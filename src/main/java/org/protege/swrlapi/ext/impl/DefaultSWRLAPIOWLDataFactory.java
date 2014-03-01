@@ -7,150 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.protege.owl.portability.axioms.OWLAnnotationPropertyDeclarationAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLAsymmetricObjectPropertyAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLClassAssertionAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLClassDeclarationAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLDataPropertyAssertionAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLDataPropertyDeclarationAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLDataPropertyDomainAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLDataPropertyRangeAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLDatatypeDeclarationAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLDifferentIndividualsAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLDisjointClassesAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLDisjointDataPropertiesAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLDisjointObjectPropertiesAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLEquivalentClassesAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLEquivalentDataPropertiesAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLEquivalentObjectPropertiesAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLFunctionalDataPropertyAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLFunctionalObjectPropertyAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLIndividualDeclarationAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLInverseFunctionalObjectPropertyAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLInverseObjectPropertiesAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLIrreflexiveObjectPropertyAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLObjectPropertyAssertionAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLObjectPropertyDeclarationAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLObjectPropertyDomainAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLObjectPropertyRangeAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLSameIndividualAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLSubClassOfAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLSubDataPropertyOfAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLSubObjectPropertyOfAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLSymmetricObjectPropertyAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLTransitiveObjectPropertyAxiomAdapter;
-import org.protege.owl.portability.axioms.impl.OWLAnnotationPropertyDeclarationAxiomAdapterImpl;
-import org.protege.owl.portability.axioms.impl.OWLAsymmetricObjectPropertyAxiomAdapterImpl;
-import org.protege.owl.portability.axioms.impl.OWLClassAssertionAxiomAdapterImpl;
-import org.protege.owl.portability.axioms.impl.OWLClassDeclarationAxiomAdapterImpl;
-import org.protege.owl.portability.axioms.impl.OWLDataPropertyAssertionAxiomAdapterImpl;
-import org.protege.owl.portability.axioms.impl.OWLDataPropertyDeclarationAxiomAdapterImpl;
-import org.protege.owl.portability.axioms.impl.OWLDataPropertyDomainAxiomAdapterImpl;
-import org.protege.owl.portability.axioms.impl.OWLDataPropertyRangeAxiomAdapterImpl;
-import org.protege.owl.portability.axioms.impl.OWLDatatypeDeclarationAxiomAdapterImpl;
-import org.protege.owl.portability.axioms.impl.OWLDifferentIndividualsAxiomAdapterImpl;
-import org.protege.owl.portability.axioms.impl.OWLDisjointClassesAxiomAdapterImpl;
-import org.protege.owl.portability.axioms.impl.OWLDisjointDataPropertiesAxiomAdapterImpl;
-import org.protege.owl.portability.axioms.impl.OWLDisjointObjectPropertiesAxiomAdapterImpl;
-import org.protege.owl.portability.axioms.impl.OWLEquivalentClassesAxiomAdapterImpl;
-import org.protege.owl.portability.axioms.impl.OWLEquivalentDataPropertiesAxiomAdapterImpl;
-import org.protege.owl.portability.axioms.impl.OWLEquivalentObjectPropertiesAxiomAdapterImpl;
-import org.protege.owl.portability.axioms.impl.OWLFunctionalDataPropertyAxiomAdapterImpl;
-import org.protege.owl.portability.axioms.impl.OWLFunctionalObjectPropertyAxiomAdapterImpl;
-import org.protege.owl.portability.axioms.impl.OWLIndividualDeclarationAxiomAdapterImpl;
-import org.protege.owl.portability.axioms.impl.OWLInverseFunctionalObjectPropertyAxiomAdapterImpl;
-import org.protege.owl.portability.axioms.impl.OWLInverseObjectPropertiesAxiomAdapterImpl;
-import org.protege.owl.portability.axioms.impl.OWLIrreflexiveObjectPropertyAxiomAdapterImpl;
-import org.protege.owl.portability.axioms.impl.OWLObjectPropertyAssertionAxiomAdapterImpl;
-import org.protege.owl.portability.axioms.impl.OWLObjectPropertyDeclarationAxiomAdapterImpl;
-import org.protege.owl.portability.axioms.impl.OWLObjectPropertyDomainAxiomAdapterImpl;
-import org.protege.owl.portability.axioms.impl.OWLObjectPropertyRangeAxiomAdapterImpl;
-import org.protege.owl.portability.axioms.impl.OWLSameIndividualAxiomAdapterImpl;
-import org.protege.owl.portability.axioms.impl.OWLSubClassOfAxiomAdapterImpl;
-import org.protege.owl.portability.axioms.impl.OWLSubDataPropertyOfAxiomAdapterImpl;
-import org.protege.owl.portability.axioms.impl.OWLSubObjectPropertyOfAxiomAdapterImpl;
-import org.protege.owl.portability.axioms.impl.OWLSymmetricObjectPropertyAxiomAdapterImpl;
-import org.protege.owl.portability.axioms.impl.OWLTransitiveObjectPropertyAxiomAdapterImpl;
-import org.protege.owl.portability.model.OWLAnnotationPropertyAdapter;
-import org.protege.owl.portability.model.OWLAnonymousIndividualAdapter;
-import org.protege.owl.portability.model.OWLClassAdapter;
-import org.protege.owl.portability.model.OWLClassExpressionAdapter;
-import org.protege.owl.portability.model.OWLDataComplementOfAdapter;
-import org.protege.owl.portability.model.OWLDataIntersectionOfAdapter;
-import org.protege.owl.portability.model.OWLDataOneOfAdapter;
-import org.protege.owl.portability.model.OWLDataPropertyAdapter;
-import org.protege.owl.portability.model.OWLDataPropertyExpressionAdapter;
-import org.protege.owl.portability.model.OWLDataRangeAdapter;
-import org.protege.owl.portability.model.OWLDataUnionOfAdapter;
-import org.protege.owl.portability.model.OWLDatatypeAdapter;
-import org.protege.owl.portability.model.OWLIndividualAdapter;
-import org.protege.owl.portability.model.OWLLiteralAdapter;
-import org.protege.owl.portability.model.OWLNamedIndividualAdapter;
-import org.protege.owl.portability.model.OWLObjectComplementOfAdapter;
-import org.protege.owl.portability.model.OWLObjectIntersectionOfAdapter;
-import org.protege.owl.portability.model.OWLObjectInverseOfAdapter;
-import org.protege.owl.portability.model.OWLObjectOneOfAdapter;
-import org.protege.owl.portability.model.OWLObjectPropertyAdapter;
-import org.protege.owl.portability.model.OWLObjectPropertyExpressionAdapter;
-import org.protege.owl.portability.model.OWLObjectUnionOfAdapter;
-import org.protege.owl.portability.model.impl.OWLAnnotationPropertyAdapterImpl;
-import org.protege.owl.portability.model.impl.OWLAnonymousIndividualAdapterImpl;
-import org.protege.owl.portability.model.impl.OWLClassAdapterImpl;
-import org.protege.owl.portability.model.impl.OWLDataComplementOfAdapterImpl;
-import org.protege.owl.portability.model.impl.OWLDataIntersectionOfAdapterImpl;
-import org.protege.owl.portability.model.impl.OWLDataOneOfAdapterImpl;
-import org.protege.owl.portability.model.impl.OWLDataPropertyAdapterImpl;
-import org.protege.owl.portability.model.impl.OWLDataUnionOfAdapterImpl;
-import org.protege.owl.portability.model.impl.OWLDatatypeAdapterImpl;
-import org.protege.owl.portability.model.impl.OWLLiteralAdapterImpl;
-import org.protege.owl.portability.model.impl.OWLNamedIndividualAdapterImpl;
-import org.protege.owl.portability.model.impl.OWLObjectComplementOfAdapterImpl;
-import org.protege.owl.portability.model.impl.OWLObjectIntersectionOfAdapterImpl;
-import org.protege.owl.portability.model.impl.OWLObjectInverseOfAdapterImpl;
-import org.protege.owl.portability.model.impl.OWLObjectOneOfAdapterImpl;
-import org.protege.owl.portability.model.impl.OWLObjectPropertyAdapterImpl;
-import org.protege.owl.portability.model.impl.OWLObjectUnionOfAdapterImpl;
-import org.protege.owl.portability.restrictions.OWLDataAllValuesFromAdapter;
-import org.protege.owl.portability.restrictions.OWLDataExactCardinalityAdapter;
-import org.protege.owl.portability.restrictions.OWLDataHasValueAdapter;
-import org.protege.owl.portability.restrictions.OWLDataMaxCardinalityAdapter;
-import org.protege.owl.portability.restrictions.OWLDataMinCardinalityAdapter;
-import org.protege.owl.portability.restrictions.OWLDataSomeValuesFromAdapter;
-import org.protege.owl.portability.restrictions.OWLObjectAllValuesFromAdapter;
-import org.protege.owl.portability.restrictions.OWLObjectExactCardinalityAdapter;
-import org.protege.owl.portability.restrictions.OWLObjectHasValueAdapter;
-import org.protege.owl.portability.restrictions.OWLObjectMaxCardinalityAdapter;
-import org.protege.owl.portability.restrictions.OWLObjectMinCardinalityAdapter;
-import org.protege.owl.portability.restrictions.OWLObjectSomeValuesFromAdapter;
-import org.protege.owl.portability.restrictions.impl.OWLDataAllValuesFromAdapterImpl;
-import org.protege.owl.portability.restrictions.impl.OWLDataExactCardinalityAdapterImpl;
-import org.protege.owl.portability.restrictions.impl.OWLDataHasValueAdapterImpl;
-import org.protege.owl.portability.restrictions.impl.OWLDataMaxCardinalityAdapterImpl;
-import org.protege.owl.portability.restrictions.impl.OWLDataMinCardinalityAdapterImpl;
-import org.protege.owl.portability.restrictions.impl.OWLDataSomeValuesFromAdapterImpl;
-import org.protege.owl.portability.restrictions.impl.OWLObjectAllValuesFromAdapterImpl;
-import org.protege.owl.portability.restrictions.impl.OWLObjectExactCardinalityAdapterImpl;
-import org.protege.owl.portability.restrictions.impl.OWLObjectHasValueAdapterImpl;
-import org.protege.owl.portability.restrictions.impl.OWLObjectMaxCardinalityAdapterImpl;
-import org.protege.owl.portability.restrictions.impl.OWLObjectMinCardinalityAdapterImpl;
-import org.protege.owl.portability.restrictions.impl.OWLObjectSomeValuesFromAdapterImpl;
-import org.protege.owl.portability.swrl.SWRLBuiltInPredicateAdapter;
-import org.protege.owl.portability.swrl.SWRLDifferentFromPredicateAdapter;
-import org.protege.owl.portability.swrl.SWRLSameAsPredicateAdapter;
-import org.protege.owl.portability.swrl.atoms.SWRLAtomAdapter;
-import org.protege.owl.portability.swrl.atoms.SWRLClassAtomAdapter;
-import org.protege.owl.portability.swrl.atoms.SWRLDataPropertyAtomAdapter;
-import org.protege.owl.portability.swrl.atoms.SWRLDifferentIndividualsAtomAdapter;
-import org.protege.owl.portability.swrl.atoms.SWRLObjectPropertyAtomAdapter;
-import org.protege.owl.portability.swrl.atoms.SWRLSameIndividualAtomAdapter;
-import org.protege.owl.portability.swrl.atoms.impl.SWRLClassAtomAdapterImpl;
-import org.protege.owl.portability.swrl.atoms.impl.SWRLDataPropertyAtomAdapterImpl;
-import org.protege.owl.portability.swrl.atoms.impl.SWRLDifferentIndividualsAtomAdapterImpl;
-import org.protege.owl.portability.swrl.atoms.impl.SWRLObjectPropertyAtomAdapterImpl;
-import org.protege.owl.portability.swrl.atoms.impl.SWRLSameIndividualAtomAdapterImpl;
-import org.protege.owl.portability.swrl.impl.SWRLBuiltInPredicateAdapterImpl;
-import org.protege.owl.portability.swrl.impl.SWRLDifferentFromPredicateAdapterImpl;
-import org.protege.owl.portability.swrl.impl.SWRLSameAsPredicateAdapterImpl;
 import org.protege.swrlapi.core.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.protege.swrlapi.core.arguments.SWRLAtomArgumentFactory;
 import org.protege.swrlapi.core.arguments.SWRLBuiltInArgument;
@@ -180,17 +36,144 @@ import org.protege.swrlapi.ext.SWRLAPIOWLOntology;
 import org.protege.swrlapi.ext.SWRLAPIRule;
 import org.protege.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 import org.protege.swrlapi.sqwrl.values.impl.DefaultSQWRLResultValueFactory;
+import org.semanticweb.owlapi.model.OWLAnnotationProperty;
+import org.semanticweb.owlapi.model.OWLAnonymousIndividual;
+import org.semanticweb.owlapi.model.OWLAsymmetricObjectPropertyAxiom;
+import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLClassAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLClassExpression;
+import org.semanticweb.owlapi.model.OWLDataAllValuesFrom;
+import org.semanticweb.owlapi.model.OWLDataComplementOf;
+import org.semanticweb.owlapi.model.OWLDataExactCardinality;
+import org.semanticweb.owlapi.model.OWLDataHasValue;
+import org.semanticweb.owlapi.model.OWLDataIntersectionOf;
+import org.semanticweb.owlapi.model.OWLDataMaxCardinality;
+import org.semanticweb.owlapi.model.OWLDataMinCardinality;
+import org.semanticweb.owlapi.model.OWLDataOneOf;
+import org.semanticweb.owlapi.model.OWLDataProperty;
+import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLDataPropertyDomainAxiom;
+import org.semanticweb.owlapi.model.OWLDataPropertyExpression;
+import org.semanticweb.owlapi.model.OWLDataPropertyRangeAxiom;
+import org.semanticweb.owlapi.model.OWLDataRange;
+import org.semanticweb.owlapi.model.OWLDataSomeValuesFrom;
+import org.semanticweb.owlapi.model.OWLDataUnionOf;
+import org.semanticweb.owlapi.model.OWLDatatype;
+import org.semanticweb.owlapi.model.OWLDifferentIndividualsAxiom;
+import org.semanticweb.owlapi.model.OWLDisjointClassesAxiom;
+import org.semanticweb.owlapi.model.OWLDisjointDataPropertiesAxiom;
+import org.semanticweb.owlapi.model.OWLDisjointObjectPropertiesAxiom;
+import org.semanticweb.owlapi.model.OWLEquivalentClassesAxiom;
+import org.semanticweb.owlapi.model.OWLEquivalentDataPropertiesAxiom;
+import org.semanticweb.owlapi.model.OWLEquivalentObjectPropertiesAxiom;
+import org.semanticweb.owlapi.model.OWLFunctionalDataPropertyAxiom;
+import org.semanticweb.owlapi.model.OWLFunctionalObjectPropertyAxiom;
+import org.semanticweb.owlapi.model.OWLIndividual;
+import org.semanticweb.owlapi.model.OWLInverseFunctionalObjectPropertyAxiom;
+import org.semanticweb.owlapi.model.OWLInverseObjectPropertiesAxiom;
+import org.semanticweb.owlapi.model.OWLIrreflexiveObjectPropertyAxiom;
+import org.semanticweb.owlapi.model.OWLLiteral;
+import org.semanticweb.owlapi.model.OWLNamedIndividual;
+import org.semanticweb.owlapi.model.OWLObjectAllValuesFrom;
+import org.semanticweb.owlapi.model.OWLObjectComplementOf;
+import org.semanticweb.owlapi.model.OWLObjectExactCardinality;
+import org.semanticweb.owlapi.model.OWLObjectHasValue;
+import org.semanticweb.owlapi.model.OWLObjectIntersectionOf;
+import org.semanticweb.owlapi.model.OWLObjectInverseOf;
+import org.semanticweb.owlapi.model.OWLObjectMaxCardinality;
+import org.semanticweb.owlapi.model.OWLObjectMinCardinality;
+import org.semanticweb.owlapi.model.OWLObjectOneOf;
+import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLObjectPropertyDomainAxiom;
+import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
+import org.semanticweb.owlapi.model.OWLObjectPropertyRangeAxiom;
+import org.semanticweb.owlapi.model.OWLObjectSomeValuesFrom;
+import org.semanticweb.owlapi.model.OWLObjectUnionOf;
+import org.semanticweb.owlapi.model.OWLSameIndividualAxiom;
+import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
+import org.semanticweb.owlapi.model.OWLSubDataPropertyOfAxiom;
+import org.semanticweb.owlapi.model.OWLSubObjectPropertyOfAxiom;
+import org.semanticweb.owlapi.model.OWLSymmetricObjectPropertyAxiom;
+import org.semanticweb.owlapi.model.OWLTransitiveObjectPropertyAxiom;
+import org.semanticweb.owlapi.model.SWRLAtom;
+import org.semanticweb.owlapi.model.SWRLClassAtom;
+import org.semanticweb.owlapi.model.SWRLDataPropertyAtom;
+import org.semanticweb.owlapi.model.SWRLDifferentIndividualsAtom;
+import org.semanticweb.owlapi.model.SWRLObjectPropertyAtom;
+import org.semanticweb.owlapi.model.SWRLSameIndividualAtom;
+
+import uk.ac.manchester.cs.owl.owlapi.OWLAnnotationPropertyImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLAnonymousIndividualImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLAsymmetricObjectPropertyAxiomImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLClassAssertionAxiomImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLClassImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLDataAllValuesFromImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLDataComplementOfImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLDataExactCardinalityImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLDataHasValueImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLDataIntersectionOfImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLDataMaxCardinalityImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLDataMinCardinalityImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLDataOneOfImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLDataPropertyAssertionAxiomImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLDataPropertyDomainAxiomImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLDataPropertyImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLDataPropertyRangeAxiomImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLDataSomeValuesFromImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLDataUnionOfImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLDatatypeImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLDifferentIndividualsAxiomImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLDisjointClassesAxiomImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLDisjointDataPropertiesAxiomImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLDisjointObjectPropertiesAxiomImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLEquivalentClassesAxiomImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLEquivalentDataPropertiesAxiomImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLEquivalentObjectPropertiesAxiomImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLFunctionalDataPropertyAxiomImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLFunctionalObjectPropertyAxiomImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLInverseFunctionalObjectPropertyAxiomImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLInverseObjectPropertiesAxiomImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLIrreflexiveObjectPropertyAxiomImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLLiteralImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLNamedIndividualImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLObjectAllValuesFromImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLObjectComplementOfImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLObjectExactCardinalityImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLObjectHasValueImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLObjectIntersectionOfImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLObjectInverseOfImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLObjectMaxCardinalityImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLObjectMinCardinalityImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLObjectOneOfImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLObjectPropertyAssertionAxiomImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLObjectPropertyDomainAxiomImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLObjectPropertyImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLObjectPropertyRangeAxiomImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLObjectSomeValuesFromImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLObjectUnionOfImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLSameIndividualAxiomImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLSubClassOfAxiomImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLSubDataPropertyOfAxiomImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLSubObjectPropertyOfAxiomImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLSymmetricObjectPropertyAxiomImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLTransitiveObjectPropertyAxiomImpl;
+import uk.ac.manchester.cs.owl.owlapi.SWRLClassAtomImpl;
+import uk.ac.manchester.cs.owl.owlapi.SWRLDataPropertyAtomImpl;
+import uk.ac.manchester.cs.owl.owlapi.SWRLDifferentIndividualsAtomImpl;
+import uk.ac.manchester.cs.owl.owlapi.SWRLObjectPropertyAtomImpl;
+import uk.ac.manchester.cs.owl.owlapi.SWRLSameIndividualAtomImpl;
 
 public class DefaultSWRLAPIOWLDataFactory implements SWRLAPIOWLDataFactory
 {
-	private final Map<URI, OWLClassAdapter> classes = new HashMap<URI, OWLClassAdapter>();
-	private final Map<URI, OWLNamedIndividualAdapter> namedIndividuals = new HashMap<URI, OWLNamedIndividualAdapter>();
-	private final Map<String, OWLAnonymousIndividualAdapter> anonymousIndividuals = new HashMap<String, OWLAnonymousIndividualAdapter>();
-	private final Map<URI, OWLObjectPropertyAdapter> objectProperties = new HashMap<URI, OWLObjectPropertyAdapter>();
-	private final Map<URI, OWLDataPropertyAdapter> dataProperties = new HashMap<URI, OWLDataPropertyAdapter>();
-	private final Map<OWLObjectPropertyExpressionAdapter, OWLObjectInverseOfAdapter> inverseProperties = new HashMap<OWLObjectPropertyExpressionAdapter, OWLObjectInverseOfAdapter>();
-	private final Map<URI, OWLAnnotationPropertyAdapter> annotationProperties = new HashMap<URI, OWLAnnotationPropertyAdapter>();
-	private final Map<URI, OWLDatatypeAdapter> datatypes = new HashMap<URI, OWLDatatypeAdapter>();
+	private final Map<URI, OWLClass> classes = new HashMap<URI, OWLClass>();
+	private final Map<URI, OWLNamedIndividual> namedIndividuals = new HashMap<URI, OWLNamedIndividual>();
+	private final Map<String, OWLAnonymousIndividual> anonymousIndividuals = new HashMap<String, OWLAnonymousIndividual>();
+	private final Map<URI, OWLObjectProperty> objectProperties = new HashMap<URI, OWLObjectProperty>();
+	private final Map<URI, OWLDataProperty> dataProperties = new HashMap<URI, OWLDataProperty>();
+	private final Map<OWLObjectPropertyExpression, OWLObjectInverseOf> inverseProperties = new HashMap<OWLObjectPropertyExpression, OWLObjectInverseOf>();
+	private final Map<URI, OWLAnnotationProperty> annotationProperties = new HashMap<URI, OWLAnnotationProperty>();
+	private final Map<URI, OWLDatatype> datatypes = new HashMap<URI, OWLDatatype>();
 
 	private final SWRLAPIOWLOntology owlOntology;
 
@@ -221,7 +204,7 @@ public class DefaultSWRLAPIOWLDataFactory implements SWRLAPIOWLDataFactory
 	}
 
 	@Override
-	public OWLClassAdapter getOWLClass()
+	public OWLClass getOWLClass()
 	{
 		URI classURI = getActiveOWLOntology().generateOWLEntityURI("INJECTED_CLASS");
 
@@ -229,7 +212,7 @@ public class DefaultSWRLAPIOWLDataFactory implements SWRLAPIOWLDataFactory
 	}
 
 	@Override
-	public OWLNamedIndividualAdapter getOWLNamedIndividual()
+	public OWLNamedIndividual getOWLNamedIndividual()
 	{
 		URI classURI = getActiveOWLOntology().generateOWLEntityURI("INJECTED_INDIVIDUAL");
 
@@ -237,504 +220,477 @@ public class DefaultSWRLAPIOWLDataFactory implements SWRLAPIOWLDataFactory
 	}
 
 	@Override
-	public OWLClassAdapter getOWLClass(URI classURI)
+	public OWLClass getOWLClass(URI classURI)
 	{
 		if (this.classes.containsKey(classURI))
 			return this.classes.get(classURI);
 
-		OWLClassAdapter cls = new OWLClassAdapterImpl(classURI, getActiveOWLOntology().uri2PrefixedName(classURI));
+		OWLClass cls = new OWLClassImpl(classURI, getActiveOWLOntology().uri2PrefixedName(classURI));
 		this.classes.put(classURI, cls);
 		return cls;
 
 	}
 
 	@Override
-	public OWLNamedIndividualAdapter getOWLNamedIndividual(URI individualURI)
+	public OWLNamedIndividual getOWLNamedIndividual(URI individualURI)
 	{
 		if (this.namedIndividuals.containsKey(individualURI))
 			return this.namedIndividuals.get(individualURI);
 
-		OWLNamedIndividualAdapter individual = new OWLNamedIndividualAdapterImpl(individualURI, getActiveOWLOntology()
-				.uri2PrefixedName(individualURI));
+		OWLNamedIndividual individual = new OWLNamedIndividualImpl(individualURI, getActiveOWLOntology().uri2PrefixedName(
+				individualURI));
 		this.namedIndividuals.put(individualURI, individual);
 		return individual;
 	}
 
 	@Override
-	public OWLAnonymousIndividualAdapter getOWLAnonymousIndividual(String nodeID)
+	public OWLAnonymousIndividual getOWLAnonymousIndividual(String nodeID)
 	{
 		if (this.anonymousIndividuals.containsKey(nodeID))
 			return this.anonymousIndividuals.get(nodeID);
 
-		OWLAnonymousIndividualAdapter individual = new OWLAnonymousIndividualAdapterImpl(nodeID);
+		OWLAnonymousIndividual individual = new OWLAnonymousIndividualImpl(nodeID);
 		this.anonymousIndividuals.put(nodeID, individual);
 		return individual;
 	}
 
 	@Override
-	public OWLObjectPropertyAdapter getOWLObjectProperty(URI propertyURI)
+	public OWLObjectProperty getOWLObjectProperty(URI propertyURI)
 	{
 		if (this.objectProperties.containsKey(propertyURI))
 			return this.objectProperties.get(propertyURI);
 
-		OWLObjectPropertyAdapter property = new OWLObjectPropertyAdapterImpl(propertyURI, getActiveOWLOntology()
-				.uri2PrefixedName(propertyURI));
+		OWLObjectProperty property = new OWLObjectPropertyImpl(propertyURI, getActiveOWLOntology().uri2PrefixedName(
+				propertyURI));
 		this.objectProperties.put(propertyURI, property);
 		return property;
 	}
 
 	@Override
-	public OWLDataPropertyAdapter getOWLDataProperty(URI propertyURI)
+	public OWLDataProperty getOWLDataProperty(URI propertyURI)
 	{
 		if (this.dataProperties.containsKey(propertyURI))
 			return this.dataProperties.get(propertyURI);
 
-		OWLDataPropertyAdapter property = new OWLDataPropertyAdapterImpl(propertyURI, getActiveOWLOntology()
+		OWLDataProperty property = new OWLDataPropertyImpl(propertyURI, getActiveOWLOntology()
 				.uri2PrefixedName(propertyURI));
 		this.dataProperties.put(propertyURI, property);
 		return property;
 	}
 
 	@Override
-	public OWLAnnotationPropertyAdapter getOWLAnnotationProperty(URI propertyURI)
+	public OWLAnnotationProperty getOWLAnnotationProperty(URI propertyURI)
 	{
 		if (this.annotationProperties.containsKey(propertyURI))
 			return this.annotationProperties.get(propertyURI);
 
-		OWLAnnotationPropertyAdapter property = new OWLAnnotationPropertyAdapterImpl(propertyURI, getActiveOWLOntology()
+		OWLAnnotationProperty property = new OWLAnnotationPropertyImpl(propertyURI, getActiveOWLOntology()
 				.uri2PrefixedName(propertyURI));
 		this.annotationProperties.put(propertyURI, property);
 		return property;
 	}
 
 	@Override
-	public OWLDatatypeAdapter getOWLDatatype(URI datatypeURI)
+	public OWLDatatype getOWLDatatype(URI datatypeURI)
 	{
 		if (this.datatypes.containsKey(datatypeURI))
 			return this.datatypes.get(datatypeURI);
 
-		OWLDatatypeAdapter datatype = new OWLDatatypeAdapterImpl(datatypeURI, getActiveOWLOntology().uri2PrefixedName(
-				datatypeURI));
+		OWLDatatype datatype = new OWLDatatypeImpl(datatypeURI, getActiveOWLOntology().uri2PrefixedName(datatypeURI));
 		this.datatypes.put(datatypeURI, datatype);
 		return datatype;
 
 	}
 
 	@Override
-	public OWLObjectInverseOfAdapter getOWLObjectInverseOf(OWLObjectPropertyExpressionAdapter propertyExpression)
+	public OWLObjectInverseOf getOWLObjectInverseOf(OWLObjectPropertyExpression propertyExpression)
 	{
 		if (this.inverseProperties.containsKey(propertyExpression))
 			return this.inverseProperties.get(propertyExpression);
 		else {
-			OWLObjectInverseOfAdapter inversePropertyOf = new OWLObjectInverseOfAdapterImpl(propertyExpression);
+			OWLObjectInverseOf inversePropertyOf = new OWLObjectInverseOfImpl(propertyExpression);
 			this.inverseProperties.put(propertyExpression, inversePropertyOf);
 			return inversePropertyOf;
 		}
 	}
 
-	public OWLClassAdapter getOWLThingClass()
+	public OWLClass getOWLThingClass()
 	{
 		try {
 			URI owlThingURI = new URI(OWL_THING);
-			return new OWLClassAdapterImpl(owlThingURI, "owl:Thing"); // TODO look at
+			return new OWLClassImpl(owlThingURI, "owl:Thing"); // TODO look at
 		} catch (URISyntaxException e) { // Should not fail
 			throw new RuntimeException("error getting owl:Thing class"); // TODO look at
 		}
 	}
 
 	@Override
-	public OWLObjectComplementOfAdapter getOWLObjectComplementOf(OWLClassExpressionAdapter cls)
+	public OWLObjectComplementOf getOWLObjectComplementOf(OWLClassExpression cls)
 	{
-		return new OWLObjectComplementOfAdapterImpl(cls);
+		return new OWLObjectComplementOfImpl(cls);
 	}
 
 	@Override
-	public OWLObjectSomeValuesFromAdapter getOWLObjectSomeValuesFrom(OWLObjectPropertyExpressionAdapter property,
-			OWLClassExpressionAdapter cls)
+	public OWLObjectSomeValuesFrom getOWLObjectSomeValuesFrom(OWLObjectPropertyExpression property, OWLClassExpression cls)
 	{
-		return new OWLObjectSomeValuesFromAdapterImpl(property, cls);
+		return new OWLObjectSomeValuesFromImpl(property, cls);
 	}
 
 	@Override
-	public OWLDataSomeValuesFromAdapter getOWLDataSomeValuesFrom(OWLDataPropertyExpressionAdapter property,
-			OWLDataRangeAdapter filler)
+	public OWLDataSomeValuesFrom getOWLDataSomeValuesFrom(OWLDataPropertyExpression property, OWLDataRange filler)
 	{
-		return new OWLDataSomeValuesFromAdapterImpl(property, filler);
+		return new OWLDataSomeValuesFromImpl(property, filler);
 	}
 
 	@Override
-	public OWLObjectUnionOfAdapter getOWLObjectUnionOf(Set<OWLClassExpressionAdapter> unionClasses)
+	public OWLObjectUnionOf getOWLObjectUnionOf(Set<OWLClassExpression> unionClasses)
 	{
-		return new OWLObjectUnionOfAdapterImpl(unionClasses);
+		return new OWLObjectUnionOfImpl(unionClasses);
 	}
 
 	@Override
-	public OWLObjectIntersectionOfAdapter getOWLObjectIntersectionOf(Set<OWLClassExpressionAdapter> intersectionClasses)
+	public OWLObjectIntersectionOf getOWLObjectIntersectionOf(Set<OWLClassExpression> intersectionClasses)
 	{
-		return new OWLObjectIntersectionOfAdapterImpl(intersectionClasses);
+		return new OWLObjectIntersectionOfImpl(intersectionClasses);
 	}
 
 	@Override
-	public OWLObjectOneOfAdapter getOWLObjectOneOf(Set<OWLIndividualAdapter> oneOfIndividuals)
+	public OWLObjectOneOf getOWLObjectOneOf(Set<OWLIndividual> oneOfIndividuals)
 	{
-		return new OWLObjectOneOfAdapterImpl(oneOfIndividuals);
+		return new OWLObjectOneOfImpl(oneOfIndividuals);
 	}
 
 	@Override
-	public OWLDataExactCardinalityAdapter getOWLDataExactCardinality(OWLDataPropertyExpressionAdapter property,
-			int cardinality)
+	public OWLDataExactCardinality getOWLDataExactCardinality(OWLDataPropertyExpression property, int cardinality)
 	{
-		return new OWLDataExactCardinalityAdapterImpl(property, cardinality);
+		return new OWLDataExactCardinalityImpl(property, cardinality);
 	}
 
 	@Override
-	public OWLObjectExactCardinalityAdapter getOWLObjectExactCardinality(OWLObjectPropertyExpressionAdapter property,
-			int cardinality)
+	public OWLObjectExactCardinality getOWLObjectExactCardinality(OWLObjectPropertyExpression property, int cardinality)
 	{
-		return new OWLObjectExactCardinalityAdapterImpl(property, cardinality);
+		return new OWLObjectExactCardinalityImpl(property, cardinality);
 	}
 
 	@Override
-	public OWLDataMinCardinalityAdapter getOWLDataMinCardinality(OWLDataPropertyExpressionAdapter property,
-			int cardinality)
+	public OWLDataMinCardinality getOWLDataMinCardinality(OWLDataPropertyExpression property, int cardinality)
 	{
-		return new OWLDataMinCardinalityAdapterImpl(property, cardinality);
+		return new OWLDataMinCardinalityImpl(property, cardinality);
 	}
 
 	@Override
-	public OWLObjectMinCardinalityAdapter getOWLObjectMinCardinality(OWLObjectPropertyExpressionAdapter property,
-			int cardinality)
+	public OWLObjectMinCardinality getOWLObjectMinCardinality(OWLObjectPropertyExpression property, int cardinality)
 	{
-		return new OWLObjectMinCardinalityAdapterImpl(property, cardinality);
+		return new OWLObjectMinCardinalityImpl(property, cardinality);
 	}
 
 	@Override
-	public OWLDataMaxCardinalityAdapter getOWLDataMaxCardinality(OWLDataPropertyExpressionAdapter property,
-			int cardinality)
+	public OWLDataMaxCardinality getOWLDataMaxCardinality(OWLDataPropertyExpression property, int cardinality)
 	{
-		return new OWLDataMaxCardinalityAdapterImpl(property, cardinality);
+		return new OWLDataMaxCardinalityImpl(property, cardinality);
 	}
 
 	@Override
-	public OWLObjectMaxCardinalityAdapter getOWLObjectMaxCardinality(OWLObjectPropertyExpressionAdapter property,
-			int cardinality)
+	public OWLObjectMaxCardinality getOWLObjectMaxCardinality(OWLObjectPropertyExpression property, int cardinality)
 	{
-		return new OWLObjectMaxCardinalityAdapterImpl(property, cardinality);
+		return new OWLObjectMaxCardinalityImpl(property, cardinality);
 	}
 
 	@Override
-	public OWLDataHasValueAdapter getOWLDataHasValue(OWLDataPropertyExpressionAdapter property, OWLLiteralAdapter value)
+	public OWLDataHasValue getOWLDataHasValue(OWLDataPropertyExpression property, OWLLiteral value)
 	{
-		return new OWLDataHasValueAdapterImpl(property, value);
+		return new OWLDataHasValueImpl(property, value);
 	}
 
 	@Override
-	public OWLObjectHasValueAdapter getOWLObjectHasValue(OWLObjectPropertyExpressionAdapter property,
-			OWLIndividualAdapter value)
+	public OWLObjectHasValue getOWLObjectHasValue(OWLObjectPropertyExpression property, OWLIndividual value)
 	{
-		return new OWLObjectHasValueAdapterImpl(property, value);
+		return new OWLObjectHasValueImpl(property, value);
 	}
 
 	@Override
-	public OWLObjectAllValuesFromAdapter getOWLObjectAllValuesFrom(OWLObjectPropertyExpressionAdapter property,
-			OWLClassExpressionAdapter cls)
+	public OWLObjectAllValuesFrom getOWLObjectAllValuesFrom(OWLObjectPropertyExpression property, OWLClassExpression cls)
 	{
-		return new OWLObjectAllValuesFromAdapterImpl(property, cls);
+		return new OWLObjectAllValuesFromImpl(property, cls);
 	}
 
 	@Override
-	public OWLDataAllValuesFromAdapter getOWLDataAllValuesFrom(OWLDataPropertyExpressionAdapter property,
-			OWLDataRangeAdapter filler)
+	public OWLDataAllValuesFrom getOWLDataAllValuesFrom(OWLDataPropertyExpression property, OWLDataRange filler)
 	{
-		return new OWLDataAllValuesFromAdapterImpl(property, filler);
+		return new OWLDataAllValuesFromImpl(property, filler);
 	}
 
 	// OWL axioms
 
 	@Override
-	public OWLDataPropertyAssertionAxiomAdapter getOWLDataPropertyAssertionAxiom(OWLIndividualAdapter subject,
-			OWLDataPropertyExpressionAdapter property, OWLLiteralAdapter literal)
+	public OWLDataPropertyAssertionAxiom getOWLDataPropertyAssertionAxiom(OWLIndividual subject,
+			OWLDataPropertyExpression property, OWLLiteral literal)
 	{
-		return new OWLDataPropertyAssertionAxiomAdapterImpl(subject, property, literal);
+		return new OWLDataPropertyAssertionAxiomImpl(subject, property, literal);
 	}
 
 	@Override
-	public OWLObjectPropertyAssertionAxiomAdapter getOWLObjectPropertyAssertionAxiom(OWLIndividualAdapter subject,
-			OWLObjectPropertyExpressionAdapter property, OWLIndividualAdapter object)
+	public OWLObjectPropertyAssertionAxiom getOWLObjectPropertyAssertionAxiom(OWLIndividual subject,
+			OWLObjectPropertyExpression property, OWLIndividual object)
 	{
-		return new OWLObjectPropertyAssertionAxiomAdapterImpl(subject, property, object);
+		return new OWLObjectPropertyAssertionAxiomImpl(subject, property, object);
 	}
 
 	@Override
-	public OWLDifferentIndividualsAxiomAdapter getOWLDifferentIndividualsAxiom(
-			Set<OWLIndividualAdapter> differentIndividuals)
+	public OWLDifferentIndividualsAxiom getOWLDifferentIndividualsAxiom(Set<OWLIndividual> differentIndividuals)
 	{
-		return new OWLDifferentIndividualsAxiomAdapterImpl(differentIndividuals);
+		return new OWLDifferentIndividualsAxiomImpl(differentIndividuals);
 	}
 
 	@Override
-	public OWLSameIndividualAxiomAdapter getOWLSameIndividualAxiom(Set<OWLIndividualAdapter> sameIndividuals)
+	public OWLSameIndividualAxiom getOWLSameIndividualAxiom(Set<OWLIndividual> sameIndividuals)
 	{
-		return new OWLSameIndividualAxiomAdapterImpl(sameIndividuals);
+		return new OWLSameIndividualAxiomImpl(sameIndividuals);
 	}
 
 	@Override
-	public OWLSubObjectPropertyOfAxiomAdapter getOWLSubObjectPropertyOfAxiom(
-			OWLObjectPropertyExpressionAdapter subProperty, OWLObjectPropertyExpressionAdapter superProperty)
+	public OWLSubObjectPropertyOfAxiom getOWLSubObjectPropertyOfAxiom(OWLObjectPropertyExpression subProperty,
+			OWLObjectPropertyExpression superProperty)
 	{
-		return new OWLSubObjectPropertyOfAxiomAdapterImpl(subProperty, superProperty);
+		return new OWLSubObjectPropertyOfAxiomImpl(subProperty, superProperty);
 	}
 
 	@Override
-	public OWLSubDataPropertyOfAxiomAdapter getOWLSubDataPropertyOfAxiom(OWLDataPropertyExpressionAdapter subProperty,
-			OWLDataPropertyExpressionAdapter superProperty)
+	public OWLSubDataPropertyOfAxiom getOWLSubDataPropertyOfAxiom(OWLDataPropertyExpression subProperty,
+			OWLDataPropertyExpression superProperty)
 	{
-		return new OWLSubDataPropertyOfAxiomAdapterImpl(subProperty, superProperty);
+		return new OWLSubDataPropertyOfAxiomImpl(subProperty, superProperty);
 	}
 
 	@Override
-	public OWLEquivalentObjectPropertiesAxiomAdapter getOWLEquivalentObjectPropertiesAxiom(
-			Set<OWLObjectPropertyExpressionAdapter> properties)
+	public OWLEquivalentObjectPropertiesAxiom getOWLEquivalentObjectPropertiesAxiom(
+			Set<OWLObjectPropertyExpression> properties)
 	{
-		return new OWLEquivalentObjectPropertiesAxiomAdapterImpl(properties);
+		return new OWLEquivalentObjectPropertiesAxiomImpl(properties);
 	}
 
 	@Override
-	public OWLEquivalentDataPropertiesAxiomAdapter getOWLEquivalentDataPropertiesAxiom(
-			Set<OWLDataPropertyExpressionAdapter> properties)
+	public OWLEquivalentDataPropertiesAxiom getOWLEquivalentDataPropertiesAxiom(Set<OWLDataPropertyExpression> properties)
 	{
-		return new OWLEquivalentDataPropertiesAxiomAdapterImpl(properties);
+		return new OWLEquivalentDataPropertiesAxiomImpl(properties);
 	}
 
 	@Override
-	public OWLDisjointObjectPropertiesAxiomAdapter getOWLDisjointObjectPropertiesAxiom(
-			Set<OWLObjectPropertyExpressionAdapter> properties)
+	public OWLDisjointObjectPropertiesAxiom getOWLDisjointObjectPropertiesAxiom(
+			Set<OWLObjectPropertyExpression> properties)
 	{
-		return new OWLDisjointObjectPropertiesAxiomAdapterImpl(properties);
+		return new OWLDisjointObjectPropertiesAxiomImpl(properties);
 	}
 
 	@Override
-	public OWLDisjointDataPropertiesAxiomAdapter getOWLDisjointDataPropertiesAxiom(
-			Set<OWLDataPropertyExpressionAdapter> properties)
+	public OWLDisjointDataPropertiesAxiom getOWLDisjointDataPropertiesAxiom(Set<OWLDataPropertyExpression> properties)
 	{
-		return new OWLDisjointDataPropertiesAxiomAdapterImpl(properties);
+		return new OWLDisjointDataPropertiesAxiomImpl(properties);
 	}
 
 	@Override
-	public OWLObjectPropertyDomainAxiomAdapter getOWLObjectPropertyDomainAxiom(
-			OWLObjectPropertyExpressionAdapter property, OWLClassExpressionAdapter domain)
+	public OWLObjectPropertyDomainAxiom getOWLObjectPropertyDomainAxiom(OWLObjectPropertyExpression property,
+			OWLClassExpression domain)
 	{
-		return new OWLObjectPropertyDomainAxiomAdapterImpl(property, domain);
+		return new OWLObjectPropertyDomainAxiomImpl(property, domain);
 	}
 
 	@Override
-	public OWLDataPropertyDomainAxiomAdapter getOWLDataPropertyDomainAxiom(OWLDataPropertyExpressionAdapter property,
-			OWLClassExpressionAdapter domain)
+	public OWLDataPropertyDomainAxiom getOWLDataPropertyDomainAxiom(OWLDataPropertyExpression property,
+			OWLClassExpression domain)
 	{
-		return new OWLDataPropertyDomainAxiomAdapterImpl(property, domain);
+		return new OWLDataPropertyDomainAxiomImpl(property, domain);
 	}
 
 	@Override
-	public OWLObjectPropertyRangeAxiomAdapter getOWLObjectPropertyRangeAxiom(OWLObjectPropertyExpressionAdapter property,
-			OWLClassExpressionAdapter domain)
+	public OWLObjectPropertyRangeAxiom getOWLObjectPropertyRangeAxiom(OWLObjectPropertyExpression property,
+			OWLClassExpression domain)
 	{
-		return new OWLObjectPropertyRangeAxiomAdapterImpl(property, domain);
+		return new OWLObjectPropertyRangeAxiomImpl(property, domain);
 	}
 
 	@Override
-	public OWLDataPropertyRangeAxiomAdapter getOWLDataPropertyRangeAxiom(OWLDataPropertyExpressionAdapter property,
-			OWLDataRangeAdapter range)
+	public OWLDataPropertyRangeAxiom getOWLDataPropertyRangeAxiom(OWLDataPropertyExpression property, OWLDataRange range)
 	{
-		return new OWLDataPropertyRangeAxiomAdapterImpl(property, range);
+		return new OWLDataPropertyRangeAxiomImpl(property, range);
 	}
 
 	@Override
-	public OWLTransitiveObjectPropertyAxiomAdapter getOWLTransitiveObjectPropertyAxiom(
-			OWLObjectPropertyExpressionAdapter property)
+	public OWLTransitiveObjectPropertyAxiom getOWLTransitiveObjectPropertyAxiom(OWLObjectPropertyExpression property)
 	{
-		return new OWLTransitiveObjectPropertyAxiomAdapterImpl(property);
+		return new OWLTransitiveObjectPropertyAxiomImpl(property);
 	}
 
 	@Override
-	public OWLSymmetricObjectPropertyAxiomAdapter getOWLSymmetricObjectPropertyAxiom(
-			OWLObjectPropertyExpressionAdapter property)
+	public OWLSymmetricObjectPropertyAxiom getOWLSymmetricObjectPropertyAxiom(OWLObjectPropertyExpression property)
 	{
-		return new OWLSymmetricObjectPropertyAxiomAdapterImpl(property);
+		return new OWLSymmetricObjectPropertyAxiomImpl(property);
 	}
 
 	@Override
-	public OWLFunctionalObjectPropertyAxiomAdapter getOWLFunctionalObjectPropertyAxiom(
-			OWLObjectPropertyExpressionAdapter property)
+	public OWLFunctionalObjectPropertyAxiom getOWLFunctionalObjectPropertyAxiom(OWLObjectPropertyExpression property)
 	{
-		return new OWLFunctionalObjectPropertyAxiomAdapterImpl(property);
+		return new OWLFunctionalObjectPropertyAxiomImpl(property);
 	}
 
 	@Override
-	public OWLInverseFunctionalObjectPropertyAxiomAdapter getOWLInverseFunctionalObjectPropertyAxiom(
-			OWLObjectPropertyExpressionAdapter property)
+	public OWLInverseFunctionalObjectPropertyAxiom getOWLInverseFunctionalObjectPropertyAxiom(
+			OWLObjectPropertyExpression property)
 	{
-		return new OWLInverseFunctionalObjectPropertyAxiomAdapterImpl(property);
+		return new OWLInverseFunctionalObjectPropertyAxiomImpl(property);
 	}
 
 	@Override
-	public OWLInverseObjectPropertiesAxiomAdapter getOWLInverseObjectPropertiesAxiom(
-			OWLObjectPropertyExpressionAdapter firstProperty, OWLObjectPropertyExpressionAdapter secondProperty)
+	public OWLInverseObjectPropertiesAxiom getOWLInverseObjectPropertiesAxiom(OWLObjectPropertyExpression firstProperty,
+			OWLObjectPropertyExpression secondProperty)
 	{
-		return new OWLInverseObjectPropertiesAxiomAdapterImpl(firstProperty, secondProperty);
+		return new OWLInverseObjectPropertiesAxiomImpl(firstProperty, secondProperty);
 	}
 
 	@Override
-	public OWLIrreflexiveObjectPropertyAxiomAdapter getOWLIrreflexiveObjectPropertyAxiom(
-			OWLObjectPropertyExpressionAdapter property)
+	public OWLIrreflexiveObjectPropertyAxiom getOWLIrreflexiveObjectPropertyAxiom(OWLObjectPropertyExpression property)
 	{
-		return new OWLIrreflexiveObjectPropertyAxiomAdapterImpl(property);
+		return new OWLIrreflexiveObjectPropertyAxiomImpl(property);
 	}
 
 	@Override
-	public OWLAsymmetricObjectPropertyAxiomAdapter getOWLAsymmetricObjectPropertyAxiom(
-			OWLObjectPropertyExpressionAdapter property)
+	public OWLAsymmetricObjectPropertyAxiom getOWLAsymmetricObjectPropertyAxiom(OWLObjectPropertyExpression property)
 	{
-		return new OWLAsymmetricObjectPropertyAxiomAdapterImpl(property);
+		return new OWLAsymmetricObjectPropertyAxiomImpl(property);
 	}
 
 	@Override
-	public OWLFunctionalDataPropertyAxiomAdapter getOWLFunctionalDataPropertyAxiom(
-			OWLDataPropertyExpressionAdapter property)
+	public OWLFunctionalDataPropertyAxiom getOWLFunctionalDataPropertyAxiom(OWLDataPropertyExpression property)
 	{
-		return new OWLFunctionalDataPropertyAxiomAdapterImpl(property);
+		return new OWLFunctionalDataPropertyAxiomImpl(property);
 	}
 
 	@Override
-	public OWLClassAssertionAxiomAdapter getOWLClassAssertionAxiom(OWLIndividualAdapter individual,
-			OWLClassExpressionAdapter description)
+	public OWLClassAssertionAxiom getOWLClassAssertionAxiom(OWLIndividual individual, OWLClassExpression description)
 	{
-		return new OWLClassAssertionAxiomAdapterImpl(individual, description);
+		return new OWLClassAssertionAxiomImpl(individual, description);
 	}
 
 	@Override
-	public OWLSubClassOfAxiomAdapter getOWLSubClassOfAxiom(OWLClassExpressionAdapter subClass,
-			OWLClassExpressionAdapter superClass)
+	public OWLSubClassOfAxiom getOWLSubClassOfAxiom(OWLClassExpression subClass, OWLClassExpression superClass)
 	{
-		return new OWLSubClassOfAxiomAdapterImpl(subClass, superClass);
+		return new OWLSubClassOfAxiomImpl(subClass, superClass);
 	}
 
 	@Override
-	public OWLEquivalentClassesAxiomAdapter getOWLEquivalentClassesAxiom(Set<OWLClassExpressionAdapter> equivalentClasses)
+	public OWLEquivalentClassesAxiom getOWLEquivalentClassesAxiom(Set<OWLClassExpression> equivalentClasses)
 	{
-		return new OWLEquivalentClassesAxiomAdapterImpl(equivalentClasses);
+		return new OWLEquivalentClassesAxiomImpl(equivalentClasses);
 	}
 
 	@Override
-	public OWLDisjointClassesAxiomAdapter getOWLDisjointClassesAxiom(Set<OWLClassExpressionAdapter> disjointClasses)
+	public OWLDisjointClassesAxiom getOWLDisjointClassesAxiom(Set<OWLClassExpression> disjointClasses)
 	{
-		return new OWLDisjointClassesAxiomAdapterImpl(disjointClasses);
+		return new OWLDisjointClassesAxiomImpl(disjointClasses);
 	}
 
 	@Override
-	public OWLClassDeclarationAxiomAdapter getOWLClassDeclarationAxiom(OWLClassAdapter cls)
+	public OWLClassDeclarationAxiom getOWLClassDeclarationAxiom(OWLClass cls)
 	{
-		return new OWLClassDeclarationAxiomAdapterImpl(cls);
+		return new OWLClassDeclarationAxiomImpl(cls);
 	}
 
 	@Override
-	public OWLIndividualDeclarationAxiomAdapter getOWLIndividualDeclarationAxiom(OWLNamedIndividualAdapter individual)
+	public OWLIndividualDeclarationAxiom getOWLIndividualDeclarationAxiom(OWLNamedIndividual individual)
 	{
-		return new OWLIndividualDeclarationAxiomAdapterImpl(individual);
+		return new OWLIndividualDeclarationAxiomImpl(individual);
 	}
 
 	@Override
-	public OWLObjectPropertyDeclarationAxiomAdapter getOWLObjectPropertyDeclarationAxiom(OWLObjectPropertyAdapter property)
+	public OWLObjectPropertyDeclarationAxiom getOWLObjectPropertyDeclarationAxiom(OWLObjectProperty property)
 	{
-		return new OWLObjectPropertyDeclarationAxiomAdapterImpl(property);
+		return new OWLObjectPropertyDeclarationAxiomImpl(property);
 	}
 
 	@Override
-	public OWLDataPropertyDeclarationAxiomAdapter getOWLDataPropertyDeclarationAxiom(OWLDataPropertyAdapter property)
+	public OWLDataPropertyDeclarationAxiom getOWLDataPropertyDeclarationAxiom(OWLDataProperty property)
 	{
-		return new OWLDataPropertyDeclarationAxiomAdapterImpl(property);
+		return new OWLDataPropertyDeclarationAxiomImpl(property);
 	}
 
 	@Override
-	public OWLAnnotationPropertyDeclarationAxiomAdapter getOWLAnnotationPropertyDeclarationAxiom(
-			OWLAnnotationPropertyAdapter property)
+	public OWLAnnotationPropertyDeclarationAxiom getOWLAnnotationPropertyDeclarationAxiom(OWLAnnotationProperty property)
 	{
-		return new OWLAnnotationPropertyDeclarationAxiomAdapterImpl(property);
+		return new OWLAnnotationPropertyDeclarationAxiomImpl(property);
 	}
 
 	@Override
-	public OWLDatatypeDeclarationAxiomAdapter getOWLDatatypeDeclarationAxiom(OWLDatatypeAdapter datatype)
+	public OWLDatatypeDeclarationAxiom getOWLDatatypeDeclarationAxiom(OWLDatatype datatype)
 	{
-		return new OWLDatatypeDeclarationAxiomAdapterImpl(datatype);
+		return new OWLDatatypeDeclarationAxiomImpl(datatype);
 	}
 
-	public OWLObjectSomeValuesFromAdapter getOWLSomeValuesFrom(OWLObjectPropertyExpressionAdapter onProperty,
-			OWLClassExpressionAdapter someValuesFrom)
+	public OWLObjectSomeValuesFrom getOWLSomeValuesFrom(OWLObjectPropertyExpression onProperty,
+			OWLClassExpression someValuesFrom)
 	{
-		return new OWLObjectSomeValuesFromAdapterImpl(onProperty, someValuesFrom);
-	}
-
-	@Override
-	public OWLDataOneOfAdapter getOWLDataOneOf(Set<? extends OWLLiteralAdapter> values)
-	{
-		return new OWLDataOneOfAdapterImpl(values);
+		return new OWLObjectSomeValuesFromImpl(onProperty, someValuesFrom);
 	}
 
 	@Override
-	public OWLDataComplementOfAdapter getOWLDataComplementOf(OWLDataRangeAdapter dataRange)
+	public OWLDataOneOf getOWLDataOneOf(Set<? extends OWLLiteral> values)
 	{
-		return new OWLDataComplementOfAdapterImpl(dataRange);
+		return new OWLDataOneOfImpl(values);
 	}
 
 	@Override
-	public OWLDataIntersectionOfAdapter getOWLDataIntersectionOf(Set<? extends OWLDataRangeAdapter> dataRanges)
+	public OWLDataComplementOf getOWLDataComplementOf(OWLDataRange dataRange)
 	{
-		return new OWLDataIntersectionOfAdapterImpl(dataRanges);
+		return new OWLDataComplementOfImpl(dataRange);
 	}
 
 	@Override
-	public OWLDataUnionOfAdapter getOWLDataUnionOf(Set<? extends OWLDataRangeAdapter> dataRanges)
+	public OWLDataIntersectionOf getOWLDataIntersectionOf(Set<? extends OWLDataRange> dataRanges)
 	{
-		return new OWLDataUnionOfAdapterImpl(dataRanges);
+		return new OWLDataIntersectionOfImpl(dataRanges);
 	}
 
 	@Override
-	public SWRLAPIRule getSWRLRule(String ruleName, List<? extends SWRLAtomAdapter> bodyAtoms,
-			List<? extends SWRLAtomAdapter> headAtoms)
+	public OWLDataUnionOf getOWLDataUnionOf(Set<? extends OWLDataRange> dataRanges)
+	{
+		return new OWLDataUnionOfImpl(dataRanges);
+	}
+
+	@Override
+	public SWRLAPIRule getSWRLRule(String ruleName, List<? extends SWRLAtom> bodyAtoms, List<? extends SWRLAtom> headAtoms)
 	{
 		return new DefaultSWRLAPIRule(ruleName, bodyAtoms, headAtoms);
 	}
 
 	@Override
-	public SWRLClassAtomAdapter getSWRLClassAtom(OWLClassExpressionAdapter predicate, SWRLIAtomArgument arg)
+	public SWRLClassAtom getSWRLClassAtom(OWLClassExpression predicate, SWRLIAtomArgument arg)
 	{
-		return new SWRLClassAtomAdapterImpl(predicate, arg);
+		return new SWRLClassAtomImpl(predicate, arg);
 	}
 
 	@Override
-	public SWRLObjectPropertyAtomAdapter getSWRLObjectPropertyAtom(OWLObjectPropertyExpressionAdapter property,
-			SWRLIAtomArgument arg0, SWRLIAtomArgument arg1)
-	{
-		return new SWRLObjectPropertyAtomAdapterImpl(property, arg0, arg1);
-	}
-
-	@Override
-	public SWRLDataPropertyAtomAdapter getSWRLDataPropertyAtom(OWLDataPropertyExpressionAdapter property,
-			SWRLIAtomArgument arg0, SWRLDAtomArgument arg1)
-	{
-		return new SWRLDataPropertyAtomAdapterImpl(property, arg0, arg1);
-	}
-
-	@Override
-	public SWRLSameIndividualAtomAdapter getSWRLSameIndividualAtom(SWRLIAtomArgument arg0, SWRLIAtomArgument arg1)
-	{
-		return new SWRLSameIndividualAtomAdapterImpl(arg0, arg1);
-	}
-
-	@Override
-	public SWRLDifferentIndividualsAtomAdapter getSWRLDifferentIndividualsAtom(SWRLIAtomArgument arg0,
+	public SWRLObjectPropertyAtom getSWRLObjectPropertyAtom(OWLObjectPropertyExpression property, SWRLIAtomArgument arg0,
 			SWRLIAtomArgument arg1)
 	{
-		return new SWRLDifferentIndividualsAtomAdapterImpl(arg0, arg1);
+		return new SWRLObjectPropertyAtomImpl(property, arg0, arg1);
+	}
+
+	@Override
+	public SWRLDataPropertyAtom getSWRLDataPropertyAtom(OWLDataPropertyExpression property, SWRLIAtomArgument arg0,
+			SWRLDAtomArgument arg1)
+	{
+		return new SWRLDataPropertyAtomImpl(property, arg0, arg1);
+	}
+
+	@Override
+	public SWRLSameIndividualAtom getSWRLSameIndividualAtom(SWRLIAtomArgument arg0, SWRLIAtomArgument arg1)
+	{
+		return new SWRLSameIndividualAtomImpl(arg0, arg1);
+	}
+
+	@Override
+	public SWRLDifferentIndividualsAtom getSWRLDifferentIndividualsAtom(SWRLIAtomArgument arg0, SWRLIAtomArgument arg1)
+	{
+		return new SWRLDifferentIndividualsAtomImpl(arg0, arg1);
 	}
 
 	@Override
@@ -757,96 +713,95 @@ public class DefaultSWRLAPIOWLDataFactory implements SWRLAPIOWLDataFactory
 	}
 
 	@Override
-	public SWRLClassAtomArgument getSWRLClassAtomArgument(OWLClassAdapter cls)
+	public SWRLClassAtomArgument getSWRLClassAtomArgument(OWLClass cls)
 	{
 		return getSWRLAtomArgumentFactory().createClassArgument(cls);
 	}
 
 	@Override
-	public SWRLClassBuiltInArgument getSWRLClassBuiltInArgument(OWLClassAdapter cls)
+	public SWRLClassBuiltInArgument getSWRLClassBuiltInArgument(OWLClass cls)
 	{
 		return getSWRLBuiltInArgumentFactory().createClassArgument(cls);
 	}
 
 	@Override
-	public SWRLIndividualAtomArgument getSWRLIndividualAtomArgument(OWLIndividualAdapter individual)
+	public SWRLIndividualAtomArgument getSWRLIndividualAtomArgument(OWLIndividual individual)
 	{
 		return getSWRLAtomArgumentFactory().createIndividualArgument(individual);
 	}
 
 	@Override
-	public SWRLIndividualBuiltInArgument getSWRLIndividualBuiltInArgument(OWLIndividualAdapter individual)
+	public SWRLIndividualBuiltInArgument getSWRLIndividualBuiltInArgument(OWLIndividual individual)
 	{
 		return getSWRLBuiltInArgumentFactory().createIndividualArgument(individual);
 	}
 
 	@Override
-	public SWRLObjectPropertyAtomArgument getSWRLObjectPropertyAtomArgument(OWLObjectPropertyAdapter property)
+	public SWRLObjectPropertyAtomArgument getSWRLObjectPropertyAtomArgument(OWLObjectProperty property)
 	{
 		return getSWRLAtomArgumentFactory().createObjectPropertyArgument(property);
 	}
 
 	@Override
-	public SWRLObjectPropertyBuiltInArgument getSWRLObjectPropertyBuiltInArgument(OWLObjectPropertyAdapter property)
+	public SWRLObjectPropertyBuiltInArgument getSWRLObjectPropertyBuiltInArgument(OWLObjectProperty property)
 	{
 		return getSWRLBuiltInArgumentFactory().createObjectPropertyArgument(property);
 	}
 
 	@Override
-	public SWRLDataPropertyAtomArgument getSWRLDataPropertyAtomArgument(OWLDataPropertyAdapter property)
+	public SWRLDataPropertyAtomArgument getSWRLDataPropertyAtomArgument(OWLDataProperty property)
 	{
 		return getSWRLAtomArgumentFactory().createDataPropertyArgument(property);
 	}
 
 	@Override
-	public SWRLDataPropertyBuiltInArgument getSWRLDataPropertyBuiltInArgument(OWLDataPropertyAdapter property)
+	public SWRLDataPropertyBuiltInArgument getSWRLDataPropertyBuiltInArgument(OWLDataProperty property)
 	{
 		return getSWRLBuiltInArgumentFactory().createDataPropertyArgument(property);
 	}
 
 	@Override
-	public SWRLAnnotationPropertyBuiltInArgument getSWRLAnnotationPropertyBuiltInArgument(
-			OWLAnnotationPropertyAdapter property)
+	public SWRLAnnotationPropertyBuiltInArgument getSWRLAnnotationPropertyBuiltInArgument(OWLAnnotationProperty property)
 	{
 		return getSWRLBuiltInArgumentFactory().createAnnotationPropertyArgument(property);
 	}
 
 	@Override
-	public SWRLLiteralBuiltInArgument getSWRLLiteralBuiltInArgument(OWLLiteralAdapter literal)
+	public SWRLLiteralBuiltInArgument getSWRLLiteralBuiltInArgument(OWLLiteral literal)
 	{
 		return getSWRLBuiltInArgumentFactory().createLiteralArgument(literal);
 	}
 
 	@Override
-	public SWRLLiteralAtomArgument getSWRLLiteralAtomArgument(OWLLiteralAdapter literal)
+	public SWRLLiteralAtomArgument getSWRLLiteralAtomArgument(OWLLiteral literal)
 	{
 		return getSWRLAtomArgumentFactory().createLiteralArgument(literal);
 	}
 
 	@Override
-	public SWRLLiteralAtomArgument getSWRLLiteralAtomArgument(String lexicalValue, OWLDatatypeAdapter datatype)
+	public SWRLLiteralAtomArgument getSWRLLiteralAtomArgument(String lexicalValue, OWLDatatype datatype)
 	{
-		OWLLiteralAdapter literal = new OWLLiteralAdapterImpl(lexicalValue, datatype);
+		OWLLiteral literal = new OWLLiteralImpl(lexicalValue, datatype);
 
 		return getSWRLAtomArgumentFactory().createLiteralArgument(literal);
 	}
 
 	@Override
-	public SWRLSameAsPredicateAdapter getSWRLSameAsPredicate()
+	public SWRLSameAsPredicate getSWRLSameAsPredicate()
 	{
-		return new SWRLSameAsPredicateAdapterImpl();
+		return new SWRLSameAsPredicateImpl();
 	}
 
 	@Override
-	public SWRLDifferentFromPredicateAdapter getSWRLDifferentFromPredicate()
+	public SWRLDifferentFromPredicate getSWRLDifferentFromPredicate()
 	{
-		return new SWRLDifferentFromPredicateAdapterImpl();
+		return new SWRLDifferentFromPredicateImpl();
 	}
 
 	@Override
-	public SWRLBuiltInPredicateAdapter getSWRLBuiltInPredicate(String builtInPrefixedName)
+	public SWRLBuiltInPredicate getSWRLBuiltInPredicate(String builtInPrefixedName)
 	{
-		return new SWRLBuiltInPredicateAdapterImpl(builtInPrefixedName);
+		return new SWRLBuiltInPredicateImpl(builtInPrefixedName);
 	}
 
 	@Override

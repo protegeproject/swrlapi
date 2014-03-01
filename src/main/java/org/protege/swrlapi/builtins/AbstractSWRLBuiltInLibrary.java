@@ -10,13 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.protege.owl.portability.axioms.OWLClassAssertionAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLIndividualDeclarationAxiomAdapter;
-import org.protege.owl.portability.model.OWLClassAdapter;
-import org.protege.owl.portability.model.OWLDataPropertyAdapter;
-import org.protege.owl.portability.model.OWLLiteralAdapter;
-import org.protege.owl.portability.model.OWLNamedIndividualAdapter;
-import org.protege.owl.portability.model.OWLObjectPropertyAdapter;
 import org.protege.swrlapi.core.SWRLBuiltInBridge;
 import org.protege.swrlapi.core.arguments.SQWRLCollectionBuiltInArgument;
 import org.protege.swrlapi.core.arguments.SWRLBuiltInArgument;
@@ -42,6 +35,12 @@ import org.protege.swrlapi.xsd.XSDDate;
 import org.protege.swrlapi.xsd.XSDDateTime;
 import org.protege.swrlapi.xsd.XSDDuration;
 import org.protege.swrlapi.xsd.XSDTime;
+import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLClassAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLDataProperty;
+import org.semanticweb.owlapi.model.OWLLiteral;
+import org.semanticweb.owlapi.model.OWLNamedIndividual;
+import org.semanticweb.owlapi.model.OWLObjectProperty;
 
 /**
  * A class that must be subclassed by a class implementing a library of SWRL built-in methods. See <a
@@ -104,12 +103,11 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 		return getBuiltInBridge().getOWLDataFactory().getSWRLBuiltInArgumentFactory();
 	}
 
-	protected OWLNamedIndividualAdapter injectOWLNamedIndividualOfClass(OWLClassAdapter cls) throws BuiltInException
+	protected OWLNamedIndividual injectOWLNamedIndividualOfClass(OWLClass cls) throws BuiltInException
 	{
-		OWLNamedIndividualAdapter individual = getOWLDataFactory().getOWLNamedIndividual();
-		OWLIndividualDeclarationAxiomAdapter declarationAxiom = getOWLDataFactory().getOWLIndividualDeclarationAxiom(
-				individual);
-		OWLClassAssertionAxiomAdapter classAssertionAxiom = getOWLDataFactory().getOWLClassAssertionAxiom(individual, cls);
+		OWLNamedIndividual individual = getOWLDataFactory().getOWLNamedIndividual();
+		OWLIndividualDeclarationAxiom declarationAxiom = getOWLDataFactory().getOWLIndividualDeclarationAxiom(individual);
+		OWLClassAssertionAxiom classAssertionAxiom = getOWLDataFactory().getOWLClassAssertionAxiom(individual, cls);
 		getBuiltInBridge().getOWLNamedObjectResolver().record(individual);
 		getBuiltInBridge().injectOWLAxiom(declarationAxiom);
 		getBuiltInBridge().injectOWLAxiom(classAssertionAxiom);
@@ -1385,7 +1383,7 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 
 	@Override
 	public boolean processResultArgument(List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
-			OWLLiteralAdapter resultArgument) throws BuiltInException
+			OWLLiteral resultArgument) throws BuiltInException
 	{
 		return processResultArgument(arguments, resultArgumentNumber, createLiteralBuiltInArgument(resultArgument));
 	}
@@ -1459,7 +1457,7 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 		}
 	}
 
-	public SWRLClassBuiltInArgument createClassBuiltInArgument(OWLClassAdapter cls) throws BuiltInException
+	public SWRLClassBuiltInArgument createClassBuiltInArgument(OWLClass cls) throws BuiltInException
 	{
 		return getBuiltInArgumentFactory().createClassArgument(cls.getURI(), cls.getPrefixedName());
 	}
@@ -1470,7 +1468,7 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 		return getBuiltInArgumentFactory().createClassArgument(classURI, prefixedName);
 	}
 
-	public SWRLIndividualBuiltInArgument createIndividualBuiltInArgument(OWLNamedIndividualAdapter individual)
+	public SWRLIndividualBuiltInArgument createIndividualBuiltInArgument(OWLNamedIndividual individual)
 			throws BuiltInException
 	{
 		return getBuiltInArgumentFactory().createIndividualArgument(individual.getURI(), individual.getPrefixedName());
@@ -1483,7 +1481,7 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 		return getBuiltInArgumentFactory().createIndividualArgument(individualURI, prefixedName);
 	}
 
-	public SWRLObjectPropertyBuiltInArgument createObjectPropertyBuiltInArgument(OWLObjectPropertyAdapter property)
+	public SWRLObjectPropertyBuiltInArgument createObjectPropertyBuiltInArgument(OWLObjectProperty property)
 			throws BuiltInException
 	{
 		return getBuiltInArgumentFactory().createObjectPropertyArgument(property.getURI(), property.getPrefixedName());
@@ -1496,7 +1494,7 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 		return getBuiltInArgumentFactory().createObjectPropertyArgument(propertyURI, prefixedName);
 	}
 
-	public SWRLDataPropertyBuiltInArgument createDataPropertyBuiltInArgument(OWLDataPropertyAdapter property)
+	public SWRLDataPropertyBuiltInArgument createDataPropertyBuiltInArgument(OWLDataProperty property)
 			throws BuiltInException
 	{
 		return getBuiltInArgumentFactory().createDataPropertyArgument(property.getURI(), property.getPrefixedName());
@@ -1509,7 +1507,7 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 		return getBuiltInArgumentFactory().createDataPropertyArgument(propertyURI, prefixedName);
 	}
 
-	public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(OWLLiteralAdapter literal) throws BuiltInException
+	public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(OWLLiteral literal) throws BuiltInException
 	{
 		return getBuiltInArgumentFactory().createLiteralArgument(literal);
 	}

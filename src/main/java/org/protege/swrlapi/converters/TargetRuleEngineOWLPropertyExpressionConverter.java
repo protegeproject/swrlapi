@@ -1,12 +1,12 @@
 package org.protege.swrlapi.converters;
 
-import org.protege.owl.portability.model.OWLDataPropertyExpressionAdapter;
-import org.protege.owl.portability.model.OWLObjectPropertyExpressionAdapter;
 import org.protege.swrlapi.exceptions.TargetRuleEngineException;
+import org.semanticweb.owlapi.model.OWLDataPropertyExpression;
+import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 
 public interface TargetRuleEngineOWLPropertyExpressionConverter<PE> extends TargetRuleEngineConverter
-{	
-	PE convert(OWLObjectPropertyExpressionAdapter propertyExpression) throws TargetRuleEngineException;
-	
-	PE convert(OWLDataPropertyExpressionAdapter propertyExpression) throws TargetRuleEngineException;
+{
+	PE convert(OWLObjectPropertyExpression propertyExpression) throws TargetRuleEngineException;
+
+	PE convert(OWLDataPropertyExpression propertyExpression) throws TargetRuleEngineException;
 }

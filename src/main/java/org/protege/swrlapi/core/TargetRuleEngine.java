@@ -1,10 +1,10 @@
 package org.protege.swrlapi.core;
 
-import org.protege.owl.portability.axioms.OWLAxiomAdapter;
 import org.protege.swrlapi.exceptions.BuiltInException;
 import org.protege.swrlapi.exceptions.TargetRuleEngineException;
 import org.protege.swrlapi.owl2rl.OWL2RLEngine;
 import org.protege.swrlapi.sqwrl.SQWRLQuery;
+import org.semanticweb.owlapi.model.OWLAxiom;
 
 /**
  * This interface defines the methods that must be provided by an implementation of a SWRL rule engine.
@@ -19,7 +19,7 @@ public interface TargetRuleEngine
 	/**
 	 * Define a target rule engine representation of an OWL axiom. SWRL rules are a type of OWL axiom.
 	 */
-	void defineOWLAxiom(OWLAxiomAdapter axiom) throws TargetRuleEngineException;
+	void defineOWLAxiom(OWLAxiom axiom) throws TargetRuleEngineException;
 
 	/**
 	 * Define a target rule engine representation of a SQWRL query.

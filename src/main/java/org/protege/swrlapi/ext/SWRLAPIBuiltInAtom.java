@@ -4,10 +4,10 @@ import java.net.URI;
 import java.util.List;
 import java.util.Set;
 
-import org.protege.owl.portability.swrl.atoms.SWRLBuiltInAtomAdapter;
 import org.protege.swrlapi.core.arguments.SWRLBuiltInArgument;
+import org.semanticweb.owlapi.model.SWRLBuiltInAtom;
 
-public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtomAdapter
+public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtom
 {
 	String getRuleName();
 
@@ -21,7 +21,8 @@ public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtomAdapter
 
 	boolean usesAtLeastOneVariableOf(Set<String> variableNames);
 
-	List<SWRLBuiltInArgument> getArguments();
+	@Override
+	List<SWRLBuiltInArgument> getArguments(); // TODO Rename to avoid OWLAPI collision
 
 	int getNumberOfArguments();
 

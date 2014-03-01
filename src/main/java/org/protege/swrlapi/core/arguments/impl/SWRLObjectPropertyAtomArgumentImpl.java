@@ -2,8 +2,8 @@ package org.protege.swrlapi.core.arguments.impl;
 
 import java.net.URI;
 
-import org.protege.owl.portability.model.OWLObjectPropertyAdapter;
 import org.protege.swrlapi.core.arguments.SWRLObjectPropertyAtomArgument;
+import org.semanticweb.owlapi.model.OWLObjectProperty;
 
 class SWRLObjectPropertyAtomArgumentImpl extends SWRLPropertyAtomArgumentImpl implements SWRLObjectPropertyAtomArgument
 {
@@ -12,7 +12,7 @@ class SWRLObjectPropertyAtomArgumentImpl extends SWRLPropertyAtomArgumentImpl im
 		super(propertyURI, prefixedName);
 	}
 
-	public SWRLObjectPropertyAtomArgumentImpl(OWLObjectPropertyAdapter property)
+	public SWRLObjectPropertyAtomArgumentImpl(OWLObjectProperty property)
 	{
 		super(property);
 	}

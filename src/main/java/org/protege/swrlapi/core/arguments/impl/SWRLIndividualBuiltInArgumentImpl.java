@@ -2,8 +2,8 @@ package org.protege.swrlapi.core.arguments.impl;
 
 import java.net.URI;
 
-import org.protege.owl.portability.model.OWLNamedIndividualAdapter;
 import org.protege.swrlapi.core.arguments.SWRLIndividualBuiltInArgument;
+import org.semanticweb.owlapi.model.OWLNamedIndividual;
 
 class SWRLIndividualBuiltInArgumentImpl extends SWRLNamedBuiltInArgumentImpl implements SWRLIndividualBuiltInArgument
 {
@@ -12,7 +12,7 @@ class SWRLIndividualBuiltInArgumentImpl extends SWRLNamedBuiltInArgumentImpl imp
 		super(individualURI, prefixedName);
 	}
 
-	public SWRLIndividualBuiltInArgumentImpl(OWLNamedIndividualAdapter individual)
+	public SWRLIndividualBuiltInArgumentImpl(OWLNamedIndividual individual)
 	{
 		super(individual);
 	}

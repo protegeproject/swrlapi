@@ -7,15 +7,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.protege.owl.portability.swrl.atoms.impl.SWRLAtomAdapterImpl;
-import org.protege.owl.portability.swrl.impl.SWRLBuiltInPredicateAdapterImpl;
 import org.protege.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.protege.swrlapi.ext.SWRLAPIBuiltInAtom;
+
+import uk.ac.manchester.cs.owl.owlapi.SWRLAtomImpl;
 
 /**
  * Class representing a SWRL built-in atom
  */
-public class DefaultSWRLAPIBuiltInAtom extends SWRLAtomAdapterImpl implements SWRLAPIBuiltInAtom
+public class DefaultSWRLAPIBuiltInAtom extends SWRLAtomImpl implements SWRLAPIBuiltInAtom
 {
 	private final String ruleName;
 	private final URI builtInURI;
@@ -29,7 +29,7 @@ public class DefaultSWRLAPIBuiltInAtom extends SWRLAtomAdapterImpl implements SW
 	public DefaultSWRLAPIBuiltInAtom(String ruleName, URI builtInURI, String builtInPrefixedName,
 			List<SWRLBuiltInArgument> arguments)
 	{
-		super(new SWRLBuiltInPredicateAdapterImpl(builtInPrefixedName));
+		super(new SWRLBuiltInPredicateImpl(builtInPrefixedName));
 		this.ruleName = ruleName;
 		this.builtInURI = builtInURI;
 		this.builtInPrefixedName = builtInPrefixedName;
@@ -38,7 +38,7 @@ public class DefaultSWRLAPIBuiltInAtom extends SWRLAtomAdapterImpl implements SW
 
 	public DefaultSWRLAPIBuiltInAtom(String ruleName, URI builtInURI, String builtInPrefixedName)
 	{
-		super(new SWRLBuiltInPredicateAdapterImpl(builtInPrefixedName));
+		super(new SWRLBuiltInPredicateImpl(builtInPrefixedName));
 		this.ruleName = ruleName;
 		this.builtInURI = builtInURI;
 		this.builtInPrefixedName = builtInPrefixedName;

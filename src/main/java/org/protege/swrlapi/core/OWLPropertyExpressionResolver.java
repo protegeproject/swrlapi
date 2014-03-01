@@ -3,8 +3,8 @@ package org.protege.swrlapi.core;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.protege.owl.portability.model.OWLPropertyExpressionAdapter;
 import org.protege.swrlapi.exceptions.TargetRuleEngineException;
+import org.semanticweb.owlapi.model.OWLPropertyExpression;
 
 /**
  * This class is used to keep track of property expressions, typically by a rule engine implementation. OWL 2 RL-based
@@ -15,11 +15,11 @@ import org.protege.swrlapi.exceptions.TargetRuleEngineException;
  * */
 public class OWLPropertyExpressionResolver
 {
-	private final Map<String, OWLPropertyExpressionAdapter<?, ?>> propertyExpressionMap;
+	private final Map<String, OWLPropertyExpression<?, ?>> propertyExpressionMap;
 
 	public OWLPropertyExpressionResolver()
 	{
-		this.propertyExpressionMap = new HashMap<String, OWLPropertyExpressionAdapter<?, ?>>();
+		this.propertyExpressionMap = new HashMap<String, OWLPropertyExpression<?, ?>>();
 	}
 
 	public void reset()
@@ -27,12 +27,12 @@ public class OWLPropertyExpressionResolver
 		this.propertyExpressionMap.clear();
 	}
 
-	public void record(String propertyExpressionID, OWLPropertyExpressionAdapter<?, ?> propertyExpression)
+	public void record(String propertyExpressionID, OWLPropertyExpression<?, ?> propertyExpression)
 	{
 		this.propertyExpressionMap.put(propertyExpressionID, propertyExpression);
 	}
 
-	public OWLPropertyExpressionAdapter<?, ?> resolve(String propertyExpressionID) throws TargetRuleEngineException
+	public OWLPropertyExpression<?, ?> resolve(String propertyExpressionID) throws TargetRuleEngineException
 	{
 		if (this.propertyExpressionMap.containsKey(propertyExpressionID))
 			return this.propertyExpressionMap.get(propertyExpressionID);

@@ -2,8 +2,6 @@ package org.protege.swrlapi.ext.impl;
 
 import java.net.URI;
 
-import org.protege.owl.portability.model.OWLDatatypeAdapter;
-import org.protege.owl.portability.model.OWLLiteralAdapter;
 import org.protege.swrlapi.ext.OWLDatatypeFactory;
 import org.protege.swrlapi.ext.OWLLiteralFactory;
 import org.protege.swrlapi.ext.SWRLAPILiteral;
@@ -12,6 +10,8 @@ import org.protege.swrlapi.xsd.XSDDate;
 import org.protege.swrlapi.xsd.XSDDateTime;
 import org.protege.swrlapi.xsd.XSDDuration;
 import org.protege.swrlapi.xsd.XSDTime;
+import org.semanticweb.owlapi.model.OWLDatatype;
+import org.semanticweb.owlapi.model.OWLLiteral;
 
 public class DefaultSWRLAPILiteralFactory implements SWRLAPILiteralFactory
 {
@@ -25,13 +25,13 @@ public class DefaultSWRLAPILiteralFactory implements SWRLAPILiteralFactory
 	}
 
 	@Override
-	public SWRLAPILiteral getSWRLAPILiteral(String literal, OWLDatatypeAdapter datatype)
+	public SWRLAPILiteral getSWRLAPILiteral(String literal, OWLDatatype datatype)
 	{
 		return new DefaultSWRLAPILiteral(getOWLLiteralFactory().getOWLLiteral(literal, datatype));
 	}
 
 	@Override
-	public SWRLAPILiteral getSWRLAPILiteral(OWLLiteralAdapter literal)
+	public SWRLAPILiteral getSWRLAPILiteral(OWLLiteral literal)
 	{
 		return new DefaultSWRLAPILiteral(literal);
 	}

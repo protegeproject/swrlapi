@@ -3,15 +3,15 @@ package org.protege.swrlapi.ext;
 import java.net.URI;
 import java.util.Set;
 
-import org.protege.owl.portability.axioms.OWLAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLDataPropertyAssertionAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLObjectPropertyAssertionAxiomAdapter;
-import org.protege.owl.portability.model.OWLOntologyAdapter;
+import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLOntology;
 
 /**
  * Interface that provides a high level interface to an OWL ontology.
  */
-public interface SWRLAPIOWLOntology extends OWLOntologyAdapter
+public interface SWRLAPIOWLOntology extends OWLOntology
 {
 	void startBulkConversion(); // Can be used, for example, to switch off notification during bulk conversion.
 
@@ -25,7 +25,7 @@ public interface SWRLAPIOWLOntology extends OWLOntologyAdapter
 
 	SWRLAPIRule createSWRLRule(String ruleName, String ruleText);
 
-	void putOWLAxiom(OWLAxiomAdapter axiom);
+	void putOWLAxiom(OWLAxiom axiom);
 
 	/**
 	 * Take a prefix and generate a unique URI from it in the default namespace of the ontology, e.g., a local name prefix
@@ -40,9 +40,9 @@ public interface SWRLAPIOWLOntology extends OWLOntologyAdapter
 	// TODO We really do not want all the following methods here. They are convenience methods only.
 	boolean isOWLIndividualOfType(URI individualURI, URI classURI);
 
-	Set<OWLObjectPropertyAssertionAxiomAdapter> getOWLObjectPropertyAssertionAxioms(URI individualURI, URI propertyURI);
+	Set<OWLObjectPropertyAssertionAxiom> getOWLObjectPropertyAssertionAxioms(URI individualURI, URI propertyURI);
 
-	Set<OWLDataPropertyAssertionAxiomAdapter> getOWLDataPropertyAssertionAxioms(URI individualURI, URI propertyURI);
+	Set<OWLDataPropertyAssertionAxiom> getOWLDataPropertyAssertionAxioms(URI individualURI, URI propertyURI);
 
 	boolean isOWLClass(URI classURI);
 

@@ -2,27 +2,27 @@ package org.protege.swrlapi.ext.impl;
 
 import java.net.URI;
 
-import org.protege.owl.portability.model.OWLLiteralAdapter;
-import org.protege.owl.portability.model.XSDNames;
-import org.protege.owl.portability.model.impl.OWLLiteralAdapterImpl;
 import org.protege.swrlapi.exceptions.SQWRLLiteralException;
 import org.protege.swrlapi.ext.SWRLAPILiteral;
 import org.protege.swrlapi.xsd.XSDDate;
 import org.protege.swrlapi.xsd.XSDDateTime;
 import org.protege.swrlapi.xsd.XSDDuration;
 import org.protege.swrlapi.xsd.XSDTime;
+import org.semanticweb.owlapi.model.OWLLiteral;
+
+import uk.ac.manchester.cs.owl.owlapi.OWLLiteralImpl;
 
 public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 {
-	private final OWLLiteralAdapter literal;
+	private final OWLLiteral literal;
 
-	public DefaultSWRLAPILiteral(OWLLiteralAdapter literal)
+	public DefaultSWRLAPILiteral(OWLLiteral literal)
 	{
 		this.literal = literal;
 	}
 
 	@Override
-	public OWLLiteralAdapter getOWLLiteral()
+	public OWLLiteral getOWLLiteral()
 	{
 		return this.literal;
 	}
@@ -334,7 +334,7 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 
 	/**
 	 * TODO This is incorrect. Fix. See also {@link SQWRLLiteralResultValueImpl#compareTo} and
-	 * {@link OWLLiteralAdapterImpl#compareTo}.
+	 * {@link OWLLiteralImpl#compareTo}.
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override

@@ -2,11 +2,11 @@ package org.protege.swrlapi.core.arguments;
 
 import java.net.URI;
 
-import org.protege.owl.portability.model.OWLClassAdapter;
-import org.protege.owl.portability.model.OWLDataPropertyAdapter;
-import org.protege.owl.portability.model.OWLIndividualAdapter;
-import org.protege.owl.portability.model.OWLLiteralAdapter;
-import org.protege.owl.portability.model.OWLObjectPropertyAdapter;
+import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLDataProperty;
+import org.semanticweb.owlapi.model.OWLIndividual;
+import org.semanticweb.owlapi.model.OWLLiteral;
+import org.semanticweb.owlapi.model.OWLObjectProperty;
 
 public interface SWRLAtomArgumentFactory
 {
@@ -14,21 +14,21 @@ public interface SWRLAtomArgumentFactory
 
 	SWRLClassAtomArgument createClassArgument(URI uri, String prefixedName);
 
-	SWRLClassAtomArgument createClassArgument(OWLClassAdapter cls);
+	SWRLClassAtomArgument createClassArgument(OWLClass cls);
 
 	SWRLIndividualAtomArgument createIndividualArgument(URI uri, String prefixedName);
 
-	SWRLIndividualAtomArgument createIndividualArgument(OWLIndividualAdapter individual);
+	SWRLIndividualAtomArgument createIndividualArgument(OWLIndividual individual);
 
 	SWRLObjectPropertyAtomArgument createObjectPropertyArgument(URI uri, String prefixedName);
 
-	SWRLObjectPropertyAtomArgument createObjectPropertyArgument(OWLObjectPropertyAdapter property);
+	SWRLObjectPropertyAtomArgument createObjectPropertyArgument(OWLObjectProperty property);
 
 	SWRLDataPropertyAtomArgument createDataPropertyArgument(URI uri, String prefixedName);
 
-	SWRLDataPropertyAtomArgument createDataPropertyArgument(OWLDataPropertyAdapter property);
+	SWRLDataPropertyAtomArgument createDataPropertyArgument(OWLDataProperty property);
 
-	SWRLLiteralAtomArgument createLiteralArgument(OWLLiteralAdapter literal);
+	SWRLLiteralAtomArgument createLiteralArgument(OWLLiteral literal);
 
 	SWRLLiteralAtomArgument createLiteralArgument(String s);
 

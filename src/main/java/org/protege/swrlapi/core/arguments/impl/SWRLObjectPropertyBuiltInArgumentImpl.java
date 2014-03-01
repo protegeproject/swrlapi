@@ -2,8 +2,8 @@ package org.protege.swrlapi.core.arguments.impl;
 
 import java.net.URI;
 
-import org.protege.owl.portability.model.OWLObjectPropertyAdapter;
 import org.protege.swrlapi.core.arguments.SWRLObjectPropertyBuiltInArgument;
+import org.semanticweb.owlapi.model.OWLObjectProperty;
 
 class SWRLObjectPropertyBuiltInArgumentImpl extends SWRLPropertyBuiltInArgumentImpl implements
 		SWRLObjectPropertyBuiltInArgument
@@ -13,7 +13,7 @@ class SWRLObjectPropertyBuiltInArgumentImpl extends SWRLPropertyBuiltInArgumentI
 		super(propertyURI, prefixedName);
 	}
 
-	public SWRLObjectPropertyBuiltInArgumentImpl(OWLObjectPropertyAdapter property)
+	public SWRLObjectPropertyBuiltInArgumentImpl(OWLObjectProperty property)
 	{
 		super(property);
 	}

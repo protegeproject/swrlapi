@@ -2,7 +2,6 @@ package org.protege.swrlapi.core;
 
 import java.util.List;
 
-import org.protege.owl.portability.axioms.OWLAxiomAdapter;
 import org.protege.swrlapi.core.arguments.SWRLAtomArgumentFactory;
 import org.protege.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.protege.swrlapi.core.arguments.SWRLBuiltInArgumentFactory;
@@ -13,6 +12,7 @@ import org.protege.swrlapi.ext.OWLLiteralFactory;
 import org.protege.swrlapi.ext.SWRLAPILiteralFactory;
 import org.protege.swrlapi.ext.SWRLAPIOWLDataFactory;
 import org.protege.swrlapi.owl2rl.OWL2RLPersistenceLayer;
+import org.semanticweb.owlapi.model.OWLAxiom;
 
 /**
  * The SWRL Rule Engine Bridge defines the interface seen by a target implementation of a SWRL rule engine. The
@@ -67,7 +67,7 @@ public interface SWRLRuleEngineBridge
 	/**
 	 * The infer methods are used by a target rule engines to put inferred axioms into the bridge.
 	 */
-	void inferOWLAxiom(OWLAxiomAdapter axiom) throws SWRLRuleEngineBridgeException;
+	void inferOWLAxiom(OWLAxiom axiom) throws SWRLRuleEngineBridgeException;
 
 	/**
 	 * This method can be used by a target rule engine to invoke built-ins. If the built-in evaluates to false, an empty

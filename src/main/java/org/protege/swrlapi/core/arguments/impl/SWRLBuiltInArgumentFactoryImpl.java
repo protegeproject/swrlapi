@@ -3,14 +3,6 @@ package org.protege.swrlapi.core.arguments.impl;
 import java.net.URI;
 import java.util.List;
 
-import org.protege.owl.portability.model.OWLAnnotationPropertyAdapter;
-import org.protege.owl.portability.model.OWLClassAdapter;
-import org.protege.owl.portability.model.OWLDataPropertyAdapter;
-import org.protege.owl.portability.model.OWLDatatypeAdapter;
-import org.protege.owl.portability.model.OWLIndividualAdapter;
-import org.protege.owl.portability.model.OWLLiteralAdapter;
-import org.protege.owl.portability.model.OWLNamedIndividualAdapter;
-import org.protege.owl.portability.model.OWLObjectPropertyAdapter;
 import org.protege.swrlapi.core.arguments.SQWRLCollectionBuiltInArgument;
 import org.protege.swrlapi.core.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.protege.swrlapi.core.arguments.SWRLBuiltInArgument;
@@ -31,6 +23,14 @@ import org.protege.swrlapi.xsd.XSDDate;
 import org.protege.swrlapi.xsd.XSDDateTime;
 import org.protege.swrlapi.xsd.XSDDuration;
 import org.protege.swrlapi.xsd.XSDTime;
+import org.semanticweb.owlapi.model.OWLAnnotationProperty;
+import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLDataProperty;
+import org.semanticweb.owlapi.model.OWLDatatype;
+import org.semanticweb.owlapi.model.OWLIndividual;
+import org.semanticweb.owlapi.model.OWLLiteral;
+import org.semanticweb.owlapi.model.OWLNamedIndividual;
+import org.semanticweb.owlapi.model.OWLObjectProperty;
 
 public class SWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumentFactory
 {
@@ -64,7 +64,7 @@ public class SWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumentFactor
 	}
 
 	@Override
-	public SWRLClassBuiltInArgument createClassArgument(OWLClassAdapter cls)
+	public SWRLClassBuiltInArgument createClassArgument(OWLClass cls)
 	{
 		return new SWRLClassBuiltInArgumentImpl(cls);
 	}
@@ -76,7 +76,7 @@ public class SWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumentFactor
 	}
 
 	@Override
-	public SWRLObjectPropertyBuiltInArgument createObjectPropertyArgument(OWLObjectPropertyAdapter property)
+	public SWRLObjectPropertyBuiltInArgument createObjectPropertyArgument(OWLObjectProperty property)
 	{
 		return new SWRLObjectPropertyBuiltInArgumentImpl(property);
 	}
@@ -88,7 +88,7 @@ public class SWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumentFactor
 	}
 
 	@Override
-	public SWRLDataPropertyBuiltInArgument createDataPropertyArgument(OWLDataPropertyAdapter property)
+	public SWRLDataPropertyBuiltInArgument createDataPropertyArgument(OWLDataProperty property)
 	{
 		return new SWRLDataPropertyBuiltInArgumentImpl(property);
 	}
@@ -100,7 +100,7 @@ public class SWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumentFactor
 	}
 
 	@Override
-	public SWRLAnnotationPropertyBuiltInArgument createAnnotationPropertyArgument(OWLAnnotationPropertyAdapter property)
+	public SWRLAnnotationPropertyBuiltInArgument createAnnotationPropertyArgument(OWLAnnotationProperty property)
 	{
 		return new SWRLAnnotationPropertyBuiltInArgumentImpl(property);
 	}
@@ -112,7 +112,7 @@ public class SWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumentFactor
 	}
 
 	@Override
-	public SWRLDatatypeBuiltInArgument createDatatypeArgument(OWLDatatypeAdapter datatype)
+	public SWRLDatatypeBuiltInArgument createDatatypeArgument(OWLDatatype datatype)
 	{
 		return new SWRLDatatypeBuiltInArgumentImpl(datatype);
 	}
@@ -124,17 +124,17 @@ public class SWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumentFactor
 	}
 
 	@Override
-	public SWRLIndividualBuiltInArgument createIndividualArgument(OWLIndividualAdapter individual)
+	public SWRLIndividualBuiltInArgument createIndividualArgument(OWLIndividual individual)
 	{
 		if (individual.isNamed()) {
-			OWLNamedIndividualAdapter namedIndividual = individual.asNamedIndividual();
+			OWLNamedIndividual namedIndividual = individual.asNamedIndividual();
 			return new SWRLIndividualBuiltInArgumentImpl(namedIndividual.getURI(), namedIndividual.getPrefixedName());
 		} else
 			throw new RuntimeException("OWL anonymous individual built-in arguments not supported by Portability API");
 	}
 
 	@Override
-	public SWRLLiteralBuiltInArgument createLiteralArgument(OWLLiteralAdapter literal)
+	public SWRLLiteralBuiltInArgument createLiteralArgument(OWLLiteral literal)
 	{
 		return new SWRLLiteralBuiltInArgumentImpl(literal);
 	}

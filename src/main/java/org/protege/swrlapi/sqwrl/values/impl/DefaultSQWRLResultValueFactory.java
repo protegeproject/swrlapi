@@ -2,7 +2,6 @@ package org.protege.swrlapi.sqwrl.values.impl;
 
 import java.net.URI;
 
-import org.protege.owl.portability.model.OWLLiteralAdapter;
 import org.protege.swrlapi.core.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.protege.swrlapi.core.arguments.SWRLClassBuiltInArgument;
 import org.protege.swrlapi.core.arguments.SWRLDataPropertyBuiltInArgument;
@@ -23,6 +22,7 @@ import org.protege.swrlapi.xsd.XSDDate;
 import org.protege.swrlapi.xsd.XSDDateTime;
 import org.protege.swrlapi.xsd.XSDDuration;
 import org.protege.swrlapi.xsd.XSDTime;
+import org.semanticweb.owlapi.model.OWLLiteral;
 
 public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
 {
@@ -98,7 +98,7 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
 	}
 
 	@Override
-	public SQWRLLiteralResultValue getLiteral(OWLLiteralAdapter literal)
+	public SQWRLLiteralResultValue getLiteral(OWLLiteral literal)
 	{
 		return new SQWRLLiteralResultValueImpl(literal);
 	}

@@ -2,40 +2,40 @@ package org.protege.swrlapi.ext;
 
 import java.net.URI;
 
-import org.protege.owl.portability.model.OWLDatatypeAdapter;
-import org.protege.owl.portability.model.OWLLiteralAdapter;
 import org.protege.swrlapi.xsd.XSDDate;
 import org.protege.swrlapi.xsd.XSDDateTime;
 import org.protege.swrlapi.xsd.XSDDuration;
 import org.protege.swrlapi.xsd.XSDTime;
+import org.semanticweb.owlapi.model.OWLDatatype;
+import org.semanticweb.owlapi.model.OWLLiteral;
 
 public interface OWLLiteralFactory
 {
-	OWLLiteralAdapter getOWLLiteral(String literal, OWLDatatypeAdapter datatype);
+	OWLLiteral getOWLLiteral(String literal, OWLDatatype datatype);
 
-	OWLLiteralAdapter getOWLLiteral(String value);
+	OWLLiteral getOWLLiteral(String value);
 
-	OWLLiteralAdapter getOWLLiteral(boolean value);
+	OWLLiteral getOWLLiteral(boolean value);
 
-	OWLLiteralAdapter getOWLLiteral(double value);
+	OWLLiteral getOWLLiteral(double value);
 
-	OWLLiteralAdapter getOWLLiteral(float value);
+	OWLLiteral getOWLLiteral(float value);
 
-	OWLLiteralAdapter getOWLLiteral(int value);
+	OWLLiteral getOWLLiteral(int value);
 
-	OWLLiteralAdapter getOWLLiteral(long value);
+	OWLLiteral getOWLLiteral(long value);
 
-	OWLLiteralAdapter getOWLLiteral(byte b);
+	OWLLiteral getOWLLiteral(byte b);
 
-	OWLLiteralAdapter getOWLLiteral(short s);
+	OWLLiteral getOWLLiteral(short s);
 
-	OWLLiteralAdapter getOWLLiteral(URI uri);
+	OWLLiteral getOWLLiteral(URI uri);
 
-	OWLLiteralAdapter getOWLLiteral(XSDDate date);
+	OWLLiteral getOWLLiteral(XSDDate date);
 
-	OWLLiteralAdapter getOWLLiteral(XSDTime time);
+	OWLLiteral getOWLLiteral(XSDTime time);
 
-	OWLLiteralAdapter getOWLLiteral(XSDDateTime datetime);
+	OWLLiteral getOWLLiteral(XSDDateTime datetime);
 
-	OWLLiteralAdapter getOWLLiteral(XSDDuration duration);
+	OWLLiteral getOWLLiteral(XSDDuration duration);
 }

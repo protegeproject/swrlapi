@@ -2,18 +2,18 @@ package org.protege.swrlapi.ext;
 
 import java.net.URI;
 
-import org.protege.owl.portability.model.OWLDatatypeAdapter;
-import org.protege.owl.portability.model.OWLLiteralAdapter;
 import org.protege.swrlapi.xsd.XSDDate;
 import org.protege.swrlapi.xsd.XSDDateTime;
 import org.protege.swrlapi.xsd.XSDDuration;
 import org.protege.swrlapi.xsd.XSDTime;
+import org.semanticweb.owlapi.model.OWLDatatype;
+import org.semanticweb.owlapi.model.OWLLiteral;
 
 public interface SWRLAPILiteralFactory
 {
-	SWRLAPILiteral getSWRLAPILiteral(OWLLiteralAdapter literal);
+	SWRLAPILiteral getSWRLAPILiteral(OWLLiteral literal);
 
-	SWRLAPILiteral getSWRLAPILiteral(String literal, OWLDatatypeAdapter datatype);
+	SWRLAPILiteral getSWRLAPILiteral(String literal, OWLDatatype datatype);
 
 	SWRLAPILiteral getSWRLAPILiteral(String value);
 

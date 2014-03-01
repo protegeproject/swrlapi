@@ -8,21 +8,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.protege.owl.portability.swrl.atoms.SWRLAtomAdapter;
 import org.protege.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.protege.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
 import org.protege.swrlapi.ext.SWRLAPIBuiltInAtom;
 import org.protege.swrlapi.ext.SWRLAPILiteral;
 import org.protege.swrlapi.ext.SWRLAPILiteralFactory;
-import org.protege.swrlapi.ext.impl.DefaultSWRLAPILiteralFactory;
 import org.protege.swrlapi.ext.impl.DefaultSWRLAPILiteral;
+import org.protege.swrlapi.ext.impl.DefaultSWRLAPILiteralFactory;
 import org.protege.swrlapi.sqwrl.exceptions.SQWRLException;
+import org.semanticweb.owlapi.model.SWRLAtom;
 
 public class DefaultSQWRLQuery implements SQWRLQuery
 {
 	private final String queryName;
-	private final List<SWRLAtomAdapter> bodyAtoms;
-	private final List<SWRLAtomAdapter> headAtoms;
+	private final List<SWRLAtom> bodyAtoms;
+	private final List<SWRLAtom> headAtoms;
 	private final DefaultSQWRLResult sqwrlResult;
 	private final Map<String, List<SWRLBuiltInArgument>> collectionGroupArgumentsMap; // Map of collection name to group
 																																										// arguments; applies only to
@@ -31,8 +31,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 
 	private boolean active; // Like a SWRLRule, a SQWRL query can also be inactive.
 
-	public DefaultSQWRLQuery(String queryName, List<SWRLAtomAdapter> bodyAtoms, List<SWRLAtomAdapter> headAtoms)
-			throws SQWRLException
+	public DefaultSQWRLQuery(String queryName, List<SWRLAtom> bodyAtoms, List<SWRLAtom> headAtoms) throws SQWRLException
 	{
 		this.queryName = queryName;
 		this.bodyAtoms = bodyAtoms;
@@ -53,13 +52,13 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	}
 
 	@Override
-	public List<SWRLAtomAdapter> getHeadAtoms()
+	public List<SWRLAtom> getHeadAtoms()
 	{
 		return Collections.unmodifiableList(this.headAtoms);
 	}
 
 	@Override
-	public List<SWRLAtomAdapter> getBodyAtoms()
+	public List<SWRLAtom> getBodyAtoms()
 	{
 		return Collections.unmodifiableList(this.bodyAtoms);
 	}
@@ -104,11 +103,11 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	}
 
 	@Override
-	public List<SWRLAtomAdapter> getSQWRLPhase1BodyAtoms()
+	public List<SWRLAtom> getSQWRLPhase1BodyAtoms()
 	{
-		List<SWRLAtomAdapter> result = new ArrayList<SWRLAtomAdapter>();
+		List<SWRLAtom> result = new ArrayList<SWRLAtom>();
 
-		for (SWRLAtomAdapter atom : getBodyAtoms()) {
+		for (SWRLAtom atom : getBodyAtoms()) {
 			if (atom instanceof SWRLAPIBuiltInAtom) {
 				SWRLAPIBuiltInAtom builtInAtom = (SWRLAPIBuiltInAtom)atom;
 				if (builtInAtom.usesSQWRLCollectionResults() || isSQWRLGroupCollection(builtInAtom))
@@ -121,11 +120,11 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	}
 
 	@Override
-	public List<SWRLAtomAdapter> getSQWRLPhase2BodyAtoms()
+	public List<SWRLAtom> getSQWRLPhase2BodyAtoms()
 	{
-		List<SWRLAtomAdapter> result = new ArrayList<SWRLAtomAdapter>();
+		List<SWRLAtom> result = new ArrayList<SWRLAtom>();
 
-		for (SWRLAtomAdapter atom : getBodyAtoms()) {
+		for (SWRLAtom atom : getBodyAtoms()) {
 			if (atom instanceof SWRLAPIBuiltInAtom) {
 				SWRLAPIBuiltInAtom builtInAtom = (SWRLAPIBuiltInAtom)atom;
 				if (isSQWRLMakeCollection(builtInAtom) || isSQWRLGroupCollection(builtInAtom))
@@ -149,7 +148,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		String result = "";
 		boolean isFirst = true;
 
-		for (SWRLAtomAdapter atom : getBodyAtoms()) {
+		for (SWRLAtom atom : getBodyAtoms()) {
 			if (!isFirst)
 				result += " ^ ";
 			result += "" + atom;
@@ -159,7 +158,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		result += " -> ";
 
 		isFirst = true;
-		for (SWRLAtomAdapter atom : getHeadAtoms()) {
+		for (SWRLAtom atom : getHeadAtoms()) {
 			if (!isFirst)
 				result += " ^ ";
 			result += "" + atom;
@@ -194,22 +193,22 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		return getBuiltInAtoms(getBodyAtoms());
 	}
 
-	private List<SWRLAPIBuiltInAtom> getBuiltInAtoms(List<SWRLAtomAdapter> atoms)
+	private List<SWRLAPIBuiltInAtom> getBuiltInAtoms(List<SWRLAtom> atoms)
 	{
 		List<SWRLAPIBuiltInAtom> result = new ArrayList<SWRLAPIBuiltInAtom>();
 
-		for (SWRLAtomAdapter atom : atoms)
+		for (SWRLAtom atom : atoms)
 			if (atom instanceof SWRLAPIBuiltInAtom)
 				result.add((SWRLAPIBuiltInAtom)atom);
 
 		return result;
 	}
 
-	private List<SWRLAPIBuiltInAtom> getBuiltInAtoms(List<SWRLAtomAdapter> atoms, Set<String> builtInNames)
+	private List<SWRLAPIBuiltInAtom> getBuiltInAtoms(List<SWRLAtom> atoms, Set<String> builtInNames)
 	{
 		List<SWRLAPIBuiltInAtom> result = new ArrayList<SWRLAPIBuiltInAtom>();
 
-		for (SWRLAtomAdapter atom : atoms) {
+		for (SWRLAtom atom : atoms) {
 			if (atom instanceof SWRLAPIBuiltInAtom) {
 				SWRLAPIBuiltInAtom builtInAtom = (SWRLAPIBuiltInAtom)atom;
 				if (builtInNames.contains(builtInAtom.getBuiltInPrefixedName()))
@@ -617,7 +616,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		Map<String, Set<Set<String>>> pathMap = new HashMap<String, Set<Set<String>>>();
 		Set<String> rootVariableNames = new HashSet<String>();
 
-		for (SWRLAtomAdapter atom : getBodyAtoms()) {
+		for (SWRLAtom atom : getBodyAtoms()) {
 			Set<String> thisAtomReferencedVariableNames = new HashSet<String>(atom.getReferencedVariableNames());
 
 			buildPaths(atom, rootVariableNames, pathMap);
@@ -666,7 +665,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	 * Note: Sets of sets in Java require care because of hash code issues. The enclosed set should not be modified or the
 	 * outer set may return inconsistent results.
 	 */
-	private void buildPaths(SWRLAtomAdapter atom, Set<String> rootVariableNames, Map<String, Set<Set<String>>> pathMap)
+	private void buildPaths(SWRLAtom atom, Set<String> rootVariableNames, Map<String, Set<Set<String>>> pathMap)
 	{
 		Set<String> currentAtomReferencedVariableNames = atom.getReferencedVariableNames();
 		Set<String> matchingRootVariableNames;

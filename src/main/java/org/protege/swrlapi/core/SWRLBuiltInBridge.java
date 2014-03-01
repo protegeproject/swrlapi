@@ -2,7 +2,6 @@ package org.protege.swrlapi.core;
 
 import java.util.List;
 
-import org.protege.owl.portability.axioms.OWLAxiomAdapter;
 import org.protege.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.protege.swrlapi.exceptions.BuiltInException;
 import org.protege.swrlapi.exceptions.SWRLBuiltInBridgeException;
@@ -10,6 +9,7 @@ import org.protege.swrlapi.ext.SWRLAPIOWLDataFactory;
 import org.protege.swrlapi.ext.SWRLAPIOWLOntology;
 import org.protege.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.protege.swrlapi.sqwrl.exceptions.SQWRLException;
+import org.semanticweb.owlapi.model.OWLAxiom;
 
 /**
  * The SWRL Built-in Bridge defines the methods seen by SWRL built-in implementations at run time.
@@ -22,7 +22,7 @@ public interface SWRLBuiltInBridge
 	/**
 	 * This call is used by SWRL built-ins to inject OWL axioms into the bridge.
 	 */
-	void injectOWLAxiom(OWLAxiomAdapter axiom) throws SWRLBuiltInBridgeException;
+	void injectOWLAxiom(OWLAxiom axiom) throws SWRLBuiltInBridgeException;
 
 	/**
 	 * This call is used by the SQWRL built-in library to get the result generator for a SQWRL query that is currently
@@ -32,7 +32,7 @@ public interface SWRLBuiltInBridge
 
 	/**
 	 * This call can be used by built-ins to create OWL axioms (which they can inject into the bridge using the
-	 * {@link #injectOWLAxiom(OWLAxiomAdapter)} call.
+	 * {@link #injectOWLAxiom(OWLAxiom)} call.
 	 */
 	SWRLAPIOWLDataFactory getOWLDataFactory();
 

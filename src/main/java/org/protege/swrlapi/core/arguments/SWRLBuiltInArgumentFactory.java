@@ -3,17 +3,17 @@ package org.protege.swrlapi.core.arguments;
 import java.net.URI;
 import java.util.List;
 
-import org.protege.owl.portability.model.OWLAnnotationPropertyAdapter;
-import org.protege.owl.portability.model.OWLClassAdapter;
-import org.protege.owl.portability.model.OWLDataPropertyAdapter;
-import org.protege.owl.portability.model.OWLDatatypeAdapter;
-import org.protege.owl.portability.model.OWLIndividualAdapter;
-import org.protege.owl.portability.model.OWLLiteralAdapter;
-import org.protege.owl.portability.model.OWLObjectPropertyAdapter;
 import org.protege.swrlapi.xsd.XSDDate;
 import org.protege.swrlapi.xsd.XSDDateTime;
 import org.protege.swrlapi.xsd.XSDDuration;
 import org.protege.swrlapi.xsd.XSDTime;
+import org.semanticweb.owlapi.model.OWLAnnotationProperty;
+import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLDataProperty;
+import org.semanticweb.owlapi.model.OWLDatatype;
+import org.semanticweb.owlapi.model.OWLIndividual;
+import org.semanticweb.owlapi.model.OWLLiteral;
+import org.semanticweb.owlapi.model.OWLObjectProperty;
 
 public interface SWRLBuiltInArgumentFactory
 {
@@ -23,29 +23,29 @@ public interface SWRLBuiltInArgumentFactory
 
 	SWRLClassBuiltInArgument createClassArgument(URI uri, String prefixedName);
 
-	SWRLClassBuiltInArgument createClassArgument(OWLClassAdapter cls);
+	SWRLClassBuiltInArgument createClassArgument(OWLClass cls);
 
 	SWRLIndividualBuiltInArgument createIndividualArgument(URI uri, String prefixedName);
 
-	SWRLIndividualBuiltInArgument createIndividualArgument(OWLIndividualAdapter individual);
+	SWRLIndividualBuiltInArgument createIndividualArgument(OWLIndividual individual);
 
 	SWRLObjectPropertyBuiltInArgument createObjectPropertyArgument(URI uri, String prefixedName);
 
-	SWRLObjectPropertyBuiltInArgument createObjectPropertyArgument(OWLObjectPropertyAdapter property);
+	SWRLObjectPropertyBuiltInArgument createObjectPropertyArgument(OWLObjectProperty property);
 
 	SWRLDataPropertyBuiltInArgument createDataPropertyArgument(URI uri, String prefixedName);
 
-	SWRLDataPropertyBuiltInArgument createDataPropertyArgument(OWLDataPropertyAdapter property);
+	SWRLDataPropertyBuiltInArgument createDataPropertyArgument(OWLDataProperty property);
 
 	SWRLAnnotationPropertyBuiltInArgument createAnnotationPropertyArgument(URI uri, String prefixedName);
 
-	SWRLAnnotationPropertyBuiltInArgument createAnnotationPropertyArgument(OWLAnnotationPropertyAdapter property);
+	SWRLAnnotationPropertyBuiltInArgument createAnnotationPropertyArgument(OWLAnnotationProperty property);
 
 	SWRLDatatypeBuiltInArgument createDatatypeArgument(URI uri, String prefixedName);
 
-	SWRLDatatypeBuiltInArgument createDatatypeArgument(OWLDatatypeAdapter datatype);
+	SWRLDatatypeBuiltInArgument createDatatypeArgument(OWLDatatype datatype);
 
-	SWRLLiteralBuiltInArgument createLiteralArgument(OWLLiteralAdapter literal);
+	SWRLLiteralBuiltInArgument createLiteralArgument(OWLLiteral literal);
 
 	SWRLLiteralBuiltInArgument createLiteralArgument(String s);
 

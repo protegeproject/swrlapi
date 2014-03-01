@@ -2,8 +2,8 @@ package org.protege.swrlapi.core.arguments.impl;
 
 import java.net.URI;
 
-import org.protege.owl.portability.model.OWLNamedObjectAdapter;
 import org.protege.swrlapi.core.arguments.SWRLNamedAtomArgument;
+import org.semanticweb.owlapi.model.OWLNamedObject;
 
 abstract class SWRLNamedAtomArgumentImpl implements SWRLNamedAtomArgument
 {
@@ -16,7 +16,7 @@ abstract class SWRLNamedAtomArgumentImpl implements SWRLNamedAtomArgument
 		this.prefixedName = prefixedName;
 	}
 
-	public SWRLNamedAtomArgumentImpl(OWLNamedObjectAdapter entity)
+	public SWRLNamedAtomArgumentImpl(OWLNamedObject entity)
 	{
 		this.uri = entity.getURI();
 		this.prefixedName = entity.getPrefixedName();

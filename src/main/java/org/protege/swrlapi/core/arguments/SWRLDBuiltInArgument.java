@@ -1,7 +1,7 @@
 package org.protege.swrlapi.core.arguments;
 
-import org.protege.owl.portability.swrl.SWRLDArgumentAdapter;
+import org.semanticweb.owlapi.model.SWRLDArgument;
 
-public interface SWRLDBuiltInArgument extends SWRLBuiltInArgument, SWRLDArgumentAdapter
+public interface SWRLDBuiltInArgument extends SWRLBuiltInArgument, SWRLDArgument
 {
 }

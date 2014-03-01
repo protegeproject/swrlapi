@@ -2,16 +2,16 @@ package org.protege.swrlapi.ext;
 
 import java.net.URI;
 
-import org.protege.owl.portability.model.OWLLiteralAdapter;
 import org.protege.swrlapi.exceptions.SQWRLLiteralException;
 import org.protege.swrlapi.xsd.XSDDate;
 import org.protege.swrlapi.xsd.XSDDateTime;
 import org.protege.swrlapi.xsd.XSDDuration;
 import org.protege.swrlapi.xsd.XSDTime;
+import org.semanticweb.owlapi.model.OWLLiteral;
 
 public interface SWRLAPILiteral extends Comparable<SWRLAPILiteral>
 {
-	OWLLiteralAdapter getOWLLiteral();
+	OWLLiteral getOWLLiteral();
 
 	boolean isNumeric();
 

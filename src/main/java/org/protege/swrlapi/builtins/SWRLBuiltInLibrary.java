@@ -5,7 +5,6 @@ import java.net.URI;
 import java.util.Collection;
 import java.util.List;
 
-import org.protege.owl.portability.model.OWLLiteralAdapter;
 import org.protege.swrlapi.core.SWRLBuiltInBridge;
 import org.protege.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.protege.swrlapi.core.arguments.SWRLClassBuiltInArgument;
@@ -23,6 +22,7 @@ import org.protege.swrlapi.xsd.XSDDate;
 import org.protege.swrlapi.xsd.XSDDateTime;
 import org.protege.swrlapi.xsd.XSDDuration;
 import org.protege.swrlapi.xsd.XSDTime;
+import org.semanticweb.owlapi.model.OWLLiteral;
 
 /**
  * A class that defines methods that must be implemented by a built-in library. See <a
@@ -302,7 +302,7 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
 			throws BuiltInException;
 
 	public boolean processResultArgument(List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
-			OWLLiteralAdapter resultArgument) throws BuiltInException;
+			OWLLiteral resultArgument) throws BuiltInException;
 
 	boolean processResultArgument(List<SWRLBuiltInArgument> arguments, int resultArgumentNumber, long resultArgument)
 			throws BuiltInException;

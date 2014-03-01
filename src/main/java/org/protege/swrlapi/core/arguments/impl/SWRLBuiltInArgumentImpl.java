@@ -4,6 +4,8 @@ import org.protege.swrlapi.core.arguments.SWRLBuiltInArgument;
 
 abstract class SWRLBuiltInArgumentImpl implements SWRLBuiltInArgument
 {
+	private static final long serialVersionUID = -672946065614354363L;
+
 	// There is an equals methods defined for this class.
 	private String variableName;
 	private SWRLBuiltInArgument builtInResult; // Used to store result of binding for unbound arguments

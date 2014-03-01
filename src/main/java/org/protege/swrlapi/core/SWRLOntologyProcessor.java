@@ -2,7 +2,6 @@ package org.protege.swrlapi.core;
 
 import java.util.Set;
 
-import org.protege.owl.portability.axioms.OWLAxiomAdapter;
 import org.protege.swrlapi.exceptions.SWRLRuleException;
 import org.protege.swrlapi.ext.SWRLAPIOWLOntology;
 import org.protege.swrlapi.ext.SWRLAPIRule;
@@ -10,6 +9,7 @@ import org.protege.swrlapi.sqwrl.SQWRLQuery;
 import org.protege.swrlapi.sqwrl.SQWRLResult;
 import org.protege.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.protege.swrlapi.sqwrl.exceptions.SQWRLException;
+import org.semanticweb.owlapi.model.OWLAxiom;
 
 /**
  * This interface defines a processor that is used by SWRL rule and SQWRL query engines to analyze an ontology (defined
@@ -34,11 +34,11 @@ public interface SWRLOntologyProcessor
 	/**
 	 * Get all OWL axioms in processed ontology (which will include SWRL rules);
 	 */
-	Set<OWLAxiomAdapter> getOWLAxioms();
+	Set<OWLAxiom> getOWLAxioms();
 
 	int getNumberOfOWLAxioms();
 
-	boolean hasOWLAxiom(OWLAxiomAdapter axiom);
+	boolean hasOWLAxiom(OWLAxiom axiom);
 
 	int getNumberOfOWLClassDeclarationAxioms();
 

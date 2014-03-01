@@ -2,11 +2,11 @@ package org.protege.swrlapi.core;
 
 import java.util.Set;
 
-import org.protege.owl.portability.axioms.OWLAxiomAdapter;
 import org.protege.swrlapi.exceptions.SWRLRuleEngineException;
 import org.protege.swrlapi.ext.SWRLAPIRule;
 import org.protege.swrlapi.owl2rl.OWL2RLEngine;
 import org.protege.swrlapi.sqwrl.SQWRLQueryEngine;
+import org.semanticweb.owlapi.model.OWLAxiom;
 
 /**
  * This interface defines methods that must be provided by a SWRL rule engine.
@@ -66,11 +66,11 @@ public interface SWRLRuleEngine extends SQWRLQueryEngine
 
 	Set<SWRLAPIRule> getSWRLRules();
 
-	Set<OWLAxiomAdapter> getAssertedOWLAxioms();
+	Set<OWLAxiom> getAssertedOWLAxioms();
 
-	Set<OWLAxiomAdapter> getInferredOWLAxioms();
+	Set<OWLAxiom> getInferredOWLAxioms();
 
-	Set<OWLAxiomAdapter> getInjectedOWLAxioms();
+	Set<OWLAxiom> getInjectedOWLAxioms();
 
 	int getNumberOfImportedSWRLRules();
 

@@ -1,10 +1,9 @@
-
 package org.protege.swrlapi.extractors;
 
-import org.protege.owl.portability.model.OWLLiteralAdapter;
 import org.protege.swrlapi.exceptions.TargetRuleEngineException;
+import org.semanticweb.owlapi.model.OWLLiteral;
 
 public interface TargetRuleEngineOWLLiteralExtractor<T> extends TargetRuleEngineExtractor
 {
-	public OWLLiteralAdapter extract(T targetRuleEngineLiteral) throws TargetRuleEngineException;
+	public OWLLiteral extract(T targetRuleEngineLiteral) throws TargetRuleEngineException;
 }

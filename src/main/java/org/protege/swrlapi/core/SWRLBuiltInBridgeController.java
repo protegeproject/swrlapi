@@ -1,13 +1,12 @@
-
 package org.protege.swrlapi.core;
 
 import java.util.Set;
 
-import org.protege.owl.portability.axioms.OWLAxiomAdapter;
 import org.protege.swrlapi.exceptions.SWRLBuiltInBridgeException;
+import org.semanticweb.owlapi.model.OWLAxiom;
 
 /**
- * This interface defines methods required by a built-in bridge controller. 
+ * This interface defines methods required by a built-in bridge controller.
  */
 public interface SWRLBuiltInBridgeController
 {
@@ -15,7 +14,7 @@ public interface SWRLBuiltInBridgeController
 
 	int getNumberOfInjectedOWLAxioms();
 
-	boolean isInjectedOWLAxiom(OWLAxiomAdapter axiom);
+	boolean isInjectedOWLAxiom(OWLAxiom axiom);
 
-	Set<OWLAxiomAdapter> getInjectedOWLAxioms();
+	Set<OWLAxiom> getInjectedOWLAxioms();
 }

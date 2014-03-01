@@ -3,16 +3,16 @@ package org.protege.swrlapi.ext;
 import java.util.List;
 import java.util.Set;
 
-import org.protege.owl.portability.axioms.SWRLRuleAdapter;
-import org.protege.owl.portability.swrl.atoms.SWRLAtomAdapter;
+import org.semanticweb.owlapi.model.SWRLAtom;
+import org.semanticweb.owlapi.model.SWRLRule;
 
-public interface SWRLAPIRule extends SWRLRuleAdapter
+public interface SWRLAPIRule extends SWRLRule
 {
 	String getName();
 
-	List<SWRLAtomAdapter> getHeadAtoms();
+	List<SWRLAtom> getHeadAtoms();
 
-	List<SWRLAtomAdapter> getBodyAtoms();
+	List<SWRLAtom> getBodyAtoms();
 
 	List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromHead(Set<String> builtInNames);
 

@@ -4,10 +4,6 @@ import java.net.URI;
 import java.util.List;
 import java.util.Set;
 
-import org.protege.owl.portability.axioms.OWLDataPropertyAssertionAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLObjectPropertyAssertionAxiomAdapter;
-import org.protege.owl.portability.model.OWLIndividualAdapter;
-import org.protege.owl.portability.model.OWLLiteralAdapter;
 import org.protege.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
 import org.protege.swrlapi.core.SWRLBuiltInBridge;
 import org.protege.swrlapi.core.arguments.SWRLBuiltInArgument;
@@ -17,6 +13,10 @@ import org.protege.swrlapi.exceptions.InvalidBuiltInArgumentException;
 import org.protege.swrlapi.exceptions.SWRLBuiltInLibraryException;
 import org.protege.swrlapi.xsd.XSDDate;
 import org.protege.swrlapi.xsd.XSDDateTime;
+import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLIndividual;
+import org.semanticweb.owlapi.model.OWLLiteral;
+import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
 
 /**
  * Implementation library for SWRL temporal built-ins. See <a
@@ -272,7 +272,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 		if (isUnboundArgument(0, arguments)) {
 			arguments.get(0).setBuiltInResult(createLiteralBuiltInArgument(operationResult)); // Bind the result to the first
-																																									// parameter
+			// parameter
 			return true;
 		} else {
 			long argument1 = getArgumentAsALong(0, arguments);
@@ -380,12 +380,12 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 			if (isUnboundArgument(0, arguments)) {
 				arguments.get(0).setBuiltInResult(createLiteralBuiltInArgument(new XSDDateTime(operationResult.toString()))); // Bind
-																																																								// the
-																																																								// result
-																																																								// to
-																																																								// the
-																																																								// first
-																																																								// parameter
+				// the
+				// result
+				// to
+				// the
+				// first
+				// parameter
 				return true;
 			} else {
 				Instant argument1 = getArgumentAsAnInstant(0, arguments, granularity);
@@ -611,20 +611,20 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 	private URI getObjectPropertyValueAsURI(SWRLBuiltInBridge bridge, URI individualURI, URI propertyURI)
 	{
-		Set<OWLObjectPropertyAssertionAxiomAdapter> axioms = bridge.getOWLOntology().getOWLObjectPropertyAssertionAxioms(
+		Set<OWLObjectPropertyAssertionAxiom> axioms = bridge.getOWLOntology().getOWLObjectPropertyAssertionAxioms(
 				individualURI, propertyURI);
-		OWLObjectPropertyAssertionAxiomAdapter axiom = axioms.toArray(new OWLObjectPropertyAssertionAxiomAdapter[0])[0];
-		OWLIndividualAdapter subject = axiom.getObject();
+		OWLObjectPropertyAssertionAxiom axiom = axioms.toArray(new OWLObjectPropertyAssertionAxiom[0])[0];
+		OWLIndividual subject = axiom.getObject();
 
 		return subject.asNamedIndividual().getURI();
 	}
 
 	private String getDataPropertyValueAsAString(SWRLBuiltInBridge bridge, URI individualURI, URI propertyURI)
 	{
-		Set<OWLDataPropertyAssertionAxiomAdapter> axioms = bridge.getOWLOntology().getOWLDataPropertyAssertionAxioms(
+		Set<OWLDataPropertyAssertionAxiom> axioms = bridge.getOWLOntology().getOWLDataPropertyAssertionAxioms(
 				individualURI, propertyURI);
-		OWLDataPropertyAssertionAxiomAdapter axiom = axioms.toArray(new OWLDataPropertyAssertionAxiomAdapter[0])[0];
-		OWLLiteralAdapter value = axiom.getObject();
+		OWLDataPropertyAssertionAxiom axiom = axioms.toArray(new OWLDataPropertyAssertionAxiom[0])[0];
+		OWLLiteral value = axiom.getObject();
 
 		return value.toString();
 	}

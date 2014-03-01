@@ -3,27 +3,27 @@ package org.protege.swrlapi.ext.impl;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import org.protege.owl.portability.model.OWLDatatypeAdapter;
-import org.protege.owl.portability.model.XSDNames;
-import org.protege.owl.portability.model.impl.OWLDatatypeAdapterImpl;
 import org.protege.swrlapi.ext.OWLDatatypeFactory;
+import org.semanticweb.owlapi.model.OWLDatatype;
+
+import uk.ac.manchester.cs.owl.owlapi.OWLDatatypeImpl;
 
 public class DefaultOWLDatatypeFactory implements OWLDatatypeFactory
 {
 
 	@Override
-	public OWLDatatypeAdapter getOWLDatatype(URI uri)
+	public OWLDatatype getOWLDatatype(URI uri)
 	{
-		OWLDatatypeAdapter datatype = new OWLDatatypeAdapterImpl(uri, XSDNames.Prefixed.BOOLEAN);
+		OWLDatatype datatype = new OWLDatatypeImpl(uri, XSDNames.Prefixed.BOOLEAN);
 		return datatype;
 	}
 
 	@Override
-	public OWLDatatypeAdapter getOWLBooleanDatatype()
+	public OWLDatatype getOWLBooleanDatatype()
 	{
 		try {
 			URI uri = new URI(XSDNames.Full.BOOLEAN);
-			OWLDatatypeAdapter datatype = new OWLDatatypeAdapterImpl(uri, XSDNames.Prefixed.BOOLEAN);
+			OWLDatatype datatype = new OWLDatatypeImpl(uri, XSDNames.Prefixed.BOOLEAN);
 			return datatype;
 		} catch (URISyntaxException e) {
 			return null;
@@ -31,11 +31,11 @@ public class DefaultOWLDatatypeFactory implements OWLDatatypeFactory
 	}
 
 	@Override
-	public OWLDatatypeAdapter getOWLShortDatatype()
+	public OWLDatatype getOWLShortDatatype()
 	{
 		try {
 			URI uri = new URI(XSDNames.Full.SHORT);
-			OWLDatatypeAdapter datatype = new OWLDatatypeAdapterImpl(uri, XSDNames.Prefixed.SHORT);
+			OWLDatatype datatype = new OWLDatatypeImpl(uri, XSDNames.Prefixed.SHORT);
 			return datatype;
 		} catch (URISyntaxException e) {
 			return null;
@@ -43,11 +43,11 @@ public class DefaultOWLDatatypeFactory implements OWLDatatypeFactory
 	}
 
 	@Override
-	public OWLDatatypeAdapter getOWLDoubleDatatype()
+	public OWLDatatype getOWLDoubleDatatype()
 	{
 		try {
 			URI uri = new URI(XSDNames.Full.DOUBLE);
-			OWLDatatypeAdapter datatype = new OWLDatatypeAdapterImpl(uri, XSDNames.Prefixed.DOUBLE);
+			OWLDatatype datatype = new OWLDatatypeImpl(uri, XSDNames.Prefixed.DOUBLE);
 			return datatype;
 		} catch (URISyntaxException e) {
 			return null;
@@ -55,11 +55,11 @@ public class DefaultOWLDatatypeFactory implements OWLDatatypeFactory
 	}
 
 	@Override
-	public OWLDatatypeAdapter getOWLFloatDatatype()
+	public OWLDatatype getOWLFloatDatatype()
 	{
 		try {
 			URI uri = new URI(XSDNames.Full.FLOAT);
-			OWLDatatypeAdapter datatype = new OWLDatatypeAdapterImpl(uri, XSDNames.Prefixed.FLOAT);
+			OWLDatatype datatype = new OWLDatatypeImpl(uri, XSDNames.Prefixed.FLOAT);
 			return datatype;
 		} catch (URISyntaxException e) {
 			return null;
@@ -67,11 +67,11 @@ public class DefaultOWLDatatypeFactory implements OWLDatatypeFactory
 	}
 
 	@Override
-	public OWLDatatypeAdapter getOWLIntegerDatatype()
+	public OWLDatatype getOWLIntegerDatatype()
 	{
 		try {
 			URI uri = new URI(XSDNames.Full.INTEGER);
-			OWLDatatypeAdapter datatype = new OWLDatatypeAdapterImpl(uri, XSDNames.Prefixed.INTEGER);
+			OWLDatatype datatype = new OWLDatatypeImpl(uri, XSDNames.Prefixed.INTEGER);
 			return datatype;
 		} catch (URISyntaxException e) {
 			return null;
@@ -79,11 +79,11 @@ public class DefaultOWLDatatypeFactory implements OWLDatatypeFactory
 	}
 
 	@Override
-	public OWLDatatypeAdapter getOWLLongDatatype()
+	public OWLDatatype getOWLLongDatatype()
 	{
 		try {
 			URI uri = new URI(XSDNames.Full.LONG);
-			OWLDatatypeAdapter datatype = new OWLDatatypeAdapterImpl(uri, XSDNames.Prefixed.LONG);
+			OWLDatatype datatype = new OWLDatatypeImpl(uri, XSDNames.Prefixed.LONG);
 			return datatype;
 		} catch (URISyntaxException e) {
 			return null;
@@ -91,11 +91,11 @@ public class DefaultOWLDatatypeFactory implements OWLDatatypeFactory
 	}
 
 	@Override
-	public OWLDatatypeAdapter getOWLStringDatatype()
+	public OWLDatatype getOWLStringDatatype()
 	{
 		try {
 			URI uri = new URI(XSDNames.Full.STRING);
-			OWLDatatypeAdapter datatype = new OWLDatatypeAdapterImpl(uri, XSDNames.Prefixed.STRING);
+			OWLDatatype datatype = new OWLDatatypeImpl(uri, XSDNames.Prefixed.STRING);
 			return datatype;
 		} catch (URISyntaxException e) {
 			return null;
@@ -103,11 +103,11 @@ public class DefaultOWLDatatypeFactory implements OWLDatatypeFactory
 	}
 
 	@Override
-	public OWLDatatypeAdapter getOWLByteDatatype()
+	public OWLDatatype getOWLByteDatatype()
 	{
 		try {
 			URI uri = new URI(XSDNames.Full.FLOAT);
-			OWLDatatypeAdapter datatype = new OWLDatatypeAdapterImpl(uri, XSDNames.Prefixed.BYTE);
+			OWLDatatype datatype = new OWLDatatypeImpl(uri, XSDNames.Prefixed.BYTE);
 			return datatype;
 		} catch (URISyntaxException e) {
 			return null;
@@ -115,11 +115,11 @@ public class DefaultOWLDatatypeFactory implements OWLDatatypeFactory
 	}
 
 	@Override
-	public OWLDatatypeAdapter getOWLURIDatatype()
+	public OWLDatatype getOWLURIDatatype()
 	{
 		try {
 			URI uri = new URI(XSDNames.Full.ANY_URI);
-			OWLDatatypeAdapter datatype = new OWLDatatypeAdapterImpl(uri, XSDNames.Prefixed.ANY_URI);
+			OWLDatatype datatype = new OWLDatatypeImpl(uri, XSDNames.Prefixed.ANY_URI);
 			return datatype;
 		} catch (URISyntaxException e) {
 			return null;
@@ -127,11 +127,11 @@ public class DefaultOWLDatatypeFactory implements OWLDatatypeFactory
 	}
 
 	@Override
-	public OWLDatatypeAdapter getOWLDateDatatype()
+	public OWLDatatype getOWLDateDatatype()
 	{
 		try {
 			URI uri = new URI(XSDNames.Full.DATE);
-			OWLDatatypeAdapter datatype = new OWLDatatypeAdapterImpl(uri, XSDNames.Prefixed.DATE);
+			OWLDatatype datatype = new OWLDatatypeImpl(uri, XSDNames.Prefixed.DATE);
 			return datatype;
 		} catch (URISyntaxException e) {
 			return null;
@@ -139,11 +139,11 @@ public class DefaultOWLDatatypeFactory implements OWLDatatypeFactory
 	}
 
 	@Override
-	public OWLDatatypeAdapter getOWLTimeDatatype()
+	public OWLDatatype getOWLTimeDatatype()
 	{
 		try {
 			URI uri = new URI(XSDNames.Full.TIME);
-			OWLDatatypeAdapter datatype = new OWLDatatypeAdapterImpl(uri, XSDNames.Prefixed.TIME);
+			OWLDatatype datatype = new OWLDatatypeImpl(uri, XSDNames.Prefixed.TIME);
 			return datatype;
 		} catch (URISyntaxException e) {
 			return null;
@@ -151,11 +151,11 @@ public class DefaultOWLDatatypeFactory implements OWLDatatypeFactory
 	}
 
 	@Override
-	public OWLDatatypeAdapter getOWLDateTimeDatatype()
+	public OWLDatatype getOWLDateTimeDatatype()
 	{
 		try {
 			URI uri = new URI(XSDNames.Full.DATE_TIME);
-			OWLDatatypeAdapter datatype = new OWLDatatypeAdapterImpl(uri, XSDNames.Prefixed.DATE_TIME);
+			OWLDatatype datatype = new OWLDatatypeImpl(uri, XSDNames.Prefixed.DATE_TIME);
 			return datatype;
 		} catch (URISyntaxException e) {
 			return null;
@@ -163,11 +163,11 @@ public class DefaultOWLDatatypeFactory implements OWLDatatypeFactory
 	}
 
 	@Override
-	public OWLDatatypeAdapter getOWLDurationDatatype()
+	public OWLDatatype getOWLDurationDatatype()
 	{
 		try {
 			URI uri = new URI(XSDNames.Full.DURATION);
-			OWLDatatypeAdapter datatype = new OWLDatatypeAdapterImpl(uri, XSDNames.Prefixed.DURATION);
+			OWLDatatype datatype = new OWLDatatypeImpl(uri, XSDNames.Prefixed.DURATION);
 			return datatype;
 		} catch (URISyntaxException e) {
 			return null;

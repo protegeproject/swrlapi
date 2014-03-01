@@ -1,61 +1,60 @@
-
 package org.protege.swrlapi.converters;
 
-import org.protege.owl.portability.model.OWLClassAdapter;
-import org.protege.owl.portability.model.OWLObjectComplementOfAdapter;
-import org.protege.owl.portability.model.OWLObjectIntersectionOfAdapter;
-import org.protege.owl.portability.model.OWLObjectOneOfAdapter;
-import org.protege.owl.portability.model.OWLObjectUnionOfAdapter;
-import org.protege.owl.portability.restrictions.OWLDataAllValuesFromAdapter;
-import org.protege.owl.portability.restrictions.OWLDataExactCardinalityAdapter;
-import org.protege.owl.portability.restrictions.OWLDataHasValueAdapter;
-import org.protege.owl.portability.restrictions.OWLDataMaxCardinalityAdapter;
-import org.protege.owl.portability.restrictions.OWLDataMinCardinalityAdapter;
-import org.protege.owl.portability.restrictions.OWLDataSomeValuesFromAdapter;
-import org.protege.owl.portability.restrictions.OWLObjectAllValuesFromAdapter;
-import org.protege.owl.portability.restrictions.OWLObjectExactCardinalityAdapter;
-import org.protege.owl.portability.restrictions.OWLObjectHasValueAdapter;
-import org.protege.owl.portability.restrictions.OWLObjectMaxCardinalityAdapter;
-import org.protege.owl.portability.restrictions.OWLObjectMinCardinalityAdapter;
-import org.protege.owl.portability.restrictions.OWLObjectSomeValuesFromAdapter;
 import org.protege.swrlapi.exceptions.TargetRuleEngineException;
+import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLDataAllValuesFrom;
+import org.semanticweb.owlapi.model.OWLDataExactCardinality;
+import org.semanticweb.owlapi.model.OWLDataHasValue;
+import org.semanticweb.owlapi.model.OWLDataMaxCardinality;
+import org.semanticweb.owlapi.model.OWLDataMinCardinality;
+import org.semanticweb.owlapi.model.OWLDataSomeValuesFrom;
+import org.semanticweb.owlapi.model.OWLObjectAllValuesFrom;
+import org.semanticweb.owlapi.model.OWLObjectComplementOf;
+import org.semanticweb.owlapi.model.OWLObjectExactCardinality;
+import org.semanticweb.owlapi.model.OWLObjectHasValue;
+import org.semanticweb.owlapi.model.OWLObjectIntersectionOf;
+import org.semanticweb.owlapi.model.OWLObjectMaxCardinality;
+import org.semanticweb.owlapi.model.OWLObjectMinCardinality;
+import org.semanticweb.owlapi.model.OWLObjectOneOf;
+import org.semanticweb.owlapi.model.OWLObjectSomeValuesFrom;
+import org.semanticweb.owlapi.model.OWLObjectUnionOf;
 
 /**
  * Interface describing the methods required to convert OWL class expressions to a target rule engine format.
  */
 public interface TargetRuleEngineOWLClassExpressionConverter<C> extends TargetRuleEngineConverter
-{	
-	C convert(OWLClassAdapter cls) throws TargetRuleEngineException;
-	
-	C convert(OWLObjectOneOfAdapter objectOneOf) throws TargetRuleEngineException;
+{
+	C convert(OWLClass cls) throws TargetRuleEngineException;
 
-	C convert(OWLObjectIntersectionOfAdapter objectIntersectionOf) throws TargetRuleEngineException;
+	C convert(OWLObjectOneOf objectOneOf) throws TargetRuleEngineException;
 
-	C convert(OWLObjectUnionOfAdapter objectUnionOf) throws TargetRuleEngineException;
+	C convert(OWLObjectIntersectionOf objectIntersectionOf) throws TargetRuleEngineException;
 
-	C convert(OWLObjectSomeValuesFromAdapter objectSomeValuesFrom) throws TargetRuleEngineException;
+	C convert(OWLObjectUnionOf objectUnionOf) throws TargetRuleEngineException;
 
-	C convert(OWLObjectComplementOfAdapter objectComplementOf) throws TargetRuleEngineException;
+	C convert(OWLObjectSomeValuesFrom objectSomeValuesFrom) throws TargetRuleEngineException;
 
-	C convert(OWLDataSomeValuesFromAdapter dataSomeValuesFrom) throws TargetRuleEngineException;
+	C convert(OWLObjectComplementOf objectComplementOf) throws TargetRuleEngineException;
 
-	C convert(OWLDataExactCardinalityAdapter dataExactCardinality) throws TargetRuleEngineException;
+	C convert(OWLDataSomeValuesFrom dataSomeValuesFrom) throws TargetRuleEngineException;
 
-	C convert(OWLObjectExactCardinalityAdapter objectExactCardinality) throws TargetRuleEngineException;
+	C convert(OWLDataExactCardinality dataExactCardinality) throws TargetRuleEngineException;
 
-	C convert(OWLDataMinCardinalityAdapter dataMinCardinality) throws TargetRuleEngineException;
+	C convert(OWLObjectExactCardinality objectExactCardinality) throws TargetRuleEngineException;
 
-	C convert(OWLObjectMinCardinalityAdapter objectMinCardinality) throws TargetRuleEngineException;
+	C convert(OWLDataMinCardinality dataMinCardinality) throws TargetRuleEngineException;
 
-	C convert(OWLDataMaxCardinalityAdapter dataMaxCardinality) throws TargetRuleEngineException;
+	C convert(OWLObjectMinCardinality objectMinCardinality) throws TargetRuleEngineException;
 
-	C convert(OWLObjectMaxCardinalityAdapter objectMaxCardinality) throws TargetRuleEngineException;
+	C convert(OWLDataMaxCardinality dataMaxCardinality) throws TargetRuleEngineException;
 
-	C convert(OWLDataHasValueAdapter dataHasValue) throws TargetRuleEngineException;
+	C convert(OWLObjectMaxCardinality objectMaxCardinality) throws TargetRuleEngineException;
 
-	C convert(OWLObjectHasValueAdapter objectHasValue) throws TargetRuleEngineException;
+	C convert(OWLDataHasValue dataHasValue) throws TargetRuleEngineException;
 
-	C convert(OWLObjectAllValuesFromAdapter objectAllValuesFrom) throws TargetRuleEngineException;
+	C convert(OWLObjectHasValue objectHasValue) throws TargetRuleEngineException;
 
-	C convert(OWLDataAllValuesFromAdapter dataAllValuesFrom) throws TargetRuleEngineException;
+	C convert(OWLObjectAllValuesFrom objectAllValuesFrom) throws TargetRuleEngineException;
+
+	C convert(OWLDataAllValuesFrom dataAllValuesFrom) throws TargetRuleEngineException;
 }

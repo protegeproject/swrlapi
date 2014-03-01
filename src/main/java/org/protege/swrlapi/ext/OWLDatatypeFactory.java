@@ -2,35 +2,35 @@ package org.protege.swrlapi.ext;
 
 import java.net.URI;
 
-import org.protege.owl.portability.model.OWLDatatypeAdapter;
+import org.semanticweb.owlapi.model.OWLDatatype;
 
 public interface OWLDatatypeFactory
 {
-	OWLDatatypeAdapter getOWLDatatype(URI type);
+	OWLDatatype getOWLDatatype(URI type);
 
-	OWLDatatypeAdapter getOWLBooleanDatatype();
+	OWLDatatype getOWLBooleanDatatype();
 
-	OWLDatatypeAdapter getOWLShortDatatype();
+	OWLDatatype getOWLShortDatatype();
 
-	OWLDatatypeAdapter getOWLDoubleDatatype();
+	OWLDatatype getOWLDoubleDatatype();
 
-	OWLDatatypeAdapter getOWLFloatDatatype();
+	OWLDatatype getOWLFloatDatatype();
 
-	OWLDatatypeAdapter getOWLIntegerDatatype();
+	OWLDatatype getOWLIntegerDatatype();
 
-	OWLDatatypeAdapter getOWLLongDatatype();
+	OWLDatatype getOWLLongDatatype();
 
-	OWLDatatypeAdapter getOWLStringDatatype();
+	OWLDatatype getOWLStringDatatype();
 
-	OWLDatatypeAdapter getOWLByteDatatype();
+	OWLDatatype getOWLByteDatatype();
 
-	OWLDatatypeAdapter getOWLURIDatatype();
+	OWLDatatype getOWLURIDatatype();
 
-	OWLDatatypeAdapter getOWLDateDatatype();
+	OWLDatatype getOWLDateDatatype();
 
-	OWLDatatypeAdapter getOWLTimeDatatype();
+	OWLDatatype getOWLTimeDatatype();
 
-	OWLDatatypeAdapter getOWLDateTimeDatatype();
+	OWLDatatype getOWLDateTimeDatatype();
 
-	OWLDatatypeAdapter getOWLDurationDatatype();
+	OWLDatatype getOWLDurationDatatype();
 }

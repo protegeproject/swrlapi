@@ -1,20 +1,20 @@
 package org.protege.swrlapi.core.arguments.impl;
 
-import org.protege.owl.portability.model.OWLLiteralAdapter;
 import org.protege.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.protege.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
+import org.semanticweb.owlapi.model.OWLLiteral;
 
 class SWRLLiteralBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements SWRLLiteralBuiltInArgument
 {
-	private final OWLLiteralAdapter literal;
+	private final OWLLiteral literal;
 
-	public SWRLLiteralBuiltInArgumentImpl(OWLLiteralAdapter literal)
+	public SWRLLiteralBuiltInArgumentImpl(OWLLiteral literal)
 	{
 		this.literal = literal;
 	}
 
 	@Override
-	public OWLLiteralAdapter getLiteral()
+	public OWLLiteral getLiteral()
 	{
 		return literal;
 	}

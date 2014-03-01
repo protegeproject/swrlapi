@@ -2,8 +2,8 @@ package org.protege.swrlapi.core.arguments.impl;
 
 import java.net.URI;
 
-import org.protege.owl.portability.model.OWLDatatypeAdapter;
 import org.protege.swrlapi.core.arguments.SWRLDatatypeBuiltInArgument;
+import org.semanticweb.owlapi.model.OWLDatatype;
 
 class SWRLDatatypeBuiltInArgumentImpl extends SWRLNamedBuiltInArgumentImpl implements SWRLDatatypeBuiltInArgument
 {
@@ -12,7 +12,7 @@ class SWRLDatatypeBuiltInArgumentImpl extends SWRLNamedBuiltInArgumentImpl imple
 		super(uri, prefixedName);
 	}
 
-	public SWRLDatatypeBuiltInArgumentImpl(OWLDatatypeAdapter datatype)
+	public SWRLDatatypeBuiltInArgumentImpl(OWLDatatype datatype)
 	{
 		super(datatype);
 	}

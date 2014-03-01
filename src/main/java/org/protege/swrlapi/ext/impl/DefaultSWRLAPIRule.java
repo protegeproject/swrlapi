@@ -5,24 +5,23 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.protege.owl.portability.swrl.atoms.SWRLAtomAdapter;
-import org.protege.owl.portability.swrl.atoms.SWRLClassAtomAdapter;
 import org.protege.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.protege.swrlapi.ext.SWRLAPIBuiltInAtom;
 import org.protege.swrlapi.ext.SWRLAPIRule;
+import org.semanticweb.owlapi.model.SWRLAtom;
+import org.semanticweb.owlapi.model.SWRLClassAtom;
 
 class DefaultSWRLAPIRule implements SWRLAPIRule
 {
 	private final String ruleName;
-	private List<SWRLAtomAdapter> bodyAtoms; // Not final because it can be reorganized during processing
-	private final List<SWRLAtomAdapter> headAtoms;
+	private List<SWRLAtom> bodyAtoms; // Not final because it can be reorganized during processing
+	private final List<SWRLAtom> headAtoms;
 
-	public DefaultSWRLAPIRule(String ruleName, List<? extends SWRLAtomAdapter> bodyAtoms,
-			List<? extends SWRLAtomAdapter> headAtoms)
+	public DefaultSWRLAPIRule(String ruleName, List<? extends SWRLAtom> bodyAtoms, List<? extends SWRLAtom> headAtoms)
 	{
 		this.ruleName = ruleName;
-		this.bodyAtoms = new ArrayList<SWRLAtomAdapter>(bodyAtoms);
-		this.headAtoms = new ArrayList<SWRLAtomAdapter>(headAtoms);
+		this.bodyAtoms = new ArrayList<SWRLAtom>(bodyAtoms);
+		this.headAtoms = new ArrayList<SWRLAtom>(headAtoms);
 
 		processUnboundBuiltInArguments();
 	}
@@ -34,13 +33,13 @@ class DefaultSWRLAPIRule implements SWRLAPIRule
 	}
 
 	@Override
-	public List<SWRLAtomAdapter> getHeadAtoms()
+	public List<SWRLAtom> getHeadAtoms()
 	{
 		return this.headAtoms;
 	}
 
 	@Override
-	public List<SWRLAtomAdapter> getBodyAtoms()
+	public List<SWRLAtom> getBodyAtoms()
 	{
 		return this.bodyAtoms;
 	}
@@ -62,7 +61,7 @@ class DefaultSWRLAPIRule implements SWRLAPIRule
 		String result = "";
 		boolean isFirst = true;
 
-		for (SWRLAtomAdapter atom : getBodyAtoms()) {
+		for (SWRLAtom atom : getBodyAtoms()) {
 			if (!isFirst)
 				result += " ^ ";
 			result += "" + atom;
@@ -72,7 +71,7 @@ class DefaultSWRLAPIRule implements SWRLAPIRule
 		result += " -> ";
 
 		isFirst = true;
-		for (SWRLAtomAdapter atom : getHeadAtoms()) {
+		for (SWRLAtom atom : getHeadAtoms()) {
 			if (!isFirst)
 				result += " ^ ";
 			result += "" + atom;
@@ -93,7 +92,7 @@ class DefaultSWRLAPIRule implements SWRLAPIRule
 		return getBuiltInAtoms(getBodyAtoms(), builtInNames);
 	}
 
-	private void setBodyAtoms(List<SWRLAtomAdapter> atoms)
+	private void setBodyAtoms(List<SWRLAtom> atoms)
 	{
 		this.bodyAtoms = atoms;
 	}
@@ -106,8 +105,8 @@ class DefaultSWRLAPIRule implements SWRLAPIRule
 	private void processUnboundBuiltInArguments()
 	{
 		List<SWRLAPIBuiltInAtom> bodyBuiltInAtoms = new ArrayList<SWRLAPIBuiltInAtom>();
-		List<SWRLAtomAdapter> bodyNonBuiltInAtoms = new ArrayList<SWRLAtomAdapter>();
-		List<SWRLAtomAdapter> finalBodyAtoms = new ArrayList<SWRLAtomAdapter>();
+		List<SWRLAtom> bodyNonBuiltInAtoms = new ArrayList<SWRLAtom>();
+		List<SWRLAtom> finalBodyAtoms = new ArrayList<SWRLAtom>();
 		Set<String> variableNamesUsedByNonBuiltInBodyAtoms = new HashSet<String>(); // By definition, these will always be
 																																								// bound.
 		Set<String> variableNamesBoundByBuiltIns = new HashSet<String>(); // Names of variables bound by built-ins in this
@@ -115,7 +114,7 @@ class DefaultSWRLAPIRule implements SWRLAPIRule
 
 		// Process the body atoms and build up list of (1) built-in body atoms, and (2) the variables used by non-built body
 		// in atoms.
-		for (SWRLAtomAdapter atom : getBodyAtoms()) {
+		for (SWRLAtom atom : getBodyAtoms()) {
 			if (atom instanceof SWRLAPIBuiltInAtom)
 				bodyBuiltInAtoms.add((SWRLAPIBuiltInAtom)atom);
 			else {
@@ -157,14 +156,14 @@ class DefaultSWRLAPIRule implements SWRLAPIRule
 	/**
 	 * Build up a list of body class atoms and non class, non built-in atoms.
 	 */
-	private List<SWRLAtomAdapter> processBodyNonBuiltInAtoms(List<SWRLAtomAdapter> bodyNonBuiltInAtoms)
+	private List<SWRLAtom> processBodyNonBuiltInAtoms(List<SWRLAtom> bodyNonBuiltInAtoms)
 	{
-		List<SWRLAtomAdapter> bodyClassAtoms = new ArrayList<SWRLAtomAdapter>();
-		List<SWRLAtomAdapter> bodyNonClassNonBuiltInAtoms = new ArrayList<SWRLAtomAdapter>();
-		List<SWRLAtomAdapter> result = new ArrayList<SWRLAtomAdapter>();
+		List<SWRLAtom> bodyClassAtoms = new ArrayList<SWRLAtom>();
+		List<SWRLAtom> bodyNonClassNonBuiltInAtoms = new ArrayList<SWRLAtom>();
+		List<SWRLAtom> result = new ArrayList<SWRLAtom>();
 
-		for (SWRLAtomAdapter atom : bodyNonBuiltInAtoms) {
-			if (atom instanceof SWRLClassAtomAdapter)
+		for (SWRLAtom atom : bodyNonBuiltInAtoms) {
+			if (atom instanceof SWRLClassAtom)
 				bodyClassAtoms.add(atom);
 			else
 				bodyNonClassNonBuiltInAtoms.add(atom);
@@ -176,11 +175,11 @@ class DefaultSWRLAPIRule implements SWRLAPIRule
 		return result;
 	}
 
-	private List<SWRLAPIBuiltInAtom> getBuiltInAtoms(List<SWRLAtomAdapter> atoms, Set<String> builtInNames)
+	private List<SWRLAPIBuiltInAtom> getBuiltInAtoms(List<SWRLAtom> atoms, Set<String> builtInNames)
 	{
 		List<SWRLAPIBuiltInAtom> result = new ArrayList<SWRLAPIBuiltInAtom>();
 
-		for (SWRLAtomAdapter atom : atoms) {
+		for (SWRLAtom atom : atoms) {
 			if (atom instanceof SWRLAPIBuiltInAtom) {
 				SWRLAPIBuiltInAtom builtInAtom = (SWRLAPIBuiltInAtom)atom;
 				if (builtInNames.contains(builtInAtom.getBuiltInPrefixedName()))

@@ -3,13 +3,11 @@ package org.protege.swrlapi.builtins.swrlx;
 import java.util.HashMap;
 import java.util.List;
 
-import org.protege.owl.portability.axioms.OWLClassDeclarationAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLIndividualDeclarationAxiomAdapter;
-import org.protege.owl.portability.model.OWLClassAdapter;
-import org.protege.owl.portability.model.OWLNamedIndividualAdapter;
 import org.protege.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
 import org.protege.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.protege.swrlapi.exceptions.BuiltInException;
+import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLNamedIndividual;
 
 /**
  * Implementations library for SWRL Extensions built-in methods. See <a
@@ -21,14 +19,14 @@ import org.protege.swrlapi.exceptions.BuiltInException;
 public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 {
 	private static final String SWRLXLibraryName = "SWRLExtensionsBuiltIns";
-	private final HashMap<String, OWLClassAdapter> classInvocationMap;
-	private final HashMap<String, OWLNamedIndividualAdapter> individualInvocationMap;
+	private final HashMap<String, OWLClass> classInvocationMap;
+	private final HashMap<String, OWLNamedIndividual> individualInvocationMap;
 
 	public SWRLBuiltInLibraryImpl()
 	{
 		super(SWRLXLibraryName);
-		this.classInvocationMap = new HashMap<String, OWLClassAdapter>();
-		this.individualInvocationMap = new HashMap<String, OWLNamedIndividualAdapter>();
+		this.classInvocationMap = new HashMap<String, OWLClass>();
+		this.individualInvocationMap = new HashMap<String, OWLNamedIndividual>();
 	}
 
 	@Override
@@ -49,13 +47,13 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		if (isUnboundArgument(0, arguments)) {
 			String createInvocationPattern = createInvocationPattern(getBuiltInBridge(), getInvokingRuleName(),
 					getInvokingBuiltInIndex(), getIsInConsequent(), arguments.subList(1, arguments.size()));
-			OWLClassAdapter cls;
+			OWLClass cls;
 
 			if (this.classInvocationMap.containsKey(createInvocationPattern)) {
 				cls = this.classInvocationMap.get(createInvocationPattern);
 			} else {
 				cls = getOWLDataFactory().getOWLClass();
-				OWLClassDeclarationAxiomAdapter declarationAxiom = getOWLDataFactory().getOWLClassDeclarationAxiom(cls);
+				OWLClassDeclarationAxiom declarationAxiom = getOWLDataFactory().getOWLClassDeclarationAxiom(cls);
 				getBuiltInBridge().getOWLNamedObjectResolver().record(cls);
 				getBuiltInBridge().injectOWLAxiom(declarationAxiom);
 				this.classInvocationMap.put(createInvocationPattern, cls);
@@ -75,7 +73,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		checkNumberOfArgumentsAtLeast(2, arguments.size());
 
 		if (isUnboundArgument(0, arguments)) {
-			OWLNamedIndividualAdapter individual = null;
+			OWLNamedIndividual individual = null;
 			String createInvocationPattern = createInvocationPattern(getBuiltInBridge(), getInvokingRuleName(),
 					getInvokingBuiltInIndex(), getIsInConsequent(), arguments.subList(1, arguments.size()));
 
@@ -83,13 +81,14 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 				individual = this.individualInvocationMap.get(createInvocationPattern);
 			else {
 				individual = getOWLDataFactory().getOWLNamedIndividual();
-				OWLIndividualDeclarationAxiomAdapter declarationAxiom = getOWLDataFactory().getOWLIndividualDeclarationAxiom(
+				OWLIndividualDeclarationAxiom declarationAxiom = getOWLDataFactory().getOWLIndividualDeclarationAxiom(
 						individual);
 				getBuiltInBridge().getOWLNamedObjectResolver().record(individual);
 				getBuiltInBridge().injectOWLAxiom(declarationAxiom);
 				this.individualInvocationMap.put(createInvocationPattern, individual);
 			}
-			arguments.get(0).setBuiltInResult(createIndividualBuiltInArgument(individual)); // Bind the result to the first parameter
+			arguments.get(0).setBuiltInResult(createIndividualBuiltInArgument(individual)); // Bind the result to the first
+																																											// parameter
 		}
 
 		return true;

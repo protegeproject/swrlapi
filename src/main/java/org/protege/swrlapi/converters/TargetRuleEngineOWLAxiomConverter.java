@@ -1,142 +1,138 @@
 package org.protege.swrlapi.converters;
 
-import org.protege.owl.portability.axioms.OWLAnnotationAssertionAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLAnnotationPropertyDeclarationAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLAnnotationPropertyDomainAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLAnnotationPropertyRangeAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLAsymmetricObjectPropertyAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLClassAssertionAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLClassDeclarationAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLDataPropertyAssertionAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLDataPropertyDeclarationAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLDataPropertyDomainAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLDataPropertyRangeAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLDatatypeDeclarationAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLDatatypeDefinitionAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLDifferentIndividualsAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLDisjointClassesAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLDisjointDataPropertiesAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLDisjointObjectPropertiesAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLDisjointUnionAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLEquivalentClassesAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLEquivalentDataPropertiesAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLEquivalentObjectPropertiesAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLFunctionalDataPropertyAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLFunctionalObjectPropertyAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLHasKeyAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLIndividualDeclarationAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLInverseFunctionalObjectPropertyAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLInverseObjectPropertiesAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLIrreflexiveObjectPropertyAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLNegativeDataPropertyAssertionAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLNegativeObjectPropertyAssertionAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLObjectPropertyAssertionAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLObjectPropertyDeclarationAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLObjectPropertyDomainAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLObjectPropertyRangeAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLReflexiveObjectPropertyAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLSameIndividualAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLSubAnnotationPropertyOfAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLSubClassOfAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLSubDataPropertyOfAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLSubObjectPropertyOfAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLSubPropertyChainOfAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLSymmetricObjectPropertyAxiomAdapter;
-import org.protege.owl.portability.axioms.OWLTransitiveObjectPropertyAxiomAdapter;
 import org.protege.swrlapi.exceptions.TargetRuleEngineException;
 import org.protege.swrlapi.ext.SWRLAPIRule;
+import org.semanticweb.owlapi.model.OWLAnnotationAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLAnnotationPropertyDomainAxiom;
+import org.semanticweb.owlapi.model.OWLAnnotationPropertyRangeAxiom;
+import org.semanticweb.owlapi.model.OWLAsymmetricObjectPropertyAxiom;
+import org.semanticweb.owlapi.model.OWLClassAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLDataPropertyDomainAxiom;
+import org.semanticweb.owlapi.model.OWLDataPropertyRangeAxiom;
+import org.semanticweb.owlapi.model.OWLDatatypeDefinitionAxiom;
+import org.semanticweb.owlapi.model.OWLDifferentIndividualsAxiom;
+import org.semanticweb.owlapi.model.OWLDisjointClassesAxiom;
+import org.semanticweb.owlapi.model.OWLDisjointDataPropertiesAxiom;
+import org.semanticweb.owlapi.model.OWLDisjointObjectPropertiesAxiom;
+import org.semanticweb.owlapi.model.OWLDisjointUnionAxiom;
+import org.semanticweb.owlapi.model.OWLEquivalentClassesAxiom;
+import org.semanticweb.owlapi.model.OWLEquivalentDataPropertiesAxiom;
+import org.semanticweb.owlapi.model.OWLEquivalentObjectPropertiesAxiom;
+import org.semanticweb.owlapi.model.OWLFunctionalDataPropertyAxiom;
+import org.semanticweb.owlapi.model.OWLFunctionalObjectPropertyAxiom;
+import org.semanticweb.owlapi.model.OWLHasKeyAxiom;
+import org.semanticweb.owlapi.model.OWLInverseFunctionalObjectPropertyAxiom;
+import org.semanticweb.owlapi.model.OWLInverseObjectPropertiesAxiom;
+import org.semanticweb.owlapi.model.OWLIrreflexiveObjectPropertyAxiom;
+import org.semanticweb.owlapi.model.OWLNegativeDataPropertyAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLNegativeObjectPropertyAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLObjectPropertyDomainAxiom;
+import org.semanticweb.owlapi.model.OWLObjectPropertyRangeAxiom;
+import org.semanticweb.owlapi.model.OWLReflexiveObjectPropertyAxiom;
+import org.semanticweb.owlapi.model.OWLSameIndividualAxiom;
+import org.semanticweb.owlapi.model.OWLSubAnnotationPropertyOfAxiom;
+import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
+import org.semanticweb.owlapi.model.OWLSubDataPropertyOfAxiom;
+import org.semanticweb.owlapi.model.OWLSubObjectPropertyOfAxiom;
+import org.semanticweb.owlapi.model.OWLSubPropertyChainOfAxiom;
+import org.semanticweb.owlapi.model.OWLSymmetricObjectPropertyAxiom;
+import org.semanticweb.owlapi.model.OWLTransitiveObjectPropertyAxiom;
 
 /**
- * This interface describes methods that can be implemented by a target rule engine to convert OWL axioms to their native rule engine representation.
+ * This interface describes methods that can be implemented by a target rule engine to convert OWL axioms to their
+ * native rule engine representation.
  * <p>
  * Implementors may also chose an alternate conversion approach.
  */
-public interface TargetRuleEngineOWLAxiomConverter extends TargetRuleEngineConverter {
+public interface TargetRuleEngineOWLAxiomConverter extends TargetRuleEngineConverter
+{
 	void convert(SWRLAPIRule axiom) throws TargetRuleEngineException;
 
-	void convert(OWLClassDeclarationAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLClassDeclarationAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLIndividualDeclarationAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLIndividualDeclarationAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLObjectPropertyDeclarationAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLObjectPropertyDeclarationAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLDataPropertyDeclarationAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLDataPropertyDeclarationAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLAnnotationPropertyDeclarationAxiomAdapter axiom) throws TargetRuleEngineException;
-	
-	void convert(OWLDatatypeDeclarationAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLAnnotationPropertyDeclarationAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLClassAssertionAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLDatatypeDeclarationAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLObjectPropertyAssertionAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLClassAssertionAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLDataPropertyAssertionAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLObjectPropertyAssertionAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLSameIndividualAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLDataPropertyAssertionAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLDifferentIndividualsAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLSameIndividualAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLDisjointClassesAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLDifferentIndividualsAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLEquivalentClassesAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLDisjointClassesAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLSubClassOfAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLEquivalentClassesAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLSubDataPropertyOfAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLSubClassOfAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLSubObjectPropertyOfAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLSubDataPropertyOfAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLEquivalentDataPropertiesAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLSubObjectPropertyOfAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLEquivalentObjectPropertiesAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLEquivalentDataPropertiesAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLDisjointDataPropertiesAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLEquivalentObjectPropertiesAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLDisjointObjectPropertiesAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLDisjointDataPropertiesAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLObjectPropertyDomainAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLDisjointObjectPropertiesAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLDataPropertyDomainAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLObjectPropertyDomainAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLObjectPropertyRangeAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLDataPropertyDomainAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLDataPropertyRangeAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLObjectPropertyRangeAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLFunctionalObjectPropertyAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLDataPropertyRangeAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLFunctionalDataPropertyAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLFunctionalObjectPropertyAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLInverseFunctionalObjectPropertyAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLFunctionalDataPropertyAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLIrreflexiveObjectPropertyAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLInverseFunctionalObjectPropertyAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLTransitiveObjectPropertyAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLIrreflexiveObjectPropertyAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLSymmetricObjectPropertyAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLTransitiveObjectPropertyAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLAsymmetricObjectPropertyAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLSymmetricObjectPropertyAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLInverseObjectPropertiesAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLAsymmetricObjectPropertyAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLNegativeDataPropertyAssertionAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLInverseObjectPropertiesAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLNegativeObjectPropertyAssertionAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLNegativeDataPropertyAssertionAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLReflexiveObjectPropertyAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLNegativeObjectPropertyAssertionAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLDisjointUnionAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLReflexiveObjectPropertyAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLAnnotationAssertionAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLDisjointUnionAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLSubPropertyChainOfAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLAnnotationAssertionAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLHasKeyAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLSubPropertyChainOfAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLDatatypeDefinitionAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLHasKeyAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLAnnotationPropertyRangeAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLDatatypeDefinitionAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLAnnotationPropertyDomainAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLAnnotationPropertyRangeAxiom axiom) throws TargetRuleEngineException;
 
-	void convert(OWLSubAnnotationPropertyOfAxiomAdapter axiom) throws TargetRuleEngineException;
+	void convert(OWLAnnotationPropertyDomainAxiom axiom) throws TargetRuleEngineException;
+
+	void convert(OWLSubAnnotationPropertyOfAxiom axiom) throws TargetRuleEngineException;
 }

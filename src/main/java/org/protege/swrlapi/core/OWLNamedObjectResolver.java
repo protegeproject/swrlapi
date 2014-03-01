@@ -6,17 +6,17 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.protege.owl.portability.model.OWLAnnotationPropertyAdapter;
-import org.protege.owl.portability.model.OWLClassAdapter;
-import org.protege.owl.portability.model.OWLDataPropertyAdapter;
-import org.protege.owl.portability.model.OWLDatatypeAdapter;
-import org.protege.owl.portability.model.OWLNamedIndividualAdapter;
-import org.protege.owl.portability.model.OWLObjectPropertyAdapter;
 import org.protege.swrlapi.core.arguments.SWRLClassBuiltInArgument;
 import org.protege.swrlapi.core.arguments.SWRLDataPropertyBuiltInArgument;
 import org.protege.swrlapi.core.arguments.SWRLIndividualBuiltInArgument;
 import org.protege.swrlapi.core.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.protege.swrlapi.exceptions.TargetRuleEngineException;
+import org.semanticweb.owlapi.model.OWLAnnotationProperty;
+import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLDataProperty;
+import org.semanticweb.owlapi.model.OWLDatatype;
+import org.semanticweb.owlapi.model.OWLNamedIndividual;
+import org.semanticweb.owlapi.model.OWLObjectProperty;
 
 /**
  * This class is used by rule engine implementations to determine the type of OWL entities using their prefixed name. It
@@ -84,42 +84,42 @@ public class OWLNamedObjectResolver
 		return this.datatypePrefixedNames.contains(prefixedName);
 	}
 
-	public void record(OWLClassAdapter cls)
+	public void record(OWLClass cls)
 	{
 		recordPrefixedName2URIMapping(cls.getPrefixedName(), cls.getURI());
 
 		this.classPrefixedNames.add(cls.getPrefixedName());
 	}
 
-	public void record(OWLNamedIndividualAdapter individual)
+	public void record(OWLNamedIndividual individual)
 	{
 		recordPrefixedName2URIMapping(individual.getPrefixedName(), individual.getURI());
 
 		this.individualPrefixedNames.add(individual.getPrefixedName());
 	}
 
-	public void record(OWLObjectPropertyAdapter property)
+	public void record(OWLObjectProperty property)
 	{
 		recordPrefixedName2URIMapping(property.getPrefixedName(), property.getURI());
 
 		this.objectPropertyPrefixedNames.add(property.getPrefixedName());
 	}
 
-	public void record(OWLDataPropertyAdapter property)
+	public void record(OWLDataProperty property)
 	{
 		recordPrefixedName2URIMapping(property.getPrefixedName(), property.getURI());
 
 		this.dataPropertyPrefixedNames.add(property.getPrefixedName());
 	}
 
-	public void record(OWLAnnotationPropertyAdapter property)
+	public void record(OWLAnnotationProperty property)
 	{
 		recordPrefixedName2URIMapping(property.getPrefixedName(), property.getURI());
 
 		this.annotationPropertyPrefixedNames.add(property.getPrefixedName());
 	}
 
-	public void record(OWLDatatypeAdapter datatype)
+	public void record(OWLDatatype datatype)
 	{
 		recordPrefixedName2URIMapping(datatype.getPrefixedName(), datatype.getURI());
 

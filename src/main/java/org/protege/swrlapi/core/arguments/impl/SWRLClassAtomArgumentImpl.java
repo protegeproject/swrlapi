@@ -2,8 +2,8 @@ package org.protege.swrlapi.core.arguments.impl;
 
 import java.net.URI;
 
-import org.protege.owl.portability.model.OWLClassAdapter;
 import org.protege.swrlapi.core.arguments.SWRLClassAtomArgument;
+import org.semanticweb.owlapi.model.OWLClass;
 
 class SWRLClassAtomArgumentImpl extends SWRLNamedAtomArgumentImpl implements SWRLClassAtomArgument
 {
@@ -12,7 +12,7 @@ class SWRLClassAtomArgumentImpl extends SWRLNamedAtomArgumentImpl implements SWR
 		super(classURI, prefixedName);
 	}
 
-	public SWRLClassAtomArgumentImpl(OWLClassAdapter cls)
+	public SWRLClassAtomArgumentImpl(OWLClass cls)
 	{
 		super(cls);
 	}

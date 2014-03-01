@@ -30,6 +30,7 @@ import org.protege.swrlapi.sqwrl.values.SQWRLDataPropertyValue;
 import org.protege.swrlapi.sqwrl.values.SQWRLIndividualValue;
 import org.protege.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.protege.swrlapi.sqwrl.values.SQWRLObjectPropertyValue;
+import org.semanticweb.owlapi.model.SWRLArgument;
 
 /**
  * Implementation library for SQWRL built-ins. See <a href="http://protege.cim3.net/cgi-bin/wiki.pl?SQWRL">here</a> for

@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.protege.owl.portability.axioms.OWLAxiomAdapter;
 import org.protege.swrlapi.builtins.SWRLBuiltInLibraryManager;
 import org.protege.swrlapi.core.arguments.SWRLAtomArgumentFactory;
 import org.protege.swrlapi.core.arguments.SWRLBuiltInArgument;
@@ -24,13 +23,14 @@ import org.protege.swrlapi.owl2rl.OWL2RLPersistenceLayer;
 import org.protege.swrlapi.sqwrl.SQWRLResult;
 import org.protege.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.protege.swrlapi.sqwrl.exceptions.SQWRLException;
+import org.semanticweb.owlapi.model.OWLAxiom;
 
 /**
  * Default implementation of a SWRL rule engine bridge, built-in bridge, built-in bridge controller, and rule engine
  * bridge controller.
  * <p>
  * Asserted OWL axioms are managed by a {@link SWRLRuleEngine}, which passes them to a {@link TargetRuleEngine} using
- * the {@link TargetRuleEngine#defineOWLAxiom(OWLAxiomAdapter)} call.
+ * the {@link TargetRuleEngine#defineOWLAxiom(OWLAxiom)} call.
  */
 public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridge, SWRLBuiltInBridgeController,
 		SWRLRuleEngineBridgeController
@@ -56,13 +56,13 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 	 * OWL axioms inferred by a rule engine (via the {@link #inferOWLAxiom()} call). A {@link SWRLRuleEngine} can retrieve
 	 * these using the the {@link #getInjectedOWLAxioms()} call after calling {@link TargetRuleEngine#runRuleEngine()}.
 	 */
-	private final Set<OWLAxiomAdapter> inferredOWLAxioms;
+	private final Set<OWLAxiom> inferredOWLAxioms;
 
 	/**
 	 * OWL axioms inferred by SWRL built-ins (via the {@link #injectOWLAxiomCall}). A {@link SWRLRuleEngine} can retrieve
 	 * these using the {@link #getInjectedOWLAxioms()} call after calling {@link TargetRuleEngine#runRuleEngine()}.
 	 */
-	private final Set<OWLAxiomAdapter> injectedOWLAxioms;
+	private final Set<OWLAxiom> injectedOWLAxioms;
 
 	public DefaultSWRLBridge(SWRLAPIOWLOntology targetOWLOntology, SWRLOntologyProcessor swrlapiOntologyProcessor,
 			OWL2RLPersistenceLayer owl2RLPersistenceLayer) throws SWRLBuiltInBridgeException
@@ -82,8 +82,8 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 		this.classExpressionResolver = new OWLClassExpressionResolver();
 		this.propertyExpressionResolver = new OWLPropertyExpressionResolver();
 
-		this.inferredOWLAxioms = new HashSet<OWLAxiomAdapter>();
-		this.injectedOWLAxioms = new HashSet<OWLAxiomAdapter>();
+		this.inferredOWLAxioms = new HashSet<OWLAxiom>();
+		this.injectedOWLAxioms = new HashSet<OWLAxiom>();
 
 		resetController();
 	}
@@ -114,7 +114,7 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 	 * in the underlying engine.
 	 */
 	@Override
-	public void injectOWLAxiom(OWLAxiomAdapter axiom) throws SWRLBuiltInBridgeException
+	public void injectOWLAxiom(OWLAxiom axiom) throws SWRLBuiltInBridgeException
 	{
 		if (!this.injectedOWLAxioms.contains(axiom)) {
 			this.injectedOWLAxioms.add(axiom);
@@ -147,9 +147,9 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 	}
 
 	@Override
-	public Set<OWLAxiomAdapter> getInjectedOWLAxioms()
+	public Set<OWLAxiom> getInjectedOWLAxioms()
 	{
-		return new HashSet<OWLAxiomAdapter>(this.injectedOWLAxioms);
+		return new HashSet<OWLAxiom>(this.injectedOWLAxioms);
 	}
 
 	@Override
@@ -159,13 +159,13 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 	}
 
 	@Override
-	public boolean isInjectedOWLAxiom(OWLAxiomAdapter axiom)
+	public boolean isInjectedOWLAxiom(OWLAxiom axiom)
 	{
 		return this.injectedOWLAxioms.contains(axiom);
 	}
 
 	@Override
-	public Set<OWLAxiomAdapter> getInferredOWLAxioms()
+	public Set<OWLAxiom> getInferredOWLAxioms()
 	{
 		return this.inferredOWLAxioms;
 	}
@@ -177,7 +177,7 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 	}
 
 	@Override
-	public void inferOWLAxiom(OWLAxiomAdapter axiom) throws SWRLRuleEngineBridgeException
+	public void inferOWLAxiom(OWLAxiom axiom) throws SWRLRuleEngineBridgeException
 	{
 		if (!this.inferredOWLAxioms.contains(axiom) && !this.swrlapiOntologyProcessor.hasOWLAxiom(axiom)) // Exclude already
 																																																			// asserted axioms
@@ -229,7 +229,7 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 		return this.swrlapiOntologyProcessor.getSQWRLResultGenerator(queryName);
 	}
 
-	private void exportOWLAxiom(OWLAxiomAdapter axiom) throws SWRLBuiltInBridgeException
+	private void exportOWLAxiom(OWLAxiom axiom) throws SWRLBuiltInBridgeException
 	{
 		try {
 			this.targetRuleEngine.defineOWLAxiom(axiom);
