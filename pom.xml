@@ -13,16 +13,51 @@
     <owlapi.version>3.4.10</owlapi.version>
     <log4j.version>1.2.16</log4j.version>
     <junit.version>3.8.1</junit.version>
+    <jep.version>999</jep.version>
+    <commons.lang.version>3.8.1</commons.lang.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
   </properties>
 
+
+	<repositories>
+
+    <!-- Use repository in ${project.basedir}/lib for JARs that can not be found in public Maven repositories. -->
+    <!-- Each project ./lib directory should contain dependencies that may be used by that project. -->
+    <!-- See: http://blog.dub.podval.org/2010/01/maven-in-project-repository.html -->
+    <!-- May ultimately use a local Nexus server or the like for some of these dependencies. -->
+    <repository>
+      <id>lib</id>
+      <name>lib</name>
+      <releases>
+        <enabled>true</enabled>
+        <checksumPolicy>ignore</checksumPolicy>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <url>file://${project.basedir}/lib</url>
+    </repository>
+
+  </repositories>
+  
   <dependencies>
 
     <dependency>
       <groupId>net.sourceforge.owlapi</groupId>
       <artifactId>owlapi-distribution</artifactId>
       <version>${owlapi.version}</version>
+    </dependency>
+
+		<groupId>org.apache.commons</groupId>
+		<artifactId>commons-lang3</artifactId>
+		<version>${commons.lang.version}</version>
+
+    <!-- This is in a local project repository (in ./lib) because we could not find a public Maven repository containing it. -->
+    <dependency>
+      <groupId>org.nfunk</groupId>
+      <artifactId>jep</artifactId>
+      <version>${jep.version}</version>
     </dependency>
 
 		<dependency>

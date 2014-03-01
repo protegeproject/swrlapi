@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.protege.owl.portability.swrl.SWRLArgumentAdapter;
 import org.protege.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
 import org.protege.swrlapi.core.arguments.SQWRLCollectionBuiltInArgument;
 import org.protege.swrlapi.core.arguments.SWRLAnnotationPropertyBuiltInArgument;
@@ -456,7 +455,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 			checkNumberOfArgumentsEqualTo(numberOfConsequentArguments, arguments.size());
 
 			SQWRLResultGenerator resultGenerator = getSQWRLResultGenerator(getInvokingRuleName());
-			SWRLArgumentAdapter argument = arguments.get(0);
+			SWRLArgument argument = arguments.get(0);
 
 			if (!resultGenerator.isRowOpen())
 				resultGenerator.openRow();
