@@ -3,7 +3,7 @@ package org.protege.swrlapi.core.arguments;
 /**
  * Interface representing an argument to a SWRL built-in
  */
-public interface SWRLBuiltInArgument extends SWRLAtomArgument // TODO Comparable<SWRLBuiltInArgument>
+public interface SWRLBuiltInArgument extends SWRLAtomArgument
 {
 	void setBuiltInResult(SWRLBuiltInArgument builtInResult);
 
@@ -24,4 +24,7 @@ public interface SWRLBuiltInArgument extends SWRLAtomArgument // TODO Comparable
 	void setUnbound();
 
 	void setBound();
+
+	@Override
+	String toDisplayText();
 }

@@ -4,7 +4,7 @@ import org.protege.swrlapi.core.arguments.SWRLNamedAtomArgument;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLNamedObject;
 
-abstract class SWRLNamedAtomArgumentImpl implements SWRLNamedAtomArgument
+abstract class SWRLNamedAtomArgumentImpl extends SWRLAtomArgumentImpl implements SWRLNamedAtomArgument
 {
 	private static final long serialVersionUID = -5547990984547544944L;
 

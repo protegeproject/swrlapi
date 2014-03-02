@@ -11,7 +11,9 @@ import org.protege.swrlapi.ext.SWRLAPIRule;
 import org.semanticweb.owlapi.model.SWRLAtom;
 import org.semanticweb.owlapi.model.SWRLClassAtom;
 
-class DefaultSWRLAPIRule implements SWRLAPIRule
+import uk.ac.manchester.cs.owl.owlapi.SWRLRuleImpl;
+
+class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 {
 	private static final long serialVersionUID = 4399366884810154866L;
 

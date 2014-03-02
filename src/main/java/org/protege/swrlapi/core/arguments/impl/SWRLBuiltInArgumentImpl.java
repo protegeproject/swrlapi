@@ -2,7 +2,7 @@ package org.protege.swrlapi.core.arguments.impl;
 
 import org.protege.swrlapi.core.arguments.SWRLBuiltInArgument;
 
-abstract class SWRLBuiltInArgumentImpl implements SWRLBuiltInArgument
+abstract class SWRLBuiltInArgumentImpl extends SWRLAtomArgumentImpl implements SWRLBuiltInArgument
 {
 	private static final long serialVersionUID = -672946065614354363L;
 

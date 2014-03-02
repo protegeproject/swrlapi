@@ -4,7 +4,7 @@ import org.protege.swrlapi.core.arguments.SWRLAtomArgument;
 import org.protege.swrlapi.core.arguments.SWRLLiteralAtomArgument;
 import org.semanticweb.owlapi.model.OWLLiteral;
 
-class SWRLLiteralAtomArgumentImpl implements SWRLLiteralAtomArgument
+class SWRLLiteralAtomArgumentImpl extends SWRLAtomArgumentImpl implements SWRLLiteralAtomArgument
 {
 	private static final long serialVersionUID = 2564969515366239679L;
 
