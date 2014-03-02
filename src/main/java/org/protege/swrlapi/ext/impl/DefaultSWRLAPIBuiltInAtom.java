@@ -1,6 +1,5 @@
 package org.protege.swrlapi.ext.impl;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -9,6 +8,7 @@ import java.util.Set;
 
 import org.protege.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.protege.swrlapi.ext.SWRLAPIBuiltInAtom;
+import org.semanticweb.owlapi.model.IRI;
 
 import uk.ac.manchester.cs.owl.owlapi.SWRLAtomImpl;
 
@@ -17,8 +17,10 @@ import uk.ac.manchester.cs.owl.owlapi.SWRLAtomImpl;
  */
 public class DefaultSWRLAPIBuiltInAtom extends SWRLAtomImpl implements SWRLAPIBuiltInAtom
 {
+	private static final long serialVersionUID = -5422861824260677949L;
+
 	private final String ruleName;
-	private final URI builtInURI;
+	private final IRI builtInIRI;
 	private final String builtInPrefixedName;
 	private List<SWRLBuiltInArgument> arguments;
 	private int builtInIndex = -1; // Index of this built-in atom in rule body; left-to-right, first built-in index is 0,
@@ -26,21 +28,21 @@ public class DefaultSWRLAPIBuiltInAtom extends SWRLAtomImpl implements SWRLAPIBu
 	private Set<String> pathVariableNames = new HashSet<String>();
 	private boolean sqwrlCollectionResultsUsed = false;
 
-	public DefaultSWRLAPIBuiltInAtom(String ruleName, URI builtInURI, String builtInPrefixedName,
+	public DefaultSWRLAPIBuiltInAtom(String ruleName, IRI builtInIRI, String builtInPrefixedName,
 			List<SWRLBuiltInArgument> arguments)
 	{
 		super(new SWRLBuiltInPredicateImpl(builtInPrefixedName));
 		this.ruleName = ruleName;
-		this.builtInURI = builtInURI;
+		this.builtInIRI = builtInIRI;
 		this.builtInPrefixedName = builtInPrefixedName;
 		this.arguments = arguments;
 	}
 
-	public DefaultSWRLAPIBuiltInAtom(String ruleName, URI builtInURI, String builtInPrefixedName)
+	public DefaultSWRLAPIBuiltInAtom(String ruleName, IRI builtInIRI, String builtInPrefixedName)
 	{
 		super(new SWRLBuiltInPredicateImpl(builtInPrefixedName));
 		this.ruleName = ruleName;
-		this.builtInURI = builtInURI;
+		this.builtInIRI = builtInIRI;
 		this.builtInPrefixedName = builtInPrefixedName;
 		this.arguments = new ArrayList<SWRLBuiltInArgument>();
 	}
@@ -64,13 +66,13 @@ public class DefaultSWRLAPIBuiltInAtom extends SWRLAtomImpl implements SWRLAPIBu
 	}
 
 	@Override
-	public URI getBuiltInURI()
+	public IRI getBuiltInIRI()
 	{
-		return this.builtInURI;
+		return this.builtInIRI;
 	}
 
 	@Override
-	public List<SWRLBuiltInArgument> getArguments()
+	public List<SWRLBuiltInArgument> getBuiltInArguments()
 	{
 		return Collections.unmodifiableList(this.arguments);
 	}
@@ -233,7 +235,7 @@ public class DefaultSWRLAPIBuiltInAtom extends SWRLAtomImpl implements SWRLAPIBu
 		String result = this.builtInPrefixedName + "(";
 		boolean isFirst = true;
 
-		for (SWRLBuiltInArgument argument : getArguments()) {
+		for (SWRLBuiltInArgument argument : getBuiltInArguments()) {
 			if (!isFirst)
 				result += ", ";
 			result += argument.toDisplayText();

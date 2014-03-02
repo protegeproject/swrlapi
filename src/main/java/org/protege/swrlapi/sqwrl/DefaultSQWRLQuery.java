@@ -250,7 +250,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 			String builtInName = builtInAtom.getBuiltInPrefixedName();
 
 			int columnIndex = 0;
-			for (SWRLBuiltInArgument argument : builtInAtom.getArguments()) {
+			for (SWRLBuiltInArgument argument : builtInAtom.getBuiltInArguments()) {
 				boolean isArgumentAVariable = argument.isVariable();
 				String variableName = null, columnName;
 
@@ -374,7 +374,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 						throw new SQWRLException("not greatest or last do not accept arguments");
 					this.sqwrlResult.setNotLast();
 				} else {
-					SWRLBuiltInArgument nArgument = builtInAtom.getArguments().get(0);
+					SWRLBuiltInArgument nArgument = builtInAtom.getBuiltInArguments().get(0);
 					int n;
 
 					if (nArgument instanceof SWRLLiteralBuiltInArgument) {
@@ -411,7 +411,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 						else
 							throw new SQWRLException("unknown slicing operator " + builtInName);
 					} else if (builtInAtom.getArguments().size() == 2) {
-						SWRLBuiltInArgument sliceArgument = builtInAtom.getArguments().get(1);
+						SWRLBuiltInArgument sliceArgument = builtInAtom.getBuiltInArguments().get(1);
 						int sliceSize;
 
 						if (sliceArgument instanceof SWRLLiteralBuiltInArgument) {
@@ -464,7 +464,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	{
 		for (SWRLAPIBuiltInAtom builtInAtom : getBuiltInAtomsFromBody(SQWRLNames.getCollectionGroupByBuiltInNames())) {
 			String collectionName = builtInAtom.getArgumentVariableName(0); // The first argument is the collection name.
-			List<SWRLBuiltInArgument> builtInArguments = builtInAtom.getArguments();
+			List<SWRLBuiltInArgument> builtInArguments = builtInAtom.getBuiltInArguments();
 			List<SWRLBuiltInArgument> groupArguments = builtInArguments.subList(1, builtInArguments.size());
 
 			if (builtInAtom.getArguments().size() < 2)

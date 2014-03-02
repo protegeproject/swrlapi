@@ -1,7 +1,6 @@
 package org.protege.swrlapi.builtins;
 
 import java.lang.reflect.Method;
-import java.net.URI;
 import java.util.Collection;
 import java.util.List;
 
@@ -22,6 +21,7 @@ import org.protege.swrlapi.xsd.XSDDate;
 import org.protege.swrlapi.xsd.XSDDateTime;
 import org.protege.swrlapi.xsd.XSDDuration;
 import org.protege.swrlapi.xsd.XSDTime;
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLLiteral;
 
 /**
@@ -85,7 +85,7 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
 	void checkArgumentNumber(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
 
 	// Named argument handling
-	URI getArgumentAsAURI(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	IRI getArgumentAsAIRI(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
 
 	void checkThatArgumentIsAClassPropertyOrIndividual(int argumentNumber, List<SWRLBuiltInArgument> arguments)
 			throws BuiltInException;
@@ -94,7 +94,7 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
 			throws BuiltInException;
 
 	// Class argument handling
-	URI getArgumentAsAClassURI(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	IRI getArgumentAsAClassIRI(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
 
 	SWRLClassBuiltInArgument getArgumentAsAClass(int argumentNumber, List<SWRLBuiltInArgument> arguments)
 			throws BuiltInException;
@@ -108,7 +108,7 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
 
 	void checkThatArgumentIsAnIndividual(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
 
-	URI getArgumentAsAnIndividualURI(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	IRI getArgumentAsAnIndividualIRI(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
 
 	SWRLIndividualBuiltInArgument getArgumentAsAnIndividual(int argumentNumber, List<SWRLBuiltInArgument> arguments)
 			throws BuiltInException;
@@ -120,7 +120,7 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
 
 	boolean isArgumentADataProperty(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
 
-	URI getArgumentAsAPropertyURI(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	IRI getArgumentAsAPropertyIRI(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
 
 	SWRLObjectPropertyBuiltInArgument getArgumentAsAnObjectProperty(int argumentNumber,
 			List<SWRLBuiltInArgument> arguments) throws BuiltInException;
@@ -150,9 +150,9 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
 
 	SWRLAPILiteral getArgumentAsASWRLAPILiteral(SWRLBuiltInArgument argument) throws BuiltInException;
 
-	// URI
+	// IRI
 
-	URI createURI(String fullName) throws BuiltInException;
+	IRI createIRI(String fullName) throws BuiltInException;
 
 	// Primitive type argument handling
 
@@ -320,15 +320,15 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
 			throws BuiltInException;
 
 	// Argument creation handling
-	SWRLClassBuiltInArgument createClassBuiltInArgument(URI classURI, String prefixedName) throws BuiltInException;
+	SWRLClassBuiltInArgument createClassBuiltInArgument(IRI classIRI, String prefixedName) throws BuiltInException;
 
-	SWRLIndividualBuiltInArgument createIndividualBuiltInArgument(URI individualURI, String prefixedName)
+	SWRLIndividualBuiltInArgument createIndividualBuiltInArgument(IRI individualIRI, String prefixedName)
 			throws BuiltInException;
 
-	SWRLObjectPropertyBuiltInArgument createObjectPropertyBuiltInArgument(URI propertyURI, String prefixedName)
+	SWRLObjectPropertyBuiltInArgument createObjectPropertyBuiltInArgument(IRI propertyIRI, String prefixedName)
 			throws BuiltInException;
 
-	SWRLDataPropertyBuiltInArgument createDataPropertyArgument(URI propertyURI, String prefixedName)
+	SWRLDataPropertyBuiltInArgument createDataPropertyArgument(IRI propertyIRI, String prefixedName)
 			throws BuiltInException;
 
 	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(String s) throws BuiltInException;
@@ -347,7 +347,7 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
 
 	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(double d) throws BuiltInException;
 
-	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(URI uri) throws BuiltInException;
+	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(IRI uri) throws BuiltInException;
 
 	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(XSDDate date) throws BuiltInException;
 
@@ -373,7 +373,7 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
 
 	SWRLAPILiteral createSWRLAPILiteral(double d) throws BuiltInException;
 
-	SWRLAPILiteral createSWRLAPILiteral(URI uri) throws BuiltInException;
+	SWRLAPILiteral createSWRLAPILiteral(IRI uri) throws BuiltInException;
 
 	SWRLAPILiteral createSWRLAPILiteral(XSDDate date) throws BuiltInException;
 

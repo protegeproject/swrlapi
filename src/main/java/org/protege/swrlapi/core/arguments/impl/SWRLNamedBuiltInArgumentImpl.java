@@ -1,20 +1,19 @@
 package org.protege.swrlapi.core.arguments.impl;
 
-import java.net.URI;
-
 import org.protege.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.protege.swrlapi.core.arguments.SWRLDatatypeBuiltInArgument;
 import org.protege.swrlapi.core.arguments.SWRLNamedBuiltInArgument;
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLNamedObject;
 
 abstract class SWRLNamedBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements SWRLNamedBuiltInArgument
 {
 	private static final long serialVersionUID = 6305671503926589607L;
 
-	private final URI uri;
+	private final IRI uri;
 	private final String prefixedName;
 
-	public SWRLNamedBuiltInArgumentImpl(URI uri, String prefixedName)
+	public SWRLNamedBuiltInArgumentImpl(IRI uri, String prefixedName)
 	{
 		this.uri = uri;
 		this.prefixedName = prefixedName;
@@ -22,12 +21,12 @@ abstract class SWRLNamedBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl impl
 
 	public SWRLNamedBuiltInArgumentImpl(OWLNamedObject entity)
 	{
-		this.uri = entity.getURI();
+		this.uri = entity.getIRI();
 		this.prefixedName = entity.getPrefixedName();
 	}
 
 	@Override
-	public URI getURI()
+	public IRI getIRI()
 	{
 		return this.uri;
 	}
@@ -54,7 +53,7 @@ abstract class SWRLNamedBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl impl
 	@Override
 	public int compareTo(SWRLBuiltInArgument o)
 	{
-		return this.uri.compareTo(((SWRLDatatypeBuiltInArgument)o).getURI());
+		return this.uri.compareTo(((SWRLDatatypeBuiltInArgument)o).getIRI());
 	}
 
 	@Override
@@ -65,14 +64,14 @@ abstract class SWRLNamedBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl impl
 		if ((obj == null) || (obj.getClass() != this.getClass()))
 			return false;
 		SWRLNamedBuiltInArgumentImpl impl = (SWRLNamedBuiltInArgumentImpl)obj;
-		return (getURI() == impl.getURI() || (getURI() != null && getURI().equals(impl.getURI())));
+		return (getIRI() == impl.getIRI() || (getIRI() != null && getIRI().equals(impl.getIRI())));
 	}
 
 	@Override
 	public int hashCode()
 	{
 		int hash = 152;
-		hash = hash + (null == getURI() ? 0 : getURI().hashCode());
+		hash = hash + (null == getIRI() ? 0 : getIRI().hashCode());
 		return hash;
 	}
 }

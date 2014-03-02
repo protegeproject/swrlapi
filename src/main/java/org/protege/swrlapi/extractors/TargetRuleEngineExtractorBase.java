@@ -1,7 +1,5 @@
 package org.protege.swrlapi.extractors;
 
-import java.net.URI;
-
 import org.protege.swrlapi.converters.TargetRuleEngineConverterBase;
 import org.protege.swrlapi.core.OWLClassExpressionResolver;
 import org.protege.swrlapi.core.OWLNamedObjectResolver;
@@ -12,6 +10,7 @@ import org.protege.swrlapi.exceptions.TargetRuleEngineException;
 import org.protege.swrlapi.ext.OWLDatatypeFactory;
 import org.protege.swrlapi.ext.OWLLiteralFactory;
 import org.protege.swrlapi.ext.SWRLAPIOWLDataFactory;
+import org.semanticweb.owlapi.model.IRI;
 
 /**
  * This interface describes a set of methods that will be needed by target rule engines to create Portability API
@@ -64,9 +63,9 @@ public abstract class TargetRuleEngineExtractorBase implements TargetRuleEngineE
 		return getBridge().getOWLNamedObjectResolver();
 	}
 
-	protected URI getURI(String id) throws TargetRuleEngineException
+	protected IRI getIRI(String id) throws TargetRuleEngineException
 	{
-		return getOWLNamedObjectResolver().prefixedName2URI(id);
+		return getOWLNamedObjectResolver().prefixedName2IRI(id);
 	}
 
 	private SWRLRuleEngineBridge getBridge()

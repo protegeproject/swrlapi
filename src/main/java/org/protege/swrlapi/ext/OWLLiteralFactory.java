@@ -1,11 +1,10 @@
 package org.protege.swrlapi.ext;
 
-import java.net.URI;
-
 import org.protege.swrlapi.xsd.XSDDate;
 import org.protege.swrlapi.xsd.XSDDateTime;
 import org.protege.swrlapi.xsd.XSDDuration;
 import org.protege.swrlapi.xsd.XSDTime;
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
 
@@ -29,7 +28,7 @@ public interface OWLLiteralFactory
 
 	OWLLiteral getOWLLiteral(short s);
 
-	OWLLiteral getOWLLiteral(URI uri);
+	OWLLiteral getOWLLiteral(IRI uri);
 
 	OWLLiteral getOWLLiteral(XSDDate date);
 

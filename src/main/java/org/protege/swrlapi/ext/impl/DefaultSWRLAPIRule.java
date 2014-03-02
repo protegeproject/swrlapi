@@ -13,6 +13,8 @@ import org.semanticweb.owlapi.model.SWRLClassAtom;
 
 class DefaultSWRLAPIRule implements SWRLAPIRule
 {
+	private static final long serialVersionUID = 4399366884810154866L;
+
 	private final String ruleName;
 	private List<SWRLAtom> bodyAtoms; // Not final because it can be reorganized during processing
 	private final List<SWRLAtom> headAtoms;
@@ -126,7 +128,7 @@ class DefaultSWRLAPIRule implements SWRLAPIRule
 		// Process the body built-in atoms and determine if they bind any of their arguments.
 		for (SWRLAPIBuiltInAtom builtInAtom : bodyBuiltInAtoms) { // Read through built-in arguments and determine which
 																															// are unbound.
-			for (SWRLBuiltInArgument argument : builtInAtom.getArguments()) {
+			for (SWRLBuiltInArgument argument : builtInAtom.getBuiltInArguments()) {
 				if (argument.isVariable()) {
 					String argumentVariableName = argument.getVariableName();
 

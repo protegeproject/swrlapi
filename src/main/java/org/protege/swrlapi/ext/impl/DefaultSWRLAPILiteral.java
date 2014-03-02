@@ -9,6 +9,7 @@ import org.protege.swrlapi.xsd.XSDDateTime;
 import org.protege.swrlapi.xsd.XSDDuration;
 import org.protege.swrlapi.xsd.XSDTime;
 import org.semanticweb.owlapi.model.OWLLiteral;
+import org.semanticweb.owlapi.vocab.XSDVocabulary;
 
 import uk.ac.manchester.cs.owl.owlapi.OWLLiteralImpl;
 
@@ -30,80 +31,79 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 	@Override
 	public boolean isInteger()
 	{
-		return this.literal.getDatatype().getPrefixedName().equals(XSDNames.Prefixed.INT)
-				|| this.literal.getDatatype().getPrefixedName().equals(XSDNames.Prefixed.INTEGER);
+		return this.literal.getDatatype().isInteger();
 	}
 
 	@Override
 	public boolean isLong()
 	{
-		return this.literal.getDatatype().getPrefixedName().equals(XSDNames.Prefixed.LONG);
+		return this.literal.getDatatype().getIRI().equals(XSDVocabulary.LONG.getIRI());
 	}
 
 	@Override
 	public boolean isFloat()
 	{
-		return this.literal.getDatatype().getPrefixedName().equals(XSDNames.Prefixed.FLOAT);
+		return this.literal.getDatatype().isFloat();
 	}
 
 	@Override
 	public boolean isDouble()
 	{
-		return this.literal.getDatatype().getPrefixedName().equals(XSDNames.Prefixed.DOUBLE);
+		return this.literal.getDatatype().isDouble();
 	}
 
 	@Override
 	public boolean isShort()
 	{
-		return this.literal.getDatatype().getPrefixedName().equals(XSDNames.Prefixed.SHORT);
+		return this.literal.getDatatype().getIRI().equals(XSDVocabulary.SHORT.getIRI());
 	}
 
 	@Override
 	public boolean isBoolean()
 	{
-		return this.literal.getDatatype().getPrefixedName().equals(XSDNames.Prefixed.BOOLEAN);
+		return this.literal.getDatatype().isBoolean();
 	}
 
 	@Override
 	public boolean isByte()
 	{
-		return this.literal.getDatatype().getPrefixedName().equals(XSDNames.Prefixed.BYTE);
+		return this.literal.getDatatype().getIRI().equals(XSDVocabulary.BYTE.getIRI());
 	}
 
 	@Override
 	public boolean isAnyURI()
 	{
-		return this.literal.getDatatype().getPrefixedName().equals(XSDNames.Prefixed.ANY_URI);
+		return this.literal.getDatatype().getIRI().equals(XSDVocabulary.ANY_URI.getIRI());
 	}
 
 	@Override
 	public boolean isTime()
 	{
-		return this.literal.getDatatype().getPrefixedName().equals(XSDNames.Prefixed.TIME);
+		return this.literal.getDatatype().getIRI().equals(XSDVocabulary.TIME.getIRI());
 	}
 
 	@Override
 	public boolean isDate()
 	{
-		return this.literal.getDatatype().getPrefixedName().equals(XSDNames.Prefixed.DATE);
+		return this.literal.getDatatype().getIRI().equals(XSDVocabulary.DATE.getIRI());
 	}
 
 	@Override
 	public boolean isDateTime()
 	{
-		return this.literal.getDatatype().getPrefixedName().equals(XSDNames.Prefixed.DATE_TIME);
+		return this.literal.getDatatype().getIRI().equals(XSDVocabulary.DATE_TIME.getIRI());
 	}
 
 	@Override
 	public boolean isDuration()
 	{
-		return this.literal.getDatatype().getPrefixedName().equals(XSDNames.Prefixed.DURATION);
+		return this.literal.getDatatype().getIRI().equals(XSDVocabulary.DURATION.getIRI());
 	}
 
 	@Override
 	public boolean isString()
 	{
-		return this.literal.getDatatype().getPrefixedName().equals(XSDNames.Prefixed.STRING);
+		return this.literal.getDatatype().isString();
 	}
 
 	@Override
@@ -128,8 +128,7 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 	public String getString() throws SQWRLLiteralException
 	{
 		if (!isString())
-			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype().getPrefixedName()
-					+ " to String");
+			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to String");
 		return (String)getValue();
 	}
 
@@ -137,8 +136,7 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 	public Number getNumber() throws SQWRLLiteralException
 	{
 		if (!isNumeric())
-			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype().getPrefixedName()
-					+ " to Number");
+			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to Number");
 		return (Number)getValue();
 	}
 
@@ -146,8 +144,7 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 	public boolean getBoolean() throws SQWRLLiteralException
 	{
 		if (!isBoolean())
-			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype().getPrefixedName()
-					+ " to boolean");
+			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to boolean");
 
 		return ((Boolean)getValue()).booleanValue();
 	}
@@ -156,8 +153,7 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 	public short getShort() throws SQWRLLiteralException
 	{
 		if (!isShort())
-			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype().getPrefixedName()
-					+ " to short");
+			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to short");
 		return ((Short)getValue()).shortValue();
 	}
 
@@ -169,8 +165,7 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 		else if (isShort())
 			return ((Short)getValue()).shortValue();
 		else
-			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype().getPrefixedName()
-					+ " to int");
+			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to int");
 	}
 
 	@Override
@@ -183,8 +178,7 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 		else if (isShort())
 			return ((Short)getValue()).shortValue();
 		else
-			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype().getPrefixedName()
-					+ " to long");
+			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to long");
 	}
 
 	// Some precision loss possible going from integer and long to float. See:
@@ -203,8 +197,7 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 		else if (isShort())
 			return ((Short)getValue()).shortValue();
 		else
-			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype().getPrefixedName()
-					+ " to float");
+			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to float");
 	}
 
 	// Some precision loss possible going from long to double. See:
@@ -223,16 +216,15 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 		else if (isShort())
 			return ((Short)getValue()).shortValue();
 		else
-			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype().getPrefixedName()
-					+ " to double");
+			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to double");
 	}
 
 	@Override
 	public byte getByte() throws SQWRLLiteralException
 	{
 		if (!isByte())
-			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype().getPrefixedName()
-					+ " to " + XSDNames.Prefixed.BYTE);
+			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to "
+					+ XSDVocabulary.BYTE);
 		return ((java.lang.Byte)getValue()).byteValue();
 	}
 
@@ -240,8 +232,8 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 	public URI getAnyURI() throws SQWRLLiteralException
 	{
 		if (!isAnyURI())
-			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype().getPrefixedName()
-					+ " to " + XSDNames.Prefixed.ANY_URI);
+			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to "
+					+ XSDVocabulary.ANY_URI);
 		return (URI)getValue();
 	}
 
@@ -249,8 +241,8 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 	public XSDTime getTime() throws SQWRLLiteralException
 	{
 		if (!isTime())
-			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype().getPrefixedName()
-					+ " to " + XSDNames.Prefixed.TIME);
+			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to "
+					+ XSDVocabulary.TIME);
 		return (XSDTime)getValue();
 	}
 
@@ -258,8 +250,8 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 	public XSDDate getDate() throws SQWRLLiteralException
 	{
 		if (!isDate())
-			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype().getPrefixedName()
-					+ " to " + XSDNames.Prefixed.DATE);
+			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to "
+					+ XSDVocabulary.DATE);
 		return (XSDDate)getValue();
 	}
 
@@ -267,8 +259,8 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 	public XSDDateTime getDateTime() throws SQWRLLiteralException
 	{
 		if (!isDateTime())
-			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype().getPrefixedName()
-					+ " to " + XSDNames.Prefixed.DATE_TIME);
+			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to "
+					+ XSDVocabulary.DATE_TIME);
 		;
 		return (XSDDateTime)getValue();
 	}
@@ -277,8 +269,8 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 	public XSDDuration getDuration() throws SQWRLLiteralException
 	{
 		if (!isDuration())
-			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype().getPrefixedName()
-					+ " to " + XSDNames.Prefixed.DURATION);
+			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to "
+					+ XSDVocabulary.DURATION.getShortName());
 		return (XSDDuration)getValue();
 	}
 

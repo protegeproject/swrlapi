@@ -1,7 +1,5 @@
 package org.protege.swrlapi.sqwrl.values.impl;
 
-import java.net.URI;
-
 import org.protege.swrlapi.core.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.protege.swrlapi.core.arguments.SWRLClassBuiltInArgument;
 import org.protege.swrlapi.core.arguments.SWRLDataPropertyBuiltInArgument;
@@ -22,6 +20,7 @@ import org.protege.swrlapi.xsd.XSDDate;
 import org.protege.swrlapi.xsd.XSDDateTime;
 import org.protege.swrlapi.xsd.XSDDuration;
 import org.protege.swrlapi.xsd.XSDTime;
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLLiteral;
 
 public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
@@ -38,63 +37,63 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
 	@Override
 	public SQWRLClassValue createClassValue(SWRLClassBuiltInArgument classArgument)
 	{
-		return createClassValue(classArgument.getURI(), classArgument.getPrefixedName());
+		return createClassValue(classArgument.getIRI(), classArgument.getPrefixedName());
 	}
 
 	@Override
-	public SQWRLClassValue createClassValue(URI classURI, String prefixedName)
+	public SQWRLClassValue createClassValue(IRI classIRI, String prefixedName)
 	{
-		return new SQWRLClassValueImpl(classURI, prefixedName);
+		return new SQWRLClassValueImpl(classIRI, prefixedName);
 	}
 
 	@Override
 	public SQWRLIndividualValue createIndividualValue(SWRLIndividualBuiltInArgument individualArgument)
 	{
-		return createIndividualValue(individualArgument.getURI(), individualArgument.getPrefixedName());
+		return createIndividualValue(individualArgument.getIRI(), individualArgument.getPrefixedName());
 	}
 
 	@Override
-	public SQWRLIndividualValue createIndividualValue(URI individualURI, String prefixedName)
+	public SQWRLIndividualValue createIndividualValue(IRI individualIRI, String prefixedName)
 	{
-		return new SQWRLIndividualValueImpl(individualURI, prefixedName);
+		return new SQWRLIndividualValueImpl(individualIRI, prefixedName);
 	}
 
 	@Override
 	public SQWRLObjectPropertyValue createObjectPropertyValue(SWRLObjectPropertyBuiltInArgument objectPropertyArgument)
 	{
-		return createObjectPropertyValue(objectPropertyArgument.getURI(), objectPropertyArgument.getPrefixedName());
+		return createObjectPropertyValue(objectPropertyArgument.getIRI(), objectPropertyArgument.getPrefixedName());
 	}
 
 	@Override
-	public SQWRLObjectPropertyValue createObjectPropertyValue(URI propertyURI, String prefixedName)
+	public SQWRLObjectPropertyValue createObjectPropertyValue(IRI propertyIRI, String prefixedName)
 	{
-		return new SQWRLObjectPropertyValueImpl(propertyURI, prefixedName);
+		return new SQWRLObjectPropertyValueImpl(propertyIRI, prefixedName);
 	}
 
 	@Override
 	public SQWRLDataPropertyValue createDataPropertyValue(SWRLDataPropertyBuiltInArgument dataPropertyArgument)
 	{
-		return createDataPropertyValue(dataPropertyArgument.getURI(), dataPropertyArgument.getPrefixedName());
+		return createDataPropertyValue(dataPropertyArgument.getIRI(), dataPropertyArgument.getPrefixedName());
 	}
 
 	@Override
-	public SQWRLDataPropertyValue createDataPropertyValue(URI propertyURI, String prefixedName)
+	public SQWRLDataPropertyValue createDataPropertyValue(IRI propertyIRI, String prefixedName)
 	{
-		return new SQWRLDataPropertyValueImpl(propertyURI, prefixedName);
+		return new SQWRLDataPropertyValueImpl(propertyIRI, prefixedName);
 	}
 
 	@Override
 	public SQWRLAnnotationPropertyValue createAnnotationPropertyValue(
 			SWRLAnnotationPropertyBuiltInArgument annotationPropertyArgument)
 	{
-		return createAnnotationPropertyValue(annotationPropertyArgument.getURI(),
+		return createAnnotationPropertyValue(annotationPropertyArgument.getIRI(),
 				annotationPropertyArgument.getPrefixedName());
 	}
 
 	@Override
-	public SQWRLAnnotationPropertyValue createAnnotationPropertyValue(URI propertyURI, String prefixedName)
+	public SQWRLAnnotationPropertyValue createAnnotationPropertyValue(IRI propertyIRI, String prefixedName)
 	{
-		return new SQWRLAnnotationPropertyValueImpl(propertyURI, prefixedName);
+		return new SQWRLAnnotationPropertyValueImpl(propertyIRI, prefixedName);
 	}
 
 	@Override

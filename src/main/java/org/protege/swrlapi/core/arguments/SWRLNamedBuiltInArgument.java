@@ -1,11 +1,10 @@
-
 package org.protege.swrlapi.core.arguments;
 
-import java.net.URI;
+import org.semanticweb.owlapi.model.IRI;
 
 public interface SWRLNamedBuiltInArgument extends SWRLBuiltInArgument
 {
-	URI getURI();
+	IRI getIRI();
 
 	String getPrefixedName();
 }

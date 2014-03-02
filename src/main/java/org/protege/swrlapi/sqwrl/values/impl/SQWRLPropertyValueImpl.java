@@ -1,15 +1,14 @@
 package org.protege.swrlapi.sqwrl.values.impl;
 
-import java.net.URI;
-
 import org.protege.swrlapi.sqwrl.values.SQWRLPropertyValue;
 import org.protege.swrlapi.sqwrl.values.SQWRLResultValue;
+import org.semanticweb.owlapi.model.IRI;
 
 abstract class SQWRLPropertyValueImpl extends SQWRLNamedResultValueImpl implements SQWRLPropertyValue
 {
-	protected SQWRLPropertyValueImpl(URI propertyURI, String prefixedName)
+	protected SQWRLPropertyValueImpl(IRI propertyIRI, String prefixedName)
 	{
-		super(propertyURI, prefixedName);
+		super(propertyIRI, prefixedName);
 	}
 
 	// TODO fix

@@ -1,16 +1,17 @@
 package org.protege.swrlapi.core.arguments.impl;
 
-import java.net.URI;
-
 import org.protege.swrlapi.core.arguments.SWRLNamedAtomArgument;
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLNamedObject;
 
 abstract class SWRLNamedAtomArgumentImpl implements SWRLNamedAtomArgument
 {
-	private final URI uri;
+	private static final long serialVersionUID = -5547990984547544944L;
+
+	private final IRI uri;
 	private final String prefixedName;
 
-	public SWRLNamedAtomArgumentImpl(URI uri, String prefixedName)
+	public SWRLNamedAtomArgumentImpl(IRI uri, String prefixedName)
 	{
 		this.uri = uri;
 		this.prefixedName = prefixedName;
@@ -18,12 +19,12 @@ abstract class SWRLNamedAtomArgumentImpl implements SWRLNamedAtomArgument
 
 	public SWRLNamedAtomArgumentImpl(OWLNamedObject entity)
 	{
-		this.uri = entity.getURI();
+		this.uri = entity.getIRI();
 		this.prefixedName = entity.getPrefixedName();
 	}
 
 	@Override
-	public URI getURI()
+	public IRI getIRI()
 	{
 		return this.uri;
 	}
@@ -48,7 +49,7 @@ abstract class SWRLNamedAtomArgumentImpl implements SWRLNamedAtomArgument
 
 	public int compareTo(SWRLNamedAtomArgument o)
 	{
-		return this.uri.compareTo(o.getURI());
+		return this.uri.compareTo(o.getIRI());
 	}
 
 	@Override
@@ -59,14 +60,14 @@ abstract class SWRLNamedAtomArgumentImpl implements SWRLNamedAtomArgument
 		if ((obj == null) || (obj.getClass() != this.getClass()))
 			return false;
 		SWRLNamedAtomArgumentImpl impl = (SWRLNamedAtomArgumentImpl)obj;
-		return (getURI() == impl.getURI() || (getURI() != null && getURI().equals(impl.getURI())));
+		return (getIRI() == impl.getIRI() || (getIRI() != null && getIRI().equals(impl.getIRI())));
 	}
 
 	@Override
 	public int hashCode()
 	{
 		int hash = 152;
-		hash = hash + (null == getURI() ? 0 : getURI().hashCode());
+		hash = hash + (null == getIRI() ? 0 : getIRI().hashCode());
 		return hash;
 	}
 }

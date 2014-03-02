@@ -1,15 +1,16 @@
 package org.protege.swrlapi.core.arguments.impl;
 
-import java.net.URI;
-
 import org.protege.swrlapi.core.arguments.SWRLObjectPropertyAtomArgument;
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 
 class SWRLObjectPropertyAtomArgumentImpl extends SWRLPropertyAtomArgumentImpl implements SWRLObjectPropertyAtomArgument
 {
-	public SWRLObjectPropertyAtomArgumentImpl(URI propertyURI, String prefixedName)
+	private static final long serialVersionUID = -2202377265745664328L;
+
+	public SWRLObjectPropertyAtomArgumentImpl(IRI propertyIRI, String prefixedName)
 	{
-		super(propertyURI, prefixedName);
+		super(propertyIRI, prefixedName);
 	}
 
 	public SWRLObjectPropertyAtomArgumentImpl(OWLObjectProperty property)

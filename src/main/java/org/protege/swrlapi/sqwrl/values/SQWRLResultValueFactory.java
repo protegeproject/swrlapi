@@ -1,7 +1,5 @@
 package org.protege.swrlapi.sqwrl.values;
 
-import java.net.URI;
-
 import org.protege.swrlapi.core.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.protege.swrlapi.core.arguments.SWRLClassBuiltInArgument;
 import org.protege.swrlapi.core.arguments.SWRLDataPropertyBuiltInArgument;
@@ -11,29 +9,30 @@ import org.protege.swrlapi.xsd.XSDDate;
 import org.protege.swrlapi.xsd.XSDDateTime;
 import org.protege.swrlapi.xsd.XSDDuration;
 import org.protege.swrlapi.xsd.XSDTime;
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLLiteral;
 
 public interface SQWRLResultValueFactory
 {
 	SQWRLClassValue createClassValue(SWRLClassBuiltInArgument classArgument);
 
-	SQWRLClassValue createClassValue(URI classURI, String prefixedName);
+	SQWRLClassValue createClassValue(IRI classIRI, String prefixedName);
 
 	SQWRLIndividualValue createIndividualValue(SWRLIndividualBuiltInArgument individualArgument);
 
-	SQWRLIndividualValue createIndividualValue(URI individualURI, String prefixedName);
+	SQWRLIndividualValue createIndividualValue(IRI individualIRI, String prefixedName);
 
 	SQWRLObjectPropertyValue createObjectPropertyValue(SWRLObjectPropertyBuiltInArgument objectPropertyArgument);
 
-	SQWRLObjectPropertyValue createObjectPropertyValue(URI propertyURI, String prefixedName);
+	SQWRLObjectPropertyValue createObjectPropertyValue(IRI propertyIRI, String prefixedName);
 
 	SQWRLDataPropertyValue createDataPropertyValue(SWRLDataPropertyBuiltInArgument dataPropertyArgument);
 
-	SQWRLDataPropertyValue createDataPropertyValue(URI propertyURI, String prefixedName);
+	SQWRLDataPropertyValue createDataPropertyValue(IRI propertyIRI, String prefixedName);
 
 	SQWRLAnnotationPropertyValue createAnnotationPropertyValue(SWRLAnnotationPropertyBuiltInArgument dataPropertyArgument);
 
-	SQWRLAnnotationPropertyValue createAnnotationPropertyValue(URI propertyURI, String prefixedName);
+	SQWRLAnnotationPropertyValue createAnnotationPropertyValue(IRI propertyIRI, String prefixedName);
 
 	SQWRLLiteralResultValue getLiteral(OWLLiteral literal);
 

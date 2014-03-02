@@ -11,6 +11,8 @@ import org.protege.swrlapi.core.arguments.SWRLMultiArgument;
  */
 class SWRLMultiArgumentImpl extends SWRLBuiltInArgumentImpl implements SWRLMultiArgument
 {
+	private static final long serialVersionUID = 9085670998036784280L;
+
 	private List<SWRLBuiltInArgument> arguments;
 
 	public SWRLMultiArgumentImpl()

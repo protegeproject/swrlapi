@@ -1,7 +1,6 @@
 package org.protege.swrlapi.core.arguments;
 
-import java.net.URI;
-
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLIndividual;
@@ -12,19 +11,19 @@ public interface SWRLAtomArgumentFactory
 {
 	SWRLVariableAtomArgument createVariableArgument(String variableName);
 
-	SWRLClassAtomArgument createClassArgument(URI uri, String prefixedName);
+	SWRLClassAtomArgument createClassArgument(IRI uri, String prefixedName);
 
 	SWRLClassAtomArgument createClassArgument(OWLClass cls);
 
-	SWRLIndividualAtomArgument createIndividualArgument(URI uri, String prefixedName);
+	SWRLIndividualAtomArgument createIndividualArgument(IRI uri, String prefixedName);
 
 	SWRLIndividualAtomArgument createIndividualArgument(OWLIndividual individual);
 
-	SWRLObjectPropertyAtomArgument createObjectPropertyArgument(URI uri, String prefixedName);
+	SWRLObjectPropertyAtomArgument createObjectPropertyArgument(IRI uri, String prefixedName);
 
 	SWRLObjectPropertyAtomArgument createObjectPropertyArgument(OWLObjectProperty property);
 
-	SWRLDataPropertyAtomArgument createDataPropertyArgument(URI uri, String prefixedName);
+	SWRLDataPropertyAtomArgument createDataPropertyArgument(IRI uri, String prefixedName);
 
 	SWRLDataPropertyAtomArgument createDataPropertyArgument(OWLDataProperty property);
 

@@ -1,15 +1,16 @@
 package org.protege.swrlapi.core.arguments.impl;
 
-import java.net.URI;
-
 import org.protege.swrlapi.core.arguments.SWRLIndividualBuiltInArgument;
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 
 class SWRLIndividualBuiltInArgumentImpl extends SWRLNamedBuiltInArgumentImpl implements SWRLIndividualBuiltInArgument
 {
-	public SWRLIndividualBuiltInArgumentImpl(URI individualURI, String prefixedName)
+	private static final long serialVersionUID = 5242701530881210633L;
+
+	public SWRLIndividualBuiltInArgumentImpl(IRI individualIRI, String prefixedName)
 	{
-		super(individualURI, prefixedName);
+		super(individualIRI, prefixedName);
 	}
 
 	public SWRLIndividualBuiltInArgumentImpl(OWLNamedIndividual individual)

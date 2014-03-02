@@ -1,6 +1,5 @@
 package org.protege.swrlapi.builtins.temporal;
 
-import java.net.URI;
 import java.util.List;
 import java.util.Set;
 
@@ -13,6 +12,7 @@ import org.protege.swrlapi.exceptions.InvalidBuiltInArgumentException;
 import org.protege.swrlapi.exceptions.SWRLBuiltInLibraryException;
 import org.protege.swrlapi.xsd.XSDDate;
 import org.protege.swrlapi.xsd.XSDDateTime;
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLLiteral;
@@ -477,16 +477,16 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 						"expecting xsd:string, xsd:date, or xsd:dateTime got " + arguments.get(argumentNumber));
 			return new Period(this.temporal, datetimeString, datetimeString, granularity);
 		} else if (isArgumentAnIndividual(argumentNumber, arguments)) {
-			URI individualURI = getArgumentAsAnIndividualURI(argumentNumber, arguments);
-			if (isOWLIndividualOfType(individualURI, createURI(ValidInstantClassName))) {
-				Instant instant = validInstantIndividual2Instant(individualURI, granularity);
+			IRI individualIRI = getArgumentAsAnIndividualIRI(argumentNumber, arguments);
+			if (isOWLIndividualOfType(individualIRI, createIRI(ValidInstantClassName))) {
+				Instant instant = validInstantIndividual2Instant(individualIRI, granularity);
 				return new Period(this.temporal, instant, granularity);
-			} else if (isOWLIndividualOfType(individualURI, createURI(ValidPeriodClassName))) {
-				return validPeriodIndividual2Period(individualURI, granularity);
-			} else if (isOWLIndividualOfType(individualURI, createURI(ExtendedPropositionClassName))) {
-				return extendedPropositionIndividual2Period(individualURI, granularity);
+			} else if (isOWLIndividualOfType(individualIRI, createIRI(ValidPeriodClassName))) {
+				return validPeriodIndividual2Period(individualIRI, granularity);
+			} else if (isOWLIndividualOfType(individualIRI, createIRI(ExtendedPropositionClassName))) {
+				return extendedPropositionIndividual2Period(individualIRI, granularity);
 			} else
-				throw new InvalidBuiltInArgumentException(argumentNumber, "individual " + individualURI + " is not a "
+				throw new InvalidBuiltInArgumentException(argumentNumber, "individual " + individualIRI + " is not a "
 						+ ValidInstantClassName + " or " + ValidPeriodClassName + " or " + ExtendedPropositionClassName);
 		} else
 			throw new InvalidBuiltInArgumentException(argumentNumber, "expecting xsd:date or xsd:datetime or "
@@ -511,13 +511,13 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 						"expecting xsd:string, xsd:date, or xsd:dateTime got " + arguments.get(argumentNumber));
 			return new Instant(this.temporal, datetimeString, granularity);
 		} else if (isArgumentAnIndividual(argumentNumber, arguments)) {
-			URI individualURI = getArgumentAsAnIndividualURI(argumentNumber, arguments);
-			if (isOWLIndividualOfType(individualURI, createURI(ValidInstantClassName))) {
-				return validInstantIndividual2Instant(individualURI, granularity);
-			} else if (isOWLIndividualOfType(individualURI, createURI(ExtendedPropositionClassName))) {
-				return extendedPropositionIndividual2Instant(individualURI, granularity);
+			IRI individualIRI = getArgumentAsAnIndividualIRI(argumentNumber, arguments);
+			if (isOWLIndividualOfType(individualIRI, createIRI(ValidInstantClassName))) {
+				return validInstantIndividual2Instant(individualIRI, granularity);
+			} else if (isOWLIndividualOfType(individualIRI, createIRI(ExtendedPropositionClassName))) {
+				return extendedPropositionIndividual2Instant(individualIRI, granularity);
 			} else
-				throw new InvalidBuiltInArgumentException(argumentNumber, "individual " + individualURI + " is not a "
+				throw new InvalidBuiltInArgumentException(argumentNumber, "individual " + individualIRI + " is not a "
 						+ ValidInstantClassName + "or an " + ExtendedPropositionClassName);
 		} else
 			throw new InvalidBuiltInArgumentException(argumentNumber, "expecting xsd:date or xsd:datetime or "
@@ -535,9 +535,9 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 			return Temporal.getIntegerGranularityRepresentation(granularityName);
 		} else if (isArgumentAnIndividual(argumentNumber, arguments)) {
 			SWRLIndividualBuiltInArgument individualArgument = getArgumentAsAnIndividual(argumentNumber, arguments);
-			URI individualURI = individualArgument.getURI();
+			IRI individualIRI = individualArgument.getIRI();
 			String prefixedName = individualArgument.getPrefixedName();
-			if (isOWLIndividualOfType(individualURI, createURI(GranularityClassName))) {
+			if (isOWLIndividualOfType(individualIRI, createIRI(GranularityClassName))) {
 				int hashIndex = prefixedName.indexOf(':');
 				if (hashIndex == -1)
 					granularityName = prefixedName;
@@ -545,7 +545,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 					granularityName = prefixedName.substring(hashIndex + 1, prefixedName.length());
 				return Temporal.getIntegerGranularityRepresentation(granularityName);
 			} else
-				throw new InvalidBuiltInArgumentException(argumentNumber, "individual " + individualURI + " is not a "
+				throw new InvalidBuiltInArgumentException(argumentNumber, "individual " + individualIRI + " is not a "
 						+ GranularityClassName);
 		} else
 			throw new InvalidBuiltInArgumentException(argumentNumber, "expecting a " + GranularityClassName + " individual"
@@ -559,70 +559,70 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 			String granularityName = getArgumentAsAString(argumentNumber, arguments);
 			return Temporal.isValidGranularityString(granularityName);
 		} else if (isArgumentAnIndividual(argumentNumber, arguments)) {
-			URI individualURI = getArgumentAsAnIndividualURI(argumentNumber, arguments);
-			return isOWLIndividualOfType(individualURI, createURI(GranularityClassName));
+			IRI individualIRI = getArgumentAsAnIndividualIRI(argumentNumber, arguments);
+			return isOWLIndividualOfType(individualIRI, createIRI(GranularityClassName));
 		} else
 			return false;
 	}
 
-	private Instant validInstantIndividual2Instant(URI individualURI, int granularity) throws BuiltInException,
+	private Instant validInstantIndividual2Instant(IRI individualIRI, int granularity) throws BuiltInException,
 			TemporalException
 	{
-		String datetimeString = getDataPropertyValueAsAString(getBuiltInBridge(), individualURI,
-				createURI(HasTimePropertyName));
+		String datetimeString = getDataPropertyValueAsAString(getBuiltInBridge(), individualIRI,
+				createIRI(HasTimePropertyName));
 
 		return new Instant(this.temporal, datetimeString, granularity);
 	}
 
-	private Period validPeriodIndividual2Period(URI individualURI, int granularity) throws BuiltInException,
+	private Period validPeriodIndividual2Period(IRI individualIRI, int granularity) throws BuiltInException,
 			TemporalException
 	{
-		String startDatetimeString = getDataPropertyValueAsAString(getBuiltInBridge(), individualURI,
-				createURI(HasStartTimePropertyName));
-		String finishDatetimeString = getDataPropertyValueAsAString(getBuiltInBridge(), individualURI,
-				createURI(HasFinishTimePropertyName));
+		String startDatetimeString = getDataPropertyValueAsAString(getBuiltInBridge(), individualIRI,
+				createIRI(HasStartTimePropertyName));
+		String finishDatetimeString = getDataPropertyValueAsAString(getBuiltInBridge(), individualIRI,
+				createIRI(HasFinishTimePropertyName));
 
 		return new Period(this.temporal, startDatetimeString, finishDatetimeString, granularity);
 	}
 
-	private Period extendedPropositionIndividual2Period(URI extendedPropositionURI, int granularity)
+	private Period extendedPropositionIndividual2Period(IRI extendedPropositionIRI, int granularity)
 			throws BuiltInException, TemporalException
 	{
-		URI validTimeURI = getObjectPropertyValueAsURI(getBuiltInBridge(), extendedPropositionURI,
-				createURI(HasValidTimePropertyName));
+		IRI validTimeIRI = getObjectPropertyValueAsIRI(getBuiltInBridge(), extendedPropositionIRI,
+				createIRI(HasValidTimePropertyName));
 
-		if (isOWLIndividualOfType(validTimeURI, createURI(ValidPeriodClassName)))
-			return validPeriodIndividual2Period(validTimeURI, granularity);
+		if (isOWLIndividualOfType(validTimeIRI, createIRI(ValidPeriodClassName)))
+			return validPeriodIndividual2Period(validTimeIRI, granularity);
 		else
-			throw new BuiltInException("expecting valid period value for extended proposition " + extendedPropositionURI);
+			throw new BuiltInException("expecting valid period value for extended proposition " + extendedPropositionIRI);
 	}
 
-	private Instant extendedPropositionIndividual2Instant(URI extendedPropositionURI, int granularity)
+	private Instant extendedPropositionIndividual2Instant(IRI extendedPropositionIRI, int granularity)
 			throws BuiltInException, TemporalException
 	{
-		URI validTimeURI = getObjectPropertyValueAsURI(getBuiltInBridge(), extendedPropositionURI,
-				createURI(HasValidTimePropertyName));
+		IRI validTimeIRI = getObjectPropertyValueAsIRI(getBuiltInBridge(), extendedPropositionIRI,
+				createIRI(HasValidTimePropertyName));
 
-		if (isOWLIndividualOfType(validTimeURI, createURI(ValidInstantClassName)))
-			return validInstantIndividual2Instant(validTimeURI, granularity);
+		if (isOWLIndividualOfType(validTimeIRI, createIRI(ValidInstantClassName)))
+			return validInstantIndividual2Instant(validTimeIRI, granularity);
 		else
-			throw new BuiltInException("expecting valid instant value for extended proposition " + extendedPropositionURI);
+			throw new BuiltInException("expecting valid instant value for extended proposition " + extendedPropositionIRI);
 	}
 
-	private URI getObjectPropertyValueAsURI(SWRLBuiltInBridge bridge, URI individualURI, URI propertyURI)
+	private IRI getObjectPropertyValueAsIRI(SWRLBuiltInBridge bridge, IRI individualIRI, IRI propertyIRI)
 	{
 		Set<OWLObjectPropertyAssertionAxiom> axioms = bridge.getOWLOntology().getOWLObjectPropertyAssertionAxioms(
-				individualURI, propertyURI);
+				individualIRI, propertyIRI);
 		OWLObjectPropertyAssertionAxiom axiom = axioms.toArray(new OWLObjectPropertyAssertionAxiom[0])[0];
 		OWLIndividual subject = axiom.getObject();
 
-		return subject.asNamedIndividual().getURI();
+		return subject.asOWLNamedIndividual().getIRI();
 	}
 
-	private String getDataPropertyValueAsAString(SWRLBuiltInBridge bridge, URI individualURI, URI propertyURI)
+	private String getDataPropertyValueAsAString(SWRLBuiltInBridge bridge, IRI individualIRI, IRI propertyIRI)
 	{
 		Set<OWLDataPropertyAssertionAxiom> axioms = bridge.getOWLOntology().getOWLDataPropertyAssertionAxioms(
-				individualURI, propertyURI);
+				individualIRI, propertyIRI);
 		OWLDataPropertyAssertionAxiom axiom = axioms.toArray(new OWLDataPropertyAssertionAxiom[0])[0];
 		OWLLiteral value = axiom.getObject();
 
@@ -661,8 +661,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		}
 	}
 
-	private boolean isOWLIndividualOfType(URI individualURI, URI classURI) throws SWRLBuiltInLibraryException
+	private boolean isOWLIndividualOfType(IRI individualIRI, IRI classIRI) throws SWRLBuiltInLibraryException
 	{
-		return getBuiltInBridge().getOWLOntology().isOWLIndividualOfType(individualURI, classURI);
+		return getBuiltInBridge().getOWLOntology().isOWLIndividualOfType(individualIRI, classIRI);
 	}
 }

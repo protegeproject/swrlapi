@@ -1,7 +1,5 @@
 package org.protege.swrlapi.core.arguments.impl;
 
-import java.net.URI;
-
 import org.protege.swrlapi.core.arguments.SWRLAtomArgumentFactory;
 import org.protege.swrlapi.core.arguments.SWRLClassAtomArgument;
 import org.protege.swrlapi.core.arguments.SWRLDataPropertyAtomArgument;
@@ -13,6 +11,7 @@ import org.protege.swrlapi.ext.OWLDatatypeFactory;
 import org.protege.swrlapi.ext.OWLLiteralFactory;
 import org.protege.swrlapi.ext.impl.DefaultOWLDatatypeFactory;
 import org.protege.swrlapi.ext.impl.DefaultOWLLiteralFactory;
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLIndividual;
@@ -38,9 +37,9 @@ public class SWRLAtomArgumentFactoryImpl implements SWRLAtomArgumentFactory
 	}
 
 	@Override
-	public SWRLClassAtomArgument createClassArgument(URI classURI, String prefixedName)
+	public SWRLClassAtomArgument createClassArgument(IRI classIRI, String prefixedName)
 	{
-		return new SWRLClassAtomArgumentImpl(classURI, prefixedName);
+		return new SWRLClassAtomArgumentImpl(classIRI, prefixedName);
 	}
 
 	@Override
@@ -50,9 +49,9 @@ public class SWRLAtomArgumentFactoryImpl implements SWRLAtomArgumentFactory
 	}
 
 	@Override
-	public SWRLObjectPropertyAtomArgument createObjectPropertyArgument(URI propertyURI, String prefixedName)
+	public SWRLObjectPropertyAtomArgument createObjectPropertyArgument(IRI propertyIRI, String prefixedName)
 	{
-		return new SWRLObjectPropertyAtomArgumentImpl(propertyURI, prefixedName);
+		return new SWRLObjectPropertyAtomArgumentImpl(propertyIRI, prefixedName);
 	}
 
 	@Override
@@ -62,9 +61,9 @@ public class SWRLAtomArgumentFactoryImpl implements SWRLAtomArgumentFactory
 	}
 
 	@Override
-	public SWRLDataPropertyAtomArgument createDataPropertyArgument(URI propertyURI, String prefixedName)
+	public SWRLDataPropertyAtomArgument createDataPropertyArgument(IRI propertyIRI, String prefixedName)
 	{
-		return new SWRLDataPropertyAtomArgumentImpl(propertyURI, prefixedName);
+		return new SWRLDataPropertyAtomArgumentImpl(propertyIRI, prefixedName);
 	}
 
 	@Override
@@ -74,17 +73,17 @@ public class SWRLAtomArgumentFactoryImpl implements SWRLAtomArgumentFactory
 	}
 
 	@Override
-	public SWRLIndividualAtomArgument createIndividualArgument(URI individualURI, String prefixedName)
+	public SWRLIndividualAtomArgument createIndividualArgument(IRI individualIRI, String prefixedName)
 	{
-		return new SWRLIndividualAtomArgumentImpl(individualURI, prefixedName);
+		return new SWRLIndividualAtomArgumentImpl(individualIRI, prefixedName);
 	}
 
 	@Override
 	public SWRLIndividualAtomArgument createIndividualArgument(OWLIndividual individual)
 	{
 		if (individual.isNamed()) {
-			OWLNamedIndividual namedIndividual = individual.asNamedIndividual();
-			return new SWRLIndividualAtomArgumentImpl(namedIndividual.getURI(), namedIndividual.getPrefixedName());
+			OWLNamedIndividual namedIndividual = individual.asOWLNamedIndividual();
+			return new SWRLIndividualAtomArgumentImpl(namedIndividual.getIRI(), namedIndividual.getPrefixedName());
 		} else
 			throw new RuntimeException("OWL anonymous individual atom arguments not supported by Portability API");
 	}

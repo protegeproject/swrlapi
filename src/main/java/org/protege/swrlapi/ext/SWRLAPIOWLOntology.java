@@ -1,8 +1,8 @@
 package org.protege.swrlapi.ext;
 
-import java.net.URI;
 import java.util.Set;
 
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
@@ -28,27 +28,27 @@ public interface SWRLAPIOWLOntology extends OWLOntology
 	void putOWLAxiom(OWLAxiom axiom);
 
 	/**
-	 * Take a prefix and generate a unique URI from it in the default namespace of the ontology, e.g., a local name prefix
+	 * Take a prefix and generate a unique IRI from it in the default namespace of the ontology, e.g., a local name prefix
 	 * of "MM_CLASS_" supplied to this method where the default namespace is
-	 * "http://bmir.stanford.edu/protege/ontologies/Map" will generate a URI something like
+	 * "http://bmir.stanford.edu/protege/ontologies/Map" will generate a IRI something like
 	 * "http://bmir.stanford.edu/protege/ontologies/Map#MM_CLASS_34".
 	 */
-	URI generateOWLEntityURI(String localNamePrefix);
+	IRI generateOWLEntityIRI(String localNamePrefix);
 
-	String uri2PrefixedName(URI uri);
+	String uri2PrefixedName(IRI uri);
 
 	// TODO We really do not want all the following methods here. They are convenience methods only.
-	boolean isOWLIndividualOfType(URI individualURI, URI classURI);
+	boolean isOWLIndividualOfType(IRI individualIRI, IRI classIRI);
 
-	Set<OWLObjectPropertyAssertionAxiom> getOWLObjectPropertyAssertionAxioms(URI individualURI, URI propertyURI);
+	Set<OWLObjectPropertyAssertionAxiom> getOWLObjectPropertyAssertionAxioms(IRI individualIRI, IRI propertyIRI);
 
-	Set<OWLDataPropertyAssertionAxiom> getOWLDataPropertyAssertionAxioms(URI individualURI, URI propertyURI);
+	Set<OWLDataPropertyAssertionAxiom> getOWLDataPropertyAssertionAxioms(IRI individualIRI, IRI propertyIRI);
 
-	boolean isOWLClass(URI classURI);
+	boolean isOWLClass(IRI classIRI);
 
-	boolean isOWLNamedIndividual(URI individualURI);
+	boolean isOWLNamedIndividual(IRI individualIRI);
 
-	boolean isOWLObjectProperty(URI propertyURI);
+	boolean isOWLObjectProperty(IRI propertyIRI);
 
-	boolean isOWLDataProperty(URI propertyURI);
+	boolean isOWLDataProperty(IRI propertyIRI);
 }

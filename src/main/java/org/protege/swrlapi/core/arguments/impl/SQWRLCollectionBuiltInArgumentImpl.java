@@ -4,6 +4,8 @@ import org.protege.swrlapi.core.arguments.SQWRLCollectionBuiltInArgument;
 
 class SQWRLCollectionBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements SQWRLCollectionBuiltInArgument
 {
+	private static final long serialVersionUID = 1518745061145936538L;
+
 	private final String queryName, collectionName, collectionGroupID;
 
 	public SQWRLCollectionBuiltInArgumentImpl(String queryName, String collectionName, String collectionGroupID)

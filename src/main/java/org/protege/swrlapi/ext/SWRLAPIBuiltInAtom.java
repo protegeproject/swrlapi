@@ -1,10 +1,10 @@
 package org.protege.swrlapi.ext;
 
-import java.net.URI;
 import java.util.List;
 import java.util.Set;
 
 import org.protege.swrlapi.core.arguments.SWRLBuiltInArgument;
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.SWRLBuiltInAtom;
 
 public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtom
@@ -13,7 +13,7 @@ public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtom
 
 	String getBuiltInPrefixedName();
 
-	URI getBuiltInURI();
+	IRI getBuiltInIRI();
 
 	int getBuiltInIndex();
 
@@ -21,8 +21,7 @@ public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtom
 
 	boolean usesAtLeastOneVariableOf(Set<String> variableNames);
 
-	@Override
-	List<SWRLBuiltInArgument> getArguments(); // TODO Rename to avoid OWLAPI collision
+	List<SWRLBuiltInArgument> getBuiltInArguments(); // TODO Rename to avoid OWLAPI collision
 
 	int getNumberOfArguments();
 

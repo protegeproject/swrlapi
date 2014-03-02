@@ -1,12 +1,11 @@
 package org.protege.swrlapi.ext;
 
-import java.net.URI;
-
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDatatype;
 
 public interface OWLDatatypeFactory
 {
-	OWLDatatype getOWLDatatype(URI type);
+	OWLDatatype getOWLDatatype(IRI iri);
 
 	OWLDatatype getOWLBooleanDatatype();
 

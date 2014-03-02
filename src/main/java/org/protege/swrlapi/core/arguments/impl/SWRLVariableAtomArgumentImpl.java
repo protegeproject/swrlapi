@@ -4,6 +4,8 @@ import org.protege.swrlapi.core.arguments.SWRLVariableAtomArgument;
 
 class SWRLVariableAtomArgumentImpl implements SWRLVariableAtomArgument
 {
+	private static final long serialVersionUID = 7541492844317921693L;
+
 	private final String variableName;
 
 	public SWRLVariableAtomArgumentImpl(String variableName)

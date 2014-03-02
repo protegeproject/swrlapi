@@ -1,15 +1,12 @@
-
 package org.protege.swrlapi.xsd;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-
 import org.protege.swrlapi.exceptions.SQWRLLiteralException;
+import org.semanticweb.owlapi.model.IRI;
 
 public abstract class XSDType implements Comparable<XSDType>
 {
 	private final String content;
-	private URI uri = null;
+	private IRI uri = null;
 
 	public XSDType(String content) throws SQWRLLiteralException
 	{
@@ -28,24 +25,22 @@ public abstract class XSDType implements Comparable<XSDType>
 		return this.content;
 	}
 
-	public URI getURI()
+	public IRI getURI()
 	{
 		return this.uri;
 	}
 
+	@Override
 	public int compareTo(XSDType xsdType)
 	{
-		return this.content.compareTo(xsdType.getContent()); // TODO this is not correct - need to do actual value comparison
+		return this.content.compareTo(xsdType.getContent()); // TODO this is not correct - need to do actual value
+																													// comparison
 	}
 
 	protected abstract void validate() throws SQWRLLiteralException;
 
-	protected void setURI(String uriString) throws SQWRLLiteralException
+	protected void setURI(IRI iri) throws SQWRLLiteralException
 	{
-		try {
-			this.uri = new URI(uriString);
-		} catch (URISyntaxException e) {
-			throw new SQWRLLiteralException("invalid URI " + this.uri + " associated with value " + this.content + "");
-		}
+		this.uri = iri;
 	}
 }

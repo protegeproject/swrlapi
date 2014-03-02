@@ -1,10 +1,10 @@
 package org.protege.swrlapi.sqwrl.values;
 
-import java.net.URI;
+import org.semanticweb.owlapi.model.IRI;
 
 public interface SQWRLNamedResultValue extends SQWRLResultValue
 {
-	URI getURI();
+	IRI getIRI();
 
 	String getPrefixedName();
 }

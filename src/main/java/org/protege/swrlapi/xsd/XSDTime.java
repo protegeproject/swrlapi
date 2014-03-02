@@ -1,8 +1,7 @@
-
 package org.protege.swrlapi.xsd;
 
-import org.protege.owl.portability.model.XSDNames;
 import org.protege.swrlapi.exceptions.SQWRLLiteralException;
+import org.semanticweb.owlapi.vocab.XSDVocabulary;
 
 public class XSDTime extends XSDType
 {
@@ -10,16 +9,17 @@ public class XSDTime extends XSDType
 	{
 		super(content);
 
-		setURI(XSDNames.Full.TIME);
+		setURI(XSDVocabulary.TIME.getIRI());
 	}
 
 	public XSDTime(java.util.Date date) throws SQWRLLiteralException
 	{
 		super(XSDTimeUtil.utilDate2XSDTimeString(date));
 
-		setURI(XSDNames.Full.TIME);
+		setURI(XSDVocabulary.TIME.getIRI());
 	}
 
+	@Override
 	protected void validate() throws SQWRLLiteralException
 	{
 		if (getContent() == null)

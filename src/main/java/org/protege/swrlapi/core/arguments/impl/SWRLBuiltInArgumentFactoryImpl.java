@@ -1,6 +1,5 @@
 package org.protege.swrlapi.core.arguments.impl;
 
-import java.net.URI;
 import java.util.List;
 
 import org.protege.swrlapi.core.arguments.SQWRLCollectionBuiltInArgument;
@@ -23,6 +22,7 @@ import org.protege.swrlapi.xsd.XSDDate;
 import org.protege.swrlapi.xsd.XSDDateTime;
 import org.protege.swrlapi.xsd.XSDDuration;
 import org.protege.swrlapi.xsd.XSDTime;
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataProperty;
@@ -58,9 +58,9 @@ public class SWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumentFactor
 	}
 
 	@Override
-	public SWRLClassBuiltInArgument createClassArgument(URI classURI, String prefixedName)
+	public SWRLClassBuiltInArgument createClassArgument(IRI classIRI, String prefixedName)
 	{
-		return new SWRLClassBuiltInArgumentImpl(classURI, prefixedName);
+		return new SWRLClassBuiltInArgumentImpl(classIRI, prefixedName);
 	}
 
 	@Override
@@ -70,9 +70,9 @@ public class SWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumentFactor
 	}
 
 	@Override
-	public SWRLObjectPropertyBuiltInArgument createObjectPropertyArgument(URI propertyURI, String prefixedName)
+	public SWRLObjectPropertyBuiltInArgument createObjectPropertyArgument(IRI propertyIRI, String prefixedName)
 	{
-		return new SWRLObjectPropertyBuiltInArgumentImpl(propertyURI, prefixedName);
+		return new SWRLObjectPropertyBuiltInArgumentImpl(propertyIRI, prefixedName);
 	}
 
 	@Override
@@ -82,9 +82,9 @@ public class SWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumentFactor
 	}
 
 	@Override
-	public SWRLDataPropertyBuiltInArgument createDataPropertyArgument(URI propertyURI, String prefixedName)
+	public SWRLDataPropertyBuiltInArgument createDataPropertyArgument(IRI propertyIRI, String prefixedName)
 	{
-		return new SWRLDataPropertyBuiltInArgumentImpl(propertyURI, prefixedName);
+		return new SWRLDataPropertyBuiltInArgumentImpl(propertyIRI, prefixedName);
 	}
 
 	@Override
@@ -94,9 +94,9 @@ public class SWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumentFactor
 	}
 
 	@Override
-	public SWRLAnnotationPropertyBuiltInArgument createAnnotationPropertyArgument(URI propertyURI, String prefixedName)
+	public SWRLAnnotationPropertyBuiltInArgument createAnnotationPropertyArgument(IRI propertyIRI, String prefixedName)
 	{
-		return new SWRLAnnotationPropertyBuiltInArgumentImpl(propertyURI, prefixedName);
+		return new SWRLAnnotationPropertyBuiltInArgumentImpl(propertyIRI, prefixedName);
 	}
 
 	@Override
@@ -106,7 +106,7 @@ public class SWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumentFactor
 	}
 
 	@Override
-	public SWRLDatatypeBuiltInArgument createDatatypeArgument(URI uri, String prefixedName)
+	public SWRLDatatypeBuiltInArgument createDatatypeArgument(IRI uri, String prefixedName)
 	{
 		return new SWRLDatatypeBuiltInArgumentImpl(uri, prefixedName);
 	}
@@ -118,17 +118,17 @@ public class SWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumentFactor
 	}
 
 	@Override
-	public SWRLIndividualBuiltInArgument createIndividualArgument(URI individualURI, String prefixedName)
+	public SWRLIndividualBuiltInArgument createIndividualArgument(IRI individualIRI, String prefixedName)
 	{
-		return new SWRLIndividualBuiltInArgumentImpl(individualURI, prefixedName);
+		return new SWRLIndividualBuiltInArgumentImpl(individualIRI, prefixedName);
 	}
 
 	@Override
 	public SWRLIndividualBuiltInArgument createIndividualArgument(OWLIndividual individual)
 	{
 		if (individual.isNamed()) {
-			OWLNamedIndividual namedIndividual = individual.asNamedIndividual();
-			return new SWRLIndividualBuiltInArgumentImpl(namedIndividual.getURI(), namedIndividual.getPrefixedName());
+			OWLNamedIndividual namedIndividual = individual.asOWLNamedIndividual();
+			return new SWRLIndividualBuiltInArgumentImpl(namedIndividual.getIRI(), namedIndividual.getPrefixedName());
 		} else
 			throw new RuntimeException("OWL anonymous individual built-in arguments not supported by Portability API");
 	}
@@ -182,7 +182,7 @@ public class SWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumentFactor
 	}
 
 	@Override
-	public SWRLLiteralBuiltInArgument createLiteralArgument(URI uri)
+	public SWRLLiteralBuiltInArgument createLiteralArgument(IRI uri)
 	{
 		return new SWRLLiteralBuiltInArgumentImpl(getOWLLiteralFactory().getOWLLiteral(uri));
 	}

@@ -12,6 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
+import org.apache.commons.lang.StringUtils;
 import org.protege.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
 import org.protege.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.protege.swrlapi.core.arguments.SWRLMultiArgument;

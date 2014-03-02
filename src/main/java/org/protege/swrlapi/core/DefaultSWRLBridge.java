@@ -1,6 +1,5 @@
 package org.protege.swrlapi.core;
 
-import java.net.URI;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,6 +22,7 @@ import org.protege.swrlapi.owl2rl.OWL2RLPersistenceLayer;
 import org.protege.swrlapi.sqwrl.SQWRLResult;
 import org.protege.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.protege.swrlapi.sqwrl.exceptions.SQWRLException;
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
 
 /**
@@ -192,24 +192,24 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 				arguments);
 	}
 
-	public boolean isOWLClass(URI classURI)
+	public boolean isOWLClass(IRI classIRI)
 	{
-		return this.targetOWLOntology.isOWLClass(classURI);
+		return this.targetOWLOntology.isOWLClass(classIRI);
 	}
 
-	public boolean isOWLObjectProperty(URI propertyURI)
+	public boolean isOWLObjectProperty(IRI propertyIRI)
 	{
-		return this.targetOWLOntology.isOWLObjectProperty(propertyURI);
+		return this.targetOWLOntology.isOWLObjectProperty(propertyIRI);
 	}
 
-	public boolean isOWLDataProperty(URI propertyURI)
+	public boolean isOWLDataProperty(IRI propertyIRI)
 	{
-		return this.targetOWLOntology.isOWLDataProperty(propertyURI);
+		return this.targetOWLOntology.isOWLDataProperty(propertyIRI);
 	}
 
-	public boolean isOWLNamedIndividual(URI individualURI)
+	public boolean isOWLNamedIndividual(IRI individualIRI)
 	{
-		return this.targetOWLOntology.isOWLNamedIndividual(individualURI);
+		return this.targetOWLOntology.isOWLNamedIndividual(individualIRI);
 	}
 
 	@Override

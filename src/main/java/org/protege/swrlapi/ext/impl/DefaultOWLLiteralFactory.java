@@ -1,13 +1,12 @@
 package org.protege.swrlapi.ext.impl;
 
-import java.net.URI;
-
 import org.protege.swrlapi.ext.OWLDatatypeFactory;
 import org.protege.swrlapi.ext.OWLLiteralFactory;
 import org.protege.swrlapi.xsd.XSDDate;
 import org.protege.swrlapi.xsd.XSDDateTime;
 import org.protege.swrlapi.xsd.XSDDuration;
 import org.protege.swrlapi.xsd.XSDTime;
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
 
@@ -71,9 +70,9 @@ public class DefaultOWLLiteralFactory implements OWLLiteralFactory
 	}
 
 	@Override
-	public OWLLiteral getOWLLiteral(URI uri)
+	public OWLLiteral getOWLLiteral(IRI iri)
 	{
-		return new OWLLiteralImpl(uri, getOWLDatatypeFactory().getOWLURIDatatype());
+		return new OWLLiteralImpl(iri);
 	}
 
 	@Override

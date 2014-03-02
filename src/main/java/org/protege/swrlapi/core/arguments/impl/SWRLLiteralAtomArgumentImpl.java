@@ -6,6 +6,8 @@ import org.semanticweb.owlapi.model.OWLLiteral;
 
 class SWRLLiteralAtomArgumentImpl implements SWRLLiteralAtomArgument
 {
+	private static final long serialVersionUID = 2564969515366239679L;
+
 	private final OWLLiteral literal;
 
 	public SWRLLiteralAtomArgumentImpl(OWLLiteral literal)
