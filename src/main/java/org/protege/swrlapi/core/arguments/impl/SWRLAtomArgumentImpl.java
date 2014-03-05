@@ -19,7 +19,7 @@ import org.semanticweb.owlapi.model.SWRLObjectVisitorEx;
 
 public class SWRLAtomArgumentImpl implements SWRLAtomArgument
 {
-	private static final long serialVersionUID = -5551646100865638520L;
+	private static final long serialVersionUID = 1L;
 
 	@Override
 	public String toDisplayText()

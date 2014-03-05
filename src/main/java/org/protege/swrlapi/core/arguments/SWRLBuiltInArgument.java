@@ -1,7 +1,7 @@
 package org.protege.swrlapi.core.arguments;
 
 /**
- * Interface representing an argument to a SWRL built-in
+ * Interface representing an argument to a SWRL built-in.
  */
 public interface SWRLBuiltInArgument extends SWRLAtomArgument
 {
