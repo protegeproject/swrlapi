@@ -36,12 +36,6 @@ class SWRLLiteralAtomArgumentImpl extends SWRLAtomArgumentImpl implements SWRLLi
 	}
 
 	@Override
-	public String toDisplayText()
-	{
-		return this.literal.toString();
-	}
-
-	@Override
 	public String toString()
 	{
 		return toDisplayText();
@@ -50,7 +44,7 @@ class SWRLLiteralAtomArgumentImpl extends SWRLAtomArgumentImpl implements SWRLLi
 	@Override
 	public String toDisplayText()
 	{
-		throw new RuntimeException("Not implemented");
+		return this.literal.toString();
 	}
 
 	@Override

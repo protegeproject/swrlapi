@@ -15,10 +15,10 @@ import uk.ac.manchester.cs.owl.owlapi.SWRLRuleImpl;
 
 class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 {
-	private static final long serialVersionUID = 4399366884810154866L;
+	private static final long serialVersionUID = 1L;
 
 	private final String ruleName;
-	private List<SWRLAtom> bodyAtoms; // Not final because it can be reorganized during processing
+	private List<SWRLAtom> bodyAtoms; // Atoms can be reorganized during processing
 	private final List<SWRLAtom> headAtoms;
 
 	public DefaultSWRLAPIRule(String ruleName, List<? extends SWRLAtom> bodyAtoms, List<? extends SWRLAtom> headAtoms)

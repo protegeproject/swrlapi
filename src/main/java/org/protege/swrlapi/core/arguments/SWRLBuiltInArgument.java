@@ -5,6 +5,7 @@ package org.protege.swrlapi.core.arguments;
  */
 public interface SWRLBuiltInArgument extends SWRLAtomArgument
 {
+	// TODO Why are all these here?
 	void setBuiltInResult(SWRLBuiltInArgument builtInResult);
 
 	SWRLBuiltInArgument getBuiltInResult();
@@ -24,7 +25,4 @@ public interface SWRLBuiltInArgument extends SWRLAtomArgument
 	void setUnbound();
 
 	void setBound();
-
-	@Override
-	String toDisplayText();
 }

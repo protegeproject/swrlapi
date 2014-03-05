@@ -17,4 +17,6 @@ public interface SWRLAPIRule extends SWRLRule
 	List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromHead(Set<String> builtInNames);
 
 	List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromBody(Set<String> builtInNames);
+
+	String toDisplayText();
 }

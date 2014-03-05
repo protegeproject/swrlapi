@@ -125,12 +125,6 @@ public interface SWRLAPIOWLDataFactory extends OWLDataFactory
 
 	SWRLLiteralAtomArgument getSWRLLiteralAtomArgument(String lexicalValue, OWLDatatype datatype);
 
-	SWRLSameAsPredicate getSWRLSameAsPredicate();
-
-	SWRLDifferentFromPredicate getSWRLDifferentFromPredicate();
-
-	SWRLBuiltInPredicate getSWRLBuiltInPredicate(String builtInPrefixedName);
-
 	SWRLBuiltInArgumentFactory getSWRLBuiltInArgumentFactory();
 
 	SWRLAtomArgumentFactory getSWRLAtomArgumentFactory();

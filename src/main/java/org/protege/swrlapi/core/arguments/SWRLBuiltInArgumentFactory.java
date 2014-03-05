@@ -21,27 +21,27 @@ public interface SWRLBuiltInArgumentFactory
 
 	SWRLVariableBuiltInArgument createUnboundVariableArgument(String variableName);
 
-	SWRLClassBuiltInArgument createClassArgument(IRI uri, String prefixedName);
+	SWRLClassBuiltInArgument createClassArgument(IRI uri);
 
 	SWRLClassBuiltInArgument createClassArgument(OWLClass cls);
 
-	SWRLIndividualBuiltInArgument createIndividualArgument(IRI uri, String prefixedName);
+	SWRLIndividualBuiltInArgument createIndividualArgument(IRI uri);
 
 	SWRLIndividualBuiltInArgument createIndividualArgument(OWLIndividual individual);
 
-	SWRLObjectPropertyBuiltInArgument createObjectPropertyArgument(IRI uri, String prefixedName);
+	SWRLObjectPropertyBuiltInArgument createObjectPropertyArgument(IRI uri);
 
 	SWRLObjectPropertyBuiltInArgument createObjectPropertyArgument(OWLObjectProperty property);
 
-	SWRLDataPropertyBuiltInArgument createDataPropertyArgument(IRI uri, String prefixedName);
+	SWRLDataPropertyBuiltInArgument createDataPropertyArgument(IRI uri);
 
 	SWRLDataPropertyBuiltInArgument createDataPropertyArgument(OWLDataProperty property);
 
-	SWRLAnnotationPropertyBuiltInArgument createAnnotationPropertyArgument(IRI uri, String prefixedName);
+	SWRLAnnotationPropertyBuiltInArgument createAnnotationPropertyArgument(IRI uri);
 
 	SWRLAnnotationPropertyBuiltInArgument createAnnotationPropertyArgument(OWLAnnotationProperty property);
 
-	SWRLDatatypeBuiltInArgument createDatatypeArgument(IRI uri, String prefixedName);
+	SWRLDatatypeBuiltInArgument createDatatypeArgument(IRI uri);
 
 	SWRLDatatypeBuiltInArgument createDatatypeArgument(OWLDatatype datatype);
 

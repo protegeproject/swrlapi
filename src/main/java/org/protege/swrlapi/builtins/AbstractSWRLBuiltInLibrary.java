@@ -1458,7 +1458,7 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 
 	public SWRLClassBuiltInArgument createClassBuiltInArgument(OWLClass cls) throws BuiltInException
 	{
-		return getBuiltInArgumentFactory().createClassArgument(cls.getIRI(), cls.getPrefixedName());
+		return getBuiltInArgumentFactory().createClassArgument(cls.getIRI());
 	}
 
 	@Override

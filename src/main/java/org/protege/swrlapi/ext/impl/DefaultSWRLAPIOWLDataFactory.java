@@ -170,24 +170,6 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
 	}
 
 	@Override
-	public SWRLSameAsPredicate getSWRLSameAsPredicate()
-	{
-		return new SWRLSameAsPredicateImpl();
-	}
-
-	@Override
-	public SWRLDifferentFromPredicate getSWRLDifferentFromPredicate()
-	{
-		return new SWRLDifferentFromPredicateImpl();
-	}
-
-	@Override
-	public SWRLBuiltInPredicate getSWRLBuiltInPredicate(String builtInPrefixedName)
-	{
-		return new SWRLBuiltInPredicateImpl(builtInPrefixedName);
-	}
-
-	@Override
 	public SQWRLResultValueFactory getSQWRLResultValueFactory()
 	{
 		return this.sqwrlResultValueFactory;

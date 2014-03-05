@@ -58,7 +58,7 @@ public class SWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumentFactor
 	}
 
 	@Override
-	public SWRLClassBuiltInArgument createClassArgument(IRI classIRI, String prefixedName)
+	public SWRLClassBuiltInArgument createClassArgument(IRI classIRI)
 	{
 		return new SWRLClassBuiltInArgumentImpl(classIRI, prefixedName);
 	}
