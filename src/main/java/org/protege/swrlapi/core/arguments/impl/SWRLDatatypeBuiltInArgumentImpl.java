@@ -6,11 +6,11 @@ import org.semanticweb.owlapi.model.OWLDatatype;
 
 class SWRLDatatypeBuiltInArgumentImpl extends SWRLNamedBuiltInArgumentImpl implements SWRLDatatypeBuiltInArgument
 {
-	private static final long serialVersionUID = -16981080812656529L;
+	private static final long serialVersionUID = 1L;
 
-	public SWRLDatatypeBuiltInArgumentImpl(IRI iri, String prefixedName)
+	public SWRLDatatypeBuiltInArgumentImpl(IRI iri)
 	{
-		super(iri, prefixedName);
+		super(iri);
 	}
 
 	public SWRLDatatypeBuiltInArgumentImpl(OWLDatatype datatype)

@@ -60,7 +60,7 @@ public class SWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumentFactor
 	@Override
 	public SWRLClassBuiltInArgument createClassArgument(IRI classIRI)
 	{
-		return new SWRLClassBuiltInArgumentImpl(classIRI, prefixedName);
+		return new SWRLClassBuiltInArgumentImpl(classIRI);
 	}
 
 	@Override
@@ -70,9 +70,9 @@ public class SWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumentFactor
 	}
 
 	@Override
-	public SWRLObjectPropertyBuiltInArgument createObjectPropertyArgument(IRI propertyIRI, String prefixedName)
+	public SWRLObjectPropertyBuiltInArgument createObjectPropertyArgument(IRI propertyIRI)
 	{
-		return new SWRLObjectPropertyBuiltInArgumentImpl(propertyIRI, prefixedName);
+		return new SWRLObjectPropertyBuiltInArgumentImpl(propertyIRI);
 	}
 
 	@Override
@@ -82,9 +82,9 @@ public class SWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumentFactor
 	}
 
 	@Override
-	public SWRLDataPropertyBuiltInArgument createDataPropertyArgument(IRI propertyIRI, String prefixedName)
+	public SWRLDataPropertyBuiltInArgument createDataPropertyArgument(IRI propertyIRI)
 	{
-		return new SWRLDataPropertyBuiltInArgumentImpl(propertyIRI, prefixedName);
+		return new SWRLDataPropertyBuiltInArgumentImpl(propertyIRI);
 	}
 
 	@Override
@@ -94,9 +94,9 @@ public class SWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumentFactor
 	}
 
 	@Override
-	public SWRLAnnotationPropertyBuiltInArgument createAnnotationPropertyArgument(IRI propertyIRI, String prefixedName)
+	public SWRLAnnotationPropertyBuiltInArgument createAnnotationPropertyArgument(IRI propertyIRI)
 	{
-		return new SWRLAnnotationPropertyBuiltInArgumentImpl(propertyIRI, prefixedName);
+		return new SWRLAnnotationPropertyBuiltInArgumentImpl(propertyIRI);
 	}
 
 	@Override
@@ -106,9 +106,9 @@ public class SWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumentFactor
 	}
 
 	@Override
-	public SWRLDatatypeBuiltInArgument createDatatypeArgument(IRI uri, String prefixedName)
+	public SWRLDatatypeBuiltInArgument createDatatypeArgument(IRI uri)
 	{
-		return new SWRLDatatypeBuiltInArgumentImpl(uri, prefixedName);
+		return new SWRLDatatypeBuiltInArgumentImpl(uri);
 	}
 
 	@Override
@@ -118,9 +118,9 @@ public class SWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumentFactor
 	}
 
 	@Override
-	public SWRLIndividualBuiltInArgument createIndividualArgument(IRI individualIRI, String prefixedName)
+	public SWRLIndividualBuiltInArgument createIndividualArgument(IRI individualIRI)
 	{
-		return new SWRLIndividualBuiltInArgumentImpl(individualIRI, prefixedName);
+		return new SWRLIndividualBuiltInArgumentImpl(individualIRI);
 	}
 
 	@Override
@@ -128,7 +128,7 @@ public class SWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumentFactor
 	{
 		if (individual.isNamed()) {
 			OWLNamedIndividual namedIndividual = individual.asOWLNamedIndividual();
-			return new SWRLIndividualBuiltInArgumentImpl(namedIndividual.getIRI(), namedIndividual.getPrefixedName());
+			return new SWRLIndividualBuiltInArgumentImpl(namedIndividual.getIRI());
 		} else
 			throw new RuntimeException("OWL anonymous individual built-in arguments not supported by Portability API");
 	}

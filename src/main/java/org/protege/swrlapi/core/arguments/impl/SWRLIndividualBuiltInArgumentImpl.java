@@ -6,11 +6,11 @@ import org.semanticweb.owlapi.model.OWLNamedIndividual;
 
 class SWRLIndividualBuiltInArgumentImpl extends SWRLNamedBuiltInArgumentImpl implements SWRLIndividualBuiltInArgument
 {
-	private static final long serialVersionUID = 5242701530881210633L;
+	private static final long serialVersionUID = 1L;
 
-	public SWRLIndividualBuiltInArgumentImpl(IRI individualIRI, String prefixedName)
+	public SWRLIndividualBuiltInArgumentImpl(IRI individualIRI)
 	{
-		super(individualIRI, prefixedName);
+		super(individualIRI);
 	}
 
 	public SWRLIndividualBuiltInArgumentImpl(OWLNamedIndividual individual)

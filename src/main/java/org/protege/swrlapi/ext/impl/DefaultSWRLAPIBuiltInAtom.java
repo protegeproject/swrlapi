@@ -23,40 +23,36 @@ import org.semanticweb.owlapi.model.OWLObjectVisitorEx;
 import org.semanticweb.owlapi.model.SWRLObjectVisitor;
 import org.semanticweb.owlapi.model.SWRLObjectVisitorEx;
 
-import uk.ac.manchester.cs.owl.owlapi.SWRLAtomImpl;
+import uk.ac.manchester.cs.owl.owlapi.SWRLBuiltInAtomImpl;
 
 /**
  * Class representing a SWRL built-in atom
  */
-public class DefaultSWRLAPIBuiltInAtom extends SWRLAtomImpl implements SWRLAPIBuiltInAtom
+public class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SWRLAPIBuiltInAtom
 {
-	private static final long serialVersionUID = -5422861824260677949L;
+	private static final long serialVersionUID = 1L;
 
 	private final String ruleName;
 	private final IRI builtInIRI;
-	private final String builtInPrefixedName;
 	private List<SWRLBuiltInArgument> arguments;
 	private int builtInIndex = -1; // Index of this built-in atom in rule body; left-to-right, first built-in index is 0,
 																	// second in 1, and so on
 	private Set<String> pathVariableNames = new HashSet<String>();
 	private boolean sqwrlCollectionResultsUsed = false;
 
-	public DefaultSWRLAPIBuiltInAtom(String ruleName, IRI builtInIRI, String builtInPrefixedName,
-			List<SWRLBuiltInArgument> arguments)
+	public DefaultSWRLAPIBuiltInAtom(String ruleName, IRI builtInIRI, List<SWRLBuiltInArgument> arguments)
 	{
-		super(new SWRLPredicateImpl(builtInPrefixedName));
+		super(builtInIRI, darguments);
 		this.ruleName = ruleName;
 		this.builtInIRI = builtInIRI;
-		this.builtInPrefixedName = builtInPrefixedName;
 		this.arguments = arguments;
 	}
 
-	public DefaultSWRLAPIBuiltInAtom(String ruleName, IRI builtInIRI, String builtInPrefixedName)
+	public DefaultSWRLAPIBuiltInAtom(String ruleName, IRI builtInIRI)
 	{
-		super(new SWRLPredicateImpl(builtInPrefixedName));
+		super(builtInIRI, darguments);
 		this.ruleName = ruleName;
 		this.builtInIRI = builtInIRI;
-		this.builtInPrefixedName = builtInPrefixedName;
 		this.arguments = new ArrayList<SWRLBuiltInArgument>();
 	}
 
@@ -75,7 +71,7 @@ public class DefaultSWRLAPIBuiltInAtom extends SWRLAtomImpl implements SWRLAPIBu
 	@Override
 	public String getBuiltInPrefixedName()
 	{
-		return this.builtInPrefixedName;
+		throw new RuntimeException("Not implemented");
 	}
 
 	@Override

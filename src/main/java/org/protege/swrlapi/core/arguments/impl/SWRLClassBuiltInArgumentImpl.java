@@ -6,11 +6,11 @@ import org.semanticweb.owlapi.model.OWLClass;
 
 class SWRLClassBuiltInArgumentImpl extends SWRLNamedBuiltInArgumentImpl implements SWRLClassBuiltInArgument
 {
-	private static final long serialVersionUID = 6799830791612109948L;
+	private static final long serialVersionUID = 1L;
 
-	public SWRLClassBuiltInArgumentImpl(IRI classIRI, String prefixedName)
+	public SWRLClassBuiltInArgumentImpl(IRI classIRI)
 	{
-		super(classIRI, prefixedName);
+		super(classIRI);
 	}
 
 	public SWRLClassBuiltInArgumentImpl(OWLClass cls)

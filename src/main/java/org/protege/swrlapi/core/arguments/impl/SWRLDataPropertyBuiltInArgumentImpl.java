@@ -7,11 +7,11 @@ import org.semanticweb.owlapi.model.OWLDataProperty;
 class SWRLDataPropertyBuiltInArgumentImpl extends SWRLPropertyBuiltInArgumentImpl implements
 		SWRLDataPropertyBuiltInArgument
 {
-	private static final long serialVersionUID = -1117963203473430825L;
+	private static final long serialVersionUID = 1L;
 
-	public SWRLDataPropertyBuiltInArgumentImpl(IRI propertyIRI, String prefixedName)
+	public SWRLDataPropertyBuiltInArgumentImpl(IRI propertyIRI)
 	{
-		super(propertyIRI, prefixedName);
+		super(propertyIRI);
 	}
 
 	public SWRLDataPropertyBuiltInArgumentImpl(OWLDataProperty property)

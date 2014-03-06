@@ -1,4 +1,4 @@
-`package org.protege.swrlapi.core.arguments.impl;
+package org.protege.swrlapi.core.arguments.impl;
 
 import java.util.Set;
 
@@ -21,21 +21,18 @@ import org.semanticweb.owlapi.model.SWRLObjectVisitorEx;
 
 abstract class SWRLNamedAtomArgumentImpl extends SWRLAtomArgumentImpl implements SWRLNamedAtomArgument
 {
-	private static final long serialVersionUID = -5547990984547544944L;
+	private static final long serialVersionUID = 1L;
 
 	private final IRI uri;
-	private final String prefixedName;
 
 	public SWRLNamedAtomArgumentImpl(IRI uri, String prefixedName)
 	{
 		this.uri = uri;
-		this.prefixedName = prefixedName;
 	}
 
 	public SWRLNamedAtomArgumentImpl(OWLNamedObject entity)
 	{
 		this.uri = entity.getIRI();
-		this.prefixedName = entity.getPrefixedName();
 	}
 
 	@Override
@@ -47,7 +44,7 @@ abstract class SWRLNamedAtomArgumentImpl extends SWRLAtomArgumentImpl implements
 	@Override
 	public String getPrefixedName()
 	{
-		return this.prefixedName;
+		throw new RuntimeException("Not implemented");
 	}
 
 	@Override

@@ -35,7 +35,6 @@ import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
-import uk.ac.manchester.cs.owl.owlapi.OWLLiteralImpl;
 
 public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements SWRLAPIOWLDataFactory
 {
@@ -164,7 +163,7 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
 	@Override
 	public SWRLLiteralAtomArgument getSWRLLiteralAtomArgument(String lexicalValue, OWLDatatype datatype)
 	{
-		OWLLiteral literal = new OWLLiteralImpl(lexicalValue, datatype);
+		OWLLiteral literal = getOWLLiteralFactory().getOWLLiteral(lexicalValue, datatype);
 
 		return getSWRLAtomArgumentFactory().createLiteralArgument(literal);
 	}

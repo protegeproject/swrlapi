@@ -625,7 +625,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 				SWRLAPIBuiltInAtom builtInAtom = (SWRLAPIBuiltInAtom)atom;
 
 				if (isSQWRLGroupCollection(builtInAtom))
-					continue; // We ignore sqwrl:grouoBy variables because they are really directives
+					continue; // We ignore sqwrl:groupBy variables because they are really directives
 				if (isSQWRLCollectionOperation(builtInAtom))
 					break; // Once we encounter a SQWRL operation we stop because dependencies don't matter for these atoms
 

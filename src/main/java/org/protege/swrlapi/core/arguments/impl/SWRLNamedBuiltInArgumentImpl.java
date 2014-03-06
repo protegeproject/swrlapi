@@ -24,18 +24,15 @@ abstract class SWRLNamedBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl impl
 	private static final long serialVersionUID = 1L;
 
 	private final IRI uri;
-	private final String prefixedName;
 
-	public SWRLNamedBuiltInArgumentImpl(IRI uri, String prefixedName)
+	public SWRLNamedBuiltInArgumentImpl(IRI uri)
 	{
 		this.uri = uri;
-		this.prefixedName = prefixedName;
 	}
 
 	public SWRLNamedBuiltInArgumentImpl(OWLNamedObject entity)
 	{
 		this.uri = entity.getIRI();
-		this.prefixedName = entity.getPrefixedName();
 	}
 
 	@Override
@@ -47,7 +44,7 @@ abstract class SWRLNamedBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl impl
 	@Override
 	public String getPrefixedName()
 	{
-		return this.prefixedName;
+		throw new RuntimeException("Not implemented");
 	}
 
 	@Override
