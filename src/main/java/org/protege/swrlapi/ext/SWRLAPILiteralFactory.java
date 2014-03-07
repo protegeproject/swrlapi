@@ -9,6 +9,9 @@ import org.protege.swrlapi.xsd.XSDTime;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
 
+/**
+ * Factory for constructing SWRLAPI literals.
+ */
 public interface SWRLAPILiteralFactory
 {
 	SWRLAPILiteral getSWRLAPILiteral(OWLLiteral literal);

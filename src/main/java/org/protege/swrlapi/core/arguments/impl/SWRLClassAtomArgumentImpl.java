@@ -6,11 +6,11 @@ import org.semanticweb.owlapi.model.OWLClass;
 
 class SWRLClassAtomArgumentImpl extends SWRLNamedAtomArgumentImpl implements SWRLClassAtomArgument
 {
-	private static final long serialVersionUID = -1835060093639991034L;
+	private static final long serialVersionUID = 1L;
 
-	public SWRLClassAtomArgumentImpl(IRI classIRI, String prefixedName)
+	public SWRLClassAtomArgumentImpl(IRI classIRI)
 	{
-		super(classIRI, prefixedName);
+		super(classIRI);
 	}
 
 	public SWRLClassAtomArgumentImpl(OWLClass cls)

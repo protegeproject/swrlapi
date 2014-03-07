@@ -6,10 +6,10 @@ import org.semanticweb.owlapi.model.IRI;
 class SWRLAnnotationPropertyAtomArgumentImpl extends SWRLPropertyAtomArgumentImpl implements
 		SWRLAnnotationPropertyAtomArgument
 {
-	private static final long serialVersionUID = -2507166961421119249L;
+	private static final long serialVersionUID = 1L;
 
-	public SWRLAnnotationPropertyAtomArgumentImpl(IRI propertyIRI, String prefixedName)
+	public SWRLAnnotationPropertyAtomArgumentImpl(IRI propertyIRI)
 	{
-		super(propertyIRI, prefixedName);
+		super(propertyIRI);
 	}
 }

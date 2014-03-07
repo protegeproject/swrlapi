@@ -6,11 +6,11 @@ import org.semanticweb.owlapi.model.OWLObjectProperty;
 
 class SWRLObjectPropertyAtomArgumentImpl extends SWRLPropertyAtomArgumentImpl implements SWRLObjectPropertyAtomArgument
 {
-	private static final long serialVersionUID = -2202377265745664328L;
+	private static final long serialVersionUID = 1L;
 
-	public SWRLObjectPropertyAtomArgumentImpl(IRI propertyIRI, String prefixedName)
+	public SWRLObjectPropertyAtomArgumentImpl(IRI propertyIRI)
 	{
-		super(propertyIRI, prefixedName);
+		super(propertyIRI);
 	}
 
 	public SWRLObjectPropertyAtomArgumentImpl(OWLObjectProperty property)

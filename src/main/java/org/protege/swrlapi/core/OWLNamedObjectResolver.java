@@ -11,12 +11,7 @@ import org.protege.swrlapi.core.arguments.SWRLIndividualBuiltInArgument;
 import org.protege.swrlapi.core.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.protege.swrlapi.exceptions.TargetRuleEngineException;
 import org.semanticweb.owlapi.model.IRI;
-import org.semanticweb.owlapi.model.OWLAnnotationProperty;
-import org.semanticweb.owlapi.model.OWLClass;
-import org.semanticweb.owlapi.model.OWLDataProperty;
-import org.semanticweb.owlapi.model.OWLDatatype;
-import org.semanticweb.owlapi.model.OWLNamedIndividual;
-import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.semanticweb.owlapi.model.OWLEntity;
 
 /**
  * This class is used by rule engine implementations to determine the type of OWL entities using their prefixed name. It
@@ -84,46 +79,46 @@ public class OWLNamedObjectResolver
 		return this.datatypePrefixedNames.contains(prefixedName);
 	}
 
-	public void record(OWLClass cls)
+	public void recordOWLClass(OWLEntity cls)
 	{
-		recordPrefixedName2IRIMapping(cls.getPrefixedName(), cls.getIRI());
+		recordPrefixedName2IRIMapping(getPrefixedName(cls), cls.getIRI());
 
-		this.classPrefixedNames.add(cls.getPrefixedName());
+		this.classPrefixedNames.add(getPrefixedName(cls));
 	}
 
-	public void record(OWLNamedIndividual individual)
+	public void recordOWLNamedIndividual(OWLEntity individual)
 	{
-		recordPrefixedName2IRIMapping(individual.getPrefixedName(), individual.getIRI());
+		recordPrefixedName2IRIMapping(getPrefixedName(individual), individual.getIRI());
 
-		this.individualPrefixedNames.add(individual.getPrefixedName());
+		this.individualPrefixedNames.add(getPrefixedName(individual));
 	}
 
-	public void record(OWLObjectProperty property)
+	public void recordOWLObjectProperty(OWLEntity property)
 	{
-		recordPrefixedName2IRIMapping(property.getPrefixedName(), property.getIRI());
+		recordPrefixedName2IRIMapping(getPrefixedName(property), property.getIRI());
 
-		this.objectPropertyPrefixedNames.add(property.getPrefixedName());
+		this.objectPropertyPrefixedNames.add(getPrefixedName(property));
 	}
 
-	public void record(OWLDataProperty property)
+	public void recordOWLDataProperty(OWLEntity property)
 	{
-		recordPrefixedName2IRIMapping(property.getPrefixedName(), property.getIRI());
+		recordPrefixedName2IRIMapping(getPrefixedName(property), property.getIRI());
 
-		this.dataPropertyPrefixedNames.add(property.getPrefixedName());
+		this.dataPropertyPrefixedNames.add(getPrefixedName(property));
 	}
 
-	public void record(OWLAnnotationProperty property)
+	public void recordOWLAnnotationProperty(OWLEntity property)
 	{
-		recordPrefixedName2IRIMapping(property.getPrefixedName(), property.getIRI());
+		recordPrefixedName2IRIMapping(getPrefixedName(property), property.getIRI());
 
-		this.annotationPropertyPrefixedNames.add(property.getPrefixedName());
+		this.annotationPropertyPrefixedNames.add(getPrefixedName(property));
 	}
 
-	public void record(OWLDatatype datatype)
+	public void recordOWLDatatype(OWLEntity datatype)
 	{
-		recordPrefixedName2IRIMapping(datatype.getPrefixedName(), datatype.getIRI());
+		recordPrefixedName2IRIMapping(getPrefixedName(datatype), datatype.getIRI());
 
-		this.datatypePrefixedNames.add(datatype.getPrefixedName());
+		this.datatypePrefixedNames.add(getPrefixedName(datatype));
 	}
 
 	public void record(SWRLClassBuiltInArgument classArgument)
@@ -162,5 +157,10 @@ public class OWLNamedObjectResolver
 			return this.prefixedName2IRIMap.get(prefixedName);
 		else
 			throw new TargetRuleEngineException("internal error: could not find IRI for prefixed name " + prefixedName);
+	}
+
+	private String getPrefixedName(OWLEntity owlEntity)
+	{
+		throw new RuntimeException("Not implemented");
 	}
 }

@@ -37,9 +37,9 @@ public class SWRLAtomArgumentFactoryImpl implements SWRLAtomArgumentFactory
 	}
 
 	@Override
-	public SWRLClassAtomArgument createClassArgument(IRI classIRI, String prefixedName)
+	public SWRLClassAtomArgument createClassArgument(IRI classIRI)
 	{
-		return new SWRLClassAtomArgumentImpl(classIRI, prefixedName);
+		return new SWRLClassAtomArgumentImpl(classIRI);
 	}
 
 	@Override
@@ -49,9 +49,9 @@ public class SWRLAtomArgumentFactoryImpl implements SWRLAtomArgumentFactory
 	}
 
 	@Override
-	public SWRLObjectPropertyAtomArgument createObjectPropertyArgument(IRI propertyIRI, String prefixedName)
+	public SWRLObjectPropertyAtomArgument createObjectPropertyArgument(IRI propertyIRI)
 	{
-		return new SWRLObjectPropertyAtomArgumentImpl(propertyIRI, prefixedName);
+		return new SWRLObjectPropertyAtomArgumentImpl(propertyIRI);
 	}
 
 	@Override
@@ -61,9 +61,9 @@ public class SWRLAtomArgumentFactoryImpl implements SWRLAtomArgumentFactory
 	}
 
 	@Override
-	public SWRLDataPropertyAtomArgument createDataPropertyArgument(IRI propertyIRI, String prefixedName)
+	public SWRLDataPropertyAtomArgument createDataPropertyArgument(IRI propertyIRI)
 	{
-		return new SWRLDataPropertyAtomArgumentImpl(propertyIRI, prefixedName);
+		return new SWRLDataPropertyAtomArgumentImpl(propertyIRI);
 	}
 
 	@Override
@@ -73,9 +73,9 @@ public class SWRLAtomArgumentFactoryImpl implements SWRLAtomArgumentFactory
 	}
 
 	@Override
-	public SWRLIndividualAtomArgument createIndividualArgument(IRI individualIRI, String prefixedName)
+	public SWRLIndividualAtomArgument createIndividualArgument(IRI individualIRI)
 	{
-		return new SWRLIndividualAtomArgumentImpl(individualIRI, prefixedName);
+		return new SWRLIndividualAtomArgumentImpl(individualIRI);
 	}
 
 	@Override
@@ -83,7 +83,7 @@ public class SWRLAtomArgumentFactoryImpl implements SWRLAtomArgumentFactory
 	{
 		if (individual.isNamed()) {
 			OWLNamedIndividual namedIndividual = individual.asOWLNamedIndividual();
-			return new SWRLIndividualAtomArgumentImpl(namedIndividual.getIRI(), namedIndividual.getPrefixedName());
+			return new SWRLIndividualAtomArgumentImpl(namedIndividual.getIRI());
 		} else
 			throw new RuntimeException("OWL anonymous individual atom arguments not supported by Portability API");
 	}

@@ -8,6 +8,7 @@ import java.util.Set;
 import org.protege.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.protege.swrlapi.ext.SWRLAPIBuiltInAtom;
 import org.protege.swrlapi.ext.SWRLAPIRule;
+import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.SWRLAtom;
 import org.semanticweb.owlapi.model.SWRLClassAtom;
 
@@ -18,11 +19,13 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 	private static final long serialVersionUID = 1L;
 
 	private final String ruleName;
-	private List<SWRLAtom> bodyAtoms; // Atoms can be reorganized during processing
+	private List<SWRLAtom> bodyAtoms; // Body atoms can be reorganized during processing
 	private final List<SWRLAtom> headAtoms;
 
 	public DefaultSWRLAPIRule(String ruleName, List<? extends SWRLAtom> bodyAtoms, List<? extends SWRLAtom> headAtoms)
 	{
+		// TODO
+		super(new HashSet<SWRLAtom>(bodyAtoms), new HashSet<SWRLAtom>(headAtoms), new HashSet<OWLAnnotation>());
 		this.ruleName = ruleName;
 		this.bodyAtoms = new ArrayList<SWRLAtom>(bodyAtoms);
 		this.headAtoms = new ArrayList<SWRLAtom>(headAtoms);

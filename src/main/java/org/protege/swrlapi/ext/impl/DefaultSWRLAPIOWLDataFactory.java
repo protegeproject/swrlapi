@@ -29,6 +29,7 @@ import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLDatatype;
+import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
 import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
@@ -172,6 +173,42 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
 	public SQWRLResultValueFactory getSQWRLResultValueFactory()
 	{
 		return this.sqwrlResultValueFactory;
+	}
+
+	@Override
+	public OWLDeclarationAxiom getOWLClassDeclarationAxiom(OWLClass cls)
+	{
+		return getOWLDeclarationAxiom(cls);
+	}
+
+	@Override
+	public OWLDeclarationAxiom getOWLIndividualDeclarationAxiom(OWLNamedIndividual individual)
+	{
+		return getOWLDeclarationAxiom(individual);
+	}
+
+	@Override
+	public OWLDeclarationAxiom getOWLObjectPropertyDeclarationAxiom(OWLObjectProperty property)
+	{
+		return getOWLDeclarationAxiom(property);
+	}
+
+	@Override
+	public OWLDeclarationAxiom getOWLDataPropertyDeclarationAxiom(OWLDataProperty property)
+	{
+		return getOWLDeclarationAxiom(property);
+	}
+
+	@Override
+	public OWLDeclarationAxiom getOWLAnnotationPropertyDeclarationAxiom(OWLAnnotationProperty property)
+	{
+		return getOWLDeclarationAxiom(property);
+	}
+
+	@Override
+	public OWLDeclarationAxiom getOWLDatatypeDeclarationAxiom(OWLDatatype datatype)
+	{
+		return getOWLDeclarationAxiom(datatype);
 	}
 
 	@Override

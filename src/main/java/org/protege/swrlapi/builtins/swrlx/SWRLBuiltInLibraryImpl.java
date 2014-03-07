@@ -7,6 +7,7 @@ import org.protege.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
 import org.protege.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.protege.swrlapi.exceptions.BuiltInException;
 import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 
 /**
@@ -53,8 +54,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 				cls = this.classInvocationMap.get(createInvocationPattern);
 			} else {
 				cls = getOWLDataFactory().getOWLClass();
-				OWLClassDeclarationAxiom declarationAxiom = getOWLDataFactory().getOWLClassDeclarationAxiom(cls);
-				getBuiltInBridge().getOWLNamedObjectResolver().record(cls);
+				OWLDeclarationAxiom declarationAxiom = getOWLDataFactory().getOWLClassDeclarationAxiom(cls);
+				getBuiltInBridge().getOWLNamedObjectResolver().recordOWLClass(cls);
 				getBuiltInBridge().injectOWLAxiom(declarationAxiom);
 				this.classInvocationMap.put(createInvocationPattern, cls);
 			}
@@ -81,9 +82,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 				individual = this.individualInvocationMap.get(createInvocationPattern);
 			else {
 				individual = getOWLDataFactory().getOWLNamedIndividual();
-				OWLIndividualDeclarationAxiom declarationAxiom = getOWLDataFactory().getOWLIndividualDeclarationAxiom(
-						individual);
-				getBuiltInBridge().getOWLNamedObjectResolver().record(individual);
+				OWLDeclarationAxiom declarationAxiom = getOWLDataFactory().getOWLIndividualDeclarationAxiom(individual);
+				getBuiltInBridge().getOWLNamedObjectResolver().recordOWLNamedIndividual(individual);
 				getBuiltInBridge().injectOWLAxiom(declarationAxiom);
 				this.individualInvocationMap.put(createInvocationPattern, individual);
 			}

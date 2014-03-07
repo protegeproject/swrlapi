@@ -25,7 +25,7 @@ abstract class SWRLNamedAtomArgumentImpl extends SWRLAtomArgumentImpl implements
 
 	private final IRI uri;
 
-	public SWRLNamedAtomArgumentImpl(IRI uri, String prefixedName)
+	public SWRLNamedAtomArgumentImpl(IRI uri)
 	{
 		this.uri = uri;
 	}

@@ -1,5 +1,6 @@
 package org.protege.swrlapi.core.arguments.impl;
 
+import java.net.URI;
 import java.util.List;
 
 import org.protege.swrlapi.core.arguments.SQWRLCollectionBuiltInArgument;
@@ -106,9 +107,9 @@ public class SWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumentFactor
 	}
 
 	@Override
-	public SWRLDatatypeBuiltInArgument createDatatypeArgument(IRI uri)
+	public SWRLDatatypeBuiltInArgument createDatatypeArgument(IRI iri)
 	{
-		return new SWRLDatatypeBuiltInArgumentImpl(uri);
+		return new SWRLDatatypeBuiltInArgumentImpl(iri);
 	}
 
 	@Override
@@ -182,7 +183,7 @@ public class SWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumentFactor
 	}
 
 	@Override
-	public SWRLLiteralBuiltInArgument createLiteralArgument(IRI uri)
+	public SWRLLiteralBuiltInArgument createLiteralArgument(URI uri)
 	{
 		return new SWRLLiteralBuiltInArgumentImpl(getOWLLiteralFactory().getOWLLiteral(uri));
 	}

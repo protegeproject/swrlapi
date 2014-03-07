@@ -3,6 +3,9 @@ package org.protege.swrlapi.ext;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDatatype;
 
+/**
+ * A factory to create OWLAPI OWL datatypes.
+ */
 public interface OWLDatatypeFactory
 {
 	OWLDatatype getOWLDatatype(IRI iri);

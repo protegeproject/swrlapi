@@ -5,10 +5,10 @@ import org.semanticweb.owlapi.model.IRI;
 
 class SWRLDatatypeAtomArgumentImpl extends SWRLNamedAtomArgumentImpl implements SWRLDatatypeAtomArgument
 {
-	private static final long serialVersionUID = -1389527320122265684L;
+	private static final long serialVersionUID = 1L;
 
-	public SWRLDatatypeAtomArgumentImpl(IRI uri, String prefixedName)
+	public SWRLDatatypeAtomArgumentImpl(IRI uri)
 	{
-		super(uri, prefixedName);
+		super(uri);
 	}
 }

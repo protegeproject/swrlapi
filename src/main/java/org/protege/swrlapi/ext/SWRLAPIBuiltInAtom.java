@@ -7,6 +7,9 @@ import org.protege.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.SWRLBuiltInAtom;
 
+/**
+ * The SWRLAPI's built-in atom extends the OWLAPI's built-in atom with additional functionality.
+ */
 public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtom
 {
 	String getRuleName();
@@ -21,7 +24,7 @@ public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtom
 
 	boolean usesAtLeastOneVariableOf(Set<String> variableNames);
 
-	List<SWRLBuiltInArgument> getBuiltInArguments(); // TODO Rename to avoid OWLAPI collision
+	List<SWRLBuiltInArgument> getBuiltInArguments();
 
 	int getNumberOfArguments();
 

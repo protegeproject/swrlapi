@@ -1,13 +1,17 @@
 package org.protege.swrlapi.ext;
 
+import java.net.URI;
+
 import org.protege.swrlapi.xsd.XSDDate;
 import org.protege.swrlapi.xsd.XSDDateTime;
 import org.protege.swrlapi.xsd.XSDDuration;
 import org.protege.swrlapi.xsd.XSDTime;
-import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
 
+/**
+ * A factory to create OWLAPI OWL literals.
+ */
 public interface OWLLiteralFactory
 {
 	OWLLiteral getOWLLiteral(String literal, OWLDatatype datatype);
@@ -28,7 +32,7 @@ public interface OWLLiteralFactory
 
 	OWLLiteral getOWLLiteral(short s);
 
-	OWLLiteral getOWLLiteral(IRI uri);
+	OWLLiteral getOWLLiteral(URI uri);
 
 	OWLLiteral getOWLLiteral(XSDDate date);
 

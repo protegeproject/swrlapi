@@ -11,6 +11,7 @@ import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLDataPropertyDomainAxiom;
 import org.semanticweb.owlapi.model.OWLDataPropertyRangeAxiom;
 import org.semanticweb.owlapi.model.OWLDatatypeDefinitionAxiom;
+import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
 import org.semanticweb.owlapi.model.OWLDifferentIndividualsAxiom;
 import org.semanticweb.owlapi.model.OWLDisjointClassesAxiom;
 import org.semanticweb.owlapi.model.OWLDisjointDataPropertiesAxiom;
@@ -50,17 +51,7 @@ public interface TargetRuleEngineOWLAxiomConverter extends TargetRuleEngineConve
 {
 	void convert(SWRLAPIRule axiom) throws TargetRuleEngineException;
 
-	void convert(OWLClassDeclarationAxiom axiom) throws TargetRuleEngineException;
-
-	void convert(OWLIndividualDeclarationAxiom axiom) throws TargetRuleEngineException;
-
-	void convert(OWLObjectPropertyDeclarationAxiom axiom) throws TargetRuleEngineException;
-
-	void convert(OWLDataPropertyDeclarationAxiom axiom) throws TargetRuleEngineException;
-
-	void convert(OWLAnnotationPropertyDeclarationAxiom axiom) throws TargetRuleEngineException;
-
-	void convert(OWLDatatypeDeclarationAxiom axiom) throws TargetRuleEngineException;
+	void convert(OWLDeclarationAxiom axiom) throws TargetRuleEngineException;
 
 	void convert(OWLClassAssertionAxiom axiom) throws TargetRuleEngineException;
 

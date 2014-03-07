@@ -7,8 +7,8 @@ class SWRLIndividualAtomArgumentImpl extends SWRLNamedAtomArgumentImpl implement
 {
 	private static final long serialVersionUID = -2877896006624040094L;
 
-	public SWRLIndividualAtomArgumentImpl(IRI individualIRI, String prefixedName)
+	public SWRLIndividualAtomArgumentImpl(IRI individualIRI)
 	{
-		super(individualIRI, prefixedName);
+		super(individualIRI);
 	}
 }

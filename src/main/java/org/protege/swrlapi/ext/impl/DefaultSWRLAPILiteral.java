@@ -109,7 +109,7 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 	@Override
 	public boolean isNumeric()
 	{
-		return isShort() || isInteger() || isLong() || isFloat() || isDouble();
+		return isByte() || isShort() || isInteger() || isLong() || isFloat() || isDouble();
 	}
 
 	@Override
@@ -129,15 +129,7 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 	{
 		if (!isString())
 			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to String");
-		return (String)getValue();
-	}
-
-	@Override
-	public Number getNumber() throws SQWRLLiteralException
-	{
-		if (!isNumeric())
-			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to Number");
-		return (Number)getValue();
+		return getOWLLiteral().getLiteral();
 	}
 
 	@Override
@@ -146,39 +138,52 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 		if (!isBoolean())
 			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to boolean");
 
-		return ((Boolean)getValue()).booleanValue();
+		return Boolean.parseBoolean(literal.getLiteral());
 	}
 
 	@Override
 	public short getShort() throws SQWRLLiteralException
 	{
-		if (!isShort())
-			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to short");
-		return ((Short)getValue()).shortValue();
+		try {
+			return Short.parseShort(literal.getLiteral());
+		} catch (NumberFormatException e) {
+			throw new SQWRLLiteralException("cannot convert value " + literal.getLiteral() + " of type "
+					+ this.literal.getDatatype() + " to short");
+		}
 	}
 
 	@Override
 	public int getInteger() throws SQWRLLiteralException
 	{
-		if (isInteger())
-			return ((Integer)getValue()).intValue();
-		else if (isShort())
-			return ((Short)getValue()).shortValue();
-		else
-			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to int");
+		try {
+			if (isInteger())
+				return Integer.parseInt(literal.getLiteral());
+			else if (isShort())
+				return Short.parseShort(literal.getLiteral());
+			else
+				throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to int");
+		} catch (NumberFormatException e) {
+			throw new SQWRLLiteralException("cannot convert value " + literal.getLiteral() + " of type "
+					+ this.literal.getDatatype() + " to integer");
+		}
 	}
 
 	@Override
 	public long getLong() throws SQWRLLiteralException
 	{
-		if (isLong())
-			return ((Long)getValue()).longValue();
-		else if (isInteger())
-			return ((Integer)getValue()).intValue();
-		else if (isShort())
-			return ((Short)getValue()).shortValue();
-		else
-			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to long");
+		try {
+			if (isLong())
+				return Long.parseLong(literal.getLiteral());
+			else if (isInteger())
+				return Integer.parseInt(literal.getLiteral());
+			else if (isShort())
+				return Short.parseShort(literal.getLiteral());
+			else
+				throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to long");
+		} catch (NumberFormatException e) {
+			throw new SQWRLLiteralException("cannot convert value " + literal.getLiteral() + " of type "
+					+ this.literal.getDatatype() + " to long");
+		}
 	}
 
 	// Some precision loss possible going from integer and long to float. See:
@@ -186,18 +191,23 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 	@Override
 	public float getFloat() throws SQWRLLiteralException
 	{
-		if (isFloat())
-			return ((Float)getValue()).floatValue();
-		else if (isDouble())
-			return ((Double)getValue()).floatValue();
-		else if (isInteger())
-			return ((Integer)getValue()).intValue();
-		else if (isLong())
-			return ((Long)getValue()).longValue();
-		else if (isShort())
-			return ((Short)getValue()).shortValue();
-		else
-			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to float");
+		try {
+			if (isFloat())
+				return Float.parseFloat(literal.getLiteral());
+			else if (isDouble())
+				return Float.parseFloat(literal.getLiteral());
+			else if (isInteger())
+				return Integer.parseInt(literal.getLiteral());
+			else if (isLong())
+				return Long.parseLong(literal.getLiteral());
+			else if (isShort())
+				return Short.parseShort(literal.getLiteral());
+			else
+				throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to float");
+		} catch (NumberFormatException e) {
+			throw new SQWRLLiteralException("cannot convert value " + literal.getLiteral() + " of type "
+					+ this.literal.getDatatype() + " to float");
+		}
 	}
 
 	// Some precision loss possible going from long to double. See:
@@ -205,36 +215,51 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 	@Override
 	public double getDouble() throws SQWRLLiteralException
 	{
-		if (isDouble())
-			return ((Double)getValue()).doubleValue();
-		else if (isFloat())
-			return ((Float)getValue()).floatValue();
-		else if (isInteger())
-			return ((Integer)getValue()).intValue();
-		else if (isLong())
-			return ((Long)getValue()).longValue();
-		else if (isShort())
-			return ((Short)getValue()).shortValue();
-		else
-			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to double");
+		try {
+			if (isDouble())
+				return Double.parseDouble(literal.getLiteral());
+			else if (isFloat())
+				return Float.parseFloat(literal.getLiteral());
+			else if (isInteger())
+				return Integer.parseInt(literal.getLiteral());
+			else if (isLong())
+				return Long.parseLong(literal.getLiteral());
+			else if (isShort())
+				return Short.parseShort(literal.getLiteral());
+			else
+				throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to double");
+		} catch (NumberFormatException e) {
+			throw new SQWRLLiteralException("cannot convert value " + literal.getLiteral() + " of type "
+					+ this.literal.getDatatype() + " to double");
+		}
 	}
 
 	@Override
 	public byte getByte() throws SQWRLLiteralException
 	{
-		if (!isByte())
-			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to "
-					+ XSDVocabulary.BYTE);
-		return ((java.lang.Byte)getValue()).byteValue();
+		try {
+			if (!isByte())
+				throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to "
+						+ XSDVocabulary.BYTE);
+			return Byte.parseByte(literal.getLiteral());
+		} catch (NumberFormatException e) {
+			throw new SQWRLLiteralException("cannot convert value " + literal.getLiteral() + " of type "
+					+ this.literal.getDatatype() + " to byte");
+		}
 	}
 
 	@Override
 	public URI getAnyURI() throws SQWRLLiteralException
 	{
-		if (!isAnyURI())
-			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to "
-					+ XSDVocabulary.ANY_URI);
-		return (URI)getValue();
+		try {
+			if (!isAnyURI())
+				throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to "
+						+ XSDVocabulary.ANY_URI);
+			return URI.create(literal.getLiteral());
+		} catch (IllegalArgumentException e) {
+			throw new SQWRLLiteralException("cannot convert value " + literal.getLiteral() + " of type "
+					+ this.literal.getDatatype() + " to URI");
+		}
 	}
 
 	@Override
@@ -243,7 +268,7 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 		if (!isTime())
 			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to "
 					+ XSDVocabulary.TIME);
-		return (XSDTime)getValue();
+		return new XSDTime(literal.getLiteral());
 	}
 
 	@Override
@@ -252,7 +277,7 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 		if (!isDate())
 			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to "
 					+ XSDVocabulary.DATE);
-		return (XSDDate)getValue();
+		return new XSDDate(literal.getLiteral());
 	}
 
 	@Override
@@ -262,7 +287,7 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to "
 					+ XSDVocabulary.DATE_TIME);
 		;
-		return (XSDDateTime)getValue();
+		return new XSDDateTime(literal.getLiteral());
 	}
 
 	@Override
@@ -271,25 +296,13 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 		if (!isDuration())
 			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to "
 					+ XSDVocabulary.DURATION.getShortName());
-		return (XSDDuration)getValue();
+		return new XSDDuration(literal.getLiteral());
 	}
 
 	@Override
 	public String getLiteral()
 	{
 		return this.literal.getLiteral();
-	}
-
-	@Override
-	public Object getValue()
-	{
-		return this.literal.getValue();
-	}
-
-	@Override
-	public String getPrefixedTypeName()
-	{
-		return this.literal.getDatatype().getPrefixedName();
 	}
 
 	@Override

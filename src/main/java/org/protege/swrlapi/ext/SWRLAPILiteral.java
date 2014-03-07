@@ -9,6 +9,9 @@ import org.protege.swrlapi.xsd.XSDDuration;
 import org.protege.swrlapi.xsd.XSDTime;
 import org.semanticweb.owlapi.model.OWLLiteral;
 
+/**
+ * The SWRLAPI's literal extends the OWLAPI's literal with additional functionality.
+ */
 public interface SWRLAPILiteral extends Comparable<SWRLAPILiteral>
 {
 	OWLLiteral getOWLLiteral();
@@ -41,11 +44,7 @@ public interface SWRLAPILiteral extends Comparable<SWRLAPILiteral>
 
 	boolean isDuration();
 
-	String getPrefixedTypeName();
-
 	String getString() throws SQWRLLiteralException;
-
-	Number getNumber() throws SQWRLLiteralException;
 
 	boolean getBoolean() throws SQWRLLiteralException;
 
@@ -72,8 +71,6 @@ public interface SWRLAPILiteral extends Comparable<SWRLAPILiteral>
 	XSDDuration getDuration() throws SQWRLLiteralException;
 
 	String getLiteral();
-
-	Object getValue();
 
 	boolean isComparable();
 

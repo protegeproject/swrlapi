@@ -2,6 +2,7 @@ package org.protege.swrlapi.builtins;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -37,6 +38,7 @@ import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLDataProperty;
+import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
@@ -105,9 +107,9 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 	protected OWLNamedIndividual injectOWLNamedIndividualOfClass(OWLClass cls) throws BuiltInException
 	{
 		OWLNamedIndividual individual = getOWLDataFactory().getOWLNamedIndividual();
-		OWLIndividualDeclarationAxiom declarationAxiom = getOWLDataFactory().getOWLIndividualDeclarationAxiom(individual);
-		OWLClassAssertionAxiom classAssertionAxiom = getOWLDataFactory().getOWLClassAssertionAxiom(individual, cls);
-		getBuiltInBridge().getOWLNamedObjectResolver().record(individual);
+		OWLDeclarationAxiom declarationAxiom = getOWLDataFactory().getOWLIndividualDeclarationAxiom(individual);
+		OWLClassAssertionAxiom classAssertionAxiom = getOWLDataFactory().getOWLClassAssertionAxiom(cls, individual);
+		getBuiltInBridge().getOWLNamedObjectResolver().recordOWLNamedIndividual(individual);
 		getBuiltInBridge().injectOWLAxiom(declarationAxiom);
 		getBuiltInBridge().injectOWLAxiom(classAssertionAxiom);
 
@@ -600,7 +602,7 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 	}
 
 	@Override
-	public IRI getArgumentAsAIRI(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException
+	public IRI getArgumentAsAnIRI(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException
 	{
 		checkThatArgumentIsAClassPropertyOrIndividual(argumentNumber, arguments);
 
@@ -1249,8 +1251,18 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 			return individualArgument.getIRI();
 		} else if (argument instanceof SWRLLiteralBuiltInArgument) {
 			SWRLAPILiteral literal = getArgumentAsASWRLAPILiteral(argument);
-			if (literal.isNumeric())
-				return literal.getNumber();
+			if (literal.isByte())
+				return literal.getByte();
+			else if (literal.isShort())
+				return literal.getShort();
+			else if (literal.isInteger())
+				return literal.getInteger();
+			else if (literal.isLong())
+				return literal.getLong();
+			else if (literal.isFloat())
+				return literal.getFloat();
+			else if (literal.isDouble())
+				return literal.getDouble();
 			else if (literal.isString())
 				return literal.getString();
 			else
@@ -1462,48 +1474,45 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 	}
 
 	@Override
-	public SWRLClassBuiltInArgument createClassBuiltInArgument(IRI classIRI, String prefixedName) throws BuiltInException
+	public SWRLClassBuiltInArgument createClassBuiltInArgument(IRI classIRI) throws BuiltInException
 	{
-		return getBuiltInArgumentFactory().createClassArgument(classIRI, prefixedName);
+		return getBuiltInArgumentFactory().createClassArgument(classIRI);
 	}
 
 	public SWRLIndividualBuiltInArgument createIndividualBuiltInArgument(OWLNamedIndividual individual)
 			throws BuiltInException
 	{
-		return getBuiltInArgumentFactory().createIndividualArgument(individual.getIRI(), individual.getPrefixedName());
+		return getBuiltInArgumentFactory().createIndividualArgument(individual.getIRI());
 	}
 
 	@Override
-	public SWRLIndividualBuiltInArgument createIndividualBuiltInArgument(IRI individualIRI, String prefixedName)
-			throws BuiltInException
+	public SWRLIndividualBuiltInArgument createIndividualBuiltInArgument(IRI individualIRI) throws BuiltInException
 	{
-		return getBuiltInArgumentFactory().createIndividualArgument(individualIRI, prefixedName);
+		return getBuiltInArgumentFactory().createIndividualArgument(individualIRI);
 	}
 
 	public SWRLObjectPropertyBuiltInArgument createObjectPropertyBuiltInArgument(OWLObjectProperty property)
 			throws BuiltInException
 	{
-		return getBuiltInArgumentFactory().createObjectPropertyArgument(property.getIRI(), property.getPrefixedName());
+		return getBuiltInArgumentFactory().createObjectPropertyArgument(property.getIRI());
 	}
 
 	@Override
-	public SWRLObjectPropertyBuiltInArgument createObjectPropertyBuiltInArgument(IRI propertyIRI, String prefixedName)
-			throws BuiltInException
+	public SWRLObjectPropertyBuiltInArgument createObjectPropertyBuiltInArgument(IRI propertyIRI) throws BuiltInException
 	{
-		return getBuiltInArgumentFactory().createObjectPropertyArgument(propertyIRI, prefixedName);
+		return getBuiltInArgumentFactory().createObjectPropertyArgument(propertyIRI);
 	}
 
 	public SWRLDataPropertyBuiltInArgument createDataPropertyBuiltInArgument(OWLDataProperty property)
 			throws BuiltInException
 	{
-		return getBuiltInArgumentFactory().createDataPropertyArgument(property.getIRI(), property.getPrefixedName());
+		return getBuiltInArgumentFactory().createDataPropertyArgument(property.getIRI());
 	}
 
 	@Override
-	public SWRLDataPropertyBuiltInArgument createDataPropertyArgument(IRI propertyIRI, String prefixedName)
-			throws BuiltInException
+	public SWRLDataPropertyBuiltInArgument createDataPropertyArgument(IRI propertyIRI) throws BuiltInException
 	{
-		return getBuiltInArgumentFactory().createDataPropertyArgument(propertyIRI, prefixedName);
+		return getBuiltInArgumentFactory().createDataPropertyArgument(propertyIRI);
 	}
 
 	public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(OWLLiteral literal) throws BuiltInException
@@ -1584,7 +1593,7 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 	}
 
 	@Override
-	public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(IRI uri) throws BuiltInException
+	public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(URI uri) throws BuiltInException
 	{
 		return getBuiltInArgumentFactory().createLiteralArgument(uri);
 	}
@@ -1638,7 +1647,7 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 	}
 
 	@Override
-	public SWRLAPILiteral createSWRLAPILiteral(IRI uri) throws BuiltInException
+	public SWRLAPILiteral createSWRLAPILiteral(URI uri) throws BuiltInException
 	{
 		return getSWRLAPILiteralFactory().getSWRLAPILiteral(uri);
 	}

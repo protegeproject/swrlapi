@@ -18,7 +18,6 @@ import org.protege.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.protege.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.protege.swrlapi.sqwrl.exceptions.SQWRLInvalidQueryNameException;
 import org.semanticweb.owlapi.model.IRI;
-import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLAsymmetricObjectPropertyAxiom;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLClass;
@@ -29,9 +28,11 @@ import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLDataPropertyDomainAxiom;
 import org.semanticweb.owlapi.model.OWLDataPropertyExpression;
 import org.semanticweb.owlapi.model.OWLDataPropertyRangeAxiom;
+import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
 import org.semanticweb.owlapi.model.OWLDifferentIndividualsAxiom;
 import org.semanticweb.owlapi.model.OWLDisjointDataPropertiesAxiom;
 import org.semanticweb.owlapi.model.OWLDisjointObjectPropertiesAxiom;
+import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLEquivalentClassesAxiom;
 import org.semanticweb.owlapi.model.OWLEquivalentDataPropertiesAxiom;
 import org.semanticweb.owlapi.model.OWLEquivalentObjectPropertiesAxiom;
@@ -41,7 +42,6 @@ import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLInverseFunctionalObjectPropertyAxiom;
 import org.semanticweb.owlapi.model.OWLInverseObjectPropertiesAxiom;
 import org.semanticweb.owlapi.model.OWLIrreflexiveObjectPropertyAxiom;
-import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLObjectPropertyDomainAxiom;
@@ -65,11 +65,11 @@ public class DefaultSWRLOntologyProcessor implements SWRLOntologyProcessor
 
 	private final Set<OWLAxiom> assertedOWLAxioms; // All asserted OWL axioms extracted from the active ontology
 
-	private final HashMap<IRI, OWLClassDeclarationAxiom> owlClassDeclarationAxioms;
-	private final HashMap<IRI, OWLIndividualDeclarationAxiom> owlIndividualDeclarationAxioms;
-	private final HashMap<IRI, OWLObjectPropertyDeclarationAxiom> owlObjectPropertyDeclarationAxioms;
-	private final HashMap<IRI, OWLDataPropertyDeclarationAxiom> owlDataPropertyDeclarationAxioms;
-	private final HashMap<IRI, OWLAnnotationPropertyDeclarationAxiom> owlAnnotationPropertyDeclarationAxioms;
+	private final HashMap<IRI, OWLDeclarationAxiom> owlClassDeclarationAxioms;
+	private final HashMap<IRI, OWLDeclarationAxiom> owlIndividualDeclarationAxioms;
+	private final HashMap<IRI, OWLDeclarationAxiom> owlObjectPropertyDeclarationAxioms;
+	private final HashMap<IRI, OWLDeclarationAxiom> owlDataPropertyDeclarationAxioms;
+	private final HashMap<IRI, OWLDeclarationAxiom> owlAnnotationPropertyDeclarationAxioms;
 
 	public DefaultSWRLOntologyProcessor(SWRLAPIOWLOntology owlOntology) throws SQWRLException
 	{
@@ -81,11 +81,11 @@ public class DefaultSWRLOntologyProcessor implements SWRLOntologyProcessor
 		this.queries = new HashMap<String, SQWRLQuery>();
 
 		this.assertedOWLAxioms = new HashSet<OWLAxiom>();
-		this.owlClassDeclarationAxioms = new HashMap<IRI, OWLClassDeclarationAxiom>();
-		this.owlObjectPropertyDeclarationAxioms = new HashMap<IRI, OWLObjectPropertyDeclarationAxiom>();
-		this.owlDataPropertyDeclarationAxioms = new HashMap<IRI, OWLDataPropertyDeclarationAxiom>();
-		this.owlAnnotationPropertyDeclarationAxioms = new HashMap<IRI, OWLAnnotationPropertyDeclarationAxiom>();
-		this.owlIndividualDeclarationAxioms = new HashMap<IRI, OWLIndividualDeclarationAxiom>();
+		this.owlClassDeclarationAxioms = new HashMap<IRI, OWLDeclarationAxiom>();
+		this.owlIndividualDeclarationAxioms = new HashMap<IRI, OWLDeclarationAxiom>();
+		this.owlObjectPropertyDeclarationAxioms = new HashMap<IRI, OWLDeclarationAxiom>();
+		this.owlDataPropertyDeclarationAxioms = new HashMap<IRI, OWLDeclarationAxiom>();
+		this.owlAnnotationPropertyDeclarationAxioms = new HashMap<IRI, OWLDeclarationAxiom>();
 
 		processOntology();
 	}
@@ -336,53 +336,53 @@ public class DefaultSWRLOntologyProcessor implements SWRLOntologyProcessor
 
 	private void processOWLClassDeclarationAxioms()
 	{
-		for (OWLClassDeclarationAxiom axiom : getOWLOntology().getOWLClassDeclarationAxioms()) {
-			OWLClass cls = axiom.getEntity();
+		for (OWLDeclarationAxiom axiom : getOWLOntology().getOWLClassDeclarationAxioms()) {
+			OWLEntity cls = axiom.getEntity();
 			this.owlClassDeclarationAxioms.put(cls.getIRI(), axiom);
 			this.assertedOWLAxioms.add(axiom);
-			record(cls);
+			recordOWLClass(cls);
 		}
 	}
 
 	private void processOWLIndividualDeclarationAxioms()
 	{
-		for (OWLIndividualDeclarationAxiom axiom : getOWLOntology().getOWLIndividualDeclarationAxioms()) {
-			OWLNamedIndividual individual = axiom.getEntity();
+		for (OWLDeclarationAxiom axiom : getOWLOntology().getOWLIndividualDeclarationAxioms()) {
+			OWLEntity individual = axiom.getEntity();
 			this.owlIndividualDeclarationAxioms.put(individual.getIRI(), axiom);
 			this.assertedOWLAxioms.add(axiom);
-			record(individual);
+			recordOWLNamedIndividual(individual);
 		}
 	}
 
 	private void processOWLObjectPropertyDeclarationAxioms()
 	{
-		for (OWLObjectPropertyDeclarationAxiom axiom : getOWLOntology().getOWLObjectPropertyDeclarationAxioms()) {
-			OWLObjectProperty property = axiom.getEntity();
+		for (OWLDeclarationAxiom axiom : getOWLOntology().getOWLObjectPropertyDeclarationAxioms()) {
+			OWLEntity property = axiom.getEntity();
 			this.owlObjectPropertyDeclarationAxioms.put(property.getIRI(), axiom);
 			this.assertedOWLAxioms.add(axiom);
-			record(property);
+			recordOWLObjectProperty(property);
 		}
 	}
 
 	private void processOWLDataPropertyDeclarationAxioms()
 	{
-		for (OWLDataPropertyDeclarationAxiom axiom : getOWLOntology().getOWLDataPropertyDeclarationAxioms()) {
-			OWLDataProperty property = axiom.getEntity();
+		for (OWLDeclarationAxiom axiom : getOWLOntology().getOWLDataPropertyDeclarationAxioms()) {
+			OWLEntity property = axiom.getEntity();
 
 			this.owlDataPropertyDeclarationAxioms.put(property.getIRI(), axiom);
 			this.assertedOWLAxioms.add(axiom);
-			record(property);
+			recordOWLDataProperty(property);
 		}
 	}
 
 	private void processOWLAnnotationPropertyDeclarationAxioms()
 	{
-		for (OWLAnnotationPropertyDeclarationAxiom axiom : getOWLOntology().getOWLAnnotationPropertyDeclarationAxioms()) {
-			OWLAnnotationProperty property = axiom.getEntity();
+		for (OWLDeclarationAxiom axiom : getOWLOntology().getOWLAnnotationPropertyDeclarationAxioms()) {
+			OWLEntity property = axiom.getEntity();
 
 			this.owlAnnotationPropertyDeclarationAxioms.put(property.getIRI(), axiom);
 			this.assertedOWLAxioms.add(axiom);
-			record(property);
+			recordOWLAnnotationProperty(property);
 		}
 	}
 
@@ -595,10 +595,10 @@ public class DefaultSWRLOntologyProcessor implements SWRLOntologyProcessor
 	private void generateOWLClassDeclarationAxiom(OWLClass cls)
 	{
 		if (!this.owlClassDeclarationAxioms.containsKey(cls.getIRI())) {
-			OWLClassDeclarationAxiom axiom = getOWLDataFactory().getOWLClassDeclarationAxiom(cls);
+			OWLDeclarationAxiom axiom = getOWLDataFactory().getOWLClassDeclarationAxiom(cls);
 			this.owlClassDeclarationAxioms.put(cls.getIRI(), axiom);
 			this.assertedOWLAxioms.add(axiom);
-			record(cls);
+			recordOWLClass(cls);
 		}
 	}
 
@@ -614,11 +614,11 @@ public class DefaultSWRLOntologyProcessor implements SWRLOntologyProcessor
 	{
 		if (individual.isNamed()
 				&& !this.owlIndividualDeclarationAxioms.containsKey(individual.asOWLNamedIndividual().getIRI())) {
-			OWLIndividualDeclarationAxiom axiom = getOWLDataFactory().getOWLIndividualDeclarationAxiom(
+			OWLDeclarationAxiom axiom = getOWLDataFactory().getOWLIndividualDeclarationAxiom(
 					individual.asOWLNamedIndividual());
 			this.owlIndividualDeclarationAxioms.put(individual.asOWLNamedIndividual().getIRI(), axiom);
 			this.assertedOWLAxioms.add(axiom);
-			record(individual.asOWLNamedIndividual());
+			recordOWLNamedIndividual(individual.asOWLNamedIndividual());
 		}
 	}
 
@@ -627,10 +627,10 @@ public class DefaultSWRLOntologyProcessor implements SWRLOntologyProcessor
 		if (propertyExpression instanceof OWLObjectProperty) {
 			OWLObjectProperty property = (OWLObjectProperty)propertyExpression;
 			if (!this.owlObjectPropertyDeclarationAxioms.containsKey(property.getIRI())) {
-				OWLObjectPropertyDeclarationAxiom axiom = getOWLDataFactory().getOWLObjectPropertyDeclarationAxiom(property);
+				OWLDeclarationAxiom axiom = getOWLDataFactory().getOWLObjectPropertyDeclarationAxiom(property);
 				this.owlObjectPropertyDeclarationAxioms.put(property.getIRI(), axiom);
 				this.assertedOWLAxioms.add(axiom);
-				record(property);
+				recordOWLObjectProperty(property);
 			}
 		}
 	}
@@ -640,37 +640,37 @@ public class DefaultSWRLOntologyProcessor implements SWRLOntologyProcessor
 		if (propertyExpression instanceof OWLDataProperty) {
 			OWLDataProperty property = (OWLDataProperty)propertyExpression;
 			if (!this.owlDataPropertyDeclarationAxioms.containsKey(property.getIRI())) {
-				OWLDataPropertyDeclarationAxiom axiom = getOWLDataFactory().getOWLDataPropertyDeclarationAxiom(property);
+				OWLDeclarationAxiom axiom = getOWLDataFactory().getOWLDataPropertyDeclarationAxiom(property);
 				this.owlDataPropertyDeclarationAxioms.put(property.getIRI(), axiom);
 				this.assertedOWLAxioms.add(axiom);
-				record(property);
+				recordOWLDataProperty(property);
 			}
 		}
 	}
 
-	private void record(OWLClass cls)
+	private void recordOWLClass(OWLEntity cls)
 	{
-		getOWLNamedObjectResolver().record(cls);
+		getOWLNamedObjectResolver().recordOWLClass(cls);
 	}
 
-	private void record(OWLNamedIndividual individual)
+	private void recordOWLNamedIndividual(OWLEntity individual)
 	{
-		getOWLNamedObjectResolver().record(individual);
+		getOWLNamedObjectResolver().recordOWLNamedIndividual(individual);
 	}
 
-	private void record(OWLObjectProperty property)
+	private void recordOWLObjectProperty(OWLEntity property)
 	{
-		getOWLNamedObjectResolver().record(property);
+		getOWLNamedObjectResolver().recordOWLObjectProperty(property);
 	}
 
-	private void record(OWLDataProperty property)
+	private void recordOWLDataProperty(OWLEntity property)
 	{
-		getOWLNamedObjectResolver().record(property);
+		getOWLNamedObjectResolver().recordOWLDataProperty(property);
 	}
 
-	private void record(OWLAnnotationProperty property)
+	private void recordOWLAnnotationProperty(OWLEntity property)
 	{
-		getOWLNamedObjectResolver().record(property);
+		getOWLNamedObjectResolver().recordOWLAnnotationProperty(property);
 	}
 
 	private SWRLAPIOWLDataFactory getOWLDataFactory()

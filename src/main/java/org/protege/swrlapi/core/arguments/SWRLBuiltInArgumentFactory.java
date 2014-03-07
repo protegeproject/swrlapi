@@ -1,5 +1,6 @@
 package org.protege.swrlapi.core.arguments;
 
+import java.net.URI;
 import java.util.List;
 
 import org.protege.swrlapi.xsd.XSDDate;
@@ -61,7 +62,7 @@ public interface SWRLBuiltInArgumentFactory
 
 	SWRLLiteralBuiltInArgument createLiteralArgument(byte b);
 
-	SWRLLiteralBuiltInArgument createLiteralArgument(IRI iri);
+	SWRLLiteralBuiltInArgument createLiteralArgument(URI iri);
 
 	SWRLLiteralBuiltInArgument createLiteralArgument(XSDDate date);
 

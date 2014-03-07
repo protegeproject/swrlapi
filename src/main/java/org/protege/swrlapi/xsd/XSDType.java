@@ -6,7 +6,7 @@ import org.semanticweb.owlapi.model.IRI;
 public abstract class XSDType implements Comparable<XSDType>
 {
 	private final String content;
-	private IRI uri = null;
+	private IRI iri = null;
 
 	public XSDType(String content) throws SQWRLLiteralException
 	{
@@ -25,9 +25,9 @@ public abstract class XSDType implements Comparable<XSDType>
 		return this.content;
 	}
 
-	public IRI getURI()
+	public IRI getIRI()
 	{
-		return this.uri;
+		return this.iri;
 	}
 
 	@Override
@@ -41,6 +41,6 @@ public abstract class XSDType implements Comparable<XSDType>
 
 	protected void setURI(IRI iri) throws SQWRLLiteralException
 	{
-		this.uri = iri;
+		this.iri = iri;
 	}
 }

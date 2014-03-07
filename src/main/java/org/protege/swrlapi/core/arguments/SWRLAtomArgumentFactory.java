@@ -11,19 +11,19 @@ public interface SWRLAtomArgumentFactory
 {
 	SWRLVariableAtomArgument createVariableArgument(String variableName);
 
-	SWRLClassAtomArgument createClassArgument(IRI uri, String prefixedName);
+	SWRLClassAtomArgument createClassArgument(IRI uri);
 
 	SWRLClassAtomArgument createClassArgument(OWLClass cls);
 
-	SWRLIndividualAtomArgument createIndividualArgument(IRI uri, String prefixedName);
+	SWRLIndividualAtomArgument createIndividualArgument(IRI uri);
 
 	SWRLIndividualAtomArgument createIndividualArgument(OWLIndividual individual);
 
-	SWRLObjectPropertyAtomArgument createObjectPropertyArgument(IRI uri, String prefixedName);
+	SWRLObjectPropertyAtomArgument createObjectPropertyArgument(IRI iri);
 
 	SWRLObjectPropertyAtomArgument createObjectPropertyArgument(OWLObjectProperty property);
 
-	SWRLDataPropertyAtomArgument createDataPropertyArgument(IRI uri, String prefixedName);
+	SWRLDataPropertyAtomArgument createDataPropertyArgument(IRI iri);
 
 	SWRLDataPropertyAtomArgument createDataPropertyArgument(OWLDataProperty property);
 
