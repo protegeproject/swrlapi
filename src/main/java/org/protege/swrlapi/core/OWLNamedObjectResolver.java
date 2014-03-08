@@ -151,6 +151,11 @@ public class OWLNamedObjectResolver
 			this.prefixedName2IRIMap.put(prefixedName, uri);
 	}
 
+	public String iri2PrefixedName(IRI iri) throws TargetRuleEngineException
+	{
+		throw new RuntimeException("Not implemented");
+	}
+
 	public IRI prefixedName2IRI(String prefixedName) throws TargetRuleEngineException
 	{
 		if (this.prefixedName2IRIMap.containsKey(prefixedName))

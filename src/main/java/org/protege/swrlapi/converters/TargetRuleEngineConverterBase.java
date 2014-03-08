@@ -1,6 +1,7 @@
 package org.protege.swrlapi.converters;
 
 import org.protege.swrlapi.core.OWLClassExpressionResolver;
+import org.protege.swrlapi.core.OWLNamedObjectResolver;
 import org.protege.swrlapi.core.OWLPropertyExpressionResolver;
 import org.protege.swrlapi.core.SWRLRuleEngineBridge;
 import org.protege.swrlapi.ext.SWRLAPILiteralFactory;
@@ -18,6 +19,11 @@ public abstract class TargetRuleEngineConverterBase implements TargetRuleEngineC
 		this.bridge = bridge;
 	}
 
+	protected OWLNamedObjectResolver getOWLNamedObjectResolver()
+	{
+		return getBridge().getOWLNamedObjectResolver();
+	}
+
 	protected OWLClassExpressionResolver getOWLClassExpressionResolver()
 	{
 		return getBridge().getOWLClassExpressionResolver();
@@ -33,7 +39,7 @@ public abstract class TargetRuleEngineConverterBase implements TargetRuleEngineC
 		return getBridge().getSWRLAPILiteralFactory();
 	}
 
-	private SWRLRuleEngineBridge getBridge()
+	protected SWRLRuleEngineBridge getBridge()
 	{
 		return this.bridge;
 	}
