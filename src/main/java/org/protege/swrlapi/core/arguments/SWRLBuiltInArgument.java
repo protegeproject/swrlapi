@@ -1,11 +1,9 @@
 package org.protege.swrlapi.core.arguments;
 
-import org.semanticweb.owlapi.model.SWRLDArgument;
-
 /**
  * Interface representing an argument to a SWRL built-in.
  */
-public interface SWRLBuiltInArgument extends SWRLDArgument
+public interface SWRLBuiltInArgument extends SWRLDAtomArgument
 {
 	// TODO Why are all these here?
 	void setBuiltInResult(SWRLBuiltInArgument builtInResult);
@@ -28,5 +26,6 @@ public interface SWRLBuiltInArgument extends SWRLDArgument
 
 	void setBound();
 
+	@Override
 	String toDisplayText();
 }

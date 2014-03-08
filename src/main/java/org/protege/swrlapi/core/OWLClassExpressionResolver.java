@@ -27,12 +27,12 @@ public class OWLClassExpressionResolver
 		this.classExpressionMap.clear();
 	}
 
-	public void record(String classExpressionID, OWLClassExpression classExpression)
+	public void recordOWLClassExpression(String classExpressionID, OWLClassExpression classExpression)
 	{
 		this.classExpressionMap.put(classExpressionID, classExpression);
 	}
 
-	public OWLClassExpression resolve(String classExpressionID) throws TargetRuleEngineException
+	public OWLClassExpression resolveOWLClassExpression(String classExpressionID) throws TargetRuleEngineException
 	{
 		if (this.classExpressionMap.containsKey(classExpressionID))
 			return this.classExpressionMap.get(classExpressionID);
