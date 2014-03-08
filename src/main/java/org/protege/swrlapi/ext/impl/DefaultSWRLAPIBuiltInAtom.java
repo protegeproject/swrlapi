@@ -20,6 +20,7 @@ import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLObjectVisitor;
 import org.semanticweb.owlapi.model.OWLObjectVisitorEx;
+import org.semanticweb.owlapi.model.SWRLDArgument;
 import org.semanticweb.owlapi.model.SWRLObjectVisitor;
 import org.semanticweb.owlapi.model.SWRLObjectVisitorEx;
 
@@ -34,26 +35,21 @@ public class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SW
 
 	private final String ruleName;
 	private final IRI builtInIRI;
+	private final String builtInShortName;
 	private List<SWRLBuiltInArgument> arguments;
 	private int builtInIndex = -1; // Index of this built-in atom in rule body; left-to-right, first built-in index is 0,
 																	// second in 1, and so on
 	private Set<String> pathVariableNames = new HashSet<String>();
 	private boolean sqwrlCollectionResultsUsed = false;
 
-	public DefaultSWRLAPIBuiltInAtom(String ruleName, IRI builtInIRI, List<SWRLBuiltInArgument> arguments)
+	public DefaultSWRLAPIBuiltInAtom(String ruleName, IRI builtInIRI, String builtInShortName,
+			List<SWRLBuiltInArgument> arguments)
 	{
-		super(builtInIRI, darguments);
+		super(builtInIRI, new ArrayList<SWRLDArgument>(arguments));
 		this.ruleName = ruleName;
 		this.builtInIRI = builtInIRI;
+		this.builtInShortName = builtInShortName;
 		this.arguments = arguments;
-	}
-
-	public DefaultSWRLAPIBuiltInAtom(String ruleName, IRI builtInIRI)
-	{
-		super(builtInIRI, darguments);
-		this.ruleName = ruleName;
-		this.builtInIRI = builtInIRI;
-		this.arguments = new ArrayList<SWRLBuiltInArgument>();
 	}
 
 	@Override
@@ -241,7 +237,7 @@ public class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SW
 	@Override
 	public String toDisplayText()
 	{
-		String result = this.builtInPrefixedName + "(";
+		String result = this.builtInShortName + "(";
 		boolean isFirst = true;
 
 		for (SWRLBuiltInArgument argument : getBuiltInArguments()) {
