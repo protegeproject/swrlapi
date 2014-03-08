@@ -118,42 +118,6 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 		throw new RuntimeException("Not implemented");
 	}
 
-	@Override
-	public Set<OWLDeclarationAxiom> getOWLClassDeclarationAxioms()
-	{
-		throw new RuntimeException("Not implemented");
-	}
-
-	@Override
-	public Set<OWLDeclarationAxiom> getOWLIndividualDeclarationAxioms()
-	{
-		throw new RuntimeException("Not implemented");
-	}
-
-	@Override
-	public Set<OWLDeclarationAxiom> getOWLObjectPropertyDeclarationAxioms()
-	{
-		throw new RuntimeException("Not implemented");
-	}
-
-	@Override
-	public Set<OWLDeclarationAxiom> getOWLDataPropertyDeclarationAxioms()
-	{
-		throw new RuntimeException("Not implemented");
-	}
-
-	@Override
-	public Set<OWLDeclarationAxiom> getOWLAnnotationPropertyDeclarationAxioms()
-	{
-		throw new RuntimeException("Not implemented");
-	}
-
-	@Override
-	public Set<OWLDeclarationAxiom> getOWLDatatypeDeclarationAxioms()
-	{
-		throw new RuntimeException("Not implemented");
-	}
-
 	// TODO We really do not want all the following methods here. They are convenience methods only and are used only by a
 	// few built-in libraries..
 	@Override
@@ -197,6 +161,8 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 	{
 		throw new RuntimeException("Not implemented");
 	}
+
+	// Get
 
 	@Override
 	public Set<OWLSameIndividualAxiom> getOWLSameIndividualAxioms()
@@ -419,4 +385,41 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 	{
 		throw new RuntimeException("Not implemented");
 	}
+
+	@Override
+	public Set<OWLDeclarationAxiom> getOWLClassDeclarationAxioms()
+	{
+		throw new RuntimeException("Not implemented");
+	}
+
+	@Override
+	public Set<OWLDeclarationAxiom> getOWLIndividualDeclarationAxioms()
+	{
+		throw new RuntimeException("Not implemented");
+	}
+
+	@Override
+	public Set<OWLDeclarationAxiom> getOWLObjectPropertyDeclarationAxioms()
+	{
+		throw new RuntimeException("Not implemented");
+	}
+
+	@Override
+	public Set<OWLDeclarationAxiom> getOWLDataPropertyDeclarationAxioms()
+	{
+		throw new RuntimeException("Not implemented");
+	}
+
+	@Override
+	public Set<OWLDeclarationAxiom> getOWLAnnotationPropertyDeclarationAxioms()
+	{
+		throw new RuntimeException("Not implemented");
+	}
+
+	@Override
+	public Set<OWLDeclarationAxiom> getOWLDatatypeDeclarationAxioms()
+	{
+		throw new RuntimeException("Not implemented");
+	}
+
 }

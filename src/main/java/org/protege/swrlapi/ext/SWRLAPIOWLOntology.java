@@ -61,6 +61,7 @@ public interface SWRLAPIOWLOntology extends OWLOntology
 
 	SWRLAPIRule createSWRLRule(String ruleName, String ruleText);
 
+	// TODO Change/remove to align with OWLAPI
 	void putOWLAxiom(OWLAxiom axiom);
 
 	/**
@@ -73,17 +74,25 @@ public interface SWRLAPIOWLOntology extends OWLOntology
 
 	String iri2PrefixedName(IRI iri);
 
-	Set<OWLDeclarationAxiom> getOWLClassDeclarationAxioms();
+	// TODO Do we want this method here?
+	boolean isOWLIndividualOfType(IRI individualIRI, IRI classIRI);
 
-	Set<OWLDeclarationAxiom> getOWLIndividualDeclarationAxioms();
+	// TODO Do we want this method here?
+	Set<OWLObjectPropertyAssertionAxiom> getOWLObjectPropertyAssertionAxioms(IRI individualIRI, IRI propertyIRI);
 
-	Set<OWLDeclarationAxiom> getOWLObjectPropertyDeclarationAxioms();
+	// TODO Do we want this method here?
+	Set<OWLDataPropertyAssertionAxiom> getOWLDataPropertyAssertionAxioms(IRI individualIRI, IRI propertyIRI);
 
-	Set<OWLDeclarationAxiom> getOWLDataPropertyDeclarationAxioms();
+	// TODO The following 4 method can be deleted and users can call containsXXXInSignature from OWLOntology
+	boolean isOWLClass(IRI classIRI);
 
-	Set<OWLDeclarationAxiom> getOWLAnnotationPropertyDeclarationAxioms();
+	boolean isOWLNamedIndividual(IRI individualIRI);
 
-	Set<OWLDeclarationAxiom> getOWLDatatypeDeclarationAxioms();
+	boolean isOWLObjectProperty(IRI propertyIRI);
+
+	boolean isOWLDataProperty(IRI propertyIRI);
+
+	// The following are methods to get all OWL axioms of particular type from the ontology.
 
 	Set<OWLSameIndividualAxiom> getOWLSameIndividualAxioms();
 
@@ -159,19 +168,15 @@ public interface SWRLAPIOWLOntology extends OWLOntology
 
 	Set<OWLSubAnnotationPropertyOfAxiom> getOWLSubAnnotationPropertyOfAxioms();
 
-	// TODO We really do not want all the following methods here. They are convenience methods only and are used only by a
-	// few built-in libraries..
-	boolean isOWLIndividualOfType(IRI individualIRI, IRI classIRI);
+	Set<OWLDeclarationAxiom> getOWLClassDeclarationAxioms();
 
-	Set<OWLObjectPropertyAssertionAxiom> getOWLObjectPropertyAssertionAxioms(IRI individualIRI, IRI propertyIRI);
+	Set<OWLDeclarationAxiom> getOWLIndividualDeclarationAxioms();
 
-	Set<OWLDataPropertyAssertionAxiom> getOWLDataPropertyAssertionAxioms(IRI individualIRI, IRI propertyIRI);
+	Set<OWLDeclarationAxiom> getOWLObjectPropertyDeclarationAxioms();
 
-	boolean isOWLClass(IRI classIRI);
+	Set<OWLDeclarationAxiom> getOWLDataPropertyDeclarationAxioms();
 
-	boolean isOWLNamedIndividual(IRI individualIRI);
+	Set<OWLDeclarationAxiom> getOWLAnnotationPropertyDeclarationAxioms();
 
-	boolean isOWLObjectProperty(IRI propertyIRI);
-
-	boolean isOWLDataProperty(IRI propertyIRI);
+	Set<OWLDeclarationAxiom> getOWLDatatypeDeclarationAxioms();
 }

@@ -617,7 +617,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		Set<String> rootVariableNames = new HashSet<String>();
 
 		for (SWRLAtom atom : getBodyAtoms()) {
-			Set<String> thisAtomReferencedVariableNames = new HashSet<String>(atom.getReferencedVariableNames());
+			Set<String> thisAtomReferencedVariableNames = getReferencedVariableNames(atom);
 
 			buildPaths(atom, rootVariableNames, pathMap);
 
@@ -629,7 +629,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 				if (isSQWRLCollectionOperation(builtInAtom))
 					break; // Once we encounter a SQWRL operation we stop because dependencies don't matter for these atoms
 
-				if (builtInAtom.hasReferencedVariables()) {
+				if (hasReferencedVariables(builtInAtom)) {
 					Set<String> pathVariableNames = new HashSet<String>();
 
 					for (String rootVariableName : pathMap.keySet()) {
@@ -667,7 +667,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	 */
 	private void buildPaths(SWRLAtom atom, Set<String> rootVariableNames, Map<String, Set<Set<String>>> pathMap)
 	{
-		Set<String> currentAtomReferencedVariableNames = atom.getReferencedVariableNames();
+		Set<String> currentAtomReferencedVariableNames = getReferencedVariableNames(atom);
 		Set<String> matchingRootVariableNames;
 
 		if (currentAtomReferencedVariableNames.size() == 1) { // Make variable a root if we have not yet encountered it
@@ -774,6 +774,16 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		}
 
 		return matchingRootVariableNames;
+	}
+
+	private Set<String> getReferencedVariableNames(SWRLAtom atom)
+	{
+		throw new RuntimeException("Not implemented");
+	}
+
+	private boolean hasReferencedVariables(SWRLAtom atom)
+	{
+		throw new RuntimeException("Not implemented");
 	}
 
 	private SWRLAPILiteralFactory getSWRLAPILiteralFactory()

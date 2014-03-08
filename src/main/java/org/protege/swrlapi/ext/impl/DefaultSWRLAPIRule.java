@@ -126,7 +126,7 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 				bodyBuiltInAtoms.add((SWRLAPIBuiltInAtom)atom);
 			else {
 				bodyNonBuiltInAtoms.add(atom);
-				variableNamesUsedByNonBuiltInBodyAtoms.addAll(atom.getReferencedVariableNames());
+				variableNamesUsedByNonBuiltInBodyAtoms.addAll(getReferencedVariableNames(atom));
 			}
 		}
 
@@ -195,4 +195,10 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 		}
 		return result;
 	}
+
+	private Set<String> getReferencedVariableNames(SWRLAtom atom)
+	{
+		throw new RuntimeException("Not implemented");
+	}
+
 }
