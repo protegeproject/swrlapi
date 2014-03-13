@@ -87,44 +87,56 @@ public class OWLNamedObjectResolver
 
 	public void recordOWLClass(OWLEntity cls)
 	{
-		recordPrefixedName2IRIMapping(getPrefixedName(cls), cls.getIRI());
+		String prefixedName = getPrefixedName(cls);
 
-		this.classPrefixedNames.add(getPrefixedName(cls));
+		recordPrefixedName2IRIMapping(prefixedName, cls.getIRI());
+
+		this.classPrefixedNames.add(prefixedName);
 	}
 
 	public void recordOWLNamedIndividual(OWLEntity individual)
 	{
-		recordPrefixedName2IRIMapping(getPrefixedName(individual), individual.getIRI());
+		String prefixedName = getPrefixedName(individual);
 
-		this.individualPrefixedNames.add(getPrefixedName(individual));
+		recordPrefixedName2IRIMapping(prefixedName, individual.getIRI());
+
+		this.individualPrefixedNames.add(prefixedName);
 	}
 
 	public void recordOWLObjectProperty(OWLEntity property)
 	{
-		recordPrefixedName2IRIMapping(getPrefixedName(property), property.getIRI());
+		String prefixedName = getPrefixedName(property);
 
-		this.objectPropertyPrefixedNames.add(getPrefixedName(property));
+		recordPrefixedName2IRIMapping(prefixedName, property.getIRI());
+
+		this.objectPropertyPrefixedNames.add(prefixedName);
 	}
 
 	public void recordOWLDataProperty(OWLEntity property)
 	{
-		recordPrefixedName2IRIMapping(getPrefixedName(property), property.getIRI());
+		String prefixedName = getPrefixedName(property);
 
-		this.dataPropertyPrefixedNames.add(getPrefixedName(property));
+		recordPrefixedName2IRIMapping(prefixedName, property.getIRI());
+
+		this.dataPropertyPrefixedNames.add(prefixedName);
 	}
 
 	public void recordOWLAnnotationProperty(OWLEntity property)
 	{
-		recordPrefixedName2IRIMapping(getPrefixedName(property), property.getIRI());
+		String prefixedName = getPrefixedName(property);
 
-		this.annotationPropertyPrefixedNames.add(getPrefixedName(property));
+		recordPrefixedName2IRIMapping(prefixedName, property.getIRI());
+
+		this.annotationPropertyPrefixedNames.add(prefixedName);
 	}
 
 	public void recordOWLDatatype(OWLEntity datatype)
 	{
-		recordPrefixedName2IRIMapping(getPrefixedName(datatype), datatype.getIRI());
+		String prefixedName = getPrefixedName(datatype);
 
-		this.datatypePrefixedNames.add(getPrefixedName(datatype));
+		recordPrefixedName2IRIMapping(prefixedName, datatype.getIRI());
+
+		this.datatypePrefixedNames.add(prefixedName);
 	}
 
 	public void record(SWRLClassBuiltInArgument classArgument)

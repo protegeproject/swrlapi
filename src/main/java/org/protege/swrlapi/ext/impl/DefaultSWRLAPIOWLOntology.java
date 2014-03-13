@@ -1,9 +1,11 @@
 package org.protege.swrlapi.ext.impl;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.protege.swrlapi.ext.SWRLAPIOWLOntology;
 import org.protege.swrlapi.ext.SWRLAPIRule;
+import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLAnnotationPropertyDomainAxiom;
@@ -143,259 +145,294 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 	@Override
 	public Set<OWLSameIndividualAxiom> getOWLSameIndividualAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.SAME_INDIVIDUAL, true);
 	}
 
 	@Override
 	public Set<OWLDifferentIndividualsAxiom> getOWLDifferentIndividualsAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.DIFFERENT_INDIVIDUALS, true);
 	}
 
 	@Override
 	public Set<OWLSubObjectPropertyOfAxiom> getOWLSubObjectPropertyOfAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.SUB_OBJECT_PROPERTY, true);
 	}
 
 	@Override
 	public Set<OWLSubDataPropertyOfAxiom> getOWLSubDataPropertyOfAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.SUB_DATA_PROPERTY, true);
 	}
 
 	@Override
 	public Set<OWLEquivalentClassesAxiom> getOWLEquivalentClassesAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.EQUIVALENT_CLASSES, true);
 	}
 
 	@Override
 	public Set<OWLClassAssertionAxiom> getOWLClassAssertionAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.CLASS_ASSERTION, true);
 	}
 
 	@Override
 	public Set<OWLObjectPropertyAssertionAxiom> getOWLObjectPropertyAssertionAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.OBJECT_PROPERTY_ASSERTION, true);
 	}
 
 	@Override
 	public Set<OWLDataPropertyAssertionAxiom> getOWLDataPropertyAssertionAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.DATA_PROPERTY_ASSERTION, true);
 	}
 
 	@Override
 	public Set<OWLSubClassOfAxiom> getOWLSubClassOfAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.SUBCLASS_OF, true);
 	}
 
 	@Override
 	public Set<OWLDisjointClassesAxiom> getOWLDisjointClassesAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.DISJOINT_CLASSES, true);
 	}
 
 	@Override
 	public Set<OWLEquivalentDataPropertiesAxiom> getOWLEquivalentDataPropertiesAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.EQUIVALENT_DATA_PROPERTIES, true);
 	}
 
 	@Override
 	public Set<OWLEquivalentObjectPropertiesAxiom> getOWLEquivalentObjectPropertiesAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.EQUIVALENT_OBJECT_PROPERTIES, true);
 	}
 
 	@Override
 	public Set<OWLDisjointDataPropertiesAxiom> getOWLDisjointDataPropertiesAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.DISJOINT_DATA_PROPERTIES, true);
 	}
 
 	@Override
 	public Set<OWLDisjointObjectPropertiesAxiom> getOWLDisjointObjectPropertiesAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.DISJOINT_OBJECT_PROPERTIES, true);
 	}
 
 	@Override
 	public Set<OWLObjectPropertyDomainAxiom> getOWLObjectPropertyDomainAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.OBJECT_PROPERTY_DOMAIN, true);
 	}
 
 	@Override
 	public Set<OWLDataPropertyDomainAxiom> getOWLDataPropertyDomainAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.DATA_PROPERTY_DOMAIN, true);
 	}
 
 	@Override
 	public Set<OWLObjectPropertyRangeAxiom> getOWLObjectPropertyRangeAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.OBJECT_PROPERTY_RANGE, true);
 	}
 
 	@Override
 	public Set<OWLDataPropertyRangeAxiom> getOWLDataPropertyRangeAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.DATA_PROPERTY_RANGE, true);
 	}
 
 	@Override
 	public Set<OWLFunctionalObjectPropertyAxiom> getOWLFunctionalObjectPropertyAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.FUNCTIONAL_OBJECT_PROPERTY, true);
 	}
 
 	@Override
 	public Set<OWLFunctionalDataPropertyAxiom> getOWLFunctionalDataPropertyAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.FUNCTIONAL_DATA_PROPERTY, true);
 	}
 
 	@Override
 	public Set<OWLIrreflexiveObjectPropertyAxiom> getOWLIrreflexiveObjectPropertyAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.IRREFLEXIVE_OBJECT_PROPERTY, true);
 	}
 
 	@Override
 	public Set<OWLInverseFunctionalObjectPropertyAxiom> getOWLInverseFunctionalObjectPropertyAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.INVERSE_FUNCTIONAL_OBJECT_PROPERTY, true);
 	}
 
 	@Override
 	public Set<OWLTransitiveObjectPropertyAxiom> getOWLTransitiveObjectPropertyAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.TRANSITIVE_OBJECT_PROPERTY, true);
 	}
 
 	@Override
 	public Set<OWLSymmetricObjectPropertyAxiom> getOWLSymmetricObjectPropertyAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.SYMMETRIC_OBJECT_PROPERTY, true);
 	}
 
 	@Override
 	public Set<OWLAsymmetricObjectPropertyAxiom> getOWLAsymmetricObjectPropertyAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.ASYMMETRIC_OBJECT_PROPERTY, true);
 	}
 
 	@Override
 	public Set<OWLInverseObjectPropertiesAxiom> getOWLInverseObjectPropertiesAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.INVERSE_OBJECT_PROPERTIES, true);
 	}
 
 	@Override
 	public Set<OWLNegativeDataPropertyAssertionAxiom> getOWLNegativeDataPropertyAssertionAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.NEGATIVE_DATA_PROPERTY_ASSERTION, true);
 	}
 
 	@Override
 	public Set<OWLNegativeObjectPropertyAssertionAxiom> getOWLNegativeObjectPropertyAssertionAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.NEGATIVE_OBJECT_PROPERTY_ASSERTION, true);
 	}
 
 	@Override
 	public Set<OWLReflexiveObjectPropertyAxiom> getOWLReflexiveObjectPropertyAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.REFLEXIVE_OBJECT_PROPERTY, true);
 	}
 
 	@Override
 	public Set<OWLDisjointUnionAxiom> getOWLDisjointUnionAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.DISJOINT_UNION, true);
 	}
 
 	@Override
 	public Set<OWLAnnotationAssertionAxiom> getOWLAnnotationAssertionAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.ANNOTATION_ASSERTION, true);
 	}
 
 	@Override
 	public Set<OWLSubPropertyChainOfAxiom> getOWLSubPropertyChainOfAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.SUB_PROPERTY_CHAIN_OF, true);
 	}
 
 	@Override
 	public Set<OWLHasKeyAxiom> getOWLHasKeyAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.HAS_KEY, true);
 	}
 
 	@Override
 	public Set<OWLDatatypeDefinitionAxiom> getOWLDatatypeDefinitionAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.DATATYPE_DEFINITION, true);
 	}
 
 	@Override
 	public Set<OWLAnnotationPropertyRangeAxiom> getOWLAnnotationPropertyRangeAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.ANNOTATION_PROPERTY_RANGE, true);
 	}
 
 	@Override
 	public Set<OWLAnnotationPropertyDomainAxiom> getOWLAnnotationPropertyDomainAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.ANNOTATION_PROPERTY_DOMAIN, true);
 	}
 
 	@Override
 	public Set<OWLSubAnnotationPropertyOfAxiom> getOWLSubAnnotationPropertyOfAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		return getAxioms(AxiomType.SUB_ANNOTATION_PROPERTY_OF, true);
 	}
 
 	@Override
 	public Set<OWLDeclarationAxiom> getOWLClassDeclarationAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		Set<OWLDeclarationAxiom> owlClassDeclarationAxioms = new HashSet<OWLDeclarationAxiom>();
+
+		for (OWLDeclarationAxiom owlDeclarationAxiom : getAxioms(AxiomType.DECLARATION, true)) {
+			if (owlDeclarationAxiom.getEntity().isOWLClass())
+				owlClassDeclarationAxioms.add(owlDeclarationAxiom);
+		}
+		return owlClassDeclarationAxioms;
 	}
 
 	@Override
 	public Set<OWLDeclarationAxiom> getOWLIndividualDeclarationAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		Set<OWLDeclarationAxiom> owlIndividualDeclarationAxioms = new HashSet<OWLDeclarationAxiom>();
+
+		for (OWLDeclarationAxiom owlDeclarationAxiom : getAxioms(AxiomType.DECLARATION, true)) {
+			if (owlDeclarationAxiom.getEntity().isOWLNamedIndividual())
+				owlIndividualDeclarationAxioms.add(owlDeclarationAxiom);
+		}
+		return owlIndividualDeclarationAxioms;
 	}
 
 	@Override
 	public Set<OWLDeclarationAxiom> getOWLObjectPropertyDeclarationAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		Set<OWLDeclarationAxiom> owlObjectPropertyDeclarationAxioms = new HashSet<OWLDeclarationAxiom>();
+
+		for (OWLDeclarationAxiom owlDeclarationAxiom : getAxioms(AxiomType.DECLARATION, true)) {
+			if (owlDeclarationAxiom.getEntity().isOWLObjectProperty())
+				owlObjectPropertyDeclarationAxioms.add(owlDeclarationAxiom);
+		}
+		return owlObjectPropertyDeclarationAxioms;
 	}
 
 	@Override
 	public Set<OWLDeclarationAxiom> getOWLDataPropertyDeclarationAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		Set<OWLDeclarationAxiom> owlDataPropertyDeclarationAxioms = new HashSet<OWLDeclarationAxiom>();
+
+		for (OWLDeclarationAxiom owlDeclarationAxiom : getAxioms(AxiomType.DECLARATION, true)) {
+			if (owlDeclarationAxiom.getEntity().isOWLDataProperty())
+				owlDataPropertyDeclarationAxioms.add(owlDeclarationAxiom);
+		}
+		return owlDataPropertyDeclarationAxioms;
 	}
 
 	@Override
 	public Set<OWLDeclarationAxiom> getOWLAnnotationPropertyDeclarationAxioms()
 	{
-		throw new RuntimeException("Not implemented");
+		Set<OWLDeclarationAxiom> owlAnnotationPropertyDeclarationAxioms = new HashSet<OWLDeclarationAxiom>();
+
+		for (OWLDeclarationAxiom owlDeclarationAxiom : getAxioms(AxiomType.DECLARATION, true)) {
+			if (owlDeclarationAxiom.getEntity().isOWLAnnotationProperty())
+				owlAnnotationPropertyDeclarationAxioms.add(owlDeclarationAxiom);
+		}
+		return owlAnnotationPropertyDeclarationAxioms;
 	}
 
 	@Override
 	public Set<OWLDeclarationAxiom> getOWLDatatypeDeclarationAxioms()
 	{
-		throw new RuntimeException("Not implemented");
-	}
+		Set<OWLDeclarationAxiom> owlDatatypeDeclarationAxioms = new HashSet<OWLDeclarationAxiom>();
 
+		for (OWLDeclarationAxiom owlDeclarationAxiom : getAxioms(AxiomType.DECLARATION, true)) {
+			if (owlDeclarationAxiom.getEntity().isOWLDatatype())
+				owlDatatypeDeclarationAxioms.add(owlDeclarationAxiom);
+		}
+		return owlDatatypeDeclarationAxioms;
+	}
 }
