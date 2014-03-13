@@ -83,15 +83,6 @@ public interface SWRLAPIOWLOntology extends OWLOntology
 	// TODO Do we want this method here?
 	Set<OWLDataPropertyAssertionAxiom> getOWLDataPropertyAssertionAxioms(IRI individualIRI, IRI propertyIRI);
 
-	// TODO The following 4 method can be deleted and users can call containsXXXInSignature from OWLOntology
-	boolean isOWLClass(IRI classIRI);
-
-	boolean isOWLNamedIndividual(IRI individualIRI);
-
-	boolean isOWLObjectProperty(IRI propertyIRI);
-
-	boolean isOWLDataProperty(IRI propertyIRI);
-
 	// The following are methods to get all OWL axioms of particular type from the ontology.
 
 	Set<OWLSameIndividualAxiom> getOWLSameIndividualAxioms();

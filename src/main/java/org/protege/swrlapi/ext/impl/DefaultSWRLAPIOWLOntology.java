@@ -138,31 +138,7 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 		throw new RuntimeException("Not implemented");
 	}
 
-	@Override
-	public boolean isOWLClass(IRI classIRI)
-	{
-		throw new RuntimeException("Not implemented");
-	}
-
-	@Override
-	public boolean isOWLNamedIndividual(IRI individualIRI)
-	{
-		throw new RuntimeException("Not implemented");
-	}
-
-	@Override
-	public boolean isOWLObjectProperty(IRI propertyIRI)
-	{
-		throw new RuntimeException("Not implemented");
-	}
-
-	@Override
-	public boolean isOWLDataProperty(IRI propertyIRI)
-	{
-		throw new RuntimeException("Not implemented");
-	}
-
-	// Get
+	// Get OWL axioms of a particular type
 
 	@Override
 	public Set<OWLSameIndividualAxiom> getOWLSameIndividualAxioms()

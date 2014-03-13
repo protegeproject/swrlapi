@@ -5,7 +5,7 @@ package org.protege.swrlapi.core.arguments;
  */
 public interface SWRLBuiltInArgument extends SWRLDAtomArgument
 {
-	// TODO Why are all these here?
+	// TODO These methods should really be in SWRLVariableBuiltInArgument
 	void setBuiltInResult(SWRLBuiltInArgument builtInResult);
 
 	SWRLBuiltInArgument getBuiltInResult();

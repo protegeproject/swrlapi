@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.Set;
 
 import org.protege.swrlapi.core.arguments.SWRLBuiltInArgument;
+import org.protege.swrlapi.core.arguments.SWRLVariableAtomArgument;
+import org.protege.swrlapi.core.arguments.SWRLVariableBuiltInArgument;
 import org.protege.swrlapi.ext.SWRLAPIBuiltInAtom;
 import org.protege.swrlapi.ext.SWRLAPIRule;
 import org.semanticweb.owlapi.model.OWLAnnotation;
+import org.semanticweb.owlapi.model.SWRLArgument;
 import org.semanticweb.owlapi.model.SWRLAtom;
 import org.semanticweb.owlapi.model.SWRLClassAtom;
 
@@ -198,7 +201,17 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 
 	private Set<String> getReferencedVariableNames(SWRLAtom atom)
 	{
-		throw new RuntimeException("Not implemented");
-	}
+		Set<String> referencedVariableNames = new HashSet<String>();
 
+		for (SWRLArgument argument : atom.getAllArguments()) {
+			if (argument instanceof SWRLVariableAtomArgument) {
+				SWRLVariableAtomArgument variableAtomArgument = (SWRLVariableAtomArgument)argument;
+				referencedVariableNames.add(variableAtomArgument.getVariableName());
+			} else if (argument instanceof SWRLVariableBuiltInArgument) {
+				SWRLVariableBuiltInArgument variableBuiltInArgument = (SWRLVariableBuiltInArgument)argument;
+				referencedVariableNames.add(variableBuiltInArgument.getVariableName());
+			}
+		}
+		return referencedVariableNames;
+	}
 }

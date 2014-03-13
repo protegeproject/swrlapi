@@ -10,12 +10,15 @@ import java.util.Set;
 
 import org.protege.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.protege.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
+import org.protege.swrlapi.core.arguments.SWRLVariableAtomArgument;
+import org.protege.swrlapi.core.arguments.SWRLVariableBuiltInArgument;
 import org.protege.swrlapi.ext.SWRLAPIBuiltInAtom;
 import org.protege.swrlapi.ext.SWRLAPILiteral;
 import org.protege.swrlapi.ext.SWRLAPILiteralFactory;
 import org.protege.swrlapi.ext.impl.DefaultSWRLAPILiteral;
 import org.protege.swrlapi.ext.impl.DefaultSWRLAPILiteralFactory;
 import org.protege.swrlapi.sqwrl.exceptions.SQWRLException;
+import org.semanticweb.owlapi.model.SWRLArgument;
 import org.semanticweb.owlapi.model.SWRLAtom;
 
 public class DefaultSQWRLQuery implements SQWRLQuery
@@ -778,12 +781,23 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 
 	private Set<String> getReferencedVariableNames(SWRLAtom atom)
 	{
-		throw new RuntimeException("Not implemented");
+		Set<String> referencedVariableNames = new HashSet<String>();
+
+		for (SWRLArgument argument : atom.getAllArguments()) {
+			if (argument instanceof SWRLVariableAtomArgument) {
+				SWRLVariableAtomArgument variableAtomArgument = (SWRLVariableAtomArgument)argument;
+				referencedVariableNames.add(variableAtomArgument.getVariableName());
+			} else if (argument instanceof SWRLVariableBuiltInArgument) {
+				SWRLVariableBuiltInArgument variableBuiltInArgument = (SWRLVariableBuiltInArgument)argument;
+				referencedVariableNames.add(variableBuiltInArgument.getVariableName());
+			}
+		}
+		return referencedVariableNames;
 	}
 
 	private boolean hasReferencedVariables(SWRLAtom atom)
 	{
-		throw new RuntimeException("Not implemented");
+		return !getReferencedVariableNames(atom).isEmpty();
 	}
 
 	private SWRLAPILiteralFactory getSWRLAPILiteralFactory()

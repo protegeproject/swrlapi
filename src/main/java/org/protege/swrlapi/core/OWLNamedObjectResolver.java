@@ -16,10 +16,13 @@ import org.semanticweb.owlapi.model.OWLEntity;
 /**
  * This class is used by rule engine implementations to determine the type of OWL entities using their prefixed name. It
  * also maps from prefixed names to IRIs for those entities.
+ * <p>
+ * A {@link SWRLOntologyProcessor} implementation will typically create this class.
  */
 public class OWLNamedObjectResolver
 {
-	private final Map<String, IRI> prefixedName2IRIMap;
+	private final Map<String, IRI> prefixedName2IRI;
+	private final Map<IRI, String> iri2PrefixedName;
 	private final Set<String> classPrefixedNames;
 	private final Set<String> individualPrefixedNames;
 	private final Set<String> objectPropertyPrefixedNames;
@@ -29,7 +32,9 @@ public class OWLNamedObjectResolver
 
 	public OWLNamedObjectResolver()
 	{
-		this.prefixedName2IRIMap = new HashMap<String, IRI>();
+		this.prefixedName2IRI = new HashMap<String, IRI>();
+		this.iri2PrefixedName = new HashMap<IRI, String>();
+
 		this.classPrefixedNames = new HashSet<String>();
 		this.individualPrefixedNames = new HashSet<String>();
 		this.objectPropertyPrefixedNames = new HashSet<String>();
@@ -40,7 +45,8 @@ public class OWLNamedObjectResolver
 
 	public void reset()
 	{
-		this.prefixedName2IRIMap.clear();
+		this.prefixedName2IRI.clear();
+		this.iri2PrefixedName.clear();
 		this.classPrefixedNames.clear();
 		this.individualPrefixedNames.clear();
 		this.objectPropertyPrefixedNames.clear();
@@ -145,21 +151,26 @@ public class OWLNamedObjectResolver
 		this.dataPropertyPrefixedNames.add(propertyArgument.getPrefixedName());
 	}
 
-	public void recordPrefixedName2IRIMapping(String prefixedName, IRI uri)
+	public void recordPrefixedName2IRIMapping(String prefixedName, IRI iri)
 	{
-		if (!this.prefixedName2IRIMap.containsKey(prefixedName))
-			this.prefixedName2IRIMap.put(prefixedName, uri);
+		if (!this.prefixedName2IRI.containsKey(prefixedName)) {
+			this.prefixedName2IRI.put(prefixedName, iri);
+			this.iri2PrefixedName.put(iri, prefixedName);
+		}
 	}
 
 	public String iri2PrefixedName(IRI iri) throws TargetRuleEngineException
 	{
-		throw new RuntimeException("Not implemented");
+		if (this.iri2PrefixedName.containsKey(iri))
+			return this.iri2PrefixedName(iri);
+		else
+			throw new TargetRuleEngineException("internal error: could not find prefixed name for IRI " + iri);
 	}
 
 	public IRI prefixedName2IRI(String prefixedName) throws TargetRuleEngineException
 	{
-		if (this.prefixedName2IRIMap.containsKey(prefixedName))
-			return this.prefixedName2IRIMap.get(prefixedName);
+		if (this.prefixedName2IRI.containsKey(prefixedName))
+			return this.prefixedName2IRI.get(prefixedName);
 		else
 			throw new TargetRuleEngineException("internal error: could not find IRI for prefixed name " + prefixedName);
 	}

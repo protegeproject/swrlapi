@@ -194,22 +194,22 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 
 	public boolean isOWLClass(IRI classIRI)
 	{
-		return this.targetOWLOntology.isOWLClass(classIRI);
+		return this.targetOWLOntology.containsClassInSignature(classIRI, true);
 	}
 
 	public boolean isOWLObjectProperty(IRI propertyIRI)
 	{
-		return this.targetOWLOntology.isOWLObjectProperty(propertyIRI);
+		return this.targetOWLOntology.containsObjectPropertyInSignature(propertyIRI, true);
 	}
 
 	public boolean isOWLDataProperty(IRI propertyIRI)
 	{
-		return this.targetOWLOntology.isOWLDataProperty(propertyIRI);
+		return this.targetOWLOntology.containsDataPropertyInSignature(propertyIRI, true);
 	}
 
 	public boolean isOWLNamedIndividual(IRI individualIRI)
 	{
-		return this.targetOWLOntology.isOWLNamedIndividual(individualIRI);
+		return this.targetOWLOntology.containsIndividualInSignature(individualIRI, true);
 	}
 
 	@Override
