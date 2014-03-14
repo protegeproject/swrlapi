@@ -1,14 +1,23 @@
 package org.protege.swrlapi.ext.impl;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import org.protege.swrlapi.ext.SWRLAPIOWLDataFactory;
 import org.protege.swrlapi.ext.SWRLAPIOWLOntology;
 import org.protege.swrlapi.ext.SWRLAPIRule;
+import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.SWRLAtom;
+import org.semanticweb.owlapi.model.SWRLBuiltInAtom;
+import org.semanticweb.owlapi.model.SWRLDArgument;
+import org.semanticweb.owlapi.model.SWRLRule;
 
 import uk.ac.manchester.cs.owl.owlapi.OWLOntologyImpl;
 
@@ -16,9 +25,14 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 {
 	private static final long serialVersionUID = 1L;
 
-	public DefaultSWRLAPIOWLOntology(OWLOntologyManager manager, OWLOntologyID ontologyID)
+	private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
+
+	public DefaultSWRLAPIOWLOntology(OWLOntologyManager manager, OWLOntologyID ontologyID,
+			SWRLAPIOWLDataFactory swrlapiOWLDataFactory)
 	{
 		super(manager, ontologyID);
+
+		this.swrlapiOWLDataFactory = swrlapiOWLDataFactory;
 	}
 
 	@Override
@@ -48,7 +62,14 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 	@Override
 	public Set<SWRLAPIRule> getSWRLRules()
 	{
-		throw new RuntimeException("Not implemented");
+		Set<SWRLAPIRule> swrlapiRules = new HashSet<SWRLAPIRule>();
+
+		for (SWRLRule owlapiRule : getAxioms(AxiomType.SWRL_RULE)) {
+			SWRLAPIRule swrlapiRule = convertOWLAPIRule2SWRLAPIRule(owlapiRule);
+			swrlapiRules.add(swrlapiRule);
+		}
+
+		return swrlapiRules;
 	}
 
 	// TODO We really do not want the following three methods here. They are convenience methods only and are used only by
@@ -70,5 +91,60 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 	{
 		throw new RuntimeException("Not implemented");
 	}
+
+	private SWRLAPIRule convertOWLAPIRule2SWRLAPIRule(SWRLRule owlapiRule)
+	{
+		String ruleName = "";
+		List<SWRLAtom> swrlapiBodyAtoms = new ArrayList<SWRLAtom>();
+		List<SWRLAtom> swrlapiHeadAtoms = new ArrayList<SWRLAtom>();
+
+		for (SWRLAtom atom : owlapiRule.getBody()) {
+			if (atom instanceof SWRLBuiltInAtom) {
+				SWRLBuiltInAtom owlapiBuiltInAtom = (SWRLBuiltInAtom)atom;
+				SWRLBuiltInAtom swrlapiBuiltInAtom = transformSWRLBuiltInAtom(owlapiBuiltInAtom);
+				swrlapiBodyAtoms.add(swrlapiBuiltInAtom);
+			} else
+				swrlapiBodyAtoms.add(atom);
+		}
+
+		return new DefaultSWRLAPIRule(ruleName, swrlapiBodyAtoms, swrlapiHeadAtoms);
+	}
+
+	private SWRLBuiltInAtom transformSWRLBuiltInAtom(SWRLBuiltInAtom owlapiSWRLBuiltInAtom)
+	{
+		List<SWRLDArgument> swrlapiDArguments = new ArrayList<SWRLDArgument>();
+
+		for (SWRLDArgument owlapiSWRLDArgument : owlapiSWRLBuiltInAtom.getArguments()) {
+			SWRLDArgument swrlapiSWRLDArgument = transformSWRLDArgument(owlapiSWRLDArgument);
+			swrlapiDArguments.add(swrlapiSWRLDArgument);
+		}
+
+		return getSWRLAPIOWLDataFactory().getSWRLBuiltInAtom(owlapiSWRLBuiltInAtom.getPredicate(), swrlapiDArguments);
+	}
+
+	private SWRLDArgument transformSWRLDArgument(SWRLDArgument owlapiSWRLDArgument)
+	{ // SWRLVariable,
+		throw new RuntimeException("Not implemented");
+	}
+
+	private SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory()
+	{
+		return this.swrlapiOWLDataFactory;
+	}
+
+	// SWRLRule getSWRLRule(Set<? extends SWRLAtom> body, Set<? extends SWRLAtom> head);
+	// SWRLRule getSWRLRule(Set<? extends SWRLAtom> body, Set<? extends SWRLAtom> head, Set<OWLAnnotation> annotations);
+	// SWRLClassAtom getSWRLClassAtom(OWLClassExpression predicate, SWRLIArgument arg);
+	// SWRLDataRangeAtom getSWRLDataRangeAtom(OWLDataRange predicate, SWRLDArgument arg);
+	// SWRLObjectPropertyAtom getSWRLObjectPropertyAtom(OWLObjectPropertyExpression property, SWRLIArgument arg0,
+	// SWRLIArgument arg1);
+	// SWRLDataPropertyAtom getSWRLDataPropertyAtom(OWLDataPropertyExpression property, SWRLIArgument arg0, SWRLDArgument
+	// arg1);
+	// SWRLBuiltInAtom getSWRLBuiltInAtom(IRI builtInIRI, List<SWRLDArgument> args);
+	// SWRLVariable getSWRLVariable(IRI var);
+	// SWRLIndividualArgument getSWRLIndividualArgument(OWLIndividual individual);
+	// SWRLLiteralArgument getSWRLLiteralArgument(OWLLiteral literal);
+	// SWRLSameIndividualAtom getSWRLSameIndividualAtom(SWRLIArgument arg0, SWRLIArgument arg1);
+	// SWRLDifferentIndividualsAtom getSWRLDifferentIndividualsAtom(SWRLIArgument arg0, SWRLIArgument arg1);
 
 }

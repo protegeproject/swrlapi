@@ -27,7 +27,7 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 
 	public DefaultSWRLAPIRule(String ruleName, List<? extends SWRLAtom> bodyAtoms, List<? extends SWRLAtom> headAtoms)
 	{
-		// TODO
+		// TODO Rule name
 		super(new HashSet<SWRLAtom>(bodyAtoms), new HashSet<SWRLAtom>(headAtoms), new HashSet<OWLAnnotation>());
 		this.ruleName = ruleName;
 		this.bodyAtoms = new ArrayList<SWRLAtom>(bodyAtoms);
@@ -102,11 +102,6 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 		return getBuiltInAtoms(getBodyAtoms(), builtInNames);
 	}
 
-	private void setBodyAtoms(List<SWRLAtom> atoms)
-	{
-		this.bodyAtoms = atoms;
-	}
-
 	/**
 	 * Find all built-in atoms with unbound arguments and tell them which of their arguments are unbound. See <a
 	 * href="http://protege.cim3.net/cgi-bin/wiki.pl?SWRLBuiltInBridge#nid88T">here</a> for a discussion of the role of
@@ -159,7 +154,7 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 		// engines (e.g., Jess) expect variables used as parameters to functions to have been defined before their use in
 		// a left to right fashion.
 		finalBodyAtoms = processBodyNonBuiltInAtoms(bodyNonBuiltInAtoms);
-		setBodyAtoms(finalBodyAtoms);
+		this.bodyAtoms = finalBodyAtoms;
 		finalBodyAtoms.addAll(bodyBuiltInAtoms);
 	}
 
