@@ -54,5 +54,4 @@ public interface SWRLAPIOWLDataFactory extends OWLDataFactory
 	OWLDeclarationAxiom getOWLAnnotationPropertyDeclarationAxiom(OWLAnnotationProperty property);
 
 	OWLDeclarationAxiom getOWLDatatypeDeclarationAxiom(OWLDatatype datatype);
-
 }

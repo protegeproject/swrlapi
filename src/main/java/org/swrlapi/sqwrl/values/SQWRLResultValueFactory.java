@@ -14,25 +14,25 @@ import org.swrlapi.xsd.XSDTime;
 
 public interface SQWRLResultValueFactory
 {
-	SQWRLClassValue createClassValue(SWRLClassBuiltInArgument classArgument);
+	SQWRLClassValue getClassValue(SWRLClassBuiltInArgument classArgument);
 
-	SQWRLClassValue createClassValue(IRI classIRI, String prefixedName);
+	SQWRLClassValue getClassValue(IRI classIRI, String prefixedName);
 
-	SQWRLIndividualValue createIndividualValue(SWRLIndividualBuiltInArgument individualArgument);
+	SQWRLIndividualValue getIndividualValue(SWRLIndividualBuiltInArgument individualArgument);
 
-	SQWRLIndividualValue createIndividualValue(IRI individualIRI, String prefixedName);
+	SQWRLIndividualValue getIndividualValue(IRI individualIRI, String prefixedName);
 
-	SQWRLObjectPropertyValue createObjectPropertyValue(SWRLObjectPropertyBuiltInArgument objectPropertyArgument);
+	SQWRLObjectPropertyValue getObjectPropertyValue(SWRLObjectPropertyBuiltInArgument objectPropertyArgument);
 
-	SQWRLObjectPropertyValue createObjectPropertyValue(IRI propertyIRI, String prefixedName);
+	SQWRLObjectPropertyValue getObjectPropertyValue(IRI propertyIRI, String prefixedName);
 
-	SQWRLDataPropertyValue createDataPropertyValue(SWRLDataPropertyBuiltInArgument dataPropertyArgument);
+	SQWRLDataPropertyValue getDataPropertyValue(SWRLDataPropertyBuiltInArgument dataPropertyArgument);
 
-	SQWRLDataPropertyValue createDataPropertyValue(IRI propertyIRI, String prefixedName);
+	SQWRLDataPropertyValue getDataPropertyValue(IRI propertyIRI, String prefixedName);
 
-	SQWRLAnnotationPropertyValue createAnnotationPropertyValue(SWRLAnnotationPropertyBuiltInArgument dataPropertyArgument);
+	SQWRLAnnotationPropertyValue getAnnotationPropertyValue(SWRLAnnotationPropertyBuiltInArgument dataPropertyArgument);
 
-	SQWRLAnnotationPropertyValue createAnnotationPropertyValue(IRI propertyIRI, String prefixedName);
+	SQWRLAnnotationPropertyValue getAnnotationPropertyValue(IRI propertyIRI, String prefixedName);
 
 	SQWRLLiteralResultValue getLiteral(OWLLiteral literal);
 
@@ -56,5 +56,5 @@ public interface SQWRLResultValueFactory
 
 	SQWRLLiteralResultValue getLiteral(XSDDateTime dateTime);
 
-	SQWRLLiteralResultValue createLiteralValue(XSDDuration duration);
+	SQWRLLiteralResultValue getLiteralValue(XSDDuration duration);
 }

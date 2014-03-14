@@ -20,7 +20,7 @@ import org.swrlapi.core.arguments.SWRLLiteralAtomArgument;
 
 class SWRLLiteralAtomArgumentImpl extends SWRLAtomArgumentImpl implements SWRLLiteralAtomArgument
 {
-	private static final long serialVersionUID = 2564969515366239679L;
+	private static final long serialVersionUID = 1L;
 
 	private final OWLLiteral literal;
 

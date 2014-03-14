@@ -35,63 +35,63 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
 	}
 
 	@Override
-	public SQWRLClassValue createClassValue(SWRLClassBuiltInArgument classArgument)
+	public SQWRLClassValue getClassValue(SWRLClassBuiltInArgument classArgument)
 	{
-		return createClassValue(classArgument.getIRI(), classArgument.getPrefixedName());
+		return getClassValue(classArgument.getIRI(), classArgument.getPrefixedName());
 	}
 
 	@Override
-	public SQWRLClassValue createClassValue(IRI classIRI, String prefixedName)
+	public SQWRLClassValue getClassValue(IRI classIRI, String prefixedName)
 	{
 		return new SQWRLClassValueImpl(classIRI, prefixedName);
 	}
 
 	@Override
-	public SQWRLIndividualValue createIndividualValue(SWRLIndividualBuiltInArgument individualArgument)
+	public SQWRLIndividualValue getIndividualValue(SWRLIndividualBuiltInArgument individualArgument)
 	{
-		return createIndividualValue(individualArgument.getIRI(), individualArgument.getPrefixedName());
+		return getIndividualValue(individualArgument.getIRI(), individualArgument.getPrefixedName());
 	}
 
 	@Override
-	public SQWRLIndividualValue createIndividualValue(IRI individualIRI, String prefixedName)
+	public SQWRLIndividualValue getIndividualValue(IRI individualIRI, String prefixedName)
 	{
 		return new SQWRLIndividualValueImpl(individualIRI, prefixedName);
 	}
 
 	@Override
-	public SQWRLObjectPropertyValue createObjectPropertyValue(SWRLObjectPropertyBuiltInArgument objectPropertyArgument)
+	public SQWRLObjectPropertyValue getObjectPropertyValue(SWRLObjectPropertyBuiltInArgument objectPropertyArgument)
 	{
-		return createObjectPropertyValue(objectPropertyArgument.getIRI(), objectPropertyArgument.getPrefixedName());
+		return getObjectPropertyValue(objectPropertyArgument.getIRI(), objectPropertyArgument.getPrefixedName());
 	}
 
 	@Override
-	public SQWRLObjectPropertyValue createObjectPropertyValue(IRI propertyIRI, String prefixedName)
+	public SQWRLObjectPropertyValue getObjectPropertyValue(IRI propertyIRI, String prefixedName)
 	{
 		return new SQWRLObjectPropertyValueImpl(propertyIRI, prefixedName);
 	}
 
 	@Override
-	public SQWRLDataPropertyValue createDataPropertyValue(SWRLDataPropertyBuiltInArgument dataPropertyArgument)
+	public SQWRLDataPropertyValue getDataPropertyValue(SWRLDataPropertyBuiltInArgument dataPropertyArgument)
 	{
-		return createDataPropertyValue(dataPropertyArgument.getIRI(), dataPropertyArgument.getPrefixedName());
+		return getDataPropertyValue(dataPropertyArgument.getIRI(), dataPropertyArgument.getPrefixedName());
 	}
 
 	@Override
-	public SQWRLDataPropertyValue createDataPropertyValue(IRI propertyIRI, String prefixedName)
+	public SQWRLDataPropertyValue getDataPropertyValue(IRI propertyIRI, String prefixedName)
 	{
 		return new SQWRLDataPropertyValueImpl(propertyIRI, prefixedName);
 	}
 
 	@Override
-	public SQWRLAnnotationPropertyValue createAnnotationPropertyValue(
+	public SQWRLAnnotationPropertyValue getAnnotationPropertyValue(
 			SWRLAnnotationPropertyBuiltInArgument annotationPropertyArgument)
 	{
-		return createAnnotationPropertyValue(annotationPropertyArgument.getIRI(),
+		return getAnnotationPropertyValue(annotationPropertyArgument.getIRI(),
 				annotationPropertyArgument.getPrefixedName());
 	}
 
 	@Override
-	public SQWRLAnnotationPropertyValue createAnnotationPropertyValue(IRI propertyIRI, String prefixedName)
+	public SQWRLAnnotationPropertyValue getAnnotationPropertyValue(IRI propertyIRI, String prefixedName)
 	{
 		return new SQWRLAnnotationPropertyValueImpl(propertyIRI, prefixedName);
 	}
@@ -163,7 +163,7 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
 	}
 
 	@Override
-	public SQWRLLiteralResultValue createLiteralValue(XSDDuration duration)
+	public SQWRLLiteralResultValue getLiteralValue(XSDDuration duration)
 	{
 		return new SQWRLLiteralResultValueImpl(getOWLLiteralFactory().getOWLLiteral(duration));
 	}

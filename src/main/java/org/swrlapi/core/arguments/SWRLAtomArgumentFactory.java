@@ -9,35 +9,35 @@ import org.semanticweb.owlapi.model.OWLObjectProperty;
 
 public interface SWRLAtomArgumentFactory
 {
-	SWRLVariableAtomArgument createVariableArgument(String variableName);
+	SWRLVariableAtomArgument getVariableArgument(String variableName);
 
-	SWRLClassAtomArgument createClassArgument(IRI uri);
+	SWRLClassAtomArgument getClassArgument(IRI uri);
 
-	SWRLClassAtomArgument createClassArgument(OWLClass cls);
+	SWRLClassAtomArgument getClassArgument(OWLClass cls);
 
-	SWRLIndividualAtomArgument createIndividualArgument(IRI uri);
+	SWRLIndividualAtomArgument getIndividualArgument(IRI uri);
 
-	SWRLIndividualAtomArgument createIndividualArgument(OWLIndividual individual);
+	SWRLIndividualAtomArgument getIndividualArgument(OWLIndividual individual);
 
-	SWRLObjectPropertyAtomArgument createObjectPropertyArgument(IRI iri);
+	SWRLObjectPropertyAtomArgument getObjectPropertyArgument(IRI iri);
 
-	SWRLObjectPropertyAtomArgument createObjectPropertyArgument(OWLObjectProperty property);
+	SWRLObjectPropertyAtomArgument getObjectPropertyArgument(OWLObjectProperty property);
 
-	SWRLDataPropertyAtomArgument createDataPropertyArgument(IRI iri);
+	SWRLDataPropertyAtomArgument getDataPropertyArgument(IRI iri);
 
-	SWRLDataPropertyAtomArgument createDataPropertyArgument(OWLDataProperty property);
+	SWRLDataPropertyAtomArgument getDataPropertyArgument(OWLDataProperty property);
 
-	SWRLLiteralAtomArgument createLiteralArgument(OWLLiteral literal);
+	SWRLLiteralAtomArgument getLiteralArgument(OWLLiteral literal);
 
-	SWRLLiteralAtomArgument createLiteralArgument(String s);
+	SWRLLiteralAtomArgument getLiteralArgument(String s);
 
-	SWRLLiteralAtomArgument createLiteralArgument(boolean b);
+	SWRLLiteralAtomArgument getLiteralArgument(boolean b);
 
-	SWRLLiteralAtomArgument createLiteralArgument(int i);
+	SWRLLiteralAtomArgument getLiteralArgument(int i);
 
-	SWRLLiteralAtomArgument createLiteralArgument(long l);
+	SWRLLiteralAtomArgument getLiteralArgument(long l);
 
-	SWRLLiteralAtomArgument createLiteralArgument(float f);
+	SWRLLiteralAtomArgument getLiteralArgument(float f);
 
-	SWRLLiteralAtomArgument createLiteralArgument(double d);
+	SWRLLiteralAtomArgument getLiteralArgument(double d);
 }

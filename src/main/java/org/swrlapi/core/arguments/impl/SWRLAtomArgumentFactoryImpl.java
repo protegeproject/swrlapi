@@ -31,55 +31,55 @@ public class SWRLAtomArgumentFactoryImpl implements SWRLAtomArgumentFactory
 	}
 
 	@Override
-	public SWRLVariableAtomArgument createVariableArgument(String variableName)
+	public SWRLVariableAtomArgument getVariableArgument(String variableName)
 	{
 		return new SWRLVariableAtomArgumentImpl(variableName);
 	}
 
 	@Override
-	public SWRLClassAtomArgument createClassArgument(IRI classIRI)
+	public SWRLClassAtomArgument getClassArgument(IRI classIRI)
 	{
 		return new SWRLClassAtomArgumentImpl(classIRI);
 	}
 
 	@Override
-	public SWRLClassAtomArgument createClassArgument(OWLClass cls)
+	public SWRLClassAtomArgument getClassArgument(OWLClass cls)
 	{
 		return new SWRLClassAtomArgumentImpl(cls);
 	}
 
 	@Override
-	public SWRLObjectPropertyAtomArgument createObjectPropertyArgument(IRI propertyIRI)
+	public SWRLObjectPropertyAtomArgument getObjectPropertyArgument(IRI propertyIRI)
 	{
 		return new SWRLObjectPropertyAtomArgumentImpl(propertyIRI);
 	}
 
 	@Override
-	public SWRLObjectPropertyAtomArgument createObjectPropertyArgument(OWLObjectProperty property)
+	public SWRLObjectPropertyAtomArgument getObjectPropertyArgument(OWLObjectProperty property)
 	{
 		return new SWRLObjectPropertyAtomArgumentImpl(property);
 	}
 
 	@Override
-	public SWRLDataPropertyAtomArgument createDataPropertyArgument(IRI propertyIRI)
+	public SWRLDataPropertyAtomArgument getDataPropertyArgument(IRI propertyIRI)
 	{
 		return new SWRLDataPropertyAtomArgumentImpl(propertyIRI);
 	}
 
 	@Override
-	public SWRLDataPropertyAtomArgument createDataPropertyArgument(OWLDataProperty property)
+	public SWRLDataPropertyAtomArgument getDataPropertyArgument(OWLDataProperty property)
 	{
 		return new SWRLDataPropertyAtomArgumentImpl(property);
 	}
 
 	@Override
-	public SWRLIndividualAtomArgument createIndividualArgument(IRI individualIRI)
+	public SWRLIndividualAtomArgument getIndividualArgument(IRI individualIRI)
 	{
 		return new SWRLIndividualAtomArgumentImpl(individualIRI);
 	}
 
 	@Override
-	public SWRLIndividualAtomArgument createIndividualArgument(OWLIndividual individual)
+	public SWRLIndividualAtomArgument getIndividualArgument(OWLIndividual individual)
 	{
 		if (individual.isNamed()) {
 			OWLNamedIndividual namedIndividual = individual.asOWLNamedIndividual();
@@ -89,43 +89,43 @@ public class SWRLAtomArgumentFactoryImpl implements SWRLAtomArgumentFactory
 	}
 
 	@Override
-	public SWRLLiteralAtomArgument createLiteralArgument(OWLLiteral literal)
+	public SWRLLiteralAtomArgument getLiteralArgument(OWLLiteral literal)
 	{
 		return new SWRLLiteralAtomArgumentImpl(literal);
 	}
 
 	@Override
-	public SWRLLiteralAtomArgument createLiteralArgument(String s)
+	public SWRLLiteralAtomArgument getLiteralArgument(String s)
 	{
 		return new SWRLLiteralAtomArgumentImpl(getOWLLiteralFactory().getOWLLiteral(s));
 	}
 
 	@Override
-	public SWRLLiteralAtomArgument createLiteralArgument(boolean b)
+	public SWRLLiteralAtomArgument getLiteralArgument(boolean b)
 	{
 		return new SWRLLiteralAtomArgumentImpl(getOWLLiteralFactory().getOWLLiteral(b));
 	}
 
 	@Override
-	public SWRLLiteralAtomArgument createLiteralArgument(int i)
+	public SWRLLiteralAtomArgument getLiteralArgument(int i)
 	{
 		return new SWRLLiteralAtomArgumentImpl(getOWLLiteralFactory().getOWLLiteral(i));
 	}
 
 	@Override
-	public SWRLLiteralAtomArgument createLiteralArgument(long l)
+	public SWRLLiteralAtomArgument getLiteralArgument(long l)
 	{
 		return new SWRLLiteralAtomArgumentImpl(getOWLLiteralFactory().getOWLLiteral(l));
 	}
 
 	@Override
-	public SWRLLiteralAtomArgument createLiteralArgument(float f)
+	public SWRLLiteralAtomArgument getLiteralArgument(float f)
 	{
 		return new SWRLLiteralAtomArgumentImpl(getOWLLiteralFactory().getOWLLiteral(f));
 	}
 
 	@Override
-	public SWRLLiteralAtomArgument createLiteralArgument(double d)
+	public SWRLLiteralAtomArgument getLiteralArgument(double d)
 	{
 		return new SWRLLiteralAtomArgumentImpl(getOWLLiteralFactory().getOWLLiteral(d));
 	}

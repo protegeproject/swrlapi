@@ -4,12 +4,14 @@ import org.semanticweb.owlapi.model.SWRLDArgument;
 
 /**
  * Interface representing an argument to a SWRL built-in. This interface represents the primary SWRLAPI extension point
- * for built-in arguments.
+ * of the OWLAPI to represent SWRL built-in atoms. The OWLAPI envisions built-in arguments as simple literals only. The
+ * SWRLAPI al classes, properties, datatypes, individuals, as well as SQWRL-specific arguments.
  * 
- * @see {@link SWRLClassBuiltInArgument}, {@link SWRLObjectPropertyBuiltInArgument},
- *      {@link SWRLDataPropertyBuiltInArgument}, {@link SWRLDataPropertyBuiltInArgument},
- *      {@link SWRLDatatypeBuiltInArgument}, {@link SWRLLiteralBuiltInArgument}, {@link SQWRLCollectionBuiltInArgument},
- *      {@link SWRLMultiArgument}.
+ * @see {@link SWRLClassBuiltInArgument}, {@link SWRLIndividualBuiltInArgument},
+ *      {@link SWRLObjectPropertyBuiltInArgument}, {@link SWRLDataPropertyBuiltInArgument},
+ *      {@link SWRLDataPropertyBuiltInArgument}, {@link SWRLAnnotationPropertyBuiltInArgument},
+ *      {@link SWRLDatatypeBuiltInArgument}, {@link SWRLLiteralBuiltInArgument} , {@link SQWRLCollectionBuiltInArgument}
+ *      , {@link SWRLVariableBuiltInArgument}, {@link SWRLMultiArgument}.
  */
 public interface SWRLBuiltInArgument extends SWRLAtomArgument, SWRLDArgument
 {
@@ -33,7 +35,4 @@ public interface SWRLBuiltInArgument extends SWRLAtomArgument, SWRLDArgument
 	void setUnbound();
 
 	void setBound();
-
-	@Override
-	String toDisplayText();
 }

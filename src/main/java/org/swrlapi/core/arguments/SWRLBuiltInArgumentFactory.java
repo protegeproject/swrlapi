@@ -18,64 +18,64 @@ import org.swrlapi.xsd.XSDTime;
 
 public interface SWRLBuiltInArgumentFactory
 {
-	SWRLVariableBuiltInArgument createVariableArgument(String variableName);
+	SWRLVariableBuiltInArgument getVariableArgument(String variableName);
 
-	SWRLVariableBuiltInArgument createUnboundVariableArgument(String variableName);
+	SWRLVariableBuiltInArgument getUnboundVariableArgument(String variableName);
 
-	SWRLClassBuiltInArgument createClassArgument(IRI uri);
+	SWRLClassBuiltInArgument getClassArgument(IRI uri);
 
-	SWRLClassBuiltInArgument createClassArgument(OWLClass cls);
+	SWRLClassBuiltInArgument getClassArgument(OWLClass cls);
 
-	SWRLIndividualBuiltInArgument createIndividualArgument(IRI uri);
+	SWRLIndividualBuiltInArgument getIndividualArgument(IRI uri);
 
-	SWRLIndividualBuiltInArgument createIndividualArgument(OWLIndividual individual);
+	SWRLIndividualBuiltInArgument getIndividualArgument(OWLIndividual individual);
 
-	SWRLObjectPropertyBuiltInArgument createObjectPropertyArgument(IRI uri);
+	SWRLObjectPropertyBuiltInArgument getObjectPropertyArgument(IRI uri);
 
-	SWRLObjectPropertyBuiltInArgument createObjectPropertyArgument(OWLObjectProperty property);
+	SWRLObjectPropertyBuiltInArgument getObjectPropertyArgument(OWLObjectProperty property);
 
-	SWRLDataPropertyBuiltInArgument createDataPropertyArgument(IRI uri);
+	SWRLDataPropertyBuiltInArgument getDataPropertyArgument(IRI uri);
 
-	SWRLDataPropertyBuiltInArgument createDataPropertyArgument(OWLDataProperty property);
+	SWRLDataPropertyBuiltInArgument getDataPropertyArgument(OWLDataProperty property);
 
-	SWRLAnnotationPropertyBuiltInArgument createAnnotationPropertyArgument(IRI uri);
+	SWRLAnnotationPropertyBuiltInArgument getAnnotationPropertyArgument(IRI uri);
 
-	SWRLAnnotationPropertyBuiltInArgument createAnnotationPropertyArgument(OWLAnnotationProperty property);
+	SWRLAnnotationPropertyBuiltInArgument getAnnotationPropertyArgument(OWLAnnotationProperty property);
 
-	SWRLDatatypeBuiltInArgument createDatatypeArgument(IRI uri);
+	SWRLDatatypeBuiltInArgument getDatatypeArgument(IRI uri);
 
-	SWRLDatatypeBuiltInArgument createDatatypeArgument(OWLDatatype datatype);
+	SWRLDatatypeBuiltInArgument getDatatypeArgument(OWLDatatype datatype);
 
-	SWRLLiteralBuiltInArgument createLiteralArgument(OWLLiteral literal);
+	SWRLLiteralBuiltInArgument getLiteralArgument(OWLLiteral literal);
 
-	SWRLLiteralBuiltInArgument createLiteralArgument(String s);
+	SWRLLiteralBuiltInArgument getLiteralArgument(String s);
 
-	SWRLLiteralBuiltInArgument createLiteralArgument(boolean b);
+	SWRLLiteralBuiltInArgument getLiteralArgument(boolean b);
 
-	SWRLLiteralBuiltInArgument createLiteralArgument(int i);
+	SWRLLiteralBuiltInArgument getLiteralArgument(int i);
 
-	SWRLLiteralBuiltInArgument createLiteralArgument(long l);
+	SWRLLiteralBuiltInArgument getLiteralArgument(long l);
 
-	SWRLLiteralBuiltInArgument createLiteralArgument(float f);
+	SWRLLiteralBuiltInArgument getLiteralArgument(float f);
 
-	SWRLLiteralBuiltInArgument createLiteralArgument(double d);
+	SWRLLiteralBuiltInArgument getLiteralArgument(double d);
 
-	SWRLLiteralBuiltInArgument createLiteralArgument(byte b);
+	SWRLLiteralBuiltInArgument getLiteralArgument(byte b);
 
-	SWRLLiteralBuiltInArgument createLiteralArgument(URI iri);
+	SWRLLiteralBuiltInArgument getLiteralArgument(URI iri);
 
-	SWRLLiteralBuiltInArgument createLiteralArgument(XSDDate date);
+	SWRLLiteralBuiltInArgument getLiteralArgument(XSDDate date);
 
-	SWRLLiteralBuiltInArgument createLiteralArgument(XSDTime time);
+	SWRLLiteralBuiltInArgument getLiteralArgument(XSDTime time);
 
-	SWRLLiteralBuiltInArgument createLiteralArgument(XSDDateTime datetime);
+	SWRLLiteralBuiltInArgument getLiteralArgument(XSDDateTime datetime);
 
-	SWRLLiteralBuiltInArgument createLiteralArgument(XSDDuration duration);
+	SWRLLiteralBuiltInArgument getLiteralArgument(XSDDuration duration);
 
-	SWRLMultiArgument createMultiArgument();
+	SWRLMultiArgument getMultiArgument();
 
-	SWRLMultiArgument createMultiArgument(List<SWRLBuiltInArgument> arguments);
+	SWRLMultiArgument getMultiArgument(List<SWRLBuiltInArgument> arguments);
 
-	SQWRLCollectionBuiltInArgument createSQWRLCollectionArgument(String queryName, String collectionName,
+	SQWRLCollectionBuiltInArgument getSQWRLCollectionArgument(String queryName, String collectionName,
 			String collectionID);
 }
