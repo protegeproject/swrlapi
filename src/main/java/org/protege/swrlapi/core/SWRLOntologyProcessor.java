@@ -12,10 +12,10 @@ import org.protege.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.semanticweb.owlapi.model.OWLAxiom;
 
 /**
- * This interface defines a processor that is used by SWRL rule and SQWRL query engines to analyze an ontology (defined
- * by the interface {@link SWRLAPIOWLOntology}). The main function of a processor is to manage the SWRL rules and SQWRL
- * queries in an ontology. The processor should extract SQWRL queries (which are serialized as SWRL rules in an
- * ontology). SQWRL query management functionality includes managing query results and result generators.
+ * This interface defines a processor processes an SWRLAPI-based OWL ontology (represented by the interface
+ * {@link SWRLAPIOWLOntology} and provides methods manage the SWRL rules and SQWRL queries in that ontology. The
+ * processor should also process SQWRL queries (which are serialized as SWRL rules in an ontology). SQWRL query
+ * management functionality includes managing query results and result generators.
  * <p>
  * Implementations may decide to optimize ontology processing so that, for example, only axioms relevant to the SWRL
  * rules or SQWRL queries in the ontology are extracted.
@@ -24,31 +24,21 @@ import org.semanticweb.owlapi.model.OWLAxiom;
  * <p>
  * The {@link DefaultSWRLOntologyProcessor} class provides a default implementation of this interface. Apart from
  * extracting SWRL rules and SQWRL queries, this processor also generates OWL declaration axioms for all OWL entities
- * encountered during axiom processing and records their type, URI and prefixed names using the
- * {@link OWLNamedObjectResolver} class. This class can be used by rule engines to keep track of OWL entities.
+ * encountered during axiom processing and records their type, IRI and prefixed names using the
+ * {@link OWLNamedObjectResolver} class. This class can be used by rule engines to resolve OWL named objects using their
+ * prefixed name.
  */
 public interface SWRLOntologyProcessor
 {
 	void processOntology() throws SQWRLException;
 
-	/**
-	 * Get all OWL axioms in processed ontology (which will include SWRL rules);
-	 */
+	OWLNamedObjectResolver getOWLNamedObjectResolver();
+
 	Set<OWLAxiom> getOWLAxioms();
 
 	int getNumberOfOWLAxioms();
 
-	boolean hasOWLAxiom(OWLAxiom axiom);
-
-	int getNumberOfOWLClassDeclarationAxioms();
-
-	int getNumberOfOWLIndividualDeclarationAxioms();
-
-	int getNumberOfOWLObjectPropertyDeclarationAxioms();
-
-	int getNumberOfOWLDataPropertyDeclarationAxioms();
-
-	OWLNamedObjectResolver getOWLNamedObjectResolver();
+	boolean hasAssertedOWLAxiom(OWLAxiom axiom);
 
 	int getNumberOfSWRLRules();
 
@@ -69,4 +59,12 @@ public interface SWRLOntologyProcessor
 	SQWRLResult getSQWRLResult(String queryName) throws SQWRLException;
 
 	SQWRLResultGenerator getSQWRLResultGenerator(String queryName) throws SQWRLException;
+
+	int getNumberOfOWLClassDeclarationAxioms();
+
+	int getNumberOfOWLIndividualDeclarationAxioms();
+
+	int getNumberOfOWLObjectPropertyDeclarationAxioms();
+
+	int getNumberOfOWLDataPropertyDeclarationAxioms();
 }

@@ -7,13 +7,16 @@ import org.protege.swrlapi.exceptions.BuiltInException;
 import org.protege.swrlapi.exceptions.SWRLBuiltInBridgeException;
 import org.protege.swrlapi.exceptions.SWRLRuleEngineException;
 import org.protege.swrlapi.exceptions.TargetRuleEngineException;
+import org.protege.swrlapi.ext.SWRLAPIOWLDataFactory;
 import org.protege.swrlapi.ext.SWRLAPIOWLOntology;
 import org.protege.swrlapi.ext.SWRLAPIRule;
 import org.protege.swrlapi.owl2rl.OWL2RLEngine;
 import org.protege.swrlapi.sqwrl.SQWRLQuery;
 import org.protege.swrlapi.sqwrl.SQWRLResult;
 import org.protege.swrlapi.sqwrl.exceptions.SQWRLException;
+import org.semanticweb.owlapi.model.AddAxiom;
 import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLOntologyManager;
 
 /**
  * This class provides an implementation of some of the core functionality required by a SWRL rule engine. Detailed
@@ -22,18 +25,23 @@ import org.semanticweb.owlapi.model.OWLAxiom;
  */
 public class AbstractSWRLRuleEngine implements SWRLRuleEngine
 {
-	private final TargetRuleEngine targetRuleEngine;
+	private final OWLOntologyManager owlOntologyManager;
 	private final SWRLAPIOWLOntology owlOntology;
+	private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
+	private final TargetRuleEngine targetRuleEngine;
 	private final SWRLOntologyProcessor swrlOntologyProcessor;
 	private final SWRLBuiltInBridgeController builtInBridgeController;
 	private final SWRLRuleEngineBridgeController ruleEngineBridgeController;
 	private final Set<OWLAxiom> exportedOWLAxioms; // Axioms exported to target rule engine
 
-	public AbstractSWRLRuleEngine(SWRLAPIOWLOntology owlOntology, SWRLOntologyProcessor swrlOntologyProcessor,
+	public AbstractSWRLRuleEngine(OWLOntologyManager ontologyManager, SWRLAPIOWLOntology owlOntology,
+			SWRLAPIOWLDataFactory swrlapiOWLDataFactory, SWRLOntologyProcessor swrlOntologyProcessor,
 			TargetRuleEngine targetRuleEngine, SWRLRuleEngineBridgeController ruleEngineBridgeController,
 			SWRLBuiltInBridgeController builtInBridgeController) throws SWRLRuleEngineException
 	{
+		this.owlOntologyManager = ontologyManager;
 		this.owlOntology = owlOntology;
+		this.swrlapiOWLDataFactory = swrlapiOWLDataFactory;
 		this.swrlOntologyProcessor = swrlOntologyProcessor;
 		this.targetRuleEngine = targetRuleEngine;
 		this.builtInBridgeController = builtInBridgeController;
@@ -115,7 +123,8 @@ public class AbstractSWRLRuleEngine implements SWRLRuleEngine
 	public void createSQWRLQuery(String queryName, String queryText) throws SQWRLException
 	{
 		try {
-			getOWLOntology().createSWRLRule(queryName, queryText);
+			SWRLAPIRule query = getSWRLAPIOWLDataFactory().getSWRLRule(queryName, queryText);
+			writeOWLAxiom2OWLOntology(query);
 		} catch (RuntimeException e) {
 			throw new SQWRLException("error creating SQWRL query: " + e.getMessage(), e);
 		}
@@ -374,16 +383,34 @@ public class AbstractSWRLRuleEngine implements SWRLRuleEngine
 	private void writeOWLAxioms2OWLOntology(Set<OWLAxiom> axioms) throws SWRLRuleEngineException
 	{
 		try {
-			for (OWLAxiom axiom : axioms)
-				getOWLOntology().putOWLAxiom(axiom);
+			for (OWLAxiom axiom : axioms) {
+				writeOWLAxiom2OWLOntology(axiom);
+			}
 		} catch (RuntimeException e) {
-			throw new SWRLRuleEngineException("Error writing OWL axioms", e);
+			throw new SWRLRuleEngineException("Error writing OWL axioms to ontology", e);
 		}
+	}
+
+	private void writeOWLAxiom2OWLOntology(OWLAxiom axiom) throws RuntimeException
+	{
+		AddAxiom addAxiomChange = new AddAxiom(getOWLOntology(), axiom);
+
+		getOWLOntologyManager().applyChange(addAxiomChange);
+	}
+
+	private OWLOntologyManager getOWLOntologyManager()
+	{
+		return this.owlOntologyManager;
 	}
 
 	private SWRLAPIOWLOntology getOWLOntology()
 	{
 		return this.owlOntology;
+	}
+
+	private SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory()
+	{
+		return this.swrlapiOWLDataFactory;
 	}
 
 	private SWRLOntologyProcessor getSWRLAPIOntologyProcessor()

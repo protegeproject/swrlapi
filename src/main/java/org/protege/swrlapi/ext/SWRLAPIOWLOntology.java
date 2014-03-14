@@ -3,52 +3,28 @@ package org.protege.swrlapi.ext;
 import java.util.Set;
 
 import org.semanticweb.owlapi.model.IRI;
-import org.semanticweb.owlapi.model.OWLAnnotationAssertionAxiom;
-import org.semanticweb.owlapi.model.OWLAnnotationPropertyDomainAxiom;
-import org.semanticweb.owlapi.model.OWLAnnotationPropertyRangeAxiom;
-import org.semanticweb.owlapi.model.OWLAsymmetricObjectPropertyAxiom;
-import org.semanticweb.owlapi.model.OWLAxiom;
-import org.semanticweb.owlapi.model.OWLClassAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
-import org.semanticweb.owlapi.model.OWLDataPropertyDomainAxiom;
-import org.semanticweb.owlapi.model.OWLDataPropertyRangeAxiom;
-import org.semanticweb.owlapi.model.OWLDatatypeDefinitionAxiom;
-import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
-import org.semanticweb.owlapi.model.OWLDifferentIndividualsAxiom;
-import org.semanticweb.owlapi.model.OWLDisjointClassesAxiom;
-import org.semanticweb.owlapi.model.OWLDisjointDataPropertiesAxiom;
-import org.semanticweb.owlapi.model.OWLDisjointObjectPropertiesAxiom;
-import org.semanticweb.owlapi.model.OWLDisjointUnionAxiom;
-import org.semanticweb.owlapi.model.OWLEquivalentClassesAxiom;
-import org.semanticweb.owlapi.model.OWLEquivalentDataPropertiesAxiom;
-import org.semanticweb.owlapi.model.OWLEquivalentObjectPropertiesAxiom;
-import org.semanticweb.owlapi.model.OWLFunctionalDataPropertyAxiom;
-import org.semanticweb.owlapi.model.OWLFunctionalObjectPropertyAxiom;
-import org.semanticweb.owlapi.model.OWLHasKeyAxiom;
-import org.semanticweb.owlapi.model.OWLInverseFunctionalObjectPropertyAxiom;
-import org.semanticweb.owlapi.model.OWLInverseObjectPropertiesAxiom;
-import org.semanticweb.owlapi.model.OWLIrreflexiveObjectPropertyAxiom;
-import org.semanticweb.owlapi.model.OWLNegativeDataPropertyAssertionAxiom;
-import org.semanticweb.owlapi.model.OWLNegativeObjectPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
-import org.semanticweb.owlapi.model.OWLObjectPropertyDomainAxiom;
-import org.semanticweb.owlapi.model.OWLObjectPropertyRangeAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
-import org.semanticweb.owlapi.model.OWLReflexiveObjectPropertyAxiom;
-import org.semanticweb.owlapi.model.OWLSameIndividualAxiom;
-import org.semanticweb.owlapi.model.OWLSubAnnotationPropertyOfAxiom;
-import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
-import org.semanticweb.owlapi.model.OWLSubDataPropertyOfAxiom;
-import org.semanticweb.owlapi.model.OWLSubObjectPropertyOfAxiom;
-import org.semanticweb.owlapi.model.OWLSubPropertyChainOfAxiom;
-import org.semanticweb.owlapi.model.OWLSymmetricObjectPropertyAxiom;
-import org.semanticweb.owlapi.model.OWLTransitiveObjectPropertyAxiom;
+import org.semanticweb.owlapi.model.SWRLRule;
 
 /**
- * Extends the OWLAPI's OWLOntology class with additional methods used by the SWRLAPI.
+ * Extends the OWLAPI's OWLOntology class with additional methods used by the SWRLAPI. Primarily the
+ * {@link #getSWRLRules()} method extracts {@link SWRLAPIRule} objects from an OWL ontology. This class, which extends
+ * the standard OWLAPI {@link SWRLRule} class, provide the richer representation of a SWRL rule required by the SWRLAPI.
+ * In particular, the SWRLAPI has a range of types extending the OWLAPI's @{link SWRLArgument} interface. A
+ * {@link SWRLAPIOWLOntology} will construct SWRLAPI rules to contain from the SWRL rules in an OWLAPI-based ontology to
+ * contain these additional types.
+ * <p>
+ * The {@link startBulkConversion}, {@link completeBulkConversion}, {@link hasOntologyChanged}, and
+ * {@link resetOntologyChanged} methods can be used for optimization purposed. For example, in the Protege-OWL API the
+ * {@link startBulkConversion} method turns off listener notification so that bulk transfer of OWL axioms can be
+ * performed more efficiently.
  */
 public interface SWRLAPIOWLOntology extends OWLOntology
 {
+	Set<SWRLAPIRule> getSWRLRules();
+
 	void startBulkConversion(); // Can be used, for example, to switch off notification during bulk conversion.
 
 	void completeBulkConversion();
@@ -57,117 +33,12 @@ public interface SWRLAPIOWLOntology extends OWLOntology
 
 	void resetOntologyChanged();
 
-	Set<SWRLAPIRule> getSWRLRules();
-
-	SWRLAPIRule createSWRLRule(String ruleName, String ruleText);
-
-	// TODO Change/remove to align with OWLAPI
-	void putOWLAxiom(OWLAxiom axiom);
-
-	/**
-	 * Take a prefix and generate a unique IRI from it in the default namespace of the ontology, e.g., a local name prefix
-	 * of "MM_CLASS_" supplied to this method where the default namespace is
-	 * "http://bmir.stanford.edu/protege/ontologies/Map" will generate a IRI something like
-	 * "http://bmir.stanford.edu/protege/ontologies/Map#MM_CLASS_34".
-	 */
-	IRI generateOWLEntityIRI(String localNamePrefix);
-
-	String iri2PrefixedName(IRI iri);
-
-	// TODO Do we want this method here?
+	// TODO We don't want this method here. It is a convenience method only.
 	boolean isOWLIndividualOfType(IRI individualIRI, IRI classIRI);
 
-	// TODO Do we want this method here?
+	// TODO We don't want this method here. It is a convenience method only.
 	Set<OWLObjectPropertyAssertionAxiom> getOWLObjectPropertyAssertionAxioms(IRI individualIRI, IRI propertyIRI);
 
-	// TODO Do we want this method here?
+	// TODO We don't want this method here. It is a convenience method only.
 	Set<OWLDataPropertyAssertionAxiom> getOWLDataPropertyAssertionAxioms(IRI individualIRI, IRI propertyIRI);
-
-	// The following are methods to get all OWL axioms of particular type from the ontology.
-
-	Set<OWLSameIndividualAxiom> getOWLSameIndividualAxioms();
-
-	Set<OWLDifferentIndividualsAxiom> getOWLDifferentIndividualsAxioms();
-
-	Set<OWLSubObjectPropertyOfAxiom> getOWLSubObjectPropertyOfAxioms();
-
-	Set<OWLSubDataPropertyOfAxiom> getOWLSubDataPropertyOfAxioms();
-
-	Set<OWLEquivalentClassesAxiom> getOWLEquivalentClassesAxioms();
-
-	Set<OWLClassAssertionAxiom> getOWLClassAssertionAxioms();
-
-	Set<OWLObjectPropertyAssertionAxiom> getOWLObjectPropertyAssertionAxioms();
-
-	Set<OWLDataPropertyAssertionAxiom> getOWLDataPropertyAssertionAxioms();
-
-	Set<OWLSubClassOfAxiom> getOWLSubClassOfAxioms();
-
-	Set<OWLDisjointClassesAxiom> getOWLDisjointClassesAxioms();
-
-	Set<OWLEquivalentDataPropertiesAxiom> getOWLEquivalentDataPropertiesAxioms();
-
-	Set<OWLEquivalentObjectPropertiesAxiom> getOWLEquivalentObjectPropertiesAxioms();
-
-	Set<OWLDisjointDataPropertiesAxiom> getOWLDisjointDataPropertiesAxioms();
-
-	Set<OWLDisjointObjectPropertiesAxiom> getOWLDisjointObjectPropertiesAxioms();
-
-	Set<OWLObjectPropertyDomainAxiom> getOWLObjectPropertyDomainAxioms();
-
-	Set<OWLDataPropertyDomainAxiom> getOWLDataPropertyDomainAxioms();
-
-	Set<OWLObjectPropertyRangeAxiom> getOWLObjectPropertyRangeAxioms();
-
-	Set<OWLDataPropertyRangeAxiom> getOWLDataPropertyRangeAxioms();
-
-	Set<OWLFunctionalObjectPropertyAxiom> getOWLFunctionalObjectPropertyAxioms();
-
-	Set<OWLFunctionalDataPropertyAxiom> getOWLFunctionalDataPropertyAxioms();
-
-	Set<OWLIrreflexiveObjectPropertyAxiom> getOWLIrreflexiveObjectPropertyAxioms();
-
-	Set<OWLInverseFunctionalObjectPropertyAxiom> getOWLInverseFunctionalObjectPropertyAxioms();
-
-	Set<OWLTransitiveObjectPropertyAxiom> getOWLTransitiveObjectPropertyAxioms();
-
-	Set<OWLSymmetricObjectPropertyAxiom> getOWLSymmetricObjectPropertyAxioms();
-
-	Set<OWLAsymmetricObjectPropertyAxiom> getOWLAsymmetricObjectPropertyAxioms();
-
-	Set<OWLInverseObjectPropertiesAxiom> getOWLInverseObjectPropertiesAxioms();
-
-	Set<OWLNegativeDataPropertyAssertionAxiom> getOWLNegativeDataPropertyAssertionAxioms();
-
-	Set<OWLNegativeObjectPropertyAssertionAxiom> getOWLNegativeObjectPropertyAssertionAxioms();
-
-	Set<OWLReflexiveObjectPropertyAxiom> getOWLReflexiveObjectPropertyAxioms();
-
-	Set<OWLDisjointUnionAxiom> getOWLDisjointUnionAxioms();
-
-	Set<OWLAnnotationAssertionAxiom> getOWLAnnotationAssertionAxioms();
-
-	Set<OWLSubPropertyChainOfAxiom> getOWLSubPropertyChainOfAxioms();
-
-	Set<OWLHasKeyAxiom> getOWLHasKeyAxioms();
-
-	Set<OWLDatatypeDefinitionAxiom> getOWLDatatypeDefinitionAxioms();
-
-	Set<OWLAnnotationPropertyRangeAxiom> getOWLAnnotationPropertyRangeAxioms();
-
-	Set<OWLAnnotationPropertyDomainAxiom> getOWLAnnotationPropertyDomainAxioms();
-
-	Set<OWLSubAnnotationPropertyOfAxiom> getOWLSubAnnotationPropertyOfAxioms();
-
-	Set<OWLDeclarationAxiom> getOWLClassDeclarationAxioms();
-
-	Set<OWLDeclarationAxiom> getOWLIndividualDeclarationAxioms();
-
-	Set<OWLDeclarationAxiom> getOWLObjectPropertyDeclarationAxioms();
-
-	Set<OWLDeclarationAxiom> getOWLDataPropertyDeclarationAxioms();
-
-	Set<OWLDeclarationAxiom> getOWLAnnotationPropertyDeclarationAxioms();
-
-	Set<OWLDeclarationAxiom> getOWLDatatypeDeclarationAxioms();
 }

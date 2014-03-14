@@ -72,7 +72,7 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 		this.owl2RLPersistenceLayer = owl2RLPersistenceLayer;
 		this.targetRuleEngine = null;
 
-		this.dataFactory = new DefaultSWRLAPIOWLDataFactory(targetOWLOntology);
+		this.dataFactory = new DefaultSWRLAPIOWLDataFactory();
 		this.owlDatatypeFactory = this.dataFactory.getOWLDatatypeFactory();
 		this.owlLiteralFactory = this.dataFactory.getOWLLiteralFactory();
 		this.swrlAPILiteralFactory = this.dataFactory.getSWRLAPILiteralFactory();
@@ -179,7 +179,7 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 	@Override
 	public void inferOWLAxiom(OWLAxiom axiom) throws SWRLRuleEngineBridgeException
 	{
-		if (!this.inferredOWLAxioms.contains(axiom) && !this.swrlapiOntologyProcessor.hasOWLAxiom(axiom)) // Exclude already
+		if (!this.inferredOWLAxioms.contains(axiom) && !this.swrlapiOntologyProcessor.hasAssertedOWLAxiom(axiom)) // Exclude already
 																																																			// asserted axioms
 			this.inferredOWLAxioms.add(axiom);
 	}
