@@ -1,5 +1,7 @@
 package org.swrlapi.core.arguments.impl;
 
+import java.net.URI;
+
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataProperty;
@@ -18,6 +20,10 @@ import org.swrlapi.ext.OWLDatatypeFactory;
 import org.swrlapi.ext.OWLLiteralFactory;
 import org.swrlapi.ext.impl.DefaultOWLDatatypeFactory;
 import org.swrlapi.ext.impl.DefaultOWLLiteralFactory;
+import org.swrlapi.xsd.XSDDate;
+import org.swrlapi.xsd.XSDDateTime;
+import org.swrlapi.xsd.XSDDuration;
+import org.swrlapi.xsd.XSDTime;
 
 public class SWRLAtomArgumentFactoryImpl implements SWRLAtomArgumentFactory
 {
@@ -107,6 +113,24 @@ public class SWRLAtomArgumentFactoryImpl implements SWRLAtomArgumentFactory
 	}
 
 	@Override
+	public SWRLLiteralAtomArgument getLiteralArgument(byte b)
+	{
+		return new SWRLLiteralAtomArgumentImpl(getOWLLiteralFactory().getOWLLiteral(b));
+	}
+
+	@Override
+	public SWRLLiteralAtomArgument getLiteralArgument(short s)
+	{
+		return new SWRLLiteralAtomArgumentImpl(getOWLLiteralFactory().getOWLLiteral(s));
+	}
+
+	@Override
+	public SWRLLiteralAtomArgument getLiteralArgument(URI uri)
+	{
+		return new SWRLLiteralAtomArgumentImpl(getOWLLiteralFactory().getOWLLiteral(uri));
+	}
+
+	@Override
 	public SWRLLiteralAtomArgument getLiteralArgument(int i)
 	{
 		return new SWRLLiteralAtomArgumentImpl(getOWLLiteralFactory().getOWLLiteral(i));
@@ -128,6 +152,30 @@ public class SWRLAtomArgumentFactoryImpl implements SWRLAtomArgumentFactory
 	public SWRLLiteralAtomArgument getLiteralArgument(double d)
 	{
 		return new SWRLLiteralAtomArgumentImpl(getOWLLiteralFactory().getOWLLiteral(d));
+	}
+
+	@Override
+	public SWRLLiteralAtomArgument getLiteralArgument(XSDDate date)
+	{
+		return new SWRLLiteralAtomArgumentImpl(getOWLLiteralFactory().getOWLLiteral(date));
+	}
+
+	@Override
+	public SWRLLiteralAtomArgument getLiteralArgument(XSDTime time)
+	{
+		return new SWRLLiteralAtomArgumentImpl(getOWLLiteralFactory().getOWLLiteral(time));
+	}
+
+	@Override
+	public SWRLLiteralAtomArgument getLiteralArgument(XSDDateTime datetime)
+	{
+		return new SWRLLiteralAtomArgumentImpl(getOWLLiteralFactory().getOWLLiteral(datetime));
+	}
+
+	@Override
+	public SWRLLiteralAtomArgument getLiteralArgument(XSDDuration duration)
+	{
+		return new SWRLLiteralAtomArgumentImpl(getOWLLiteralFactory().getOWLLiteral(duration));
 	}
 
 	private OWLLiteralFactory getOWLLiteralFactory()
