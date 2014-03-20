@@ -20,6 +20,7 @@ import org.swrlapi.ext.SWRLAPILiteralFactory;
 import org.swrlapi.ext.impl.DefaultSWRLAPILiteral;
 import org.swrlapi.ext.impl.DefaultSWRLAPILiteralFactory;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
+import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 
 public class DefaultSQWRLQuery implements SQWRLQuery
 {
@@ -34,12 +35,13 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 
 	private boolean active; // Like a SWRLRule, a SQWRL query can also be inactive.
 
-	public DefaultSQWRLQuery(String queryName, List<SWRLAtom> bodyAtoms, List<SWRLAtom> headAtoms) throws SQWRLException
+	public DefaultSQWRLQuery(String queryName, List<SWRLAtom> bodyAtoms, List<SWRLAtom> headAtoms,
+			SQWRLResultValueFactory sqwrlResultValueFactory) throws SQWRLException
 	{
 		this.queryName = queryName;
 		this.bodyAtoms = bodyAtoms;
 		this.headAtoms = headAtoms;
-		this.sqwrlResult = new DefaultSQWRLResult();
+		this.sqwrlResult = new DefaultSQWRLResult(sqwrlResultValueFactory);
 		this.collectionGroupArgumentsMap = new HashMap<String, List<SWRLBuiltInArgument>>();
 		this.swrlAPILiteralFactory = new DefaultSWRLAPILiteralFactory();
 		this.active = false;

@@ -21,10 +21,8 @@ import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.exceptions.SQWRLInvalidQueryNameException;
-import org.swrlapi.sqwrl.values.SQWRLClassValue;
-import org.swrlapi.sqwrl.values.SQWRLIndividualValue;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
-import org.swrlapi.sqwrl.values.SQWRLPropertyValue;
+import org.swrlapi.sqwrl.values.SQWRLNamedResultValue;
 import org.swrlapi.sqwrl.values.SQWRLResultValue;
 
 public class SQWRLQueryResultPanel extends JPanel
@@ -47,7 +45,6 @@ public class SQWRLQueryResultPanel extends JPanel
 		this.queryName = queryName;
 		this.result = result;
 		this.controlPanel = controlPanel;
-
 		this.swrlQueryResultModel = new SQWRLQueryResultModel();
 		this.table = new JTable(this.swrlQueryResultModel);
 
@@ -250,29 +247,20 @@ public class SQWRLQueryResultPanel extends JPanel
 		@Override
 		public Object getValueAt(int row, int column)
 		{
-			String representation;
-
 			try {
 				SQWRLResultValue value = (SQWRLQueryResultPanel.this.result == null) ? null : SQWRLQueryResultPanel.this.result
 						.getValue(column, row);
-				if (value instanceof SQWRLIndividualValue) {
-					SQWRLIndividualValue objectValue = (SQWRLIndividualValue)value;
-					representation = objectValue.getPrefixedName();
-				} else if (value instanceof SQWRLResultValue) {
-					SQWRLResultValue datatypeValue = value;
-					representation = datatypeValue.toString();
-				} else if (value instanceof SQWRLClassValue) {
-					SQWRLClassValue classValue = (SQWRLClassValue)value;
-					representation = classValue.getPrefixedName();
-				} else if (value instanceof SQWRLPropertyValue) {
-					SQWRLPropertyValue propertyValue = (SQWRLPropertyValue)value;
-					representation = propertyValue.getPrefixedName();
+				if (value instanceof SQWRLNamedResultValue) {
+					SQWRLNamedResultValue namedValue = (SQWRLNamedResultValue)value;
+					return namedValue.getPrefixedName();
+				} else if (value instanceof SQWRLLiteralResultValue) {
+					SQWRLLiteralResultValue literalValue = (SQWRLLiteralResultValue)value;
+					return literalValue.getLiteral();
 				} else
-					representation = "INVALID";
+					return "INVALID";
 			} catch (SQWRLException e) {
-				representation = "INVALID";
+				return "INVALID";
 			}
-			return representation;
 		}
 	}
 }

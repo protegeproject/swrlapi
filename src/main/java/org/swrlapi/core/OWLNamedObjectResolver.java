@@ -14,10 +14,12 @@ import org.swrlapi.core.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.exceptions.TargetRuleEngineException;
 
 /**
- * This class is used by rule engine implementations to determine the type of OWL entities using their prefixed name. It
- * also maps from prefixed names to IRIs for those entities.
- * <p>
- * A {@link SWRLOntologyProcessor} implementation will typically create this class.
+ * For simplicity, SWRL rule engine implementations will typically used the prefixed names of OWL named objects. A
+ * {@link SWRLOntologyProcessor} will record all the OWL named objects in an ontology together with their types. Rule
+ * engines can then use this class to determine the type of OWL entities using their prefixed name and to map those
+ * prefixed names to and from IRIs if necessary.
+ * 
+ * @see SWRLOntologyProcessor
  */
 public class OWLNamedObjectResolver
 {
@@ -55,6 +57,126 @@ public class OWLNamedObjectResolver
 		this.datatypePrefixedNames.clear();
 	}
 
+	public String iri2PrefixedName(IRI iri)
+	{
+		if (this.iri2PrefixedName.containsKey(iri))
+			return this.iri2PrefixedName(iri);
+		else
+			throw new RuntimeException("could not find prefixed name for IRI " + iri);
+	}
+
+	public IRI prefixedName2IRI(String prefixedName) throws TargetRuleEngineException
+	{
+		if (this.prefixedName2IRI.containsKey(prefixedName))
+			return this.prefixedName2IRI.get(prefixedName);
+		else
+			throw new RuntimeException("could not find IRI for prefixed name " + prefixedName);
+	}
+
+	public void recordOWLClass(OWLEntity cls)
+	{
+		IRI iri = cls.getIRI();
+		String prefixedName = getPrefixedName(iri);
+
+		recordPrefixedName2IRIMapping(prefixedName, iri);
+
+		this.classPrefixedNames.add(prefixedName);
+	}
+
+	public void recordOWLNamedIndividual(OWLEntity individual)
+	{
+		IRI iri = individual.getIRI();
+		String prefixedName = getPrefixedName(iri);
+
+		recordPrefixedName2IRIMapping(prefixedName, iri);
+
+		this.individualPrefixedNames.add(prefixedName);
+	}
+
+	public void recordOWLObjectProperty(OWLEntity property)
+	{
+		IRI iri = property.getIRI();
+		String prefixedName = getPrefixedName(iri);
+
+		recordPrefixedName2IRIMapping(prefixedName, iri);
+
+		this.objectPropertyPrefixedNames.add(prefixedName);
+	}
+
+	public void recordOWLDataProperty(OWLEntity property)
+	{
+		IRI iri = property.getIRI();
+		String prefixedName = getPrefixedName(iri);
+
+		recordPrefixedName2IRIMapping(prefixedName, iri);
+
+		this.dataPropertyPrefixedNames.add(prefixedName);
+	}
+
+	public void recordOWLAnnotationProperty(OWLEntity property)
+	{
+		IRI iri = property.getIRI();
+		String prefixedName = getPrefixedName(iri);
+
+		recordPrefixedName2IRIMapping(prefixedName, iri);
+
+		this.annotationPropertyPrefixedNames.add(prefixedName);
+	}
+
+	public void recordOWLDatatype(OWLEntity datatype)
+	{
+		IRI iri = datatype.getIRI();
+		String prefixedName = getPrefixedName(iri);
+
+		recordPrefixedName2IRIMapping(prefixedName, iri);
+
+		this.datatypePrefixedNames.add(prefixedName);
+	}
+
+	public void record(SWRLClassBuiltInArgument classArgument)
+	{
+		IRI iri = classArgument.getIRI();
+		String prefixedName = getPrefixedName(iri);
+
+		recordPrefixedName2IRIMapping(prefixedName, iri);
+		this.classPrefixedNames.add(prefixedName);
+	}
+
+	public void record(SWRLIndividualBuiltInArgument individualArgument)
+	{
+		IRI iri = individualArgument.getIRI();
+		String prefixedName = getPrefixedName(iri);
+
+		recordPrefixedName2IRIMapping(prefixedName, iri);
+		this.individualPrefixedNames.add(prefixedName);
+	}
+
+	public void record(SWRLObjectPropertyBuiltInArgument propertyArgument)
+	{
+		IRI iri = propertyArgument.getIRI();
+		String prefixedName = getPrefixedName(iri);
+
+		recordPrefixedName2IRIMapping(prefixedName, iri);
+		this.objectPropertyPrefixedNames.add(prefixedName);
+	}
+
+	public void record(SWRLDataPropertyBuiltInArgument propertyArgument)
+	{
+		IRI iri = propertyArgument.getIRI();
+		String prefixedName = getPrefixedName(iri);
+
+		recordPrefixedName2IRIMapping(prefixedName, iri);
+		this.dataPropertyPrefixedNames.add(prefixedName);
+	}
+
+	public void recordPrefixedName2IRIMapping(String prefixedName, IRI iri)
+	{
+		if (!this.prefixedName2IRI.containsKey(prefixedName)) {
+			this.prefixedName2IRI.put(prefixedName, iri);
+			this.iri2PrefixedName.put(iri, prefixedName);
+		}
+	}
+
 	public boolean isOWLClass(String prefixedName)
 	{
 		return this.classPrefixedNames.contains(prefixedName);
@@ -85,109 +207,7 @@ public class OWLNamedObjectResolver
 		return this.datatypePrefixedNames.contains(prefixedName);
 	}
 
-	public void recordOWLClass(OWLEntity cls)
-	{
-		String prefixedName = getPrefixedName(cls);
-
-		recordPrefixedName2IRIMapping(prefixedName, cls.getIRI());
-
-		this.classPrefixedNames.add(prefixedName);
-	}
-
-	public void recordOWLNamedIndividual(OWLEntity individual)
-	{
-		String prefixedName = getPrefixedName(individual);
-
-		recordPrefixedName2IRIMapping(prefixedName, individual.getIRI());
-
-		this.individualPrefixedNames.add(prefixedName);
-	}
-
-	public void recordOWLObjectProperty(OWLEntity property)
-	{
-		String prefixedName = getPrefixedName(property);
-
-		recordPrefixedName2IRIMapping(prefixedName, property.getIRI());
-
-		this.objectPropertyPrefixedNames.add(prefixedName);
-	}
-
-	public void recordOWLDataProperty(OWLEntity property)
-	{
-		String prefixedName = getPrefixedName(property);
-
-		recordPrefixedName2IRIMapping(prefixedName, property.getIRI());
-
-		this.dataPropertyPrefixedNames.add(prefixedName);
-	}
-
-	public void recordOWLAnnotationProperty(OWLEntity property)
-	{
-		String prefixedName = getPrefixedName(property);
-
-		recordPrefixedName2IRIMapping(prefixedName, property.getIRI());
-
-		this.annotationPropertyPrefixedNames.add(prefixedName);
-	}
-
-	public void recordOWLDatatype(OWLEntity datatype)
-	{
-		String prefixedName = getPrefixedName(datatype);
-
-		recordPrefixedName2IRIMapping(prefixedName, datatype.getIRI());
-
-		this.datatypePrefixedNames.add(prefixedName);
-	}
-
-	public void record(SWRLClassBuiltInArgument classArgument)
-	{
-		recordPrefixedName2IRIMapping(classArgument.getPrefixedName(), classArgument.getIRI());
-		this.classPrefixedNames.add(classArgument.getPrefixedName());
-	}
-
-	public void record(SWRLIndividualBuiltInArgument individualArgument)
-	{
-		recordPrefixedName2IRIMapping(individualArgument.getPrefixedName(), individualArgument.getIRI());
-		this.individualPrefixedNames.add(individualArgument.getPrefixedName());
-	}
-
-	public void record(SWRLObjectPropertyBuiltInArgument propertyArgument)
-	{
-		recordPrefixedName2IRIMapping(propertyArgument.getPrefixedName(), propertyArgument.getIRI());
-		this.objectPropertyPrefixedNames.add(propertyArgument.getPrefixedName());
-	}
-
-	public void record(SWRLDataPropertyBuiltInArgument propertyArgument)
-	{
-		recordPrefixedName2IRIMapping(propertyArgument.getPrefixedName(), propertyArgument.getIRI());
-		this.dataPropertyPrefixedNames.add(propertyArgument.getPrefixedName());
-	}
-
-	public void recordPrefixedName2IRIMapping(String prefixedName, IRI iri)
-	{
-		if (!this.prefixedName2IRI.containsKey(prefixedName)) {
-			this.prefixedName2IRI.put(prefixedName, iri);
-			this.iri2PrefixedName.put(iri, prefixedName);
-		}
-	}
-
-	public String iri2PrefixedName(IRI iri) throws TargetRuleEngineException
-	{
-		if (this.iri2PrefixedName.containsKey(iri))
-			return this.iri2PrefixedName(iri);
-		else
-			throw new TargetRuleEngineException("internal error: could not find prefixed name for IRI " + iri);
-	}
-
-	public IRI prefixedName2IRI(String prefixedName) throws TargetRuleEngineException
-	{
-		if (this.prefixedName2IRI.containsKey(prefixedName))
-			return this.prefixedName2IRI.get(prefixedName);
-		else
-			throw new TargetRuleEngineException("internal error: could not find IRI for prefixed name " + prefixedName);
-	}
-
-	private String getPrefixedName(OWLEntity owlEntity)
+	private String getPrefixedName(IRI iri)
 	{
 		throw new RuntimeException("Not implemented");
 	}

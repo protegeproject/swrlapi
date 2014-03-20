@@ -42,12 +42,6 @@ abstract class SWRLNamedAtomArgumentImpl extends SWRLAtomArgumentImpl implements
 	}
 
 	@Override
-	public String getPrefixedName()
-	{
-		throw new RuntimeException("Not implemented");
-	}
-
-	@Override
 	public String toString()
 	{
 		return toDisplayText();

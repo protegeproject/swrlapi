@@ -42,12 +42,6 @@ abstract class SWRLNamedBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl impl
 	}
 
 	@Override
-	public String getPrefixedName()
-	{
-		throw new RuntimeException("Not implemented");
-	}
-
-	@Override
 	public String toString()
 	{
 		return toDisplayText();

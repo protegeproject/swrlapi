@@ -6,15 +6,19 @@ import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.SWRLArgument;
 import org.semanticweb.owlapi.model.SWRLRule;
+import org.swrlapi.core.arguments.SWRLAtomArgument;
 
 /**
- * Extends the OWLAPI's OWLOntology class with additional methods used by the SWRLAPI. Primarily the
+ * Extends the OWLAPI's {@link OWLOntology} class with additional methods used by the SWRLAPI. Primarily the
  * {@link #getSWRLRules()} method extracts {@link SWRLAPIRule} objects from an OWL ontology. This class, which extends
  * the standard OWLAPI {@link SWRLRule} class, provide the richer representation of a SWRL rule required by the SWRLAPI.
- * In particular, the SWRLAPI has a range of types extending the OWLAPI's @{link SWRLArgument} interface. A
- * {@link SWRLAPIOWLOntology} will construct SWRLAPI rules from the SWRL rules in an OWLAPI-based ontology to contain
- * these additional types. A {@link SWRLAPIOWLDataFactory} can be used to create {@link SWRLAPIRule} objects from text.
+ * In particular, the SWRLAPI has a range of types extending the OWLAPI's {@link SWRLArgument} interface.
+ * <p>
+ * This extension point is defined by the {@link SWRLAtomArgument} interface. A {@link SWRLAPIOWLOntology} will
+ * construct SWRLAPI rules from the SWRL rules in an OWLAPI-based ontology to contain these additional types. A
+ * {@link SWRLAPIOWLDataFactory} can be used to create {@link SWRLAPIRule} objects from text.
  * <p>
  * The {@link startBulkConversion}, {@link completeBulkConversion}, {@link hasOntologyChanged}, and
  * {@link resetOntologyChanged} methods can be used for optimization purposed. For example, in the Protege-OWL API the

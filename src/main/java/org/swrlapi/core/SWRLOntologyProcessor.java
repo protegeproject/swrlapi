@@ -4,6 +4,7 @@ import java.util.Set;
 
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.swrlapi.exceptions.SWRLRuleException;
+import org.swrlapi.ext.SWRLAPIOWLDataFactory;
 import org.swrlapi.ext.SWRLAPIOWLOntology;
 import org.swrlapi.ext.SWRLAPIRule;
 import org.swrlapi.sqwrl.SQWRLQuery;
@@ -33,6 +34,8 @@ public interface SWRLOntologyProcessor
 	void processOntology() throws SQWRLException;
 
 	OWLNamedObjectResolver getOWLNamedObjectResolver();
+
+	SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory();
 
 	Set<OWLAxiom> getOWLAxioms();
 

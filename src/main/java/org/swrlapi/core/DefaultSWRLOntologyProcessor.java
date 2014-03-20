@@ -66,17 +66,20 @@ import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.exceptions.SQWRLInvalidQueryNameException;
+import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
+import org.swrlapi.sqwrl.values.impl.DefaultSQWRLResultValueFactory;
 
 public class DefaultSWRLOntologyProcessor implements SWRLOntologyProcessor
 {
 	private final SWRLAPIOWLOntology swrlapiOWLOntology;
 	private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
 	private final OWLNamedObjectResolver namedObjectResolver;
+	private final SQWRLResultValueFactory sqwrlResultValueFactory;
 
 	private final HashMap<String, SWRLAPIRule> rules;
 	private final HashMap<String, SQWRLQuery> queries;
 
-	private final Set<OWLAxiom> assertedOWLAxioms; // All asserted OWL axioms extracted from the active ontology
+	private final Set<OWLAxiom> assertedOWLAxioms; // All asserted OWL axioms extracted from the supplied ontology
 
 	private final HashMap<IRI, OWLDeclarationAxiom> owlClassDeclarationAxioms;
 	private final HashMap<IRI, OWLDeclarationAxiom> owlIndividualDeclarationAxioms;
@@ -84,11 +87,12 @@ public class DefaultSWRLOntologyProcessor implements SWRLOntologyProcessor
 	private final HashMap<IRI, OWLDeclarationAxiom> owlDataPropertyDeclarationAxioms;
 	private final HashMap<IRI, OWLDeclarationAxiom> owlAnnotationPropertyDeclarationAxioms;
 
-	public DefaultSWRLOntologyProcessor(SWRLAPIOWLOntology swrlapiOWLOntology) throws SQWRLException
+	public DefaultSWRLOntologyProcessor(SWRLAPIOWLOntology swrlapiOWLOntology) throws SQWRLException // TODO Remove
 	{
 		this.swrlapiOWLOntology = swrlapiOWLOntology;
-		this.swrlapiOWLDataFactory = new DefaultSWRLAPIOWLDataFactory();
 		this.namedObjectResolver = new OWLNamedObjectResolver();
+		this.sqwrlResultValueFactory = new DefaultSQWRLResultValueFactory(this.namedObjectResolver);
+		this.swrlapiOWLDataFactory = new DefaultSWRLAPIOWLDataFactory(this.sqwrlResultValueFactory);
 
 		this.rules = new HashMap<String, SWRLAPIRule>();
 		this.queries = new HashMap<String, SQWRLQuery>();
@@ -243,6 +247,12 @@ public class DefaultSWRLOntologyProcessor implements SWRLOntologyProcessor
 		return this.namedObjectResolver;
 	}
 
+	@Override
+	public SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory()
+	{
+		return this.swrlapiOWLDataFactory;
+	}
+
 	private void reset()
 	{
 		this.rules.clear();
@@ -310,7 +320,7 @@ public class DefaultSWRLOntologyProcessor implements SWRLOntologyProcessor
 	{
 		if (isSQWRLQuery(ruleOrQuery)) {
 			SQWRLQuery query = new DefaultSQWRLQuery(ruleOrQuery.getName(), ruleOrQuery.getBodyAtoms(),
-					ruleOrQuery.getHeadAtoms());
+					ruleOrQuery.getHeadAtoms(), sqwrlResultValueFactory);
 			this.queries.put(ruleOrQuery.getName(), query);
 		} else {
 			this.rules.put(ruleOrQuery.getName(), ruleOrQuery);

@@ -24,7 +24,6 @@ import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLPropertyValue;
 import org.swrlapi.sqwrl.values.SQWRLResultValue;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
-import org.swrlapi.sqwrl.values.impl.DefaultSQWRLResultValueFactory;
 
 /**
  * This class implements the interfaces {@link SQWRLResult} and {@link SQWRLResultGenerator}. It can be used to generate
@@ -114,9 +113,9 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 			notLastSelection = false, nthSliceSelection = false, notNthSliceSelection = false, nthLastSliceSelection = false,
 			notNthLastSliceSelection = false;
 
-	public DefaultSQWRLResult()
+	public DefaultSQWRLResult(SQWRLResultValueFactory sqwrlResultValueFactory)
 	{
-		this.sqwrlResultValueFactory = new DefaultSQWRLResultValueFactory();
+		this.sqwrlResultValueFactory = sqwrlResultValueFactory;
 
 		this.isConfigured = false;
 		this.isPrepared = false;

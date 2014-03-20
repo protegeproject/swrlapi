@@ -19,7 +19,6 @@ import org.swrlapi.ext.OWLLiteralFactory;
 import org.swrlapi.ext.SWRLAPILiteralFactory;
 import org.swrlapi.ext.SWRLAPIOWLDataFactory;
 import org.swrlapi.ext.SWRLAPIOWLOntology;
-import org.swrlapi.ext.impl.DefaultSWRLAPIOWLDataFactory;
 import org.swrlapi.owl2rl.OWL2RLPersistenceLayer;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
@@ -72,7 +71,7 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 		this.owl2RLPersistenceLayer = owl2RLPersistenceLayer;
 		this.targetRuleEngine = null;
 
-		this.dataFactory = new DefaultSWRLAPIOWLDataFactory();
+		this.dataFactory = swrlapiOntologyProcessor.getSWRLAPIOWLDataFactory();
 		this.owlDatatypeFactory = this.dataFactory.getOWLDatatypeFactory();
 		this.owlLiteralFactory = this.dataFactory.getOWLLiteralFactory();
 		this.swrlAPILiteralFactory = this.dataFactory.getSWRLAPILiteralFactory();
@@ -179,8 +178,9 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 	@Override
 	public void inferOWLAxiom(OWLAxiom axiom) throws SWRLRuleEngineBridgeException
 	{
-		if (!this.inferredOWLAxioms.contains(axiom) && !this.swrlapiOntologyProcessor.hasAssertedOWLAxiom(axiom)) // Exclude already
-																																																			// asserted axioms
+		if (!this.inferredOWLAxioms.contains(axiom) && !this.swrlapiOntologyProcessor.hasAssertedOWLAxiom(axiom)) // Exclude
+																																																							// already
+			// asserted axioms
 			this.inferredOWLAxioms.add(axiom);
 	}
 

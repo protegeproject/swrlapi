@@ -16,23 +16,23 @@ public interface SQWRLResultValueFactory
 {
 	SQWRLClassValue getClassValue(SWRLClassBuiltInArgument classArgument);
 
-	SQWRLClassValue getClassValue(IRI classIRI, String prefixedName);
+	SQWRLClassValue getClassValue(IRI classIRI);
 
 	SQWRLIndividualValue getIndividualValue(SWRLIndividualBuiltInArgument individualArgument);
 
-	SQWRLIndividualValue getIndividualValue(IRI individualIRI, String prefixedName);
+	SQWRLIndividualValue getIndividualValue(IRI individualIRI);
 
 	SQWRLObjectPropertyValue getObjectPropertyValue(SWRLObjectPropertyBuiltInArgument objectPropertyArgument);
 
-	SQWRLObjectPropertyValue getObjectPropertyValue(IRI propertyIRI, String prefixedName);
+	SQWRLObjectPropertyValue getObjectPropertyValue(IRI propertyIRI);
 
 	SQWRLDataPropertyValue getDataPropertyValue(SWRLDataPropertyBuiltInArgument dataPropertyArgument);
 
-	SQWRLDataPropertyValue getDataPropertyValue(IRI propertyIRI, String prefixedName);
+	SQWRLDataPropertyValue getDataPropertyValue(IRI propertyIRI);
 
 	SQWRLAnnotationPropertyValue getAnnotationPropertyValue(SWRLAnnotationPropertyBuiltInArgument dataPropertyArgument);
 
-	SQWRLAnnotationPropertyValue getAnnotationPropertyValue(IRI propertyIRI, String prefixedName);
+	SQWRLAnnotationPropertyValue getAnnotationPropertyValue(IRI propertyIRI);
 
 	SQWRLLiteralResultValue getLiteral(OWLLiteral literal);
 

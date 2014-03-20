@@ -2,6 +2,7 @@ package org.swrlapi.sqwrl.values.impl;
 
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLLiteral;
+import org.swrlapi.core.OWLNamedObjectResolver;
 import org.swrlapi.core.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLDataPropertyBuiltInArgument;
@@ -27,58 +28,72 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
 {
 	private final OWLDatatypeFactory owlDatatypeFactory;
 	private final OWLLiteralFactory owlLiteralFactory;
+	private final OWLNamedObjectResolver namedObjectResolver;
 
-	public DefaultSQWRLResultValueFactory()
+	public DefaultSQWRLResultValueFactory(OWLNamedObjectResolver namedObjectResolver)
 	{
 		this.owlDatatypeFactory = new DefaultOWLDatatypeFactory();
 		this.owlLiteralFactory = new DefaultOWLLiteralFactory(this.owlDatatypeFactory);
+		this.namedObjectResolver = namedObjectResolver;
 	}
 
 	@Override
 	public SQWRLClassValue getClassValue(SWRLClassBuiltInArgument classArgument)
 	{
-		return getClassValue(classArgument.getIRI(), classArgument.getPrefixedName());
+		return getClassValue(classArgument.getIRI());
 	}
 
 	@Override
-	public SQWRLClassValue getClassValue(IRI classIRI, String prefixedName)
+	public SQWRLClassValue getClassValue(IRI classIRI)
 	{
+		String prefixedName = getOWLNamedObjectResolver().iri2PrefixedName(classIRI);
+
 		return new SQWRLClassValueImpl(classIRI, prefixedName);
 	}
 
 	@Override
 	public SQWRLIndividualValue getIndividualValue(SWRLIndividualBuiltInArgument individualArgument)
 	{
-		return getIndividualValue(individualArgument.getIRI(), individualArgument.getPrefixedName());
+		String prefixedName = getOWLNamedObjectResolver().iri2PrefixedName(individualArgument.getIRI());
+
+		return new SQWRLIndividualValueImpl(individualArgument.getIRI(), prefixedName);
 	}
 
 	@Override
-	public SQWRLIndividualValue getIndividualValue(IRI individualIRI, String prefixedName)
+	public SQWRLIndividualValue getIndividualValue(IRI individualIRI)
 	{
+		String prefixedName = getOWLNamedObjectResolver().iri2PrefixedName(individualIRI);
+
 		return new SQWRLIndividualValueImpl(individualIRI, prefixedName);
 	}
 
 	@Override
 	public SQWRLObjectPropertyValue getObjectPropertyValue(SWRLObjectPropertyBuiltInArgument objectPropertyArgument)
 	{
-		return getObjectPropertyValue(objectPropertyArgument.getIRI(), objectPropertyArgument.getPrefixedName());
+		return getObjectPropertyValue(objectPropertyArgument.getIRI());
 	}
 
 	@Override
-	public SQWRLObjectPropertyValue getObjectPropertyValue(IRI propertyIRI, String prefixedName)
+	public SQWRLObjectPropertyValue getObjectPropertyValue(IRI propertyIRI)
 	{
+		String prefixedName = getOWLNamedObjectResolver().iri2PrefixedName(propertyIRI);
+
 		return new SQWRLObjectPropertyValueImpl(propertyIRI, prefixedName);
 	}
 
 	@Override
 	public SQWRLDataPropertyValue getDataPropertyValue(SWRLDataPropertyBuiltInArgument dataPropertyArgument)
 	{
-		return getDataPropertyValue(dataPropertyArgument.getIRI(), dataPropertyArgument.getPrefixedName());
+		String prefixedName = getOWLNamedObjectResolver().iri2PrefixedName(dataPropertyArgument.getIRI());
+
+		return new SQWRLDataPropertyValueImpl(dataPropertyArgument.getIRI(), prefixedName);
 	}
 
 	@Override
-	public SQWRLDataPropertyValue getDataPropertyValue(IRI propertyIRI, String prefixedName)
+	public SQWRLDataPropertyValue getDataPropertyValue(IRI propertyIRI)
 	{
+		String prefixedName = getOWLNamedObjectResolver().iri2PrefixedName(propertyIRI);
+
 		return new SQWRLDataPropertyValueImpl(propertyIRI, prefixedName);
 	}
 
@@ -86,13 +101,16 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
 	public SQWRLAnnotationPropertyValue getAnnotationPropertyValue(
 			SWRLAnnotationPropertyBuiltInArgument annotationPropertyArgument)
 	{
-		return getAnnotationPropertyValue(annotationPropertyArgument.getIRI(),
-				annotationPropertyArgument.getPrefixedName());
+		String prefixedName = getOWLNamedObjectResolver().iri2PrefixedName(annotationPropertyArgument.getIRI());
+
+		return new SQWRLAnnotationPropertyValueImpl(annotationPropertyArgument.getIRI(), prefixedName);
 	}
 
 	@Override
-	public SQWRLAnnotationPropertyValue getAnnotationPropertyValue(IRI propertyIRI, String prefixedName)
+	public SQWRLAnnotationPropertyValue getAnnotationPropertyValue(IRI propertyIRI)
 	{
+		String prefixedName = getOWLNamedObjectResolver().iri2PrefixedName(propertyIRI);
+
 		return new SQWRLAnnotationPropertyValueImpl(propertyIRI, prefixedName);
 	}
 
@@ -171,5 +189,10 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
 	private OWLLiteralFactory getOWLLiteralFactory()
 	{
 		return this.owlLiteralFactory;
+	}
+
+	private OWLNamedObjectResolver getOWLNamedObjectResolver()
+	{
+		return this.namedObjectResolver;
 	}
 }

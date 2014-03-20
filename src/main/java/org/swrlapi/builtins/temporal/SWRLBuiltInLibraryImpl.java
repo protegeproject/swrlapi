@@ -536,13 +536,13 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		} else if (isArgumentAnIndividual(argumentNumber, arguments)) {
 			SWRLIndividualBuiltInArgument individualArgument = getArgumentAsAnIndividual(argumentNumber, arguments);
 			IRI individualIRI = individualArgument.getIRI();
-			String prefixedName = individualArgument.getPrefixedName();
+			String fullName = individualIRI.toString();
 			if (isOWLIndividualOfType(individualIRI, createIRI(GranularityClassName))) {
-				int hashIndex = prefixedName.indexOf(':');
+				int hashIndex = fullName.indexOf('#');
 				if (hashIndex == -1)
-					granularityName = prefixedName;
+					granularityName = fullName;
 				else
-					granularityName = prefixedName.substring(hashIndex + 1, prefixedName.length());
+					granularityName = fullName.substring(hashIndex + 1, fullName.length());
 				return Temporal.getIntegerGranularityRepresentation(granularityName);
 			} else
 				throw new InvalidBuiltInArgumentException(argumentNumber, "individual " + individualIRI + " is not a "

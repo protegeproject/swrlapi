@@ -24,7 +24,7 @@ abstract class SQWRLNamedResultValueImpl implements SQWRLNamedResultValue
 	@Override
 	public String getPrefixedName()
 	{
-		return prefixedName;
+		return this.prefixedName;
 	}
 
 	// TODO: fix
@@ -37,6 +37,6 @@ abstract class SQWRLNamedResultValueImpl implements SQWRLNamedResultValue
 	@Override
 	public String toString()
 	{
-		return getPrefixedName();
+		return classIRI.toString();
 	}
 }
