@@ -153,7 +153,7 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 		if (swrlDArgument instanceof SWRLVariable) {
 			// SWRLVariable swrlVariable = (SWRLVariable)swrlDArgument;
 			String variableName = ""; // TODO
-			SWRLVariableBuiltInArgument argument = getSWRLBuiltInArgumentFactory().getVariableArgument(variableName);
+			SWRLVariableBuiltInArgument argument = getSWRLBuiltInArgumentFactory().getVariableBuiltInArgument(variableName);
 			return argument;
 		} else if (swrlDArgument instanceof SWRLLiteralArgument) {
 			SWRLLiteralArgument swrlLiteralArgument = (SWRLLiteralArgument)swrlDArgument;
@@ -163,13 +163,13 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 				IRI iri = IRI.create(literal.getLiteral());
 				SWRLBuiltInArgument argument;
 				if (containsClassInSignature(iri)) {
-					argument = getSWRLBuiltInArgumentFactory().getClassArgument(iri);
+					argument = getSWRLBuiltInArgumentFactory().getClassBuiltInArgument(iri);
 				} else {
-					argument = getSWRLBuiltInArgumentFactory().getLiteralArgument(literal);
+					argument = getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(literal);
 				}
 				throw new RuntimeException("Not implemented");
 			} else {
-				SWRLLiteralBuiltInArgument argument = getSWRLBuiltInArgumentFactory().getLiteralArgument(literal);
+				SWRLLiteralBuiltInArgument argument = getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(literal);
 				return argument;
 			}
 		} else

@@ -14,7 +14,7 @@ import org.swrlapi.core.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 
 /**
- * Factory that extends the OWLAPI's OWLDataFactory class with additional methods to create entities used by the
+ * Factory that extends the OWLAPI's {@link OWLDataFactory} class with additional methods to create entities used by the
  * SWRLAPI.
  * <p>
  * It provides a method to create a {@link SWRLAPIRule}, which extends an OWLAPI {@link SWRLRule}, and access to

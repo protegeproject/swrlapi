@@ -1,5 +1,8 @@
 package org.swrlapi.core.arguments;
 
-public interface SWRLIndividualBuiltInArgument extends SWRLNamedBuiltInArgument
+/**
+ * Represents an OWL individual argument to a built-in atom.
+ */
+public interface SWRLIndividualBuiltInArgument extends SWRLNamedBuiltInArgument, SWRLIndividualAtomArgument
 {
 }

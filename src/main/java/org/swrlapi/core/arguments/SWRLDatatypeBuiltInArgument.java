@@ -1,8 +1,8 @@
 package org.swrlapi.core.arguments;
 
 /**
- * Interface representing OWL datatype arguments to SWRL built-ins
+ * Represents an OWL datatype argument to a built-in atom.
  */
-public interface SWRLDatatypeBuiltInArgument extends SWRLNamedBuiltInArgument
+public interface SWRLDatatypeBuiltInArgument extends SWRLNamedBuiltInArgument, SWRLDatatypeAtomArgument
 {
 }

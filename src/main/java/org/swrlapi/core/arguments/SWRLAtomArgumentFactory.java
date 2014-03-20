@@ -15,49 +15,49 @@ import org.swrlapi.xsd.XSDTime;
 
 public interface SWRLAtomArgumentFactory
 {
-	SWRLVariableAtomArgument getVariableArgument(String variableName);
+	SWRLVariableAtomArgument getVariableAtomArgument(String variableName);
 
-	SWRLClassAtomArgument getClassArgument(IRI uri);
+	SWRLClassAtomArgument getClassAtomArgument(IRI uri);
 
-	SWRLClassAtomArgument getClassArgument(OWLClass cls);
+	SWRLClassAtomArgument getClassAtomArgument(OWLClass cls);
 
-	SWRLIndividualAtomArgument getIndividualArgument(IRI uri);
+	SWRLIndividualAtomArgument getIndividualAtomArgument(IRI uri);
 
-	SWRLIndividualAtomArgument getIndividualArgument(OWLIndividual individual);
+	SWRLIndividualAtomArgument getIndividualAtomArgument(OWLIndividual individual);
 
-	SWRLObjectPropertyAtomArgument getObjectPropertyArgument(IRI iri);
+	SWRLObjectPropertyAtomArgument getObjectPropertyAtomArgument(IRI iri);
 
-	SWRLObjectPropertyAtomArgument getObjectPropertyArgument(OWLObjectProperty property);
+	SWRLObjectPropertyAtomArgument getObjectPropertyAtomArgument(OWLObjectProperty property);
 
-	SWRLDataPropertyAtomArgument getDataPropertyArgument(IRI iri);
+	SWRLDataPropertyAtomArgument getDataPropertyAtomArgument(IRI iri);
 
-	SWRLDataPropertyAtomArgument getDataPropertyArgument(OWLDataProperty property);
+	SWRLDataPropertyAtomArgument getDataPropertyAtomArgument(OWLDataProperty property);
 
-	SWRLLiteralAtomArgument getLiteralArgument(OWLLiteral literal);
+	SWRLLiteralAtomArgument getLiteralAtomArgument(OWLLiteral literal);
 
-	SWRLLiteralAtomArgument getLiteralArgument(String s);
+	SWRLLiteralAtomArgument getLiteralAtomArgument(String s);
 
-	SWRLLiteralAtomArgument getLiteralArgument(boolean b);
+	SWRLLiteralAtomArgument getLiteralAtomArgument(boolean b);
 
-	SWRLLiteralAtomArgument getLiteralArgument(byte b);
+	SWRLLiteralAtomArgument getLiteralAtomArgument(byte b);
 
-	SWRLLiteralAtomArgument getLiteralArgument(short s);
+	SWRLLiteralAtomArgument getLiteralAtomArgument(short s);
 
-	SWRLLiteralAtomArgument getLiteralArgument(URI uri);
+	SWRLLiteralAtomArgument getLiteralAtomArgument(URI uri);
 
-	SWRLLiteralAtomArgument getLiteralArgument(int i);
+	SWRLLiteralAtomArgument getLiteralAtomArgument(int i);
 
-	SWRLLiteralAtomArgument getLiteralArgument(long l);
+	SWRLLiteralAtomArgument getLiteralAtomArgument(long l);
 
-	SWRLLiteralAtomArgument getLiteralArgument(float f);
+	SWRLLiteralAtomArgument getLiteralAtomArgument(float f);
 
-	SWRLLiteralAtomArgument getLiteralArgument(double d);
+	SWRLLiteralAtomArgument getLiteralAtomArgument(double d);
 
-	SWRLLiteralAtomArgument getLiteralArgument(XSDDate date);
+	SWRLLiteralAtomArgument getLiteralAtomArgument(XSDDate date);
 
-	SWRLLiteralAtomArgument getLiteralArgument(XSDDateTime date);
+	SWRLLiteralAtomArgument getLiteralAtomArgument(XSDDateTime date);
 
-	SWRLLiteralAtomArgument getLiteralArgument(XSDTime date);
+	SWRLLiteralAtomArgument getLiteralAtomArgument(XSDTime date);
 
-	SWRLLiteralAtomArgument getLiteralArgument(XSDDuration date);
+	SWRLLiteralAtomArgument getLiteralAtomArgument(XSDDuration date);
 }
