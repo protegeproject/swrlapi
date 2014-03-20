@@ -8,6 +8,8 @@ import java.util.Set;
 import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLDatatype;
+import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
@@ -137,14 +139,14 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 	}
 
 	/**
-	 * Interface representing an argument to a SWRL built-in. This interface represents the primary SWRLAPI extension
-	 * point for built-in arguments.
+	 * The {@link SWRLBuiltInArgument} interface represents the primary SWRLAPI extension point to the OWLAPI classes
+	 * representing SWRL concepts.
 	 * 
-	 * @see {@link SWRLClassBuiltInArgument}, {@link SWRLIndividualBuiltInArgument},
-	 *      {@link SWRLObjectPropertyBuiltInArgument}, {@link SWRLDataPropertyBuiltInArgument},
-	 *      {@link SWRLDataPropertyBuiltInArgument}, {@link SWRLAnnotationPropertyBuiltInArgument},
-	 *      {@link SWRLDatatypeBuiltInArgument}, {@link SWRLLiteralBuiltInArgument},
-	 *      {@link SQWRLCollectionBuiltInArgument}, {@link SWRLVariableBuiltInArgument}, {@link SWRLMultiArgument}
+	 * @see {@link SWRLLiteralBuiltInArgument}, {@link SWRLVariableBuiltInArgument},{@link SWRLClassBuiltInArgument},
+	 *      {@link SWRLIndividualBuiltInArgument}, {@link SWRLObjectPropertyBuiltInArgument},
+	 *      {@link SWRLDataPropertyBuiltInArgument}, {@link SWRLDataPropertyBuiltInArgument},
+	 *      {@link SWRLAnnotationPropertyBuiltInArgument}, {@link SWRLDatatypeBuiltInArgument},
+	 *      {@link SQWRLCollectionBuiltInArgument}, {@link SWRLMultiArgument}
 	 */
 	private SWRLBuiltInArgument transformSWRLDArgument2SWRLBuiltInArgument(SWRLDArgument swrlDArgument)
 	{ // SWRLLiteralArgument, SWRLVariable
@@ -154,11 +156,30 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 			SWRLVariableBuiltInArgument argument = getSWRLBuiltInArgumentFactory().getVariableArgument(variableName);
 			return argument;
 		} else if (swrlDArgument instanceof SWRLLiteralArgument) {
-			// SWRLLiteralArgument swrlLiteralArgument = (SWRLLiteralArgument)swrlDArgument;
-			throw new RuntimeException("Not implemented");
+			SWRLLiteralArgument swrlLiteralArgument = (SWRLLiteralArgument)swrlDArgument;
+			OWLLiteral literal = swrlLiteralArgument.getLiteral();
+			OWLDatatype datatype = literal.getDatatype();
+			if (isURI(datatype)) {
+				IRI iri = IRI.create(literal.getLiteral());
+				SWRLBuiltInArgument argument;
+				if (containsClassInSignature(iri)) {
+					argument = getSWRLBuiltInArgumentFactory().getClassArgument(iri);
+				} else {
+					argument = getSWRLBuiltInArgumentFactory().getLiteralArgument(literal);
+				}
+				throw new RuntimeException("Not implemented");
+			} else {
+				SWRLLiteralBuiltInArgument argument = getSWRLBuiltInArgumentFactory().getLiteralArgument(literal);
+				return argument;
+			}
 		} else
 			throw new RuntimeException("Unknown " + SWRLDArgument.class.getName() + " class "
 					+ swrlDArgument.getClass().getName());
+	}
+
+	private boolean isURI(OWLDatatype datatype)
+	{
+		throw new RuntimeException("Not implemented");
 	}
 
 	private SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory()

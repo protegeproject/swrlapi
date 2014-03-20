@@ -14,8 +14,10 @@ import org.swrlapi.ext.SWRLAPIRule;
  * <p>
  * Since and OWLAPI ontology (represented by the OWLAPI class {@link OWLOntology}) or an OWL data factory (represented
  * by the class {@link OWLDataFactory), will not be aware of these types a {@link SWRLOntologyProcessor} must be used
- * to construct SWRLAPI SWRL rules (represented by the class {@link SWRLAPIRule}, which extends the OWLAPI
- * {@link SWRLRule} class).
+ * to construct SWRLAPI SWRL rules (represented by the class {@link SWRLAPIRule}), which extends the OWLAPI SWRL rule
+ * class (represented by the {@link SWRLRule} class).
+ * 
+ * @see SWRLIAtomArgument
  */
 public interface SWRLAtomArgument extends SWRLArgument
 {

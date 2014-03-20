@@ -1,8 +1,8 @@
-
 package org.swrlapi.core.arguments;
 
 /**
- * Interface representing OWL property arguments to SWRL atoms
+ * Represents an OWL property argument to a built-in atom. Distinct from a {@link SWRLPropertyBuiltInArgument}, which
+ * represents an OWL property argument to a built-in atom.
  */
 public interface SWRLPropertyAtomArgument extends SWRLNamedAtomArgument
 {

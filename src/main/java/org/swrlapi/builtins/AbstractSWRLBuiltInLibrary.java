@@ -53,7 +53,7 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 {
 	private final String libraryName;
 
-	private final SWRLAPILiteralFactory swrlAPILiteralFactory;
+	private final SWRLAPILiteralFactory swrlapiLiteralFactory;
 
 	// Bridge, rule name, built-in index, and head or body location within rule of built-in currently invoking its
 	// associated Java
@@ -72,7 +72,7 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 	public AbstractSWRLBuiltInLibrary(String libraryName)
 	{
 		this.libraryName = libraryName;
-		this.swrlAPILiteralFactory = new DefaultSWRLAPILiteralFactory();
+		this.swrlapiLiteralFactory = new DefaultSWRLAPILiteralFactory();
 		this.invocationPatternID = 0L;
 		this.invocationPatternMap = new HashMap<String, Long>();
 	}
@@ -1701,6 +1701,6 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 
 	protected SWRLAPILiteralFactory getSWRLAPILiteralFactory()
 	{
-		return this.swrlAPILiteralFactory;
+		return this.swrlapiLiteralFactory;
 	}
 }
