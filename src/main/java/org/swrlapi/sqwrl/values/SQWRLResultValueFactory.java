@@ -5,7 +5,7 @@ import org.semanticweb.owlapi.model.OWLLiteral;
 import org.swrlapi.core.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLDataPropertyBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLIndividualBuiltInArgument;
+import org.swrlapi.core.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.xsd.XSDDate;
 import org.swrlapi.xsd.XSDDateTime;
@@ -18,7 +18,7 @@ public interface SQWRLResultValueFactory
 
 	SQWRLClassValue getClassValue(IRI classIRI);
 
-	SQWRLIndividualValue getIndividualValue(SWRLIndividualBuiltInArgument individualArgument);
+	SQWRLIndividualValue getIndividualValue(SWRLNamedIndividualBuiltInArgument individualArgument);
 
 	SQWRLIndividualValue getIndividualValue(IRI individualIRI);
 

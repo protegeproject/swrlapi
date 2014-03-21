@@ -17,7 +17,7 @@ import org.swrlapi.core.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLDataPropertyBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLIndividualBuiltInArgument;
+import org.swrlapi.core.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.exceptions.BuiltInException;
@@ -90,8 +90,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 				SWRLLiteralBuiltInArgument literalArgument = (SWRLLiteralBuiltInArgument)argument;
 				SQWRLLiteralResultValue literal = getSQWRLResultValueFactory().getLiteral(literalArgument.getLiteral());
 				resultGenerator.addRowData(literal);
-			} else if (argument instanceof SWRLIndividualBuiltInArgument) {
-				SWRLIndividualBuiltInArgument individualArgument = (SWRLIndividualBuiltInArgument)argument;
+			} else if (argument instanceof SWRLNamedIndividualBuiltInArgument) {
+				SWRLNamedIndividualBuiltInArgument individualArgument = (SWRLNamedIndividualBuiltInArgument)argument;
 				SQWRLIndividualValue individualValue = getSQWRLResultValueFactory().getIndividualValue(individualArgument);
 				resultGenerator.addRowData(individualValue);
 			} else if (argument instanceof SWRLClassBuiltInArgument) {
@@ -149,8 +149,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 			// SQWRLLiteralResultValue literal = new SQWRLLiteralResultValueImpl(literalArgument.getLiteral());
 			SQWRLLiteralResultValue literal = getSQWRLResultValueFactory().getLiteral(literalArgument.getLiteral());
 			resultGenerator.addRowData(literal);
-		} else if (argument instanceof SWRLIndividualBuiltInArgument) {
-			SWRLIndividualBuiltInArgument individualArgument = (SWRLIndividualBuiltInArgument)argument;
+		} else if (argument instanceof SWRLNamedIndividualBuiltInArgument) {
+			SWRLNamedIndividualBuiltInArgument individualArgument = (SWRLNamedIndividualBuiltInArgument)argument;
 			SQWRLIndividualValue individualValue = getSQWRLResultValueFactory().getIndividualValue(individualArgument);
 			resultGenerator.addRowData(individualValue);
 		} else if (argument instanceof SWRLClassBuiltInArgument) {

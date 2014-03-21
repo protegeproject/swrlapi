@@ -14,7 +14,7 @@ import org.swrlapi.core.arguments.SWRLAnnotationPropertyAtomArgument;
 import org.swrlapi.core.arguments.SWRLAtomArgumentFactory;
 import org.swrlapi.core.arguments.SWRLClassAtomArgument;
 import org.swrlapi.core.arguments.SWRLDataPropertyAtomArgument;
-import org.swrlapi.core.arguments.SWRLIndividualAtomArgument;
+import org.swrlapi.core.arguments.SWRLNamedIndividualAtomArgument;
 import org.swrlapi.core.arguments.SWRLLiteralAtomArgument;
 import org.swrlapi.core.arguments.SWRLObjectPropertyAtomArgument;
 import org.swrlapi.core.arguments.SWRLVariableAtomArgument;
@@ -88,17 +88,17 @@ public class DefaultSWRLAtomArgumentFactory implements SWRLAtomArgumentFactory
 	}
 
 	@Override
-	public SWRLIndividualAtomArgument getIndividualAtomArgument(IRI individualIRI)
+	public SWRLNamedIndividualAtomArgument getNamedIndividualAtomArgument(IRI individualIRI)
 	{
-		return new SWRLIndividualAtomArgumentImpl(individualIRI);
+		return new SWRLNamedIndividualAtomArgumentImpl(individualIRI);
 	}
 
 	@Override
-	public SWRLIndividualAtomArgument getIndividualAtomArgument(OWLIndividual individual)
+	public SWRLNamedIndividualAtomArgument getNamedIndividualAtomArgument(OWLIndividual individual)
 	{
 		if (individual.isNamed()) {
 			OWLNamedIndividual namedIndividual = individual.asOWLNamedIndividual();
-			return new SWRLIndividualAtomArgumentImpl(namedIndividual.getIRI());
+			return new SWRLNamedIndividualAtomArgumentImpl(namedIndividual.getIRI());
 		} else
 			throw new RuntimeException("OWL anonymous individual atom arguments not supported by Portability API");
 	}

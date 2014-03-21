@@ -12,8 +12,8 @@ import org.swrlapi.core.arguments.SWRLDataPropertyAtomArgument;
 import org.swrlapi.core.arguments.SWRLDataPropertyBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLDatatypeAtomArgument;
 import org.swrlapi.core.arguments.SWRLDatatypeBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLIndividualAtomArgument;
-import org.swrlapi.core.arguments.SWRLIndividualBuiltInArgument;
+import org.swrlapi.core.arguments.SWRLNamedIndividualAtomArgument;
+import org.swrlapi.core.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLLiteralAtomArgument;
 import org.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLObjectPropertyAtomArgument;
@@ -30,7 +30,7 @@ public interface TargetRuleEngineSWRLBodyAtomArgumentWithVariableNamesConverter<
 
 	T convert(SWRLClassAtomArgument classArgument) throws TargetRuleEngineException;
 
-	T convert(SWRLIndividualAtomArgument individualArgument) throws TargetRuleEngineException;
+	T convert(SWRLNamedIndividualAtomArgument individualArgument) throws TargetRuleEngineException;
 
 	T convert(SWRLObjectPropertyAtomArgument propertyArgument) throws TargetRuleEngineException;
 	
@@ -46,7 +46,7 @@ public interface TargetRuleEngineSWRLBodyAtomArgumentWithVariableNamesConverter<
 
 	T convert(SWRLClassAtomArgument argument, String fieldName, Set<String> variableNames) throws TargetRuleEngineException;
 
-	T convert(SWRLIndividualAtomArgument argument, String fieldName, Set<String> variableNames) throws TargetRuleEngineException;
+	T convert(SWRLNamedIndividualAtomArgument argument, String fieldName, Set<String> variableNames) throws TargetRuleEngineException;
 
 	T convert(SWRLObjectPropertyAtomArgument argument, String fieldName, Set<String> variableNames) throws TargetRuleEngineException;
 
@@ -64,7 +64,7 @@ public interface TargetRuleEngineSWRLBodyAtomArgumentWithVariableNamesConverter<
 
 	T convert(SWRLClassBuiltInArgument classArgument) throws TargetRuleEngineException;
 
-	T convert(SWRLIndividualBuiltInArgument individualArgument) throws TargetRuleEngineException;
+	T convert(SWRLNamedIndividualBuiltInArgument individualArgument) throws TargetRuleEngineException;
 
 	T convert(SWRLObjectPropertyBuiltInArgument propertyArgument) throws TargetRuleEngineException;
 	
@@ -78,7 +78,7 @@ public interface TargetRuleEngineSWRLBodyAtomArgumentWithVariableNamesConverter<
 
 	T convert(SWRLClassBuiltInArgument argument, String fieldName, Set<String> variableNames) throws TargetRuleEngineException;
 
-	T convert(SWRLIndividualBuiltInArgument argument, String fieldName, Set<String> variableNames) throws TargetRuleEngineException;
+	T convert(SWRLNamedIndividualBuiltInArgument argument, String fieldName, Set<String> variableNames) throws TargetRuleEngineException;
 
 	T convert(SWRLObjectPropertyBuiltInArgument argument, String fieldName, Set<String> variableNames) throws TargetRuleEngineException;
 

@@ -19,7 +19,7 @@ import org.swrlapi.core.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.core.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLDataPropertyBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLDatatypeBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLIndividualBuiltInArgument;
+import org.swrlapi.core.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLMultiValueBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLObjectPropertyBuiltInArgument;
@@ -114,17 +114,17 @@ public class DefaultSWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumen
 	}
 
 	@Override
-	public SWRLIndividualBuiltInArgument getIndividualBuiltInArgument(IRI individualIRI)
+	public SWRLNamedIndividualBuiltInArgument getNamedIndividualBuiltInArgument(IRI individualIRI)
 	{
-		return new SWRLIndividualBuiltInArgumentImpl(individualIRI);
+		return new SWRLNamedIndividualBuiltInArgumentImpl(individualIRI);
 	}
 
 	@Override
-	public SWRLIndividualBuiltInArgument getIndividualBuiltInArgument(OWLIndividual individual)
+	public SWRLNamedIndividualBuiltInArgument getNamedIndividualBuiltInArgument(OWLIndividual individual)
 	{
 		if (individual.isNamed()) {
 			OWLNamedIndividual namedIndividual = individual.asOWLNamedIndividual();
-			return new SWRLIndividualBuiltInArgumentImpl(namedIndividual.getIRI());
+			return new SWRLNamedIndividualBuiltInArgumentImpl(namedIndividual.getIRI());
 		} else
 			throw new RuntimeException("OWL anonymous individual built-in arguments not supported by Portability API");
 	}

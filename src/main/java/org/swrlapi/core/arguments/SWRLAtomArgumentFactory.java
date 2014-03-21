@@ -28,9 +28,9 @@ public interface SWRLAtomArgumentFactory
 
 	SWRLClassAtomArgument getClassAtomArgument(OWLClass cls);
 
-	SWRLIndividualAtomArgument getIndividualAtomArgument(IRI uri);
+	SWRLNamedIndividualAtomArgument getNamedIndividualAtomArgument(IRI uri);
 
-	SWRLIndividualAtomArgument getIndividualAtomArgument(OWLIndividual individual);
+	SWRLNamedIndividualAtomArgument getNamedIndividualAtomArgument(OWLIndividual individual);
 
 	SWRLObjectPropertyAtomArgument getObjectPropertyAtomArgument(IRI iri);
 

@@ -32,9 +32,9 @@ public interface SWRLBuiltInArgumentFactory
 
 	SWRLClassBuiltInArgument getClassBuiltInArgument(OWLClass cls);
 
-	SWRLIndividualBuiltInArgument getIndividualBuiltInArgument(IRI uri);
+	SWRLNamedIndividualBuiltInArgument getNamedIndividualBuiltInArgument(IRI uri);
 
-	SWRLIndividualBuiltInArgument getIndividualBuiltInArgument(OWLIndividual individual);
+	SWRLNamedIndividualBuiltInArgument getNamedIndividualBuiltInArgument(OWLIndividual individual);
 
 	SWRLObjectPropertyBuiltInArgument getObjectPropertyBuiltInArgument(IRI uri);
 

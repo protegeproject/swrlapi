@@ -5,7 +5,7 @@ import org.swrlapi.core.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLDataPropertyBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLDatatypeBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLIndividualBuiltInArgument;
+import org.swrlapi.core.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLVariableBuiltInArgument;
@@ -17,7 +17,7 @@ public interface TargetRuleEngineSWRLBuiltInArgumentConverter<T> extends TargetR
 
 	T convert(SWRLClassBuiltInArgument argument) throws TargetRuleEngineException;
 
-	T convert(SWRLIndividualBuiltInArgument argument) throws TargetRuleEngineException;
+	T convert(SWRLNamedIndividualBuiltInArgument argument) throws TargetRuleEngineException;
 
 	T convert(SWRLObjectPropertyBuiltInArgument argument) throws TargetRuleEngineException;
 

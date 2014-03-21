@@ -23,13 +23,13 @@ import org.swrlapi.ext.SWRLAPIRule;
  * Similarly, a SWRLAPI-aware parser is required to generate SWRLAPI rules from rule text.
  * 
  * @see SWRLAPIRule, SWRLAPIOWLOntology, SWRLAPIOWLDataFactory, SWRLBuiltInArgumentFactory, SWRLAtomArgumentFactory
- * @see SWRLVariableAtomArgument, SWRLLiteralAtomArgument, SWRLIndividualAtomArgument, SWRLClassAtomArgument,
+ * @see SWRLVariableAtomArgument, SWRLLiteralAtomArgument, SWRLNamedIndividualAtomArgument, SWRLClassAtomArgument,
  *      SWRLObjectPropertyAtomArgument, SWRLDataPropertyAtomArgument, SWRLAnnotationPropertyAtomArgument,
  *      SWRLDatatypeAtomArgument
- * @see SWRLBuiltInArgument, SWRLVariableBuiltInArgument, SWRLLiteralBuiltInArgument, SWRLIndividualBuiltInArgument,
- *      SWRLClassBuiltInArgument, SWRLObjectPropertyBuiltInArgument, SWRLDataPropertyBuiltInArgument,
- *      SWRLAnnotationPropertyBuiltInArgument, SWRLDatatypeBuiltInArgument, SQWRLCollectionBuiltInArgument,
- *      SWRLMultiValueBuiltInArgument
+ * @see SWRLBuiltInArgument, SWRLVariableBuiltInArgument, SWRLLiteralBuiltInArgument,
+ *      SWRLNamedIndividualBuiltInArgument, SWRLClassBuiltInArgument, SWRLObjectPropertyBuiltInArgument,
+ *      SWRLDataPropertyBuiltInArgument, SWRLAnnotationPropertyBuiltInArgument, SWRLDatatypeBuiltInArgument,
+ *      SWRLMultiValueBuiltInArgument, SQWRLCollectionBuiltInArgument
  */
 public interface SWRLAtomArgument extends SWRLArgument
 {

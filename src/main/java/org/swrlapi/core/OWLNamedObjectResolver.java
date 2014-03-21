@@ -9,7 +9,7 @@ import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.swrlapi.core.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLDataPropertyBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLIndividualBuiltInArgument;
+import org.swrlapi.core.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.exceptions.TargetRuleEngineException;
 
@@ -142,7 +142,7 @@ public class OWLNamedObjectResolver
 		this.classPrefixedNames.add(prefixedName);
 	}
 
-	public void record(SWRLIndividualBuiltInArgument individualArgument)
+	public void record(SWRLNamedIndividualBuiltInArgument individualArgument)
 	{
 		IRI iri = individualArgument.getIRI();
 		String prefixedName = getPrefixedName(iri);

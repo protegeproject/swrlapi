@@ -6,7 +6,7 @@ import org.swrlapi.core.OWLNamedObjectResolver;
 import org.swrlapi.core.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLDataPropertyBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLIndividualBuiltInArgument;
+import org.swrlapi.core.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.ext.OWLLiteralFactory;
 import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyValue;
@@ -47,7 +47,7 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
 	}
 
 	@Override
-	public SQWRLIndividualValue getIndividualValue(SWRLIndividualBuiltInArgument individualArgument)
+	public SQWRLIndividualValue getIndividualValue(SWRLNamedIndividualBuiltInArgument individualArgument)
 	{
 		String prefixedName = getOWLNamedObjectResolver().iri2PrefixedName(individualArgument.getIRI());
 

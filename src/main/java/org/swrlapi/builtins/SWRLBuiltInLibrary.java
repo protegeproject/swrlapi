@@ -11,7 +11,7 @@ import org.swrlapi.core.SWRLBuiltInBridge;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLDataPropertyBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLIndividualBuiltInArgument;
+import org.swrlapi.core.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLMultiValueBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLObjectPropertyBuiltInArgument;
@@ -111,7 +111,7 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
 
 	IRI getArgumentAsAnIndividualIRI(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
 
-	SWRLIndividualBuiltInArgument getArgumentAsAnIndividual(int argumentNumber, List<SWRLBuiltInArgument> arguments)
+	SWRLNamedIndividualBuiltInArgument getArgumentAsAnIndividual(int argumentNumber, List<SWRLBuiltInArgument> arguments)
 			throws BuiltInException;
 
 	// Property argument handling
@@ -323,7 +323,7 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
 	// Argument creation handling
 	SWRLClassBuiltInArgument createClassBuiltInArgument(IRI classIRI) throws BuiltInException;
 
-	SWRLIndividualBuiltInArgument createIndividualBuiltInArgument(IRI individualIRI) throws BuiltInException;
+	SWRLNamedIndividualBuiltInArgument createIndividualBuiltInArgument(IRI individualIRI) throws BuiltInException;
 
 	SWRLObjectPropertyBuiltInArgument createObjectPropertyBuiltInArgument(IRI propertyIRI) throws BuiltInException;
 

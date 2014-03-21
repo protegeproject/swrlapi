@@ -19,9 +19,11 @@ import org.semanticweb.owlapi.model.SWRLDArgument;
 import org.semanticweb.owlapi.model.SWRLLiteralArgument;
 import org.semanticweb.owlapi.model.SWRLRule;
 import org.semanticweb.owlapi.model.SWRLVariable;
+import org.swrlapi.core.arguments.SQWRLCollectionBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
+import org.swrlapi.core.arguments.SWRLMultiValueBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.ext.SWRLAPIOWLDataFactory;
 import org.swrlapi.ext.SWRLAPIOWLOntology;
@@ -142,7 +144,7 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 	 * The {@link SWRLBuiltInArgument} interface represents the primary SWRLAPI extension point to the OWLAPI classes to
 	 * represent arguments to SWRL built-in atoms.
 	 * 
-	 * @see SWRLBuiltInArgument
+	 * @see SWRLBuiltInArgument, SWRLVariableBuiltInArgument, SWRLLiteralArgument, SWRLDArgument
 	 */
 	private SWRLBuiltInArgument convertSWRLDArgument2SWRLBuiltInArgument(SWRLDArgument swrlDArgument)
 	{
@@ -160,13 +162,20 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 	}
 
 	/**
-	 * The {@link SWRLBuiltInArgument} interface represents the primary SWRLAPI extension point to the OWLAPI classes to
-	 * represent arguments to SWRL built-in atoms.
+	 * The OWLAPI permits only variable and literal arguments to built-ins, which conforms with the SWRL Specification.
+	 * The SWRLAPI also permits OWL named objects (classes, named individuals, properties, and datatypes) as arguments. In
+	 * order to support these additional argument types in a Specification-conformant way, the SWRLAPI treats URI literal
+	 * arguments specially. It a URI literal argument is passed to a built-in we determine if it refers to an OWL named
+	 * object in the active ontology and if so we create specific SWRLAPI built-in argument types for it.
+	 * <p>
+	 * The SWRLAPI allows SQWRL collection built-in arguments (represented by a {@link SQWRLCollectionBuiltInArgument})
+	 * and multi-value variables (represented by a {@link SWRLMultiValueBuiltInArgument}). These two argument types are
+	 * not instantiated directly as built-in argument types. They are created at runtime during rule execution and passed
+	 * as result values in SWRL variable built-in arguments.
 	 * 
-	 * @see SWRLBuiltInArgument, SWRLVariableBuiltInArgument, SWRLLiteralBuiltInArgument, SWRLClassBuiltInArgument,
-	 *      SWRLIndividualBuiltInArgument, SWRLObjectPropertyBuiltInArgument, SWRLDataPropertyBuiltInArgument,
-	 *      SWRLAnnotationPropertyBuiltInArgument, SWRLDatatypeBuiltInArgument, SQWRLCollectionBuiltInArgument,
-	 *      SWRLMultiValueBuiltInArgument
+	 * @see SWRLLiteralBuiltInArgument, SWRLClassBuiltInArgument, SWRLNamedIndividualBuiltInArgument,
+	 *      SWRLObjectPropertyBuiltInArgument, SWRLDataPropertyBuiltInArgument, SWRLAnnotationPropertyBuiltInArgument,
+	 *      SWRLDatatypeBuiltInArgument, SQWRLCollectionBuiltInArgument, SWRLMultiValueBuiltInArgument
 	 */
 	private SWRLBuiltInArgument convertSWRLLiteralArgument2SWRLBuiltInArgument(SWRLLiteralArgument swrlLiteralArgument)
 	{
@@ -178,7 +187,7 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 			if (containsClassInSignature(iri)) {
 				return getSWRLBuiltInArgumentFactory().getClassBuiltInArgument(iri);
 			} else if (containsIndividualInSignature(iri)) {
-				return getSWRLBuiltInArgumentFactory().getIndividualBuiltInArgument(iri);
+				return getSWRLBuiltInArgumentFactory().getNamedIndividualBuiltInArgument(iri);
 			} else if (containsObjectPropertyInSignature(iri)) {
 				return getSWRLBuiltInArgumentFactory().getObjectPropertyBuiltInArgument(iri);
 			} else if (containsDataPropertyInSignature(iri)) {
@@ -194,6 +203,7 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 			SWRLLiteralBuiltInArgument argument = getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(literal);
 			return argument;
 		}
+		// TODO Where are we creating SQWRLCollectionBuiltInArgument, SWRLMultiValueBuiltInArgument?
 	}
 
 	private SWRLVariableBuiltInArgument transformSWRLVariable2SWRLVariableBuiltInArgument(SWRLVariable swrlVariable)

@@ -10,8 +10,8 @@ import org.swrlapi.core.arguments.SWRLDataPropertyAtomArgument;
 import org.swrlapi.core.arguments.SWRLDataPropertyBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLDatatypeAtomArgument;
 import org.swrlapi.core.arguments.SWRLDatatypeBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLIndividualAtomArgument;
-import org.swrlapi.core.arguments.SWRLIndividualBuiltInArgument;
+import org.swrlapi.core.arguments.SWRLNamedIndividualAtomArgument;
+import org.swrlapi.core.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLLiteralAtomArgument;
 import org.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLObjectPropertyAtomArgument;
@@ -31,7 +31,7 @@ public interface TargetRuleEngineSWRLAtomArgumentConverter<T> extends TargetRule
 
 	T convert(SWRLClassAtomArgument classArgument) throws TargetRuleEngineException;
 
-	T convert(SWRLIndividualAtomArgument individualArgument) throws TargetRuleEngineException;
+	T convert(SWRLNamedIndividualAtomArgument individualArgument) throws TargetRuleEngineException;
 
 	T convert(SWRLObjectPropertyAtomArgument propertyArgument) throws TargetRuleEngineException;
 	
@@ -47,7 +47,7 @@ public interface TargetRuleEngineSWRLAtomArgumentConverter<T> extends TargetRule
 
 	T convert(SWRLClassBuiltInArgument argument) throws TargetRuleEngineException;
 
-	T convert(SWRLIndividualBuiltInArgument argument) throws TargetRuleEngineException;
+	T convert(SWRLNamedIndividualBuiltInArgument argument) throws TargetRuleEngineException;
 
 	T convert(SWRLObjectPropertyBuiltInArgument argument) throws TargetRuleEngineException;
 

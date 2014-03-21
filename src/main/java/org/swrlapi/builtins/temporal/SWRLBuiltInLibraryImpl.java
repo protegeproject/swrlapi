@@ -11,7 +11,7 @@ import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
 import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
 import org.swrlapi.core.SWRLBuiltInBridge;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLIndividualBuiltInArgument;
+import org.swrlapi.core.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.exceptions.BuiltInException;
 import org.swrlapi.exceptions.InvalidBuiltInArgumentException;
 import org.swrlapi.exceptions.SWRLBuiltInLibraryException;
@@ -534,7 +534,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 			granularityName = getArgumentAsAString(argumentNumber, arguments);
 			return Temporal.getIntegerGranularityRepresentation(granularityName);
 		} else if (isArgumentAnIndividual(argumentNumber, arguments)) {
-			SWRLIndividualBuiltInArgument individualArgument = getArgumentAsAnIndividual(argumentNumber, arguments);
+			SWRLNamedIndividualBuiltInArgument individualArgument = getArgumentAsAnIndividual(argumentNumber, arguments);
 			IRI individualIRI = individualArgument.getIRI();
 			String fullName = individualIRI.toString();
 			if (isOWLIndividualOfType(individualIRI, createIRI(GranularityClassName))) {
