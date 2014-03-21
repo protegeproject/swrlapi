@@ -15,7 +15,7 @@ import java.util.regex.PatternSyntaxException;
 import org.apache.commons.lang.StringUtils;
 import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLMultiBuiltInArgument;
+import org.swrlapi.core.arguments.SWRLMultiValueBuiltInArgument;
 import org.swrlapi.exceptions.BuiltInException;
 import org.swrlapi.exceptions.BuiltInNotImplementedException;
 import org.swrlapi.exceptions.InvalidBuiltInArgumentException;
@@ -562,14 +562,14 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 		tokenizer = new StringTokenizer(inputString.trim(), delimeters);
 
-		SWRLMultiBuiltInArgument multiBuiltInArgument = createSWRLMultiBuiltInArgument();
+		SWRLMultiValueBuiltInArgument multiValueBuiltInArgument = createSWRLMultiValueBuiltInArgument();
 		while (tokenizer.hasMoreTokens()) {
 			String token = tokenizer.nextToken();
-			multiBuiltInArgument.addArgument(createLiteralBuiltInArgument(token));
+			multiValueBuiltInArgument.addArgument(createLiteralBuiltInArgument(token));
 		}
 
-		arguments.get(0).setBuiltInResult(multiBuiltInArgument);
-		result = !multiBuiltInArgument.hasNoArguments();
+		arguments.get(0).setBuiltInResult(multiValueBuiltInArgument);
+		result = !multiValueBuiltInArgument.hasNoArguments();
 
 		return result;
 	}

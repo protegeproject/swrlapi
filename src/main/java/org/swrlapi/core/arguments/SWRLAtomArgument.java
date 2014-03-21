@@ -29,7 +29,7 @@ import org.swrlapi.ext.SWRLAPIRule;
  * @see SWRLBuiltInArgument, SWRLVariableBuiltInArgument, SWRLLiteralBuiltInArgument, SWRLIndividualBuiltInArgument,
  *      SWRLClassBuiltInArgument, SWRLObjectPropertyBuiltInArgument, SWRLDataPropertyBuiltInArgument,
  *      SWRLAnnotationPropertyBuiltInArgument, SWRLDatatypeBuiltInArgument, SQWRLCollectionBuiltInArgument,
- *      SWRLMultiBuiltInArgument
+ *      SWRLMultiValueBuiltInArgument
  */
 public interface SWRLAtomArgument extends SWRLArgument
 {

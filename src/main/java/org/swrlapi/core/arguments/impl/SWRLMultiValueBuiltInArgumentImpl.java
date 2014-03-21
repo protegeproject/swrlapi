@@ -18,23 +18,23 @@ import org.semanticweb.owlapi.model.OWLObjectVisitorEx;
 import org.semanticweb.owlapi.model.SWRLObjectVisitor;
 import org.semanticweb.owlapi.model.SWRLObjectVisitorEx;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLMultiBuiltInArgument;
+import org.swrlapi.core.arguments.SWRLMultiValueBuiltInArgument;
 
 /**
  * A class used to bind multiple arguments to a built-in argument
  */
-class SWRLMultiBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements SWRLMultiBuiltInArgument
+class SWRLMultiValueBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements SWRLMultiValueBuiltInArgument
 {
 	private static final long serialVersionUID = 1L;
 
 	private List<SWRLBuiltInArgument> arguments;
 
-	public SWRLMultiBuiltInArgumentImpl()
+	public SWRLMultiValueBuiltInArgumentImpl()
 	{
 		arguments = new ArrayList<SWRLBuiltInArgument>();
 	}
 
-	public SWRLMultiBuiltInArgumentImpl(List<SWRLBuiltInArgument> arguments)
+	public SWRLMultiValueBuiltInArgumentImpl(List<SWRLBuiltInArgument> arguments)
 	{
 		this.arguments = arguments;
 	}

@@ -102,14 +102,14 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 
 	private SWRLAPIRule convertOWLAPIRule2SWRLAPIRule(SWRLRule owlapiRule)
 	{
-		String ruleName = "";
+		String ruleName = ""; // TODO
 		List<SWRLAtom> swrlapiBodyAtoms = new ArrayList<SWRLAtom>();
 		List<SWRLAtom> swrlapiHeadAtoms = new ArrayList<SWRLAtom>();
 
 		for (SWRLAtom atom : owlapiRule.getBody()) {
 			if (atom instanceof SWRLBuiltInAtom) {
 				SWRLBuiltInAtom owlapiBuiltInAtom = (SWRLBuiltInAtom)atom;
-				SWRLBuiltInAtom swrlapiBuiltInAtom = transformSWRLBuiltInAtom(owlapiBuiltInAtom);
+				SWRLBuiltInAtom swrlapiBuiltInAtom = convertOWLAPIBuiltInAtom2SWRLAPIBuiltInAtom(owlapiBuiltInAtom);
 				swrlapiBodyAtoms.add(swrlapiBuiltInAtom);
 			} else
 				swrlapiBodyAtoms.add(atom);
@@ -118,12 +118,20 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 		return new DefaultSWRLAPIRule(ruleName, swrlapiBodyAtoms, swrlapiHeadAtoms);
 	}
 
-	private SWRLBuiltInAtom transformSWRLBuiltInAtom(SWRLBuiltInAtom owlapiSWRLBuiltInAtom)
+	/**
+	 * Both the OWLAPI and the SWRLAPI use the {@link SWRLBuiltInAtom} class to represent built-in atoms. However, the
+	 * SWRLAPI has a richer range of possible argument types. The OWLAPI allows {@link SWRLDArgument} built-in arguments
+	 * only, whereas the SWRLAPI has a range of types. These types are represented buy the {@link SWRLBuiltInArgument}
+	 * interface.
+	 * 
+	 * @see SWRLBuiltInArgument
+	 */
+	private SWRLBuiltInAtom convertOWLAPIBuiltInAtom2SWRLAPIBuiltInAtom(SWRLBuiltInAtom owlapiSWRLBuiltInAtom)
 	{
 		List<SWRLDArgument> swrlBuiltInArguments = new ArrayList<SWRLDArgument>();
 
 		for (SWRLDArgument swrlDArgument : owlapiSWRLBuiltInAtom.getArguments()) {
-			SWRLBuiltInArgument swrlBuiltInArgument = transformSWRLDArgument2SWRLBuiltInArgument(swrlDArgument);
+			SWRLBuiltInArgument swrlBuiltInArgument = convertSWRLDArgument2SWRLBuiltInArgument(swrlDArgument);
 			swrlBuiltInArguments.add(swrlBuiltInArgument);
 		}
 
@@ -134,16 +142,13 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 	 * The {@link SWRLBuiltInArgument} interface represents the primary SWRLAPI extension point to the OWLAPI classes to
 	 * represent arguments to SWRL built-in atoms.
 	 * 
-	 * @see SWRLBuiltInArgument, SWRLVariableBuiltInArgument, SWRLLiteralBuiltInArgument, SWRLClassBuiltInArgument,
-	 *      SWRLIndividualBuiltInArgument, SWRLObjectPropertyBuiltInArgument, SWRLDataPropertyBuiltInArgument,
-	 *      SWRLAnnotationPropertyBuiltInArgument, SWRLDatatypeBuiltInArgument, SQWRLCollectionBuiltInArgument,
-	 *      SWRLMultiBuiltInArgument
+	 * @see SWRLBuiltInArgument
 	 */
-	private SWRLBuiltInArgument transformSWRLDArgument2SWRLBuiltInArgument(SWRLDArgument swrlDArgument)
-	{ // SWRLLiteralArgument, SWRLVariable
+	private SWRLBuiltInArgument convertSWRLDArgument2SWRLBuiltInArgument(SWRLDArgument swrlDArgument)
+	{
 		if (swrlDArgument instanceof SWRLLiteralArgument) {
 			SWRLLiteralArgument swrlLiteralArgument = (SWRLLiteralArgument)swrlDArgument;
-			SWRLBuiltInArgument argument = transformSWRLLiteralArgument2SWRLBuiltInArgument(swrlLiteralArgument);
+			SWRLBuiltInArgument argument = convertSWRLLiteralArgument2SWRLBuiltInArgument(swrlLiteralArgument);
 			return argument;
 		} else if (swrlDArgument instanceof SWRLVariable) {
 			SWRLVariable swrlVariable = (SWRLVariable)swrlDArgument;
@@ -154,7 +159,16 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 					+ swrlDArgument.getClass().getName());
 	}
 
-	private SWRLBuiltInArgument transformSWRLLiteralArgument2SWRLBuiltInArgument(SWRLLiteralArgument swrlLiteralArgument)
+	/**
+	 * The {@link SWRLBuiltInArgument} interface represents the primary SWRLAPI extension point to the OWLAPI classes to
+	 * represent arguments to SWRL built-in atoms.
+	 * 
+	 * @see SWRLBuiltInArgument, SWRLVariableBuiltInArgument, SWRLLiteralBuiltInArgument, SWRLClassBuiltInArgument,
+	 *      SWRLIndividualBuiltInArgument, SWRLObjectPropertyBuiltInArgument, SWRLDataPropertyBuiltInArgument,
+	 *      SWRLAnnotationPropertyBuiltInArgument, SWRLDatatypeBuiltInArgument, SQWRLCollectionBuiltInArgument,
+	 *      SWRLMultiValueBuiltInArgument
+	 */
+	private SWRLBuiltInArgument convertSWRLLiteralArgument2SWRLBuiltInArgument(SWRLLiteralArgument swrlLiteralArgument)
 	{
 		OWLLiteral literal = swrlLiteralArgument.getLiteral();
 		OWLDatatype datatype = literal.getDatatype();
@@ -184,7 +198,7 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 
 	private SWRLVariableBuiltInArgument transformSWRLVariable2SWRLVariableBuiltInArgument(SWRLVariable swrlVariable)
 	{
-		IRI iri = swrlVariable.getIRI();
+		// IRI iri = swrlVariable.getIRI();
 
 		// SWRLVariableBuiltInArgument argument = getSWRLBuiltInArgumentFactory().getVariableBuiltInArgument(iri);
 		SWRLVariableBuiltInArgument argument = null;

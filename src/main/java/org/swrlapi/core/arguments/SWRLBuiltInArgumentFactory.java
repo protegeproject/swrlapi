@@ -16,6 +16,12 @@ import org.swrlapi.xsd.XSDDateTime;
 import org.swrlapi.xsd.XSDDuration;
 import org.swrlapi.xsd.XSDTime;
 
+/**
+ * Factory for creating SWRLAPI {@link SWRLBuiltInArgument} objects.
+ * 
+ * 
+ * @author martin
+ */
 public interface SWRLBuiltInArgumentFactory
 {
 	SWRLVariableBuiltInArgument getVariableBuiltInArgument(String variableName);
@@ -72,9 +78,10 @@ public interface SWRLBuiltInArgumentFactory
 
 	SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(XSDDuration duration);
 
-	SWRLMultiBuiltInArgument getMultiBuiltInArgument();
+	SWRLMultiValueBuiltInArgument getMultiValueBuiltInArgument();
 
-	SWRLMultiBuiltInArgument getMultiBuiltInArgument(List<SWRLBuiltInArgument> arguments);
+	SWRLMultiValueBuiltInArgument getMultiValueBuiltInArgument(List<SWRLBuiltInArgument> arguments);
 
-	SQWRLCollectionBuiltInArgument getSQWRLCollectionBuiltInArgument(String queryName, String collectionName, String collectionID);
+	SQWRLCollectionBuiltInArgument getSQWRLCollectionBuiltInArgument(String queryName, String collectionName,
+			String collectionID);
 }

@@ -3,6 +3,7 @@ package org.swrlapi.core.arguments;
 import java.net.URI;
 
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLIndividual;
@@ -13,6 +14,12 @@ import org.swrlapi.xsd.XSDDateTime;
 import org.swrlapi.xsd.XSDDuration;
 import org.swrlapi.xsd.XSDTime;
 
+/**
+ * Factory for creating SWRLAPI {@link SWRLAtomArgument} objects.
+ * 
+ * 
+ * @author martin
+ */
 public interface SWRLAtomArgumentFactory
 {
 	SWRLVariableAtomArgument getVariableAtomArgument(String variableName);
@@ -32,6 +39,10 @@ public interface SWRLAtomArgumentFactory
 	SWRLDataPropertyAtomArgument getDataPropertyAtomArgument(IRI iri);
 
 	SWRLDataPropertyAtomArgument getDataPropertyAtomArgument(OWLDataProperty property);
+
+	SWRLAnnotationPropertyAtomArgument getAnnotationPropertyAtomArgument(IRI uri);
+
+	SWRLAnnotationPropertyAtomArgument getAnnotationPropertyAtomArgument(OWLAnnotationProperty property);
 
 	SWRLLiteralAtomArgument getLiteralAtomArgument(OWLLiteral literal);
 

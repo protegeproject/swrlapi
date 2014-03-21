@@ -3,12 +3,14 @@ package org.swrlapi.core.arguments.impl;
 import java.net.URI;
 
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.swrlapi.core.arguments.SWRLAnnotationPropertyAtomArgument;
 import org.swrlapi.core.arguments.SWRLAtomArgumentFactory;
 import org.swrlapi.core.arguments.SWRLClassAtomArgument;
 import org.swrlapi.core.arguments.SWRLDataPropertyAtomArgument;
@@ -71,6 +73,18 @@ public class DefaultSWRLAtomArgumentFactory implements SWRLAtomArgumentFactory
 	public SWRLDataPropertyAtomArgument getDataPropertyAtomArgument(OWLDataProperty property)
 	{
 		return new SWRLDataPropertyAtomArgumentImpl(property);
+	}
+
+	@Override
+	public SWRLAnnotationPropertyAtomArgument getAnnotationPropertyAtomArgument(IRI propertyIRI)
+	{
+		return new SWRLAnnotationPropertyAtomArgumentImpl(propertyIRI);
+	}
+
+	@Override
+	public SWRLAnnotationPropertyAtomArgument getAnnotationPropertyAtomArgument(OWLAnnotationProperty property)
+	{
+		return new SWRLAnnotationPropertyAtomArgumentImpl(property);
 	}
 
 	@Override

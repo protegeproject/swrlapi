@@ -25,7 +25,7 @@ import org.swrlapi.core.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLDataPropertyBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLIndividualBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLMultiBuiltInArgument;
+import org.swrlapi.core.arguments.SWRLMultiValueBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLPropertyBuiltInArgument;
 import org.swrlapi.exceptions.BuiltInException;
@@ -1296,7 +1296,7 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 			if (argument.isUnbound())
 				throw new BuiltInException("built-in " + builtInName + " in rule " + ruleName + " "
 						+ "returned with unbound argument ?" + argument.getVariableName());
-			else if (argument instanceof SWRLMultiBuiltInArgument && ((SWRLMultiBuiltInArgument)argument).hasNoArguments())
+			else if (argument instanceof SWRLMultiValueBuiltInArgument && ((SWRLMultiValueBuiltInArgument)argument).hasNoArguments())
 				throw new BuiltInException("built-in " + builtInName + " in rule " + ruleName + " "
 						+ "returned with empty multi-argument ?" + argument.getVariableName());
 		}
@@ -1317,11 +1317,11 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 		checkArgumentNumber(resultArgumentNumber, arguments);
 
 		if (isUnboundArgument(resultArgumentNumber, arguments)) {
-			SWRLMultiBuiltInArgument multiBuiltInArgument = createSWRLMultiBuiltInArgument();
+			SWRLMultiValueBuiltInArgument multiValueBuiltInArgument = createSWRLMultiValueBuiltInArgument();
 			for (SWRLBuiltInArgument argument : resultArguments)
-				multiBuiltInArgument.addArgument(argument);
-			arguments.get(resultArgumentNumber).setBuiltInResult(multiBuiltInArgument);
-			result = !multiBuiltInArgument.hasNoArguments();
+				multiValueBuiltInArgument.addArgument(argument);
+			arguments.get(resultArgumentNumber).setBuiltInResult(multiValueBuiltInArgument);
+			result = !multiValueBuiltInArgument.hasNoArguments();
 		} else {
 			SWRLBuiltInArgument argument = arguments.get(resultArgumentNumber);
 			result = resultArguments.contains(argument);
@@ -1668,15 +1668,15 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 	}
 
 	@Override
-	public SWRLMultiBuiltInArgument createSWRLMultiBuiltInArgument() throws BuiltInException
+	public SWRLMultiValueBuiltInArgument createSWRLMultiValueBuiltInArgument() throws BuiltInException
 	{
-		return getBuiltInArgumentFactory().getMultiBuiltInArgument();
+		return getBuiltInArgumentFactory().getMultiValueBuiltInArgument();
 	}
 
 	@Override
-	public SWRLMultiBuiltInArgument createSWRLMultiBuiltInArgument(List<SWRLBuiltInArgument> arguments) throws BuiltInException
+	public SWRLMultiValueBuiltInArgument createSWRLMultiValueBuiltInArgument(List<SWRLBuiltInArgument> arguments) throws BuiltInException
 	{
-		return getBuiltInArgumentFactory().getMultiBuiltInArgument(arguments);
+		return getBuiltInArgumentFactory().getMultiValueBuiltInArgument(arguments);
 	}
 
 	public SQWRLCollectionBuiltInArgument createSQWRLCollectionBuiltInArgument(String queryName, String collectionName,

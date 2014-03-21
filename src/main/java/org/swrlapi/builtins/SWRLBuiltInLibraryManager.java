@@ -13,7 +13,7 @@ import java.util.Set;
 
 import org.swrlapi.core.SWRLBuiltInBridge;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLMultiBuiltInArgument;
+import org.swrlapi.core.arguments.SWRLMultiValueBuiltInArgument;
 import org.swrlapi.exceptions.BuiltInException;
 import org.swrlapi.exceptions.IncompatibleBuiltInClassException;
 import org.swrlapi.exceptions.IncompatibleBuiltInMethodException;
@@ -53,8 +53,8 @@ public abstract class SWRLBuiltInLibraryManager
 
 	/**
 	 * Invoke a SWRL built-in. This method is called from the invokeSWRLBuiltIn method in the
-	 * {@link org.swrlapi.core.SWRLRuleEngineBridge} and should not be called directly from a rule engine. The
-	 * built-in name should be the prefixed name of the built-in (e.g., swrlb:lessThanOrEqual).
+	 * {@link org.swrlapi.core.SWRLRuleEngineBridge} and should not be called directly from a rule engine. The built-in
+	 * name should be the prefixed name of the built-in (e.g., swrlb:lessThanOrEqual).
 	 * <p>
 	 * For built-ins that evaluate to true, this method will return a list of argument patterns, one pattern for each
 	 * combination of arguments that evaluates to true.
@@ -170,66 +170,69 @@ public abstract class SWRLBuiltInLibraryManager
 	private static Set<List<SWRLBuiltInArgument>> generateBuiltInArgumentPattern(String ruleName, String builtInName,
 			int builtInIndex, List<SWRLBuiltInArgument> arguments) throws BuiltInException
 	{
-		List<Integer> multiBuiltInArgumentIndexes = getMultiBuiltInArgumentIndexes(arguments);
+		List<Integer> multiValueBuiltInArgumentIndexes = getMultiValueBuiltInArgumentIndexes(arguments);
 		Set<List<SWRLBuiltInArgument>> pattern = new HashSet<List<SWRLBuiltInArgument>>();
 
-		if (multiBuiltInArgumentIndexes.isEmpty()) // No multi-arguments - generate a single pattern
+		if (multiValueBuiltInArgumentIndexes.isEmpty()) // No multi-arguments - generate a single pattern
 			pattern.add(arguments);
 		else { // Generate all possible patterns
-			int firstMultiBuiltInArgumentIndex = multiBuiltInArgumentIndexes.get(0); // Pick the first multi-argument.
-			SWRLMultiBuiltInArgument multiBuiltInArgument = getArgumentAsASWRLMultiBuiltInArgument(arguments, firstMultiBuiltInArgumentIndex);
-			int numberOfArgumentsInMultiBuiltInArgument = multiBuiltInArgument.getNumberOfArguments();
+			int firstMultiValueBuiltInArgumentIndex = multiValueBuiltInArgumentIndexes.get(0); // Pick the first
+																																													// multi-argument.
+			SWRLMultiValueBuiltInArgument multiValueBuiltInArgument = getArgumentAsASWRLMultiValueBuiltInArgument(arguments,
+					firstMultiValueBuiltInArgumentIndex);
+			int numberOfArgumentsInMultiValueBuiltInArgument = multiValueBuiltInArgument.getNumberOfArguments();
 
-			if (numberOfArgumentsInMultiBuiltInArgument < 1)
-				throw new BuiltInException("empty multi-argument for built-in " + builtInName + "(index " + builtInIndex
+			if (numberOfArgumentsInMultiValueBuiltInArgument < 1)
+				throw new BuiltInException("empty multi-value argument for built-in " + builtInName + "(index " + builtInIndex
 						+ ") in rule " + ruleName);
 
-			for (int i = 1; i < multiBuiltInArgumentIndexes.size(); i++) {
-				int multiBuiltInArgumentIndex = multiBuiltInArgumentIndexes.get(i);
-				multiBuiltInArgument = getArgumentAsASWRLMultiBuiltInArgument(arguments, multiBuiltInArgumentIndex);
-				if (numberOfArgumentsInMultiBuiltInArgument != multiBuiltInArgument.getNumberOfArguments())
-					throw new BuiltInException("all multi-arguments must have the same number of elements for built-in "
+			for (int i = 1; i < multiValueBuiltInArgumentIndexes.size(); i++) {
+				int multiValueBuiltInArgumentIndex = multiValueBuiltInArgumentIndexes.get(i);
+				multiValueBuiltInArgument = getArgumentAsASWRLMultiValueBuiltInArgument(arguments, multiValueBuiltInArgumentIndex);
+				if (numberOfArgumentsInMultiValueBuiltInArgument != multiValueBuiltInArgument.getNumberOfArguments())
+					throw new BuiltInException("all multi-value arguments must have the same number of elements for built-in "
 							+ builtInName + "(index " + builtInIndex + ") in rule " + ruleName);
 			}
 
-			for (int multiBuiltInArgumentArgumentIndex = 0; multiBuiltInArgumentArgumentIndex < numberOfArgumentsInMultiBuiltInArgument; multiBuiltInArgumentArgumentIndex++) {
-				List<SWRLBuiltInArgument> argumentsPattern = generateArgumentsPattern(arguments, multiBuiltInArgumentArgumentIndex);
+			for (int multiValueBuiltInArgumentArgumentIndex = 0; multiValueBuiltInArgumentArgumentIndex < numberOfArgumentsInMultiValueBuiltInArgument; multiValueBuiltInArgumentArgumentIndex++) {
+				List<SWRLBuiltInArgument> argumentsPattern = generateArgumentsPattern(arguments,
+						multiValueBuiltInArgumentArgumentIndex);
 				pattern.add(argumentsPattern);
 			}
 		}
 		return pattern;
 	}
 
-	private static SWRLMultiBuiltInArgument getArgumentAsASWRLMultiBuiltInArgument(List<SWRLBuiltInArgument> arguments,
-			int argumentIndex) throws BuiltInException
+	private static SWRLMultiValueBuiltInArgument getArgumentAsASWRLMultiValueBuiltInArgument(
+			List<SWRLBuiltInArgument> arguments, int argumentIndex) throws BuiltInException
 	{
-		if (arguments.get(argumentIndex) instanceof SWRLMultiBuiltInArgument)
-			return (SWRLMultiBuiltInArgument)arguments.get(argumentIndex);
+		if (arguments.get(argumentIndex) instanceof SWRLMultiValueBuiltInArgument)
+			return (SWRLMultiValueBuiltInArgument)arguments.get(argumentIndex);
 		else
 			throw new BuiltInException("expecting milti-argment for (0-indexed) argument #" + argumentIndex);
 	}
 
 	// Find indices of multi-arguments (if any) in a list of arguments.
-	private static List<Integer> getMultiBuiltInArgumentIndexes(List<SWRLBuiltInArgument> arguments)
+	private static List<Integer> getMultiValueBuiltInArgumentIndexes(List<SWRLBuiltInArgument> arguments)
 	{
 		List<Integer> result = new ArrayList<Integer>();
 
 		for (int i = 0; i < arguments.size(); i++)
-			if (arguments.get(i) instanceof SWRLMultiBuiltInArgument)
+			if (arguments.get(i) instanceof SWRLMultiValueBuiltInArgument)
 				result.add(Integer.valueOf(i));
 
 		return result;
 	}
 
 	private static List<SWRLBuiltInArgument> generateArgumentsPattern(List<SWRLBuiltInArgument> arguments,
-			int multiBuiltInArgumentArgumentIndex) throws BuiltInException
+			int multiValueBuiltInArgumentArgumentIndex) throws BuiltInException
 	{
 		List<SWRLBuiltInArgument> result = new ArrayList<SWRLBuiltInArgument>();
 
 		for (SWRLBuiltInArgument argument : arguments) {
-			if (argument instanceof SWRLMultiBuiltInArgument) {
-				SWRLMultiBuiltInArgument multiBuiltInArgument = (SWRLMultiBuiltInArgument)argument;
-				result.add(multiBuiltInArgument.getArguments().get(multiBuiltInArgumentArgumentIndex));
+			if (argument instanceof SWRLMultiValueBuiltInArgument) {
+				SWRLMultiValueBuiltInArgument multiValueBuiltInArgument = (SWRLMultiValueBuiltInArgument)argument;
+				result.add(multiValueBuiltInArgument.getArguments().get(multiValueBuiltInArgumentArgumentIndex));
 			} else
 				result.add(argument);
 		}

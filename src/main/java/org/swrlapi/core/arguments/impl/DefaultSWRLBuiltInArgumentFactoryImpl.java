@@ -21,7 +21,7 @@ import org.swrlapi.core.arguments.SWRLDataPropertyBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLDatatypeBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLIndividualBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLMultiBuiltInArgument;
+import org.swrlapi.core.arguments.SWRLMultiValueBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.ext.OWLLiteralFactory;
@@ -208,15 +208,15 @@ public class DefaultSWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumen
 	}
 
 	@Override
-	public SWRLMultiBuiltInArgument getMultiBuiltInArgument()
+	public SWRLMultiValueBuiltInArgument getMultiValueBuiltInArgument()
 	{
-		return new SWRLMultiBuiltInArgumentImpl();
+		return new SWRLMultiValueBuiltInArgumentImpl();
 	}
 
 	@Override
-	public SWRLMultiBuiltInArgument getMultiBuiltInArgument(List<SWRLBuiltInArgument> arguments)
+	public SWRLMultiValueBuiltInArgument getMultiValueBuiltInArgument(List<SWRLBuiltInArgument> arguments)
 	{
-		return new SWRLMultiBuiltInArgumentImpl(arguments);
+		return new SWRLMultiValueBuiltInArgumentImpl(arguments);
 	}
 
 	@Override
