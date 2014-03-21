@@ -12,7 +12,7 @@ import org.semanticweb.owlapi.model.SWRLDArgument;
  * @see SWRLLiteralBuiltInArgument, SWRLVariableBuiltInArgument, SWRLClassBuiltInArgument,
  *      SWRLIndividualBuiltInArgument, SWRLObjectPropertyBuiltInArgument, SWRLDataPropertyBuiltInArgument,
  *      SWRLDataPropertyBuiltInArgument, SWRLAnnotationPropertyBuiltInArgument, SWRLDatatypeBuiltInArgument,
- *      SQWRLCollectionBuiltInArgument, SWRLMultiArgument
+ *      SQWRLCollectionBuiltInArgument, SWRLMultiBuiltInArgument
  */
 public interface SWRLBuiltInArgument extends SWRLAtomArgument, SWRLDArgument
 { // TODO These methods should really be in SWRLVariableBuiltInArgument

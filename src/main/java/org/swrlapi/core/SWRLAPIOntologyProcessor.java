@@ -23,13 +23,13 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
  * <p>
  * The {@link #processOntology} method should be called before any axioms are retrieved.
  * <p>
- * The {@link DefaultSWRLOntologyProcessor} class provides a default implementation of this interface. Apart from
+ * The {@link DefaultSWRLAPIOntologyProcessor} class provides a default implementation of this interface. Apart from
  * extracting SWRL rules and SQWRL queries, this processor also generates OWL declaration axioms for all OWL entities
  * encountered during axiom processing and records their type, IRI and prefixed names using the
  * {@link OWLNamedObjectResolver} class. This class can be used by rule engines to resolve OWL named objects using their
  * prefixed name.
  */
-public interface SWRLOntologyProcessor
+public interface SWRLAPIOntologyProcessor
 {
 	void processOntology() throws SQWRLException;
 

@@ -8,10 +8,7 @@ import org.swrlapi.core.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLDataPropertyBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLIndividualBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLObjectPropertyBuiltInArgument;
-import org.swrlapi.ext.OWLDatatypeFactory;
 import org.swrlapi.ext.OWLLiteralFactory;
-import org.swrlapi.ext.impl.DefaultOWLDatatypeFactory;
-import org.swrlapi.ext.impl.DefaultOWLLiteralFactory;
 import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyValue;
 import org.swrlapi.sqwrl.values.SQWRLClassValue;
 import org.swrlapi.sqwrl.values.SQWRLDataPropertyValue;
@@ -26,14 +23,12 @@ import org.swrlapi.xsd.XSDTime;
 
 public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
 {
-	private final OWLDatatypeFactory owlDatatypeFactory;
 	private final OWLLiteralFactory owlLiteralFactory;
 	private final OWLNamedObjectResolver namedObjectResolver;
 
-	public DefaultSQWRLResultValueFactory(OWLNamedObjectResolver namedObjectResolver)
+	public DefaultSQWRLResultValueFactory(OWLNamedObjectResolver namedObjectResolver, OWLLiteralFactory owlLiteralFactory)
 	{
-		this.owlDatatypeFactory = new DefaultOWLDatatypeFactory();
-		this.owlLiteralFactory = new DefaultOWLLiteralFactory(this.owlDatatypeFactory);
+		this.owlLiteralFactory = owlLiteralFactory;
 		this.namedObjectResolver = namedObjectResolver;
 	}
 

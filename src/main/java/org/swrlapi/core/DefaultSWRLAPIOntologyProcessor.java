@@ -66,15 +66,12 @@ import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.exceptions.SQWRLInvalidQueryNameException;
-import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
-import org.swrlapi.sqwrl.values.impl.DefaultSQWRLResultValueFactory;
 
-public class DefaultSWRLOntologyProcessor implements SWRLOntologyProcessor
+public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 {
 	private final SWRLAPIOWLOntology swrlapiOWLOntology;
 	private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
 	private final OWLNamedObjectResolver namedObjectResolver;
-	private final SQWRLResultValueFactory sqwrlResultValueFactory;
 
 	private final HashMap<String, SWRLAPIRule> rules;
 	private final HashMap<String, SQWRLQuery> queries;
@@ -87,12 +84,11 @@ public class DefaultSWRLOntologyProcessor implements SWRLOntologyProcessor
 	private final HashMap<IRI, OWLDeclarationAxiom> owlDataPropertyDeclarationAxioms;
 	private final HashMap<IRI, OWLDeclarationAxiom> owlAnnotationPropertyDeclarationAxioms;
 
-	public DefaultSWRLOntologyProcessor(SWRLAPIOWLOntology swrlapiOWLOntology) throws SQWRLException // TODO Remove
+	public DefaultSWRLAPIOntologyProcessor(SWRLAPIOWLOntology swrlapiOWLOntology) throws SQWRLException // TODO Remove
 	{
 		this.swrlapiOWLOntology = swrlapiOWLOntology;
 		this.namedObjectResolver = new OWLNamedObjectResolver();
-		this.sqwrlResultValueFactory = new DefaultSQWRLResultValueFactory(this.namedObjectResolver);
-		this.swrlapiOWLDataFactory = new DefaultSWRLAPIOWLDataFactory(this.sqwrlResultValueFactory);
+		this.swrlapiOWLDataFactory = new DefaultSWRLAPIOWLDataFactory(this.namedObjectResolver);
 
 		this.rules = new HashMap<String, SWRLAPIRule>();
 		this.queries = new HashMap<String, SQWRLQuery>();
@@ -312,7 +308,7 @@ public class DefaultSWRLOntologyProcessor implements SWRLOntologyProcessor
 
 	private void processSWRLRulesAndSQWRLQueries() throws SQWRLException
 	{
-		for (SWRLAPIRule ruleOrQuery : getSWRLAPIOWLOntology().getSWRLRules())
+		for (SWRLAPIRule ruleOrQuery : getSWRLAPIOWLOntology().getSWRLAPIRules())
 			processSWRLRuleOrSQWRLQuery(ruleOrQuery);
 	}
 
@@ -320,7 +316,7 @@ public class DefaultSWRLOntologyProcessor implements SWRLOntologyProcessor
 	{
 		if (isSQWRLQuery(ruleOrQuery)) {
 			SQWRLQuery query = new DefaultSQWRLQuery(ruleOrQuery.getName(), ruleOrQuery.getBodyAtoms(),
-					ruleOrQuery.getHeadAtoms(), sqwrlResultValueFactory);
+					ruleOrQuery.getHeadAtoms(), swrlapiOWLDataFactory);
 			this.queries.put(ruleOrQuery.getName(), query);
 		} else {
 			this.rules.put(ruleOrQuery.getName(), ruleOrQuery);

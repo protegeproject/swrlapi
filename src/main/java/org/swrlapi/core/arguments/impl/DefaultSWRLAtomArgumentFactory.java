@@ -16,24 +16,19 @@ import org.swrlapi.core.arguments.SWRLIndividualAtomArgument;
 import org.swrlapi.core.arguments.SWRLLiteralAtomArgument;
 import org.swrlapi.core.arguments.SWRLObjectPropertyAtomArgument;
 import org.swrlapi.core.arguments.SWRLVariableAtomArgument;
-import org.swrlapi.ext.OWLDatatypeFactory;
 import org.swrlapi.ext.OWLLiteralFactory;
-import org.swrlapi.ext.impl.DefaultOWLDatatypeFactory;
-import org.swrlapi.ext.impl.DefaultOWLLiteralFactory;
 import org.swrlapi.xsd.XSDDate;
 import org.swrlapi.xsd.XSDDateTime;
 import org.swrlapi.xsd.XSDDuration;
 import org.swrlapi.xsd.XSDTime;
 
-public class SWRLAtomArgumentFactoryImpl implements SWRLAtomArgumentFactory
+public class DefaultSWRLAtomArgumentFactory implements SWRLAtomArgumentFactory
 {
-	private final OWLDatatypeFactory owlDatatypeFactory;
 	private final OWLLiteralFactory owlLiteralFactory;
 
-	public SWRLAtomArgumentFactoryImpl()
+	public DefaultSWRLAtomArgumentFactory(OWLLiteralFactory owlLiteralFactory)
 	{
-		this.owlDatatypeFactory = new DefaultOWLDatatypeFactory();
-		this.owlLiteralFactory = new DefaultOWLLiteralFactory(this.owlDatatypeFactory);
+		this.owlLiteralFactory = owlLiteralFactory;
 	}
 
 	@Override

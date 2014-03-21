@@ -35,7 +35,7 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 		SWRLRuleEngineBridgeController
 {
 	private final SWRLAPIOWLOntology targetOWLOntology;
-	private final SWRLOntologyProcessor swrlapiOntologyProcessor;
+	private final SWRLAPIOntologyProcessor swrlapiOntologyProcessor;
 	private final SWRLAPIOWLDataFactory dataFactory;
 	private final OWLDatatypeFactory owlDatatypeFactory;
 	private final OWLLiteralFactory owlLiteralFactory;
@@ -63,7 +63,7 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 	 */
 	private final Set<OWLAxiom> injectedOWLAxioms;
 
-	public DefaultSWRLBridge(SWRLAPIOWLOntology targetOWLOntology, SWRLOntologyProcessor swrlapiOntologyProcessor,
+	public DefaultSWRLBridge(SWRLAPIOWLOntology targetOWLOntology, SWRLAPIOntologyProcessor swrlapiOntologyProcessor,
 			OWL2RLPersistenceLayer owl2RLPersistenceLayer) throws SWRLBuiltInBridgeException
 	{
 		this.targetOWLOntology = targetOWLOntology;

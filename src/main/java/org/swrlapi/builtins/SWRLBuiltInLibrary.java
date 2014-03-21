@@ -13,7 +13,7 @@ import org.swrlapi.core.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLDataPropertyBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLIndividualBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLMultiArgument;
+import org.swrlapi.core.arguments.SWRLMultiBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.exceptions.BuiltInException;
 import org.swrlapi.exceptions.InvalidBuiltInArgumentNumberException;
@@ -381,9 +381,9 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
 
 	SWRLAPILiteral createSWRLAPILiteral(XSDDuration duration) throws BuiltInException;
 
-	SWRLMultiArgument createMultiArgument() throws BuiltInException;
+	SWRLMultiBuiltInArgument createSWRLMultiBuiltInArgument() throws BuiltInException;
 
-	SWRLMultiArgument createMultiArgument(List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	SWRLMultiBuiltInArgument createSWRLMultiBuiltInArgument(List<SWRLBuiltInArgument> arguments) throws BuiltInException;
 
 	SQWRLResultValueFactory getSQWRLResultValueFactory() throws SWRLBuiltInLibraryException;
 }

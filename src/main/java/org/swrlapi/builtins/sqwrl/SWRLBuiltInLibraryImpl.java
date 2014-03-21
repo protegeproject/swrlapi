@@ -240,7 +240,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 		if (isUnboundArgument(resultCollectionArgumentNumber, arguments))
 			arguments.get(resultCollectionArgumentNumber).setBuiltInResult(
-					createCollectionArgument(queryName, collectionName, collectionGroupKey));
+					createSQWRLCollectionBuiltInArgument(queryName, collectionName, collectionGroupKey));
 
 		return true;
 	}
@@ -267,7 +267,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 		if (isUnboundArgument(resultCollectionArgumentNumber, arguments))
 			arguments.get(resultCollectionArgumentNumber).setBuiltInResult(
-					createCollectionArgument(queryName, collectionName, collectionGroupKey));
+					createSQWRLCollectionBuiltInArgument(queryName, collectionName, collectionGroupKey));
 
 		return true;
 	}
@@ -1025,7 +1025,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 		if (isUnboundArgument(resultCollectionArgumentNumber, arguments))
 			arguments.get(resultCollectionArgumentNumber).setBuiltInResult(
-					createCollectionArgument(queryName, resultCollectionName, resultCollectionGroupKey));
+					createSQWRLCollectionBuiltInArgument(queryName, resultCollectionName, resultCollectionGroupKey));
 
 		return true;
 	}
@@ -1060,7 +1060,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 		if (isUnboundArgument(resultCollectionArgumentNumber, arguments))
 			arguments.get(resultCollectionArgumentNumber).setBuiltInResult(
-					createCollectionArgument(queryName, resultCollectionName, resultCollectionGroupKey));
+					createSQWRLCollectionBuiltInArgument(queryName, resultCollectionName, resultCollectionGroupKey));
 
 		return true;
 	}
@@ -1095,7 +1095,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 		if (isUnboundArgument(resultCollectionArgumentNumber, arguments))
 			arguments.get(resultCollectionArgumentNumber).setBuiltInResult(
-					createCollectionArgument(queryName, resultCollectionName, resultCollectionGroupKey));
+					createSQWRLCollectionBuiltInArgument(queryName, resultCollectionName, resultCollectionGroupKey));
 
 		return true;
 	}
@@ -1130,7 +1130,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 		if (isUnboundArgument(resultCollectionArgumentNumber, arguments))
 			arguments.get(resultCollectionArgumentNumber).setBuiltInResult(
-					createCollectionArgument(queryName, resultCollectionName, resultCollectionGroupKey));
+					createSQWRLCollectionBuiltInArgument(queryName, resultCollectionName, resultCollectionGroupKey));
 
 		return true;
 	}
@@ -1318,7 +1318,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 		if (isUnboundArgument(resultArgumentNumber, arguments)) {
 			arguments.get(resultArgumentNumber).setBuiltInResult(
-					createCollectionArgument(queryName, resultListName, resultListID));
+					createSQWRLCollectionBuiltInArgument(queryName, resultListName, resultListID));
 			return true;
 		} else {
 			Collection<SWRLBuiltInArgument> collection = getCollection(queryName, resultListName, resultListID);

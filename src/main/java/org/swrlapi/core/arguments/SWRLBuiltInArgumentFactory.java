@@ -72,9 +72,9 @@ public interface SWRLBuiltInArgumentFactory
 
 	SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(XSDDuration duration);
 
-	SWRLMultiArgument getMultiArgument();
+	SWRLMultiBuiltInArgument getMultiBuiltInArgument();
 
-	SWRLMultiArgument getMultiArgument(List<SWRLBuiltInArgument> arguments);
+	SWRLMultiBuiltInArgument getMultiBuiltInArgument(List<SWRLBuiltInArgument> arguments);
 
-	SQWRLCollectionBuiltInArgument getSQWRLCollectionArgument(String queryName, String collectionName, String collectionID);
+	SQWRLCollectionBuiltInArgument getSQWRLCollectionBuiltInArgument(String queryName, String collectionName, String collectionID);
 }

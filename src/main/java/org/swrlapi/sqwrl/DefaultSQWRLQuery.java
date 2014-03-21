@@ -17,10 +17,9 @@ import org.swrlapi.core.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.ext.SWRLAPIBuiltInAtom;
 import org.swrlapi.ext.SWRLAPILiteral;
 import org.swrlapi.ext.SWRLAPILiteralFactory;
+import org.swrlapi.ext.SWRLAPIOWLDataFactory;
 import org.swrlapi.ext.impl.DefaultSWRLAPILiteral;
-import org.swrlapi.ext.impl.DefaultSWRLAPILiteralFactory;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
-import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 
 public class DefaultSQWRLQuery implements SQWRLQuery
 {
@@ -31,19 +30,18 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	private final Map<String, List<SWRLBuiltInArgument>> collectionGroupArgumentsMap; // Map of collection name to group
 																																										// arguments; applies only to
 																																										// grouped collections
-	private final SWRLAPILiteralFactory swrlAPILiteralFactory;
-
+	private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
 	private boolean active; // Like a SWRLRule, a SQWRL query can also be inactive.
 
 	public DefaultSQWRLQuery(String queryName, List<SWRLAtom> bodyAtoms, List<SWRLAtom> headAtoms,
-			SQWRLResultValueFactory sqwrlResultValueFactory) throws SQWRLException
+			SWRLAPIOWLDataFactory swrlapiOWLDataFactory) throws SQWRLException
 	{
 		this.queryName = queryName;
 		this.bodyAtoms = bodyAtoms;
 		this.headAtoms = headAtoms;
-		this.sqwrlResult = new DefaultSQWRLResult(sqwrlResultValueFactory);
+		this.swrlapiOWLDataFactory = swrlapiOWLDataFactory;
+		this.sqwrlResult = new DefaultSQWRLResult(swrlapiOWLDataFactory.getSQWRLResultValueFactory());
 		this.collectionGroupArgumentsMap = new HashMap<String, List<SWRLBuiltInArgument>>();
-		this.swrlAPILiteralFactory = new DefaultSWRLAPILiteralFactory();
 		this.active = false;
 
 		processSQWRLBuiltIns();
@@ -804,6 +802,6 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 
 	private SWRLAPILiteralFactory getSWRLAPILiteralFactory()
 	{
-		return this.swrlAPILiteralFactory;
+		return this.swrlapiOWLDataFactory.getSWRLAPILiteralFactory();
 	}
 }

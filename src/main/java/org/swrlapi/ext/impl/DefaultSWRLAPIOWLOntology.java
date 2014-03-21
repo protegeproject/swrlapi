@@ -19,17 +19,9 @@ import org.semanticweb.owlapi.model.SWRLDArgument;
 import org.semanticweb.owlapi.model.SWRLLiteralArgument;
 import org.semanticweb.owlapi.model.SWRLRule;
 import org.semanticweb.owlapi.model.SWRLVariable;
-import org.swrlapi.core.arguments.SQWRLCollectionBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLBuiltInArgumentFactory;
-import org.swrlapi.core.arguments.SWRLClassBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLDataPropertyBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLDatatypeBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLIndividualBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLMultiArgument;
-import org.swrlapi.core.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.ext.SWRLAPIOWLDataFactory;
 import org.swrlapi.ext.SWRLAPIOWLOntology;
@@ -76,7 +68,7 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 	}
 
 	@Override
-	public Set<SWRLAPIRule> getSWRLRules()
+	public Set<SWRLAPIRule> getSWRLAPIRules()
 	{
 		Set<SWRLAPIRule> swrlapiRules = new HashSet<SWRLAPIRule>();
 
@@ -139,42 +131,65 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 	}
 
 	/**
-	 * The {@link SWRLBuiltInArgument} interface represents the primary SWRLAPI extension point to the OWLAPI classes
-	 * representing SWRL concepts.
+	 * The {@link SWRLBuiltInArgument} interface represents the primary SWRLAPI extension point to the OWLAPI classes to
+	 * represent arguments to SWRL built-in atoms.
 	 * 
-	 * @see {@link SWRLLiteralBuiltInArgument}, {@link SWRLVariableBuiltInArgument},{@link SWRLClassBuiltInArgument},
-	 *      {@link SWRLIndividualBuiltInArgument}, {@link SWRLObjectPropertyBuiltInArgument},
-	 *      {@link SWRLDataPropertyBuiltInArgument}, {@link SWRLDataPropertyBuiltInArgument},
-	 *      {@link SWRLAnnotationPropertyBuiltInArgument}, {@link SWRLDatatypeBuiltInArgument},
-	 *      {@link SQWRLCollectionBuiltInArgument}, {@link SWRLMultiArgument}
+	 * @see SWRLBuiltInArgument, SWRLVariableBuiltInArgument, SWRLLiteralBuiltInArgument, SWRLClassBuiltInArgument,
+	 *      SWRLIndividualBuiltInArgument, SWRLObjectPropertyBuiltInArgument, SWRLDataPropertyBuiltInArgument,
+	 *      SWRLAnnotationPropertyBuiltInArgument, SWRLDatatypeBuiltInArgument, SQWRLCollectionBuiltInArgument,
+	 *      SWRLMultiBuiltInArgument
 	 */
 	private SWRLBuiltInArgument transformSWRLDArgument2SWRLBuiltInArgument(SWRLDArgument swrlDArgument)
 	{ // SWRLLiteralArgument, SWRLVariable
-		if (swrlDArgument instanceof SWRLVariable) {
-			// SWRLVariable swrlVariable = (SWRLVariable)swrlDArgument;
-			String variableName = ""; // TODO
-			SWRLVariableBuiltInArgument argument = getSWRLBuiltInArgumentFactory().getVariableBuiltInArgument(variableName);
-			return argument;
-		} else if (swrlDArgument instanceof SWRLLiteralArgument) {
+		if (swrlDArgument instanceof SWRLLiteralArgument) {
 			SWRLLiteralArgument swrlLiteralArgument = (SWRLLiteralArgument)swrlDArgument;
-			OWLLiteral literal = swrlLiteralArgument.getLiteral();
-			OWLDatatype datatype = literal.getDatatype();
-			if (isURI(datatype)) {
-				IRI iri = IRI.create(literal.getLiteral());
-				SWRLBuiltInArgument argument;
-				if (containsClassInSignature(iri)) {
-					argument = getSWRLBuiltInArgumentFactory().getClassBuiltInArgument(iri);
-				} else {
-					argument = getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(literal);
-				}
-				throw new RuntimeException("Not implemented");
-			} else {
-				SWRLLiteralBuiltInArgument argument = getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(literal);
-				return argument;
-			}
+			SWRLBuiltInArgument argument = transformSWRLLiteralArgument2SWRLBuiltInArgument(swrlLiteralArgument);
+			return argument;
+		} else if (swrlDArgument instanceof SWRLVariable) {
+			SWRLVariable swrlVariable = (SWRLVariable)swrlDArgument;
+			SWRLVariableBuiltInArgument argument = transformSWRLVariable2SWRLVariableBuiltInArgument(swrlVariable);
+			return argument;
 		} else
 			throw new RuntimeException("Unknown " + SWRLDArgument.class.getName() + " class "
 					+ swrlDArgument.getClass().getName());
+	}
+
+	private SWRLBuiltInArgument transformSWRLLiteralArgument2SWRLBuiltInArgument(SWRLLiteralArgument swrlLiteralArgument)
+	{
+		OWLLiteral literal = swrlLiteralArgument.getLiteral();
+		OWLDatatype datatype = literal.getDatatype();
+
+		if (isURI(datatype)) {
+			IRI iri = IRI.create(literal.getLiteral());
+			if (containsClassInSignature(iri)) {
+				return getSWRLBuiltInArgumentFactory().getClassBuiltInArgument(iri);
+			} else if (containsIndividualInSignature(iri)) {
+				return getSWRLBuiltInArgumentFactory().getIndividualBuiltInArgument(iri);
+			} else if (containsObjectPropertyInSignature(iri)) {
+				return getSWRLBuiltInArgumentFactory().getObjectPropertyBuiltInArgument(iri);
+			} else if (containsDataPropertyInSignature(iri)) {
+				return getSWRLBuiltInArgumentFactory().getDataPropertyBuiltInArgument(iri);
+			} else if (containsAnnotationPropertyInSignature(iri)) {
+				return getSWRLBuiltInArgumentFactory().getAnnotationPropertyBuiltInArgument(iri);
+			} else if (containsDatatypeInSignature(iri)) {
+				return getSWRLBuiltInArgumentFactory().getDatatypeBuiltInArgument(iri);
+			} else {
+				return getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(literal);
+			}
+		} else {
+			SWRLLiteralBuiltInArgument argument = getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(literal);
+			return argument;
+		}
+	}
+
+	private SWRLVariableBuiltInArgument transformSWRLVariable2SWRLVariableBuiltInArgument(SWRLVariable swrlVariable)
+	{
+		IRI iri = swrlVariable.getIRI();
+
+		// SWRLVariableBuiltInArgument argument = getSWRLBuiltInArgumentFactory().getVariableBuiltInArgument(iri);
+		SWRLVariableBuiltInArgument argument = null;
+
+		return argument;
 	}
 
 	private boolean isURI(OWLDatatype datatype)

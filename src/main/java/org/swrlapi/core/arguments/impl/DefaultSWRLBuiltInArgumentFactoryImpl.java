@@ -21,27 +21,22 @@ import org.swrlapi.core.arguments.SWRLDataPropertyBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLDatatypeBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLIndividualBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLMultiArgument;
+import org.swrlapi.core.arguments.SWRLMultiBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLVariableBuiltInArgument;
-import org.swrlapi.ext.OWLDatatypeFactory;
 import org.swrlapi.ext.OWLLiteralFactory;
-import org.swrlapi.ext.impl.DefaultOWLDatatypeFactory;
-import org.swrlapi.ext.impl.DefaultOWLLiteralFactory;
 import org.swrlapi.xsd.XSDDate;
 import org.swrlapi.xsd.XSDDateTime;
 import org.swrlapi.xsd.XSDDuration;
 import org.swrlapi.xsd.XSDTime;
 
-public class SWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumentFactory
+public class DefaultSWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumentFactory
 {
-	private final OWLDatatypeFactory owlDatatypeFactory;
 	private final OWLLiteralFactory owlLiteralFactory;
 
-	public SWRLBuiltInArgumentFactoryImpl()
+	public DefaultSWRLBuiltInArgumentFactoryImpl(OWLLiteralFactory owlLiteralFactory)
 	{
-		this.owlDatatypeFactory = new DefaultOWLDatatypeFactory();
-		this.owlLiteralFactory = new DefaultOWLLiteralFactory(this.owlDatatypeFactory);
+		this.owlLiteralFactory = owlLiteralFactory;
 	}
 
 	@Override
@@ -213,19 +208,19 @@ public class SWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumentFactor
 	}
 
 	@Override
-	public SWRLMultiArgument getMultiArgument()
+	public SWRLMultiBuiltInArgument getMultiBuiltInArgument()
 	{
-		return new SWRLMultiArgumentImpl();
+		return new SWRLMultiBuiltInArgumentImpl();
 	}
 
 	@Override
-	public SWRLMultiArgument getMultiArgument(List<SWRLBuiltInArgument> arguments)
+	public SWRLMultiBuiltInArgument getMultiBuiltInArgument(List<SWRLBuiltInArgument> arguments)
 	{
-		return new SWRLMultiArgumentImpl(arguments);
+		return new SWRLMultiBuiltInArgumentImpl(arguments);
 	}
 
 	@Override
-	public SQWRLCollectionBuiltInArgument getSQWRLCollectionArgument(String queryName, String collectionName,
+	public SQWRLCollectionBuiltInArgument getSQWRLCollectionBuiltInArgument(String queryName, String collectionName,
 			String collectionGroupID)
 	{
 		return new SQWRLCollectionBuiltInArgumentImpl(queryName, collectionName, collectionGroupID);

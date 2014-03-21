@@ -19,6 +19,8 @@ import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
  * <p>
  * It provides a method to create a {@link SWRLAPIRule}, which extends an OWLAPI {@link SWRLRule}, and access to
  * factories to create other entity types used by the SWRLAPI that have no direct equivalent in the OWLAPI.
+ * 
+ * @see SWRLAPIRule, SWRLAPIOntologyProcessor, SWRLAPIOWLOntology
  */
 public interface SWRLAPIOWLDataFactory extends OWLDataFactory
 {

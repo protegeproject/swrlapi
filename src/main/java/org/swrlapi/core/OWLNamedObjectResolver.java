@@ -15,11 +15,11 @@ import org.swrlapi.exceptions.TargetRuleEngineException;
 
 /**
  * For simplicity, SWRL rule engine implementations will typically used the prefixed names of OWL named objects. A
- * {@link SWRLOntologyProcessor} will record all the OWL named objects in an ontology together with their types. Rule
+ * {@link SWRLAPIOntologyProcessor} will record all the OWL named objects in an ontology together with their types. Rule
  * engines can then use this class to determine the type of OWL entities using their prefixed name and to map those
  * prefixed names to and from IRIs if necessary.
  * 
- * @see SWRLOntologyProcessor
+ * @see SWRLAPIOntologyProcessor
  */
 public class OWLNamedObjectResolver
 {

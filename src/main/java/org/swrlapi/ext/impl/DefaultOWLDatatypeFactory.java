@@ -9,7 +9,6 @@ import uk.ac.manchester.cs.owl.owlapi.OWLDatatypeImpl;
 
 public class DefaultOWLDatatypeFactory implements OWLDatatypeFactory
 {
-
 	@Override
 	public OWLDatatype getOWLDatatype(IRI iri)
 	{

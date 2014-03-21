@@ -25,7 +25,7 @@ import org.swrlapi.core.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLDataPropertyBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLIndividualBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLMultiArgument;
+import org.swrlapi.core.arguments.SWRLMultiBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLPropertyBuiltInArgument;
 import org.swrlapi.exceptions.BuiltInException;
@@ -36,7 +36,6 @@ import org.swrlapi.exceptions.SWRLBuiltInLibraryException;
 import org.swrlapi.ext.SWRLAPILiteral;
 import org.swrlapi.ext.SWRLAPILiteralFactory;
 import org.swrlapi.ext.SWRLAPIOWLDataFactory;
-import org.swrlapi.ext.impl.DefaultSWRLAPILiteralFactory;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 import org.swrlapi.xsd.XSDDate;
 import org.swrlapi.xsd.XSDDateTime;
@@ -52,8 +51,6 @@ import org.swrlapi.xsd.XSDTime;
 public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 {
 	private final String libraryName;
-
-	private final SWRLAPILiteralFactory swrlapiLiteralFactory;
 
 	// Bridge, rule name, built-in index, and head or body location within rule of built-in currently invoking its
 	// associated Java
@@ -72,7 +69,6 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 	public AbstractSWRLBuiltInLibrary(String libraryName)
 	{
 		this.libraryName = libraryName;
-		this.swrlapiLiteralFactory = new DefaultSWRLAPILiteralFactory();
 		this.invocationPatternID = 0L;
 		this.invocationPatternMap = new HashMap<String, Long>();
 	}
@@ -1300,7 +1296,7 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 			if (argument.isUnbound())
 				throw new BuiltInException("built-in " + builtInName + " in rule " + ruleName + " "
 						+ "returned with unbound argument ?" + argument.getVariableName());
-			else if (argument instanceof SWRLMultiArgument && ((SWRLMultiArgument)argument).hasNoArguments())
+			else if (argument instanceof SWRLMultiBuiltInArgument && ((SWRLMultiBuiltInArgument)argument).hasNoArguments())
 				throw new BuiltInException("built-in " + builtInName + " in rule " + ruleName + " "
 						+ "returned with empty multi-argument ?" + argument.getVariableName());
 		}
@@ -1321,11 +1317,11 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 		checkArgumentNumber(resultArgumentNumber, arguments);
 
 		if (isUnboundArgument(resultArgumentNumber, arguments)) {
-			SWRLMultiArgument multiArgument = createMultiArgument();
+			SWRLMultiBuiltInArgument multiBuiltInArgument = createSWRLMultiBuiltInArgument();
 			for (SWRLBuiltInArgument argument : resultArguments)
-				multiArgument.addArgument(argument);
-			arguments.get(resultArgumentNumber).setBuiltInResult(multiArgument);
-			result = !multiArgument.hasNoArguments();
+				multiBuiltInArgument.addArgument(argument);
+			arguments.get(resultArgumentNumber).setBuiltInResult(multiBuiltInArgument);
+			result = !multiBuiltInArgument.hasNoArguments();
 		} else {
 			SWRLBuiltInArgument argument = arguments.get(resultArgumentNumber);
 			result = resultArguments.contains(argument);
@@ -1672,21 +1668,21 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 	}
 
 	@Override
-	public SWRLMultiArgument createMultiArgument() throws BuiltInException
+	public SWRLMultiBuiltInArgument createSWRLMultiBuiltInArgument() throws BuiltInException
 	{
-		return getBuiltInArgumentFactory().getMultiArgument();
+		return getBuiltInArgumentFactory().getMultiBuiltInArgument();
 	}
 
 	@Override
-	public SWRLMultiArgument createMultiArgument(List<SWRLBuiltInArgument> arguments) throws BuiltInException
+	public SWRLMultiBuiltInArgument createSWRLMultiBuiltInArgument(List<SWRLBuiltInArgument> arguments) throws BuiltInException
 	{
-		return getBuiltInArgumentFactory().getMultiArgument(arguments);
+		return getBuiltInArgumentFactory().getMultiBuiltInArgument(arguments);
 	}
 
-	public SQWRLCollectionBuiltInArgument createCollectionArgument(String queryName, String collectionName,
+	public SQWRLCollectionBuiltInArgument createSQWRLCollectionBuiltInArgument(String queryName, String collectionName,
 			String collectionGroupID) throws BuiltInException
 	{
-		return getBuiltInArgumentFactory().getSQWRLCollectionArgument(queryName, collectionName, collectionGroupID);
+		return getBuiltInArgumentFactory().getSQWRLCollectionBuiltInArgument(queryName, collectionName, collectionGroupID);
 	}
 
 	protected SWRLAPIOWLDataFactory getOWLDataFactory() throws SWRLBuiltInLibraryException
@@ -1694,14 +1690,13 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 		return getBuiltInBridge().getOWLDataFactory();
 	}
 
-	protected SWRLAPILiteralFactory getSWRLAPILiteralFactory()
+	protected SWRLAPILiteralFactory getSWRLAPILiteralFactory() throws SWRLBuiltInLibraryException
 	{
-		return this.swrlapiLiteralFactory;
+		return getBuiltInBridge().getOWLDataFactory().getSWRLAPILiteralFactory();
 	}
 
 	private SWRLBuiltInArgumentFactory getBuiltInArgumentFactory() throws SWRLBuiltInLibraryException
 	{
 		return getBuiltInBridge().getOWLDataFactory().getSWRLBuiltInArgumentFactory();
 	}
-
 }

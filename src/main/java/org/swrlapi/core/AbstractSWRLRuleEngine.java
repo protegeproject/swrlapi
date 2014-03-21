@@ -28,21 +28,21 @@ public class AbstractSWRLRuleEngine implements SWRLRuleEngine
 	private final OWLOntologyManager owlOntologyManager;
 	private final SWRLAPIOWLOntology owlOntology;
 	private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
+	private final SWRLAPIOntologyProcessor swrlapiOntologyProcessor;
 	private final TargetRuleEngine targetRuleEngine;
-	private final SWRLOntologyProcessor swrlOntologyProcessor;
 	private final SWRLBuiltInBridgeController builtInBridgeController;
 	private final SWRLRuleEngineBridgeController ruleEngineBridgeController;
 	private final Set<OWLAxiom> exportedOWLAxioms; // Axioms exported to target rule engine
 
 	public AbstractSWRLRuleEngine(OWLOntologyManager ontologyManager, SWRLAPIOWLOntology owlOntology,
-			SWRLAPIOWLDataFactory swrlapiOWLDataFactory, SWRLOntologyProcessor swrlOntologyProcessor,
+			SWRLAPIOWLDataFactory swrlapiOWLDataFactory, SWRLAPIOntologyProcessor swrlapiOntologyProcessor,
 			TargetRuleEngine targetRuleEngine, SWRLRuleEngineBridgeController ruleEngineBridgeController,
 			SWRLBuiltInBridgeController builtInBridgeController) throws SWRLRuleEngineException
 	{
 		this.owlOntologyManager = ontologyManager;
 		this.owlOntology = owlOntology;
 		this.swrlapiOWLDataFactory = swrlapiOWLDataFactory;
-		this.swrlOntologyProcessor = swrlOntologyProcessor;
+		this.swrlapiOntologyProcessor = swrlapiOntologyProcessor;
 		this.targetRuleEngine = targetRuleEngine;
 		this.builtInBridgeController = builtInBridgeController;
 		this.ruleEngineBridgeController = ruleEngineBridgeController;
@@ -413,9 +413,9 @@ public class AbstractSWRLRuleEngine implements SWRLRuleEngine
 		return this.swrlapiOWLDataFactory;
 	}
 
-	private SWRLOntologyProcessor getSWRLAPIOntologyProcessor()
+	private SWRLAPIOntologyProcessor getSWRLAPIOntologyProcessor()
 	{
-		return this.swrlOntologyProcessor;
+		return this.swrlapiOntologyProcessor;
 	}
 
 	private SWRLBuiltInBridgeController getBuiltInBridgeController()
