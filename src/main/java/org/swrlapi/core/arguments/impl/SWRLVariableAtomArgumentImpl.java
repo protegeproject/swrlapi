@@ -19,7 +19,7 @@ import org.swrlapi.core.arguments.SWRLVariableAtomArgument;
 
 class SWRLVariableAtomArgumentImpl extends SWRLAtomArgumentImpl implements SWRLVariableAtomArgument
 {
-	private static final long serialVersionUID = 7541492844317921693L;
+	private static final long serialVersionUID = 1L;
 
 	private final String variableName;
 
