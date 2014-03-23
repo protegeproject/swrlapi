@@ -6,17 +6,18 @@ import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
-import org.semanticweb.owlapi.model.SWRLArgument;
+import org.semanticweb.owlapi.model.SWRLDArgument;
 import org.semanticweb.owlapi.model.SWRLRule;
+import org.swrlapi.core.arguments.SWRLBuiltInArgument;
 
 /**
  * Extends the OWLAPI's {@link OWLOntology} class with additional methods used by the SWRLAPI. Primarily the
  * {@link #getSWRLAPIRules()} method extracts {@link SWRLAPIRule} objects from an OWL ontology. This class, which
  * extends the standard OWLAPI {@link SWRLRule} class, provide the richer representation of a SWRL rule required by the
- * SWRLAPI and laos represent SQWRL queries. In particular, the SWRLAPI has a range of types extending the OWLAPI's
- * {@link SWRLArgument} interface, which represent arguments to atoms and built-in atoms.
+ * SWRLAPI and also represent SQWRL queries. In particular, the SWRLAPI has a range of types extending the OWLAPI's
+ * {@link SWRLDArgument} interface to define arguments to built-in atoms.
  * <p>
- * This extension point is defined by the {@link SWRLAtomArgument} interface. A {@link SWRLAPIOWLOntology} will
+ * This extension point is defined by the {@link SWRLBuiltInArgument} interface. A {@link SWRLAPIOWLOntology} will
  * construct SWRLAPI rules from the SWRL rules in an OWLAPI-based ontology to contain these additional types. A
  * {@link SWRLAPIOWLDataFactory} can be used to create {@link SWRLAPIRule} objects from a text-based representation of a
  * SWRL rule or SQWRL query.
@@ -27,7 +28,7 @@ import org.semanticweb.owlapi.model.SWRLRule;
  * performed more efficiently. The {@link hasOntologyChanged} method can be used by rule engines to avoid unnecessary
  * regeneration of knowledge.
  * 
- * @see SWRLAtomArgument, SWRLAPIOntologyProcessor, SWRLAPIOWLDataFactory
+ * @see SWRLBuiltInArgument, SWRLAPIOntologyProcessor, SWRLAPIOWLDataFactory
  */
 public interface SWRLAPIOWLOntology extends OWLOntology
 {

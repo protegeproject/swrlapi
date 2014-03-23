@@ -163,7 +163,7 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 	 * The {@link SWRLBuiltInArgument} interface represents the primary SWRLAPI extension point to the OWLAPI classes to
 	 * represent arguments to SWRL built-in atoms.
 	 * 
-	 * @see SWRLBuiltInArgument, SWRLVariableBuiltInArgument, SWRLLiteralArgument, SWRLDArgument
+	 * @see SWRLBuiltInArgument, SWRLLiteralArgument, SWRLDArgument
 	 */
 	private SWRLBuiltInArgument convertSWRLDArgument2SWRLBuiltInArgument(SWRLDArgument swrlDArgument)
 	{
@@ -174,6 +174,8 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 		} else if (swrlDArgument instanceof SWRLVariable) {
 			SWRLVariable swrlVariable = (SWRLVariable)swrlDArgument;
 			SWRLVariableBuiltInArgument argument = transformSWRLVariable2SWRLVariableBuiltInArgument(swrlVariable);
+
+			getOWLIRIResolver().recordSWRLVariable(swrlVariable);
 			return argument;
 		} else
 			throw new RuntimeException("Unknown " + SWRLDArgument.class.getName() + " class "
