@@ -3,7 +3,6 @@ package org.swrlapi.core;
 import java.util.List;
 
 import org.semanticweb.owlapi.model.OWLAxiom;
-import org.swrlapi.core.arguments.SWRLAtomArgumentFactory;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.exceptions.BuiltInException;
@@ -41,13 +40,11 @@ public interface SWRLRuleEngineBridge
 
 	SWRLBuiltInArgumentFactory getSWRLBuiltInArgumentFactory();
 
-	SWRLAtomArgumentFactory getSWRLAtomArgumentFactory();
-
 	/**
 	 * A named object resolver can be used by a target rule engine to determine the type of a named OWL entity given its
 	 * URI or prefixed name. It can also be used to get the URI of an OWL named entity using its prefixed name.
 	 */
-	OWLNamedObjectResolver getOWLNamedObjectResolver();
+	OWLIRIResolver getOWLIRIResolver();
 
 	/**
 	 * A class expression resolver can be used by a target rule engine to resolve OWL class expressions.

@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
+import org.semanticweb.owlapi.model.SWRLVariable;
 import org.swrlapi.core.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLDataPropertyBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLNamedIndividualBuiltInArgument;
@@ -21,24 +22,27 @@ import org.swrlapi.exceptions.TargetRuleEngineException;
  * 
  * @see SWRLAPIOntologyProcessor
  */
-public class OWLNamedObjectResolver
+public class OWLIRIResolver
 {
 	private final Map<String, IRI> prefixedName2IRI;
 	private final Map<IRI, String> iri2PrefixedName;
+
+	private final Set<String> variablePrefixedNames;
 	private final Set<String> classPrefixedNames;
-	private final Set<String> individualPrefixedNames;
+	private final Set<String> namedIndividualPrefixedNames;
 	private final Set<String> objectPropertyPrefixedNames;
 	private final Set<String> dataPropertyPrefixedNames;
 	private final Set<String> annotationPropertyPrefixedNames;
 	private final Set<String> datatypePrefixedNames;
 
-	public OWLNamedObjectResolver()
+	public OWLIRIResolver()
 	{
 		this.prefixedName2IRI = new HashMap<String, IRI>();
 		this.iri2PrefixedName = new HashMap<IRI, String>();
 
+		this.variablePrefixedNames = new HashSet<String>();
 		this.classPrefixedNames = new HashSet<String>();
-		this.individualPrefixedNames = new HashSet<String>();
+		this.namedIndividualPrefixedNames = new HashSet<String>();
 		this.objectPropertyPrefixedNames = new HashSet<String>();
 		this.dataPropertyPrefixedNames = new HashSet<String>();
 		this.annotationPropertyPrefixedNames = new HashSet<String>();
@@ -49,8 +53,9 @@ public class OWLNamedObjectResolver
 	{
 		this.prefixedName2IRI.clear();
 		this.iri2PrefixedName.clear();
+		this.variablePrefixedNames.clear();
 		this.classPrefixedNames.clear();
-		this.individualPrefixedNames.clear();
+		this.namedIndividualPrefixedNames.clear();
 		this.objectPropertyPrefixedNames.clear();
 		this.dataPropertyPrefixedNames.clear();
 		this.annotationPropertyPrefixedNames.clear();
@@ -73,10 +78,18 @@ public class OWLNamedObjectResolver
 			throw new RuntimeException("could not find IRI for prefixed name " + prefixedName);
 	}
 
+	public void recordSWRLVariable(SWRLVariable variable)
+	{
+		IRI iri = variable.getIRI();
+		String variableName = getPrefixedNameFromIRI(iri);
+		this.prefixedName2IRI.put(variableName, iri);
+		this.variablePrefixedNames.add(variableName);
+	}
+
 	public void recordOWLClass(OWLEntity cls)
 	{
 		IRI iri = cls.getIRI();
-		String prefixedName = getPrefixedName(iri);
+		String prefixedName = getPrefixedNameFromIRI(iri);
 
 		recordPrefixedName2IRIMapping(prefixedName, iri);
 
@@ -86,17 +99,17 @@ public class OWLNamedObjectResolver
 	public void recordOWLNamedIndividual(OWLEntity individual)
 	{
 		IRI iri = individual.getIRI();
-		String prefixedName = getPrefixedName(iri);
+		String prefixedName = getPrefixedNameFromIRI(iri);
 
 		recordPrefixedName2IRIMapping(prefixedName, iri);
 
-		this.individualPrefixedNames.add(prefixedName);
+		this.namedIndividualPrefixedNames.add(prefixedName);
 	}
 
 	public void recordOWLObjectProperty(OWLEntity property)
 	{
 		IRI iri = property.getIRI();
-		String prefixedName = getPrefixedName(iri);
+		String prefixedName = getPrefixedNameFromIRI(iri);
 
 		recordPrefixedName2IRIMapping(prefixedName, iri);
 
@@ -106,7 +119,7 @@ public class OWLNamedObjectResolver
 	public void recordOWLDataProperty(OWLEntity property)
 	{
 		IRI iri = property.getIRI();
-		String prefixedName = getPrefixedName(iri);
+		String prefixedName = getPrefixedNameFromIRI(iri);
 
 		recordPrefixedName2IRIMapping(prefixedName, iri);
 
@@ -116,7 +129,7 @@ public class OWLNamedObjectResolver
 	public void recordOWLAnnotationProperty(OWLEntity property)
 	{
 		IRI iri = property.getIRI();
-		String prefixedName = getPrefixedName(iri);
+		String prefixedName = getPrefixedNameFromIRI(iri);
 
 		recordPrefixedName2IRIMapping(prefixedName, iri);
 
@@ -126,7 +139,7 @@ public class OWLNamedObjectResolver
 	public void recordOWLDatatype(OWLEntity datatype)
 	{
 		IRI iri = datatype.getIRI();
-		String prefixedName = getPrefixedName(iri);
+		String prefixedName = getPrefixedNameFromIRI(iri);
 
 		recordPrefixedName2IRIMapping(prefixedName, iri);
 
@@ -136,7 +149,7 @@ public class OWLNamedObjectResolver
 	public void record(SWRLClassBuiltInArgument classArgument)
 	{
 		IRI iri = classArgument.getIRI();
-		String prefixedName = getPrefixedName(iri);
+		String prefixedName = getPrefixedNameFromIRI(iri);
 
 		recordPrefixedName2IRIMapping(prefixedName, iri);
 		this.classPrefixedNames.add(prefixedName);
@@ -145,16 +158,16 @@ public class OWLNamedObjectResolver
 	public void record(SWRLNamedIndividualBuiltInArgument individualArgument)
 	{
 		IRI iri = individualArgument.getIRI();
-		String prefixedName = getPrefixedName(iri);
+		String prefixedName = getPrefixedNameFromIRI(iri);
 
 		recordPrefixedName2IRIMapping(prefixedName, iri);
-		this.individualPrefixedNames.add(prefixedName);
+		this.namedIndividualPrefixedNames.add(prefixedName);
 	}
 
 	public void record(SWRLObjectPropertyBuiltInArgument propertyArgument)
 	{
 		IRI iri = propertyArgument.getIRI();
-		String prefixedName = getPrefixedName(iri);
+		String prefixedName = getPrefixedNameFromIRI(iri);
 
 		recordPrefixedName2IRIMapping(prefixedName, iri);
 		this.objectPropertyPrefixedNames.add(prefixedName);
@@ -163,7 +176,7 @@ public class OWLNamedObjectResolver
 	public void record(SWRLDataPropertyBuiltInArgument propertyArgument)
 	{
 		IRI iri = propertyArgument.getIRI();
-		String prefixedName = getPrefixedName(iri);
+		String prefixedName = getPrefixedNameFromIRI(iri);
 
 		recordPrefixedName2IRIMapping(prefixedName, iri);
 		this.dataPropertyPrefixedNames.add(prefixedName);
@@ -184,7 +197,7 @@ public class OWLNamedObjectResolver
 
 	public boolean isOWLNamedIndividual(String prefixedName)
 	{
-		return this.individualPrefixedNames.contains(prefixedName);
+		return this.namedIndividualPrefixedNames.contains(prefixedName);
 	}
 
 	public boolean isOWLObjectProperty(String prefixedName)
@@ -207,7 +220,7 @@ public class OWLNamedObjectResolver
 		return this.datatypePrefixedNames.contains(prefixedName);
 	}
 
-	private String getPrefixedName(IRI iri)
+	private String getPrefixedNameFromIRI(IRI iri)
 	{
 		throw new RuntimeException("Not implemented");
 	}

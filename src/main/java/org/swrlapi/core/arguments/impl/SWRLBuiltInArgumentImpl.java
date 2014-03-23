@@ -17,7 +17,7 @@ import org.semanticweb.owlapi.model.SWRLObjectVisitor;
 import org.semanticweb.owlapi.model.SWRLObjectVisitorEx;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
 
-abstract class SWRLBuiltInArgumentImpl extends SWRLAtomArgumentImpl implements SWRLBuiltInArgument
+abstract class SWRLBuiltInArgumentImpl implements SWRLBuiltInArgument
 {
 	private static final long serialVersionUID = 1L;
 

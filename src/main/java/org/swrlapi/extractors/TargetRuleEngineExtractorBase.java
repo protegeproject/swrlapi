@@ -3,9 +3,8 @@ package org.swrlapi.extractors;
 import org.semanticweb.owlapi.model.IRI;
 import org.swrlapi.converters.TargetRuleEngineConverterBase;
 import org.swrlapi.core.OWLClassExpressionResolver;
-import org.swrlapi.core.OWLNamedObjectResolver;
+import org.swrlapi.core.OWLIRIResolver;
 import org.swrlapi.core.SWRLRuleEngineBridge;
-import org.swrlapi.core.arguments.SWRLAtomArgumentFactory;
 import org.swrlapi.core.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.exceptions.TargetRuleEngineException;
 import org.swrlapi.ext.OWLDatatypeFactory;
@@ -33,12 +32,7 @@ public abstract class TargetRuleEngineExtractorBase implements TargetRuleEngineE
 		return getBridge().getSWRLBuiltInArgumentFactory();
 	}
 
-	protected SWRLAtomArgumentFactory getSWRLAtomArgumentFactory()
-	{
-		return getBridge().getSWRLAtomArgumentFactory();
-	}
-
-	protected SWRLAPIOWLDataFactory getOWLDataFactory()
+	protected SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory()
 	{
 		return getBridge().getOWLDataFactory();
 	}
@@ -58,14 +52,14 @@ public abstract class TargetRuleEngineExtractorBase implements TargetRuleEngineE
 		return getBridge().getOWLClassExpressionResolver();
 	}
 
-	protected OWLNamedObjectResolver getOWLNamedObjectResolver()
+	protected OWLIRIResolver getOWLIRIResolver()
 	{
-		return getBridge().getOWLNamedObjectResolver();
+		return getBridge().getOWLIRIResolver();
 	}
 
 	protected IRI getIRI(String id) throws TargetRuleEngineException
 	{
-		return getOWLNamedObjectResolver().prefixedName2IRI(id);
+		return getOWLIRIResolver().prefixedName2IRI(id);
 	}
 
 	private SWRLRuleEngineBridge getBridge()

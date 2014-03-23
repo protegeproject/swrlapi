@@ -4,7 +4,8 @@ import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.swrlapi.core.arguments.SWRLNamedIndividualBuiltInArgument;
 
-class SWRLNamedIndividualBuiltInArgumentImpl extends SWRLNamedBuiltInArgumentImpl implements SWRLNamedIndividualBuiltInArgument
+class SWRLNamedIndividualBuiltInArgumentImpl extends SWRLNamedBuiltInArgumentImpl implements
+		SWRLNamedIndividualBuiltInArgument
 {
 	private static final long serialVersionUID = 1L;
 

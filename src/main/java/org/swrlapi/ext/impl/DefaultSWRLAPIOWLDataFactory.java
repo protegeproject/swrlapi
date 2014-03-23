@@ -7,10 +7,8 @@ import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
-import org.swrlapi.core.OWLNamedObjectResolver;
-import org.swrlapi.core.arguments.SWRLAtomArgumentFactory;
+import org.swrlapi.core.OWLIRIResolver;
 import org.swrlapi.core.arguments.SWRLBuiltInArgumentFactory;
-import org.swrlapi.core.arguments.impl.DefaultSWRLAtomArgumentFactory;
 import org.swrlapi.core.arguments.impl.DefaultSWRLBuiltInArgumentFactoryImpl;
 import org.swrlapi.ext.OWLDatatypeFactory;
 import org.swrlapi.ext.OWLLiteralFactory;
@@ -29,18 +27,16 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
 	private final OWLDatatypeFactory owlDatatypeFactory;
 	private final OWLLiteralFactory owlLiteralFactory;
 	private final SWRLAPILiteralFactory swrlAPILiteralFactory;
-	private final SWRLAtomArgumentFactory swrlAtomArgumentFactory;
 	private final SWRLBuiltInArgumentFactory swrlBuiltInArgumentFactory;
 	private final SQWRLResultValueFactory sqwrlResultValueFactory;
 
-	public DefaultSWRLAPIOWLDataFactory(OWLNamedObjectResolver namedObjectResolver)
+	public DefaultSWRLAPIOWLDataFactory(OWLIRIResolver iriResolver)
 	{
 		this.owlDatatypeFactory = new DefaultOWLDatatypeFactory();
 		this.owlLiteralFactory = new DefaultOWLLiteralFactory(this.owlDatatypeFactory);
 		this.swrlAPILiteralFactory = new DefaultSWRLAPILiteralFactory(this.owlLiteralFactory);
-		this.swrlAtomArgumentFactory = new DefaultSWRLAtomArgumentFactory(this.owlLiteralFactory);
 		this.swrlBuiltInArgumentFactory = new DefaultSWRLBuiltInArgumentFactoryImpl(this.owlLiteralFactory);
-		this.sqwrlResultValueFactory = new DefaultSQWRLResultValueFactory(namedObjectResolver, this.owlLiteralFactory);
+		this.sqwrlResultValueFactory = new DefaultSQWRLResultValueFactory(iriResolver, this.owlLiteralFactory);
 	}
 
 	@Override
@@ -109,12 +105,6 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
 	public OWLDeclarationAxiom getOWLDatatypeDeclarationAxiom(OWLDatatype datatype)
 	{
 		return getOWLDeclarationAxiom(datatype);
-	}
-
-	@Override
-	public SWRLAtomArgumentFactory getSWRLAtomArgumentFactory()
-	{
-		return this.swrlAtomArgumentFactory;
 	}
 
 	@Override

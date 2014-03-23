@@ -8,11 +8,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.SWRLArgument;
 import org.semanticweb.owlapi.model.SWRLAtom;
+import org.semanticweb.owlapi.model.SWRLVariable;
+import org.swrlapi.core.OWLIRIResolver;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLVariableAtomArgument;
 import org.swrlapi.core.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.ext.SWRLAPIBuiltInAtom;
 import org.swrlapi.ext.SWRLAPILiteral;
@@ -31,17 +33,22 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 																																										// arguments; applies only to
 																																										// grouped collections
 	private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
+	private final OWLIRIResolver iriResolver;
+
 	private boolean active; // Like a SWRLRule, a SQWRL query can also be inactive.
 
 	public DefaultSQWRLQuery(String queryName, List<SWRLAtom> bodyAtoms, List<SWRLAtom> headAtoms,
-			SWRLAPIOWLDataFactory swrlapiOWLDataFactory) throws SQWRLException
+			SWRLAPIOWLDataFactory swrlapiOWLDataFactory, OWLIRIResolver iriResolver) throws SQWRLException
 	{
 		this.queryName = queryName;
 		this.bodyAtoms = bodyAtoms;
 		this.headAtoms = headAtoms;
-		this.swrlapiOWLDataFactory = swrlapiOWLDataFactory;
 		this.sqwrlResult = new DefaultSQWRLResult(swrlapiOWLDataFactory.getSQWRLResultValueFactory());
 		this.collectionGroupArgumentsMap = new HashMap<String, List<SWRLBuiltInArgument>>();
+
+		this.swrlapiOWLDataFactory = swrlapiOWLDataFactory;
+		this.iriResolver = iriResolver;
+
 		this.active = false;
 
 		processSQWRLBuiltIns();
@@ -784,9 +791,11 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		Set<String> referencedVariableNames = new HashSet<String>();
 
 		for (SWRLArgument argument : atom.getAllArguments()) {
-			if (argument instanceof SWRLVariableAtomArgument) {
-				SWRLVariableAtomArgument variableAtomArgument = (SWRLVariableAtomArgument)argument;
-				referencedVariableNames.add(variableAtomArgument.getVariableName());
+			if (argument instanceof SWRLVariable) {
+				SWRLVariable variable = (SWRLVariable)argument;
+				IRI iri = variable.getIRI();
+				String variableName = getOWLIRIResolver().iri2PrefixedName(iri); // TODO
+				referencedVariableNames.add(variableName);
 			} else if (argument instanceof SWRLVariableBuiltInArgument) {
 				SWRLVariableBuiltInArgument variableBuiltInArgument = (SWRLVariableBuiltInArgument)argument;
 				referencedVariableNames.add(variableBuiltInArgument.getVariableName());
@@ -803,5 +812,10 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	private SWRLAPILiteralFactory getSWRLAPILiteralFactory()
 	{
 		return this.swrlapiOWLDataFactory.getSWRLAPILiteralFactory();
+	}
+
+	private OWLIRIResolver getOWLIRIResolver()
+	{
+		return this.iriResolver;
 	}
 }

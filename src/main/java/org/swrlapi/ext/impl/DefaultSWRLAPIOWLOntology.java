@@ -7,7 +7,6 @@ import java.util.Set;
 
 import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.IRI;
-import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
@@ -16,23 +15,16 @@ import org.semanticweb.owlapi.model.OWLOntologyID;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.SWRLAtom;
 import org.semanticweb.owlapi.model.SWRLBuiltInAtom;
-import org.semanticweb.owlapi.model.SWRLClassAtom;
 import org.semanticweb.owlapi.model.SWRLDArgument;
-import org.semanticweb.owlapi.model.SWRLDataPropertyAtom;
-import org.semanticweb.owlapi.model.SWRLDataRangeAtom;
-import org.semanticweb.owlapi.model.SWRLDifferentIndividualsAtom;
-import org.semanticweb.owlapi.model.SWRLIArgument;
 import org.semanticweb.owlapi.model.SWRLLiteralArgument;
-import org.semanticweb.owlapi.model.SWRLObjectPropertyAtom;
 import org.semanticweb.owlapi.model.SWRLPredicate;
 import org.semanticweb.owlapi.model.SWRLRule;
-import org.semanticweb.owlapi.model.SWRLSameIndividualAtom;
 import org.semanticweb.owlapi.model.SWRLVariable;
 import org.semanticweb.owlapi.vocab.OWL2Datatype;
+import org.swrlapi.core.OWLIRIResolver;
 import org.swrlapi.core.arguments.SQWRLCollectionBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLBuiltInArgumentFactory;
-import org.swrlapi.core.arguments.SWRLClassAtomArgument;
 import org.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLMultiValueBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLVariableBuiltInArgument;
@@ -47,13 +39,15 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 	private static final long serialVersionUID = 1L;
 
 	private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
+	private final OWLIRIResolver iriResolver;
 
 	public DefaultSWRLAPIOWLOntology(OWLOntologyManager manager, OWLOntologyID ontologyID,
-			SWRLAPIOWLDataFactory swrlapiOWLDataFactory)
+			SWRLAPIOWLDataFactory swrlapiOWLDataFactory, OWLIRIResolver iriResolver)
 	{
 		super(manager, ontologyID);
 
 		this.swrlapiOWLDataFactory = swrlapiOWLDataFactory;
+		this.iriResolver = iriResolver;
 	}
 
 	@Override
@@ -119,74 +113,30 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 		List<SWRLAtom> swrlapiBodyAtoms = new ArrayList<SWRLAtom>();
 		List<SWRLAtom> swrlapiHeadAtoms = new ArrayList<SWRLAtom>();
 
-		for (SWRLAtom owlapiAtom : owlapiRule.getBody()) {
-			SWRLAtom swrlapiAtom = convertOWLAPISWRLAtom2SWRLAPIAtom(owlapiAtom);
-			swrlapiBodyAtoms.add(swrlapiAtom);
+		for (SWRLAtom atom : owlapiRule.getBody()) {
+			if (isSWRLBuiltInAtom(atom)) {
+				SWRLBuiltInAtom builtInAtom = (SWRLBuiltInAtom)atom;
+				List<SWRLDArgument> swrlDArguments = builtInAtom.getArguments();
+				List<SWRLDArgument> swrlBuiltInArguments = convertSWRLDArguments2SWRLBuiltInArguments(swrlDArguments);
+				SWRLBuiltInAtom swrlapiAtom = getSWRLAPIOWLDataFactory().getSWRLBuiltInAtom(builtInAtom.getPredicate(),
+						swrlBuiltInArguments);
+				swrlapiBodyAtoms.add(swrlapiAtom);
+			} else
+				swrlapiBodyAtoms.add(atom);
 		}
 
-		for (SWRLAtom owlapiAtom : owlapiRule.getHead()) {
-			SWRLAtom swrlapiAtom = convertOWLAPISWRLAtom2SWRLAPIAtom(owlapiAtom);
-			swrlapiHeadAtoms.add(swrlapiAtom);
+		for (SWRLAtom atom : owlapiRule.getHead()) {
+			if (isSWRLBuiltInAtom(atom)) {
+				SWRLBuiltInAtom builtInAtom = (SWRLBuiltInAtom)atom;
+				List<SWRLDArgument> swrlDArguments = builtInAtom.getArguments();
+				List<SWRLDArgument> swrlBuiltInArguments = convertSWRLDArguments2SWRLBuiltInArguments(swrlDArguments);
+				SWRLBuiltInAtom swrlapiAtom = getSWRLAPIOWLDataFactory().getSWRLBuiltInAtom(builtInAtom.getPredicate(),
+						swrlBuiltInArguments);
+				swrlapiHeadAtoms.add(swrlapiAtom);
+			} else
+				swrlapiHeadAtoms.add(atom);
 		}
-
-		return new DefaultSWRLAPIRule(ruleName, swrlapiBodyAtoms, swrlapiHeadAtoms);
-	}
-
-	private SWRLAtom convertOWLAPISWRLAtom2SWRLAPIAtom(SWRLAtom atom)
-	{ // TODO Use SWRLObjectVisitor
-		if (isSWRLBuiltInAtom(atom)) {
-			SWRLBuiltInAtom owlapiBuiltInAtom = (SWRLBuiltInAtom)atom;
-			List<SWRLDArgument> swrlDArguments = owlapiBuiltInAtom.getArguments();
-			List<SWRLDArgument> swrlBuiltInArguments = convertSWRLDArguments2SWRLBuiltInArguments(swrlDArguments);
-			SWRLBuiltInAtom swrlapiAtom = getSWRLAPIOWLDataFactory().getSWRLBuiltInAtom(owlapiBuiltInAtom.getPredicate(),
-					swrlBuiltInArguments);
-			return swrlapiAtom;
-		} else if (atom instanceof SWRLClassAtom) {
-			SWRLClassAtom owlapiAtom = (SWRLClassAtom)atom;
-			OWLClassExpression owlapiPredicate = owlapiAtom.getPredicate();
-			SWRLIArgument owlapiArgument = owlapiAtom.getArgument();
-			SWRLClassAtomArgument swrlapiArgument = null;
-			SWRLAtom swrlapiAtom = null;
-			return swrlapiAtom;
-		} else if (atom instanceof SWRLDataPropertyAtom) {
-			SWRLDataPropertyAtom owlapiAtom = (SWRLDataPropertyAtom)atom;
-			SWRLAtom swrlapiAtom = null;
-			return swrlapiAtom;
-		} else if (atom instanceof SWRLObjectPropertyAtom) {
-			SWRLObjectPropertyAtom owlapiAtom = (SWRLObjectPropertyAtom)atom;
-			SWRLAtom swrlapiAtom = null;
-			return swrlapiAtom;
-		} else if (atom instanceof SWRLSameIndividualAtom) {
-			SWRLSameIndividualAtom owlapiAtom = (SWRLSameIndividualAtom)atom;
-			SWRLAtom swrlapiAtom = null;
-			return swrlapiAtom;
-		} else if (atom instanceof SWRLDifferentIndividualsAtom) {
-			SWRLDifferentIndividualsAtom owlapiAtom = (SWRLDifferentIndividualsAtom)atom;
-			SWRLAtom swrlapiAtom = null;
-			return swrlapiAtom;
-		} else if (atom instanceof SWRLDataRangeAtom) {
-			throw new RuntimeException("SWRL data range atoms not implemented by the SWRLAPI");
-		} else
-			throw new RuntimeException("Unexpected" + SWRLAtom.class.getName() + " class " + atom.getClass().getName());
-	}
-
-	private boolean isSWRLBuiltInAtom(SWRLAtom atom)
-	{
-		if (atom instanceof SWRLBuiltInAtom)
-			return true;
-		else {
-			SWRLPredicate predicate = atom.getPredicate();
-			if (predicate instanceof IRI) {
-				IRI iri = (IRI)predicate;
-				return isSWRLBuiltIn(iri);
-			}
-			return false;
-		}
-	}
-
-	private boolean isSWRLBuiltIn(IRI iri)
-	{
-		throw new RuntimeException("isSWRLBuiltIn not implemented");
+		return new DefaultSWRLAPIRule(ruleName, swrlapiBodyAtoms, swrlapiHeadAtoms, getOWLIRIResolver());
 	}
 
 	/**
@@ -232,17 +182,17 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 
 	/**
 	 * The OWLAPI permits only variable and literal arguments to built-ins, which conforms with the SWRL Specification.
-	 * The SWRLAPI also permits OWL named objects (classes, named individuals, properties, and datatypes) as arguments. In
-	 * order to support these additional argument types in a Specification-conformant way, the SWRLAPI treats URI literal
-	 * arguments specially. It a URI literal argument is passed to a built-in we determine if it refers to an OWL named
-	 * object in the active ontology and if so we create specific SWRLAPI built-in argument types for it.
+	 * The SWRLAPI also permits OWL classes, individuals, properties, and datatypes as arguments. In order to support
+	 * these additional argument types in a Specification-conformant way, the SWRLAPI treats URI literal arguments
+	 * specially. It a URI literal argument is passed to a built-in we determine if it refers to an OWL named object in
+	 * the active ontology and if so we create specific SWRLAPI built-in argument types for it.
 	 * <p>
 	 * The SWRLAPI allows SQWRL collection built-in arguments (represented by a {@link SQWRLCollectionBuiltInArgument})
 	 * and multi-value variables (represented by a {@link SWRLMultiValueBuiltInArgument}). These two argument types are
 	 * not instantiated directly as built-in argument types. They are created at runtime during rule execution and passed
 	 * as result values in SWRL variable built-in arguments.
 	 * 
-	 * @see SWRLLiteralBuiltInArgument, SWRLClassBuiltInArgument, SWRLNamedIndividualBuiltInArgument,
+	 * @see SWRLLiteralBuiltInArgument, SWRLClassBuiltInArgument, SWRLIndividualBuiltInArgument,
 	 *      SWRLObjectPropertyBuiltInArgument, SWRLDataPropertyBuiltInArgument, SWRLAnnotationPropertyBuiltInArgument,
 	 *      SWRLDatatypeBuiltInArgument, SQWRLCollectionBuiltInArgument, SWRLMultiValueBuiltInArgument
 	 */
@@ -277,16 +227,30 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 	private SWRLVariableBuiltInArgument transformSWRLVariable2SWRLVariableBuiltInArgument(SWRLVariable swrlVariable)
 	{
 		IRI iri = swrlVariable.getIRI();
-		String variableName = iri2ShortName(iri);
+		String variableName = getOWLIRIResolver().iri2PrefixedName(iri);
 
 		SWRLVariableBuiltInArgument argument = getSWRLBuiltInArgumentFactory().getVariableBuiltInArgument(variableName);
 
 		return argument;
 	}
 
-	private String iri2ShortName(IRI iri)
+	private boolean isSWRLBuiltInAtom(SWRLAtom atom) // TODO
 	{
-		throw new RuntimeException("iri2ShortName not implemented");
+		if (atom instanceof SWRLBuiltInAtom)
+			return true;
+		else {
+			SWRLPredicate predicate = atom.getPredicate();
+			if (predicate instanceof IRI) {
+				IRI iri = (IRI)predicate;
+				return isSWRLBuiltIn(iri);
+			}
+			return false;
+		}
+	}
+
+	private boolean isSWRLBuiltIn(IRI iri)
+	{
+		throw new RuntimeException("isSWRLBuiltIn not implemented");
 	}
 
 	private boolean isURI(OWLDatatype datatype)
@@ -298,6 +262,11 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 	{
 		return this.swrlapiOWLDataFactory;
 	}
+
+	private OWLIRIResolver getOWLIRIResolver()
+	{
+		return this.iriResolver;
+	};
 
 	private SWRLBuiltInArgumentFactory getSWRLBuiltInArgumentFactory()
 	{

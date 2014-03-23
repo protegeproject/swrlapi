@@ -37,10 +37,10 @@ public interface SWRLBuiltInBridge
 	SWRLAPIOWLDataFactory getOWLDataFactory();
 
 	/**
-	 * All named objects are recorded by a {@link OWLNamedObjectResolver}. If a built-in injects a named object it should
+	 * All named objects are recorded by a {@link OWLIRIResolver}. If a built-in injects a named object it should
 	 * also record it with this resolver.
 	 */
-	OWLNamedObjectResolver getOWLNamedObjectResolver();
+	OWLIRIResolver getOWLIRIResolver();
 
 	/**
 	 * This call can be used by built-ins to access the current active ontology. In general, built-ins should not directly

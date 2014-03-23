@@ -6,7 +6,6 @@ import java.util.Set;
 import org.semanticweb.owlapi.model.SWRLArgument;
 import org.semanticweb.owlapi.model.SWRLAtom;
 import org.semanticweb.owlapi.model.SWRLRule;
-import org.swrlapi.core.arguments.SWRLAtomArgument;
 
 /**
  * SWRLAPI representation of a SWRL rule. Extends the OWLAPI's {@link SWRLRule} with additional functionality. In

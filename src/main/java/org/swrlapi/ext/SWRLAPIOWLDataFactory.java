@@ -9,7 +9,6 @@ import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.SWRLRule;
-import org.swrlapi.core.arguments.SWRLAtomArgumentFactory;
 import org.swrlapi.core.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 
@@ -27,8 +26,6 @@ public interface SWRLAPIOWLDataFactory extends OWLDataFactory
 	SWRLAPIRule getSWRLRule(String ruleName, String ruleText); // Also SQWRL query
 
 	SWRLBuiltInArgumentFactory getSWRLBuiltInArgumentFactory();
-
-	SWRLAtomArgumentFactory getSWRLAtomArgumentFactory();
 
 	OWLDatatypeFactory getOWLDatatypeFactory();
 

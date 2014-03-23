@@ -5,12 +5,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.SWRLArgument;
 import org.semanticweb.owlapi.model.SWRLAtom;
 import org.semanticweb.owlapi.model.SWRLClassAtom;
+import org.semanticweb.owlapi.model.SWRLVariable;
+import org.swrlapi.core.OWLIRIResolver;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLVariableAtomArgument;
 import org.swrlapi.core.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.ext.SWRLAPIBuiltInAtom;
 import org.swrlapi.ext.SWRLAPIRule;
@@ -25,13 +27,18 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 	private List<SWRLAtom> bodyAtoms; // Body atoms can be reorganized during processing
 	private final List<SWRLAtom> headAtoms;
 
-	public DefaultSWRLAPIRule(String ruleName, List<? extends SWRLAtom> bodyAtoms, List<? extends SWRLAtom> headAtoms)
+	private final OWLIRIResolver iriResolver;
+
+	public DefaultSWRLAPIRule(String ruleName, List<? extends SWRLAtom> bodyAtoms, List<? extends SWRLAtom> headAtoms,
+			OWLIRIResolver iriResolver)
 	{
 		// TODO Rule name
 		super(new HashSet<SWRLAtom>(bodyAtoms), new HashSet<SWRLAtom>(headAtoms), new HashSet<OWLAnnotation>());
 		this.ruleName = ruleName;
 		this.bodyAtoms = new ArrayList<SWRLAtom>(bodyAtoms);
 		this.headAtoms = new ArrayList<SWRLAtom>(headAtoms);
+
+		this.iriResolver = iriResolver;
 
 		processUnboundBuiltInArguments();
 	}
@@ -199,14 +206,21 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 		Set<String> referencedVariableNames = new HashSet<String>();
 
 		for (SWRLArgument argument : atom.getAllArguments()) {
-			if (argument instanceof SWRLVariableAtomArgument) {
-				SWRLVariableAtomArgument variableAtomArgument = (SWRLVariableAtomArgument)argument;
-				referencedVariableNames.add(variableAtomArgument.getVariableName());
+			if (argument instanceof SWRLVariable) {
+				SWRLVariable variable = (SWRLVariable)argument;
+				IRI iri = variable.getIRI();
+				String variableName = getOWLIRIResolver().iri2PrefixedName(iri);
+				referencedVariableNames.add(variableName);
 			} else if (argument instanceof SWRLVariableBuiltInArgument) {
 				SWRLVariableBuiltInArgument variableBuiltInArgument = (SWRLVariableBuiltInArgument)argument;
 				referencedVariableNames.add(variableBuiltInArgument.getVariableName());
 			}
 		}
 		return referencedVariableNames;
+	}
+
+	private OWLIRIResolver getOWLIRIResolver()
+	{
+		return this.iriResolver;
 	}
 }

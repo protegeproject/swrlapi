@@ -7,7 +7,6 @@ import java.util.Set;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.swrlapi.builtins.SWRLBuiltInLibraryManager;
-import org.swrlapi.core.arguments.SWRLAtomArgumentFactory;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.exceptions.BuiltInException;
@@ -41,7 +40,6 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 	private final OWLLiteralFactory owlLiteralFactory;
 	private final SWRLAPILiteralFactory swrlAPILiteralFactory;
 	private final SWRLBuiltInArgumentFactory swrlBuiltInArgumentFactory;
-	private final SWRLAtomArgumentFactory swrlAtomArgumentFactory;
 	private final OWLClassExpressionResolver classExpressionResolver;
 	private final OWLPropertyExpressionResolver propertyExpressionResolver;
 	private final OWL2RLPersistenceLayer owl2RLPersistenceLayer;
@@ -76,7 +74,6 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 		this.owlLiteralFactory = this.dataFactory.getOWLLiteralFactory();
 		this.swrlAPILiteralFactory = this.dataFactory.getSWRLAPILiteralFactory();
 		this.swrlBuiltInArgumentFactory = this.dataFactory.getSWRLBuiltInArgumentFactory();
-		this.swrlAtomArgumentFactory = this.dataFactory.getSWRLAtomArgumentFactory();
 
 		this.classExpressionResolver = new OWLClassExpressionResolver();
 		this.propertyExpressionResolver = new OWLPropertyExpressionResolver();
@@ -122,9 +119,9 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 	}
 
 	@Override
-	public OWLNamedObjectResolver getOWLNamedObjectResolver()
+	public OWLIRIResolver getOWLIRIResolver()
 	{
-		return this.swrlapiOntologyProcessor.getOWLNamedObjectResolver();
+		return this.swrlapiOntologyProcessor.getOWLIRIResolver();
 	}
 
 	@Override
@@ -268,11 +265,4 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 	{
 		return this.swrlBuiltInArgumentFactory;
 	}
-
-	@Override
-	public SWRLAtomArgumentFactory getSWRLAtomArgumentFactory()
-	{
-		return this.swrlAtomArgumentFactory;
-	}
-
 }
