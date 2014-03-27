@@ -24,31 +24,31 @@ import org.swrlapi.xsd.XSDTime;
  */
 public interface SWRLBuiltInArgumentFactory
 {
-	SWRLVariableBuiltInArgument getVariableBuiltInArgument(String variableName);
+	SWRLVariableBuiltInArgument getVariableBuiltInArgument(IRI variableIRI, String variableName);
 
-	SWRLVariableBuiltInArgument getUnboundVariableBuiltInArgument(String variableName);
+	SWRLVariableBuiltInArgument getUnboundVariableBuiltInArgument(IRI variableIRI, String variableName);
 
-	SWRLClassBuiltInArgument getClassBuiltInArgument(IRI uri);
+	SWRLClassBuiltInArgument getClassBuiltInArgument(IRI iri);
 
 	SWRLClassBuiltInArgument getClassBuiltInArgument(OWLClass cls);
 
-	SWRLNamedIndividualBuiltInArgument getNamedIndividualBuiltInArgument(IRI uri);
+	SWRLNamedIndividualBuiltInArgument getNamedIndividualBuiltInArgument(IRI iri);
 
 	SWRLNamedIndividualBuiltInArgument getNamedIndividualBuiltInArgument(OWLIndividual individual);
 
-	SWRLObjectPropertyBuiltInArgument getObjectPropertyBuiltInArgument(IRI uri);
+	SWRLObjectPropertyBuiltInArgument getObjectPropertyBuiltInArgument(IRI iri);
 
 	SWRLObjectPropertyBuiltInArgument getObjectPropertyBuiltInArgument(OWLObjectProperty property);
 
-	SWRLDataPropertyBuiltInArgument getDataPropertyBuiltInArgument(IRI uri);
+	SWRLDataPropertyBuiltInArgument getDataPropertyBuiltInArgument(IRI iri);
 
 	SWRLDataPropertyBuiltInArgument getDataPropertyBuiltInArgument(OWLDataProperty property);
 
-	SWRLAnnotationPropertyBuiltInArgument getAnnotationPropertyBuiltInArgument(IRI uri);
+	SWRLAnnotationPropertyBuiltInArgument getAnnotationPropertyBuiltInArgument(IRI iri);
 
 	SWRLAnnotationPropertyBuiltInArgument getAnnotationPropertyBuiltInArgument(OWLAnnotationProperty property);
 
-	SWRLDatatypeBuiltInArgument getDatatypeBuiltInArgument(IRI uri);
+	SWRLDatatypeBuiltInArgument getDatatypeBuiltInArgument(IRI iri);
 
 	SWRLDatatypeBuiltInArgument getDatatypeBuiltInArgument(OWLDatatype datatype);
 
@@ -78,10 +78,11 @@ public interface SWRLBuiltInArgumentFactory
 
 	SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(XSDDuration duration);
 
-	SWRLMultiValueBuiltInArgument getMultiValueBuiltInArgument();
+	SWRLMultiValueVariableBuiltInArgument getMultiValueVariableBuiltInArgument(IRI variableIRI, String variableName);
 
-	SWRLMultiValueBuiltInArgument getMultiValueBuiltInArgument(List<SWRLBuiltInArgument> arguments);
+	SWRLMultiValueVariableBuiltInArgument getMultiValueVariableBuiltInArgument(IRI variableIRI, String variableName,
+			List<SWRLBuiltInArgument> arguments);
 
-	SQWRLCollectionBuiltInArgument getSQWRLCollectionBuiltInArgument(String queryName, String collectionName,
-			String collectionID);
+	SQWRLCollectionVariableBuiltInArgument getSQWRLCollectionVariableBuiltInArgument(IRI variableIRI,
+			String variableName, String queryName, String collectionName, String collectionID);
 }

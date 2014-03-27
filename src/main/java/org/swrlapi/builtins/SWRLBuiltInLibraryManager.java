@@ -13,7 +13,7 @@ import java.util.Set;
 
 import org.swrlapi.core.SWRLBuiltInBridge;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLMultiValueBuiltInArgument;
+import org.swrlapi.core.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.exceptions.BuiltInException;
 import org.swrlapi.exceptions.IncompatibleBuiltInClassException;
 import org.swrlapi.exceptions.IncompatibleBuiltInMethodException;
@@ -93,8 +93,8 @@ public abstract class SWRLBuiltInLibraryManager
 	{
 		for (int argumentIndex = 0; argumentIndex < arguments.size(); argumentIndex++) {
 			SWRLBuiltInArgument argument = arguments.get(argumentIndex);
-			if (argument.hasBuiltInResult())
-				arguments.set(argumentIndex, argument.getBuiltInResult());
+			if (argument.isVariable() && argument.asVariable().hasBuiltInResult())
+				arguments.set(argumentIndex, argument.asVariable().getBuiltInResult());
 		}
 	}
 
@@ -178,8 +178,8 @@ public abstract class SWRLBuiltInLibraryManager
 		else { // Generate all possible patterns
 			int firstMultiValueBuiltInArgumentIndex = multiValueBuiltInArgumentIndexes.get(0); // Pick the first
 																																													// multi-argument.
-			SWRLMultiValueBuiltInArgument multiValueBuiltInArgument = getArgumentAsASWRLMultiValueBuiltInArgument(arguments,
-					firstMultiValueBuiltInArgumentIndex);
+			SWRLMultiValueVariableBuiltInArgument multiValueBuiltInArgument = getArgumentAsASWRLMultiValueBuiltInArgument(
+					arguments, firstMultiValueBuiltInArgumentIndex);
 			int numberOfArgumentsInMultiValueBuiltInArgument = multiValueBuiltInArgument.getNumberOfArguments();
 
 			if (numberOfArgumentsInMultiValueBuiltInArgument < 1)
@@ -188,7 +188,8 @@ public abstract class SWRLBuiltInLibraryManager
 
 			for (int i = 1; i < multiValueBuiltInArgumentIndexes.size(); i++) {
 				int multiValueBuiltInArgumentIndex = multiValueBuiltInArgumentIndexes.get(i);
-				multiValueBuiltInArgument = getArgumentAsASWRLMultiValueBuiltInArgument(arguments, multiValueBuiltInArgumentIndex);
+				multiValueBuiltInArgument = getArgumentAsASWRLMultiValueBuiltInArgument(arguments,
+						multiValueBuiltInArgumentIndex);
 				if (numberOfArgumentsInMultiValueBuiltInArgument != multiValueBuiltInArgument.getNumberOfArguments())
 					throw new BuiltInException("all multi-value arguments must have the same number of elements for built-in "
 							+ builtInName + "(index " + builtInIndex + ") in rule " + ruleName);
@@ -203,11 +204,11 @@ public abstract class SWRLBuiltInLibraryManager
 		return pattern;
 	}
 
-	private static SWRLMultiValueBuiltInArgument getArgumentAsASWRLMultiValueBuiltInArgument(
+	private static SWRLMultiValueVariableBuiltInArgument getArgumentAsASWRLMultiValueBuiltInArgument(
 			List<SWRLBuiltInArgument> arguments, int argumentIndex) throws BuiltInException
 	{
-		if (arguments.get(argumentIndex) instanceof SWRLMultiValueBuiltInArgument)
-			return (SWRLMultiValueBuiltInArgument)arguments.get(argumentIndex);
+		if (arguments.get(argumentIndex) instanceof SWRLMultiValueVariableBuiltInArgument)
+			return (SWRLMultiValueVariableBuiltInArgument)arguments.get(argumentIndex);
 		else
 			throw new BuiltInException("expecting milti-argment for (0-indexed) argument #" + argumentIndex);
 	}
@@ -218,7 +219,7 @@ public abstract class SWRLBuiltInLibraryManager
 		List<Integer> result = new ArrayList<Integer>();
 
 		for (int i = 0; i < arguments.size(); i++)
-			if (arguments.get(i) instanceof SWRLMultiValueBuiltInArgument)
+			if (arguments.get(i) instanceof SWRLMultiValueVariableBuiltInArgument)
 				result.add(Integer.valueOf(i));
 
 		return result;
@@ -230,8 +231,8 @@ public abstract class SWRLBuiltInLibraryManager
 		List<SWRLBuiltInArgument> result = new ArrayList<SWRLBuiltInArgument>();
 
 		for (SWRLBuiltInArgument argument : arguments) {
-			if (argument instanceof SWRLMultiValueBuiltInArgument) {
-				SWRLMultiValueBuiltInArgument multiValueBuiltInArgument = (SWRLMultiValueBuiltInArgument)argument;
+			if (argument instanceof SWRLMultiValueVariableBuiltInArgument) {
+				SWRLMultiValueVariableBuiltInArgument multiValueBuiltInArgument = (SWRLMultiValueVariableBuiltInArgument)argument;
 				result.add(multiValueBuiltInArgument.getArguments().get(multiValueBuiltInArgumentArgumentIndex));
 			} else
 				result.add(argument);
@@ -321,7 +322,7 @@ public abstract class SWRLBuiltInLibraryManager
 	private static boolean hasUnboundArguments(List<SWRLBuiltInArgument> arguments)
 	{
 		for (SWRLBuiltInArgument argument : arguments)
-			if (argument.isUnbound())
+			if (argument.isVariable() && argument.asVariable().isUnbound())
 				return true;
 
 		return false;

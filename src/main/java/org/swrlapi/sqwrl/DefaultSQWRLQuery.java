@@ -267,7 +267,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 				if (SQWRLNames.isSQWRLHeadSelectionBuiltIn(builtInName)
 						|| SQWRLNames.isSQWRLHeadAggregationBuiltIn(builtInName)) {
 					if (isArgumentAVariable) {
-						variableName = argument.getVariableName();
+						variableName = argument.asVariable().getVariableName();
 						if (selectedVariable2ColumnIndices.containsKey(variableName))
 							selectedVariable2ColumnIndices.get(variableName).add(columnIndex);
 						else {
@@ -603,7 +603,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	private boolean hasUnboundArgument(List<SWRLBuiltInArgument> arguments)
 	{
 		for (SWRLBuiltInArgument argument : arguments)
-			if (argument.isUnbound())
+			if (argument.isVariable() && argument.asVariable().isUnbound())
 				return true;
 		return false;
 	}
@@ -767,7 +767,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 
 		for (SWRLBuiltInArgument argument : arguments)
 			if (argument.isVariable())
-				variableNames.add(argument.getVariableName());
+				variableNames.add(argument.asVariable().getVariableName());
 
 		return variableNames;
 	}

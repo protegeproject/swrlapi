@@ -1,6 +1,6 @@
 package org.swrlapi.converters;
 
-import org.swrlapi.core.arguments.SQWRLCollectionBuiltInArgument;
+import org.swrlapi.core.arguments.SQWRLCollectionVariableBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLDataPropertyBuiltInArgument;
@@ -29,5 +29,5 @@ public interface TargetRuleEngineSWRLBuiltInArgumentConverter<T> extends TargetR
 
 	T convert(SWRLLiteralBuiltInArgument argument) throws TargetRuleEngineException;
 
-	T convert(SQWRLCollectionBuiltInArgument argument) throws TargetRuleEngineException;
+	T convert(SQWRLCollectionVariableBuiltInArgument argument) throws TargetRuleEngineException;
 }

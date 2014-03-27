@@ -45,7 +45,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		argument2 = getArgumentAsADouble(1, arguments);
 
 		if (isUnboundArgument(0, arguments)) {
-			arguments.get(0).setBuiltInResult(createLiteralBuiltInArgument(java.lang.Math.sqrt(argument2)));
+			arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument(java.lang.Math.sqrt(argument2)));
 			return true;
 		} else {
 			argument1 = getArgumentAsADouble(0, arguments);
@@ -66,7 +66,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		argument2 = getArgumentAsADouble(1, arguments);
 
 		if (isUnboundArgument(0, arguments)) {
-			arguments.get(0).setBuiltInResult(createLiteralBuiltInArgument(java.lang.Math.log(argument2)));
+			arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument(java.lang.Math.log(argument2)));
 			return true;
 		} else {
 			argument1 = getArgumentAsADouble(0, arguments);
@@ -95,7 +95,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 			checkForNonVariableArguments(variableArguments, "unexpected non variable argument");
 
 			for (SWRLBuiltInArgument argument : variableArguments) {
-				String variableName = argument.getVariableName(); // We will have already checked that they are all variables
+				String variableName = argument.asVariable().getVariableName(); // We have checked that they are all variables
 				double variableValue = getArgumentAsADouble(argument);
 				getJEP().addVariable(variableName, variableValue);
 			}
@@ -112,7 +112,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 			throw new BuiltInException("exception parsing expression '" + expression + "': " + getJEP().getErrorInfo());
 
 		if (isUnboundArgument(0, arguments)) {
-			arguments.get(0).setBuiltInResult(createLiteralBuiltInArgument(value));
+			arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument(value));
 			return true;
 		} else {
 			return value == getArgumentAsADouble(0, arguments);

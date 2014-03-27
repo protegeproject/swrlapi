@@ -140,7 +140,7 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 																															// are unbound.
 			for (SWRLBuiltInArgument argument : builtInAtom.getBuiltInArguments()) {
 				if (argument.isVariable()) {
-					String argumentVariableName = argument.getVariableName();
+					String argumentVariableName = argument.asVariable().getVariableName();
 
 					// If a variable argument is not used by any non built-in body atom or is not bound by another body built-in
 					// atom it will therefore be
@@ -150,7 +150,8 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 					// execution.
 					if (!variableNamesUsedByNonBuiltInBodyAtoms.contains(argumentVariableName)
 							&& !variableNamesBoundByBuiltIns.contains(argumentVariableName)) {
-						argument.setUnbound(); // Tell the built-in that it is expected to bind this argument.
+						argument.asVariable().setUnbound(); // Tell the built-in that it is expected to bind this
+																																		// argument.
 						variableNamesBoundByBuiltIns.add(argumentVariableName); // Flag this as a bound variable for later
 																																		// built-ins.
 					}

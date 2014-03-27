@@ -11,9 +11,9 @@ import org.swrlapi.core.SWRLBuiltInBridge;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLDataPropertyBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLMultiValueBuiltInArgument;
+import org.swrlapi.core.arguments.SWRLMultiValueVariableBuiltInArgument;
+import org.swrlapi.core.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.exceptions.BuiltInException;
 import org.swrlapi.exceptions.InvalidBuiltInArgumentNumberException;
@@ -381,9 +381,11 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
 
 	SWRLAPILiteral createSWRLAPILiteral(XSDDuration duration) throws BuiltInException;
 
-	SWRLMultiValueBuiltInArgument createSWRLMultiValueBuiltInArgument() throws BuiltInException;
+	SWRLMultiValueVariableBuiltInArgument createSWRLMultiValueVariableBuiltInArgument(IRI variableIRI, String variableName)
+			throws BuiltInException;
 
-	SWRLMultiValueBuiltInArgument createSWRLMultiValueBuiltInArgument(List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	SWRLMultiValueVariableBuiltInArgument createSWRLMultiValueVariableBuiltInArgument(IRI variableIRI,
+			String variableName, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
 
 	SQWRLResultValueFactory getSQWRLResultValueFactory() throws SWRLBuiltInLibraryException;
 }

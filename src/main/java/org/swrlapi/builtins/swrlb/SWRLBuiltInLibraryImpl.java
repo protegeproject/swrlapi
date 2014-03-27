@@ -13,9 +13,11 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 import org.apache.commons.lang.StringUtils;
+import org.semanticweb.owlapi.model.IRI;
 import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLMultiValueBuiltInArgument;
+import org.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
+import org.swrlapi.core.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.exceptions.BuiltInException;
 import org.swrlapi.exceptions.BuiltInNotImplementedException;
 import org.swrlapi.exceptions.InvalidBuiltInArgumentException;
@@ -334,8 +336,10 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 				throw new InvalidBuiltInArgumentException(1, "expecting a Boolean");
 
 			boolean operationResult = !getArgumentAsABoolean(1, arguments);
-			arguments.get(0).setBuiltInResult(createLiteralBuiltInArgument(operationResult)); // Bind the result to the first
-			// parameter
+			SWRLLiteralBuiltInArgument resultArgument = createLiteralBuiltInArgument(operationResult);
+
+			arguments.get(0).asVariable().setBuiltInResult(resultArgument); // Bind the result to the first argument
+
 			return true;
 		} else {
 			if (!areAllArgumentsBooleans(arguments))
@@ -562,13 +566,16 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 		tokenizer = new StringTokenizer(inputString.trim(), delimeters);
 
-		SWRLMultiValueBuiltInArgument multiValueBuiltInArgument = createSWRLMultiValueBuiltInArgument();
+		IRI variableIRI = arguments.get(0).asVariable().getIRI();
+		String variableName = arguments.get(0).asVariable().getVariableName();
+		SWRLMultiValueVariableBuiltInArgument multiValueBuiltInArgument = createSWRLMultiValueVariableBuiltInArgument(
+				variableIRI, variableName);
 		while (tokenizer.hasMoreTokens()) {
 			String token = tokenizer.nextToken();
 			multiValueBuiltInArgument.addArgument(createLiteralBuiltInArgument(token));
 		}
 
-		arguments.get(0).setBuiltInResult(multiValueBuiltInArgument);
+		arguments.get(0).asVariable().setBuiltInResult(multiValueBuiltInArgument);
 		result = !multiValueBuiltInArgument.hasNoArguments();
 
 		return result;
@@ -1104,17 +1111,17 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 			if (builtInName.equalsIgnoreCase(SWRLB_SIN) || builtInName.equalsIgnoreCase(SWRLB_COS)
 					|| builtInName.equalsIgnoreCase(SWRLB_TAN))
-				arguments.get(0).setBuiltInResult(createLiteralBuiltInArgument(operationResult));
+				arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument(operationResult));
 			else if (isShortMostPreciseArgument(boundArguments))
-				arguments.get(0).setBuiltInResult(createLiteralBuiltInArgument((short)operationResult));
+				arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument((short)operationResult));
 			else if (isIntegerMostPreciseArgument(boundArguments))
-				arguments.get(0).setBuiltInResult(createLiteralBuiltInArgument((int)operationResult));
+				arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument((int)operationResult));
 			else if (isLongMostPreciseArgument(boundArguments))
-				arguments.get(0).setBuiltInResult(createLiteralBuiltInArgument((long)operationResult));
+				arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument((long)operationResult));
 			else if (isFloatMostPreciseArgument(boundArguments))
-				arguments.get(0).setBuiltInResult(createLiteralBuiltInArgument((float)operationResult));
+				arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument((float)operationResult));
 			else
-				arguments.get(0).setBuiltInResult(createLiteralBuiltInArgument(operationResult));
+				arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument(operationResult));
 
 			result = true;
 		} else

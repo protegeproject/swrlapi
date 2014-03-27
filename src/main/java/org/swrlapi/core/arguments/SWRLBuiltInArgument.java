@@ -25,26 +25,14 @@ import org.swrlapi.ext.SWRLAPIOWLOntology;
  *      SWRLMultiValueBuiltInArgument, SQWRLCollectionBuiltInArgument
  */
 public interface SWRLBuiltInArgument extends SWRLDArgument
-{ // TODO These methods should really be in SWRLVariableBuiltInArgument
-	void setBuiltInResult(SWRLBuiltInArgument builtInResult);
-
-	SWRLBuiltInArgument getBuiltInResult();
-
-	boolean hasBuiltInResult();
-
-	String getVariableName();
-
-	void setVariableName(String variableName);
-
+{
 	boolean isVariable();
 
-	boolean isUnbound();
+	boolean isMultiValueVariable();
 
-	boolean isBound();
+	SWRLVariableBuiltInArgument asVariable();
 
-	void setUnbound();
-
-	void setBound();
+	SWRLMultiValueVariableBuiltInArgument asMultiValueVariable();
 
 	String toDisplayText();
 }

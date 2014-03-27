@@ -10,16 +10,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.SWRLArgument;
 import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
-import org.swrlapi.core.arguments.SQWRLCollectionBuiltInArgument;
+import org.swrlapi.core.arguments.SQWRLCollectionVariableBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLDataPropertyBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
+import org.swrlapi.core.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLObjectPropertyBuiltInArgument;
+import org.swrlapi.core.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.exceptions.BuiltInException;
 import org.swrlapi.exceptions.InvalidBuiltInArgumentException;
 import org.swrlapi.sqwrl.DefaultSQWRLQuery;
@@ -110,10 +112,10 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 				resultGenerator.addRowData(dataPropertyValue);
 			} else if (argument instanceof SWRLAnnotationPropertyBuiltInArgument) {
 				SWRLAnnotationPropertyBuiltInArgument annotationPropertyArgument = (SWRLAnnotationPropertyBuiltInArgument)argument;
-				SQWRLAnnotationPropertyValue annotationPropertyValue = getSQWRLResultValueFactory()
-						.getAnnotationPropertyValue(annotationPropertyArgument);
+				SQWRLAnnotationPropertyValue annotationPropertyValue = getSQWRLResultValueFactory().getAnnotationPropertyValue(
+						annotationPropertyArgument);
 				resultGenerator.addRowData(annotationPropertyValue);
-			} else if (argument instanceof SQWRLCollectionBuiltInArgument) {
+			} else if (argument instanceof SQWRLCollectionVariableBuiltInArgument) {
 				throw new InvalidBuiltInArgumentException(argumentIndex, "collections cannot be selected");
 			} else
 				throw new InvalidBuiltInArgumentException(argumentIndex, "unknown type "
@@ -164,15 +166,15 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 			resultGenerator.addRowData(objectPropertyValue);
 		} else if (argument instanceof SWRLDataPropertyBuiltInArgument) {
 			SWRLDataPropertyBuiltInArgument dataPropertyArgument = (SWRLDataPropertyBuiltInArgument)argument;
-			SQWRLDataPropertyValue dataPropertyValue = getSQWRLResultValueFactory().getDataPropertyValue(
-					dataPropertyArgument);
+			SQWRLDataPropertyValue dataPropertyValue = getSQWRLResultValueFactory()
+					.getDataPropertyValue(dataPropertyArgument);
 			resultGenerator.addRowData(dataPropertyValue);
 		} else if (argument instanceof SWRLAnnotationPropertyBuiltInArgument) {
 			SWRLAnnotationPropertyBuiltInArgument annotationPropertyArgument = (SWRLAnnotationPropertyBuiltInArgument)argument;
-			SQWRLAnnotationPropertyValue annotationPropertyValue = getSQWRLResultValueFactory()
-					.getAnnotationPropertyValue(annotationPropertyArgument);
+			SQWRLAnnotationPropertyValue annotationPropertyValue = getSQWRLResultValueFactory().getAnnotationPropertyValue(
+					annotationPropertyArgument);
 			resultGenerator.addRowData(annotationPropertyValue);
-		} else if (argument instanceof SQWRLCollectionBuiltInArgument) {
+		} else if (argument instanceof SQWRLCollectionVariableBuiltInArgument) {
 			throw new InvalidBuiltInArgumentException(0, "collections cannot be counted");
 		} else
 			throw new InvalidBuiltInArgumentException(0, "unknown type " + argument.getClass().getCanonicalName());
@@ -238,9 +240,14 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 		set.add(element);
 
-		if (isUnboundArgument(resultCollectionArgumentNumber, arguments))
-			arguments.get(resultCollectionArgumentNumber).setBuiltInResult(
-					createSQWRLCollectionBuiltInArgument(queryName, collectionName, collectionGroupKey));
+		if (isUnboundArgument(resultCollectionArgumentNumber, arguments)) {
+			SWRLVariableBuiltInArgument variableArgument = arguments.get(resultCollectionArgumentNumber).asVariable();
+			IRI variableIRI = variableArgument.getIRI();
+			String variableName = variableArgument.getVariableName();
+			SQWRLCollectionVariableBuiltInArgument collectionArgument = createSQWRLCollectionVariableBuiltInArgument(
+					variableIRI, variableName, queryName, collectionName, collectionGroupKey);
+			variableArgument.setBuiltInResult(collectionArgument);
+		}
 
 		return true;
 	}
@@ -265,9 +272,15 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 		bag.add(element);
 
-		if (isUnboundArgument(resultCollectionArgumentNumber, arguments))
-			arguments.get(resultCollectionArgumentNumber).setBuiltInResult(
-					createSQWRLCollectionBuiltInArgument(queryName, collectionName, collectionGroupKey));
+		if (isUnboundArgument(resultCollectionArgumentNumber, arguments)) {
+			SWRLVariableBuiltInArgument variableArgument = arguments.get(resultCollectionArgumentNumber).asVariable();
+			IRI variableIRI = variableArgument.getIRI();
+			String variableName = variableArgument.getVariableName();
+
+			SQWRLCollectionVariableBuiltInArgument collectionArgument = createSQWRLCollectionVariableBuiltInArgument(
+					variableIRI, variableName, queryName, collectionName, collectionGroupKey);
+			variableArgument.setBuiltInResult(collectionArgument);
+		}
 
 		return true;
 	}
@@ -1023,9 +1036,15 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		if (!isCollection(queryName, resultCollectionName, resultCollectionGroupKey))
 			recordCollection(queryName, resultCollectionName, resultCollectionGroupKey, intersection);
 
-		if (isUnboundArgument(resultCollectionArgumentNumber, arguments))
-			arguments.get(resultCollectionArgumentNumber).setBuiltInResult(
-					createSQWRLCollectionBuiltInArgument(queryName, resultCollectionName, resultCollectionGroupKey));
+		if (isUnboundArgument(resultCollectionArgumentNumber, arguments)) {
+			SWRLVariableBuiltInArgument variableArgument = arguments.get(resultCollectionArgumentNumber).asVariable();
+			IRI variableIRI = variableArgument.getIRI();
+			String variableName = variableArgument.getVariableName();
+
+			SQWRLCollectionVariableBuiltInArgument collectionArgument = createSQWRLCollectionVariableBuiltInArgument(
+					variableIRI, variableName, queryName, resultCollectionName, resultCollectionGroupKey);
+			variableArgument.setBuiltInResult(collectionArgument);
+		}
 
 		return true;
 	}
@@ -1058,9 +1077,15 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		if (!isCollectionRecorded(resultCollectionName, resultCollectionGroupKey))
 			recordCollection(queryName, resultCollectionName, resultCollectionGroupKey, resultCollection);
 
-		if (isUnboundArgument(resultCollectionArgumentNumber, arguments))
-			arguments.get(resultCollectionArgumentNumber).setBuiltInResult(
-					createSQWRLCollectionBuiltInArgument(queryName, resultCollectionName, resultCollectionGroupKey));
+		if (isUnboundArgument(resultCollectionArgumentNumber, arguments)) {
+			SWRLVariableBuiltInArgument variableArgument = arguments.get(resultCollectionArgumentNumber).asVariable();
+			IRI variableIRI = variableArgument.getIRI();
+			String variableName = variableArgument.getVariableName();
+
+			SQWRLCollectionVariableBuiltInArgument collectionArgument = createSQWRLCollectionVariableBuiltInArgument(
+					variableIRI, variableName, queryName, resultCollectionName, resultCollectionGroupKey);
+			variableArgument.setBuiltInResult(collectionArgument);
+		}
 
 		return true;
 	}
@@ -1093,9 +1118,15 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		if (!isCollection(queryName, resultCollectionName, resultCollectionGroupKey))
 			recordCollection(queryName, resultCollectionName, resultCollectionGroupKey, union);
 
-		if (isUnboundArgument(resultCollectionArgumentNumber, arguments))
-			arguments.get(resultCollectionArgumentNumber).setBuiltInResult(
-					createSQWRLCollectionBuiltInArgument(queryName, resultCollectionName, resultCollectionGroupKey));
+		if (isUnboundArgument(resultCollectionArgumentNumber, arguments)) {
+			SWRLVariableBuiltInArgument variableArgument = arguments.get(resultCollectionArgumentNumber).asVariable();
+			IRI variableIRI = variableArgument.getIRI();
+			String variableName = variableArgument.getVariableName();
+
+			SQWRLCollectionVariableBuiltInArgument collectionArgument = createSQWRLCollectionVariableBuiltInArgument(
+					variableIRI, variableName, queryName, resultCollectionName, resultCollectionGroupKey);
+			variableArgument.setBuiltInResult(collectionArgument);
+		}
 
 		return true;
 	}
@@ -1128,9 +1159,15 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		if (!isCollection(queryName, resultCollectionName, resultCollectionGroupKey))
 			recordCollection(queryName, resultCollectionName, resultCollectionGroupKey, difference);
 
-		if (isUnboundArgument(resultCollectionArgumentNumber, arguments))
-			arguments.get(resultCollectionArgumentNumber).setBuiltInResult(
-					createSQWRLCollectionBuiltInArgument(queryName, resultCollectionName, resultCollectionGroupKey));
+		if (isUnboundArgument(resultCollectionArgumentNumber, arguments)) {
+			SWRLVariableBuiltInArgument variableArgument = arguments.get(resultCollectionArgumentNumber).asVariable();
+			IRI variableIRI = variableArgument.getIRI();
+			String variableName = variableArgument.getVariableName();
+
+			SQWRLCollectionVariableBuiltInArgument collectionArgument = createSQWRLCollectionVariableBuiltInArgument(
+					variableIRI, variableName, queryName, resultCollectionName, resultCollectionGroupKey);
+			variableArgument.setBuiltInResult(collectionArgument);
+		}
 
 		return true;
 	}
@@ -1224,7 +1261,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		if (isBoundArgument(collectionArgumentNumber, arguments)
 				&& !this.collectionGroupElementNumbersMap.containsKey(collectionKey)) {
 			// Collection variable already used in non collection context
-			throw new BuiltInException("collection variable ?" + arguments.get(collectionArgumentNumber).getVariableName()
+			throw new BuiltInException("collection variable ?"
+					+ arguments.get(collectionArgumentNumber).asVariable().getVariableName()
 					+ " already used in non collection context in query " + queryName);
 		}
 
@@ -1317,8 +1355,14 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		String queryName = getInvokingRuleName();
 
 		if (isUnboundArgument(resultArgumentNumber, arguments)) {
-			arguments.get(resultArgumentNumber).setBuiltInResult(
-					createSQWRLCollectionBuiltInArgument(queryName, resultListName, resultListID));
+			SWRLVariableBuiltInArgument variableArgument = arguments.get(resultArgumentNumber).asVariable();
+			IRI variableIRI = variableArgument.getIRI();
+			String variableName = variableArgument.getVariableName();
+
+			SQWRLCollectionVariableBuiltInArgument collectionArgument = createSQWRLCollectionVariableBuiltInArgument(
+					variableIRI, variableName, queryName, resultListName, resultListID);
+			variableArgument.setBuiltInResult(collectionArgument);
+
 			return true;
 		} else {
 			Collection<SWRLBuiltInArgument> collection = getCollection(queryName, resultListName, resultListID);

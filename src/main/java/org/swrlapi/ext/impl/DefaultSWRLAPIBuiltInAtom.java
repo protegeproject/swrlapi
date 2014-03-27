@@ -22,6 +22,7 @@ import org.semanticweb.owlapi.model.SWRLDArgument;
 import org.semanticweb.owlapi.model.SWRLObjectVisitor;
 import org.semanticweb.owlapi.model.SWRLObjectVisitorEx;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
+import org.swrlapi.core.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.ext.SWRLAPIBuiltInAtom;
 
 import uk.ac.manchester.cs.owl.owlapi.SWRLBuiltInAtomImpl;
@@ -127,7 +128,7 @@ public class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SW
 	{
 		checkArgumentNumber(argumentNumber);
 
-		return this.arguments.get(argumentNumber).isVariable();
+		return this.arguments.get(argumentNumber) instanceof SWRLVariableBuiltInArgument;
 	}
 
 	@Override
@@ -135,14 +136,15 @@ public class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SW
 	{
 		checkArgumentNumber(argumentNumber);
 
-		return this.arguments.get(argumentNumber).isUnbound();
+		return this.arguments.get(argumentNumber).isVariable()
+				&& this.arguments.get(argumentNumber).asVariable().isUnbound();
 	}
 
 	@Override
 	public boolean hasUnboundArguments()
 	{
 		for (SWRLBuiltInArgument argument : this.arguments)
-			if (argument.isUnbound())
+			if (argument.isVariable() && argument.asVariable().isUnbound())
 				return true;
 		return false;
 	}
@@ -162,8 +164,8 @@ public class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SW
 		Set<String> result = new HashSet<String>();
 
 		for (SWRLBuiltInArgument argument : this.arguments)
-			if (argument.isUnbound())
-				result.add(argument.getVariableName());
+			if (argument.isVariable() && argument.asVariable().isUnbound())
+				result.add(argument.asVariable().getVariableName());
 
 		return Collections.unmodifiableSet(result);
 	}
@@ -176,7 +178,7 @@ public class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SW
 		if (!this.arguments.get(argumentNumber).isVariable())
 			throw new RuntimeException("expecting a variable for (0-offset) argument #" + argumentNumber);
 
-		return this.arguments.get(argumentNumber).getVariableName();
+		return this.arguments.get(argumentNumber).asVariable().getVariableName();
 	}
 
 	@Override
@@ -186,7 +188,7 @@ public class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SW
 
 		for (SWRLBuiltInArgument argument : this.arguments)
 			if (argument.isVariable())
-				result.add(argument.getVariableName());
+				result.add(argument.asVariable().getVariableName());
 
 		return Collections.unmodifiableList(result);
 	}
@@ -199,7 +201,7 @@ public class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SW
 
 		for (SWRLBuiltInArgument argument : this.arguments)
 			if (argument.isVariable() && argumentCount++ != 0)
-				result.add(argument.getVariableName());
+				result.add(argument.asVariable().getVariableName());
 
 		return Collections.unmodifiableList(result);
 	}

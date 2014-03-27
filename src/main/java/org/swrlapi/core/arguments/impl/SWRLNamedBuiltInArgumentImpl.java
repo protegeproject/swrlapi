@@ -42,12 +42,6 @@ abstract class SWRLNamedBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl impl
 	}
 
 	@Override
-	public String toString()
-	{
-		return toDisplayText();
-	}
-
-	@Override
 	public String toDisplayText()
 	{
 		throw new RuntimeException("Not implemented");

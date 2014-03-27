@@ -11,6 +11,7 @@ import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
 import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
 import org.swrlapi.core.SWRLBuiltInBridge;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
+import org.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.exceptions.BuiltInException;
 import org.swrlapi.exceptions.InvalidBuiltInArgumentException;
@@ -271,8 +272,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		}
 
 		if (isUnboundArgument(0, arguments)) {
-			arguments.get(0).setBuiltInResult(createLiteralBuiltInArgument(operationResult)); // Bind the result to the first
-			// parameter
+			SWRLLiteralBuiltInArgument resultArgument = createLiteralBuiltInArgument(operationResult);
+			arguments.get(0).asVariable().setBuiltInResult(resultArgument); // Bind the result to the first argument
 			return true;
 		} else {
 			long argument1 = getArgumentAsALong(0, arguments);
@@ -289,7 +290,9 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 		argument1 = getArgumentAsALong(0, arguments);
 
-		newArguments.get(0).setUnbound();
+		if (newArguments.get(0).isVariable())
+			newArguments.get(0).asVariable().setUnbound();
+
 		duration(newArguments);
 		operationResult = getArgumentAsALong(0, newArguments);
 
@@ -305,7 +308,9 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 		argument1 = getArgumentAsALong(0, arguments);
 
-		newArguments.get(0).setUnbound();
+		if (newArguments.get(0).isVariable())
+			newArguments.get(0).asVariable().setUnbound();
+
 		duration(newArguments);
 		operationResult = getArgumentAsALong(0, newArguments);
 
@@ -316,12 +321,15 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	{
 		checkNumberOfArgumentsInRange(3, 4, arguments.size());
 		checkForUnboundArguments(arguments);
+
 		long argument1, operationResult;
 		List<SWRLBuiltInArgument> newArguments = cloneArguments(arguments);
 
 		argument1 = getArgumentAsALong(0, arguments);
 
-		newArguments.get(0).setUnbound();
+		if (newArguments.get(0).isVariable())
+			newArguments.get(0).asVariable().setUnbound();
+
 		duration(newArguments);
 		operationResult = getArgumentAsALong(0, newArguments);
 
@@ -332,12 +340,15 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	{
 		checkNumberOfArgumentsInRange(3, 4, arguments.size());
 		checkForUnboundArguments(arguments);
+
 		long argument1, operationResult;
 		List<SWRLBuiltInArgument> newArguments = cloneArguments(arguments);
 
 		argument1 = getArgumentAsALong(0, arguments);
 
-		newArguments.get(0).setUnbound();
+		if (newArguments.get(0).isVariable())
+			newArguments.get(0).asVariable().setUnbound();
+
 		duration(newArguments);
 		operationResult = getArgumentAsALong(0, newArguments);
 
@@ -353,7 +364,9 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 		argument1 = getArgumentAsALong(0, arguments);
 
-		newArguments.get(0).setUnbound();
+		if (newArguments.get(0).isVariable())
+			newArguments.get(0).asVariable().setUnbound();
+
 		duration(newArguments);
 		operationResult = getArgumentAsALong(0, newArguments);
 
@@ -379,13 +392,10 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 			operationResult.addGranuleCount(granuleCount, granularity);
 
 			if (isUnboundArgument(0, arguments)) {
-				arguments.get(0).setBuiltInResult(createLiteralBuiltInArgument(new XSDDateTime(operationResult.toString()))); // Bind
-				// the
-				// result
-				// to
-				// the
-				// first
-				// parameter
+				SWRLLiteralBuiltInArgument resultArgument = createLiteralBuiltInArgument(new XSDDateTime(
+						operationResult.toString()));
+				arguments.get(0).asVariable().setBuiltInResult(resultArgument); // Bind the result to the first parameter.
+
 				return true;
 			} else {
 				Instant argument1 = getArgumentAsAnInstant(0, arguments, granularity);
@@ -641,20 +651,15 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	{
 		String datetimeString = getArgumentAsAString(argumentNumber, arguments);
 		XSDDatetimeStringProcessor datetimeProcessor = new XSDDatetimeStringProcessor();
-		String variableName = arguments.get(argumentNumber).getVariableName();
 
 		try {
 			if (datetimeProcessor.getFinestSpecifiedGranularity(datetimeString) < Temporal.HOURS) { // If no finer than hours,
 																																															// assume it is xsd:date
 				XSDDate date = new XSDDate(datetimeProcessor.stripDatetimeString(datetimeString, Temporal.DAYS));
 				arguments.set(argumentNumber, createLiteralBuiltInArgument(date));
-				if (variableName != null)
-					arguments.get(argumentNumber).setVariableName(variableName);
 			} else { // xsd:dateTime
 				XSDDateTime dateTime = new XSDDateTime(datetimeProcessor.normalizeDatetimeString(datetimeString));
 				arguments.set(argumentNumber, createLiteralBuiltInArgument(dateTime));
-				if (variableName != null)
-					arguments.get(argumentNumber).setVariableName(variableName);
 			}
 		} catch (TemporalException e) {
 			throw new BuiltInException("invalid xsd:date or xsd:dateTime string " + datetimeString);

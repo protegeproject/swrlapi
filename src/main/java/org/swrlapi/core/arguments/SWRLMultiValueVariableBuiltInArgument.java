@@ -4,10 +4,8 @@ import java.util.List;
 
 /**
  * A class used to bind multiple arguments to a SWRL built-in argument.
- * <p>
- * See <a href="http://protege.cim3.net/cgi-bin/wiki.pl?SWRLBuiltInBridge#nid8LH">here</a> for details.
  */
-public interface SWRLMultiValueBuiltInArgument extends SWRLBuiltInArgument
+public interface SWRLMultiValueVariableBuiltInArgument extends SWRLVariableBuiltInArgument
 {
 	void addArgument(SWRLBuiltInArgument argument);
 

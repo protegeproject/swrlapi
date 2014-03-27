@@ -3,7 +3,7 @@ package org.swrlapi.converters;
 import org.semanticweb.owlapi.model.SWRLIndividualArgument;
 import org.semanticweb.owlapi.model.SWRLLiteralArgument;
 import org.semanticweb.owlapi.model.SWRLVariable;
-import org.swrlapi.core.arguments.SQWRLCollectionBuiltInArgument;
+import org.swrlapi.core.arguments.SQWRLCollectionVariableBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLDataPropertyBuiltInArgument;
@@ -44,5 +44,5 @@ public interface TargetRuleEngineSWRLAtomArgumentConverter<T> extends TargetRule
 
 	T convert(SWRLLiteralBuiltInArgument argument) throws TargetRuleEngineException;
 
-	T convert(SQWRLCollectionBuiltInArgument argument) throws TargetRuleEngineException;
+	T convert(SQWRLCollectionVariableBuiltInArgument argument) throws TargetRuleEngineException;
 }

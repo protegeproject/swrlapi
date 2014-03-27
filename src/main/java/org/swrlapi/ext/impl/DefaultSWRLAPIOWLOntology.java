@@ -22,11 +22,11 @@ import org.semanticweb.owlapi.model.SWRLRule;
 import org.semanticweb.owlapi.model.SWRLVariable;
 import org.semanticweb.owlapi.vocab.OWL2Datatype;
 import org.swrlapi.core.OWLIRIResolver;
-import org.swrlapi.core.arguments.SQWRLCollectionBuiltInArgument;
+import org.swrlapi.core.arguments.SQWRLCollectionVariableBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLMultiValueBuiltInArgument;
+import org.swrlapi.core.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.ext.SWRLAPIOWLDataFactory;
 import org.swrlapi.ext.SWRLAPIOWLOntology;
@@ -189,10 +189,11 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 	 * specially. It a URI literal argument is passed to a built-in we determine if it refers to an OWL named object in
 	 * the active ontology and if so we create specific SWRLAPI built-in argument types for it.
 	 * <p>
-	 * The SWRLAPI allows SQWRL collection built-in arguments (represented by a {@link SQWRLCollectionBuiltInArgument})
-	 * and multi-value variables (represented by a {@link SWRLMultiValueBuiltInArgument}). These two argument types are
-	 * not instantiated directly as built-in argument types. They are created at runtime during rule execution and passed
-	 * as result values in SWRL variable built-in arguments.
+	 * The SWRLAPI allows SQWRL collection built-in arguments (represented by a
+	 * {@link SQWRLCollectionVariableBuiltInArgument}) and multi-value variables (represented by a
+	 * {@link SWRLMultiValueVariableBuiltInArgument}). These two argument types are not instantiated directly as built-in
+	 * argument types. They are created at runtime during rule execution and passed as result values in SWRL variable
+	 * built-in arguments.
 	 * 
 	 * @see SWRLLiteralBuiltInArgument, SWRLClassBuiltInArgument, SWRLIndividualBuiltInArgument,
 	 *      SWRLObjectPropertyBuiltInArgument, SWRLDataPropertyBuiltInArgument, SWRLAnnotationPropertyBuiltInArgument,
@@ -228,10 +229,11 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 
 	private SWRLVariableBuiltInArgument transformSWRLVariable2SWRLVariableBuiltInArgument(SWRLVariable swrlVariable)
 	{
-		IRI iri = swrlVariable.getIRI();
-		String variableName = getOWLIRIResolver().iri2PrefixedName(iri);
+		IRI variableIRI = swrlVariable.getIRI();
+		String variableName = getOWLIRIResolver().iri2PrefixedName(variableIRI);
 
-		SWRLVariableBuiltInArgument argument = getSWRLBuiltInArgumentFactory().getVariableBuiltInArgument(variableName);
+		SWRLVariableBuiltInArgument argument = getSWRLBuiltInArgumentFactory().getVariableBuiltInArgument(variableIRI,
+				variableName);
 
 		return argument;
 	}

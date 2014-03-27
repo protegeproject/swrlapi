@@ -5,7 +5,7 @@ import java.util.Set;
 import org.semanticweb.owlapi.model.SWRLIndividualArgument;
 import org.semanticweb.owlapi.model.SWRLLiteralArgument;
 import org.semanticweb.owlapi.model.SWRLVariable;
-import org.swrlapi.core.arguments.SQWRLCollectionBuiltInArgument;
+import org.swrlapi.core.arguments.SQWRLCollectionVariableBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLDataPropertyBuiltInArgument;
@@ -71,8 +71,8 @@ public interface TargetRuleEngineSWRLBodyAtomArgumentWithVariableNamesConverter<
 	T convert(SWRLDatatypeBuiltInArgument datatypeArgument, String fieldName, Set<String> variableNames)
 			throws TargetRuleEngineException;
 
-	T convert(SQWRLCollectionBuiltInArgument argument) throws TargetRuleEngineException;
+	T convert(SQWRLCollectionVariableBuiltInArgument argument) throws TargetRuleEngineException;
 
-	T convert(SQWRLCollectionBuiltInArgument argument, String fieldName, Set<String> variableNames)
+	T convert(SQWRLCollectionVariableBuiltInArgument argument, String fieldName, Set<String> variableNames)
 			throws TargetRuleEngineException;
 }
