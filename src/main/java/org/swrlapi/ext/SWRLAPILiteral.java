@@ -2,6 +2,7 @@ package org.swrlapi.ext;
 
 import java.net.URI;
 
+import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.swrlapi.exceptions.SQWRLLiteralException;
 import org.swrlapi.xsd.XSDDate;
@@ -71,6 +72,8 @@ public interface SWRLAPILiteral extends Comparable<SWRLAPILiteral>
 	XSDDuration getDuration() throws SQWRLLiteralException;
 
 	String getLiteral();
+
+	OWLDatatype getDatatype();
 
 	boolean isComparable();
 

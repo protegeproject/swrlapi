@@ -21,7 +21,9 @@ import org.semanticweb.owlapi.model.SWRLPredicate;
 import org.semanticweb.owlapi.model.SWRLRule;
 import org.semanticweb.owlapi.model.SWRLVariable;
 import org.semanticweb.owlapi.vocab.OWL2Datatype;
+import org.swrlapi.core.DefaultSWRLAPIOntologyProcessor;
 import org.swrlapi.core.OWLIRIResolver;
+import org.swrlapi.core.SWRLAPIOntologyProcessor;
 import org.swrlapi.core.arguments.SQWRLCollectionVariableBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLBuiltInArgumentFactory;
@@ -39,15 +41,45 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 	private static final long serialVersionUID = 1L;
 
 	private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
-	private final OWLIRIResolver iriResolver;
+	private final SWRLAPIOntologyProcessor swrlapiOntologyProcessor;
 
-	public DefaultSWRLAPIOWLOntology(OWLOntologyManager manager, OWLOntologyID ontologyID,
-			SWRLAPIOWLDataFactory swrlapiOWLDataFactory, OWLIRIResolver iriResolver)
+	public DefaultSWRLAPIOWLOntology(OWLOntologyManager manager, OWLOntologyID ontologyID)
 	{
 		super(manager, ontologyID);
 
-		this.swrlapiOWLDataFactory = swrlapiOWLDataFactory;
-		this.iriResolver = iriResolver;
+		this.swrlapiOWLDataFactory = new DefaultSWRLAPIOWLDataFactory();
+		this.swrlapiOntologyProcessor = new DefaultSWRLAPIOntologyProcessor(this);
+	}
+
+	@Override
+	public Set<SWRLAPIRule> getSWRLAPIRules()
+	{
+		Set<SWRLAPIRule> swrlapiRules = new HashSet<SWRLAPIRule>();
+
+		for (SWRLRule owlapiRule : getAxioms(AxiomType.SWRL_RULE)) {
+			SWRLAPIRule swrlapiRule = convertOWLAPIRule2SWRLAPIRule(owlapiRule);
+			swrlapiRules.add(swrlapiRule);
+		}
+
+		return swrlapiRules;
+	}
+
+	@Override
+	public SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory()
+	{
+		return this.swrlapiOWLDataFactory;
+	}
+
+	@Override
+	public SWRLAPIOntologyProcessor getSWRLAPIOntologyProcessor()
+	{
+		return this.swrlapiOntologyProcessor;
+	}
+
+	@Override
+	public OWLIRIResolver getOWLIRIResolver()
+	{
+		return getSWRLAPIOWLDataFactory().getOWLIRIResolver();
 	}
 
 	@Override
@@ -72,19 +104,6 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 	public void resetOntologyChanged()
 	{
 		throw new RuntimeException("Not implemented");
-	}
-
-	@Override
-	public Set<SWRLAPIRule> getSWRLAPIRules()
-	{
-		Set<SWRLAPIRule> swrlapiRules = new HashSet<SWRLAPIRule>();
-
-		for (SWRLRule owlapiRule : getAxioms(AxiomType.SWRL_RULE)) {
-			SWRLAPIRule swrlapiRule = convertOWLAPIRule2SWRLAPIRule(owlapiRule);
-			swrlapiRules.add(swrlapiRule);
-		}
-
-		return swrlapiRules;
 	}
 
 	// TODO We really do not want the following three methods here. They are convenience methods only and are used only by
@@ -261,16 +280,6 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 	{
 		return datatype.getIRI().equals(OWL2Datatype.XSD_ANY_URI.getIRI());
 	}
-
-	private SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory()
-	{
-		return this.swrlapiOWLDataFactory;
-	}
-
-	private OWLIRIResolver getOWLIRIResolver()
-	{
-		return this.iriResolver;
-	};
 
 	private SWRLBuiltInArgumentFactory getSWRLBuiltInArgumentFactory()
 	{

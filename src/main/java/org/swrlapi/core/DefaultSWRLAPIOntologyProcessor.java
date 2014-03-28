@@ -58,7 +58,6 @@ import org.swrlapi.exceptions.SWRLRuleException;
 import org.swrlapi.ext.SWRLAPIOWLDataFactory;
 import org.swrlapi.ext.SWRLAPIOWLOntology;
 import org.swrlapi.ext.SWRLAPIRule;
-import org.swrlapi.ext.impl.DefaultSWRLAPIOWLDataFactory;
 import org.swrlapi.sqwrl.DefaultSQWRLQuery;
 import org.swrlapi.sqwrl.SQWRLNames;
 import org.swrlapi.sqwrl.SQWRLQuery;
@@ -70,8 +69,6 @@ import org.swrlapi.sqwrl.exceptions.SQWRLInvalidQueryNameException;
 public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 {
 	private final SWRLAPIOWLOntology swrlapiOWLOntology;
-	private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
-	private final OWLIRIResolver iriResolver;
 
 	private final HashMap<String, SWRLAPIRule> rules;
 	private final HashMap<String, SQWRLQuery> queries;
@@ -84,11 +81,9 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 	private final HashMap<IRI, OWLDeclarationAxiom> owlDataPropertyDeclarationAxioms;
 	private final HashMap<IRI, OWLDeclarationAxiom> owlAnnotationPropertyDeclarationAxioms;
 
-	public DefaultSWRLAPIOntologyProcessor(SWRLAPIOWLOntology swrlapiOWLOntology) throws SQWRLException // TODO Remove
+	public DefaultSWRLAPIOntologyProcessor(SWRLAPIOWLOntology swrlapiOWLOntology)
 	{
 		this.swrlapiOWLOntology = swrlapiOWLOntology;
-		this.iriResolver = new OWLIRIResolver();
-		this.swrlapiOWLDataFactory = new DefaultSWRLAPIOWLDataFactory(this.iriResolver);
 
 		this.rules = new HashMap<String, SWRLAPIRule>();
 		this.queries = new HashMap<String, SQWRLQuery>();
@@ -99,8 +94,6 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 		this.owlObjectPropertyDeclarationAxioms = new HashMap<IRI, OWLDeclarationAxiom>();
 		this.owlDataPropertyDeclarationAxioms = new HashMap<IRI, OWLDeclarationAxiom>();
 		this.owlAnnotationPropertyDeclarationAxioms = new HashMap<IRI, OWLDeclarationAxiom>();
-
-		processOntology();
 	}
 
 	@Override
@@ -237,23 +230,11 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 		return this.queries.get(queryName).getResultGenerator();
 	}
 
-	@Override
-	public OWLIRIResolver getOWLIRIResolver()
-	{
-		return this.iriResolver;
-	}
-
-	@Override
-	public SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory()
-	{
-		return this.swrlapiOWLDataFactory;
-	}
-
 	private void reset()
 	{
 		this.rules.clear();
 		this.queries.clear();
-		this.iriResolver.reset();
+		getOWLIRIResolver().reset();
 
 		this.assertedOWLAxioms.clear();
 
@@ -266,8 +247,7 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 
 	/**
 	 * Process currently supported OWL axioms. The processing consists of recording any OWL entities in the processed
-	 * axioms (with an instance of the {@link OWLIRIResolver} class) and generating declaration axioms for these
-	 * entities.
+	 * axioms (with an instance of the {@link OWLIRIResolver} class) and generating declaration axioms for these entities.
 	 * <p>
 	 * TODO The current approach is clunky. A better approach would be to walk the axioms with a visitor and record the
 	 * entities and generate the declaration axioms.
@@ -960,5 +940,15 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 	private SWRLAPIOWLOntology getSWRLAPIOWLOntology()
 	{
 		return this.swrlapiOWLOntology;
+	}
+
+	private OWLIRIResolver getOWLIRIResolver()
+	{
+		return getSWRLAPIOWLOntology().getOWLIRIResolver();
+	}
+
+	private SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory()
+	{
+		return getSWRLAPIOWLOntology().getSWRLAPIOWLDataFactory();
 	}
 }

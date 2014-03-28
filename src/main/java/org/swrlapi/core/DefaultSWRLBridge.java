@@ -33,13 +33,7 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
 public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridge, SWRLBuiltInBridgeController,
 		SWRLRuleEngineBridgeController
 {
-	private final SWRLAPIOWLOntology targetOWLOntology;
-	private final SWRLAPIOntologyProcessor swrlapiOntologyProcessor;
-	private final SWRLAPIOWLDataFactory dataFactory;
-	private final OWLDatatypeFactory owlDatatypeFactory;
-	private final OWLLiteralFactory owlLiteralFactory;
-	private final SWRLAPILiteralFactory swrlAPILiteralFactory;
-	private final SWRLBuiltInArgumentFactory swrlBuiltInArgumentFactory;
+	private final SWRLAPIOWLOntology swrlapiOWLOntology;
 	private final OWLClassExpressionResolver classExpressionResolver;
 	private final OWLPropertyExpressionResolver propertyExpressionResolver;
 	private final OWL2RLPersistenceLayer owl2RLPersistenceLayer;
@@ -61,19 +55,12 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 	 */
 	private final Set<OWLAxiom> injectedOWLAxioms;
 
-	public DefaultSWRLBridge(SWRLAPIOWLOntology targetOWLOntology, SWRLAPIOntologyProcessor swrlapiOntologyProcessor,
-			OWL2RLPersistenceLayer owl2RLPersistenceLayer) throws SWRLBuiltInBridgeException
+	public DefaultSWRLBridge(SWRLAPIOWLOntology swrlapiOWLOntology, OWL2RLPersistenceLayer owl2RLPersistenceLayer)
+			throws SWRLBuiltInBridgeException
 	{
-		this.targetOWLOntology = targetOWLOntology;
-		this.swrlapiOntologyProcessor = swrlapiOntologyProcessor;
+		this.swrlapiOWLOntology = swrlapiOWLOntology;
 		this.owl2RLPersistenceLayer = owl2RLPersistenceLayer;
 		this.targetRuleEngine = null;
-
-		this.dataFactory = swrlapiOntologyProcessor.getSWRLAPIOWLDataFactory();
-		this.owlDatatypeFactory = this.dataFactory.getOWLDatatypeFactory();
-		this.owlLiteralFactory = this.dataFactory.getOWLLiteralFactory();
-		this.swrlAPILiteralFactory = this.dataFactory.getSWRLAPILiteralFactory();
-		this.swrlBuiltInArgumentFactory = this.dataFactory.getSWRLBuiltInArgumentFactory();
 
 		this.classExpressionResolver = new OWLClassExpressionResolver();
 		this.propertyExpressionResolver = new OWLPropertyExpressionResolver();
@@ -121,7 +108,7 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 	@Override
 	public OWLIRIResolver getOWLIRIResolver()
 	{
-		return this.swrlapiOntologyProcessor.getOWLIRIResolver();
+		return this.swrlapiOWLOntology.getOWLIRIResolver();
 	}
 
 	@Override
@@ -175,7 +162,7 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 	@Override
 	public void inferOWLAxiom(OWLAxiom axiom) throws SWRLRuleEngineBridgeException
 	{
-		if (!this.inferredOWLAxioms.contains(axiom) && !this.swrlapiOntologyProcessor.hasAssertedOWLAxiom(axiom)) // Exclude
+		if (!this.inferredOWLAxioms.contains(axiom) && !getSWRLAPIOntologyProcessor().hasAssertedOWLAxiom(axiom)) // Exclude
 																																																							// already
 			// asserted axioms
 			this.inferredOWLAxioms.add(axiom);
@@ -191,39 +178,39 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 
 	public boolean isOWLClass(IRI classIRI)
 	{
-		return this.targetOWLOntology.containsClassInSignature(classIRI, true);
+		return this.swrlapiOWLOntology.containsClassInSignature(classIRI, true);
 	}
 
 	public boolean isOWLObjectProperty(IRI propertyIRI)
 	{
-		return this.targetOWLOntology.containsObjectPropertyInSignature(propertyIRI, true);
+		return this.swrlapiOWLOntology.containsObjectPropertyInSignature(propertyIRI, true);
 	}
 
 	public boolean isOWLDataProperty(IRI propertyIRI)
 	{
-		return this.targetOWLOntology.containsDataPropertyInSignature(propertyIRI, true);
+		return this.swrlapiOWLOntology.containsDataPropertyInSignature(propertyIRI, true);
 	}
 
 	public boolean isOWLNamedIndividual(IRI individualIRI)
 	{
-		return this.targetOWLOntology.containsIndividualInSignature(individualIRI, true);
+		return this.swrlapiOWLOntology.containsIndividualInSignature(individualIRI, true);
 	}
 
 	@Override
 	public SWRLAPIOWLOntology getOWLOntology()
 	{
-		return this.targetOWLOntology;
+		return this.swrlapiOWLOntology;
 	}
 
 	public SQWRLResult getSQWRLResult(String queryName) throws SQWRLException
 	{
-		return this.swrlapiOntologyProcessor.getSQWRLResult(queryName);
+		return this.getSWRLAPIOntologyProcessor().getSQWRLResult(queryName);
 	}
 
 	@Override
 	public SQWRLResultGenerator getSQWRLResultGenerator(String queryName) throws SQWRLException
 	{
-		return this.swrlapiOntologyProcessor.getSQWRLResultGenerator(queryName);
+		return this.getSWRLAPIOntologyProcessor().getSQWRLResultGenerator(queryName);
 	}
 
 	private void exportOWLAxiom(OWLAxiom axiom) throws SWRLBuiltInBridgeException
@@ -239,30 +226,45 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 	@Override
 	public SWRLAPIOWLDataFactory getOWLDataFactory()
 	{
-		return this.dataFactory;
+		return this.getSWRLAPIOWLOntology().getSWRLAPIOWLDataFactory();
 	}
 
 	@Override
 	public OWLLiteralFactory getOWLLiteralFactory()
 	{
-		return this.owlLiteralFactory;
+		return getSWRLAPIOWLDataFactory().getOWLLiteralFactory();
 	}
 
 	@Override
 	public OWLDatatypeFactory getOWLDatatypeFactory()
 	{
-		return this.owlDatatypeFactory;
+		return getSWRLAPIOWLDataFactory().getOWLDatatypeFactory();
 	}
 
 	@Override
 	public SWRLAPILiteralFactory getSWRLAPILiteralFactory()
 	{
-		return this.swrlAPILiteralFactory;
+		return getSWRLAPIOWLDataFactory().getSWRLAPILiteralFactory();
 	}
 
 	@Override
 	public SWRLBuiltInArgumentFactory getSWRLBuiltInArgumentFactory()
 	{
-		return this.swrlBuiltInArgumentFactory;
+		return getSWRLAPIOWLDataFactory().getSWRLBuiltInArgumentFactory();
+	}
+
+	private SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory()
+	{
+		return getSWRLAPIOWLOntology().getSWRLAPIOWLDataFactory();
+	}
+
+	private SWRLAPIOWLOntology getSWRLAPIOWLOntology()
+	{
+		return swrlapiOWLOntology;
+	}
+
+	private SWRLAPIOntologyProcessor getSWRLAPIOntologyProcessor()
+	{
+		return getSWRLAPIOWLOntology().getSWRLAPIOntologyProcessor();
 	}
 }

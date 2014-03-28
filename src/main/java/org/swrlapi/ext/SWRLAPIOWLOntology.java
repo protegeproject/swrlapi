@@ -8,6 +8,8 @@ import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.SWRLDArgument;
 import org.semanticweb.owlapi.model.SWRLRule;
+import org.swrlapi.core.OWLIRIResolver;
+import org.swrlapi.core.SWRLAPIOntologyProcessor;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
 
 /**
@@ -33,6 +35,12 @@ import org.swrlapi.core.arguments.SWRLBuiltInArgument;
 public interface SWRLAPIOWLOntology extends OWLOntology
 {
 	Set<SWRLAPIRule> getSWRLAPIRules();
+
+	OWLIRIResolver getOWLIRIResolver();
+
+	SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory();
+
+	SWRLAPIOntologyProcessor getSWRLAPIOntologyProcessor();
 
 	void startBulkConversion(); // Can be used, for example, to switch off notification during bulk conversion.
 

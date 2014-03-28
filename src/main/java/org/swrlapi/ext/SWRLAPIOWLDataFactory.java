@@ -9,6 +9,7 @@ import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.SWRLRule;
+import org.swrlapi.core.OWLIRIResolver;
 import org.swrlapi.core.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 
@@ -34,6 +35,8 @@ public interface SWRLAPIOWLDataFactory extends OWLDataFactory
 	OWLLiteralFactory getOWLLiteralFactory();
 
 	SWRLAPILiteralFactory getSWRLAPILiteralFactory();
+
+	OWLIRIResolver getOWLIRIResolver();
 
 	OWLClass getOWLClass(); // Auto-generate an OWL class with a unique IRI
 

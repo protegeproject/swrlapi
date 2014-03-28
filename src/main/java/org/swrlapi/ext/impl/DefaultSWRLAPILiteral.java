@@ -2,6 +2,7 @@ package org.swrlapi.ext.impl;
 
 import java.net.URI;
 
+import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
 import org.swrlapi.exceptions.SQWRLLiteralException;
@@ -303,6 +304,12 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 	public String getLiteral()
 	{
 		return this.literal.getLiteral();
+	}
+
+	@Override
+	public OWLDatatype getDatatype()
+	{
+		return literal.getDatatype();
 	}
 
 	@Override

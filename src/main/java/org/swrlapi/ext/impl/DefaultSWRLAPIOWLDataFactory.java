@@ -24,19 +24,21 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
 {
 	private static final long serialVersionUID = 1L;
 
+	private final OWLIRIResolver owlIRIResolver;
 	private final OWLDatatypeFactory owlDatatypeFactory;
 	private final OWLLiteralFactory owlLiteralFactory;
 	private final SWRLAPILiteralFactory swrlAPILiteralFactory;
 	private final SWRLBuiltInArgumentFactory swrlBuiltInArgumentFactory;
 	private final SQWRLResultValueFactory sqwrlResultValueFactory;
 
-	public DefaultSWRLAPIOWLDataFactory(OWLIRIResolver iriResolver)
+	public DefaultSWRLAPIOWLDataFactory()
 	{
+		this.owlIRIResolver = new OWLIRIResolver();
 		this.owlDatatypeFactory = new DefaultOWLDatatypeFactory();
 		this.owlLiteralFactory = new DefaultOWLLiteralFactory(this.owlDatatypeFactory);
 		this.swrlAPILiteralFactory = new DefaultSWRLAPILiteralFactory(this.owlLiteralFactory);
 		this.swrlBuiltInArgumentFactory = new DefaultSWRLBuiltInArgumentFactoryImpl(this.owlLiteralFactory);
-		this.sqwrlResultValueFactory = new DefaultSQWRLResultValueFactory(iriResolver, this.owlLiteralFactory);
+		this.sqwrlResultValueFactory = new DefaultSQWRLResultValueFactory(this.owlIRIResolver, this.owlLiteralFactory);
 	}
 
 	@Override
@@ -124,4 +126,11 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
 	{
 		return this.swrlAPILiteralFactory;
 	}
+
+	@Override
+	public OWLIRIResolver getOWLIRIResolver()
+	{
+		return this.owlIRIResolver;
+	}
+
 }
