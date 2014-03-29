@@ -4,7 +4,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -34,13 +33,7 @@ import org.swrlapi.exceptions.UnresolvedBuiltInMethodException;
  */
 public abstract class SWRLBuiltInLibraryManager
 {
-	private static final String BuiltInLibraryPackageBaseName = "org.protege.swrlapi.builtins.";
-
-	// TODO The abox, tbox, swrlb, and swrlxml built-ins have not yet been ported to the Portability API so still reside
-	// inside the Protege-OWL SWRLTab project.
-	private static final String P3BuiltInLibraryPackageBaseName = "org.protege.swrltab.bridge.builtins.";
-	private static final Set<String> P3BuiltInLibraryPrefixes = new HashSet<String>(Arrays.asList(new String[] { "abox",
-			"tbox", "rdfb", "swrlxml" }));
+	private static final String BuiltInLibraryPackageBaseName = "org.swrlapi.builtins.";
 
 	// Holds instances of implementation classes defining built-in libraries
 	private static final Map<String, SWRLBuiltInLibrary> builtInLibraries;
@@ -128,10 +121,7 @@ public abstract class SWRLBuiltInLibraryManager
 		if (prefix.length() == 0)
 			return BuiltInLibraryPackageBaseName + "SWRLBuiltInLibraryImpl";
 		else {
-			if (P3BuiltInLibraryPrefixes.contains(prefix))
-				return P3BuiltInLibraryPackageBaseName + prefix + ".SWRLBuiltInLibraryImpl";
-			else
-				return BuiltInLibraryPackageBaseName + prefix + ".SWRLBuiltInLibraryImpl";
+			return BuiltInLibraryPackageBaseName + prefix + ".SWRLBuiltInLibraryImpl";
 		}
 	}
 

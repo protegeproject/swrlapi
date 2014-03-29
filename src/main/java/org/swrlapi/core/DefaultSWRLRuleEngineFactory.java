@@ -23,8 +23,8 @@ public class DefaultSWRLRuleEngineFactory implements SWRLRuleEngineFactory
 
 	/**
 	 * Register a rule engine. The {@link SWRLRuleEngineManager.TargetSWRLRuleEngineCreator} interface specifies a
-	 * {@link SWRLRuleEngineManager.TargetSWRLRuleEngineCreator#create(org.protege.swrlapi.core.SWRLRuleEngineBridge)}
-	 * method that returns an implementation of a {@link TargetRuleEngine}.
+	 * {@link SWRLRuleEngineManager.TargetSWRLRuleEngineCreator#create(org.swrlapi.core.SWRLRuleEngineBridge)} method that
+	 * returns an implementation of a {@link TargetRuleEngine}.
 	 */
 	@Override
 	public void registerRuleEngine(SWRLRuleEngineManager.TargetSWRLRuleEngineCreator ruleEngineCreator)
