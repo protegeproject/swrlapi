@@ -11,7 +11,7 @@ import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
-import org.semanticweb.owlapi.model.OWLOntologyID;
+import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.SWRLAtom;
 import org.semanticweb.owlapi.model.SWRLBuiltInAtom;
@@ -34,21 +34,27 @@ import org.swrlapi.ext.SWRLAPIOWLDataFactory;
 import org.swrlapi.ext.SWRLAPIOWLOntology;
 import org.swrlapi.ext.SWRLAPIRule;
 
-import uk.ac.manchester.cs.owl.owlapi.OWLOntologyImpl;
-
-public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAPIOWLOntology
+public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 {
-	private static final long serialVersionUID = 1L;
-
+	@SuppressWarnings("unused")
+	// TODO
+	private final OWLOntologyManager ontologyManager;
+	private final OWLOntology owlOntology;
 	private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
 	private final SWRLAPIOntologyProcessor swrlapiOntologyProcessor;
 
-	public DefaultSWRLAPIOWLOntology(OWLOntologyManager manager, OWLOntologyID ontologyID)
+	public DefaultSWRLAPIOWLOntology(OWLOntologyManager ontologyManager, OWLOntology owlOntology)
 	{
-		super(manager, ontologyID);
-
+		this.ontologyManager = ontologyManager;
+		this.owlOntology = owlOntology;
 		this.swrlapiOWLDataFactory = new DefaultSWRLAPIOWLDataFactory();
 		this.swrlapiOntologyProcessor = new DefaultSWRLAPIOntologyProcessor(this);
+	}
+
+	@Override
+	public OWLOntology getOWLOntology()
+	{
+		return this.owlOntology;
 	}
 
 	@Override
@@ -56,7 +62,7 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 	{
 		Set<SWRLAPIRule> swrlapiRules = new HashSet<SWRLAPIRule>();
 
-		for (SWRLRule owlapiRule : getAxioms(AxiomType.SWRL_RULE)) {
+		for (SWRLRule owlapiRule : getOWLOntology().getAxioms(AxiomType.SWRL_RULE)) {
 			SWRLAPIRule swrlapiRule = convertOWLAPIRule2SWRLAPIRule(owlapiRule);
 			swrlapiRules.add(swrlapiRule);
 		}
@@ -225,17 +231,17 @@ public class DefaultSWRLAPIOWLOntology extends OWLOntologyImpl implements SWRLAP
 
 		if (isURI(datatype)) {
 			IRI iri = IRI.create(literal.getLiteral());
-			if (containsClassInSignature(iri)) {
+			if (getOWLOntology().containsClassInSignature(iri)) {
 				return getSWRLBuiltInArgumentFactory().getClassBuiltInArgument(iri);
-			} else if (containsIndividualInSignature(iri)) {
+			} else if (getOWLOntology().containsIndividualInSignature(iri)) {
 				return getSWRLBuiltInArgumentFactory().getNamedIndividualBuiltInArgument(iri);
-			} else if (containsObjectPropertyInSignature(iri)) {
+			} else if (getOWLOntology().containsObjectPropertyInSignature(iri)) {
 				return getSWRLBuiltInArgumentFactory().getObjectPropertyBuiltInArgument(iri);
-			} else if (containsDataPropertyInSignature(iri)) {
+			} else if (getOWLOntology().containsDataPropertyInSignature(iri)) {
 				return getSWRLBuiltInArgumentFactory().getDataPropertyBuiltInArgument(iri);
-			} else if (containsAnnotationPropertyInSignature(iri)) {
+			} else if (getOWLOntology().containsAnnotationPropertyInSignature(iri)) {
 				return getSWRLBuiltInArgumentFactory().getAnnotationPropertyBuiltInArgument(iri);
-			} else if (containsDatatypeInSignature(iri)) {
+			} else if (getOWLOntology().containsDatatypeInSignature(iri)) {
 				return getSWRLBuiltInArgumentFactory().getDatatypeBuiltInArgument(iri);
 			} else {
 				return getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(literal);

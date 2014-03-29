@@ -37,8 +37,8 @@ public interface SWRLBuiltInBridge
 	SWRLAPIOWLDataFactory getOWLDataFactory();
 
 	/**
-	 * All named objects are recorded by a {@link OWLIRIResolver}. If a built-in injects a named object it should
-	 * also record it with this resolver.
+	 * All named objects are recorded by a {@link OWLIRIResolver}. If a built-in injects a named object it should also
+	 * record it with this resolver.
 	 */
 	OWLIRIResolver getOWLIRIResolver();
 
@@ -48,7 +48,7 @@ public interface SWRLBuiltInBridge
 	 * ontology. However, some specialized ABox and TBox built-ins may require directy ontology access (e.g.,
 	 * thox:isIndividual(?i)).
 	 */
-	SWRLAPIOWLOntology getOWLOntology();
+	SWRLAPIOWLOntology getSWRLAPIOWLOntology();
 
 	/**
 	 * This call can be used by built-ins to invoke another built-in. Unless you really know what you are doing its use

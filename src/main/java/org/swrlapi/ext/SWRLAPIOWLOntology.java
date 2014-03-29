@@ -32,8 +32,10 @@ import org.swrlapi.core.arguments.SWRLBuiltInArgument;
  * 
  * @see SWRLBuiltInArgument, SWRLAPIOntologyProcessor, SWRLAPIOWLDataFactory
  */
-public interface SWRLAPIOWLOntology extends OWLOntology
+public interface SWRLAPIOWLOntology
 {
+	OWLOntology getOWLOntology();
+
 	Set<SWRLAPIRule> getSWRLAPIRules();
 
 	OWLIRIResolver getOWLIRIResolver();

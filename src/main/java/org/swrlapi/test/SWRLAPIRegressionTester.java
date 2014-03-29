@@ -6,7 +6,6 @@ import java.util.Set;
 import java.util.StringTokenizer;
 
 import org.semanticweb.owlapi.model.OWLDatatype;
-import org.swrlapi.core.SWRLRuleEngineManager;
 import org.swrlapi.exceptions.SWRLRuleEngineException;
 import org.swrlapi.ext.SWRLAPIOWLOntology;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
@@ -19,46 +18,10 @@ import org.swrlapi.sqwrl.values.SQWRLResultValue;
 public class SWRLAPIRegressionTester
 {
 	private final SQWRLQueryEngine queryEngine;
-	private final String ruleEngineName;
 
-	public static void main(String[] args)
-	{
-		@SuppressWarnings("unused")
-		String ruleEngineName = "", owlFileName = "";
-
-		if (args.length == 2) {
-			ruleEngineName = args[0];
-			owlFileName = args[1];
-		} else
-			Usage();
-
-		// OWLOntologyManager manager = null;
-		// OWLOntologyID ontologyID = null;
-
-		// SWRLRuleEngineFactory.registerRuleEngine("Drools", new DroolsSWRLRuleEngineCreator());
-
-		// SWRLAPIOWLOntology swrlapiOWLOntology = new DefaultSWRLAPIOWLOntology(manager, ontologyID);
-
-	}
-
-	/**
-	 * Creator class that is supplied to a {@link SWRLRuleEngineManager} to create new instances of a
-	 * {@link DroolsSWRLRuleEngine}.
-	 */
-	// private class DroolsSWRLRuleEngineCreator implements SWRLRuleEngineManager.TargetSWRLRuleEngineCreator
-	// {
-	// @Override
-	// public TargetRuleEngine create(SWRLRuleEngineBridge bridge) throws TargetRuleEngineException
-	// {
-	// return new DroolsSWRLRuleEngine(bridge);
-	// }
-	// }
-
-	public SWRLAPIRegressionTester(SWRLAPIOWLOntology swrlapiOWLOntology, SQWRLQueryEngine queryEngine,
-			String ruleEngineName)
+	public SWRLAPIRegressionTester(SWRLAPIOWLOntology swrlapiOWLOntology, SQWRLQueryEngine queryEngine)
 	{
 		this.queryEngine = queryEngine;
-		this.ruleEngineName = ruleEngineName;
 	}
 
 	public void run()
@@ -72,8 +35,6 @@ public class SWRLAPIRegressionTester
 			queryEngine.reset();
 			// queryEngine.getOWL2RLEngine().disableAll();
 			// queryEngine.getOWL2RLEngine().enableTables(OWL2RLNames.Table.Table5);
-
-			System.out.println("Running tests with rule engine " + ruleEngineName);
 
 			for (String queryName : queryEngine.getSQWRLQueryNames()) {
 				System.out.print("Running test " + queryName + "...");
@@ -172,11 +133,5 @@ public class SWRLAPIRegressionTester
 			result.next();
 		}
 		return true;
-	}
-
-	private static void Usage()
-	{
-		System.err.println("Usage: SQWRLTest <ruleEngine> <owlFileName>");
-		System.exit(1);
 	}
 }

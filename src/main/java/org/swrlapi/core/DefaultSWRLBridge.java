@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLOntology;
 import org.swrlapi.builtins.SWRLBuiltInLibraryManager;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLBuiltInArgumentFactory;
@@ -89,7 +90,7 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 	@Override
 	public boolean hasOntologyChanged()
 	{
-		return getOWLOntology().hasOntologyChanged();
+		return getSWRLAPIOWLOntology().hasOntologyChanged();
 	}
 
 	/**
@@ -178,28 +179,22 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 
 	public boolean isOWLClass(IRI classIRI)
 	{
-		return this.swrlapiOWLOntology.containsClassInSignature(classIRI, true);
+		return getOWLOntology().containsClassInSignature(classIRI, true);
 	}
 
 	public boolean isOWLObjectProperty(IRI propertyIRI)
 	{
-		return this.swrlapiOWLOntology.containsObjectPropertyInSignature(propertyIRI, true);
+		return getOWLOntology().containsObjectPropertyInSignature(propertyIRI, true);
 	}
 
 	public boolean isOWLDataProperty(IRI propertyIRI)
 	{
-		return this.swrlapiOWLOntology.containsDataPropertyInSignature(propertyIRI, true);
+		return getOWLOntology().containsDataPropertyInSignature(propertyIRI, true);
 	}
 
 	public boolean isOWLNamedIndividual(IRI individualIRI)
 	{
-		return this.swrlapiOWLOntology.containsIndividualInSignature(individualIRI, true);
-	}
-
-	@Override
-	public SWRLAPIOWLOntology getOWLOntology()
-	{
-		return this.swrlapiOWLOntology;
+		return getOWLOntology().containsIndividualInSignature(individualIRI, true);
 	}
 
 	public SQWRLResult getSQWRLResult(String queryName) throws SQWRLException
@@ -253,14 +248,20 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 		return getSWRLAPIOWLDataFactory().getSWRLBuiltInArgumentFactory();
 	}
 
+	@Override
+	public SWRLAPIOWLOntology getSWRLAPIOWLOntology()
+	{
+		return swrlapiOWLOntology;
+	}
+
 	private SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory()
 	{
 		return getSWRLAPIOWLOntology().getSWRLAPIOWLDataFactory();
 	}
 
-	private SWRLAPIOWLOntology getSWRLAPIOWLOntology()
+	private OWLOntology getOWLOntology()
 	{
-		return swrlapiOWLOntology;
+		return getSWRLAPIOWLOntology().getOWLOntology();
 	}
 
 	private SWRLAPIOntologyProcessor getSWRLAPIOntologyProcessor()

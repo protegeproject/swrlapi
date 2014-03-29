@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.semanticweb.owlapi.model.AddAxiom;
 import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.swrlapi.exceptions.BuiltInException;
 import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
@@ -388,7 +389,7 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 
 	private void writeOWLAxiom2OWLOntology(OWLAxiom axiom) throws RuntimeException
 	{
-		AddAxiom addAxiomChange = new AddAxiom(getSWRLAPIOWLOntology(), axiom);
+		AddAxiom addAxiomChange = new AddAxiom(getOWLOntology(), axiom);
 
 		getOWLOntologyManager().applyChange(addAxiomChange);
 	}
@@ -401,6 +402,11 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 	private SWRLAPIOWLOntology getSWRLAPIOWLOntology()
 	{
 		return this.swrlapiOWLOntology;
+	}
+
+	private OWLOntology getOWLOntology()
+	{
+		return getSWRLAPIOWLOntology().getOWLOntology();
 	}
 
 	private SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory()

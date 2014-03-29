@@ -621,7 +621,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 	private IRI getObjectPropertyValueAsIRI(SWRLBuiltInBridge bridge, IRI individualIRI, IRI propertyIRI)
 	{
-		Set<OWLObjectPropertyAssertionAxiom> axioms = bridge.getOWLOntology().getOWLObjectPropertyAssertionAxioms(
+		Set<OWLObjectPropertyAssertionAxiom> axioms = bridge.getSWRLAPIOWLOntology().getOWLObjectPropertyAssertionAxioms(
 				individualIRI, propertyIRI);
 		OWLObjectPropertyAssertionAxiom axiom = axioms.toArray(new OWLObjectPropertyAssertionAxiom[0])[0];
 		OWLIndividual subject = axiom.getObject();
@@ -631,7 +631,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 	private String getDataPropertyValueAsAString(SWRLBuiltInBridge bridge, IRI individualIRI, IRI propertyIRI)
 	{
-		Set<OWLDataPropertyAssertionAxiom> axioms = bridge.getOWLOntology().getOWLDataPropertyAssertionAxioms(
+		Set<OWLDataPropertyAssertionAxiom> axioms = bridge.getSWRLAPIOWLOntology().getOWLDataPropertyAssertionAxioms(
 				individualIRI, propertyIRI);
 		OWLDataPropertyAssertionAxiom axiom = axioms.toArray(new OWLDataPropertyAssertionAxiom[0])[0];
 		OWLLiteral value = axiom.getObject();
@@ -668,6 +668,6 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 	private boolean isOWLIndividualOfType(IRI individualIRI, IRI classIRI) throws SWRLBuiltInLibraryException
 	{
-		return getBuiltInBridge().getOWLOntology().isOWLIndividualOfType(individualIRI, classIRI);
+		return getBuiltInBridge().getSWRLAPIOWLOntology().isOWLIndividualOfType(individualIRI, classIRI);
 	}
 }
