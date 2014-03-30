@@ -50,7 +50,7 @@ public class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SW
 	}
 
 	@Override
-	public String getBuiltInPrefixedName()
+	public String getBuiltInShortName()
 	{
 		return builtInShortName;
 	}

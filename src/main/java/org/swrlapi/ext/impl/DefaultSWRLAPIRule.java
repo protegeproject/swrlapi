@@ -190,7 +190,7 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 		for (SWRLAtom atom : atoms) {
 			if (atom instanceof SWRLAPIBuiltInAtom) {
 				SWRLAPIBuiltInAtom builtInAtom = (SWRLAPIBuiltInAtom)atom;
-				if (builtInNames.contains(builtInAtom.getBuiltInPrefixedName()))
+				if (builtInNames.contains(builtInAtom.getBuiltInShortName()))
 					result.add(builtInAtom);
 			}
 		}

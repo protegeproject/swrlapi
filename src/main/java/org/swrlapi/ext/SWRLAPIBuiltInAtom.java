@@ -14,7 +14,7 @@ public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtom
 {
 	String getRuleName();
 
-	String getBuiltInPrefixedName();
+	String getBuiltInShortName();
 
 	IRI getBuiltInIRI();
 
