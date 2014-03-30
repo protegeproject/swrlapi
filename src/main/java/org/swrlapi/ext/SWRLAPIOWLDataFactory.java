@@ -1,5 +1,8 @@
 package org.swrlapi.ext;
 
+import java.util.List;
+
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataFactory;
@@ -10,6 +13,7 @@ import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.SWRLRule;
 import org.swrlapi.core.OWLIRIResolver;
+import org.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 
@@ -27,6 +31,9 @@ public interface SWRLAPIOWLDataFactory extends OWLDataFactory
 	SWRLAPIRule getSWRLRule(String ruleName, String ruleText); // Also SQWRL query
 
 	SWRLBuiltInArgumentFactory getSWRLBuiltInArgumentFactory();
+
+	SWRLAPIBuiltInAtom getSWRLAPIBuiltInAtom(String ruleName, IRI builtInIRI, String builtInShortName,
+			List<SWRLBuiltInArgument> arguments);
 
 	OWLDatatypeFactory getOWLDatatypeFactory();
 

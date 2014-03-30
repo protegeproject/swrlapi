@@ -146,10 +146,12 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		for (SWRLAtom atom : owlapiRule.getBody()) {
 			if (isSWRLBuiltInAtom(atom)) {
 				SWRLBuiltInAtom builtInAtom = (SWRLBuiltInAtom)atom;
+				IRI builtInIRI = builtInAtom.getPredicate();
+				String builtInShortName = getOWLIRIResolver().iri2PrefixedName(builtInIRI);
 				List<SWRLDArgument> swrlDArguments = builtInAtom.getArguments();
-				List<SWRLDArgument> swrlBuiltInArguments = convertSWRLDArguments2SWRLBuiltInArguments(swrlDArguments);
-				SWRLBuiltInAtom swrlapiAtom = getSWRLAPIOWLDataFactory().getSWRLBuiltInAtom(builtInAtom.getPredicate(),
-						swrlBuiltInArguments);
+				List<SWRLBuiltInArgument> swrlBuiltInArguments = convertSWRLDArguments2SWRLBuiltInArguments(swrlDArguments);
+				SWRLBuiltInAtom swrlapiAtom = getSWRLAPIOWLDataFactory().getSWRLAPIBuiltInAtom(ruleName, builtInIRI,
+						builtInShortName, swrlBuiltInArguments);
 				swrlapiBodyAtoms.add(swrlapiAtom);
 			} else
 				swrlapiBodyAtoms.add(atom);
@@ -158,10 +160,12 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		for (SWRLAtom atom : owlapiRule.getHead()) {
 			if (isSWRLBuiltInAtom(atom)) {
 				SWRLBuiltInAtom builtInAtom = (SWRLBuiltInAtom)atom;
+				IRI builtInIRI = builtInAtom.getPredicate();
+				String builtInShortName = getOWLIRIResolver().iri2PrefixedName(builtInIRI);
 				List<SWRLDArgument> swrlDArguments = builtInAtom.getArguments();
-				List<SWRLDArgument> swrlBuiltInArguments = convertSWRLDArguments2SWRLBuiltInArguments(swrlDArguments);
-				SWRLBuiltInAtom swrlapiAtom = getSWRLAPIOWLDataFactory().getSWRLBuiltInAtom(builtInAtom.getPredicate(),
-						swrlBuiltInArguments);
+				List<SWRLBuiltInArgument> swrlBuiltInArguments = convertSWRLDArguments2SWRLBuiltInArguments(swrlDArguments);
+				SWRLBuiltInAtom swrlapiAtom = getSWRLAPIOWLDataFactory().getSWRLAPIBuiltInAtom(ruleName, builtInIRI,
+						builtInShortName, swrlBuiltInArguments);
 				swrlapiHeadAtoms.add(swrlapiAtom);
 			} else
 				swrlapiHeadAtoms.add(atom);
@@ -177,9 +181,9 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	 * 
 	 * @see SWRLBuiltInArgument
 	 */
-	private List<SWRLDArgument> convertSWRLDArguments2SWRLBuiltInArguments(List<SWRLDArgument> swrlDArguments)
+	private List<SWRLBuiltInArgument> convertSWRLDArguments2SWRLBuiltInArguments(List<SWRLDArgument> swrlDArguments)
 	{
-		List<SWRLDArgument> swrlBuiltInArguments = new ArrayList<SWRLDArgument>();
+		List<SWRLBuiltInArgument> swrlBuiltInArguments = new ArrayList<SWRLBuiltInArgument>();
 
 		for (SWRLDArgument swrlDArgument : swrlDArguments) {
 			SWRLBuiltInArgument swrlBuiltInArgument = convertSWRLDArgument2SWRLBuiltInArgument(swrlDArgument);

@@ -1,5 +1,8 @@
 package org.swrlapi.ext.impl;
 
+import java.util.List;
+
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataProperty;
@@ -8,10 +11,12 @@ import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.swrlapi.core.OWLIRIResolver;
+import org.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.core.arguments.impl.DefaultSWRLBuiltInArgumentFactoryImpl;
 import org.swrlapi.ext.OWLDatatypeFactory;
 import org.swrlapi.ext.OWLLiteralFactory;
+import org.swrlapi.ext.SWRLAPIBuiltInAtom;
 import org.swrlapi.ext.SWRLAPILiteralFactory;
 import org.swrlapi.ext.SWRLAPIOWLDataFactory;
 import org.swrlapi.ext.SWRLAPIRule;
@@ -45,6 +50,13 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
 	public SWRLBuiltInArgumentFactory getSWRLBuiltInArgumentFactory()
 	{
 		return this.swrlBuiltInArgumentFactory;
+	}
+
+	@Override
+	public SWRLAPIBuiltInAtom getSWRLAPIBuiltInAtom(String ruleName, IRI builtInIRI, String builtInShortName,
+			List<SWRLBuiltInArgument> arguments)
+	{
+		return new DefaultSWRLAPIBuiltInAtom(ruleName, builtInIRI, builtInShortName, arguments);
 	}
 
 	@Override

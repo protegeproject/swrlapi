@@ -74,8 +74,6 @@ public class SWRLAPIRegressionTester
 				System.out.println("Passed " + passedTests + " test(s)!");
 		} catch (SWRLRuleEngineException e) {
 			System.out.println("Internal error running tests: " + e.getMessage());
-		} catch (SQWRLException e) {
-			System.out.println("Internal error running tests: " + e.getMessage());
 		}
 	}
 

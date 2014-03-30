@@ -36,6 +36,9 @@ public interface SWRLAPIOWLOntology
 {
 	OWLOntology getOWLOntology();
 
+	/**
+	 * Create {@link SWRLAPIRule} objects from standard OWLAP- {@link SWRLRule} objects in an ontology.
+	 */
 	Set<SWRLAPIRule> getSWRLAPIRules();
 
 	OWLIRIResolver getOWLIRIResolver();
