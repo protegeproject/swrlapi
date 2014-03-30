@@ -45,7 +45,7 @@ public interface SQWRLQueryEngine
 	/**
 	 * Get the names of the enabled SQWRL queries in the ontology.
 	 */
-	Set<String> getSQWRLQueryNames() throws SQWRLException;
+	Set<String> getSQWRLQueryNames();
 
 	/**
 	 * Reset the query engine.

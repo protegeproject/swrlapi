@@ -235,7 +235,7 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 	 * Get the names of the enabled SQWRL queries in the ontology.
 	 */
 	@Override
-	public Set<String> getSQWRLQueryNames() throws SQWRLException
+	public Set<String> getSQWRLQueryNames()
 	{
 		return getSWRLAPIOntologyProcessor().getSQWRLQueryNames();
 	}
