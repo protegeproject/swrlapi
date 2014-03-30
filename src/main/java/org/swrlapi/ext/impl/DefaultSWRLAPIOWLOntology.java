@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.IRI;
@@ -138,7 +139,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 
 	private SWRLAPIRule convertOWLAPIRule2SWRLAPIRule(SWRLRule owlapiRule)
 	{
-		String ruleName = ""; // TODO
+		String ruleName = UUID.randomUUID().toString(); // TODO
 		List<SWRLAtom> swrlapiBodyAtoms = new ArrayList<SWRLAtom>();
 		List<SWRLAtom> swrlapiHeadAtoms = new ArrayList<SWRLAtom>();
 

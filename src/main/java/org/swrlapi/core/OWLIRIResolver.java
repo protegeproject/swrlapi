@@ -27,7 +27,7 @@ public class OWLIRIResolver
 {
 	private final DefaultPrefixManager prefixManager;
 	private final Map<String, IRI> prefixedName2IRI;
-	private final Map<IRI, String> iri2PrefixedName;
+	private final Map<IRI, String> iri2PrefixedNameCache;
 
 	private final Set<String> variablePrefixedNames;
 	private final Set<String> classPrefixedNames;
@@ -42,7 +42,7 @@ public class OWLIRIResolver
 		this.prefixManager = prefixManager;
 
 		this.prefixedName2IRI = new HashMap<String, IRI>();
-		this.iri2PrefixedName = new HashMap<IRI, String>();
+		this.iri2PrefixedNameCache = new HashMap<IRI, String>();
 
 		this.variablePrefixedNames = new HashSet<String>();
 		this.classPrefixedNames = new HashSet<String>();
@@ -56,7 +56,7 @@ public class OWLIRIResolver
 	public void reset()
 	{
 		this.prefixedName2IRI.clear();
-		this.iri2PrefixedName.clear();
+		this.iri2PrefixedNameCache.clear();
 		this.variablePrefixedNames.clear();
 		this.classPrefixedNames.clear();
 		this.namedIndividualPrefixedNames.clear();
@@ -68,8 +68,8 @@ public class OWLIRIResolver
 
 	public String iri2PrefixedName(IRI iri)
 	{
-		if (this.iri2PrefixedName.containsKey(iri))
-			return this.iri2PrefixedName(iri);
+		if (this.iri2PrefixedNameCache.containsKey(iri))
+			return this.iri2PrefixedNameCache.get(iri);
 		else {
 			String prefixedName = prefixManager.getPrefixIRI(iri);
 			if (prefixedName != null)
@@ -195,7 +195,7 @@ public class OWLIRIResolver
 	{
 		if (!this.prefixedName2IRI.containsKey(prefixedName)) {
 			this.prefixedName2IRI.put(prefixedName, iri);
-			this.iri2PrefixedName.put(iri, prefixedName);
+			this.iri2PrefixedNameCache.put(iri, prefixedName);
 		}
 	}
 

@@ -93,6 +93,9 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 			this.exportedOWLAxioms.clear();
 			getOWL2RLEngine().resetRuleSelectionChanged();
 			getSWRLAPIOWLOntology().resetOntologyChanged();
+			getSWRLAPIOntologyProcessor().processOntology();
+		} catch (SQWRLException e) {
+			throw new SWRLRuleEngineException("error resetting target rule engine: " + e.getMessage(), e);
 		} catch (TargetRuleEngineException e) {
 			throw new SWRLRuleEngineException("error resetting target rule engine: " + e.getMessage(), e);
 		} catch (SWRLBuiltInBridgeException e) {
