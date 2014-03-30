@@ -297,11 +297,11 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 	private void processSWRLRuleOrSQWRLQuery(SWRLAPIRule ruleOrQuery) throws SQWRLException
 	{
 		if (isSQWRLQuery(ruleOrQuery)) {
-			SQWRLQuery query = new DefaultSQWRLQuery(ruleOrQuery.getName(), ruleOrQuery.getBodyAtoms(),
+			SQWRLQuery query = new DefaultSQWRLQuery(ruleOrQuery.getRuleName(), ruleOrQuery.getBodyAtoms(),
 					ruleOrQuery.getHeadAtoms(), getSWRLAPIOWLDataFactory(), getOWLIRIResolver());
-			this.queries.put(ruleOrQuery.getName(), query);
+			this.queries.put(ruleOrQuery.getRuleName(), query);
 		} else {
-			this.rules.put(ruleOrQuery.getName(), ruleOrQuery);
+			this.rules.put(ruleOrQuery.getRuleName(), ruleOrQuery);
 			this.assertedOWLAxioms.add(ruleOrQuery); // A SWRL rule is a type of OWL axiom; a SQWRL query is not.
 		}
 	}

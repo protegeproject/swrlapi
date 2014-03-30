@@ -32,6 +32,7 @@ import org.swrlapi.core.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLVariableBuiltInArgument;
+import org.swrlapi.ext.SWRLAPIBuiltInAtom;
 import org.swrlapi.ext.SWRLAPIOWLDataFactory;
 import org.swrlapi.ext.SWRLAPIOWLOntology;
 import org.swrlapi.ext.SWRLAPIRule;
@@ -137,13 +138,19 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		throw new RuntimeException("Not implemented");
 	}
 
+	/**
+	 * We basically take an OWLAPI {@link SWRLRule} object and for every OWLAPI {@link SWRLBuiltInAtom} in it we create a
+	 * SWRLAPI {@link SWRLAPIBuiltInAtom}; all other atoms remain the same.
+	 */
 	private SWRLAPIRule convertOWLAPIRule2SWRLAPIRule(SWRLRule owlapiRule)
 	{
-		String ruleName = UUID.randomUUID().toString(); // TODO
+		String ruleName = UUID.randomUUID().toString(); // TODO Get rule name from annotation property if there.
+		List<SWRLAtom> owlapiBodyAtoms = new ArrayList<SWRLAtom>(owlapiRule.getBody());
+		List<SWRLAtom> owlapiHeadAtoms = new ArrayList<SWRLAtom>(owlapiRule.getHead());
 		List<SWRLAtom> swrlapiBodyAtoms = new ArrayList<SWRLAtom>();
 		List<SWRLAtom> swrlapiHeadAtoms = new ArrayList<SWRLAtom>();
 
-		for (SWRLAtom atom : owlapiRule.getBody()) {
+		for (SWRLAtom atom : owlapiBodyAtoms) {
 			if (isSWRLBuiltInAtom(atom)) {
 				SWRLBuiltInAtom builtInAtom = (SWRLBuiltInAtom)atom;
 				IRI builtInIRI = builtInAtom.getPredicate();
@@ -154,10 +161,10 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 						builtInShortName, swrlBuiltInArguments);
 				swrlapiBodyAtoms.add(swrlapiAtom);
 			} else
-				swrlapiBodyAtoms.add(atom);
+				swrlapiBodyAtoms.add(atom); // Only built-in atoms are converted; other atoms remain the same
 		}
 
-		for (SWRLAtom atom : owlapiRule.getHead()) {
+		for (SWRLAtom atom : owlapiHeadAtoms) {
 			if (isSWRLBuiltInAtom(atom)) {
 				SWRLBuiltInAtom builtInAtom = (SWRLBuiltInAtom)atom;
 				IRI builtInIRI = builtInAtom.getPredicate();
@@ -168,7 +175,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 						builtInShortName, swrlBuiltInArguments);
 				swrlapiHeadAtoms.add(swrlapiAtom);
 			} else
-				swrlapiHeadAtoms.add(atom);
+				swrlapiHeadAtoms.add(atom); // Only built-in atoms are converted; other atoms remain the same
 		}
 		return new DefaultSWRLAPIRule(ruleName, swrlapiBodyAtoms, swrlapiHeadAtoms, getOWLIRIResolver());
 	}

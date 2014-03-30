@@ -44,7 +44,7 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 	}
 
 	@Override
-	public String getName()
+	public String getRuleName()
 	{
 		return this.ruleName;
 	}
@@ -124,8 +124,7 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 		Set<String> variableNamesBoundByBuiltIns = new HashSet<String>(); // Names of variables bound by built-ins in this
 																																			// rule
 
-		// Process the body atoms and build up list of (1) built-in body atoms, and (2) the variables used by non-built body
-		// in atoms.
+		// Process body atoms to build list of (1) built-in body atoms, and (2) the variables used by non-built-in atoms.
 		for (SWRLAtom atom : getBodyAtoms()) {
 			if (atom instanceof SWRLAPIBuiltInAtom)
 				bodyBuiltInAtoms.add((SWRLAPIBuiltInAtom)atom);
@@ -143,17 +142,13 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 					String argumentVariableName = argument.asVariable().getVariableName();
 
 					// If a variable argument is not used by any non built-in body atom or is not bound by another body built-in
-					// atom it will therefore be
-					// unbound when this built-in is called. We thus set this built-in argument to unbound. If a built-in binds an
-					// argument, all later
-					// built-ins (proceeding from left to right) will be passed the bound value of this variable during rule
-					// execution.
+					// atom it will therefore be unbound when this built-in is called. We thus set this built-in argument to
+					// unbound. If a built-in binds an argument, all later built-ins (proceeding from left to right) will be
+					// passed the bound value of this variable during rule execution.
 					if (!variableNamesUsedByNonBuiltInBodyAtoms.contains(argumentVariableName)
 							&& !variableNamesBoundByBuiltIns.contains(argumentVariableName)) {
-						argument.asVariable().setUnbound(); // Tell the built-in that it is expected to bind this
-																																		// argument.
-						variableNamesBoundByBuiltIns.add(argumentVariableName); // Flag this as a bound variable for later
-																																		// built-ins.
+						argument.asVariable().setUnbound(); // Tell the built-in that it is expected to bind this argument
+						variableNamesBoundByBuiltIns.add(argumentVariableName); // Flag as a bound variable for later built-ins
 					}
 				}
 			}
@@ -161,15 +156,15 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 		// If we have built-in atoms, construct a new body with built-in atoms moved to the end of the list. Some rule
 		// engines (e.g., Jess) expect variables used as parameters to functions to have been defined before their use in
 		// a left to right fashion.
-		finalBodyAtoms = processBodyNonBuiltInAtoms(bodyNonBuiltInAtoms);
+		finalBodyAtoms = reorganizeBodyNonBuiltInAtoms(bodyNonBuiltInAtoms);
 		this.bodyAtoms = finalBodyAtoms;
 		finalBodyAtoms.addAll(bodyBuiltInAtoms);
 	}
 
 	/**
-	 * Build up a list of body class atoms and non class, non built-in atoms.
+	 * Reorganize body non-built atoms so that class atoms appear firsts, followed by other atom types.
 	 */
-	private List<SWRLAtom> processBodyNonBuiltInAtoms(List<SWRLAtom> bodyNonBuiltInAtoms)
+	private List<SWRLAtom> reorganizeBodyNonBuiltInAtoms(List<SWRLAtom> bodyNonBuiltInAtoms)
 	{
 		List<SWRLAtom> bodyClassAtoms = new ArrayList<SWRLAtom>();
 		List<SWRLAtom> bodyNonClassNonBuiltInAtoms = new ArrayList<SWRLAtom>();
@@ -182,8 +177,8 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 				bodyNonClassNonBuiltInAtoms.add(atom);
 		}
 
-		result.addAll(bodyClassAtoms); // We arrange the class atoms first.
-		result.addAll(bodyNonClassNonBuiltInAtoms);
+		result.addAll(bodyClassAtoms); // We arrange the class atoms first
+		result.addAll(bodyNonClassNonBuiltInAtoms); // Followed by other non built-in atoms
 
 		return result;
 	}
