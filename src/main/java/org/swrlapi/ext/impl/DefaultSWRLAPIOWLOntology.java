@@ -13,6 +13,7 @@ import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.PrefixManager;
 import org.semanticweb.owlapi.model.SWRLAtom;
 import org.semanticweb.owlapi.model.SWRLBuiltInAtom;
 import org.semanticweb.owlapi.model.SWRLDArgument;
@@ -20,6 +21,7 @@ import org.semanticweb.owlapi.model.SWRLLiteralArgument;
 import org.semanticweb.owlapi.model.SWRLPredicate;
 import org.semanticweb.owlapi.model.SWRLRule;
 import org.semanticweb.owlapi.model.SWRLVariable;
+import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.semanticweb.owlapi.vocab.OWL2Datatype;
 import org.swrlapi.core.DefaultSWRLAPIOntologyProcessor;
 import org.swrlapi.core.OWLIRIResolver;
@@ -40,6 +42,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	// TODO
 	private final OWLOntologyManager ontologyManager;
 	private final OWLOntology owlOntology;
+	private final OWLIRIResolver owlIRIResolver;
 	private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
 	private final SWRLAPIOntologyProcessor swrlapiOntologyProcessor;
 
@@ -47,7 +50,10 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	{
 		this.ontologyManager = ontologyManager;
 		this.owlOntology = owlOntology;
-		this.swrlapiOWLDataFactory = new DefaultSWRLAPIOWLDataFactory();
+		PrefixManager prefixManager = new DefaultPrefixManager(this.ontologyManager
+				.getOntologyDocumentIRI(this.owlOntology).toString());
+		this.owlIRIResolver = new OWLIRIResolver(prefixManager);
+		this.swrlapiOWLDataFactory = new DefaultSWRLAPIOWLDataFactory(owlIRIResolver);
 		this.swrlapiOntologyProcessor = new DefaultSWRLAPIOntologyProcessor(this);
 	}
 

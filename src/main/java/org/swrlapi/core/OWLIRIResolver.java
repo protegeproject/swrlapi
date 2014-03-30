@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
+import org.semanticweb.owlapi.model.PrefixManager;
 import org.semanticweb.owlapi.model.SWRLVariable;
 import org.swrlapi.core.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLDataPropertyBuiltInArgument;
@@ -24,6 +25,7 @@ import org.swrlapi.exceptions.TargetRuleEngineException;
  */
 public class OWLIRIResolver
 {
+	private final PrefixManager prefixManager;
 	private final Map<String, IRI> prefixedName2IRI;
 	private final Map<IRI, String> iri2PrefixedName;
 
@@ -35,8 +37,10 @@ public class OWLIRIResolver
 	private final Set<String> annotationPropertyPrefixedNames;
 	private final Set<String> datatypePrefixedNames;
 
-	public OWLIRIResolver()
+	public OWLIRIResolver(PrefixManager prefixManager)
 	{
+		this.prefixManager = prefixManager;
+
 		this.prefixedName2IRI = new HashMap<String, IRI>();
 		this.iri2PrefixedName = new HashMap<IRI, String>();
 
@@ -66,8 +70,13 @@ public class OWLIRIResolver
 	{
 		if (this.iri2PrefixedName.containsKey(iri))
 			return this.iri2PrefixedName(iri);
-		else
-			throw new RuntimeException("could not find prefixed name for IRI " + iri);
+		else {
+			String prefixedName = prefixManager.getPrefixIRI(iri);
+			if (prefixedName != null)
+				return prefixedName;
+			else
+				throw new RuntimeException("could not find prefixed name for IRI " + iri);
+		}
 	}
 
 	public IRI prefixedName2IRI(String prefixedName) throws TargetRuleEngineException
