@@ -98,6 +98,22 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 	}
 
 	@Override
+	public void reset()
+	{
+		this.rules.clear();
+		this.queries.clear();
+		getOWLIRIResolver().reset();
+
+		this.assertedOWLAxioms.clear();
+
+		this.owlClassDeclarationAxioms.clear();
+		this.owlObjectPropertyDeclarationAxioms.clear();
+		this.owlDataPropertyDeclarationAxioms.clear();
+		this.owlAnnotationPropertyDeclarationAxioms.clear();
+		this.owlIndividualDeclarationAxioms.clear();
+	}
+
+	@Override
 	public void processOntology() throws SQWRLException
 	{
 		reset();
@@ -229,21 +245,6 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 			throw new SQWRLInvalidQueryNameException(queryName);
 
 		return this.queries.get(queryName).getResultGenerator();
-	}
-
-	private void reset()
-	{
-		this.rules.clear();
-		this.queries.clear();
-		getOWLIRIResolver().reset();
-
-		this.assertedOWLAxioms.clear();
-
-		this.owlClassDeclarationAxioms.clear();
-		this.owlObjectPropertyDeclarationAxioms.clear();
-		this.owlDataPropertyDeclarationAxioms.clear();
-		this.owlAnnotationPropertyDeclarationAxioms.clear();
-		this.owlIndividualDeclarationAxioms.clear();
 	}
 
 	/**

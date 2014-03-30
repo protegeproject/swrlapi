@@ -20,5 +20,4 @@ public interface SWRLRuleEngineFactory
 
 	SWRLRuleEngine createSWRLRuleEngine(String ruleEngineName, OWLOntologyManager owlOntologyManager,
 			SWRLAPIOWLOntology swrlapiOWLOntology) throws SWRLRuleEngineException;
-
 }

@@ -29,6 +29,8 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
  */
 public interface SWRLAPIOntologyProcessor
 {
+	void reset();
+
 	void processOntology() throws SQWRLException;
 
 	Set<OWLAxiom> getOWLAxioms();

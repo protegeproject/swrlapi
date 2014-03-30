@@ -87,14 +87,12 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 	public void reset() throws SWRLRuleEngineException
 	{
 		try {
-			getSWRLAPIOntologyProcessor().processOntology();
+			getSWRLAPIOntologyProcessor().reset();
 			getTargetRuleEngine().resetRuleEngine(); // Reset the target rule engine
 			getBuiltInBridgeController().resetController();
 			this.exportedOWLAxioms.clear();
 			getOWL2RLEngine().resetRuleSelectionChanged();
 			getSWRLAPIOWLOntology().resetOntologyChanged();
-		} catch (SQWRLException e) {
-			throw new SWRLRuleEngineException("error resetting target rule engine: " + e.getMessage(), e);
 		} catch (TargetRuleEngineException e) {
 			throw new SWRLRuleEngineException("error resetting target rule engine: " + e.getMessage(), e);
 		} catch (SWRLBuiltInBridgeException e) {
@@ -109,7 +107,10 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 	public void run() throws SWRLRuleEngineException
 	{
 		try {
+			getSWRLAPIOntologyProcessor().processOntology();
 			getTargetRuleEngine().runRuleEngine();
+		} catch (SQWRLException e) {
+			throw new SWRLRuleEngineException("error running rule engine: " + e.getMessage(), e);
 		} catch (TargetRuleEngineException e) {
 			throw new SWRLRuleEngineException("error running rule engine: " + e.getMessage(), e);
 		}
