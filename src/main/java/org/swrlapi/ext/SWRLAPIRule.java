@@ -33,5 +33,9 @@ public interface SWRLAPIRule extends SWRLRule
 
 	List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromBody(Set<String> builtInNames);
 
+	boolean isActive();
+
+	String comment();
+
 	String toDisplayText();
 }

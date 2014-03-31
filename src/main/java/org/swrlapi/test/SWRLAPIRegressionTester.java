@@ -8,6 +8,7 @@ import java.util.StringTokenizer;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.swrlapi.exceptions.SWRLRuleEngineException;
 import org.swrlapi.ext.SWRLAPIOWLOntology;
+import org.swrlapi.sqwrl.SQWRLQuery;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
@@ -18,9 +19,11 @@ import org.swrlapi.sqwrl.values.SQWRLResultValue;
 public class SWRLAPIRegressionTester
 {
 	private final SQWRLQueryEngine queryEngine;
+	private final SWRLAPIOWLOntology swrlapiOWLOntology;
 
 	public SWRLAPIRegressionTester(SWRLAPIOWLOntology swrlapiOWLOntology, SQWRLQueryEngine queryEngine)
 	{
+		this.swrlapiOWLOntology = swrlapiOWLOntology;
 		this.queryEngine = queryEngine;
 	}
 
@@ -36,7 +39,8 @@ public class SWRLAPIRegressionTester
 			// queryEngine.getOWL2RLEngine().disableAll();
 			// queryEngine.getOWL2RLEngine().enableTables(OWL2RLNames.Table.Table5);
 
-			for (String queryName : queryEngine.getSQWRLQueryNames()) {
+			for (SQWRLQuery query : queryEngine.getSQWRLQueries()) {
+				String queryName = query.getName();
 				System.out.print("Running test " + queryName + "...");
 				numberOfTests++;
 				try {
@@ -45,9 +49,9 @@ public class SWRLAPIRegressionTester
 						System.out.println("FAILED - no result returned!");
 						failedTests.add(queryName);
 					} else {
-						Object rdfsComment = getRDFSCommentFromSQWRLQuery();
-						if (rdfsComment != null) {
-							if (compare(result, rdfsComment.toString())) {
+						String comment = query.getComment();
+						if (comment.length() != 0) {
+							if (compare(result, comment)) {
 								System.out.println("PASSED");
 								passedTests++;
 							} else {
@@ -74,12 +78,9 @@ public class SWRLAPIRegressionTester
 				System.out.println("Passed " + passedTests + " test(s)!");
 		} catch (SWRLRuleEngineException e) {
 			System.out.println("Internal error running tests: " + e.getMessage());
+		} catch (SQWRLException e) {
+			System.out.println("Internal error running tests: " + e.getMessage());
 		}
-	}
-
-	private String getRDFSCommentFromSQWRLQuery()
-	{
-		return "TODO";
 	}
 
 	private boolean compare(SQWRLResult result, String resultString) throws SQWRLException

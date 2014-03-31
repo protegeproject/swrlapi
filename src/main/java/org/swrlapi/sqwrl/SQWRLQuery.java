@@ -32,4 +32,6 @@ public interface SQWRLQuery
 	void setActive(boolean isActive);
 
 	boolean isActive();
+
+	String getComment();
 }

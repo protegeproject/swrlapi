@@ -3,6 +3,7 @@ package org.swrlapi.ext;
 import java.util.Set;
 
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
@@ -46,6 +47,8 @@ public interface SWRLAPIOWLOntology
 	OWLIRIResolver getOWLIRIResolver();
 
 	SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory();
+
+	OWLDataFactory getOWLDataFactory();
 
 	SWRLAPIOntologyProcessor getSWRLAPIOntologyProcessor();
 

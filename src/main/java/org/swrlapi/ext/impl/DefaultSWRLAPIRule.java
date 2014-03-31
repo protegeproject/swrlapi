@@ -24,17 +24,22 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 	private static final long serialVersionUID = 1L;
 
 	private final String ruleName;
+	private final boolean active;
+	private final String comment;
+
 	private List<SWRLAtom> bodyAtoms; // Body atoms can be reorganized during processing
 	private final List<SWRLAtom> headAtoms;
 
 	private final OWLIRIResolver iriResolver;
 
 	public DefaultSWRLAPIRule(String ruleName, List<? extends SWRLAtom> bodyAtoms, List<? extends SWRLAtom> headAtoms,
-			OWLIRIResolver iriResolver)
+			OWLIRIResolver iriResolver, boolean active, String comment)
 	{
 		// TODO Rule name
 		super(new HashSet<SWRLAtom>(bodyAtoms), new HashSet<SWRLAtom>(headAtoms), new HashSet<OWLAnnotation>());
 		this.ruleName = ruleName;
+		this.active = active;
+		this.comment = comment;
 		this.bodyAtoms = new ArrayList<SWRLAtom>(bodyAtoms);
 		this.headAtoms = new ArrayList<SWRLAtom>(headAtoms);
 
@@ -47,6 +52,18 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 	public String getRuleName()
 	{
 		return this.ruleName;
+	}
+
+	@Override
+	public boolean isActive()
+	{
+		return active;
+	}
+
+	@Override
+	public String comment()
+	{
+		return comment;
 	}
 
 	@Override

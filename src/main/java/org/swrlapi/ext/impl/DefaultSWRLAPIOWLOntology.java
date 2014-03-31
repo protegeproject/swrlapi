@@ -8,6 +8,9 @@ import java.util.UUID;
 
 import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLAnnotation;
+import org.semanticweb.owlapi.model.OWLAnnotationProperty;
+import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
@@ -23,6 +26,7 @@ import org.semanticweb.owlapi.model.SWRLRule;
 import org.semanticweb.owlapi.model.SWRLVariable;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.semanticweb.owlapi.vocab.OWL2Datatype;
+import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 import org.swrlapi.core.DefaultSWRLAPIOntologyProcessor;
 import org.swrlapi.core.OWLIRIResolver;
 import org.swrlapi.core.SWRLAPIOntologyProcessor;
@@ -83,6 +87,12 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	}
 
 	@Override
+	public OWLDataFactory getOWLDataFactory()
+	{
+		return ontologyManager.getOWLDataFactory();
+	}
+
+	@Override
 	public SWRLAPIOntologyProcessor getSWRLAPIOntologyProcessor()
 	{
 		return this.swrlapiOntologyProcessor;
@@ -109,7 +119,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	@Override
 	public boolean hasOntologyChanged()
 	{
-		return true; // TODO
+		return false; // TODO
 	}
 
 	@Override
@@ -138,13 +148,54 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		throw new RuntimeException("Not implemented");
 	}
 
+	private String getRuleName(SWRLRule owlapiRule)
+	{
+		String ruleName = UUID.randomUUID().toString(); // TODO Get rule name from annotation property if there.
+
+		// OWLAnnotationProperty labelAnnotation = getOWLDataFactory().getOWLAnnotationProperty(
+		// OWLRDFVocabulary.RDFS_LABEL.getIRI());
+
+		return ruleName;
+	}
+
+	private boolean getActive(SWRLRule owlapiRule)
+	{
+		OWLAnnotationProperty enabledAnnotation = getOWLDataFactory().getOWLAnnotationProperty(
+				IRI.create("http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"));
+
+		for (OWLAnnotation annotation : owlapiRule.getAnnotations(enabledAnnotation)) {
+			if (annotation.getValue() instanceof OWLLiteral) {
+				OWLLiteral literal = (OWLLiteral)annotation.getValue();
+				if (literal.isBoolean())
+					return literal.parseBoolean();
+			}
+		}
+		return true;
+	}
+
+	private String getComment(SWRLRule owlapiRule)
+	{
+		OWLAnnotationProperty commentAnnotation = getOWLDataFactory().getOWLAnnotationProperty(
+				OWLRDFVocabulary.RDFS_COMMENT.getIRI());
+
+		for (OWLAnnotation annotation : owlapiRule.getAnnotations(commentAnnotation)) {
+			if (annotation.getValue() instanceof OWLLiteral) {
+				OWLLiteral literal = (OWLLiteral)annotation.getValue();
+				return literal.getLiteral(); // TODO We just pick one for the moment
+			}
+		}
+		return "";
+	}
+
 	/**
 	 * We basically take an OWLAPI {@link SWRLRule} object and for every OWLAPI {@link SWRLBuiltInAtom} in it we create a
 	 * SWRLAPI {@link SWRLAPIBuiltInAtom}; all other atoms remain the same.
 	 */
 	private SWRLAPIRule convertOWLAPIRule2SWRLAPIRule(SWRLRule owlapiRule)
 	{
-		String ruleName = UUID.randomUUID().toString(); // TODO Get rule name from annotation property if there.
+		String ruleName = getRuleName(owlapiRule);
+		boolean active = getActive(owlapiRule);
+		String comment = getComment(owlapiRule);
 		List<SWRLAtom> owlapiBodyAtoms = new ArrayList<SWRLAtom>(owlapiRule.getBody());
 		List<SWRLAtom> owlapiHeadAtoms = new ArrayList<SWRLAtom>(owlapiRule.getHead());
 		List<SWRLAtom> swrlapiBodyAtoms = new ArrayList<SWRLAtom>();
@@ -177,7 +228,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 			} else
 				swrlapiHeadAtoms.add(atom); // Only built-in atoms are converted; other atoms remain the same
 		}
-		return new DefaultSWRLAPIRule(ruleName, swrlapiBodyAtoms, swrlapiHeadAtoms, getOWLIRIResolver());
+		return new DefaultSWRLAPIRule(ruleName, swrlapiBodyAtoms, swrlapiHeadAtoms, getOWLIRIResolver(), active, comment);
 	}
 
 	/**

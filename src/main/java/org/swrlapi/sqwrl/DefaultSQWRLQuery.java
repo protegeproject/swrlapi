@@ -37,9 +37,11 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	private final OWLIRIResolver iriResolver;
 
 	private boolean active; // Like a SWRLRule, a SQWRL query can also be inactive.
+	private final String comment;
 
 	public DefaultSQWRLQuery(String queryName, List<SWRLAtom> bodyAtoms, List<SWRLAtom> headAtoms,
-			SWRLAPIOWLDataFactory swrlapiOWLDataFactory, OWLIRIResolver iriResolver) throws SQWRLException
+			SWRLAPIOWLDataFactory swrlapiOWLDataFactory, OWLIRIResolver iriResolver, boolean active, String comment)
+			throws SQWRLException
 	{
 		this.queryName = queryName;
 		this.bodyAtoms = bodyAtoms;
@@ -50,7 +52,8 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		this.swrlapiOWLDataFactory = swrlapiOWLDataFactory;
 		this.iriResolver = iriResolver;
 
-		this.active = false;
+		this.active = active;
+		this.comment = comment;
 
 		processSQWRLBuiltIns();
 		generateBuiltInAtomVariableDependencies();
@@ -105,6 +108,12 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	public void setActive(boolean isActive)
 	{
 		this.active = isActive;
+	}
+
+	@Override
+	public String getComment()
+	{
+		return this.comment;
 	}
 
 	@Override
@@ -360,11 +369,9 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 			this.sqwrlResult.setFirst(sliceN);
 		else if (builtInName.equalsIgnoreCase(SQWRLNames.LastN) || builtInName.equalsIgnoreCase(SQWRLNames.GreatestN))
 			this.sqwrlResult.setLast(sliceN);
-		else if (builtInName.equalsIgnoreCase(SQWRLNames.NotLastN)
-				|| builtInName.equalsIgnoreCase(SQWRLNames.NotGreatestN))
+		else if (builtInName.equalsIgnoreCase(SQWRLNames.NotLastN) || builtInName.equalsIgnoreCase(SQWRLNames.NotGreatestN))
 			this.sqwrlResult.setNotLast(sliceN);
-		else if (builtInName.equalsIgnoreCase(SQWRLNames.NotFirstN)
-				|| builtInName.equalsIgnoreCase(SQWRLNames.NotLeastN))
+		else if (builtInName.equalsIgnoreCase(SQWRLNames.NotFirstN) || builtInName.equalsIgnoreCase(SQWRLNames.NotLeastN))
 			this.sqwrlResult.setNotFirst(sliceN);
 		else
 			throw new SQWRLException("unknown slicing operator " + builtInName);
