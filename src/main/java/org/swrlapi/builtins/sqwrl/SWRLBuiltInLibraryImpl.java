@@ -243,9 +243,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		if (isUnboundArgument(resultCollectionArgumentNumber, arguments)) {
 			SWRLVariableBuiltInArgument variableArgument = arguments.get(resultCollectionArgumentNumber).asVariable();
 			IRI variableIRI = variableArgument.getIRI();
-			String variableName = variableArgument.getVariableName();
 			SQWRLCollectionVariableBuiltInArgument collectionArgument = createSQWRLCollectionVariableBuiltInArgument(
-					variableIRI, variableName, queryName, collectionName, collectionGroupKey);
+					variableIRI, queryName, collectionName, collectionGroupKey);
 			variableArgument.setBuiltInResult(collectionArgument);
 		}
 
@@ -275,10 +274,9 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		if (isUnboundArgument(resultCollectionArgumentNumber, arguments)) {
 			SWRLVariableBuiltInArgument variableArgument = arguments.get(resultCollectionArgumentNumber).asVariable();
 			IRI variableIRI = variableArgument.getIRI();
-			String variableName = variableArgument.getVariableName();
 
 			SQWRLCollectionVariableBuiltInArgument collectionArgument = createSQWRLCollectionVariableBuiltInArgument(
-					variableIRI, variableName, queryName, collectionName, collectionGroupKey);
+					variableIRI, queryName, collectionName, collectionGroupKey);
 			variableArgument.setBuiltInResult(collectionArgument);
 		}
 
@@ -1039,10 +1037,9 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		if (isUnboundArgument(resultCollectionArgumentNumber, arguments)) {
 			SWRLVariableBuiltInArgument variableArgument = arguments.get(resultCollectionArgumentNumber).asVariable();
 			IRI variableIRI = variableArgument.getIRI();
-			String variableName = variableArgument.getVariableName();
 
 			SQWRLCollectionVariableBuiltInArgument collectionArgument = createSQWRLCollectionVariableBuiltInArgument(
-					variableIRI, variableName, queryName, resultCollectionName, resultCollectionGroupKey);
+					variableIRI, queryName, resultCollectionName, resultCollectionGroupKey);
 			variableArgument.setBuiltInResult(collectionArgument);
 		}
 
@@ -1080,10 +1077,9 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		if (isUnboundArgument(resultCollectionArgumentNumber, arguments)) {
 			SWRLVariableBuiltInArgument variableArgument = arguments.get(resultCollectionArgumentNumber).asVariable();
 			IRI variableIRI = variableArgument.getIRI();
-			String variableName = variableArgument.getVariableName();
 
 			SQWRLCollectionVariableBuiltInArgument collectionArgument = createSQWRLCollectionVariableBuiltInArgument(
-					variableIRI, variableName, queryName, resultCollectionName, resultCollectionGroupKey);
+					variableIRI, queryName, resultCollectionName, resultCollectionGroupKey);
 			variableArgument.setBuiltInResult(collectionArgument);
 		}
 
@@ -1121,10 +1117,9 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		if (isUnboundArgument(resultCollectionArgumentNumber, arguments)) {
 			SWRLVariableBuiltInArgument variableArgument = arguments.get(resultCollectionArgumentNumber).asVariable();
 			IRI variableIRI = variableArgument.getIRI();
-			String variableName = variableArgument.getVariableName();
 
 			SQWRLCollectionVariableBuiltInArgument collectionArgument = createSQWRLCollectionVariableBuiltInArgument(
-					variableIRI, variableName, queryName, resultCollectionName, resultCollectionGroupKey);
+					variableIRI, queryName, resultCollectionName, resultCollectionGroupKey);
 			variableArgument.setBuiltInResult(collectionArgument);
 		}
 
@@ -1162,10 +1157,9 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		if (isUnboundArgument(resultCollectionArgumentNumber, arguments)) {
 			SWRLVariableBuiltInArgument variableArgument = arguments.get(resultCollectionArgumentNumber).asVariable();
 			IRI variableIRI = variableArgument.getIRI();
-			String variableName = variableArgument.getVariableName();
 
 			SQWRLCollectionVariableBuiltInArgument collectionArgument = createSQWRLCollectionVariableBuiltInArgument(
-					variableIRI, variableName, queryName, resultCollectionName, resultCollectionGroupKey);
+					variableIRI, queryName, resultCollectionName, resultCollectionGroupKey);
 			variableArgument.setBuiltInResult(collectionArgument);
 		}
 
@@ -1357,10 +1351,9 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		if (isUnboundArgument(resultArgumentNumber, arguments)) {
 			SWRLVariableBuiltInArgument variableArgument = arguments.get(resultArgumentNumber).asVariable();
 			IRI variableIRI = variableArgument.getIRI();
-			String variableName = variableArgument.getVariableName();
 
 			SQWRLCollectionVariableBuiltInArgument collectionArgument = createSQWRLCollectionVariableBuiltInArgument(
-					variableIRI, variableName, queryName, resultListName, resultListID);
+					variableIRI, queryName, resultListName, resultListID);
 			variableArgument.setBuiltInResult(collectionArgument);
 
 			return true;

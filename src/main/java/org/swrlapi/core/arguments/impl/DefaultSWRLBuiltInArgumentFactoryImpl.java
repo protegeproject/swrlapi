@@ -12,6 +12,7 @@ import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.swrlapi.core.OWLIRIResolver;
 import org.swrlapi.core.arguments.SQWRLCollectionVariableBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
@@ -32,25 +33,29 @@ import org.swrlapi.xsd.XSDTime;
 
 public class DefaultSWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumentFactory
 {
+	private final OWLIRIResolver owlIRIResolver;
 	private final OWLLiteralFactory owlLiteralFactory;
 
-	public DefaultSWRLBuiltInArgumentFactoryImpl(OWLLiteralFactory owlLiteralFactory)
+	public DefaultSWRLBuiltInArgumentFactoryImpl(OWLIRIResolver owlIRIResolver, OWLLiteralFactory owlLiteralFactory)
 	{
+		this.owlIRIResolver = owlIRIResolver;
 		this.owlLiteralFactory = owlLiteralFactory;
 	}
 
 	@Override
-	public SWRLVariableBuiltInArgument getUnboundVariableBuiltInArgument(IRI variableIRI, String variableName)
+	public SWRLVariableBuiltInArgument getUnboundVariableBuiltInArgument(IRI variableIRI)
 	{
-		SWRLVariableBuiltInArgument argument = new SWRLVariableBuiltInArgumentImpl(variableIRI, variableName);
+		String variableShortName = getOWLIRIResolver().iri2PrefixedName(variableIRI);
+		SWRLVariableBuiltInArgument argument = new SWRLVariableBuiltInArgumentImpl(variableIRI, variableShortName);
 		argument.setUnbound();
 		return argument;
 	}
 
 	@Override
-	public SWRLVariableBuiltInArgument getVariableBuiltInArgument(IRI variableIRI, String variableName)
+	public SWRLVariableBuiltInArgument getVariableBuiltInArgument(IRI variableIRI)
 	{
-		return new SWRLVariableBuiltInArgumentImpl(variableIRI, variableName);
+		String variableShortName = getOWLIRIResolver().iri2PrefixedName(variableIRI);
+		return new SWRLVariableBuiltInArgumentImpl(variableIRI, variableShortName);
 	}
 
 	@Override
@@ -208,28 +213,39 @@ public class DefaultSWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumen
 	}
 
 	@Override
-	public SWRLMultiValueVariableBuiltInArgument getMultiValueVariableBuiltInArgument(IRI variableIRI, String variableName)
+	public SWRLMultiValueVariableBuiltInArgument getMultiValueVariableBuiltInArgument(IRI variableIRI)
 	{
-		return new SWRLMultiValueVariableBuiltInArgumentImpl(variableIRI, variableName);
+		String variableShortName = getOWLIRIResolver().iri2PrefixedName(variableIRI);
+
+		return new SWRLMultiValueVariableBuiltInArgumentImpl(variableIRI, variableShortName);
 	}
 
 	@Override
 	public SWRLMultiValueVariableBuiltInArgument getMultiValueVariableBuiltInArgument(IRI variableIRI,
-			String variableName, List<SWRLBuiltInArgument> arguments)
+			List<SWRLBuiltInArgument> arguments)
 	{
-		return new SWRLMultiValueVariableBuiltInArgumentImpl(variableIRI, variableName, arguments);
+		String variableShortName = getOWLIRIResolver().iri2PrefixedName(variableIRI);
+
+		return new SWRLMultiValueVariableBuiltInArgumentImpl(variableIRI, variableShortName, arguments);
 	}
 
 	@Override
 	public SQWRLCollectionVariableBuiltInArgument getSQWRLCollectionVariableBuiltInArgument(IRI variableIRI,
-			String variableName, String queryName, String collectionName, String collectionGroupID)
+			String queryName, String collectionName, String collectionGroupID)
 	{
-		return new SQWRLCollectionVariableBuiltInArgumentImpl(variableIRI, variableName, queryName, collectionName,
+		String variableShortName = getOWLIRIResolver().iri2PrefixedName(variableIRI);
+
+		return new SQWRLCollectionVariableBuiltInArgumentImpl(variableIRI, variableShortName, queryName, collectionName,
 				collectionGroupID);
 	}
 
 	private OWLLiteralFactory getOWLLiteralFactory()
 	{
 		return this.owlLiteralFactory;
+	}
+
+	private OWLIRIResolver getOWLIRIResolver()
+	{
+		return this.owlIRIResolver;
 	}
 }

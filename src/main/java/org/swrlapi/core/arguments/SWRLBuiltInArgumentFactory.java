@@ -24,9 +24,9 @@ import org.swrlapi.xsd.XSDTime;
  */
 public interface SWRLBuiltInArgumentFactory
 {
-	SWRLVariableBuiltInArgument getVariableBuiltInArgument(IRI variableIRI, String variableName);
+	SWRLVariableBuiltInArgument getVariableBuiltInArgument(IRI variableIRI);
 
-	SWRLVariableBuiltInArgument getUnboundVariableBuiltInArgument(IRI variableIRI, String variableName);
+	SWRLVariableBuiltInArgument getUnboundVariableBuiltInArgument(IRI variableIRI);
 
 	SWRLClassBuiltInArgument getClassBuiltInArgument(IRI iri);
 
@@ -78,11 +78,11 @@ public interface SWRLBuiltInArgumentFactory
 
 	SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(XSDDuration duration);
 
-	SWRLMultiValueVariableBuiltInArgument getMultiValueVariableBuiltInArgument(IRI variableIRI, String variableName);
+	SWRLMultiValueVariableBuiltInArgument getMultiValueVariableBuiltInArgument(IRI variableIRI);
 
-	SWRLMultiValueVariableBuiltInArgument getMultiValueVariableBuiltInArgument(IRI variableIRI, String variableName,
+	SWRLMultiValueVariableBuiltInArgument getMultiValueVariableBuiltInArgument(IRI variableIRI,
 			List<SWRLBuiltInArgument> arguments);
 
-	SQWRLCollectionVariableBuiltInArgument getSQWRLCollectionVariableBuiltInArgument(IRI variableIRI,
-			String variableName, String queryName, String collectionName, String collectionID);
+	SQWRLCollectionVariableBuiltInArgument getSQWRLCollectionVariableBuiltInArgument(IRI variableIRI, String queryName,
+			String collectionName, String collectionID);
 }

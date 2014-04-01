@@ -10,10 +10,10 @@ class SQWRLCollectionVariableBuiltInArgumentImpl extends SWRLVariableBuiltInArgu
 
 	private final String queryName, collectionName, collectionGroupID;
 
-	public SQWRLCollectionVariableBuiltInArgumentImpl(IRI iri, String variableName, String queryName, String collectionName,
+	public SQWRLCollectionVariableBuiltInArgumentImpl(IRI iri, String variableShortName, String queryName, String collectionName,
 			String collectionGroupID)
 	{
-		super(iri, variableName);
+		super(iri, variableShortName);
 		this.queryName = queryName;
 		this.collectionName = collectionName;
 		this.collectionGroupID = collectionGroupID;

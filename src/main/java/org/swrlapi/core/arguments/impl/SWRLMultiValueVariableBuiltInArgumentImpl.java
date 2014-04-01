@@ -17,16 +17,16 @@ class SWRLMultiValueVariableBuiltInArgumentImpl extends SWRLVariableBuiltInArgum
 
 	private List<SWRLBuiltInArgument> arguments;
 
-	public SWRLMultiValueVariableBuiltInArgumentImpl(IRI variableIRI, String variableName)
+	public SWRLMultiValueVariableBuiltInArgumentImpl(IRI variableIRI, String variableShortName)
 	{
-		super(variableIRI, variableName);
+		super(variableIRI, variableShortName);
 		arguments = new ArrayList<SWRLBuiltInArgument>();
 	}
 
-	public SWRLMultiValueVariableBuiltInArgumentImpl(IRI variableIRI, String variableName,
+	public SWRLMultiValueVariableBuiltInArgumentImpl(IRI variableIRI, String variableShortName,
 			List<SWRLBuiltInArgument> arguments)
 	{
-		super(variableIRI, variableName);
+		super(variableIRI, variableShortName);
 		this.arguments = arguments;
 	}
 

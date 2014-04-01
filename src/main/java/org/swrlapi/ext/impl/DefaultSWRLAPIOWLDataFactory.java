@@ -42,7 +42,8 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
 		this.owlDatatypeFactory = new DefaultOWLDatatypeFactory();
 		this.owlLiteralFactory = new DefaultOWLLiteralFactory(this.owlDatatypeFactory);
 		this.swrlAPILiteralFactory = new DefaultSWRLAPILiteralFactory(this.owlLiteralFactory);
-		this.swrlBuiltInArgumentFactory = new DefaultSWRLBuiltInArgumentFactoryImpl(this.owlLiteralFactory);
+		this.swrlBuiltInArgumentFactory = new DefaultSWRLBuiltInArgumentFactoryImpl(this.owlIRIResolver,
+				this.owlLiteralFactory);
 		this.sqwrlResultValueFactory = new DefaultSQWRLResultValueFactory(this.owlIRIResolver, this.owlLiteralFactory);
 	}
 

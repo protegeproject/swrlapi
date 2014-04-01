@@ -381,11 +381,11 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
 
 	SWRLAPILiteral createSWRLAPILiteral(XSDDuration duration) throws BuiltInException;
 
-	SWRLMultiValueVariableBuiltInArgument createSWRLMultiValueVariableBuiltInArgument(IRI variableIRI, String variableName)
+	SWRLMultiValueVariableBuiltInArgument createSWRLMultiValueVariableBuiltInArgument(IRI variableIRI)
 			throws BuiltInException;
 
 	SWRLMultiValueVariableBuiltInArgument createSWRLMultiValueVariableBuiltInArgument(IRI variableIRI,
-			String variableName, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+			List<SWRLBuiltInArgument> arguments) throws BuiltInException;
 
 	SQWRLResultValueFactory getSQWRLResultValueFactory() throws SWRLBuiltInLibraryException;
 }

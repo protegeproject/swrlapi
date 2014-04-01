@@ -1318,9 +1318,7 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 
 		if (isUnboundArgument(resultArgumentNumber, arguments)) {
 			IRI variableIRI = arguments.get(resultArgumentNumber).asVariable().getIRI();
-			String variableName = arguments.get(resultArgumentNumber).asVariable().getVariableName();
-			SWRLMultiValueVariableBuiltInArgument resultMultiArgument = createSWRLMultiValueVariableBuiltInArgument(variableIRI,
-					variableName);
+			SWRLMultiValueVariableBuiltInArgument resultMultiArgument = createSWRLMultiValueVariableBuiltInArgument(variableIRI);
 			for (SWRLBuiltInArgument argument : resultArguments)
 				resultMultiArgument.addArgument(argument);
 			arguments.get(resultArgumentNumber).asVariable().setBuiltInResult(resultMultiArgument);
@@ -1671,24 +1669,24 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 	}
 
 	@Override
-	public SWRLMultiValueVariableBuiltInArgument createSWRLMultiValueVariableBuiltInArgument(IRI variableIRI,
-			String variableName) throws BuiltInException
+	public SWRLMultiValueVariableBuiltInArgument createSWRLMultiValueVariableBuiltInArgument(IRI variableIRI)
+			throws BuiltInException
 	{
-		return getSWRLBuiltInArgumentFactory().getMultiValueVariableBuiltInArgument(variableIRI, variableName);
+		return getSWRLBuiltInArgumentFactory().getMultiValueVariableBuiltInArgument(variableIRI);
 	}
 
 	@Override
 	public SWRLMultiValueVariableBuiltInArgument createSWRLMultiValueVariableBuiltInArgument(IRI variableIRI,
-			String variableName, List<SWRLBuiltInArgument> arguments) throws BuiltInException
+			List<SWRLBuiltInArgument> arguments) throws BuiltInException
 	{
-		return getSWRLBuiltInArgumentFactory().getMultiValueVariableBuiltInArgument(variableIRI, variableName, arguments);
+		return getSWRLBuiltInArgumentFactory().getMultiValueVariableBuiltInArgument(variableIRI, arguments);
 	}
 
 	public SQWRLCollectionVariableBuiltInArgument createSQWRLCollectionVariableBuiltInArgument(IRI variableIRI,
-			String variableName, String queryName, String collectionName, String collectionGroupID) throws BuiltInException
+			String queryName, String collectionName, String collectionGroupID) throws BuiltInException
 	{
-		return getSWRLBuiltInArgumentFactory().getSQWRLCollectionVariableBuiltInArgument(variableIRI, variableName,
-				queryName, collectionName, collectionGroupID);
+		return getSWRLBuiltInArgumentFactory().getSQWRLCollectionVariableBuiltInArgument(variableIRI, queryName,
+				collectionName, collectionGroupID);
 	}
 
 	protected SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory() throws SWRLBuiltInLibraryException

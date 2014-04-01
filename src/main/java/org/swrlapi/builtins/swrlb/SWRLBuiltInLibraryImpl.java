@@ -567,9 +567,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		tokenizer = new StringTokenizer(inputString.trim(), delimeters);
 
 		IRI variableIRI = arguments.get(0).asVariable().getIRI();
-		String variableName = arguments.get(0).asVariable().getVariableName();
-		SWRLMultiValueVariableBuiltInArgument multiValueBuiltInArgument = createSWRLMultiValueVariableBuiltInArgument(
-				variableIRI, variableName);
+		SWRLMultiValueVariableBuiltInArgument multiValueBuiltInArgument = createSWRLMultiValueVariableBuiltInArgument(variableIRI);
 		while (tokenizer.hasMoreTokens()) {
 			String token = tokenizer.nextToken();
 			multiValueBuiltInArgument.addArgument(createLiteralBuiltInArgument(token));

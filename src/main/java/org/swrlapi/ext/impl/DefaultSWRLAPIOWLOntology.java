@@ -322,10 +322,8 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	private SWRLVariableBuiltInArgument transformSWRLVariable2SWRLVariableBuiltInArgument(SWRLVariable swrlVariable)
 	{
 		IRI variableIRI = swrlVariable.getIRI();
-		String variableName = getOWLIRIResolver().iri2PrefixedName(variableIRI);
 
-		SWRLVariableBuiltInArgument argument = getSWRLBuiltInArgumentFactory().getVariableBuiltInArgument(variableIRI,
-				variableName);
+		SWRLVariableBuiltInArgument argument = getSWRLBuiltInArgumentFactory().getVariableBuiltInArgument(variableIRI);
 
 		return argument;
 	}
