@@ -46,16 +46,13 @@ class SWRLVariableBuiltInArgumentImpl extends SWRLVariableImpl implements SWRLVa
 	@Override
 	public SWRLMultiValueVariableBuiltInArgument asMultiValueVariable()
 	{
-		throw new RuntimeException("Not a SWRLMultiVariableBuiltInArgument");
+		throw new RuntimeException("not a SWRLMultiVariableBuiltInArgument");
 	}
 
 	@Override
 	public String getVariableName()
 	{
-		if (this.variableShortName.startsWith(":"))
-			return variableShortName.substring(1);
-		else
-			return variableShortName;
+		return variableShortName;
 	}
 
 	@Override

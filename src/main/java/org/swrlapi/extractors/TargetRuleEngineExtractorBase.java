@@ -1,6 +1,7 @@
 package org.swrlapi.extractors;
 
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.swrlapi.converters.TargetRuleEngineConverterBase;
 import org.swrlapi.core.OWLClassExpressionResolver;
 import org.swrlapi.core.OWLIRIResolver;
@@ -12,11 +13,11 @@ import org.swrlapi.ext.OWLLiteralFactory;
 import org.swrlapi.ext.SWRLAPIOWLDataFactory;
 
 /**
- * This interface describes a set of methods that will be needed by target rule engines to create Portability API
- * representations the the OWL concepts from its native rule engine representation of those concepts.
+ * This interface describes a set of methods that will be needed by target rule engines to create OWLAPI representations
+ * the the OWL entities from its native rule engine representation of those concepts.
  * <p>
  * The corresponding {@link TargetRuleEngineConverterBase} is used to create native rule engine representations of
- * Portability API OWL concepts.
+ * OWLAPI OWL entities.
  */
 public abstract class TargetRuleEngineExtractorBase implements TargetRuleEngineExtractor
 {
@@ -33,6 +34,11 @@ public abstract class TargetRuleEngineExtractorBase implements TargetRuleEngineE
 	}
 
 	protected SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory()
+	{
+		return getBridge().getOWLDataFactory();
+	}
+
+	protected OWLDataFactory getOWLDataFactory()
 	{
 		return getBridge().getOWLDataFactory();
 	}

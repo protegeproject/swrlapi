@@ -8,12 +8,13 @@ import org.semanticweb.owlapi.model.SWRLBuiltInAtom;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
 
 /**
- * The SWRLAPI's built-in atom extends the OWLAPI's built-in atom with additional functionality.
+ * The SWRLAPI's built-in atom extends the OWLAPI's built-in atom with additional functionality. In addition to the
+ * {@link SWRLBuiltInArgument} class, this interface is the SWRLAPI's primary OWLAPI extension point.
+ * 
+ * @see SWRLBuiltInArgument
  */
 public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtom
 {
-	String getRuleName();
-
 	String getBuiltInShortName();
 
 	IRI getBuiltInIRI();
@@ -43,6 +44,8 @@ public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtom
 	List<String> getArgumentsVariableNames();
 
 	List<String> getArgumentsVariableNamesExceptFirst();
+
+	String getRuleName();
 
 	// SQWRL-related methods
 

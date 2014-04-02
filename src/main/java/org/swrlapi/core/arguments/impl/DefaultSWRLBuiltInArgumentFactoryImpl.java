@@ -131,7 +131,7 @@ public class DefaultSWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumen
 			OWLNamedIndividual namedIndividual = individual.asOWLNamedIndividual();
 			return new SWRLNamedIndividualBuiltInArgumentImpl(namedIndividual.getIRI());
 		} else
-			throw new RuntimeException("OWL anonymous individual built-in arguments not supported by Portability API");
+			throw new RuntimeException("OWL anonymous individual built-in arguments not supported by the SWRLAPI");
 	}
 
 	@Override
