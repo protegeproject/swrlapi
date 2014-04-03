@@ -66,7 +66,7 @@ public class OWLIRIResolver
 		this.datatypePrefixedNames.clear();
 	}
 
-	public String iri2PrefixedName(IRI iri)
+	public String iri2ShortName(IRI iri)
 	{
 		if (this.iri2PrefixedNameCache.containsKey(iri))
 			return this.iri2PrefixedNameCache.get(iri);
@@ -79,7 +79,7 @@ public class OWLIRIResolver
 		}
 	}
 
-	public IRI prefixedName2IRI(String prefixedName) throws TargetRuleEngineException
+	public IRI shortName2IRI(String prefixedName) throws TargetRuleEngineException
 	{
 		if (this.prefixedName2IRI.containsKey(prefixedName))
 			return this.prefixedName2IRI.get(prefixedName);
@@ -90,7 +90,7 @@ public class OWLIRIResolver
 	public void recordSWRLVariable(SWRLVariable variable)
 	{
 		IRI iri = variable.getIRI();
-		String variableName = iri2PrefixedName(iri);
+		String variableName = iri2ShortName(iri);
 		this.prefixedName2IRI.put(variableName, iri);
 		this.variablePrefixedNames.add(variableName);
 	}
@@ -98,7 +98,7 @@ public class OWLIRIResolver
 	public void recordOWLClass(OWLEntity cls)
 	{
 		IRI iri = cls.getIRI();
-		String prefixedName = iri2PrefixedName(iri);
+		String prefixedName = iri2ShortName(iri);
 
 		recordPrefixedName2IRIMapping(prefixedName, iri);
 
@@ -108,7 +108,7 @@ public class OWLIRIResolver
 	public void recordOWLNamedIndividual(OWLEntity individual)
 	{
 		IRI iri = individual.getIRI();
-		String prefixedName = iri2PrefixedName(iri);
+		String prefixedName = iri2ShortName(iri);
 
 		recordPrefixedName2IRIMapping(prefixedName, iri);
 
@@ -118,7 +118,7 @@ public class OWLIRIResolver
 	public void recordOWLObjectProperty(OWLEntity property)
 	{
 		IRI iri = property.getIRI();
-		String prefixedName = iri2PrefixedName(iri);
+		String prefixedName = iri2ShortName(iri);
 
 		recordPrefixedName2IRIMapping(prefixedName, iri);
 
@@ -128,7 +128,7 @@ public class OWLIRIResolver
 	public void recordOWLDataProperty(OWLEntity property)
 	{
 		IRI iri = property.getIRI();
-		String prefixedName = iri2PrefixedName(iri);
+		String prefixedName = iri2ShortName(iri);
 
 		recordPrefixedName2IRIMapping(prefixedName, iri);
 
@@ -138,7 +138,7 @@ public class OWLIRIResolver
 	public void recordOWLAnnotationProperty(OWLEntity property)
 	{
 		IRI iri = property.getIRI();
-		String prefixedName = iri2PrefixedName(iri);
+		String prefixedName = iri2ShortName(iri);
 
 		recordPrefixedName2IRIMapping(prefixedName, iri);
 
@@ -148,7 +148,7 @@ public class OWLIRIResolver
 	public void recordOWLDatatype(OWLEntity datatype)
 	{
 		IRI iri = datatype.getIRI();
-		String prefixedName = iri2PrefixedName(iri);
+		String prefixedName = iri2ShortName(iri);
 
 		recordPrefixedName2IRIMapping(prefixedName, iri);
 
@@ -158,7 +158,7 @@ public class OWLIRIResolver
 	public void record(SWRLClassBuiltInArgument classArgument)
 	{
 		IRI iri = classArgument.getIRI();
-		String prefixedName = iri2PrefixedName(iri);
+		String prefixedName = iri2ShortName(iri);
 
 		recordPrefixedName2IRIMapping(prefixedName, iri);
 		this.classPrefixedNames.add(prefixedName);
@@ -167,7 +167,7 @@ public class OWLIRIResolver
 	public void record(SWRLNamedIndividualBuiltInArgument individualArgument)
 	{
 		IRI iri = individualArgument.getIRI();
-		String prefixedName = iri2PrefixedName(iri);
+		String prefixedName = iri2ShortName(iri);
 
 		recordPrefixedName2IRIMapping(prefixedName, iri);
 		this.namedIndividualPrefixedNames.add(prefixedName);
@@ -176,7 +176,7 @@ public class OWLIRIResolver
 	public void record(SWRLObjectPropertyBuiltInArgument propertyArgument)
 	{
 		IRI iri = propertyArgument.getIRI();
-		String prefixedName = iri2PrefixedName(iri);
+		String prefixedName = iri2ShortName(iri);
 
 		recordPrefixedName2IRIMapping(prefixedName, iri);
 		this.objectPropertyPrefixedNames.add(prefixedName);
@@ -185,7 +185,7 @@ public class OWLIRIResolver
 	public void record(SWRLDataPropertyBuiltInArgument propertyArgument)
 	{
 		IRI iri = propertyArgument.getIRI();
-		String prefixedName = iri2PrefixedName(iri);
+		String prefixedName = iri2ShortName(iri);
 
 		recordPrefixedName2IRIMapping(prefixedName, iri);
 		this.dataPropertyPrefixedNames.add(prefixedName);

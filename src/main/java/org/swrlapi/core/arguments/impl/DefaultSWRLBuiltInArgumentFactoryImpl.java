@@ -45,7 +45,7 @@ public class DefaultSWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumen
 	@Override
 	public SWRLVariableBuiltInArgument getUnboundVariableBuiltInArgument(IRI variableIRI)
 	{
-		String variableShortName = getOWLIRIResolver().iri2PrefixedName(variableIRI);
+		String variableShortName = getOWLIRIResolver().iri2ShortName(variableIRI);
 		SWRLVariableBuiltInArgument argument = new SWRLVariableBuiltInArgumentImpl(variableIRI, variableShortName);
 		argument.setUnbound();
 		return argument;
@@ -54,7 +54,7 @@ public class DefaultSWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumen
 	@Override
 	public SWRLVariableBuiltInArgument getVariableBuiltInArgument(IRI variableIRI)
 	{
-		String variableShortName = getOWLIRIResolver().iri2PrefixedName(variableIRI);
+		String variableShortName = getOWLIRIResolver().iri2ShortName(variableIRI);
 		return new SWRLVariableBuiltInArgumentImpl(variableIRI, variableShortName);
 	}
 
@@ -215,7 +215,7 @@ public class DefaultSWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumen
 	@Override
 	public SWRLMultiValueVariableBuiltInArgument getMultiValueVariableBuiltInArgument(IRI variableIRI)
 	{
-		String variableShortName = getOWLIRIResolver().iri2PrefixedName(variableIRI);
+		String variableShortName = getOWLIRIResolver().iri2ShortName(variableIRI);
 
 		return new SWRLMultiValueVariableBuiltInArgumentImpl(variableIRI, variableShortName);
 	}
@@ -224,7 +224,7 @@ public class DefaultSWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumen
 	public SWRLMultiValueVariableBuiltInArgument getMultiValueVariableBuiltInArgument(IRI variableIRI,
 			List<SWRLBuiltInArgument> arguments)
 	{
-		String variableShortName = getOWLIRIResolver().iri2PrefixedName(variableIRI);
+		String variableShortName = getOWLIRIResolver().iri2ShortName(variableIRI);
 
 		return new SWRLMultiValueVariableBuiltInArgumentImpl(variableIRI, variableShortName, arguments);
 	}
@@ -233,7 +233,7 @@ public class DefaultSWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumen
 	public SQWRLCollectionVariableBuiltInArgument getSQWRLCollectionVariableBuiltInArgument(IRI variableIRI,
 			String queryName, String collectionName, String collectionGroupID)
 	{
-		String variableShortName = getOWLIRIResolver().iri2PrefixedName(variableIRI);
+		String variableShortName = getOWLIRIResolver().iri2ShortName(variableIRI);
 
 		return new SQWRLCollectionVariableBuiltInArgumentImpl(variableIRI, variableShortName, queryName, collectionName,
 				collectionGroupID);

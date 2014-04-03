@@ -222,7 +222,7 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 			if (argument instanceof SWRLVariable) {
 				SWRLVariable variable = (SWRLVariable)argument;
 				IRI iri = variable.getIRI();
-				String variableName = getOWLIRIResolver().iri2PrefixedName(iri);
+				String variableName = getOWLIRIResolver().iri2ShortName(iri);
 				referencedVariableNames.add(variableName);
 			} else if (argument instanceof SWRLVariableBuiltInArgument) {
 				SWRLVariableBuiltInArgument variableBuiltInArgument = (SWRLVariableBuiltInArgument)argument;

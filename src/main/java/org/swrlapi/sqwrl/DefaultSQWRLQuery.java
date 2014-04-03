@@ -897,7 +897,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 			if (argument instanceof SWRLVariable) {
 				SWRLVariable variable = (SWRLVariable)argument;
 				IRI iri = variable.getIRI();
-				String variableName = getOWLIRIResolver().iri2PrefixedName(iri); // TODO
+				String variableName = getOWLIRIResolver().iri2ShortName(iri); // TODO
 				referencedVariableNames.add(variableName);
 			} else if (argument instanceof SWRLVariableBuiltInArgument) {
 				SWRLVariableBuiltInArgument variableBuiltInArgument = (SWRLVariableBuiltInArgument)argument;

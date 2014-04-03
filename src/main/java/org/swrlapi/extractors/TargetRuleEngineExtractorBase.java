@@ -63,9 +63,9 @@ public abstract class TargetRuleEngineExtractorBase implements TargetRuleEngineE
 		return getBridge().getOWLIRIResolver();
 	}
 
-	protected IRI getIRI(String id) throws TargetRuleEngineException
+	protected IRI shortName2IRI(String shortName) throws TargetRuleEngineException
 	{
-		return getOWLIRIResolver().prefixedName2IRI(id);
+		return getOWLIRIResolver().shortName2IRI(shortName);
 	}
 
 	private SWRLRuleEngineBridge getBridge()
