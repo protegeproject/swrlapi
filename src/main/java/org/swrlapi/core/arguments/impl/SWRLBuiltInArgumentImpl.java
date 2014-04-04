@@ -1,5 +1,6 @@
 package org.swrlapi.core.arguments.impl;
 
+import java.util.Collections;
 import java.util.Set;
 
 import org.semanticweb.owlapi.model.OWLAnonymousIndividual;
@@ -48,100 +49,93 @@ public abstract class SWRLBuiltInArgumentImpl implements SWRLBuiltInArgument
 	}
 
 	@Override
+	public boolean containsEntityInSignature(OWLEntity owlEntity)
+	{
+		return false; // TODO
+	}
+
+	@Override
 	public void accept(SWRLObjectVisitor visitor)
 	{
-		// TODO Auto-generated method stub
-
+		// TODO
 	}
 
 	@Override
 	public <O> O accept(SWRLObjectVisitorEx<O> visitor)
 	{
-		// TODO Auto-generated method stub
+		// TODO
 		return null;
 	}
 
 	@Override
 	public Set<OWLEntity> getSignature()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return null; // TODO
 	}
 
 	@Override
 	public Set<OWLAnonymousIndividual> getAnonymousIndividuals()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return Collections.emptySet(); // TODO
 	}
 
 	@Override
 	public Set<OWLClass> getClassesInSignature()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return Collections.emptySet(); // TODO
 	}
 
 	@Override
 	public Set<OWLDataProperty> getDataPropertiesInSignature()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return Collections.emptySet(); // TODO
 	}
 
 	@Override
 	public Set<OWLObjectProperty> getObjectPropertiesInSignature()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return Collections.emptySet(); // TODO
 	}
 
 	@Override
 	public Set<OWLNamedIndividual> getIndividualsInSignature()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return Collections.emptySet(); // TODO
 	}
 
 	@Override
 	public Set<OWLDatatype> getDatatypesInSignature()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return Collections.emptySet(); // TODO
 	}
 
 	@Override
 	public Set<OWLClassExpression> getNestedClassExpressions()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return Collections.emptySet(); // TODO
 	}
 
 	@Override
 	public void accept(OWLObjectVisitor visitor)
 	{
-		// TODO Auto-generated method stub
-
+		// TODO
 	}
 
 	@Override
 	public <O> O accept(OWLObjectVisitorEx<O> visitor)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return null; // TODO
 	}
 
 	@Override
 	public boolean isTopEntity()
 	{
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean isBottomEntity()
 	{
-		// TODO Auto-generated method stub
 		return false;
 	}
 

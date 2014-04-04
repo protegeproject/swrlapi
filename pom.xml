@@ -10,7 +10,8 @@
 
   <properties>
 
-    <owlapi.version>3.4.10</owlapi.version>
+<!--    <owlapi.version>3.4.10</owlapi.version> -->
+   <owlapi.version>3.5.0-SNAPSHOT</owlapi.version> 
     <log4j.version>1.2.16</log4j.version>
     <junit.version>3.8.1</junit.version>
     <jep.version>2.4.0</jep.version>
