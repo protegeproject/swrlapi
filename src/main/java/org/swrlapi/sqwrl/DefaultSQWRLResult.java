@@ -95,7 +95,7 @@ import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
  */
 public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Serializable
 {
-	private static final long serialVersionUID = -2945270777360073492L;
+	private static final long serialVersionUID = 1L;
 
 	private final SQWRLResultValueFactory sqwrlResultValueFactory;
 

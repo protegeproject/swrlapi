@@ -8,6 +8,8 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
 /**
  * This interface defines the methods that must be provided by a SQWRL query engine.
+ * 
+ * @see SQWRLQuery, SQWRLResult
  */
 public interface SQWRLQueryEngine
 {

@@ -4,12 +4,23 @@ import java.util.List;
 import java.util.Set;
 
 import org.semanticweb.owlapi.model.SWRLAtom;
+import org.swrlapi.core.SWRLAPIOntologyProcessor;
 import org.swrlapi.ext.SWRLAPIBuiltInAtom;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
+/**
+ * Represents a SQWRL query in the SWRLAPI. A {@link SWRLAPIOntologyProcessor} can be used to extract SQWRL queries -
+ * which are stored as SWRL rules - from an OWL ontology.
+ * 
+ * @see SWRLAPIOntologyProcessor, SWRLAPIRule
+ */
 public interface SQWRLQuery
 {
 	String getName();
+
+	boolean isActive();
+
+	String getComment();
 
 	List<SWRLAtom> getHeadAtoms();
 
@@ -18,8 +29,6 @@ public interface SQWRLQuery
 	String getQueryText();
 
 	SQWRLResult getResult() throws SQWRLException;
-
-	SQWRLResultGenerator getResultGenerator();
 
 	List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromBody(Set<String> builtInNames);
 
@@ -31,7 +40,5 @@ public interface SQWRLQuery
 
 	void setActive(boolean isActive);
 
-	boolean isActive();
-
-	String getComment();
+	SQWRLResultGenerator getResultGenerator();
 }

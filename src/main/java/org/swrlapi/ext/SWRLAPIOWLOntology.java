@@ -31,6 +31,9 @@ import org.swrlapi.core.arguments.SWRLBuiltInArgument;
  * {@link startBulkConversion} method turns off listener notification so that bulk transfer of OWL axioms can be
  * performed more efficiently. The {@link hasOntologyChanged} method can be used by rule engines to avoid unnecessary
  * regeneration of knowledge.
+ * <p>
+ * A SWRLAPI ontology does not directly deal with SQWRL queries. Instead, a {@link SWRLAPIOntologyProcessor} is used to
+ * extract SQWRL queries from a {@link SWRLAPIOWLOntology}
  * 
  * @see SWRLAPIRule, SWRLBuiltInArgument, SWRLAPIOntologyProcessor, SWRLAPIOWLDataFactory
  */

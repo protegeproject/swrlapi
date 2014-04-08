@@ -90,6 +90,7 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 		this.queries = new HashMap<String, SQWRLQuery>();
 
 		this.assertedOWLAxioms = new HashSet<OWLAxiom>();
+
 		this.owlClassDeclarationAxioms = new HashMap<IRI, OWLDeclarationAxiom>();
 		this.owlIndividualDeclarationAxioms = new HashMap<IRI, OWLDeclarationAxiom>();
 		this.owlObjectPropertyDeclarationAxioms = new HashMap<IRI, OWLDeclarationAxiom>();
@@ -102,6 +103,7 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 	{
 		this.rules.clear();
 		this.queries.clear();
+
 		getOWLIRIResolver().reset();
 
 		this.assertedOWLAxioms.clear();
@@ -297,8 +299,8 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 	private void processSWRLRuleOrSQWRLQuery(SWRLAPIRule ruleOrQuery) throws SQWRLException
 	{
 		if (isSQWRLQuery(ruleOrQuery)) {
-			boolean active = false;
-			String comment = "";
+			boolean active = true; // TODO
+			String comment = ""; // TODO
 			SQWRLQuery query = new DefaultSQWRLQuery(ruleOrQuery.getRuleName(), ruleOrQuery.getBodyAtoms(),
 					ruleOrQuery.getHeadAtoms(), getSWRLAPIOWLDataFactory(), getOWLIRIResolver(), active, comment);
 			this.queries.put(ruleOrQuery.getRuleName(), query);
