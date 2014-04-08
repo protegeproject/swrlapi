@@ -7,6 +7,7 @@ import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.SWRLDArgument;
 import org.semanticweb.owlapi.model.SWRLRule;
 import org.swrlapi.core.OWLIRIResolver;
@@ -14,11 +15,11 @@ import org.swrlapi.core.SWRLAPIOntologyProcessor;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
 
 /**
- * Extends the OWLAPI's {@link OWLOntology} class with additional methods used by the SWRLAPI. Primarily the
+ * Wraps the OWLAPI's {@link OWLOntology} class with additional methods used by the SWRLAPI. Primarily the
  * {@link #getSWRLAPIRules()} method extracts {@link SWRLAPIRule} objects from an OWL ontology. This class, which
  * extends the standard OWLAPI {@link SWRLRule} class, provide the richer representation of a SWRL rule required by the
- * SWRLAPI and also represent SQWRL queries. In particular, the SWRLAPI has a range of types extending the OWLAPI's
- * {@link SWRLDArgument} interface to define arguments to built-in atoms.
+ * SWRLAPI. In particular, the SWRLAPI has a range of types extending the OWLAPI's {@link SWRLDArgument} interface to
+ * define arguments to built-in atoms.
  * <p>
  * This extension point is defined by the {@link SWRLBuiltInArgument} interface. A {@link SWRLAPIOWLOntology} will
  * construct SWRLAPI rules from the SWRL rules in an OWLAPI-based ontology to contain these additional types. A
@@ -31,26 +32,23 @@ import org.swrlapi.core.arguments.SWRLBuiltInArgument;
  * performed more efficiently. The {@link hasOntologyChanged} method can be used by rule engines to avoid unnecessary
  * regeneration of knowledge.
  * 
- * @see SWRLBuiltInArgument, SWRLAPIOntologyProcessor, SWRLAPIOWLDataFactory
+ * @see SWRLAPIRule, SWRLBuiltInArgument, SWRLAPIOntologyProcessor, SWRLAPIOWLDataFactory
  */
 public interface SWRLAPIOWLOntology
 {
-	OWLOntology getOWLOntology();
-
-	/**
-	 * Create SWRLAPI {@link SWRLAPIRule} objects from standard OWLAPI {@link SWRLRule} objects in an ontology.
-	 * 
-	 * @see SWRLAPIRule
-	 */
 	Set<SWRLAPIRule> getSWRLAPIRules();
-
-	OWLIRIResolver getOWLIRIResolver();
 
 	SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory();
 
-	OWLDataFactory getOWLDataFactory();
-
 	SWRLAPIOntologyProcessor getSWRLAPIOntologyProcessor();
+
+	OWLIRIResolver getOWLIRIResolver();
+
+	OWLOntology getOWLOntology();
+
+	OWLOntologyManager getOWLOntologyManager();
+
+	OWLDataFactory getOWLDataFactory();
 
 	void startBulkConversion(); // Can be used, for example, to switch off notification during bulk conversion.
 

@@ -296,7 +296,7 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 	{
 		if (!isDuration())
 			throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to "
-					+ XSDVocabulary.DURATION.getShortName());
+					+ XSDVocabulary.DURATION.getShortForm());
 		return new XSDDuration(literal.getLiteral());
 	}
 

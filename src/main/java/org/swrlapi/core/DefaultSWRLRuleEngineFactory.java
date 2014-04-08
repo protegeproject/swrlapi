@@ -1,6 +1,5 @@
 package org.swrlapi.core;
 
-import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.swrlapi.exceptions.InvalidSWRLRuleEngineNameException;
 import org.swrlapi.exceptions.NoRegisteredRuleEnginesException;
 import org.swrlapi.exceptions.SWRLRuleEngineException;
@@ -35,17 +34,16 @@ public class DefaultSWRLRuleEngineFactory implements SWRLRuleEngineFactory
 	}
 
 	@Override
-	public SQWRLQueryEngine createSQWRLQueryEngine(OWLOntologyManager owlOntologyManager,
-			SWRLAPIOWLOntology swrlapiOWLOntology) throws SWRLRuleEngineException
+	public SQWRLQueryEngine createSQWRLQueryEngine(SWRLAPIOWLOntology swrlapiOWLOntology) throws SWRLRuleEngineException
 	{
-		return createSWRLRuleEngine(owlOntologyManager, swrlapiOWLOntology);
+		return createSWRLRuleEngine(swrlapiOWLOntology);
 	}
 
 	@Override
-	public SQWRLQueryEngine createSQWRLQueryEngine(String ruleEngineName, OWLOntologyManager owlOntologyManager,
-			SWRLAPIOWLOntology swrlapiOWLOntology) throws SWRLRuleEngineException
+	public SQWRLQueryEngine createSQWRLQueryEngine(String ruleEngineName, SWRLAPIOWLOntology swrlapiOWLOntology)
+			throws SWRLRuleEngineException
 	{
-		return createSWRLRuleEngine(ruleEngineName, owlOntologyManager, swrlapiOWLOntology);
+		return createSWRLRuleEngine(ruleEngineName, swrlapiOWLOntology);
 	}
 
 	/**
@@ -54,12 +52,10 @@ public class DefaultSWRLRuleEngineFactory implements SWRLRuleEngineFactory
 	 * protege.properties file then the Drools rule engine is returned (if it is registered).
 	 */
 	@Override
-	public SWRLRuleEngine createSWRLRuleEngine(OWLOntologyManager owlOntologyManager,
-			SWRLAPIOWLOntology swrlapiOWLOntology) throws SWRLRuleEngineException
+	public SWRLRuleEngine createSWRLRuleEngine(SWRLAPIOWLOntology swrlapiOWLOntology) throws SWRLRuleEngineException
 	{
 		if (ruleEngineManager.hasRegisteredRuleEngines()) {
-			return createSWRLRuleEngine(ruleEngineManager.getAnyRegisteredRuleEngineName(), owlOntologyManager,
-					swrlapiOWLOntology);
+			return createSWRLRuleEngine(ruleEngineManager.getAnyRegisteredRuleEngineName(), swrlapiOWLOntology);
 		} else
 			throw new NoRegisteredRuleEnginesException();
 	}
@@ -69,8 +65,8 @@ public class DefaultSWRLRuleEngineFactory implements SWRLRuleEngineFactory
 	 * registered.
 	 */
 	@Override
-	public SWRLRuleEngine createSWRLRuleEngine(String ruleEngineName, OWLOntologyManager owlOntologyManager,
-			SWRLAPIOWLOntology swrlapiOWLOntology) throws SWRLRuleEngineException
+	public SWRLRuleEngine createSWRLRuleEngine(String ruleEngineName, SWRLAPIOWLOntology swrlapiOWLOntology)
+			throws SWRLRuleEngineException
 	{
 		if (this.ruleEngineManager.isRuleEngineRegistered(ruleEngineName)) {
 			try {
@@ -81,7 +77,7 @@ public class DefaultSWRLRuleEngineFactory implements SWRLRuleEngineFactory
 
 				bridge.setTargetRuleEngine(targetRuleEngine);
 
-				return new DefaultSWRLRuleEngine(owlOntologyManager, swrlapiOWLOntology, targetRuleEngine, bridge, bridge);
+				return new DefaultSWRLRuleEngine(swrlapiOWLOntology, targetRuleEngine, bridge, bridge);
 			} catch (Throwable e) {
 				throw new SWRLRuleEngineException("Error creating rule engine " + ruleEngineName + ". Exception: "
 						+ e.getClass().getCanonicalName() + ". Message: " + e.getMessage(), e);

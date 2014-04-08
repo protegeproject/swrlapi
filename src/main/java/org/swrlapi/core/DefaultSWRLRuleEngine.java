@@ -26,18 +26,16 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
  */
 public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 {
-	private final OWLOntologyManager owlOntologyManager;
 	private final SWRLAPIOWLOntology swrlapiOWLOntology;
 	private final TargetRuleEngine targetRuleEngine;
 	private final SWRLBuiltInBridgeController builtInBridgeController;
 	private final SWRLRuleEngineBridgeController ruleEngineBridgeController;
 	private final Set<OWLAxiom> exportedOWLAxioms; // Axioms exported to target rule engine
 
-	public DefaultSWRLRuleEngine(OWLOntologyManager ontologyManager, SWRLAPIOWLOntology swrlapiOWLOntology,
-			TargetRuleEngine targetRuleEngine, SWRLRuleEngineBridgeController ruleEngineBridgeController,
-			SWRLBuiltInBridgeController builtInBridgeController) throws SWRLRuleEngineException
+	public DefaultSWRLRuleEngine(SWRLAPIOWLOntology swrlapiOWLOntology, TargetRuleEngine targetRuleEngine,
+			SWRLRuleEngineBridgeController ruleEngineBridgeController, SWRLBuiltInBridgeController builtInBridgeController)
+			throws SWRLRuleEngineException
 	{
-		this.owlOntologyManager = ontologyManager;
 		this.swrlapiOWLOntology = swrlapiOWLOntology;
 		this.targetRuleEngine = targetRuleEngine;
 		this.builtInBridgeController = builtInBridgeController;
@@ -400,7 +398,7 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 
 	private OWLOntologyManager getOWLOntologyManager()
 	{
-		return this.owlOntologyManager;
+		return this.getSWRLAPIOWLOntology().getOWLOntologyManager();
 	}
 
 	private SWRLAPIOWLOntology getSWRLAPIOWLOntology()

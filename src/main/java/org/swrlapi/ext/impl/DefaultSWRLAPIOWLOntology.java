@@ -44,17 +44,17 @@ import org.swrlapi.ext.SWRLAPIRule;
 public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 {
 	private final OWLOntologyManager ontologyManager;
-	private final OWLOntology owlOntology;
+	private final OWLOntology ontology;
 	private final DefaultPrefixManager prefixManager;
 	private final OWLIRIResolver owlIRIResolver;
 	private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
 	private final SWRLAPIOntologyProcessor swrlapiOntologyProcessor;
 
-	public DefaultSWRLAPIOWLOntology(OWLOntologyManager ontologyManager, OWLOntology owlOntology,
+	public DefaultSWRLAPIOWLOntology(OWLOntologyManager ontologyManager, OWLOntology ontology,
 			DefaultPrefixManager prefixManager)
 	{
 		this.ontologyManager = ontologyManager;
-		this.owlOntology = owlOntology;
+		this.ontology = ontology;
 		this.prefixManager = prefixManager;
 		this.owlIRIResolver = new OWLIRIResolver(this.prefixManager);
 		this.swrlapiOWLDataFactory = new DefaultSWRLAPIOWLDataFactory(owlIRIResolver);
@@ -64,7 +64,13 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	@Override
 	public OWLOntology getOWLOntology()
 	{
-		return this.owlOntology;
+		return this.ontology;
+	}
+
+	@Override
+	public OWLOntologyManager getOWLOntologyManager()
+	{
+		return this.ontologyManager;
 	}
 
 	@Override
@@ -252,23 +258,45 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	}
 
 	/**
-	 * The {@link SWRLBuiltInArgument} interface represents the primary SWRLAPI extension point to the OWLAPI classes to
-	 * represent arguments to SWRL built-in atoms.
+	 * The {@link SWRLBuiltInArgument} interface is the SWRLAPI extension point to the OWLAPI to represent arguments to
+	 * SWRL built-in atoms. In the OWL Specification only data values or variables referencing them are allowed as
+	 * parameters to built-in atoms. The SWRLAPI named OWL entities (classes, named individuals, properties, and
+	 * datatypes) can also be passed to built-ins.
+	 * <p>
+	 * The OWLAPI follows the Specification and does not explicitly allow named OWL entities as parameters. However, if
+	 * OWLAPI parsers encounter named entities as parameters they appear to represent them as SWRL variables - with the
+	 * variable IRI set to the IRI of the named entity. So if we are processing built-in parameters and encounter
+	 * variables with an IRI referring to named OWL entities in the active ontology we can transform them to the
+	 * appropriate SWRLAPI built-in argument for the named entity. An important restriction here is that variable names do
+	 * not intersect with named entities in their OWL ontology.
 	 * 
-	 * @see SWRLBuiltInArgument, SWRLLiteralArgument, SWRLDArgument
+	 * @see SWRLBuiltInArgument, SWRLLiteralArgument, SWRLDArgument, SWRLVariable
 	 */
 	private SWRLBuiltInArgument convertSWRLDArgument2SWRLBuiltInArgument(SWRLDArgument swrlDArgument)
 	{
 		if (swrlDArgument instanceof SWRLLiteralArgument) {
 			SWRLLiteralArgument swrlLiteralArgument = (SWRLLiteralArgument)swrlDArgument;
-			SWRLBuiltInArgument argument = convertSWRLLiteralArgument2SWRLBuiltInArgument(swrlLiteralArgument);
-			return argument;
+			SWRLBuiltInArgument swrlBuiltInArgument = convertSWRLLiteralArgument2SWRLBuiltInArgument(swrlLiteralArgument);
+			return swrlBuiltInArgument;
 		} else if (swrlDArgument instanceof SWRLVariable) {
 			SWRLVariable swrlVariable = (SWRLVariable)swrlDArgument;
-			SWRLVariableBuiltInArgument argument = transformSWRLVariable2SWRLVariableBuiltInArgument(swrlVariable);
+			IRI iri = swrlVariable.getIRI();
 
-			getOWLIRIResolver().recordSWRLVariable(swrlVariable);
-			return argument;
+			if (getOWLOntology().containsClassInSignature(iri, true)) {
+				return getSWRLBuiltInArgumentFactory().getClassBuiltInArgument(iri);
+			} else if (getOWLOntology().containsIndividualInSignature(iri, true)) {
+				return getSWRLBuiltInArgumentFactory().getNamedIndividualBuiltInArgument(iri);
+			} else if (getOWLOntology().containsObjectPropertyInSignature(iri, true)) {
+				return getSWRLBuiltInArgumentFactory().getObjectPropertyBuiltInArgument(iri);
+			} else if (getOWLOntology().containsDataPropertyInSignature(iri, true)) {
+				return getSWRLBuiltInArgumentFactory().getDataPropertyBuiltInArgument(iri);
+			} else if (getOWLOntology().containsAnnotationPropertyInSignature(iri, true)) {
+				return getSWRLBuiltInArgumentFactory().getAnnotationPropertyBuiltInArgument(iri);
+			} else if (getOWLOntology().containsDatatypeInSignature(iri, true)) {
+				return getSWRLBuiltInArgumentFactory().getDatatypeBuiltInArgument(iri);
+			} else {
+				return transformSWRLVariable2SWRLVariableBuiltInArgument(swrlVariable);
+			}
 		} else
 			throw new RuntimeException("Unknown " + SWRLDArgument.class.getName() + " class "
 					+ swrlDArgument.getClass().getName());
@@ -277,9 +305,9 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	/**
 	 * The OWLAPI permits only variable and literal arguments to built-ins, which conforms with the SWRL Specification.
 	 * The SWRLAPI also permits OWL classes, individuals, properties, and datatypes as arguments. In order to support
-	 * these additional argument types in a Specification-conformant way, the SWRLAPI treats URI literal arguments
-	 * specially. It a URI literal argument is passed to a built-in we determine if it refers to an OWL named object in
-	 * the active ontology and if so we create specific SWRLAPI built-in argument types for it.
+	 * these additional argument types in a standards-conformant way, the SWRLAPI treats URI literal arguments specially.
+	 * It a URI literal argument is passed to a built-in we determine if it refers to an OWL named object in the active
+	 * ontology and if so we create specific SWRLAPI built-in argument types for it.
 	 * <p>
 	 * The SWRLAPI allows SQWRL collection built-in arguments (represented by a
 	 * {@link SQWRLCollectionVariableBuiltInArgument}) and multi-value variables (represented by a
@@ -296,7 +324,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		OWLLiteral literal = swrlLiteralArgument.getLiteral();
 		OWLDatatype datatype = literal.getDatatype();
 
-		if (isURI(datatype)) {
+		if (isURI(datatype)) { // TODO This URI-based approach may not be relevant
 			IRI iri = IRI.create(literal.getLiteral());
 			if (getOWLOntology().containsClassInSignature(iri)) {
 				return getSWRLBuiltInArgumentFactory().getClassBuiltInArgument(iri);
@@ -324,6 +352,8 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		IRI variableIRI = swrlVariable.getIRI();
 
 		SWRLVariableBuiltInArgument argument = getSWRLBuiltInArgumentFactory().getVariableBuiltInArgument(variableIRI);
+
+		getOWLIRIResolver().recordSWRLVariable(swrlVariable);
 
 		return argument;
 	}
