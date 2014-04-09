@@ -33,7 +33,7 @@ import org.swrlapi.core.arguments.SWRLBuiltInArgument;
  * regeneration of knowledge.
  * <p>
  * A SWRLAPI ontology does not directly deal with SQWRL queries. Instead, a {@link SWRLAPIOntologyProcessor} is used to
- * extract SQWRL queries from a {@link SWRLAPIOWLOntology}
+ * extract SQWRL queries - which are stored as SWRL rules - from a {@link SWRLAPIOWLOntology}.
  * 
  * @see SWRLAPIRule, SWRLBuiltInArgument, SWRLAPIOntologyProcessor, SWRLAPIOWLDataFactory
  */
