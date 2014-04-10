@@ -95,10 +95,10 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 			checkForNonVariableArguments(variableArguments, "unexpected non variable argument");
 
 			for (SWRLBuiltInArgument argument : variableArguments) {
-				String variableName = argument.asVariable().getVariableName(); // We have checked that they are all
+				String variableShortName = argument.asVariable().getVariableShortName(); // We have checked that they are all
 																																						// variables
 				double variableValue = getArgumentAsADouble(argument);
-				getJEP().addVariable(variableName, variableValue);
+				getJEP().addVariable(variableShortName, variableValue);
 			}
 		}
 

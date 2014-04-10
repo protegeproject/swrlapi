@@ -23,7 +23,7 @@ public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtom
 
 	void setBuiltInIndex(int builtInIndex);
 
-	boolean usesAtLeastOneVariableOf(Set<String> variableNames);
+	boolean usesAtLeastOneVariableOf(Set<String> variableShortNames);
 
 	List<SWRLBuiltInArgument> getBuiltInArguments();
 
@@ -37,13 +37,13 @@ public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtom
 
 	boolean hasVariableArguments();
 
-	Set<String> getUnboundArgumentVariableNames();
+	Set<String> getUnboundArgumentVariableShortNames();
 
-	String getArgumentVariableName(int argumentNumber);
+	String getArgumentVariableShortName(int argumentNumber);
 
-	List<String> getArgumentsVariableNames();
+	List<String> getArgumentsVariableShortNames();
 
-	List<String> getArgumentsVariableNamesExceptFirst();
+	List<String> getArgumentsShortVariableNamesExceptFirst();
 
 	String getRuleName();
 
@@ -53,11 +53,12 @@ public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtom
 
 	void addArguments(List<SWRLBuiltInArgument> additionalArguments);
 
-	void setPathVariableNames(Set<String> variableNames);
+	void setPathVariableShortNames(Set<String> variableShortNames);
 
 	boolean hasPathVariables();
 
-	Set<String> getPathVariableNames(); // Indicates variables that this built-in atom depends on (directly or indirectly)
+	Set<String> getPathVariableShortNames(); // Indicates variables that this built-in atom depends on (directly or
+																						// indirectly)
 
 	void setUsesSQWRLCollectionResults();
 

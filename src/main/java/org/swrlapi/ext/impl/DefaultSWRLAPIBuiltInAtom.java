@@ -24,7 +24,7 @@ public class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SW
 	private List<SWRLBuiltInArgument> arguments;
 	private int builtInIndex = -1; // Index of this built-in atom in rule body; left-to-right, first built-in index is 0,
 																	// second in 1, and so on
-	private Set<String> pathVariableNames = new HashSet<String>();
+	private Set<String> pathVariableShortNames = new HashSet<String>();
 	private boolean sqwrlCollectionResultsUsed = false;
 
 	public DefaultSWRLAPIBuiltInAtom(String ruleName, IRI builtInIRI, String builtInShortName,
@@ -86,23 +86,23 @@ public class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SW
 	}
 
 	@Override
-	public Set<String> getPathVariableNames()
+	public Set<String> getPathVariableShortNames()
 	{
-		return Collections.unmodifiableSet(this.pathVariableNames);
+		return Collections.unmodifiableSet(this.pathVariableShortNames);
 	}
 
 	@Override
 	public boolean hasPathVariables()
 	{
-		return !this.pathVariableNames.isEmpty();
+		return !this.pathVariableShortNames.isEmpty();
 	}
 
 	@Override
-	public boolean usesAtLeastOneVariableOf(Set<String> variableNames)
+	public boolean usesAtLeastOneVariableOf(Set<String> variableShortNames)
 	{
-		Set<String> s = new HashSet<String>(variableNames);
+		Set<String> s = new HashSet<String>(variableShortNames);
 
-		s.retainAll(getArgumentsVariableNames());
+		s.retainAll(getArgumentsVariableShortNames());
 
 		return !s.isEmpty();
 	}
@@ -143,49 +143,49 @@ public class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SW
 	}
 
 	@Override
-	public Set<String> getUnboundArgumentVariableNames()
+	public Set<String> getUnboundArgumentVariableShortNames()
 	{
 		Set<String> result = new HashSet<String>();
 
 		for (SWRLBuiltInArgument argument : this.arguments)
 			if (argument.isVariable() && argument.asVariable().isUnbound())
-				result.add(argument.asVariable().getVariableName());
+				result.add(argument.asVariable().getVariableShortName());
 
 		return Collections.unmodifiableSet(result);
 	}
 
 	@Override
-	public String getArgumentVariableName(int argumentNumber)
+	public String getArgumentVariableShortName(int argumentNumber)
 	{
 		checkArgumentNumber(argumentNumber);
 
 		if (!this.arguments.get(argumentNumber).isVariable())
 			throw new RuntimeException("expecting a variable for (0-offset) argument #" + argumentNumber);
 
-		return this.arguments.get(argumentNumber).asVariable().getVariableName();
+		return this.arguments.get(argumentNumber).asVariable().getVariableShortName();
 	}
 
 	@Override
-	public List<String> getArgumentsVariableNames()
+	public List<String> getArgumentsVariableShortNames()
 	{
 		List<String> result = new ArrayList<String>();
 
 		for (SWRLBuiltInArgument argument : this.arguments)
 			if (argument.isVariable())
-				result.add(argument.asVariable().getVariableName());
+				result.add(argument.asVariable().getVariableShortName());
 
 		return Collections.unmodifiableList(result);
 	}
 
 	@Override
-	public List<String> getArgumentsVariableNamesExceptFirst()
+	public List<String> getArgumentsShortVariableNamesExceptFirst()
 	{
 		List<String> result = new ArrayList<String>();
 		int argumentCount = 0;
 
 		for (SWRLBuiltInArgument argument : this.arguments)
 			if (argument.isVariable() && argumentCount++ != 0)
-				result.add(argument.asVariable().getVariableName());
+				result.add(argument.asVariable().getVariableShortName());
 
 		return Collections.unmodifiableList(result);
 	}
@@ -197,9 +197,9 @@ public class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SW
 	}
 
 	@Override
-	public void setPathVariableNames(Set<String> variableNames)
+	public void setPathVariableShortNames(Set<String> variableShortNames)
 	{
-		this.pathVariableNames = variableNames;
+		this.pathVariableShortNames = new HashSet<String>(variableShortNames);
 	}
 
 	@Override

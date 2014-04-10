@@ -136,9 +136,9 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 		List<SWRLAPIBuiltInAtom> bodyBuiltInAtoms = new ArrayList<SWRLAPIBuiltInAtom>();
 		List<SWRLAtom> bodyNonBuiltInAtoms = new ArrayList<SWRLAtom>();
 		List<SWRLAtom> finalBodyAtoms = new ArrayList<SWRLAtom>();
-		Set<String> variableNamesUsedByNonBuiltInBodyAtoms = new HashSet<String>(); // By definition, these will always be
+		Set<String> variableShortNamesUsedByNonBuiltInBodyAtoms = new HashSet<String>(); // By definition, these will always be
 																																								// bound.
-		Set<String> variableNamesBoundByBuiltIns = new HashSet<String>(); // Names of variables bound by built-ins in this
+		Set<String> variableShortNamesBoundByBuiltIns = new HashSet<String>(); // Names of variables bound by built-ins in this
 																																			// rule
 
 		// Process body atoms to build list of (1) built-in body atoms, and (2) the variables used by non-built-in atoms.
@@ -147,7 +147,7 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 				bodyBuiltInAtoms.add((SWRLAPIBuiltInAtom)atom);
 			else {
 				bodyNonBuiltInAtoms.add(atom);
-				variableNamesUsedByNonBuiltInBodyAtoms.addAll(getReferencedVariableNames(atom));
+				variableShortNamesUsedByNonBuiltInBodyAtoms.addAll(getReferencedVariableShortNames(atom));
 			}
 		}
 
@@ -156,16 +156,16 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 																															// are unbound.
 			for (SWRLBuiltInArgument argument : builtInAtom.getBuiltInArguments()) {
 				if (argument.isVariable()) {
-					String argumentVariableName = argument.asVariable().getVariableName();
+					String argumentVariableShortName = argument.asVariable().getVariableShortName();
 
 					// If a variable argument is not used by any non built-in body atom or is not bound by another body built-in
 					// atom it will therefore be unbound when this built-in is called. We thus set this built-in argument to
 					// unbound. If a built-in binds an argument, all later built-ins (proceeding from left to right) will be
 					// passed the bound value of this variable during rule execution.
-					if (!variableNamesUsedByNonBuiltInBodyAtoms.contains(argumentVariableName)
-							&& !variableNamesBoundByBuiltIns.contains(argumentVariableName)) {
+					if (!variableShortNamesUsedByNonBuiltInBodyAtoms.contains(argumentVariableShortName)
+							&& !variableShortNamesBoundByBuiltIns.contains(argumentVariableShortName)) {
 						argument.asVariable().setUnbound(); // Tell the built-in that it is expected to bind this argument
-						variableNamesBoundByBuiltIns.add(argumentVariableName); // Flag as a bound variable for later built-ins
+						variableShortNamesBoundByBuiltIns.add(argumentVariableShortName); // Flag as a bound variable for later built-ins
 					}
 				}
 			}
@@ -214,22 +214,22 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 		return result;
 	}
 
-	private Set<String> getReferencedVariableNames(SWRLAtom atom)
+	private Set<String> getReferencedVariableShortNames(SWRLAtom atom)
 	{
-		Set<String> referencedVariableNames = new HashSet<String>();
+		Set<String> referencedVariableShortNames = new HashSet<String>();
 
 		for (SWRLArgument argument : atom.getAllArguments()) {
 			if (argument instanceof SWRLVariable) {
 				SWRLVariable variable = (SWRLVariable)argument;
 				IRI iri = variable.getIRI();
-				String variableName = getOWLIRIResolver().iri2ShortName(iri);
-				referencedVariableNames.add(variableName);
+				String variableShortName = getOWLIRIResolver().iri2ShortName(iri);
+				referencedVariableShortNames.add(variableShortName);
 			} else if (argument instanceof SWRLVariableBuiltInArgument) {
 				SWRLVariableBuiltInArgument variableBuiltInArgument = (SWRLVariableBuiltInArgument)argument;
-				referencedVariableNames.add(variableBuiltInArgument.getVariableName());
+				referencedVariableShortNames.add(variableBuiltInArgument.getVariableShortName());
 			}
 		}
-		return referencedVariableNames;
+		return referencedVariableShortNames;
 	}
 
 	private OWLIRIResolver getOWLIRIResolver()

@@ -54,7 +54,7 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
 			throws BuiltInException;
 
 	// Variable name handling
-	String getVariableName(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	String getVariableShortName(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
 
 	// Unbound argument handling
 	boolean hasUnboundArguments(List<SWRLBuiltInArgument> arguments) throws BuiltInException;

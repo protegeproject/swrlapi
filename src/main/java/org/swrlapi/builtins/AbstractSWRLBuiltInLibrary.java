@@ -1181,7 +1181,7 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 	}
 
 	@Override
-	public String getVariableName(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException
+	public String getVariableShortName(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException
 	{
 		checkArgumentNumber(argumentNumber, arguments);
 
@@ -1189,7 +1189,7 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 			throw new BuiltInException("internal error: attempt to get variable name of non-variable argument "
 					+ argumentNumber);
 
-		return arguments.get(argumentNumber).asVariable().getVariableName();
+		return arguments.get(argumentNumber).asVariable().getVariableShortName();
 	}
 
 	private String makeInvalidArgumentTypeMessage(SWRLBuiltInArgument argument, String expectedTypeName)
@@ -1198,7 +1198,7 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 		String message = "expecting " + expectedTypeName + ", got ";
 
 		if (argument.isVariable() && argument.asVariable().isUnbound())
-			message += "unbound argument with variable name " + argument.asVariable().getVariableName();
+			message += "unbound argument with variable name " + argument.asVariable().getVariableShortName();
 		else {
 			if (argument instanceof SWRLClassBuiltInArgument) {
 				SWRLClassBuiltInArgument classArgument = (SWRLClassBuiltInArgument)argument;
@@ -1299,10 +1299,10 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 		for (SWRLBuiltInArgument argument : arguments) {
 			if (argument.isVariable() && argument.asVariable().isUnbound())
 				throw new BuiltInException("built-in " + builtInName + " in rule " + ruleName + " "
-						+ "returned with unbound argument ?" + argument.asVariable().getVariableName());
+						+ "returned with unbound argument ?" + argument.asVariable().getVariableShortName());
 			else if (argument.isMultiValueVariable() && argument.asMultiValueVariable().hasNoArguments())
 				throw new BuiltInException("built-in " + builtInName + " in rule " + ruleName + " "
-						+ "returned with empty multi-argument ?" + argument.asVariable().getVariableName());
+						+ "returned with empty multi-argument ?" + argument.asVariable().getVariableShortName());
 		}
 	}
 
