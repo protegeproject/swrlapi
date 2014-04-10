@@ -71,7 +71,7 @@ public class OWLIRIResolver
 		if (this.iri2ShortNameCache.containsKey(iri))
 			return this.iri2ShortNameCache.get(iri);
 		else {
-			String shortName = prefixManager.getPrefixIRI(iri);
+			String shortName = prefixManager.getShortForm(iri);
 			if (shortName != null)
 				return shortName;
 			else
@@ -83,8 +83,10 @@ public class OWLIRIResolver
 	{
 		if (this.shortName2IRI.containsKey(shortName))
 			return this.shortName2IRI.get(shortName);
-		else
-			throw new RuntimeException("could not find IRI for prefixed name " + shortName);
+		else {
+			return prefixManager.getIRI(shortName);
+		}
+		// throw new RuntimeException("could not find IRI for short name " + shortName);
 	}
 
 	public void recordSWRLVariable(SWRLVariable variable)
