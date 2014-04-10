@@ -6,11 +6,19 @@ import java.util.Collection;
 import java.util.List;
 
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLAnnotationProperty;
+import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLDataProperty;
+import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
+import org.semanticweb.owlapi.model.OWLNamedIndividual;
+import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.swrlapi.core.SWRLBuiltInBridge;
+import org.swrlapi.core.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLDataPropertyBuiltInArgument;
+import org.swrlapi.core.arguments.SWRLDatatypeBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLNamedIndividualBuiltInArgument;
@@ -321,13 +329,20 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
 			throws BuiltInException;
 
 	// Argument creation handling
-	SWRLClassBuiltInArgument createClassBuiltInArgument(IRI classIRI) throws BuiltInException;
+	SWRLClassBuiltInArgument createClassBuiltInArgument(OWLClass cls) throws BuiltInException;
 
-	SWRLNamedIndividualBuiltInArgument createIndividualBuiltInArgument(IRI individualIRI) throws BuiltInException;
+	SWRLNamedIndividualBuiltInArgument createIndividualBuiltInArgument(OWLNamedIndividual individual)
+			throws BuiltInException;
 
-	SWRLObjectPropertyBuiltInArgument createObjectPropertyBuiltInArgument(IRI propertyIRI) throws BuiltInException;
+	SWRLObjectPropertyBuiltInArgument createObjectPropertyBuiltInArgument(OWLObjectProperty property)
+			throws BuiltInException;
 
-	SWRLDataPropertyBuiltInArgument createDataPropertyArgument(IRI propertyIRI) throws BuiltInException;
+	SWRLDataPropertyBuiltInArgument createDataPropertyBuiltInArgument(OWLDataProperty property) throws BuiltInException;
+
+	SWRLAnnotationPropertyBuiltInArgument createAnnotationPropertyBuiltInArgument(OWLAnnotationProperty property)
+			throws BuiltInException;
+
+	SWRLDatatypeBuiltInArgument createDatatypeBuiltInArgument(OWLDatatype datatype) throws BuiltInException;
 
 	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(String s) throws BuiltInException;
 

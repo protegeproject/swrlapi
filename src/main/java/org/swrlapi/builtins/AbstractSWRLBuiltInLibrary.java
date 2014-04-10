@@ -10,19 +10,23 @@ import java.util.List;
 import java.util.Map;
 
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLDataProperty;
+import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.swrlapi.core.SWRLBuiltInBridge;
 import org.swrlapi.core.arguments.SQWRLCollectionVariableBuiltInArgument;
+import org.swrlapi.core.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.core.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLDataPropertyBuiltInArgument;
+import org.swrlapi.core.arguments.SWRLDatatypeBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLNamedIndividualBuiltInArgument;
@@ -1460,51 +1464,44 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 		}
 	}
 
+	@Override
 	public SWRLClassBuiltInArgument createClassBuiltInArgument(OWLClass cls) throws BuiltInException
 	{
-		return getSWRLBuiltInArgumentFactory().getClassBuiltInArgument(cls.getIRI());
+		return getSWRLBuiltInArgumentFactory().getClassBuiltInArgument(cls);
 	}
 
 	@Override
-	public SWRLClassBuiltInArgument createClassBuiltInArgument(IRI classIRI) throws BuiltInException
-	{
-		return getSWRLBuiltInArgumentFactory().getClassBuiltInArgument(classIRI);
-	}
-
 	public SWRLNamedIndividualBuiltInArgument createIndividualBuiltInArgument(OWLNamedIndividual individual)
 			throws BuiltInException
 	{
-		return getSWRLBuiltInArgumentFactory().getNamedIndividualBuiltInArgument(individual.getIRI());
+		return getSWRLBuiltInArgumentFactory().getNamedIndividualBuiltInArgument(individual);
 	}
 
 	@Override
-	public SWRLNamedIndividualBuiltInArgument createIndividualBuiltInArgument(IRI individualIRI) throws BuiltInException
-	{
-		return getSWRLBuiltInArgumentFactory().getNamedIndividualBuiltInArgument(individualIRI);
-	}
-
 	public SWRLObjectPropertyBuiltInArgument createObjectPropertyBuiltInArgument(OWLObjectProperty property)
 			throws BuiltInException
 	{
-		return getSWRLBuiltInArgumentFactory().getObjectPropertyBuiltInArgument(property.getIRI());
+		return getSWRLBuiltInArgumentFactory().getObjectPropertyBuiltInArgument(property);
 	}
 
 	@Override
-	public SWRLObjectPropertyBuiltInArgument createObjectPropertyBuiltInArgument(IRI propertyIRI) throws BuiltInException
-	{
-		return getSWRLBuiltInArgumentFactory().getObjectPropertyBuiltInArgument(propertyIRI);
-	}
-
 	public SWRLDataPropertyBuiltInArgument createDataPropertyBuiltInArgument(OWLDataProperty property)
 			throws BuiltInException
 	{
-		return getSWRLBuiltInArgumentFactory().getDataPropertyBuiltInArgument(property.getIRI());
+		return getSWRLBuiltInArgumentFactory().getDataPropertyBuiltInArgument(property);
 	}
 
 	@Override
-	public SWRLDataPropertyBuiltInArgument createDataPropertyArgument(IRI propertyIRI) throws BuiltInException
+	public SWRLAnnotationPropertyBuiltInArgument createAnnotationPropertyBuiltInArgument(OWLAnnotationProperty property)
+			throws BuiltInException
 	{
-		return getSWRLBuiltInArgumentFactory().getDataPropertyBuiltInArgument(propertyIRI);
+		return getSWRLBuiltInArgumentFactory().getAnnotationPropertyBuiltInArgument(property);
+	}
+
+	@Override
+	public SWRLDatatypeBuiltInArgument createDatatypeBuiltInArgument(OWLDatatype datatype) throws BuiltInException
+	{
+		return getSWRLBuiltInArgumentFactory().getDatatypeBuiltInArgument(datatype);
 	}
 
 	public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(OWLLiteral literal) throws BuiltInException

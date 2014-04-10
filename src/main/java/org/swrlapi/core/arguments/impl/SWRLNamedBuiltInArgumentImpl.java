@@ -1,35 +1,35 @@
 package org.swrlapi.core.arguments.impl;
 
 import org.semanticweb.owlapi.model.IRI;
-import org.semanticweb.owlapi.model.OWLNamedObject;
+import org.semanticweb.owlapi.model.OWLEntity;
 import org.swrlapi.core.arguments.SWRLNamedBuiltInArgument;
 
 abstract class SWRLNamedBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements SWRLNamedBuiltInArgument
 {
 	private static final long serialVersionUID = 1L;
 
-	private final IRI uri;
+	private final OWLEntity entity;
 
-	public SWRLNamedBuiltInArgumentImpl(IRI uri)
+	public SWRLNamedBuiltInArgumentImpl(OWLEntity entity)
 	{
-		this.uri = uri;
-	}
-
-	public SWRLNamedBuiltInArgumentImpl(OWLNamedObject entity)
-	{
-		this.uri = entity.getIRI();
+		this.entity = entity;
 	}
 
 	@Override
 	public IRI getIRI()
 	{
-		return this.uri;
+		return this.entity.getIRI();
 	}
 
 	@Override
 	public String toDisplayText()
 	{
-		throw new RuntimeException("Not implemented");
+		throw new RuntimeException("Not implemented"); // TODO
+	}
+
+	protected OWLEntity getOWLEntity()
+	{
+		return this.entity;
 	}
 
 	@Override

@@ -8,8 +8,8 @@ import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLDatatype;
-import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLLiteral;
+import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.swrlapi.xsd.XSDDate;
 import org.swrlapi.xsd.XSDDateTime;
@@ -19,8 +19,7 @@ import org.swrlapi.xsd.XSDTime;
 /**
  * Factory for creating SWRLAPI {@link SWRLBuiltInArgument} objects.
  * 
- * 
- * @author martin
+ * @see SWRLBuiltInArgument
  */
 public interface SWRLBuiltInArgumentFactory
 {
@@ -28,27 +27,15 @@ public interface SWRLBuiltInArgumentFactory
 
 	SWRLVariableBuiltInArgument getUnboundVariableBuiltInArgument(IRI variableIRI);
 
-	SWRLClassBuiltInArgument getClassBuiltInArgument(IRI iri);
-
 	SWRLClassBuiltInArgument getClassBuiltInArgument(OWLClass cls);
 
-	SWRLNamedIndividualBuiltInArgument getNamedIndividualBuiltInArgument(IRI iri);
-
-	SWRLNamedIndividualBuiltInArgument getNamedIndividualBuiltInArgument(OWLIndividual individual);
-
-	SWRLObjectPropertyBuiltInArgument getObjectPropertyBuiltInArgument(IRI iri);
+	SWRLNamedIndividualBuiltInArgument getNamedIndividualBuiltInArgument(OWLNamedIndividual individual);
 
 	SWRLObjectPropertyBuiltInArgument getObjectPropertyBuiltInArgument(OWLObjectProperty property);
 
-	SWRLDataPropertyBuiltInArgument getDataPropertyBuiltInArgument(IRI iri);
-
 	SWRLDataPropertyBuiltInArgument getDataPropertyBuiltInArgument(OWLDataProperty property);
 
-	SWRLAnnotationPropertyBuiltInArgument getAnnotationPropertyBuiltInArgument(IRI iri);
-
 	SWRLAnnotationPropertyBuiltInArgument getAnnotationPropertyBuiltInArgument(OWLAnnotationProperty property);
-
-	SWRLDatatypeBuiltInArgument getDatatypeBuiltInArgument(IRI iri);
 
 	SWRLDatatypeBuiltInArgument getDatatypeBuiltInArgument(OWLDatatype datatype);
 

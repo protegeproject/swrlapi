@@ -8,7 +8,6 @@ import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLDatatype;
-import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
@@ -59,21 +58,9 @@ public class DefaultSWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumen
 	}
 
 	@Override
-	public SWRLClassBuiltInArgument getClassBuiltInArgument(IRI classIRI)
-	{
-		return new SWRLClassBuiltInArgumentImpl(classIRI);
-	}
-
-	@Override
 	public SWRLClassBuiltInArgument getClassBuiltInArgument(OWLClass cls)
 	{
 		return new SWRLClassBuiltInArgumentImpl(cls);
-	}
-
-	@Override
-	public SWRLObjectPropertyBuiltInArgument getObjectPropertyBuiltInArgument(IRI propertyIRI)
-	{
-		return new SWRLObjectPropertyBuiltInArgumentImpl(propertyIRI);
 	}
 
 	@Override
@@ -83,21 +70,9 @@ public class DefaultSWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumen
 	}
 
 	@Override
-	public SWRLDataPropertyBuiltInArgument getDataPropertyBuiltInArgument(IRI propertyIRI)
-	{
-		return new SWRLDataPropertyBuiltInArgumentImpl(propertyIRI);
-	}
-
-	@Override
 	public SWRLDataPropertyBuiltInArgument getDataPropertyBuiltInArgument(OWLDataProperty property)
 	{
 		return new SWRLDataPropertyBuiltInArgumentImpl(property);
-	}
-
-	@Override
-	public SWRLAnnotationPropertyBuiltInArgument getAnnotationPropertyBuiltInArgument(IRI propertyIRI)
-	{
-		return new SWRLAnnotationPropertyBuiltInArgumentImpl(propertyIRI);
 	}
 
 	@Override
@@ -107,31 +82,15 @@ public class DefaultSWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumen
 	}
 
 	@Override
-	public SWRLDatatypeBuiltInArgument getDatatypeBuiltInArgument(IRI iri)
-	{
-		return new SWRLDatatypeBuiltInArgumentImpl(iri);
-	}
-
-	@Override
 	public SWRLDatatypeBuiltInArgument getDatatypeBuiltInArgument(OWLDatatype datatype)
 	{
 		return new SWRLDatatypeBuiltInArgumentImpl(datatype);
 	}
 
 	@Override
-	public SWRLNamedIndividualBuiltInArgument getNamedIndividualBuiltInArgument(IRI individualIRI)
+	public SWRLNamedIndividualBuiltInArgument getNamedIndividualBuiltInArgument(OWLNamedIndividual individual)
 	{
-		return new SWRLNamedIndividualBuiltInArgumentImpl(individualIRI);
-	}
-
-	@Override
-	public SWRLNamedIndividualBuiltInArgument getNamedIndividualBuiltInArgument(OWLIndividual individual)
-	{
-		if (individual.isNamed()) {
-			OWLNamedIndividual namedIndividual = individual.asOWLNamedIndividual();
-			return new SWRLNamedIndividualBuiltInArgumentImpl(namedIndividual.getIRI());
-		} else
-			throw new RuntimeException("OWL anonymous individual built-in arguments not supported by the SWRLAPI");
+		return new SWRLNamedIndividualBuiltInArgumentImpl(individual);
 	}
 
 	@Override

@@ -10,10 +10,14 @@ import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
+import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataFactory;
+import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
+import org.semanticweb.owlapi.model.OWLNamedIndividual;
+import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
@@ -283,17 +287,23 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 			IRI iri = swrlVariable.getIRI();
 
 			if (getOWLOntology().containsClassInSignature(iri, true)) {
-				return getSWRLBuiltInArgumentFactory().getClassBuiltInArgument(iri);
+				OWLClass cls = getOWLDataFactory().getOWLClass(iri);
+				return getSWRLBuiltInArgumentFactory().getClassBuiltInArgument(cls);
 			} else if (getOWLOntology().containsIndividualInSignature(iri, true)) {
-				return getSWRLBuiltInArgumentFactory().getNamedIndividualBuiltInArgument(iri);
+				OWLNamedIndividual individual = getOWLDataFactory().getOWLNamedIndividual(iri);
+				return getSWRLBuiltInArgumentFactory().getNamedIndividualBuiltInArgument(individual);
 			} else if (getOWLOntology().containsObjectPropertyInSignature(iri, true)) {
-				return getSWRLBuiltInArgumentFactory().getObjectPropertyBuiltInArgument(iri);
+				OWLObjectProperty property = getOWLDataFactory().getOWLObjectProperty(iri);
+				return getSWRLBuiltInArgumentFactory().getObjectPropertyBuiltInArgument(property);
 			} else if (getOWLOntology().containsDataPropertyInSignature(iri, true)) {
-				return getSWRLBuiltInArgumentFactory().getDataPropertyBuiltInArgument(iri);
+				OWLDataProperty property = getOWLDataFactory().getOWLDataProperty(iri);
+				return getSWRLBuiltInArgumentFactory().getDataPropertyBuiltInArgument(property);
 			} else if (getOWLOntology().containsAnnotationPropertyInSignature(iri, true)) {
-				return getSWRLBuiltInArgumentFactory().getAnnotationPropertyBuiltInArgument(iri);
+				OWLAnnotationProperty property = getOWLDataFactory().getOWLAnnotationProperty(iri);
+				return getSWRLBuiltInArgumentFactory().getAnnotationPropertyBuiltInArgument(property);
 			} else if (getOWLOntology().containsDatatypeInSignature(iri, true)) {
-				return getSWRLBuiltInArgumentFactory().getDatatypeBuiltInArgument(iri);
+				OWLDatatype datatype = getOWLDataFactory().getOWLDatatype(iri);
+				return getSWRLBuiltInArgumentFactory().getDatatypeBuiltInArgument(datatype);
 			} else {
 				return transformSWRLVariable2SWRLVariableBuiltInArgument(swrlVariable);
 			}
@@ -322,22 +332,28 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	private SWRLBuiltInArgument convertSWRLLiteralArgument2SWRLBuiltInArgument(SWRLLiteralArgument swrlLiteralArgument)
 	{
 		OWLLiteral literal = swrlLiteralArgument.getLiteral();
-		OWLDatatype datatype = literal.getDatatype();
+		OWLDatatype literalDatatype = literal.getDatatype();
 
-		if (isURI(datatype)) { // TODO This URI-based approach may not be relevant
+		if (isURI(literalDatatype)) { // TODO This URI-based approach may not be relevant
 			IRI iri = IRI.create(literal.getLiteral());
 			if (getOWLOntology().containsClassInSignature(iri)) {
-				return getSWRLBuiltInArgumentFactory().getClassBuiltInArgument(iri);
+				OWLClass cls = getOWLDataFactory().getOWLClass(iri);
+				return getSWRLBuiltInArgumentFactory().getClassBuiltInArgument(cls);
 			} else if (getOWLOntology().containsIndividualInSignature(iri)) {
-				return getSWRLBuiltInArgumentFactory().getNamedIndividualBuiltInArgument(iri);
+				OWLNamedIndividual individual = getOWLDataFactory().getOWLNamedIndividual(iri);
+				return getSWRLBuiltInArgumentFactory().getNamedIndividualBuiltInArgument(individual);
 			} else if (getOWLOntology().containsObjectPropertyInSignature(iri)) {
-				return getSWRLBuiltInArgumentFactory().getObjectPropertyBuiltInArgument(iri);
+				OWLObjectProperty property = getOWLDataFactory().getOWLObjectProperty(iri);
+				return getSWRLBuiltInArgumentFactory().getObjectPropertyBuiltInArgument(property);
 			} else if (getOWLOntology().containsDataPropertyInSignature(iri)) {
-				return getSWRLBuiltInArgumentFactory().getDataPropertyBuiltInArgument(iri);
+				OWLDataProperty property = getOWLDataFactory().getOWLDataProperty(iri);
+				return getSWRLBuiltInArgumentFactory().getDataPropertyBuiltInArgument(property);
 			} else if (getOWLOntology().containsAnnotationPropertyInSignature(iri)) {
-				return getSWRLBuiltInArgumentFactory().getAnnotationPropertyBuiltInArgument(iri);
+				OWLAnnotationProperty property = getOWLDataFactory().getOWLAnnotationProperty(iri);
+				return getSWRLBuiltInArgumentFactory().getAnnotationPropertyBuiltInArgument(property);
 			} else if (getOWLOntology().containsDatatypeInSignature(iri)) {
-				return getSWRLBuiltInArgumentFactory().getDatatypeBuiltInArgument(iri);
+				OWLDatatype datatype = getOWLDataFactory().getOWLDatatype(iri);
+				return getSWRLBuiltInArgumentFactory().getDatatypeBuiltInArgument(datatype);
 			} else {
 				return getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(literal);
 			}
