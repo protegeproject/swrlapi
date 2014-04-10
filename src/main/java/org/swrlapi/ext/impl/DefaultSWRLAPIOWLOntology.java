@@ -267,12 +267,6 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	 * parameters to built-in atoms. The SWRLAPI named OWL entities (classes, named individuals, properties, and
 	 * datatypes) can also be passed to built-ins.
 	 * <p>
-	 * The OWLAPI follows the Specification and does not explicitly allow named OWL entities as parameters. However, if
-	 * OWLAPI parsers encounter named entities as parameters they appear to represent them as SWRL variables - with the
-	 * variable IRI set to the IRI of the named entity. So if we are processing built-in parameters and encounter
-	 * variables with an IRI referring to named OWL entities in the active ontology we can transform them to the
-	 * appropriate SWRLAPI built-in argument for the named entity. An important restriction here is that variable names do
-	 * not intersect with named entities in their OWL ontology.
 	 * 
 	 * @see SWRLBuiltInArgument, SWRLLiteralArgument, SWRLDArgument, SWRLVariable
 	 */
@@ -284,32 +278,61 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 			return swrlBuiltInArgument;
 		} else if (swrlDArgument instanceof SWRLVariable) {
 			SWRLVariable swrlVariable = (SWRLVariable)swrlDArgument;
-			IRI iri = swrlVariable.getIRI();
-
-			if (getOWLOntology().containsClassInSignature(iri, true)) {
-				OWLClass cls = getOWLDataFactory().getOWLClass(iri);
-				return getSWRLBuiltInArgumentFactory().getClassBuiltInArgument(cls);
-			} else if (getOWLOntology().containsIndividualInSignature(iri, true)) {
-				OWLNamedIndividual individual = getOWLDataFactory().getOWLNamedIndividual(iri);
-				return getSWRLBuiltInArgumentFactory().getNamedIndividualBuiltInArgument(individual);
-			} else if (getOWLOntology().containsObjectPropertyInSignature(iri, true)) {
-				OWLObjectProperty property = getOWLDataFactory().getOWLObjectProperty(iri);
-				return getSWRLBuiltInArgumentFactory().getObjectPropertyBuiltInArgument(property);
-			} else if (getOWLOntology().containsDataPropertyInSignature(iri, true)) {
-				OWLDataProperty property = getOWLDataFactory().getOWLDataProperty(iri);
-				return getSWRLBuiltInArgumentFactory().getDataPropertyBuiltInArgument(property);
-			} else if (getOWLOntology().containsAnnotationPropertyInSignature(iri, true)) {
-				OWLAnnotationProperty property = getOWLDataFactory().getOWLAnnotationProperty(iri);
-				return getSWRLBuiltInArgumentFactory().getAnnotationPropertyBuiltInArgument(property);
-			} else if (getOWLOntology().containsDatatypeInSignature(iri, true)) {
-				OWLDatatype datatype = getOWLDataFactory().getOWLDatatype(iri);
-				return getSWRLBuiltInArgumentFactory().getDatatypeBuiltInArgument(datatype);
-			} else {
-				return transformSWRLVariable2SWRLVariableBuiltInArgument(swrlVariable);
-			}
+			return convertSWRLVariable2SWRLBuiltInArgument(swrlVariable);
 		} else
 			throw new RuntimeException("Unknown " + SWRLDArgument.class.getName() + " class "
 					+ swrlDArgument.getClass().getName());
+	}
+
+	/**
+	 * The OWLAPI follows the Specification and does not explicitly allow named OWL entities as parameters. However, if
+	 * OWLAPI parsers encounter named entities as parameters they appear to represent them as SWRL variables - with the
+	 * variable IRI set to the IRI of the named entity. So if we are processing built-in parameters and encounter
+	 * variables with an IRI referring to named OWL entities in the active ontology we can transform them to the
+	 * appropriate SWRLAPI built-in argument for the named entity. An important restriction here is that variable names do
+	 * not intersect with named entities in their OWL ontology.
+	 */
+	private SWRLBuiltInArgument convertSWRLVariable2SWRLBuiltInArgument(SWRLVariable swrlVariable)
+	{
+		IRI iri = swrlVariable.getIRI();
+
+		if (isOWLClass(iri)) {
+			OWLClass cls = getOWLDataFactory().getOWLClass(iri);
+
+			return getSWRLBuiltInArgumentFactory().getClassBuiltInArgument(cls);
+		} else if (getOWLOntology().containsIndividualInSignature(iri, true)) {
+			OWLNamedIndividual individual = getOWLDataFactory().getOWLNamedIndividual(iri);
+
+			return getSWRLBuiltInArgumentFactory().getNamedIndividualBuiltInArgument(individual);
+		} else if (getOWLOntology().containsObjectPropertyInSignature(iri, true)) {
+			OWLObjectProperty property = getOWLDataFactory().getOWLObjectProperty(iri);
+
+			return getSWRLBuiltInArgumentFactory().getObjectPropertyBuiltInArgument(property);
+		} else if (getOWLOntology().containsDataPropertyInSignature(iri, true)) {
+			OWLDataProperty property = getOWLDataFactory().getOWLDataProperty(iri);
+
+			return getSWRLBuiltInArgumentFactory().getDataPropertyBuiltInArgument(property);
+		} else if (getOWLOntology().containsAnnotationPropertyInSignature(iri, true)) {
+			OWLAnnotationProperty property = getOWLDataFactory().getOWLAnnotationProperty(iri);
+
+			return getSWRLBuiltInArgumentFactory().getAnnotationPropertyBuiltInArgument(property);
+		} else if (getOWLOntology().containsDatatypeInSignature(iri, true)) {
+			OWLDatatype datatype = getOWLDataFactory().getOWLDatatype(iri);
+
+			return getSWRLBuiltInArgumentFactory().getDatatypeBuiltInArgument(datatype);
+		} else {
+			IRI variableIRI = swrlVariable.getIRI();
+			SWRLVariableBuiltInArgument argument = getSWRLBuiltInArgumentFactory().getVariableBuiltInArgument(variableIRI);
+			getOWLIRIResolver().recordSWRLVariable(swrlVariable);
+
+			return argument;
+		}
+	}
+
+	private boolean isOWLClass(IRI iri)
+	{ // TODO This is likely not robust. Also see similar method in DefaultSWRLBridge
+		return getOWLOntology().containsClassInSignature(iri, true) || iri.equals(OWLRDFVocabulary.OWL_THING.getIRI())
+				|| iri.equals(OWLRDFVocabulary.OWL_NOTHING.getIRI());
 	}
 
 	/**
@@ -336,7 +359,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 
 		if (isURI(literalDatatype)) { // TODO This URI-based approach may not be relevant
 			IRI iri = IRI.create(literal.getLiteral());
-			if (getOWLOntology().containsClassInSignature(iri)) {
+			if (isOWLClass(iri)) {
 				OWLClass cls = getOWLDataFactory().getOWLClass(iri);
 				return getSWRLBuiltInArgumentFactory().getClassBuiltInArgument(cls);
 			} else if (getOWLOntology().containsIndividualInSignature(iri)) {
@@ -361,17 +384,6 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 			SWRLLiteralBuiltInArgument argument = getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(literal);
 			return argument;
 		}
-	}
-
-	private SWRLVariableBuiltInArgument transformSWRLVariable2SWRLVariableBuiltInArgument(SWRLVariable swrlVariable)
-	{
-		IRI variableIRI = swrlVariable.getIRI();
-
-		SWRLVariableBuiltInArgument argument = getSWRLBuiltInArgumentFactory().getVariableBuiltInArgument(variableIRI);
-
-		getOWLIRIResolver().recordSWRLVariable(swrlVariable);
-
-		return argument;
 	}
 
 	private boolean isSWRLBuiltInAtom(SWRLAtom atom) // TODO

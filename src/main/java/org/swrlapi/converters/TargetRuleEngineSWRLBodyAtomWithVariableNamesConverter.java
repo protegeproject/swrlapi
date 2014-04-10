@@ -21,17 +21,23 @@ import org.swrlapi.ext.SWRLAPIBuiltInAtom;
  */
 public interface TargetRuleEngineSWRLBodyAtomWithVariableNamesConverter<T> extends TargetRuleEngineConverter
 {
-	T convert(SWRLClassAtom atom, Set<String> variableShortNames) throws TargetRuleEngineException;
+	T convert(SWRLClassAtom atom, Set<String> previouslyEncounteredVariableShortNames) throws TargetRuleEngineException;
 
-	T convert(SWRLDataPropertyAtom atom, Set<String> variableShortNames) throws TargetRuleEngineException;
+	T convert(SWRLDataPropertyAtom atom, Set<String> previouslyEncounteredVariableShortNames)
+			throws TargetRuleEngineException;
 
-	T convert(SWRLObjectPropertyAtom atom, Set<String> variableShortNames) throws TargetRuleEngineException;
+	T convert(SWRLObjectPropertyAtom atom, Set<String> previouslyEncounteredVariableShortNames)
+			throws TargetRuleEngineException;
 
-	T convert(SWRLSameIndividualAtom atom, Set<String> variableShortNames) throws TargetRuleEngineException;
+	T convert(SWRLSameIndividualAtom atom, Set<String> previouslyEncounteredVariableShortNames)
+			throws TargetRuleEngineException;
 
-	T convert(SWRLDifferentIndividualsAtom atom, Set<String> variableShortNames) throws TargetRuleEngineException;
+	T convert(SWRLDifferentIndividualsAtom atom, Set<String> previouslyEncounteredVariableShortNames)
+			throws TargetRuleEngineException;
 
-	T convert(SWRLAPIBuiltInAtom atom, Set<String> variableShortNames) throws TargetRuleEngineException;
+	T convert(SWRLAPIBuiltInAtom atom, Set<String> previouslyEncounteredVariableShortNames)
+			throws TargetRuleEngineException;
 
-	T convert(SWRLDataRangeAtom atom, Set<String> variableShortNames) throws TargetRuleEngineException;
+	T convert(SWRLDataRangeAtom atom, Set<String> previouslyEncounteredVariableShortNames)
+			throws TargetRuleEngineException;
 }

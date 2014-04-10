@@ -7,6 +7,7 @@ import java.util.Set;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 import org.swrlapi.builtins.SWRLBuiltInLibraryManager;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLBuiltInArgumentFactory;
@@ -63,7 +64,7 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 		this.owl2RLPersistenceLayer = owl2RLPersistenceLayer;
 		this.targetRuleEngine = null;
 
-		this.classExpressionResolver = new OWLClassExpressionResolver();
+		this.classExpressionResolver = new OWLClassExpressionResolver(swrlapiOWLOntology.getOWLDataFactory());
 		this.propertyExpressionResolver = new OWLPropertyExpressionResolver();
 
 		this.inferredOWLAxioms = new HashSet<OWLAxiom>();
@@ -177,9 +178,10 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 				arguments);
 	}
 
-	public boolean isOWLClass(IRI classIRI)
-	{
-		return getOWLOntology().containsClassInSignature(classIRI, true);
+	public boolean isOWLClass(IRI iri)
+	{ // TODO Probably not robust - see DefaultSWRLAPIOWLOntology.isOWLClass
+		return getOWLOntology().containsClassInSignature(iri, true) || iri.equals(OWLRDFVocabulary.OWL_THING.getIRI())
+				|| iri.equals(OWLRDFVocabulary.OWL_NOTHING);
 	}
 
 	public boolean isOWLObjectProperty(IRI propertyIRI)

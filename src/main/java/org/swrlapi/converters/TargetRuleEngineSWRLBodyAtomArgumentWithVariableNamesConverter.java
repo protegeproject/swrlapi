@@ -38,42 +38,43 @@ public interface TargetRuleEngineSWRLBodyAtomArgumentWithVariableNamesConverter<
 
 	T convert(SWRLLiteralBuiltInArgument argument) throws TargetRuleEngineException;
 
-	T convert(SWRLVariableBuiltInArgument argument, String fieldName, Set<String> variableShortNames)
+	T convert(SWRLVariableBuiltInArgument argument, String fieldName, Set<String> previouslyEncounteredVariableShortNames)
 			throws TargetRuleEngineException;
 
-	T convert(SWRLVariable argument, String fieldName, Set<String> variableShortNames) throws TargetRuleEngineException;
-
-	T convert(SWRLIndividualArgument argument, String fieldName, Set<String> variableShortNames)
+	T convert(SWRLVariable argument, String fieldName, Set<String> previouslyEncounteredVariableShortNames)
 			throws TargetRuleEngineException;
 
-	T convert(SWRLLiteralArgument argument, String fieldName, Set<String> variableShortNames)
+	T convert(SWRLIndividualArgument argument, String fieldName, Set<String> previouslyEncounteredVariableShortNames)
 			throws TargetRuleEngineException;
 
-	T convert(SWRLClassBuiltInArgument argument, String fieldName, Set<String> variableShortNames)
+	T convert(SWRLLiteralArgument argument, String fieldName, Set<String> previouslyEncounteredVariableShortNames)
 			throws TargetRuleEngineException;
 
-	T convert(SWRLNamedIndividualBuiltInArgument argument, String fieldName, Set<String> variableShortNames)
+	T convert(SWRLClassBuiltInArgument argument, String fieldName, Set<String> previouslyEncounteredVariableShortNames)
 			throws TargetRuleEngineException;
 
-	T convert(SWRLObjectPropertyBuiltInArgument argument, String fieldName, Set<String> variableShortNames)
-			throws TargetRuleEngineException;
+	T convert(SWRLNamedIndividualBuiltInArgument argument, String fieldName,
+			Set<String> previouslyEncounteredVariableShortNames) throws TargetRuleEngineException;
 
-	T convert(SWRLDataPropertyBuiltInArgument argument, String fieldName, Set<String> variableShortNames)
-			throws TargetRuleEngineException;
+	T convert(SWRLObjectPropertyBuiltInArgument argument, String fieldName,
+			Set<String> previouslyEncounteredVariableShortNames) throws TargetRuleEngineException;
 
-	T convert(SWRLAnnotationPropertyBuiltInArgument argument, String fieldName, Set<String> variableShortNames)
-			throws TargetRuleEngineException;
+	T convert(SWRLDataPropertyBuiltInArgument argument, String fieldName,
+			Set<String> previouslyEncounteredVariableShortNames) throws TargetRuleEngineException;
 
-	T convert(SWRLLiteralBuiltInArgument argument, String fieldName, Set<String> variableShortNames)
+	T convert(SWRLAnnotationPropertyBuiltInArgument argument, String fieldName,
+			Set<String> previouslyEncounteredVariableShortNames) throws TargetRuleEngineException;
+
+	T convert(SWRLLiteralBuiltInArgument argument, String fieldName, Set<String> previouslyEncounteredVariableShortNames)
 			throws TargetRuleEngineException;
 
 	T convert(SWRLDatatypeBuiltInArgument datatypeArgument) throws TargetRuleEngineException;
 
-	T convert(SWRLDatatypeBuiltInArgument datatypeArgument, String fieldName, Set<String> variableShortNames)
-			throws TargetRuleEngineException;
+	T convert(SWRLDatatypeBuiltInArgument datatypeArgument, String fieldName,
+			Set<String> previouslyEncounteredVariableShortNames) throws TargetRuleEngineException;
 
 	T convert(SQWRLCollectionVariableBuiltInArgument argument) throws TargetRuleEngineException;
 
-	T convert(SQWRLCollectionVariableBuiltInArgument argument, String fieldName, Set<String> variableShortNames)
-			throws TargetRuleEngineException;
+	T convert(SQWRLCollectionVariableBuiltInArgument argument, String fieldName,
+			Set<String> previouslyEncounteredVariableShortNames) throws TargetRuleEngineException;
 }

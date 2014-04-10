@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.semanticweb.owlapi.model.OWLClassExpression;
+import org.semanticweb.owlapi.model.OWLDataFactory;
+import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 import org.swrlapi.exceptions.TargetRuleEngineException;
 
 /**
@@ -17,14 +19,20 @@ public class OWLClassExpressionResolver
 {
 	private final Map<String, OWLClassExpression> classExpressionMap;
 
-	public OWLClassExpressionResolver()
+	private final OWLDataFactory owlDataFactory;
+
+	public OWLClassExpressionResolver(OWLDataFactory owlDataFactory)
 	{
 		this.classExpressionMap = new HashMap<String, OWLClassExpression>();
+		this.owlDataFactory = owlDataFactory;
+		reset();
 	}
 
 	public void reset()
 	{
 		this.classExpressionMap.clear();
+		recordOWLClassExpression(OWLRDFVocabulary.OWL_THING.getPrefixedName(), getOWLDataFactory().getOWLThing());
+		recordOWLClassExpression(OWLRDFVocabulary.OWL_NOTHING.getPrefixedName(), getOWLDataFactory().getOWLNothing());
 	}
 
 	public void recordOWLClassExpression(String classExpressionID, OWLClassExpression classExpression)
@@ -38,5 +46,10 @@ public class OWLClassExpressionResolver
 			return this.classExpressionMap.get(classExpressionID);
 		else
 			throw new TargetRuleEngineException("internal error: no class expression found with ID " + classExpressionID);
+	}
+
+	private OWLDataFactory getOWLDataFactory()
+	{
+		return this.owlDataFactory;
 	}
 }
