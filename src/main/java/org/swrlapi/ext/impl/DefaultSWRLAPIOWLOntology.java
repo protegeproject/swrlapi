@@ -183,7 +183,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 
 	private String getRuleName(SWRLRule owlapiRule)
 	{
-		String ruleName = UUID.randomUUID().toString(); // TODO Get rule name from annotation property if there.
+		String ruleName = "XX" + owlapiRule.hashCode(); // TODO Get rule name from annotation property if there.
 
 		// OWLAnnotationProperty labelAnnotation = getOWLDataFactory().getOWLAnnotationProperty(
 		// OWLRDFVocabulary.RDFS_LABEL.getIRI());
