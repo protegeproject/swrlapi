@@ -35,7 +35,7 @@ public interface SWRLAPIOWLDataFactory extends OWLDataFactory
 	SWRLAPIBuiltInAtom getSWRLAPIBuiltInAtom(String ruleName, IRI builtInIRI, String builtInShortName,
 			List<SWRLBuiltInArgument> arguments);
 
-	SWRLAPIOWLDatatypeFactory getOWLDatatypeFactory();
+	SWRLAPIOWLDatatypeFactory getSWRLAPIOWLDatatypeFactory();
 
 	SQWRLResultValueFactory getSQWRLResultValueFactory();
 
@@ -44,10 +44,6 @@ public interface SWRLAPIOWLDataFactory extends OWLDataFactory
 	SWRLAPILiteralFactory getSWRLAPILiteralFactory();
 
 	OWLIRIResolver getOWLIRIResolver();
-
-	OWLClass getInjectedOWLClass(); // Auto-generate an OWL class with a unique IRI
-
-	OWLNamedIndividual getInjectedOWLNamedIndividual(); // Auto-generate an OWL individual with a unique IRI
 
 	// We provide convenience methods for defining these declaration axioms, though we do not specialize the
 	// OWLDeclarationAxiom itself.

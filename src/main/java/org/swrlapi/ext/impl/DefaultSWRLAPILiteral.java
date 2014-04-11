@@ -36,6 +36,12 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 	}
 
 	@Override
+	public boolean isInt()
+	{
+		return this.literal.getDatatype().getIRI().equals(XSDVocabulary.INT.getIRI());
+	}
+
+	@Override
 	public boolean isLong()
 	{
 		return this.literal.getDatatype().getIRI().equals(XSDVocabulary.LONG.getIRI());
@@ -110,7 +116,7 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 	@Override
 	public boolean isNumeric()
 	{
-		return isByte() || isShort() || isInteger() || isLong() || isFloat() || isDouble();
+		return isByte() || isShort() || isInteger() || isInt() || isLong() || isFloat() || isDouble();
 	}
 
 	@Override
@@ -159,6 +165,8 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 		try {
 			if (isInteger())
 				return Integer.parseInt(literal.getLiteral());
+			if (isInt())
+				return Integer.parseInt(literal.getLiteral());
 			else if (isShort())
 				return Short.parseShort(literal.getLiteral());
 			else
@@ -175,6 +183,8 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 		try {
 			if (isLong())
 				return Long.parseLong(literal.getLiteral());
+			else if (isInt())
+				return Integer.parseInt(literal.getLiteral());
 			else if (isInteger())
 				return Integer.parseInt(literal.getLiteral());
 			else if (isShort())
@@ -199,6 +209,8 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 				return Float.parseFloat(literal.getLiteral());
 			else if (isInteger())
 				return Integer.parseInt(literal.getLiteral());
+			else if (isInt())
+				return Integer.parseInt(literal.getLiteral());
 			else if (isLong())
 				return Long.parseLong(literal.getLiteral());
 			else if (isShort())
@@ -222,6 +234,8 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 			else if (isFloat())
 				return Float.parseFloat(literal.getLiteral());
 			else if (isInteger())
+				return Integer.parseInt(literal.getLiteral());
+			else if (isInt())
 				return Integer.parseInt(literal.getLiteral());
 			else if (isLong())
 				return Long.parseLong(literal.getLiteral());

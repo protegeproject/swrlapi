@@ -3,8 +3,10 @@ package org.swrlapi.ext;
 import java.util.Set;
 
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
@@ -60,6 +62,10 @@ public interface SWRLAPIOWLOntology
 	boolean hasOntologyChanged();
 
 	void resetOntologyChanged();
+
+	OWLClass getInjectedOWLClass(); // Auto-generate an OWL class with a unique IRI
+
+	OWLNamedIndividual getInjectedOWLNamedIndividual(); // Auto-generate an OWL individual with a unique IRI
 
 	// TODO We don't want this method here. It is a convenience method and used only by the temporal built-in library.
 	boolean isOWLIndividualOfType(IRI individualIRI, IRI classIRI);

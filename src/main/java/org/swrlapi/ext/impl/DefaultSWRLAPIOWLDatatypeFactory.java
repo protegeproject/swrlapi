@@ -57,6 +57,14 @@ public class DefaultSWRLAPIOWLDatatypeFactory implements SWRLAPIOWLDatatypeFacto
 	}
 
 	@Override
+	public OWLDatatype getOWLIntDatatype()
+	{
+		IRI iri = XSDVocabulary.INT.getIRI();
+		OWLDatatype datatype = new OWLDatatypeImpl(iri);
+		return datatype;
+	}
+
+	@Override
 	public OWLDatatype getOWLLongDatatype()
 	{
 		IRI iri = XSDVocabulary.LONG.getIRI();

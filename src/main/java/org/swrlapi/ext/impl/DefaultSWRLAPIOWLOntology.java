@@ -139,12 +139,34 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		// TODO
 	}
 
+	@Override
+	public OWLClass getInjectedOWLClass()
+	{
+		// TODO
+		IRI iri = IRI
+				.create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + UUID.randomUUID().toString());
+
+		return getSWRLAPIOWLDataFactory().getOWLClass(iri);
+	}
+
+	@Override
+	public OWLNamedIndividual getInjectedOWLNamedIndividual()
+	{
+		// TODO
+
+		IRI iri = IRI
+				.create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + UUID.randomUUID().toString());
+
+		return getSWRLAPIOWLDataFactory().getOWLNamedIndividual(iri);
+	}
+
 	// TODO We really do not want the following three methods here. They are convenience methods only and are used only by
 	// a the temporal built-in library.
 	@Override
 	public boolean isOWLIndividualOfType(IRI individualIRI, IRI classIRI)
 	{
-		throw new RuntimeException("Not implemented");
+		return true; // TODO
+		// throw new RuntimeException("Not implemented");
 	}
 
 	@Override

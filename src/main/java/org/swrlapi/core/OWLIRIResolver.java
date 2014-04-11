@@ -84,9 +84,12 @@ public class OWLIRIResolver
 		if (this.shortName2IRI.containsKey(shortName))
 			return this.shortName2IRI.get(shortName);
 		else {
-			return prefixManager.getIRI(shortName);
+			try {
+				return prefixManager.getIRI(shortName);
+			} catch (RuntimeException e) {
+				throw new TargetRuleEngineException("could not find IRI for short name " + shortName);
+			}
 		}
-		// throw new RuntimeException("could not find IRI for short name " + shortName);
 	}
 
 	public void recordSWRLVariable(SWRLVariable variable)

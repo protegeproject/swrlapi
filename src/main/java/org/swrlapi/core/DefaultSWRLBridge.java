@@ -228,7 +228,7 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 	@Override
 	public SWRLAPIOWLDatatypeFactory getOWLDatatypeFactory()
 	{
-		return getSWRLAPIOWLDataFactory().getOWLDatatypeFactory();
+		return getSWRLAPIOWLDataFactory().getSWRLAPIOWLDatatypeFactory();
 	}
 
 	@Override

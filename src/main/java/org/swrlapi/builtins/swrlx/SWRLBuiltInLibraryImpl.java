@@ -53,7 +53,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 			if (this.classInvocationMap.containsKey(createInvocationPattern)) {
 				cls = this.classInvocationMap.get(createInvocationPattern);
 			} else {
-				cls = getSWRLAPIOWLDataFactory().getInjectedOWLClass();
+				cls = getSWRLAPIOWLOntology().getInjectedOWLClass();
 				OWLDeclarationAxiom declarationAxiom = getSWRLAPIOWLDataFactory().getOWLClassDeclarationAxiom(cls);
 				getBuiltInBridge().getOWLIRIResolver().recordOWLClass(cls);
 				getBuiltInBridge().injectOWLAxiom(declarationAxiom);
@@ -82,7 +82,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 			if (this.individualInvocationMap.containsKey(createInvocationPattern))
 				individual = this.individualInvocationMap.get(createInvocationPattern);
 			else {
-				individual = getSWRLAPIOWLDataFactory().getInjectedOWLNamedIndividual();
+				individual = getSWRLAPIOWLOntology().getInjectedOWLNamedIndividual();
 				OWLDeclarationAxiom declarationAxiom = getSWRLAPIOWLDataFactory().getOWLIndividualDeclarationAxiom(individual);
 				getBuiltInBridge().getOWLIRIResolver().recordOWLNamedIndividual(individual);
 				getBuiltInBridge().injectOWLAxiom(declarationAxiom);

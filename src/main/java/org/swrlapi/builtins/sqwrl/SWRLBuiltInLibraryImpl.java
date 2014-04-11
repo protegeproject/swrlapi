@@ -148,7 +148,6 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 		if (argument instanceof SWRLLiteralBuiltInArgument) {
 			SWRLLiteralBuiltInArgument literalArgument = (SWRLLiteralBuiltInArgument)argument;
-			// SQWRLLiteralResultValue literal = new SQWRLLiteralResultValueImpl(literalArgument.getLiteral());
 			SQWRLLiteralResultValue literal = getSQWRLResultValueFactory().getLiteral(literalArgument.getLiteral());
 			resultGenerator.addRowData(literal);
 		} else if (argument instanceof SWRLNamedIndividualBuiltInArgument) {

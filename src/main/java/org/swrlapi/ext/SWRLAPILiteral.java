@@ -27,6 +27,8 @@ public interface SWRLAPILiteral extends Comparable<SWRLAPILiteral>
 
 	boolean isInteger();
 
+	boolean isInt();
+
 	boolean isLong();
 
 	boolean isFloat();

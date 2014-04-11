@@ -306,7 +306,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 			if (nArgument instanceof SWRLLiteralBuiltInArgument) {
 				SWRLLiteralBuiltInArgument sliceNArgument = (SWRLLiteralBuiltInArgument)nArgument;
 				SWRLAPILiteral literal = new DefaultSWRLAPILiteral(sliceNArgument.getLiteral()); // TODO Use factory
-				if (literal.isInteger()) {
+				if (literal.isInteger() || literal.isInt()) {
 					sliceN = literal.getInteger();
 					if (sliceN < 1)
 						throw new SQWRLException("nth argument for slicing operator " + builtInName + " must be a positive integer");
@@ -529,7 +529,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 			SWRLBuiltInArgument argument, boolean isArgumentAVariable, String variableShortName) throws SQWRLException
 	{
 		if (!isArgumentAVariable)
-			throw new SQWRLException("only variables allowed for ordered columns - found " + argument);
+			throw new SQWRLException("only variables allowed for ordered columns - found " + argument.getClass().getName());
 
 		if (selectedVariable2ColumnIndices.containsKey(variableShortName)) {
 			for (int selectedColumnIndex : selectedVariable2ColumnIndices.get(variableShortName))

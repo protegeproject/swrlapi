@@ -40,6 +40,7 @@ import org.swrlapi.exceptions.SWRLBuiltInLibraryException;
 import org.swrlapi.ext.SWRLAPILiteral;
 import org.swrlapi.ext.SWRLAPILiteralFactory;
 import org.swrlapi.ext.SWRLAPIOWLDataFactory;
+import org.swrlapi.ext.SWRLAPIOWLOntology;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 import org.swrlapi.xsd.XSDDate;
 import org.swrlapi.xsd.XSDDateTime;
@@ -101,7 +102,7 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 
 	protected OWLNamedIndividual injectOWLNamedIndividualOfClass(OWLClass cls) throws BuiltInException
 	{
-		OWLNamedIndividual individual = getSWRLAPIOWLDataFactory().getInjectedOWLNamedIndividual();
+		OWLNamedIndividual individual = getSWRLAPIOWLOntology().getInjectedOWLNamedIndividual();
 		OWLDeclarationAxiom declarationAxiom = getSWRLAPIOWLDataFactory().getOWLIndividualDeclarationAxiom(individual);
 		OWLClassAssertionAxiom classAssertionAxiom = getSWRLAPIOWLDataFactory().getOWLClassAssertionAxiom(cls, individual);
 		getBuiltInBridge().getOWLIRIResolver().recordOWLNamedIndividual(individual);
@@ -1684,6 +1685,11 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 	{
 		return getSWRLBuiltInArgumentFactory().getSQWRLCollectionVariableBuiltInArgument(variableIRI, queryName,
 				collectionName, collectionGroupID);
+	}
+
+	protected SWRLAPIOWLOntology getSWRLAPIOWLOntology() throws SWRLBuiltInLibraryException
+	{
+		return getBuiltInBridge().getSWRLAPIOWLOntology();
 	}
 
 	protected SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory() throws SWRLBuiltInLibraryException
