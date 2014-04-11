@@ -15,6 +15,7 @@ import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLDatatype;
+import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
@@ -31,8 +32,8 @@ import org.semanticweb.owlapi.model.SWRLVariable;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.semanticweb.owlapi.vocab.OWL2Datatype;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
-import org.swrlapi.core.DefaultSWRLAPIOntologyProcessor;
 import org.swrlapi.core.OWLIRIResolver;
+import org.swrlapi.core.SWRLAPIFactory;
 import org.swrlapi.core.SWRLAPIOntologyProcessor;
 import org.swrlapi.core.arguments.SQWRLCollectionVariableBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
@@ -61,8 +62,8 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		this.ontology = ontology;
 		this.prefixManager = prefixManager;
 		this.owlIRIResolver = new OWLIRIResolver(this.prefixManager);
-		this.swrlapiOWLDataFactory = new DefaultSWRLAPIOWLDataFactory(owlIRIResolver);
-		this.swrlapiOntologyProcessor = new DefaultSWRLAPIOntologyProcessor(this);
+		this.swrlapiOWLDataFactory = SWRLAPIFactory.createSWRLAPIOWLDataFactory(owlIRIResolver);
+		this.swrlapiOntologyProcessor = SWRLAPIFactory.createSWRLAPIOntologyProcessor(this);
 	}
 
 	@Override
@@ -285,12 +286,14 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	}
 
 	/**
-	 * The OWLAPI follows the Specification and does not explicitly allow named OWL entities as parameters. However, if
-	 * OWLAPI parsers encounter named entities as parameters they appear to represent them as SWRL variables - with the
-	 * variable IRI set to the IRI of the named entity. So if we are processing built-in parameters and encounter
-	 * variables with an IRI referring to named OWL entities in the active ontology we can transform them to the
-	 * appropriate SWRLAPI built-in argument for the named entity. An important restriction here is that variable names do
-	 * not intersect with named entities in their OWL ontology.
+	 * The OWLAPI follows the OWL Specification and does not explicitly allow named OWL entities as parameters. However,
+	 * if OWLAPI parsers encounter OWL entities as parameters they appear to represent them as SWRL variables - with the
+	 * variable IRI set to the IRI of the entity ({@link OWLEntity} classes represent named OWL concepts so have an IRI).
+	 * So if we are processing built-in parameters and encounter variables with an IRI referring to named OWL entities in
+	 * the active ontology we can transform them to the appropriate SWRLAPI built-in argument for the named entity.
+	 * <p>
+	 * Note: An important restriction here is that variable names do not intersect with named entities in their OWL
+	 * ontology.
 	 */
 	private SWRLBuiltInArgument convertSWRLVariable2SWRLBuiltInArgument(SWRLVariable swrlVariable)
 	{

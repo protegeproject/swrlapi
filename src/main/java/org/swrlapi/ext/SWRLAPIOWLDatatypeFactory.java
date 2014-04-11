@@ -4,9 +4,9 @@ import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDatatype;
 
 /**
- * A factory to create OWLAPI OWL datatypes.
+ * A convenience factory to create OWLAPI OWL datatypes.
  */
-public interface OWLDatatypeFactory
+public interface SWRLAPIOWLDatatypeFactory
 {
 	OWLDatatype getOWLDatatype(IRI iri);
 

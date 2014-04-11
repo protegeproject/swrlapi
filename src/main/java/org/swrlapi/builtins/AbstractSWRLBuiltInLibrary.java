@@ -96,7 +96,7 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 	@Override
 	public SQWRLResultValueFactory getSQWRLResultValueFactory() throws SWRLBuiltInLibraryException
 	{
-		return getBuiltInBridge().getOWLDataFactory().getSQWRLResultValueFactory();
+		return getBuiltInBridge().getSWRLAPIOWLDataFactory().getSQWRLResultValueFactory();
 	}
 
 	protected OWLNamedIndividual injectOWLNamedIndividualOfClass(OWLClass cls) throws BuiltInException
@@ -1688,16 +1688,16 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 
 	protected SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory() throws SWRLBuiltInLibraryException
 	{
-		return getBuiltInBridge().getOWLDataFactory();
+		return getBuiltInBridge().getSWRLAPIOWLDataFactory();
 	}
 
 	protected SWRLAPILiteralFactory getSWRLAPILiteralFactory() throws SWRLBuiltInLibraryException
 	{
-		return getBuiltInBridge().getOWLDataFactory().getSWRLAPILiteralFactory();
+		return getBuiltInBridge().getSWRLAPIOWLDataFactory().getSWRLAPILiteralFactory();
 	}
 
 	private SWRLBuiltInArgumentFactory getSWRLBuiltInArgumentFactory() throws SWRLBuiltInLibraryException
 	{
-		return getBuiltInBridge().getOWLDataFactory().getSWRLBuiltInArgumentFactory();
+		return getBuiltInBridge().getSWRLAPIOWLDataFactory().getSWRLBuiltInArgumentFactory();
 	}
 }

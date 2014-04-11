@@ -4,7 +4,6 @@ import org.swrlapi.core.OWLClassExpressionResolver;
 import org.swrlapi.core.OWLIRIResolver;
 import org.swrlapi.core.OWLPropertyExpressionResolver;
 import org.swrlapi.core.SWRLRuleEngineBridge;
-import org.swrlapi.ext.SWRLAPILiteralFactory;
 
 /**
  * This interface represents provides utility methods converters implemented by target rule engines to convert OWL
@@ -32,11 +31,6 @@ public abstract class TargetRuleEngineConverterBase implements TargetRuleEngineC
 	protected OWLPropertyExpressionResolver getOWLPropertyExpressionResolver()
 	{
 		return getBridge().getOWLPropertyExpressionResolver();
-	}
-
-	protected SWRLAPILiteralFactory getSWRLAPILiteralFactory()
-	{
-		return getBridge().getSWRLAPILiteralFactory();
 	}
 
 	protected SWRLRuleEngineBridge getBridge()

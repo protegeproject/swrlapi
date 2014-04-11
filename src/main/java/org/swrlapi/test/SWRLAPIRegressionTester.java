@@ -110,7 +110,7 @@ public class SWRLAPIRegressionTester
 					SQWRLLiteralResultValue literalResultValue = (SQWRLLiteralResultValue)resultValue;
 					String actualRawLiteral = literalResultValue.getLiteral();
 					@SuppressWarnings("unused")
-					OWLDatatype datatype = literalResultValue.getDatatype();
+					OWLDatatype datatype = literalResultValue.getOWLDatatype();
 					String actualDatatypeShortName = "XXX"; // TODO
 					String testRawLiteral = testValueString.substring(1, testValueString.indexOf("^^") - 1);
 					String testDatatypeShortName = testValueString.substring(testValueString.indexOf("^^") + 2);

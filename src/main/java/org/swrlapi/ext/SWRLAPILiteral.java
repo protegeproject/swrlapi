@@ -11,11 +11,13 @@ import org.swrlapi.xsd.XSDDuration;
 import org.swrlapi.xsd.XSDTime;
 
 /**
- * The SWRLAPI's literal extends the OWLAPI's literal with additional functionality.
+ * The SWRLAPI's literal wraps an OWLAPI literal to provide additional convenience methods used by the SWRLAPI.
  */
 public interface SWRLAPILiteral extends Comparable<SWRLAPILiteral>
 {
 	OWLLiteral getOWLLiteral();
+
+	OWLDatatype getOWLDatatype();
 
 	boolean isNumeric();
 
@@ -72,8 +74,6 @@ public interface SWRLAPILiteral extends Comparable<SWRLAPILiteral>
 	XSDDuration getDuration() throws SQWRLLiteralException;
 
 	String getLiteral();
-
-	OWLDatatype getDatatype();
 
 	boolean isComparable();
 

@@ -385,7 +385,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		int columnIndex = 0;
 		for (SWRLBuiltInArgument argument : builtInAtom.getBuiltInArguments()) {
 			boolean isArgumentAVariable = argument.isVariable();
-			String variableShortName = null;
+			String variableShortName;
 
 			if (SQWRLNames.isSQWRLHeadSelectionBuiltIn(builtInName) || SQWRLNames.isSQWRLHeadAggregationBuiltIn(builtInName)) {
 				if (isArgumentAVariable) {
@@ -396,7 +396,9 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 						selectedVariable2ColumnIndices.put(variableShortName, new ArrayList<Integer>());
 						selectedVariable2ColumnIndices.get(variableShortName).add(columnIndex);
 					}
-				}
+				} else
+					variableShortName = "";
+
 				if (builtInName.equalsIgnoreCase(SQWRLNames.Select)) {
 					processSelectArgument(argument, isArgumentAVariable, variableShortName);
 				} else if (builtInName.equalsIgnoreCase(SQWRLNames.SelectDistinct)) {
@@ -528,6 +530,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	{
 		if (!isArgumentAVariable)
 			throw new SQWRLException("only variables allowed for ordered columns - found " + argument);
+
 		if (selectedVariable2ColumnIndices.containsKey(variableShortName)) {
 			for (int selectedColumnIndex : selectedVariable2ColumnIndices.get(variableShortName))
 				this.sqwrlResult.addOrderByColumn(selectedColumnIndex, true);

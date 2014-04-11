@@ -8,7 +8,7 @@ import org.swrlapi.core.OWLIRIResolver;
 import org.swrlapi.core.SWRLRuleEngineBridge;
 import org.swrlapi.core.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.exceptions.TargetRuleEngineException;
-import org.swrlapi.ext.OWLDatatypeFactory;
+import org.swrlapi.ext.SWRLAPIOWLDatatypeFactory;
 import org.swrlapi.ext.OWLLiteralFactory;
 import org.swrlapi.ext.SWRLAPIOWLDataFactory;
 
@@ -17,7 +17,9 @@ import org.swrlapi.ext.SWRLAPIOWLDataFactory;
  * the the OWL entities from its native rule engine representation of those concepts.
  * <p>
  * The corresponding {@link TargetRuleEngineConverterBase} is used to create native rule engine representations of
- * OWLAPI OWL entities.
+ * OWLAPI OWL objects.
+ * 
+ * @see TargetRuleEngineConverterBase
  */
 public abstract class TargetRuleEngineExtractorBase implements TargetRuleEngineExtractor
 {
@@ -35,15 +37,15 @@ public abstract class TargetRuleEngineExtractorBase implements TargetRuleEngineE
 
 	protected SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory()
 	{
-		return getBridge().getOWLDataFactory();
+		return getBridge().getSWRLAPIOWLDataFactory();
 	}
 
 	protected OWLDataFactory getOWLDataFactory()
 	{
-		return getBridge().getOWLDataFactory();
+		return getBridge().getSWRLAPIOWLDataFactory();
 	}
 
-	protected OWLDatatypeFactory getOWLDatatypeFactory()
+	protected SWRLAPIOWLDatatypeFactory getOWLDatatypeFactory()
 	{
 		return getBridge().getOWLDatatypeFactory();
 	}

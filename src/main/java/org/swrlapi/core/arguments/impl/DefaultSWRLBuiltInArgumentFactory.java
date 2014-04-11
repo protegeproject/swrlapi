@@ -30,12 +30,12 @@ import org.swrlapi.xsd.XSDDateTime;
 import org.swrlapi.xsd.XSDDuration;
 import org.swrlapi.xsd.XSDTime;
 
-public class DefaultSWRLBuiltInArgumentFactoryImpl implements SWRLBuiltInArgumentFactory
+public class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFactory
 {
 	private final OWLIRIResolver owlIRIResolver;
 	private final OWLLiteralFactory owlLiteralFactory;
 
-	public DefaultSWRLBuiltInArgumentFactoryImpl(OWLIRIResolver owlIRIResolver, OWLLiteralFactory owlLiteralFactory)
+	public DefaultSWRLBuiltInArgumentFactory(OWLIRIResolver owlIRIResolver, OWLLiteralFactory owlLiteralFactory)
 	{
 		this.owlIRIResolver = owlIRIResolver;
 		this.owlLiteralFactory = owlLiteralFactory;

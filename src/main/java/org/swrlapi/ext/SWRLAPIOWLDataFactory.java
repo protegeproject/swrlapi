@@ -35,7 +35,7 @@ public interface SWRLAPIOWLDataFactory extends OWLDataFactory
 	SWRLAPIBuiltInAtom getSWRLAPIBuiltInAtom(String ruleName, IRI builtInIRI, String builtInShortName,
 			List<SWRLBuiltInArgument> arguments);
 
-	OWLDatatypeFactory getOWLDatatypeFactory();
+	SWRLAPIOWLDatatypeFactory getOWLDatatypeFactory();
 
 	SQWRLResultValueFactory getSQWRLResultValueFactory();
 

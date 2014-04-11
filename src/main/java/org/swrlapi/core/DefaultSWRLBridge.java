@@ -15,10 +15,9 @@ import org.swrlapi.exceptions.BuiltInException;
 import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
 import org.swrlapi.exceptions.SWRLRuleEngineBridgeException;
 import org.swrlapi.exceptions.TargetRuleEngineException;
-import org.swrlapi.ext.OWLDatatypeFactory;
 import org.swrlapi.ext.OWLLiteralFactory;
-import org.swrlapi.ext.SWRLAPILiteralFactory;
 import org.swrlapi.ext.SWRLAPIOWLDataFactory;
+import org.swrlapi.ext.SWRLAPIOWLDatatypeFactory;
 import org.swrlapi.ext.SWRLAPIOWLOntology;
 import org.swrlapi.owl2rl.OWL2RLPersistenceLayer;
 import org.swrlapi.sqwrl.SQWRLResult;
@@ -221,27 +220,15 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 	}
 
 	@Override
-	public SWRLAPIOWLDataFactory getOWLDataFactory()
-	{
-		return this.getSWRLAPIOWLOntology().getSWRLAPIOWLDataFactory();
-	}
-
-	@Override
 	public OWLLiteralFactory getOWLLiteralFactory()
 	{
 		return getSWRLAPIOWLDataFactory().getOWLLiteralFactory();
 	}
 
 	@Override
-	public OWLDatatypeFactory getOWLDatatypeFactory()
+	public SWRLAPIOWLDatatypeFactory getOWLDatatypeFactory()
 	{
 		return getSWRLAPIOWLDataFactory().getOWLDatatypeFactory();
-	}
-
-	@Override
-	public SWRLAPILiteralFactory getSWRLAPILiteralFactory()
-	{
-		return getSWRLAPIOWLDataFactory().getSWRLAPILiteralFactory();
 	}
 
 	@Override
@@ -256,7 +243,8 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 		return swrlapiOWLOntology;
 	}
 
-	private SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory()
+	@Override
+	public SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory()
 	{
 		return getSWRLAPIOWLOntology().getSWRLAPIOWLDataFactory();
 	}

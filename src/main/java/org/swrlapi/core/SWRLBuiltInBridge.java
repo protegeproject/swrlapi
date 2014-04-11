@@ -34,7 +34,7 @@ public interface SWRLBuiltInBridge
 	 * This call can be used by built-ins to create OWL axioms (which they can inject into the bridge using the
 	 * {@link #injectOWLAxiom(OWLAxiom)} call.
 	 */
-	SWRLAPIOWLDataFactory getOWLDataFactory();
+	SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory();
 
 	/**
 	 * All named objects are recorded by a {@link OWLIRIResolver}. If a built-in injects a named object it should also

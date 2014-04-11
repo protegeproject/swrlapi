@@ -4,7 +4,7 @@ import java.net.URI;
 
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
-import org.swrlapi.ext.OWLDatatypeFactory;
+import org.swrlapi.ext.SWRLAPIOWLDatatypeFactory;
 import org.swrlapi.ext.OWLLiteralFactory;
 import org.swrlapi.xsd.XSDDate;
 import org.swrlapi.xsd.XSDDateTime;
@@ -15,9 +15,9 @@ import uk.ac.manchester.cs.owl.owlapi.OWLLiteralImpl;
 
 public class DefaultOWLLiteralFactory implements OWLLiteralFactory
 {
-	private final OWLDatatypeFactory datatypeFactory;
+	private final SWRLAPIOWLDatatypeFactory datatypeFactory;
 
-	public DefaultOWLLiteralFactory(OWLDatatypeFactory datatypeFactory)
+	public DefaultOWLLiteralFactory(SWRLAPIOWLDatatypeFactory datatypeFactory)
 	{
 		this.datatypeFactory = datatypeFactory;
 	}
@@ -106,7 +106,7 @@ public class DefaultOWLLiteralFactory implements OWLLiteralFactory
 		return new OWLLiteralImpl(literal, "", datatype);
 	}
 
-	private OWLDatatypeFactory getOWLDatatypeFactory()
+	private SWRLAPIOWLDatatypeFactory getOWLDatatypeFactory()
 	{
 		return this.datatypeFactory;
 	}

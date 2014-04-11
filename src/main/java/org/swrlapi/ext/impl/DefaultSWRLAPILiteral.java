@@ -307,7 +307,7 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 	}
 
 	@Override
-	public OWLDatatype getDatatype()
+	public OWLDatatype getOWLDatatype()
 	{
 		return literal.getDatatype();
 	}

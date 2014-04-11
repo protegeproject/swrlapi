@@ -7,10 +7,9 @@ import org.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.exceptions.BuiltInException;
 import org.swrlapi.exceptions.SWRLRuleEngineBridgeException;
-import org.swrlapi.ext.OWLDatatypeFactory;
 import org.swrlapi.ext.OWLLiteralFactory;
-import org.swrlapi.ext.SWRLAPILiteralFactory;
 import org.swrlapi.ext.SWRLAPIOWLDataFactory;
+import org.swrlapi.ext.SWRLAPIOWLDatatypeFactory;
 import org.swrlapi.owl2rl.OWL2RLPersistenceLayer;
 
 /**
@@ -27,18 +26,16 @@ public interface SWRLRuleEngineBridge
 	 */
 	void setTargetRuleEngine(TargetRuleEngine targetRuleEngine);
 
-	/**
-	 * A target rule engine can create OWL axioms using the OWL factory supplied by the bridge.
-	 */
-	SWRLAPIOWLDataFactory getOWLDataFactory();
-
-	OWLDatatypeFactory getOWLDatatypeFactory();
+	SWRLAPIOWLDatatypeFactory getOWLDatatypeFactory();
 
 	OWLLiteralFactory getOWLLiteralFactory();
 
-	SWRLAPILiteralFactory getSWRLAPILiteralFactory();
-
 	SWRLBuiltInArgumentFactory getSWRLBuiltInArgumentFactory();
+
+	/**
+	 * A target rule engine can create OWL axioms using the OWL factory supplied by the bridge.
+	 */
+	SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory();
 
 	/**
 	 * A named object resolver can be used by a target rule engine to determine the type of a named OWL entity given its

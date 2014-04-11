@@ -11,17 +11,16 @@ import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.swrlapi.core.OWLIRIResolver;
+import org.swrlapi.core.SWRLAPIFactory;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLBuiltInArgumentFactory;
-import org.swrlapi.core.arguments.impl.DefaultSWRLBuiltInArgumentFactoryImpl;
-import org.swrlapi.ext.OWLDatatypeFactory;
 import org.swrlapi.ext.OWLLiteralFactory;
 import org.swrlapi.ext.SWRLAPIBuiltInAtom;
 import org.swrlapi.ext.SWRLAPILiteralFactory;
 import org.swrlapi.ext.SWRLAPIOWLDataFactory;
+import org.swrlapi.ext.SWRLAPIOWLDatatypeFactory;
 import org.swrlapi.ext.SWRLAPIRule;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
-import org.swrlapi.sqwrl.values.impl.DefaultSQWRLResultValueFactory;
 
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 
@@ -30,7 +29,7 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
 	private static final long serialVersionUID = 1L;
 
 	private final OWLIRIResolver owlIRIResolver;
-	private final OWLDatatypeFactory owlDatatypeFactory;
+	private final SWRLAPIOWLDatatypeFactory owlDatatypeFactory;
 	private final OWLLiteralFactory owlLiteralFactory;
 	private final SWRLAPILiteralFactory swrlAPILiteralFactory;
 	private final SWRLBuiltInArgumentFactory swrlBuiltInArgumentFactory;
@@ -39,12 +38,13 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
 	public DefaultSWRLAPIOWLDataFactory(OWLIRIResolver owlIRIResolver)
 	{
 		this.owlIRIResolver = owlIRIResolver;
-		this.owlDatatypeFactory = new DefaultOWLDatatypeFactory();
-		this.owlLiteralFactory = new DefaultOWLLiteralFactory(this.owlDatatypeFactory);
-		this.swrlAPILiteralFactory = new DefaultSWRLAPILiteralFactory(this.owlLiteralFactory);
-		this.swrlBuiltInArgumentFactory = new DefaultSWRLBuiltInArgumentFactoryImpl(this.owlIRIResolver,
+		this.owlDatatypeFactory = SWRLAPIFactory.createSWRLAPIOWLDatatypeFactory();
+		this.owlLiteralFactory = SWRLAPIFactory.createOWLLiteralFactory(this.owlDatatypeFactory);
+		this.swrlAPILiteralFactory = SWRLAPIFactory.createSWRLAPILiteralFactory(this.owlLiteralFactory);
+		this.swrlBuiltInArgumentFactory = SWRLAPIFactory.createSWRLBuiltInArgumentFactory(this.owlIRIResolver,
 				this.owlLiteralFactory);
-		this.sqwrlResultValueFactory = new DefaultSQWRLResultValueFactory(this.owlIRIResolver, this.owlLiteralFactory);
+		this.sqwrlResultValueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(this.owlIRIResolver,
+				this.owlLiteralFactory);
 	}
 
 	@Override
@@ -123,7 +123,7 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
 	}
 
 	@Override
-	public OWLDatatypeFactory getOWLDatatypeFactory()
+	public SWRLAPIOWLDatatypeFactory getOWLDatatypeFactory()
 	{
 		return this.owlDatatypeFactory;
 	}
