@@ -101,7 +101,7 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 
 	protected OWLNamedIndividual injectOWLNamedIndividualOfClass(OWLClass cls) throws BuiltInException
 	{
-		OWLNamedIndividual individual = getSWRLAPIOWLDataFactory().getOWLNamedIndividual();
+		OWLNamedIndividual individual = getSWRLAPIOWLDataFactory().getInjectedOWLNamedIndividual();
 		OWLDeclarationAxiom declarationAxiom = getSWRLAPIOWLDataFactory().getOWLIndividualDeclarationAxiom(individual);
 		OWLClassAssertionAxiom classAssertionAxiom = getSWRLAPIOWLDataFactory().getOWLClassAssertionAxiom(cls, individual);
 		getBuiltInBridge().getOWLIRIResolver().recordOWLNamedIndividual(individual);

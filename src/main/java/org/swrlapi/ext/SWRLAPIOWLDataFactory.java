@@ -21,8 +21,8 @@ import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
  * Factory that extends the OWLAPI's {@link OWLDataFactory} class with additional methods to create entities used by the
  * SWRLAPI.
  * <p>
- * It provides a method to create a {@link SWRLAPIRule}, which extends an OWLAPI {@link SWRLRule}, and access to
- * factories to create other entity types used by the SWRLAPI that have no direct equivalent in the OWLAPI.
+ * It provides a method to create {@link SWRLAPIRule} objects, which extend an OWLAPI {@link SWRLRule}, and provides
+ * access to factories to create other entity types used by the SWRLAPI that have no direct equivalent in the OWLAPI.
  * 
  * @see SWRLAPIRule, SWRLAPIOntologyProcessor, SWRLAPIOWLOntology
  */
@@ -45,12 +45,12 @@ public interface SWRLAPIOWLDataFactory extends OWLDataFactory
 
 	OWLIRIResolver getOWLIRIResolver();
 
-	OWLClass getOWLClass(); // Auto-generate an OWL class with a unique IRI
+	OWLClass getInjectedOWLClass(); // Auto-generate an OWL class with a unique IRI
 
-	OWLNamedIndividual getOWLNamedIndividual(); // Auto-generate an OWL individual with a unique IRI
+	OWLNamedIndividual getInjectedOWLNamedIndividual(); // Auto-generate an OWL individual with a unique IRI
 
-	// We provide convenience methods for these declarations, though we do not specialize the OWLDeclarationAxiom class
-	// itself.
+	// We provide convenience methods for defining these declaration axioms, though we do not specialize the
+	// OWLDeclarationAxiom itself.
 
 	OWLDeclarationAxiom getOWLClassDeclarationAxiom(OWLClass individual);
 

@@ -10,9 +10,12 @@ import org.swrlapi.xsd.XSDDuration;
 import org.swrlapi.xsd.XSDTime;
 
 /**
- * A convenience factory to create OWLAPI OWL literals.
+ * A convenience factory to create OWLAPI OWL literals. The SWRLAPI also has a {@link SWRLAPILiteralFactory} that can be
+ * used to create {@link SWRLAPILiteral} objects, which wrap {@link OWLLiteral}s to provide additional convenience
+ * methods used be the SWRLAPI.
  * 
- * @see OWLLiteral
+ * @see OWLLiteral, SWRLAPILiteralFactory
+ * @see XSDDate, XSDTime, XSDDatetime, XSDDuration
  */
 public interface OWLLiteralFactory
 {

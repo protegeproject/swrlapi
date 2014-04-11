@@ -10,7 +10,10 @@ import org.swrlapi.xsd.XSDDuration;
 import org.swrlapi.xsd.XSDTime;
 
 /**
- * Factory for constructing SWRLAPI literals.
+ * Factory for constructing SWRLAPI literals, which wrap {@link OWLLiteral}s to provide additional convenience methods
+ * used be the SWRLAPI.
+ * 
+ * @see SWRLAPILiteral
  */
 public interface SWRLAPILiteralFactory
 {
