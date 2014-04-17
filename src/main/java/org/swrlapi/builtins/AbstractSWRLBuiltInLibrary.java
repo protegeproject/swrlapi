@@ -1253,6 +1253,8 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 				return literal.getShort();
 			else if (literal.isInteger())
 				return literal.getInteger();
+			else if (literal.isInt())
+				return literal.getInteger();
 			else if (literal.isLong())
 				return literal.getLong();
 			else if (literal.isFloat())

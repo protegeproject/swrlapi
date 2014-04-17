@@ -307,6 +307,12 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 					+ swrlDArgument.getClass().getName());
 	}
 
+	private boolean hackIRI(IRI iri)
+	{
+		String shortForm = prefixManager.getShortForm(iri);
+		return !shortForm.equals(":name");
+	}
+
 	/**
 	 * The OWLAPI follows the OWL Specification and does not explicitly allow named OWL entities as parameters. However,
 	 * if OWLAPI parsers encounter OWL entities as parameters they appear to represent them as SWRL variables - with the
@@ -325,7 +331,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 			OWLClass cls = getOWLDataFactory().getOWLClass(iri);
 
 			return getSWRLBuiltInArgumentFactory().getClassBuiltInArgument(cls);
-		} else if (getOWLOntology().containsIndividualInSignature(iri, true)) {
+		} else if (getOWLOntology().containsIndividualInSignature(iri, true) && hackIRI(iri)) {
 			OWLNamedIndividual individual = getOWLDataFactory().getOWLNamedIndividual(iri);
 
 			return getSWRLBuiltInArgumentFactory().getNamedIndividualBuiltInArgument(individual);

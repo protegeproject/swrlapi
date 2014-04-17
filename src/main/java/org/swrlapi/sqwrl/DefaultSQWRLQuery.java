@@ -333,15 +333,15 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		if (sliceSizeArgument instanceof SWRLLiteralBuiltInArgument) {
 			SWRLLiteralBuiltInArgument literalArgument = (SWRLLiteralBuiltInArgument)sliceSizeArgument;
 			SWRLAPILiteral literal = new DefaultSWRLAPILiteral(literalArgument.getLiteral()); // TODO Use factory
-			if (literal.isInteger()) {
+			if (literal.isInteger() || literal.isInt()) {
 				sliceSize = literal.getInteger();
 				if (sliceSize < 1)
 					throw new SQWRLException("slice size argument to slicing operator " + builtInName
 							+ " must be a positive integer");
 			} else
-				throw new SQWRLException("expecing integer to slicing operator " + builtInName);
+				throw new SQWRLException("expecting integer to slicing operator " + builtInName);
 		} else
-			throw new SQWRLException("expecing integer to slicing operator " + builtInName);
+			throw new SQWRLException("expecting integer to slicing operator " + builtInName);
 
 		if (builtInName.equalsIgnoreCase(SQWRLNames.NthSlice))
 			this.sqwrlResult.setNthSlice(sliceN, sliceSize);
@@ -384,44 +384,47 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 
 		int columnIndex = 0;
 		for (SWRLBuiltInArgument argument : builtInAtom.getBuiltInArguments()) {
-			boolean isArgumentAVariable = argument.isVariable();
-			String variableShortName;
 
 			if (SQWRLNames.isSQWRLHeadSelectionBuiltIn(builtInName) || SQWRLNames.isSQWRLHeadAggregationBuiltIn(builtInName)) {
-				if (isArgumentAVariable) {
-					variableShortName = argument.asVariable().getVariableShortName();
+				if (argument.isVariable()) {
+					String variableShortName = argument.asVariable().getVariableShortName();
 					if (selectedVariable2ColumnIndices.containsKey(variableShortName))
 						selectedVariable2ColumnIndices.get(variableShortName).add(columnIndex);
 					else {
 						selectedVariable2ColumnIndices.put(variableShortName, new ArrayList<Integer>());
 						selectedVariable2ColumnIndices.get(variableShortName).add(columnIndex);
 					}
-				} else
-					variableShortName = "";
-
+				}
 				if (builtInName.equalsIgnoreCase(SQWRLNames.Select)) {
-					processSelectArgument(argument, isArgumentAVariable, variableShortName);
+					processSelectArgument(argument);
 				} else if (builtInName.equalsIgnoreCase(SQWRLNames.SelectDistinct)) {
-					processSelectDistinctArgument(argument, isArgumentAVariable, variableShortName);
+					processSelectDistinctArgument(argument);
 				} else if (builtInName.equalsIgnoreCase(SQWRLNames.Count)) {
-					processCountArgument(argument, isArgumentAVariable, variableShortName);
+					processCountArgument(argument);
 				} else if (builtInName.equalsIgnoreCase(SQWRLNames.CountDistinct)) {
-					processCountDistinctArgument(argument, isArgumentAVariable, variableShortName);
+					processCountDistinctArgument(argument);
 				} else if (builtInName.equalsIgnoreCase(SQWRLNames.Min)) {
-					processMinArgument(argument, isArgumentAVariable, variableShortName);
+					processMinArgument(argument);
 				} else if (builtInName.equalsIgnoreCase(SQWRLNames.Max)) {
-					processMaxArgument(argument, isArgumentAVariable, variableShortName);
+					processMaxArgument(argument);
 				} else if (builtInName.equalsIgnoreCase(SQWRLNames.Sum)) {
-					processSumArgument(argument, isArgumentAVariable, variableShortName);
+					processSumArgument(argument);
 				} else if (builtInName.equalsIgnoreCase(SQWRLNames.Median)) {
-					processMedianArgument(argument, isArgumentAVariable, variableShortName);
+					processMedianArgument(argument);
 				} else if (builtInName.equalsIgnoreCase(SQWRLNames.Avg)) {
-					processAverageArgument(argument, isArgumentAVariable, variableShortName);
+					processAverageArgument(argument);
 				} else if (builtInName.equalsIgnoreCase(SQWRLNames.OrderBy)) {
-					processOrderByArgument(selectedVariable2ColumnIndices, argument, isArgumentAVariable, variableShortName);
+					if (!argument.isVariable())
+						throw new SQWRLException("only variables allowed for ordered columns - found "
+								+ argument.getClass().getName());
+
+					processOrderByArgument(selectedVariable2ColumnIndices, argument.asVariable());
 				} else if (builtInName.equalsIgnoreCase(SQWRLNames.OrderByDescending)) {
-					processOrderByDescendingArgument(selectedVariable2ColumnIndices, argument, isArgumentAVariable,
-							variableShortName);
+					if (!argument.isVariable())
+						throw new SQWRLException("only variables allowed for ordered columns - found "
+								+ argument.getClass().getName());
+
+					processOrderByDescendingArgument(selectedVariable2ColumnIndices, argument.asVariable());
 				} else if (builtInName.equalsIgnoreCase(SQWRLNames.ColumnNames)) {
 					processColumnNamesArgument(argument);
 				}
@@ -430,106 +433,102 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		}
 	}
 
-	private void processMedianArgument(SWRLBuiltInArgument argument, boolean isArgumentAVariable, String variableShortName)
-			throws SQWRLException
+	private void processMedianArgument(SWRLBuiltInArgument argument) throws SQWRLException
 	{
 		String columnName;
-		if (isArgumentAVariable)
-			columnName = "median(?" + variableShortName + ")";
+		if (argument.isVariable())
+			columnName = "median(?" + argument.asVariable().getVariableShortName() + ")";
 		else
 			columnName = "median[" + argument + "]";
+
 		this.sqwrlResult.addAggregateColumn(columnName, SQWRLNames.MedianAggregateFunction);
 	}
 
-	private void processSumArgument(SWRLBuiltInArgument argument, boolean isArgumentAVariable, String variableShortName)
-			throws SQWRLException
+	private void processSumArgument(SWRLBuiltInArgument argument) throws SQWRLException
 	{
 		String columnName;
-		if (isArgumentAVariable)
-			columnName = "sum(?" + variableShortName + ")";
+		if (argument.isVariable())
+			columnName = "sum(?" + argument.asVariable().getVariableShortName() + ")";
 		else
 			columnName = "sum[" + argument + "]";
+
 		this.sqwrlResult.addAggregateColumn(columnName, SQWRLNames.SumAggregateFunction);
 	}
 
-	private void processMaxArgument(SWRLBuiltInArgument argument, boolean isArgumentAVariable, String variableShortName)
-			throws SQWRLException
+	private void processMaxArgument(SWRLBuiltInArgument argument) throws SQWRLException
 	{
 		String columnName;
-		if (isArgumentAVariable)
-			columnName = "max(?" + variableShortName + ")";
+		if (argument.isVariable())
+			columnName = "max(?" + argument.asVariable().getVariableShortName() + ")";
 		else
 			columnName = "max[" + argument + "]";
+
 		this.sqwrlResult.addAggregateColumn(columnName, SQWRLNames.MaxAggregateFunction);
 	}
 
-	private void processMinArgument(SWRLBuiltInArgument argument, boolean isArgumentAVariable, String variableShortName)
-			throws SQWRLException
+	private void processMinArgument(SWRLBuiltInArgument argument) throws SQWRLException
 	{
 		String columnName;
-		if (isArgumentAVariable)
-			columnName = "min(?" + variableShortName + ")";
+		if (argument.isVariable())
+			columnName = "min(?" + argument.asVariable().getVariableShortName() + ")";
 		else
 			columnName = "min[" + argument + "]";
+
 		this.sqwrlResult.addAggregateColumn(columnName, SQWRLNames.MinAggregateFunction);
 	}
 
-	private void processCountDistinctArgument(SWRLBuiltInArgument argument, boolean isArgumentAVariable,
-			String variableShortName) throws SQWRLException
+	private void processCountDistinctArgument(SWRLBuiltInArgument argument) throws SQWRLException
 	{
 		String columnName;
-		if (isArgumentAVariable)
-			columnName = "countDistinct(?" + variableShortName + ")";
+		if (argument.isVariable())
+			columnName = "countDistinct(?" + argument.asVariable().getVariableShortName() + ")";
 		else
 			columnName = "[" + argument + "]";
+
 		this.sqwrlResult.addAggregateColumn(columnName, SQWRLNames.CountDistinctAggregateFunction);
 	}
 
-	private void processCountArgument(SWRLBuiltInArgument argument, boolean isArgumentAVariable, String variableShortName)
-			throws SQWRLException
+	private void processCountArgument(SWRLBuiltInArgument argument) throws SQWRLException
 	{
 		String columnName;
-		if (isArgumentAVariable)
-			columnName = "count(?" + variableShortName + ")";
+		if (argument.isVariable())
+			columnName = "count(?" + argument.asVariable().getVariableShortName() + ")";
 		else
 			columnName = "[" + argument + "]";
+
 		this.sqwrlResult.addAggregateColumn(columnName, SQWRLNames.CountAggregateFunction);
 	}
 
-	private void processSelectDistinctArgument(SWRLBuiltInArgument argument, boolean isArgumentAVariable,
-			String variableShortName) throws SQWRLException
+	private void processSelectDistinctArgument(SWRLBuiltInArgument argument) throws SQWRLException
 	{
-		processSelectArgument(argument, isArgumentAVariable, variableShortName);
+		processSelectArgument(argument);
 		this.sqwrlResult.setIsDistinct();
 	}
 
-	private void processSelectArgument(SWRLBuiltInArgument argument, boolean isArgumentAVariable, String variableShortName)
-			throws SQWRLException
+	private void processSelectArgument(SWRLBuiltInArgument argument) throws SQWRLException
 	{
 		String columnName;
-		if (isArgumentAVariable)
-			columnName = "?" + variableShortName;
-		else
+		if (argument.isVariable()) {
+			columnName = "?" + argument.asVariable().getVariableShortName();
+		} else
 			columnName = "[" + argument + "]";
 		this.sqwrlResult.addColumn(columnName);
 	}
 
-	private void processAverageArgument(SWRLBuiltInArgument argument, boolean isArgumentAVariable,
-			String variableShortName) throws SQWRLException
+	private void processAverageArgument(SWRLBuiltInArgument argument) throws SQWRLException
 	{
 		String columnName;
-		if (isArgumentAVariable)
-			columnName = "avg(?" + variableShortName + ")";
+		if (argument.isVariable())
+			columnName = "avg(?" + argument.asVariable().getVariableShortName() + ")";
 		else
 			columnName = "avg[" + argument + "]";
 		this.sqwrlResult.addAggregateColumn(columnName, SQWRLNames.AvgAggregateFunction);
 	}
 
 	private void processOrderByArgument(Map<String, List<Integer>> selectedVariable2ColumnIndices,
-			SWRLBuiltInArgument argument, boolean isArgumentAVariable, String variableShortName) throws SQWRLException
+			SWRLVariableBuiltInArgument argument) throws SQWRLException
 	{
-		if (!isArgumentAVariable)
-			throw new SQWRLException("only variables allowed for ordered columns - found " + argument.getClass().getName());
+		String variableShortName = argument.getVariableShortName();
 
 		if (selectedVariable2ColumnIndices.containsKey(variableShortName)) {
 			for (int selectedColumnIndex : selectedVariable2ColumnIndices.get(variableShortName))
@@ -539,10 +538,10 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	}
 
 	private void processOrderByDescendingArgument(Map<String, List<Integer>> selectedVariable2ColumnIndices,
-			SWRLBuiltInArgument argument, boolean isArgumentAVariable, String variableShortName) throws SQWRLException
+			SWRLVariableBuiltInArgument argument) throws SQWRLException
 	{
-		if (!isArgumentAVariable)
-			throw new SQWRLException("only variables allowed for ordered columns - found " + argument);
+		String variableShortName = argument.getVariableShortName();
+
 		if (selectedVariable2ColumnIndices.containsKey(variableShortName)) {
 			for (int selectedColumnIndex : selectedVariable2ColumnIndices.get(variableShortName))
 				this.sqwrlResult.addOrderByColumn(selectedColumnIndex, false);
