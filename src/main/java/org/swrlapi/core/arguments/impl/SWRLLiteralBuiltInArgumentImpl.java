@@ -5,15 +5,21 @@ import org.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLVariableBuiltInArgument;
 
-import uk.ac.manchester.cs.owl.owlapi.SWRLLiteralArgumentImpl;
-
-class SWRLLiteralBuiltInArgumentImpl extends SWRLLiteralArgumentImpl implements SWRLLiteralBuiltInArgument
+class SWRLLiteralBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements SWRLLiteralBuiltInArgument
 {
 	private static final long serialVersionUID = 1L;
 
+	private final OWLLiteral literal;
+
 	public SWRLLiteralBuiltInArgumentImpl(OWLLiteral literal)
 	{
-		super(literal);
+		this.literal = literal;
+	}
+
+	@Override
+	public OWLLiteral getLiteral()
+	{
+		return this.literal;
 	}
 
 	@Override
@@ -43,7 +49,13 @@ class SWRLLiteralBuiltInArgumentImpl extends SWRLLiteralArgumentImpl implements 
 	@Override
 	public String toDisplayText()
 	{
-		throw new RuntimeException("Not implemented");
+		return this.literal.toString();
+	}
+
+	@Override
+	public String toString()
+	{
+		return toDisplayText();
 	}
 
 	@Override

@@ -39,5 +39,11 @@ public interface SWRLBuiltInArgument extends SWRLDArgument
 
 	SWRLMultiValueVariableBuiltInArgument asMultiValueVariable();
 
+	boolean wasBoundVariable();
+
+	String getBoundVariableName();
+
+	void setBoundVariableName(String boundVariableName);
+
 	String toDisplayText();
 }

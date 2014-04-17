@@ -5,12 +5,11 @@ import org.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLVariableBuiltInArgument;
 
-import uk.ac.manchester.cs.owl.owlapi.SWRLVariableImpl;
-
-class SWRLVariableBuiltInArgumentImpl extends SWRLVariableImpl implements SWRLVariableBuiltInArgument
+class SWRLVariableBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements SWRLVariableBuiltInArgument
 {
 	private static final long serialVersionUID = 1L;
 
+	private final IRI iri;
 	private final String variableShortName;
 
 	// There is an equals methods defined for this class.
@@ -19,10 +18,16 @@ class SWRLVariableBuiltInArgumentImpl extends SWRLVariableImpl implements SWRLVa
 
 	public SWRLVariableBuiltInArgumentImpl(IRI iri, String variableShortName)
 	{
-		super(iri);
+		this.iri = iri;
 		this.builtInResult = null;
 		this.isBound = true;
 		this.variableShortName = variableShortName;
+	}
+
+	@Override
+	public IRI getIRI()
+	{
+		return this.iri;
 	}
 
 	@Override
@@ -113,6 +118,12 @@ class SWRLVariableBuiltInArgumentImpl extends SWRLVariableImpl implements SWRLVa
 			return this.builtInResult.toString();
 		else
 			return "?" + getVariableShortName();
+	}
+
+	@Override
+	public String toString()
+	{
+		return toDisplayText();
 	}
 
 	@Override

@@ -77,7 +77,7 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
 
 	void checkForUnboundArguments(List<SWRLBuiltInArgument> arguments, String message) throws BuiltInException;
 
-	void checkForNonVariableArguments(List<SWRLBuiltInArgument> arguments, String message) throws BuiltInException;
+	void checkThatArgumentsWereBoundVariables(List<SWRLBuiltInArgument> arguments, String message) throws BuiltInException;
 
 	void checkForUnboundNonFirstArguments(List<SWRLBuiltInArgument> arguments) throws BuiltInException;
 

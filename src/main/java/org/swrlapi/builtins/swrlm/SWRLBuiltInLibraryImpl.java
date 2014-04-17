@@ -91,14 +91,13 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		if (arguments.size() > 2) {
 			List<SWRLBuiltInArgument> variableArguments = arguments.subList(2, arguments.size());
 
-			checkForUnboundArguments(variableArguments, "unexpected unbound expression argument");
-			checkForNonVariableArguments(variableArguments, "unexpected non variable argument");
+			checkForUnboundArguments(variableArguments, "2nd and subequent arguments cannot be unbound");
+			checkThatArgumentsWereBoundVariables(variableArguments, "2nd and subequent arguments should be variables");
 
 			for (SWRLBuiltInArgument argument : variableArguments) {
-				String variableShortName = argument.asVariable().getVariableShortName(); // We have checked that they are all
-																																						// variables
+				String variableName = argument.getBoundVariableName(); // We have checked that they are all variables
 				double variableValue = getArgumentAsADouble(argument);
-				getJEP().addVariable(variableShortName, variableValue);
+				getJEP().addVariable(variableName, variableValue);
 			}
 		}
 

@@ -1166,10 +1166,11 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 	}
 
 	@Override
-	public void checkForNonVariableArguments(List<SWRLBuiltInArgument> arguments, String message) throws BuiltInException
+	public void checkThatArgumentsWereBoundVariables(List<SWRLBuiltInArgument> arguments, String message)
+			throws BuiltInException
 	{
 		for (SWRLBuiltInArgument argument : arguments)
-			if (!argument.isVariable())
+			if (!argument.wasBoundVariable())
 				throw new BuiltInException(message + " " + argument);
 	}
 

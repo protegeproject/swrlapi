@@ -23,6 +23,7 @@ import org.swrlapi.core.arguments.SWRLVariableBuiltInArgument;
 public abstract class SWRLBuiltInArgumentImpl implements SWRLBuiltInArgument
 {
 	private static final long serialVersionUID = 1L;
+	private String boundVariableName = null;
 
 	@Override
 	public boolean isVariable()
@@ -46,6 +47,24 @@ public abstract class SWRLBuiltInArgumentImpl implements SWRLBuiltInArgument
 	public SWRLMultiValueVariableBuiltInArgument asMultiValueVariable()
 	{
 		throw new RuntimeException("Not a SWRLMultiVariableBuiltInArgument");
+	}
+
+	@Override
+	public boolean wasBoundVariable()
+	{
+		return this.boundVariableName != null;
+	}
+
+	@Override
+	public String getBoundVariableName()
+	{
+		return this.boundVariableName;
+	}
+
+	@Override
+	public void setBoundVariableName(String boundVariableName)
+	{
+		this.boundVariableName = boundVariableName;
 	}
 
 	@Override
