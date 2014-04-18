@@ -42,6 +42,7 @@ public class SWRLAPIRegressionTester
 				numberOfTests++;
 				try {
 					SQWRLResult result = queryEngine.runSQWRLQuery(queryName);
+					System.err.println("Result:\n" + result);
 					if (result.isEmpty()) {
 						System.out.println("FAILED - no result returned!");
 						failedTests.add(queryName);

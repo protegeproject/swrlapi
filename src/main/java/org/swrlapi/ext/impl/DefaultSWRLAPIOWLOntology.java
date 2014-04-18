@@ -142,7 +142,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	@Override
 	public OWLClass getInjectedOWLClass()
 	{
-		// TODO
+		// TODO This is rough and ready
 		IRI iri = IRI
 				.create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + UUID.randomUUID().toString());
 
@@ -152,7 +152,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	@Override
 	public OWLNamedIndividual getInjectedOWLNamedIndividual()
 	{
-		// TODO
+		// TODO This is rough and ready
 
 		IRI iri = IRI
 				.create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + UUID.randomUUID().toString());
@@ -188,10 +188,15 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		// OWLAnnotationProperty labelAnnotation = getOWLDataFactory().getOWLAnnotationProperty(
 		// OWLRDFVocabulary.RDFS_LABEL.getIRI());
 
+		// for (OWLAnnotation annotation : owlapiRule.getAnnotations(labelAnnotation)) {
+		// for (OWLAnnotation annotation : owlapiRule.getAnnotations()) {
+		// System.err.println("ann: " + annotation);
+		// }
+
 		return ruleName;
 	}
 
-	private boolean getActive(SWRLRule owlapiRule)
+	private boolean getIsActive(SWRLRule owlapiRule)
 	{
 		OWLAnnotationProperty enabledAnnotation = getOWLDataFactory().getOWLAnnotationProperty(
 				IRI.create("http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"));
@@ -227,7 +232,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	private SWRLAPIRule convertOWLAPIRule2SWRLAPIRule(SWRLRule owlapiRule)
 	{
 		String ruleName = getRuleName(owlapiRule);
-		boolean active = getActive(owlapiRule);
+		boolean isActive = getIsActive(owlapiRule);
 		String comment = getComment(owlapiRule);
 		List<SWRLAtom> owlapiBodyAtoms = new ArrayList<SWRLAtom>(owlapiRule.getBody());
 		List<SWRLAtom> owlapiHeadAtoms = new ArrayList<SWRLAtom>(owlapiRule.getHead());
@@ -261,7 +266,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 			} else
 				swrlapiHeadAtoms.add(atom); // Only built-in atoms are converted; other atoms remain the same
 		}
-		return new DefaultSWRLAPIRule(ruleName, swrlapiBodyAtoms, swrlapiHeadAtoms, getOWLIRIResolver(), active, comment);
+		return new DefaultSWRLAPIRule(ruleName, swrlapiBodyAtoms, swrlapiHeadAtoms, getOWLIRIResolver(), isActive, comment);
 	}
 
 	/**
