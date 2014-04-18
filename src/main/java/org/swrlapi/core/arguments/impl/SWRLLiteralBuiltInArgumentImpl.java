@@ -1,5 +1,7 @@
 package org.swrlapi.core.arguments.impl;
 
+import java.util.Comparator;
+
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLObject;
 import org.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
@@ -9,6 +11,8 @@ import org.swrlapi.core.arguments.SWRLVariableBuiltInArgument;
 class SWRLLiteralBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements SWRLLiteralBuiltInArgument
 {
 	private static final long serialVersionUID = 1L;
+
+	private static Comparator<String> c = NaturalOrderComparator.NUMERICAL_ORDER;
 
 	private final OWLLiteral literal;
 
@@ -63,7 +67,7 @@ class SWRLLiteralBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements 
 	{
 		OWLLiteral otherOWLLiteral = o.getLiteral();
 
-		int diff = this.literal.getLiteral().compareTo(otherOWLLiteral.getLiteral());
+		int diff = c.compare(this.literal.getLiteral(), otherOWLLiteral.getLiteral());
 		if (diff != 0)
 			return diff;
 
