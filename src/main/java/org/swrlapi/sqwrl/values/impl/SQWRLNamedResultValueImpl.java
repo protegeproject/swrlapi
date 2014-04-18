@@ -37,6 +37,6 @@ abstract class SQWRLNamedResultValueImpl implements SQWRLNamedResultValue
 	@Override
 	public String toString()
 	{
-		return classIRI.toString();
+		return prefixedName;
 	}
 }
