@@ -362,10 +362,19 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 	 * TODO This is incorrect. Fix. See also {@link SQWRLLiteralResultValueImpl#compareTo} and
 	 * {@link OWLLiteralImpl#compareTo}.
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public int compareTo(SWRLAPILiteral literal)
+	public int compareTo(SWRLAPILiteral o)
 	{
-		return ((Comparable)this.literal).compareTo(literal.getOWLLiteral());
+		OWLLiteral otherOWLLiteral = o.getOWLLiteral();
+
+		int diff = this.literal.getLiteral().compareTo(otherOWLLiteral.getLiteral());
+		if (diff != 0)
+			return diff;
+
+		diff = this.literal.getDatatype().compareTo(otherOWLLiteral.getDatatype());
+		if (diff != 0)
+			return diff;
+
+		return this.literal.getLang().compareTo(otherOWLLiteral.getLang());
 	}
 }

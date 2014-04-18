@@ -10,7 +10,6 @@ import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
-import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLObjectVisitor;
 import org.semanticweb.owlapi.model.OWLObjectVisitorEx;
@@ -158,10 +157,4 @@ public abstract class SWRLBuiltInArgumentImpl implements SWRLBuiltInArgument
 		return false;
 	}
 
-	@Override
-	public int compareTo(OWLObject o)
-	{
-		// TODO Auto-generated method stub
-		return 0;
-	}
 }

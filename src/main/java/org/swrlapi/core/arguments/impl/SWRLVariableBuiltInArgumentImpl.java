@@ -1,6 +1,7 @@
 package org.swrlapi.core.arguments.impl;
 
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLObject;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLVariableBuiltInArgument;
@@ -124,6 +125,22 @@ class SWRLVariableBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements
 	public String toString()
 	{
 		return toDisplayText();
+	}
+
+	public int compareTo(SWRLVariableBuiltInArgument o)
+	{
+		return this.getIRI().compareTo(o.getIRI());
+	}
+
+	@Override
+	public int compareTo(OWLObject o)
+	{
+		if (!(o instanceof SWRLVariableBuiltInArgument))
+			return -1;
+
+		SWRLVariableBuiltInArgument other = (SWRLVariableBuiltInArgument)o;
+
+		return compareTo(other);
 	}
 
 	@Override

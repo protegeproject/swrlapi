@@ -1,6 +1,7 @@
 package org.swrlapi.core.arguments.impl;
 
 import org.semanticweb.owlapi.model.OWLLiteral;
+import org.semanticweb.owlapi.model.OWLObject;
 import org.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLVariableBuiltInArgument;
@@ -56,6 +57,43 @@ class SWRLLiteralBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements 
 	public String toString()
 	{
 		return toDisplayText();
+	}
+
+	public int compareTo(SWRLLiteralBuiltInArgument o)
+	{
+		OWLLiteral otherOWLLiteral = o.getLiteral();
+
+		int diff = this.literal.getLiteral().compareTo(otherOWLLiteral.getLiteral());
+		if (diff != 0)
+			return diff;
+
+		diff = this.literal.getDatatype().compareTo(otherOWLLiteral.getDatatype());
+		if (diff != 0)
+			return diff;
+
+		return this.literal.getLang().compareTo(otherOWLLiteral.getLang());
+	}
+
+	@Override
+	public int compareTo(OWLObject o)
+	{
+		if (!(o instanceof SWRLLiteralBuiltInArgument))
+			return -1;
+
+		SWRLLiteralBuiltInArgument other = (SWRLLiteralBuiltInArgument)o;
+
+		return compareTo(other);
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if ((obj == null) || (obj.getClass() != this.getClass()))
+			return false;
+		SWRLLiteralBuiltInArgumentImpl impl = (SWRLLiteralBuiltInArgumentImpl)obj;
+		return (getLiteral() == impl.getLiteral() || (getLiteral() != null && getLiteral().equals(impl.getLiteral())));
 	}
 
 	@Override
