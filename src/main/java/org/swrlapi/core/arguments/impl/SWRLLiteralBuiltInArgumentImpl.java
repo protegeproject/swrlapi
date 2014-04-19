@@ -7,12 +7,13 @@ import org.semanticweb.owlapi.model.OWLObject;
 import org.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLVariableBuiltInArgument;
+import org.swrlapi.ext.impl.DefaultSWRLAPILiteral;
 
 class SWRLLiteralBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements SWRLLiteralBuiltInArgument
 {
 	private static final long serialVersionUID = 1L;
 
-	private static Comparator<String> c = NaturalOrderComparator.NUMERICAL_ORDER;
+	private static Comparator<String> naturalOrderComparator = NaturalOrderComparator.NUMERICAL_ORDER;
 
 	private final OWLLiteral literal;
 
@@ -63,11 +64,15 @@ class SWRLLiteralBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements 
 		return toDisplayText();
 	}
 
+	/**
+	 * TODO This is not correct. We really need a way of mapping to engine to deal with underlying types. See also
+	 * {@link DefaultSWRLAPILiteral} and {@link SQWRLLiteralResultValueImpl}.
+	 */
 	public int compareTo(SWRLLiteralBuiltInArgument o)
 	{
 		OWLLiteral otherOWLLiteral = o.getLiteral();
 
-		int diff = c.compare(this.literal.getLiteral(), otherOWLLiteral.getLiteral());
+		int diff = naturalOrderComparator.compare(this.literal.getLiteral(), otherOWLLiteral.getLiteral());
 		if (diff != 0)
 			return diff;
 

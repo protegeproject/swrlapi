@@ -1,10 +1,12 @@
 package org.swrlapi.ext.impl;
 
 import java.net.URI;
+import java.util.Comparator;
 
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
+import org.swrlapi.core.arguments.impl.NaturalOrderComparator;
 import org.swrlapi.exceptions.SQWRLLiteralException;
 import org.swrlapi.ext.SWRLAPILiteral;
 import org.swrlapi.xsd.XSDDate;
@@ -12,11 +14,11 @@ import org.swrlapi.xsd.XSDDateTime;
 import org.swrlapi.xsd.XSDDuration;
 import org.swrlapi.xsd.XSDTime;
 
-import uk.ac.manchester.cs.owl.owlapi.OWLLiteralImpl;
-
 public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 {
 	private final OWLLiteral literal;
+
+	private static Comparator<String> naturalOrderComparator = NaturalOrderComparator.NUMERICAL_ORDER;
 
 	public DefaultSWRLAPILiteral(OWLLiteral literal)
 	{
@@ -359,15 +361,17 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 	}
 
 	/**
-	 * TODO This is incorrect. Fix. See also {@link SQWRLLiteralResultValueImpl#compareTo} and
-	 * {@link OWLLiteralImpl#compareTo}.
+	 * TODO This is incorrect. We really need to deal with underlying type.
+	 * <p>
+	 * Fix. See {@link SWRLLiteralBuiltInArgumentImpl#compareTo} and {@link SQWRLLiteralResultValueImpl}.
+	 * {@link SQWRLLiteralResultValueImpl#compareTo}.
 	 */
 	@Override
 	public int compareTo(SWRLAPILiteral o)
 	{
 		OWLLiteral otherOWLLiteral = o.getOWLLiteral();
 
-		int diff = this.literal.getLiteral().compareTo(otherOWLLiteral.getLiteral());
+		int diff = naturalOrderComparator.compare(this.literal.getLiteral(), otherOWLLiteral.getLiteral());
 		if (diff != 0)
 			return diff;
 

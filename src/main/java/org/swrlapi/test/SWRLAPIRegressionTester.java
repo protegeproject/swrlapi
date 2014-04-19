@@ -38,16 +38,16 @@ public class SWRLAPIRegressionTester
 
 			for (SQWRLQuery query : queryEngine.getSQWRLQueries()) {
 				String queryName = query.getName();
-				System.out.print("Running test " + queryName + "...");
+				System.out.print("\n*****Running test " + queryName + "...");
 				numberOfTests++;
 				try {
 					SQWRLResult result = queryEngine.runSQWRLQuery(queryName);
-					System.err.println("Result:\n" + result);
 					if (result.isEmpty()) {
 						System.out.println("FAILED - no result returned!");
 						failedTests.add(queryName);
 					} else {
 						String comment = query.getComment();
+						System.out.println("Result:\n" + result);
 						if (comment.length() != 0) {
 							if (compare(result, comment)) {
 								System.out.println("PASSED");
