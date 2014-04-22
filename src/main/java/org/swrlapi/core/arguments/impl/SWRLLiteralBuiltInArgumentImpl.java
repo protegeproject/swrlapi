@@ -4,16 +4,16 @@ import java.util.Comparator;
 
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLObject;
+import org.swrlapi.core.OWLLiteralComparator;
 import org.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLVariableBuiltInArgument;
-import org.swrlapi.ext.impl.DefaultSWRLAPILiteral;
 
 class SWRLLiteralBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements SWRLLiteralBuiltInArgument
 {
 	private static final long serialVersionUID = 1L;
 
-	private static Comparator<String> naturalOrderComparator = NaturalOrderComparator.NUMERICAL_ORDER;
+	private static Comparator<OWLLiteral> owlLiteralComparator = OWLLiteralComparator.COMPARATOR;
 
 	private final OWLLiteral literal;
 
@@ -64,36 +64,6 @@ class SWRLLiteralBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements 
 		return toDisplayText();
 	}
 
-	/**
-	 * TODO This is not correct. We really need a way of mapping to engine to deal with underlying types. See also
-	 * {@link DefaultSWRLAPILiteral} and {@link SQWRLLiteralResultValueImpl}.
-	 */
-	public int compareTo(SWRLLiteralBuiltInArgument o)
-	{
-		OWLLiteral otherOWLLiteral = o.getLiteral();
-
-		int diff = naturalOrderComparator.compare(this.literal.getLiteral(), otherOWLLiteral.getLiteral());
-		if (diff != 0)
-			return diff;
-
-		diff = this.literal.getDatatype().compareTo(otherOWLLiteral.getDatatype());
-		if (diff != 0)
-			return diff;
-
-		return this.literal.getLang().compareTo(otherOWLLiteral.getLang());
-	}
-
-	@Override
-	public int compareTo(OWLObject o)
-	{
-		if (!(o instanceof SWRLLiteralBuiltInArgument))
-			return -1;
-
-		SWRLLiteralBuiltInArgument other = (SWRLLiteralBuiltInArgument)o;
-
-		return compareTo(other);
-	}
-
 	@Override
 	public boolean equals(Object obj)
 	{
@@ -111,5 +81,21 @@ class SWRLLiteralBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements 
 		int hash = 12;
 		hash = hash + (null == getLiteral() ? 0 : getLiteral().hashCode());
 		return hash;
+	}
+
+	@Override
+	public int compareTo(OWLObject o)
+	{
+		if (!(o instanceof SWRLLiteralBuiltInArgument))
+			return -1;
+
+		SWRLLiteralBuiltInArgument other = (SWRLLiteralBuiltInArgument)o;
+
+		return compareTo(other);
+	}
+
+	public int compareTo(SWRLLiteralBuiltInArgument o)
+	{
+		return owlLiteralComparator.compare(this.getLiteral(), o.getLiteral());
 	}
 }

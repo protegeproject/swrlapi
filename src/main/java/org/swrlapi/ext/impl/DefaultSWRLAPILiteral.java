@@ -6,7 +6,7 @@ import java.util.Comparator;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
-import org.swrlapi.core.arguments.impl.NaturalOrderComparator;
+import org.swrlapi.core.OWLLiteralComparator;
 import org.swrlapi.exceptions.SQWRLLiteralException;
 import org.swrlapi.ext.SWRLAPILiteral;
 import org.swrlapi.xsd.XSDDate;
@@ -18,7 +18,7 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 {
 	private final OWLLiteral literal;
 
-	private static Comparator<String> naturalOrderComparator = NaturalOrderComparator.NUMERICAL_ORDER;
+	private static Comparator<OWLLiteral> owlLiteralComparator = OWLLiteralComparator.COMPARATOR;
 
 	public DefaultSWRLAPILiteral(OWLLiteral literal)
 	{
@@ -360,25 +360,9 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 		return hash;
 	}
 
-	/**
-	 * TODO This is incorrect. We really need to deal with underlying type.
-	 * <p>
-	 * Fix. See {@link SWRLLiteralBuiltInArgumentImpl#compareTo} and {@link SQWRLLiteralResultValueImpl}.
-	 * {@link SQWRLLiteralResultValueImpl#compareTo}.
-	 */
 	@Override
 	public int compareTo(SWRLAPILiteral o)
 	{
-		OWLLiteral otherOWLLiteral = o.getOWLLiteral();
-
-		int diff = naturalOrderComparator.compare(this.literal.getLiteral(), otherOWLLiteral.getLiteral());
-		if (diff != 0)
-			return diff;
-
-		diff = this.literal.getDatatype().compareTo(otherOWLLiteral.getDatatype());
-		if (diff != 0)
-			return diff;
-
-		return this.literal.getLang().compareTo(otherOWLLiteral.getLang());
+		return owlLiteralComparator.compare(this.getOWLLiteral(), o.getOWLLiteral());
 	}
 }

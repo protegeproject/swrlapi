@@ -6,19 +6,19 @@ import org.swrlapi.sqwrl.values.SQWRLResultValue;
 
 abstract class SQWRLNamedResultValueImpl implements SQWRLNamedResultValue
 {
-	private final IRI classIRI;
+	private final IRI iri;
 	private final String prefixedName;
 
-	protected SQWRLNamedResultValueImpl(IRI classIRI, String prefixedName)
+	protected SQWRLNamedResultValueImpl(IRI iri, String prefixedName)
 	{
-		this.classIRI = classIRI;
+		this.iri = iri;
 		this.prefixedName = prefixedName;
 	}
 
 	@Override
 	public IRI getIRI()
 	{
-		return classIRI;
+		return iri;
 	}
 
 	@Override
@@ -27,11 +27,14 @@ abstract class SQWRLNamedResultValueImpl implements SQWRLNamedResultValue
 		return this.prefixedName;
 	}
 
-	// TODO: fix
+	// TODO Look at
 	@Override
 	public int compareTo(SQWRLResultValue o)
 	{
-		return classIRI.compareTo(((SQWRLNamedResultValueImpl)o).getIRI());
+		if (!(o instanceof SQWRLNamedResultValue))
+			return -1;
+		else
+			return iri.compareTo(((SQWRLNamedResultValue)o).getIRI());
 	}
 
 	@Override

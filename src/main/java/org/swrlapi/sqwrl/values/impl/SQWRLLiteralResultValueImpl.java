@@ -26,13 +26,12 @@ class SQWRLLiteralResultValueImpl extends DefaultSWRLAPILiteral implements SQWRL
 		return super.equals(l);
 	}
 
-	/**
-	 * TODO Not pleasant and probably incorrect. What about a SQWRLNamedResultValue? See
-	 * {@link DefaultSWRLAPILiteral#compareTo(org.swrlapi.ext.SWRLAPILiteral)}.
-	 */
 	@Override
-	public int compareTo(SQWRLResultValue value)
+	public int compareTo(SQWRLResultValue o)
 	{
-		return super.compareTo((SQWRLLiteralResultValue)value);
+		if (!(o instanceof SQWRLLiteralResultValue))
+			return -1;
+		else
+			return super.compareTo((SQWRLLiteralResultValue)o);
 	}
 }
