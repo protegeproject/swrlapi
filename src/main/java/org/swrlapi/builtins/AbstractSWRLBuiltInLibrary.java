@@ -811,24 +811,24 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 	}
 
 	@Override
-	public SWRLAPILiteral getArgumentAsASWRLAPILiteral(int argumentNumber, List<SWRLBuiltInArgument> arguments)
+	public OWLLiteral getArgumentAsAnOWLLiteral(int argumentNumber, List<SWRLBuiltInArgument> arguments)
 			throws BuiltInException
 	{
 		checkThatArgumentIsALiteral(argumentNumber, arguments);
 
 		SWRLLiteralBuiltInArgument argument = (SWRLLiteralBuiltInArgument)arguments.get(argumentNumber);
 
-		return getSWRLAPILiteralFactory().getSWRLAPILiteral(argument.getLiteral());
+		return argument.getLiteral();
 	}
 
 	@Override
-	public SWRLAPILiteral getArgumentAsASWRLAPILiteral(SWRLBuiltInArgument argument) throws BuiltInException
+	public OWLLiteral getArgumentAsAnOWLLiteral(SWRLBuiltInArgument argument) throws BuiltInException
 	{
 		checkThatArgumentIsALiteral(argument);
 
 		SWRLLiteralBuiltInArgument a = (SWRLLiteralBuiltInArgument)argument;
 
-		return getSWRLAPILiteralFactory().getSWRLAPILiteral(a.getLiteral());
+		return a.getLiteral();
 	}
 
 	// Longs
@@ -1622,13 +1622,33 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 		return getBuiltInBridge().getSWRLAPIOWLDataFactory();
 	}
 
-	protected SWRLAPILiteralFactory getSWRLAPILiteralFactory() throws SWRLBuiltInLibraryException
-	{
-		return getBuiltInBridge().getSWRLAPIOWLDataFactory().getSWRLAPILiteralFactory();
-	}
-
 	private SWRLBuiltInArgumentFactory getSWRLBuiltInArgumentFactory() throws SWRLBuiltInLibraryException
 	{
 		return getBuiltInBridge().getSWRLAPIOWLDataFactory().getSWRLBuiltInArgumentFactory();
 	}
+
+	private SWRLAPILiteralFactory getSWRLAPILiteralFactory() throws SWRLBuiltInLibraryException
+	{
+		return getBuiltInBridge().getSWRLAPIOWLDataFactory().getSWRLAPILiteralFactory();
+	}
+
+	private SWRLAPILiteral getArgumentAsASWRLAPILiteral(int argumentNumber, List<SWRLBuiltInArgument> arguments)
+			throws BuiltInException
+	{
+		checkThatArgumentIsALiteral(argumentNumber, arguments);
+
+		SWRLLiteralBuiltInArgument argument = (SWRLLiteralBuiltInArgument)arguments.get(argumentNumber);
+
+		return getSWRLAPILiteralFactory().getSWRLAPILiteral(argument.getLiteral());
+	}
+
+	private SWRLAPILiteral getArgumentAsASWRLAPILiteral(SWRLBuiltInArgument argument) throws BuiltInException
+	{
+		checkThatArgumentIsALiteral(argument);
+
+		SWRLLiteralBuiltInArgument a = (SWRLLiteralBuiltInArgument)argument;
+
+		return getSWRLAPILiteralFactory().getSWRLAPILiteral(a.getLiteral());
+	}
+
 }

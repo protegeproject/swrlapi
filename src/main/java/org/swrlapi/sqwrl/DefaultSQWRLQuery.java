@@ -332,7 +332,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 
 		if (sliceSizeArgument instanceof SWRLLiteralBuiltInArgument) {
 			SWRLLiteralBuiltInArgument literalArgument = (SWRLLiteralBuiltInArgument)sliceSizeArgument;
-			SWRLAPILiteral literal = new DefaultSWRLAPILiteral(literalArgument.getLiteral()); // TODO Use factory
+			SWRLAPILiteral literal = getSWRLAPILiteralFactory().getSWRLAPILiteral(literalArgument.getLiteral());
 			if (literal.isInteger() || literal.isInt()) {
 				sliceSize = literal.getInteger();
 				if (sliceSize < 1)

@@ -371,7 +371,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 		for (int argumentNumber = 1; argumentNumber < arguments.size(); argumentNumber++) { // Exception thrown if argument
 																																												// is not a literal.
-			operationResult = operationResult.concat(getArgumentAsASWRLAPILiteral(argumentNumber, arguments).getLiteral());
+			operationResult = operationResult.concat(getArgumentAsAnOWLLiteral(argumentNumber, arguments).getLiteral());
 		}
 
 		return processResultArgument(arguments, 0, operationResult);

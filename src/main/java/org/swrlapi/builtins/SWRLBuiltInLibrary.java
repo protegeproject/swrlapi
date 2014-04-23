@@ -26,7 +26,6 @@ import org.swrlapi.core.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.exceptions.BuiltInException;
 import org.swrlapi.exceptions.InvalidBuiltInArgumentNumberException;
 import org.swrlapi.exceptions.SWRLBuiltInLibraryException;
-import org.swrlapi.ext.SWRLAPILiteral;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 import org.swrlapi.xsd.XSDDate;
 import org.swrlapi.xsd.XSDDateTime;
@@ -155,10 +154,9 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
 
 	boolean isArgumentALiteral(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
 
-	SWRLAPILiteral getArgumentAsASWRLAPILiteral(int argumentNumber, List<SWRLBuiltInArgument> arguments)
-			throws BuiltInException;
+	OWLLiteral getArgumentAsAnOWLLiteral(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
 
-	SWRLAPILiteral getArgumentAsASWRLAPILiteral(SWRLBuiltInArgument argument) throws BuiltInException;
+	OWLLiteral getArgumentAsAnOWLLiteral(SWRLBuiltInArgument argument) throws BuiltInException;
 
 	// IRI
 
