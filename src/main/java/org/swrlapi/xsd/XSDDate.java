@@ -47,7 +47,7 @@ public class XSDDate extends XSDType<XSDDate>
 
 		XSDDate otherDate = (XSDDate)o;
 
-		return this.date.equals(otherDate.date);
+		return this.date != null && otherDate.date != null && this.date.equals(otherDate.date);
 	}
 
 	@Override

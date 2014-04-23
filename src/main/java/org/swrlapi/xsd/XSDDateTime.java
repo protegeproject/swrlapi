@@ -47,7 +47,7 @@ public class XSDDateTime extends XSDType<XSDDateTime>
 
 		XSDDateTime otherDateTime = (XSDDateTime)o;
 
-		return this.datetime.equals(otherDateTime.datetime);
+		return this.datetime != null && otherDateTime.datetime != null && this.datetime.equals(otherDateTime.datetime);
 	}
 
 	@Override

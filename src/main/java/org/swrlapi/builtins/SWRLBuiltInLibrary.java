@@ -77,7 +77,8 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
 
 	void checkForUnboundArguments(List<SWRLBuiltInArgument> arguments, String message) throws BuiltInException;
 
-	void checkThatArgumentsWereBoundVariables(List<SWRLBuiltInArgument> arguments, String message) throws BuiltInException;
+	void checkThatArgumentsWereBoundVariables(List<SWRLBuiltInArgument> arguments, String message)
+			throws BuiltInException;
 
 	void checkForUnboundNonFirstArguments(List<SWRLBuiltInArgument> arguments) throws BuiltInException;
 
@@ -369,32 +370,6 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
 	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(XSDDateTime dateTime) throws BuiltInException;
 
 	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(XSDDuration duration) throws BuiltInException;
-
-	SWRLAPILiteral createSWRLAPILiteral(String s) throws BuiltInException;
-
-	SWRLAPILiteral createSWRLAPILiteral(boolean b) throws BuiltInException;
-
-	SWRLAPILiteral createSWRLAPILiteral(Byte b) throws BuiltInException;
-
-	SWRLAPILiteral createSWRLAPILiteral(short s) throws BuiltInException;
-
-	SWRLAPILiteral createSWRLAPILiteral(int i) throws BuiltInException;
-
-	SWRLAPILiteral createSWRLAPILiteral(long l) throws BuiltInException;
-
-	SWRLAPILiteral createSWRLAPILiteral(float f) throws BuiltInException;
-
-	SWRLAPILiteral createSWRLAPILiteral(double d) throws BuiltInException;
-
-	SWRLAPILiteral createSWRLAPILiteral(URI uri) throws BuiltInException;
-
-	SWRLAPILiteral createSWRLAPILiteral(XSDDate date) throws BuiltInException;
-
-	SWRLAPILiteral createSWRLAPILiteral(XSDTime time) throws BuiltInException;
-
-	SWRLAPILiteral createSWRLAPILiteral(XSDDateTime dateTime) throws BuiltInException;
-
-	SWRLAPILiteral createSWRLAPILiteral(XSDDuration duration) throws BuiltInException;
 
 	SWRLMultiValueVariableBuiltInArgument createSWRLMultiValueVariableBuiltInArgument(IRI variableIRI)
 			throws BuiltInException;

@@ -45,7 +45,7 @@ public class XSDTime extends XSDType<XSDTime>
 
 		XSDTime otherTime = (XSDTime)o;
 
-		return this.time.equals(otherTime.time);
+		return this.time != null && otherTime.time != null && this.time.equals(otherTime.time);
 	}
 
 	@Override

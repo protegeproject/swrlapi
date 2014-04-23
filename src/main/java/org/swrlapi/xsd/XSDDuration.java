@@ -36,7 +36,7 @@ public class XSDDuration extends XSDType<XSDDuration>
 
 		XSDDuration otherDuration = (XSDDuration)o;
 
-		return this.duration.equals(otherDuration.duration);
+		return this.duration != null && otherDuration.duration != null && this.duration.equals(otherDuration.duration);
 	}
 
 	@Override
