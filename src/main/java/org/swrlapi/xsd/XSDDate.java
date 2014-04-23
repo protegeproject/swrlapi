@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
 
-public class XSDDate extends XSDType
+public class XSDDate extends XSDType<XSDDate>
 {
 	private final Date date;
 
@@ -37,11 +37,33 @@ public class XSDDate extends XSDType
 	}
 
 	@Override
-	public int compareTo(XSDType o)
+	public boolean equals(Object o)
 	{
-		if (!(o instanceof XSDDate))
-			return -1;
+		if (this == o)
+			return true;
 
-		return XSDTimeUtil.compareDates(this.date, ((XSDDate)o).date);
+		if (!(o instanceof XSDDate))
+			return false;
+
+		XSDDate otherDate = (XSDDate)o;
+
+		return this.date.equals(otherDate.date);
+	}
+
+	@Override
+	public int hashCode()
+	{
+		int code = 56;
+		code += this.date.hashCode();
+		return code;
+	}
+
+	@Override
+	public int compareTo(XSDDate o)
+	{
+		if (this == o)
+			return 0;
+
+		return XSDTimeUtil.compareDates(this.date, o.date);
 	}
 }

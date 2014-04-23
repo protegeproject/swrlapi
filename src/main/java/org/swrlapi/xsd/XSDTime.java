@@ -2,7 +2,7 @@ package org.swrlapi.xsd;
 
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
 
-public class XSDTime extends XSDType
+public class XSDTime extends XSDType<XSDTime>
 {
 	private final org.apache.axis.types.Time time;
 
@@ -35,11 +35,33 @@ public class XSDTime extends XSDType
 	}
 
 	@Override
-	public int compareTo(XSDType o)
+	public boolean equals(Object o)
 	{
-		if (!(o instanceof XSDTime))
-			return -1;
+		if (this == o)
+			return true;
 
-		return XSDTimeUtil.compareTimes(this.time, ((XSDTime)o).time);
+		if (!(o instanceof XSDTime))
+			return false;
+
+		XSDTime otherTime = (XSDTime)o;
+
+		return this.time.equals(otherTime.time);
+	}
+
+	@Override
+	public int hashCode()
+	{
+		int code = 156;
+		code += this.time.hashCode();
+		return code;
+	}
+
+	@Override
+	public int compareTo(XSDTime o)
+	{
+		if (this == o)
+			return 0;
+
+		return XSDTimeUtil.compareTimes(this.time, o.time);
 	}
 }

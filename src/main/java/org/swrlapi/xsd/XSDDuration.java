@@ -2,7 +2,7 @@ package org.swrlapi.xsd;
 
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
 
-public class XSDDuration extends XSDType
+public class XSDDuration extends XSDType<XSDDuration>
 {
 	private final org.apache.axis.types.Duration duration;
 
@@ -26,11 +26,33 @@ public class XSDDuration extends XSDType
 	}
 
 	@Override
-	public int compareTo(XSDType o)
+	public boolean equals(Object o)
 	{
-		if (!(o instanceof XSDDuration))
-			return -1;
+		if (this == o)
+			return true;
 
-		return XSDTimeUtil.compareDurations(this.duration, ((XSDDuration)o).duration);
+		if (!(o instanceof XSDDuration))
+			return false;
+
+		XSDDuration otherDuration = (XSDDuration)o;
+
+		return this.duration.equals(otherDuration.duration);
+	}
+
+	@Override
+	public int hashCode()
+	{
+		int code = 34;
+		code += this.duration.hashCode();
+		return code;
+	}
+
+	@Override
+	public int compareTo(XSDDuration o)
+	{
+		if (this == o)
+			return 0;
+
+		return XSDTimeUtil.compareDurations(this.duration, o.duration);
 	}
 }

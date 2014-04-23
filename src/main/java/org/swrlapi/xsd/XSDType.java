@@ -2,7 +2,7 @@ package org.swrlapi.xsd;
 
 import org.semanticweb.owlapi.model.IRI;
 
-public abstract class XSDType implements Comparable<XSDType>
+public abstract class XSDType<T> implements Comparable<T>
 {
 	private final String content;
 	private IRI iri = null;
