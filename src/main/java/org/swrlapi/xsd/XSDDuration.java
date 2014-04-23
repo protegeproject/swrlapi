@@ -1,24 +1,36 @@
 package org.swrlapi.xsd;
 
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
-import org.swrlapi.exceptions.SQWRLLiteralException;
 
 public class XSDDuration extends XSDType
 {
-	public XSDDuration(String content) throws SQWRLLiteralException
+	private final org.apache.axis.types.Duration duration;
+
+	public XSDDuration(String content)
 	{
 		super(content);
+
+		this.duration = XSDTimeUtil.xsdDurationString2AxisDuration(getContent());
 
 		setURI(XSDVocabulary.DURATION.getIRI());
 	}
 
 	@Override
-	protected void validate() throws SQWRLLiteralException
+	protected void validate()
 	{
 		if (getContent() == null)
-			throw new SQWRLLiteralException("null content for XSD:duration literal");
+			throw new IllegalArgumentException("null content for XSD:duration literal");
 
 		if (!XSDTimeUtil.isValidXSDDuration(getContent()))
-			throw new SQWRLLiteralException("invalid xsd:Duration: " + getContent());
+			throw new IllegalArgumentException("invalid xsd:Duration: " + getContent());
+	}
+
+	@Override
+	public int compareTo(XSDType o)
+	{
+		if (!(o instanceof XSDDuration))
+			return -1;
+
+		return XSDTimeUtil.compareDurations(this.duration, ((XSDDuration)o).duration);
 	}
 }

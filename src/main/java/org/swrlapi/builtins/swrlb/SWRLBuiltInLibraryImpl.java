@@ -2,7 +2,6 @@
 
 package org.swrlapi.builtins.swrlb;
 
-import java.text.ParseException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -1149,7 +1148,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		try {
 			date = getArgumentAsAString(argumentNumber, arguments);
 			return XSDTimeUtil.xsdDateString2Date(date);
-		} catch (ParseException e) {
+		} catch (IllegalArgumentException e) {
 			throw new BuiltInException("invalid xsd:date " + date + ": " + e.getMessage(), e);
 		}
 	}
@@ -1162,7 +1161,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		try {
 			date = getArgumentAsAString(argumentNumber, arguments);
 			return XSDTimeUtil.xsdDateTimeString2Date(date);
-		} catch (ParseException e) {
+		} catch (IllegalArgumentException e) {
 			throw new BuiltInException("invalid xsd:dateTime " + date + ": " + e.getMessage(), e);
 		}
 	}

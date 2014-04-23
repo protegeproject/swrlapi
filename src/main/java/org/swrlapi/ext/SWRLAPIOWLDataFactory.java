@@ -13,6 +13,7 @@ import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.SWRLRule;
 import org.swrlapi.core.OWLIRIResolver;
+import org.swrlapi.core.OWLLiteralFactory;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;

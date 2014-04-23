@@ -1,11 +1,10 @@
-package org.swrlapi.ext.impl;
+package org.swrlapi.core;
 
 import java.net.URI;
 
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.swrlapi.ext.SWRLAPIOWLDatatypeFactory;
-import org.swrlapi.ext.OWLLiteralFactory;
 import org.swrlapi.xsd.XSDDate;
 import org.swrlapi.xsd.XSDDateTime;
 import org.swrlapi.xsd.XSDDuration;

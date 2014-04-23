@@ -1,31 +1,47 @@
 package org.swrlapi.xsd;
 
+import java.util.Date;
+
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
-import org.swrlapi.exceptions.SQWRLLiteralException;
 
 public class XSDDateTime extends XSDType
 {
-	public XSDDateTime(String content) throws SQWRLLiteralException
+	private final Date datetime;
+
+	public XSDDateTime(String content)
 	{
 		super(content);
+
+		this.datetime = XSDTimeUtil.xsdDateTimeString2Date(getContent());
 
 		setURI(XSDVocabulary.DATE_TIME.getIRI());
 	}
 
-	public XSDDateTime(java.util.Date date) throws SQWRLLiteralException
+	public XSDDateTime(java.util.Date datetime)
 	{
-		super(XSDTimeUtil.utilDate2XSDDateTimeString(date));
+		super(XSDTimeUtil.utilDate2XSDDateTimeString(datetime));
+
+		this.datetime = datetime;
 
 		setURI(XSDVocabulary.DATE_TIME.getIRI());
 	}
 
 	@Override
-	protected void validate() throws SQWRLLiteralException
+	protected void validate()
 	{
 		if (getContent() == null)
-			throw new SQWRLLiteralException("null content for xsd:DateTime");
+			throw new IllegalArgumentException("null content for xsd:DateTime");
 
 		if (!XSDTimeUtil.isValidXSDDateTime(getContent()))
-			throw new SQWRLLiteralException("invalid xsd:DateTime " + getContent());
+			throw new IllegalArgumentException("invalid xsd:DateTime " + getContent());
+	}
+
+	@Override
+	public int compareTo(XSDType o)
+	{
+		if (!(o instanceof XSDDateTime))
+			return -1;
+
+		return XSDTimeUtil.compareDateTimes(this.datetime, ((XSDDateTime)o).datetime);
 	}
 }

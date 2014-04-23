@@ -5,11 +5,11 @@ import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.swrlapi.converters.TargetRuleEngineConverterBase;
 import org.swrlapi.core.OWLClassExpressionResolver;
 import org.swrlapi.core.OWLIRIResolver;
+import org.swrlapi.core.OWLLiteralFactory;
 import org.swrlapi.core.SWRLRuleEngineBridge;
 import org.swrlapi.core.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.exceptions.TargetRuleEngineException;
 import org.swrlapi.ext.SWRLAPIOWLDatatypeFactory;
-import org.swrlapi.ext.OWLLiteralFactory;
 import org.swrlapi.ext.SWRLAPIOWLDataFactory;
 
 /**

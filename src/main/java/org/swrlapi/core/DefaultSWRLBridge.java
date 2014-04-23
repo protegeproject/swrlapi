@@ -15,7 +15,6 @@ import org.swrlapi.exceptions.BuiltInException;
 import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
 import org.swrlapi.exceptions.SWRLRuleEngineBridgeException;
 import org.swrlapi.exceptions.TargetRuleEngineException;
-import org.swrlapi.ext.OWLLiteralFactory;
 import org.swrlapi.ext.SWRLAPIOWLDataFactory;
 import org.swrlapi.ext.SWRLAPIOWLDatatypeFactory;
 import org.swrlapi.ext.SWRLAPIOWLOntology;
