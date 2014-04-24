@@ -2,5 +2,11 @@ package org.swrlapi.sqwrl.values;
 
 public interface SQWRLResultValue
 {
-	int compareTo(SQWRLResultValue resultValue);
+	boolean isNamed();
+
+	boolean isLiteral();
+
+	SQWRLLiteralResultValue asLiteralResult();
+
+	SQWRLNamedResultValue asNamedResult();
 }

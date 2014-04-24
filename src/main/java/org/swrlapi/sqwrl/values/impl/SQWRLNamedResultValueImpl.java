@@ -1,8 +1,8 @@
 package org.swrlapi.sqwrl.values.impl;
 
 import org.semanticweb.owlapi.model.IRI;
+import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLNamedResultValue;
-import org.swrlapi.sqwrl.values.SQWRLResultValue;
 
 abstract class SQWRLNamedResultValueImpl implements SQWRLNamedResultValue
 {
@@ -27,14 +27,54 @@ abstract class SQWRLNamedResultValueImpl implements SQWRLNamedResultValue
 		return this.prefixedName;
 	}
 
-	// TODO Look at
 	@Override
-	public int compareTo(SQWRLResultValue o)
+	public boolean isNamed()
 	{
-		if (!(o instanceof SQWRLNamedResultValue))
-			return -1;
-		else
-			return iri.compareTo(((SQWRLNamedResultValue)o).getIRI());
+		return true;
+	}
+
+	@Override
+	public boolean isLiteral()
+	{
+		return false;
+	}
+
+	@Override
+	public SQWRLLiteralResultValue asLiteralResult()
+	{
+		throw new RuntimeException(getClass().getName() + " is not a " + SQWRLLiteralResultValue.class.getName());
+	}
+
+	@Override
+	public SQWRLNamedResultValue asNamedResult()
+	{
+		return this;
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if ((obj == null) || (obj.getClass() != this.getClass()))
+			return false;
+		SQWRLNamedResultValueImpl n = (SQWRLNamedResultValueImpl)obj;
+
+		return this.iri.equals(n.iri);
+	}
+
+	@Override
+	public int hashCode()
+	{
+		int hash = 298;
+		hash = hash + (null == this.iri ? 0 : this.iri.hashCode());
+		return hash;
+	}
+
+	@Override
+	public int compareTo(SQWRLNamedResultValue o)
+	{
+		return iri.compareTo(o.getIRI());
 	}
 
 	@Override

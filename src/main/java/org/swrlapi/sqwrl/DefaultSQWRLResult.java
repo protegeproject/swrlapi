@@ -377,7 +377,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 		else if (this.isDistinct)
 			this.rows = distinct(this.rows);
 
-		if (this.isOrdered)
+		if (this.isOrdered && this.rows.size() > 0)
 			this.rows = orderBy(this.rows, this.isAscending);
 
 		this.rows = processSelectionOperators(this.rows);
@@ -1007,16 +1007,21 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 	}
 
 	// TODO: fix - very inefficient
-	private List<List<SQWRLResultValue>> distinct(List<List<SQWRLResultValue>> sourceRows)
+	private List<List<SQWRLResultValue>> distinct(List<List<SQWRLResultValue>> sourceRows) throws SQWRLException
 	{
 		List<List<SQWRLResultValue>> localRows = new ArrayList<List<SQWRLResultValue>>(sourceRows);
 		List<List<SQWRLResultValue>> processedRows = new ArrayList<List<SQWRLResultValue>>();
-		RowComparator rowComparator = new RowComparator(this.allColumnNames, true); // Look at the entire row.
+		SQWRLResultRowComparator rowComparator = new SQWRLResultRowComparator(this.allColumnNames, true); // Look at the
+																																																			// entire row.
 
-		Collections.sort(localRows, rowComparator); // binary search is expecting a sorted list
-		for (List<SQWRLResultValue> row : localRows)
-			if (Collections.binarySearch(processedRows, row, rowComparator) < 0)
-				processedRows.add(row);
+		try {
+			Collections.sort(localRows, rowComparator); // Binary search is expecting a sorted list
+			for (List<SQWRLResultValue> row : localRows)
+				if (Collections.binarySearch(processedRows, row, rowComparator) < 0)
+					processedRows.add(row);
+		} catch (RuntimeException e) {
+			throw new SQWRLException("Internal error comparing rows", e);
+		}
 
 		return processedRows;
 	}
@@ -1024,7 +1029,8 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 	private List<List<SQWRLResultValue>> aggregate(List<List<SQWRLResultValue>> sourceRows) throws SQWRLException
 	{
 		List<List<SQWRLResultValue>> result = new ArrayList<List<SQWRLResultValue>>();
-		RowComparator rowComparator = new RowComparator(this.allColumnNames, this.selectedColumnIndexes, true);
+		SQWRLResultRowComparator rowComparator = new SQWRLResultRowComparator(this.allColumnNames,
+				this.selectedColumnIndexes, true);
 		// Key is index of aggregated row in result, value is hash map of aggregate column index to list of original values.
 		HashMap<Integer, HashMap<Integer, List<SQWRLResultValue>>> aggregatesMap = new HashMap<Integer, HashMap<Integer, List<SQWRLResultValue>>>();
 		HashMap<Integer, List<SQWRLResultValue>> aggregateRowMap; // Map of column indexes to value lists; used to
@@ -1065,21 +1071,29 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 
 			for (Integer aggregateColumnIndex : this.aggregateColumnIndexes.keySet()) {
 				String aggregateFunctionName = this.aggregateColumnIndexes.get(aggregateColumnIndex);
-				values = aggregateRowMap.get(aggregateColumnIndex);
+				List<SQWRLResultValue> columnValues = aggregateRowMap.get(aggregateColumnIndex);
 
 				// We have checked in addRowData that only numeric data are added for sum, max, min, and avg
-				if (aggregateFunctionName.equalsIgnoreCase(SQWRLResultNames.MinAggregateFunction))
-					value = min(values);
-				else if (aggregateFunctionName.equalsIgnoreCase(SQWRLResultNames.MaxAggregateFunction))
-					value = max(values);
-				else if (aggregateFunctionName.equalsIgnoreCase(SQWRLResultNames.SumAggregateFunction))
-					value = sum(values);
-				else if (aggregateFunctionName.equalsIgnoreCase(SQWRLResultNames.AvgAggregateFunction))
-					value = avg(values);
-				else if (aggregateFunctionName.equalsIgnoreCase(SQWRLResultNames.CountAggregateFunction))
-					value = count(values);
+				if (aggregateFunctionName.equalsIgnoreCase(SQWRLResultNames.MinAggregateFunction)) {
+					List<SQWRLLiteralResultValue> literalColumnValues = convert2LiteralResultValues(columnValues,
+							aggregateColumnIndex);
+					value = min(literalColumnValues, aggregateColumnIndex);
+				} else if (aggregateFunctionName.equalsIgnoreCase(SQWRLResultNames.MaxAggregateFunction)) {
+					List<SQWRLLiteralResultValue> literalColumnValues = convert2LiteralResultValues(columnValues,
+							aggregateColumnIndex);
+					value = max(literalColumnValues, aggregateColumnIndex);
+				} else if (aggregateFunctionName.equalsIgnoreCase(SQWRLResultNames.SumAggregateFunction)) {
+					List<SQWRLLiteralResultValue> literalColumnValues = convert2LiteralResultValues(columnValues,
+							aggregateColumnIndex);
+					value = sum(literalColumnValues, aggregateColumnIndex);
+				} else if (aggregateFunctionName.equalsIgnoreCase(SQWRLResultNames.AvgAggregateFunction)) {
+					List<SQWRLLiteralResultValue> literalColumnValues = convert2LiteralResultValues(columnValues,
+							aggregateColumnIndex);
+					value = avg(literalColumnValues, aggregateColumnIndex);
+				} else if (aggregateFunctionName.equalsIgnoreCase(SQWRLResultNames.CountAggregateFunction))
+					value = count(columnValues);
 				else if (aggregateFunctionName.equalsIgnoreCase(SQWRLResultNames.CountDistinctAggregateFunction))
-					value = countDistinct(values);
+					value = countDistinct(columnValues);
 				else
 					throw new SQWRLInvalidAggregateFunctionNameException("invalid aggregate function " + aggregateFunctionName);
 
@@ -1087,7 +1101,6 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 			}
 			rowIndex++;
 		}
-
 		return result;
 	}
 
@@ -1095,154 +1108,163 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 			throws SQWRLException
 	{
 		List<List<SQWRLResultValue>> result = new ArrayList<List<SQWRLResultValue>>(sourceRows);
-		RowComparator rowComparator = new RowComparator(this.allColumnNames, this.orderByColumnIndexes, ascending);
+		SQWRLResultRowComparator rowComparator = new SQWRLResultRowComparator(this.allColumnNames,
+				this.orderByColumnIndexes, ascending);
 
-		Collections.sort(result, rowComparator);
+		try {
+			Collections.sort(result, rowComparator);
+		} catch (RuntimeException e) {
+			throw new SQWRLException("Internal error comparing rows", e);
+		}
 
 		return result;
 	}
 
-	private SQWRLResultValue min(List<SQWRLResultValue> values) throws SQWRLException
+	private SQWRLLiteralResultValue min(List<SQWRLLiteralResultValue> columnValues, int columnIndex)
+			throws SQWRLException
 	{
-		SQWRLResultValue result = null, value;
+		SQWRLLiteralResultValue result = null;
 
-		if (values.isEmpty())
+		if (columnValues.isEmpty())
 			throw new SQWRLException("empty aggregate list for " + SQWRLResultNames.MinAggregateFunction);
 
-		for (SQWRLResultValue SWRLAPILiteral : values) {
-
-			if (!(SWRLAPILiteral instanceof SQWRLResultValue))
-				throw new SQWRLException("attempt to use " + SQWRLResultNames.MinAggregateFunction
-						+ " aggregate on non datatype " + SWRLAPILiteral);
-
-			value = SWRLAPILiteral;
+		int rowIndex = 0;
+		for (SQWRLLiteralResultValue value : columnValues) {
 
 			if (!isNumericValue(value))
 				throw new SQWRLException("attempt to use " + SQWRLResultNames.MinAggregateFunction
-						+ " aggregate on non numeric datatype " + value);
+						+ " aggregate on column with non numeric literal " + value + " with type " + value.getOWLDatatype()
+						+ "in (0-based) row " + rowIndex + ", column " + columnIndex);
 
 			if (result == null)
 				result = value;
 			else if (value.compareTo(result) < 0)
 				result = value;
+			rowIndex++;
 		}
 
 		return result;
 	}
 
-	private SQWRLResultValue max(List<SQWRLResultValue> values) throws SQWRLException
+	private SQWRLLiteralResultValue max(List<SQWRLLiteralResultValue> columnValues, int columnIndex)
+			throws SQWRLException
 	{
-		SQWRLResultValue result = null, value;
+		SQWRLLiteralResultValue result = null;
 
-		if (values.isEmpty())
+		if (columnValues.isEmpty())
 			throw new SQWRLException("empty aggregate list for " + SQWRLResultNames.MaxAggregateFunction);
 
-		for (SQWRLResultValue SWRLAPILiteral : values) {
-
-			if (!(SWRLAPILiteral instanceof SQWRLResultValue))
-				throw new SQWRLException("attempt to use " + SQWRLResultNames.MaxAggregateFunction
-						+ " aggregate on non datatype " + SWRLAPILiteral);
-
-			value = SWRLAPILiteral;
+		int rowIndex = 0;
+		for (SQWRLLiteralResultValue value : columnValues) {
 
 			if (!isNumericValue(value))
 				throw new SQWRLException("attempt to use " + SQWRLResultNames.MaxAggregateFunction
-						+ " aggregate on non numeric datatype " + value);
+						+ " aggregate with non numeric literal " + value + " with type " + value.getOWLDatatype()
+						+ "in (0-based) row " + rowIndex + ", column " + columnIndex);
 
 			if (result == null)
 				result = value;
 			else if (value.compareTo(result) > 0)
 				result = value;
+			rowIndex++;
 		}
 
 		return result;
 	}
 
-	private SQWRLResultValue sum(List<SQWRLResultValue> values) throws SQWRLException
+	private SQWRLLiteralResultValue sum(List<SQWRLLiteralResultValue> columnValues, int columnIndex)
+			throws SQWRLException
 	{
 		double sum = 0;
 
-		if (values.isEmpty())
+		if (columnValues.isEmpty())
 			throw new SQWRLException("empty aggregate list for " + SQWRLResultNames.SumAggregateFunction);
 
-		for (SQWRLResultValue value : values) {
+		int rowIndex = 0;
+		for (SQWRLLiteralResultValue value : columnValues) {
 
 			if (!isNumericValue(value))
 				throw new SQWRLException("attempt to use " + SQWRLResultNames.SumAggregateFunction
-						+ " aggregate on non numeric value: " + value);
+						+ " aggregate  on non numeric value: " + value + " with type " + value.getOWLDatatype()
+						+ " in (0-based) row " + rowIndex + ", column " + columnIndex);
 
-			double d = ((SQWRLLiteralResultValue)value).getDouble();
+			double d = value.getDouble();
 
 			sum = sum + d;
+			rowIndex++;
 		}
 
 		return getSQWRLResultValueFactory().getLiteral(sum);
 	}
 
-	private SQWRLResultValue avg(List<SQWRLResultValue> values) throws SQWRLException
+	private SQWRLLiteralResultValue avg(List<SQWRLLiteralResultValue> columnValues, int columnIndex)
+			throws SQWRLException
 	{
 		double sum = 0;
 		int count = 0;
 
-		if (values.isEmpty())
+		if (columnValues.isEmpty())
 			throw new SQWRLException("empty aggregate list for function " + SQWRLResultNames.AvgAggregateFunction);
 
-		for (SQWRLResultValue value : values) {
+		int rowIndex = 0;
+		for (SQWRLLiteralResultValue value : columnValues) {
 
 			if (!isNumericValue(value))
 				throw new SQWRLException("attempt to use " + SQWRLResultNames.AvgAggregateFunction
-						+ " aggregate on non literal value " + value);
+						+ " aggregate on column with non literal value " + value + " with type " + value.getOWLDatatype()
+						+ " in (0-based) row " + rowIndex + ", column " + columnIndex);
 
-			double d = ((SQWRLLiteralResultValue)value).getDouble();
+			double d = value.getDouble();
 
 			count++;
 			sum = sum + d;
+			rowIndex++;
 		}
-
 		return getSQWRLResultValueFactory().getLiteral(sum / count);
 	}
 
-	private SQWRLResultValue count(List<SQWRLResultValue> values) throws SQWRLException
+	private SQWRLLiteralResultValue count(List<SQWRLResultValue> columnValues) throws SQWRLException
 	{
-		return getSQWRLResultValueFactory().getLiteral(values.size());
+		return getSQWRLResultValueFactory().getLiteral(columnValues.size());
 	}
 
-	private SQWRLResultValue countDistinct(List<SQWRLResultValue> values) throws SQWRLException
+	private SQWRLLiteralResultValue countDistinct(List<SQWRLResultValue> columnValues) throws SQWRLException
 	{
-		Set<SQWRLResultValue> distinctValues = new HashSet<SQWRLResultValue>(values);
+		Set<SQWRLResultValue> distinctValues = new HashSet<SQWRLResultValue>(columnValues);
 
 		return getSQWRLResultValueFactory().getLiteral(distinctValues.size());
 	}
 
 	// TODO: linear search is not very efficient.
 	private int findRowIndex(List<List<SQWRLResultValue>> result, List<SQWRLResultValue> rowToFind,
-			Comparator<List<SQWRLResultValue>> rowComparator)
+			Comparator<List<SQWRLResultValue>> rowComparator) throws SQWRLException
 	{
 		int rowIndex = 0;
 
-		for (List<SQWRLResultValue> row : result) {
-			if (rowComparator.compare(rowToFind, row) == 0)
-				return rowIndex;
-			rowIndex++;
+		try {
+			for (List<SQWRLResultValue> row : result) {
+				if (rowComparator.compare(rowToFind, row) == 0)
+					return rowIndex;
+				rowIndex++;
+			}
+		} catch (RuntimeException e) {
+			throw new SQWRLException("Internal error comparing rows", e);
 		}
-
 		return -1;
 	}
 
-	// TODO Look at. This is quick and dirty - all checking left to the Java runtime.
-	private static class RowComparator implements Comparator<List<SQWRLResultValue>>
+	private static class SQWRLResultRowComparator implements Comparator<List<SQWRLResultValue>>
 	{
 		private final List<Integer> orderByColumnIndexes;
 		private final boolean ascending;
 
-		// Need way to distinguish two constructors because of erasure
-		public RowComparator(List<String> allColumnNames, List<Integer> orderByColumnIndexes, boolean ascending)
+		public SQWRLResultRowComparator(List<String> allColumnNames, List<Integer> orderByColumnIndexes, boolean ascending)
 		{
 			this.ascending = ascending;
 			this.orderByColumnIndexes = orderByColumnIndexes;
 		}
 
-		public RowComparator(List<String> allColumnNames, boolean ascending)
+		public SQWRLResultRowComparator(List<String> allColumnNames, boolean ascending)
 		{
 			this.ascending = ascending;
 			this.orderByColumnIndexes = new ArrayList<Integer>();
@@ -1255,15 +1277,45 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 		public int compare(List<SQWRLResultValue> row1, List<SQWRLResultValue> row2)
 		{
 			for (Integer columnIndex : this.orderByColumnIndexes) {
-				int result = row1.get(columnIndex).compareTo(row2.get(columnIndex));
-				if (result != 0)
+				SQWRLResultValue value1 = row1.get(columnIndex);
+				SQWRLResultValue value2 = row2.get(columnIndex);
+				int diff;
+
+				if (value1.isLiteral() && value2.isLiteral())
+					diff = value1.asLiteralResult().compareTo(value2.asLiteralResult());
+				else if (value1.isNamed() && value2.isNamed())
+					diff = value1.asNamedResult().compareTo(value2.asNamedResult());
+				else
+					throw new RuntimeException("Attempt to compare a " + value1.getClass().getName() + " with a "
+							+ value2.getClass().getName());
+
+				if (diff != 0) {
 					if (this.ascending)
-						return result;
+						return diff;
 					else
-						return -result;
+						return -diff;
+				}
 			}
 			return 0;
 		}
+	}
+
+	private List<SQWRLLiteralResultValue> convert2LiteralResultValues(List<SQWRLResultValue> columnValues, int columnIndex)
+			throws SQWRLException
+	{
+		List<SQWRLLiteralResultValue> literalValues = new ArrayList<SQWRLLiteralResultValue>();
+
+		int rowIndex = 0;
+		for (SQWRLResultValue value : columnValues) {
+			if (value.isLiteral())
+				literalValues.add(value.asLiteralResult());
+			else
+				throw new SQWRLException("Found non literal value " + value + " in (0-based) row " + rowIndex + ", column "
+						+ columnIndex + " - expecting literal");
+			rowIndex++;
+		}
+
+		return literalValues;
 	}
 
 	private SQWRLResultValueFactory getSQWRLResultValueFactory()

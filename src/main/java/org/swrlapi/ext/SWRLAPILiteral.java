@@ -13,7 +13,7 @@ import org.swrlapi.xsd.XSDTime;
 /**
  * The SWRLAPI's literal wraps an OWLAPI literal to provide additional convenience methods used by the SWRLAPI.
  */
-public interface SWRLAPILiteral extends Comparable<SWRLAPILiteral>
+public interface SWRLAPILiteral
 {
 	OWLLiteral getOWLLiteral();
 

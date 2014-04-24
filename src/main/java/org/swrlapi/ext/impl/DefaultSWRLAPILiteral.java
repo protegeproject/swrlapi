@@ -1,12 +1,10 @@
 package org.swrlapi.ext.impl;
 
 import java.net.URI;
-import java.util.Comparator;
 
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
-import org.swrlapi.core.OWLLiteralComparator;
 import org.swrlapi.exceptions.SQWRLLiteralException;
 import org.swrlapi.ext.SWRLAPILiteral;
 import org.swrlapi.xsd.XSDDate;
@@ -17,8 +15,6 @@ import org.swrlapi.xsd.XSDTime;
 public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 {
 	private final OWLLiteral literal;
-
-	private static Comparator<OWLLiteral> owlLiteralComparator = OWLLiteralComparator.COMPARATOR;
 
 	public DefaultSWRLAPILiteral(OWLLiteral literal)
 	{
@@ -356,13 +352,7 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 	public int hashCode()
 	{
 		int hash = 95;
-		hash = hash + (null == this.literal ? 0 : this.literal.toString().hashCode());
+		hash = hash + (null == this.literal ? 0 : this.literal.hashCode());
 		return hash;
-	}
-
-	@Override
-	public int compareTo(SWRLAPILiteral o)
-	{
-		return owlLiteralComparator.compare(this.getOWLLiteral(), o.getOWLLiteral());
 	}
 }
