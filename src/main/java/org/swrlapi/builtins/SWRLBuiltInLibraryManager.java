@@ -253,7 +253,7 @@ public abstract class SWRLBuiltInLibraryManager
 		}
 	}
 
-	// TODO: need to get constructor of library to catch exceptions it may throw.
+	// TODO Need to get constructor of library to catch exceptions it may throw.
 	private static SWRLBuiltInLibrary loadBuiltInLibraryImpl(String ruleName, String prefix, String className)
 			throws UnresolvedBuiltInClassException, IncompatibleBuiltInClassException, SWRLBuiltInLibraryException
 	{

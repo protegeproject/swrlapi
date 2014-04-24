@@ -21,7 +21,6 @@ import org.swrlapi.ext.SWRLAPIBuiltInAtom;
 import org.swrlapi.ext.SWRLAPILiteral;
 import org.swrlapi.ext.SWRLAPILiteralFactory;
 import org.swrlapi.ext.SWRLAPIOWLDataFactory;
-import org.swrlapi.ext.impl.DefaultSWRLAPILiteral;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
 public class DefaultSQWRLQuery implements SQWRLQuery
@@ -305,7 +304,8 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 
 			if (nArgument instanceof SWRLLiteralBuiltInArgument) {
 				SWRLLiteralBuiltInArgument sliceNArgument = (SWRLLiteralBuiltInArgument)nArgument;
-				SWRLAPILiteral literal = new DefaultSWRLAPILiteral(sliceNArgument.getLiteral()); // TODO Use factory
+				SWRLAPILiteral literal = getSWRLAPILiteralFactory().getSWRLAPILiteral(sliceNArgument.getLiteral());
+
 				if (literal.isInteger() || literal.isInt()) {
 					sliceN = literal.getInteger();
 					if (sliceN < 1)
@@ -737,7 +737,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		Set<String> rootVariableShortNames = new HashSet<String>();
 
 		for (SWRLAtom atom : getBodyAtoms()) {
-			Set<String> thisAtomReferencedVariableNames = getReferencedVariableNames(atom);
+			Set<String> thisAtomReferencedVariableShortNames = getReferencedVariableShortNames(atom);
 
 			buildPaths(atom, rootVariableShortNames, pathMap);
 
@@ -754,7 +754,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 
 					for (String rootVariableName : pathMap.keySet()) {
 						for (Set<String> path : pathMap.get(rootVariableName)) {
-							if (!Collections.disjoint(path, thisAtomReferencedVariableNames)) {
+							if (!Collections.disjoint(path, thisAtomReferencedVariableShortNames)) {
 								pathVariableNames.addAll(path);
 								pathVariableNames.add(rootVariableName);
 							}
@@ -762,7 +762,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 					}
 
 					if (!pathVariableNames.isEmpty()) {
-						pathVariableNames.removeAll(thisAtomReferencedVariableNames); // Remove our own variables
+						pathVariableNames.removeAll(thisAtomReferencedVariableShortNames); // Remove our own variables
 						/*
 						 * TODO: Need to think about correct operation of this if (builtInAtom.isSQWRLMakeCollection()) { String
 						 * collectionName = builtInAtom.getArgumentVariableName(0); // First argument is the collection name if
@@ -787,24 +787,25 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	 */
 	private void buildPaths(SWRLAtom atom, Set<String> rootVariableNames, Map<String, Set<Set<String>>> pathMap)
 	{
-		Set<String> currentAtomReferencedVariableNames = getReferencedVariableNames(atom);
+		Set<String> currentAtomReferencedVariableShortNames = getReferencedVariableShortNames(atom);
 		Set<String> matchingRootVariableNames;
 
-		if (currentAtomReferencedVariableNames.size() == 1) { // Make variable a root if we have not yet encountered it
-			String variableShortName = currentAtomReferencedVariableNames.iterator().next();
+		if (currentAtomReferencedVariableShortNames.size() == 1) { // Make variable a root if we have not yet encountered it
+			String variableShortName = currentAtomReferencedVariableShortNames.iterator().next();
 			if (getMatchingPaths(pathMap, variableShortName).isEmpty() && !rootVariableNames.contains(variableShortName)) {
 				Set<Set<String>> paths = new HashSet<Set<String>>();
 				pathMap.put(variableShortName, paths);
 				rootVariableNames.add(variableShortName);
 			}
-		} else if (currentAtomReferencedVariableNames.size() > 1) {
-			Set<String> currentKnownAtomRootVariableNames = new HashSet<String>(currentAtomReferencedVariableNames);
-			currentKnownAtomRootVariableNames.retainAll(rootVariableNames);
+		} else if (currentAtomReferencedVariableShortNames.size() > 1) {
+			Set<String> currentKnownAtomRootVariableShortNames = new HashSet<String>(currentAtomReferencedVariableShortNames);
+			currentKnownAtomRootVariableShortNames.retainAll(rootVariableNames);
 
-			if (!currentKnownAtomRootVariableNames.isEmpty()) { // At least one of atom's variables reference already known
-																													// root(s)
-				for (String rootVariableName : currentKnownAtomRootVariableNames) {
-					Set<String> dependentVariables = new HashSet<String>(currentAtomReferencedVariableNames);
+			if (!currentKnownAtomRootVariableShortNames.isEmpty()) { // At least one of atom's variables reference already
+																																// known
+				// root(s)
+				for (String rootVariableName : currentKnownAtomRootVariableShortNames) {
+					Set<String> dependentVariables = new HashSet<String>(currentAtomReferencedVariableShortNames);
 					dependentVariables.remove(rootVariableName);
 
 					matchingRootVariableNames = getMatchingRootVariableNames(pathMap, dependentVariables);
@@ -830,7 +831,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 					}
 				}
 			} else { // No known roots referenced by any of the atom's variables
-				matchingRootVariableNames = getMatchingRootVariableNames(pathMap, currentAtomReferencedVariableNames);
+				matchingRootVariableNames = getMatchingRootVariableNames(pathMap, currentAtomReferencedVariableShortNames);
 				if (!matchingRootVariableNames.isEmpty()) {
 					// Found existing paths that use the atom's variables - add all the variables (none of which is a root) to
 					// each path
@@ -839,21 +840,22 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 						Set<Set<String>> matchedPaths = new HashSet<Set<String>>();
 
 						for (Set<String> path : paths)
-							if (!Collections.disjoint(path, currentAtomReferencedVariableNames))
+							if (!Collections.disjoint(path, currentAtomReferencedVariableShortNames))
 								matchedPaths.add(path);
 						for (Set<String> matchedPath : matchedPaths) { // Add the new variables to the matched path and add it to
 																														// this root's path
 							Set<String> newPath = new HashSet<String>(matchedPath);
-							newPath.addAll(currentAtomReferencedVariableNames); // Add all the non-root variable names to this path
+							newPath.addAll(currentAtomReferencedVariableShortNames); // Add all the non-root variable names to this
+																																				// path
 							paths.remove(matchedPath); // Remove the original matched path
 							paths.add(Collections.unmodifiableSet(newPath)); // Add the updated path
 						}
 					}
 				} else { // No existing paths have variables from this atom - every variable becomes a root and depends on every
 									// other root variable
-					for (String rootVariableName : currentAtomReferencedVariableNames) {
+					for (String rootVariableName : currentAtomReferencedVariableShortNames) {
 						Set<Set<String>> paths = new HashSet<Set<String>>();
-						Set<String> dependentVariables = new HashSet<String>(currentAtomReferencedVariableNames);
+						Set<String> dependentVariables = new HashSet<String>(currentAtomReferencedVariableShortNames);
 						dependentVariables.remove(rootVariableName); // Remove the root from its own dependent variables
 						paths.add(Collections.unmodifiableSet(dependentVariables));
 						pathMap.put(rootVariableName, paths);
@@ -896,27 +898,27 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		return matchingRootVariableNames;
 	}
 
-	private Set<String> getReferencedVariableNames(SWRLAtom atom)
+	private Set<String> getReferencedVariableShortNames(SWRLAtom atom)
 	{
-		Set<String> referencedVariableNames = new HashSet<String>();
+		Set<String> referencedVariableShortNames = new HashSet<String>();
 
 		for (SWRLArgument argument : atom.getAllArguments()) {
 			if (argument instanceof SWRLVariable) {
 				SWRLVariable variable = (SWRLVariable)argument;
 				IRI iri = variable.getIRI();
-				String variableShortName = getOWLIRIResolver().iri2ShortName(iri); // TODO
-				referencedVariableNames.add(variableShortName);
+				String variableShortName = getOWLIRIResolver().iri2ShortName(iri);
+				referencedVariableShortNames.add(variableShortName);
 			} else if (argument instanceof SWRLVariableBuiltInArgument) {
 				SWRLVariableBuiltInArgument variableBuiltInArgument = (SWRLVariableBuiltInArgument)argument;
-				referencedVariableNames.add(variableBuiltInArgument.getVariableShortName());
+				referencedVariableShortNames.add(variableBuiltInArgument.getVariableShortName());
 			}
 		}
-		return referencedVariableNames;
+		return referencedVariableShortNames;
 	}
 
 	private boolean hasReferencedVariables(SWRLAtom atom)
 	{
-		return !getReferencedVariableNames(atom).isEmpty();
+		return !getReferencedVariableShortNames(atom).isEmpty();
 	}
 
 	private SWRLAPILiteralFactory getSWRLAPILiteralFactory()

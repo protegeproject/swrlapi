@@ -7,12 +7,11 @@ import java.text.SimpleDateFormat;
  * A class supporting processing of datetime strings represented in the standard XML Schema date format
  * 'yyyy-MM-ddTHH:mm:ss.S'.
  * <p>
- * Time zone offset specifications are not yet supported.
+ * TODO Time zone offset specifications are not yet supported.
  */
 public class XSDDatetimeStringProcessor extends DatetimeStringProcessor
 {
-	private static final SimpleDateFormat _dateFormat = new SimpleDateFormat("y-M-d'T'h:m:s.S"); // TODO: No support for Z
-																																																// yet
+	private static final SimpleDateFormat _dateFormat = new SimpleDateFormat("y-M-d'T'h:m:s.S");
 	private static final String _delimiters = "-:.TZ";
 
 	// The number of tokens (including delimeters) necessary to strip a datetime to a specified granularity.

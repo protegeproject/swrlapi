@@ -91,11 +91,6 @@ class SWRLLiteralBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements 
 
 		SWRLLiteralBuiltInArgument other = (SWRLLiteralBuiltInArgument)o;
 
-		return compareTo(other);
-	}
-
-	public int compareTo(SWRLLiteralBuiltInArgument o)
-	{
-		return owlLiteralComparator.compare(this.getLiteral(), o.getLiteral());
+		return owlLiteralComparator.compare(this.getLiteral(), other.getLiteral());
 	}
 }

@@ -1,8 +1,7 @@
-// TODO: built-ins for URIs, and lists are not implemented.
+// TODO Built-ins for URIs, and lists are not implemented.
 
 package org.swrlapi.builtins.swrlb;
-
-import java.util.Calendar;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -26,6 +25,7 @@ import org.swrlapi.xsd.XSDDateTime;
 import org.swrlapi.xsd.XSDDuration;
 import org.swrlapi.xsd.XSDTime;
 import org.swrlapi.xsd.XSDTimeUtil;
+
 
 /**
  * Implementations library for the core SWRL built-in methods. These built-ins are defined <a
@@ -126,7 +126,6 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		return result;
 	}
 
-	// TODO: XSD types
 	public boolean equal(List<SWRLBuiltInArgument> arguments) throws BuiltInException
 	{
 		checkNumberOfArgumentsEqualTo(2, arguments.size());

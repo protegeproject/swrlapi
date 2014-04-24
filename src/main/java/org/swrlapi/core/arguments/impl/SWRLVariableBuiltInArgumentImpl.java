@@ -75,10 +75,6 @@ class SWRLVariableBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements
 	@Override
 	public SWRLBuiltInArgument getBuiltInResult()
 	{
-		// TODO this should probably throw TargetRuleEngineExceptiion
-		// if (!isUnbound()) throw new BuiltInException("attempt to retrieve binding from a non bound argument " +
-		// this.toString());
-
 		return this.builtInResult;
 	}
 
