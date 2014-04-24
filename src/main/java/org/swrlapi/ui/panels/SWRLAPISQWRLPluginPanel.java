@@ -7,13 +7,13 @@ import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.ui.owl2rl.OWL2RLTabbedPane;
 
 /**
- * GUI for a each SWRLTab SQWRL query engine plugin.
+ * GUI for a each SWRLAPI SQWRL query engine plugin.
  */
-public class SWRLTabSQWRLPluginPanel extends JTabbedPane
+public class SWRLAPISQWRLPluginPanel extends JTabbedPane
 {
-	private static final long serialVersionUID = -2959798859917609752L;
+	private static final long serialVersionUID = 1L;
 
-	public SWRLTabSQWRLPluginPanel(String pluginName, SQWRLQueryEngine queryEngine, Icon queryEngineIcon,
+	public SWRLAPISQWRLPluginPanel(String pluginName, SQWRLQueryEngine queryEngine, Icon queryEngineIcon,
 			Icon reasonerIcon, SWRLRuleSelector ruleSelector)
 	{
 		addTab(pluginName, queryEngineIcon, new SQWRLQueryControlPanel(queryEngine, queryEngineIcon, ruleSelector),

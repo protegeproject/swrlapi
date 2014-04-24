@@ -10,22 +10,22 @@ import org.swrlapi.owl2rl.OWL2RLNames;
 
 public class OWL2RLTablesControlPanel extends JPanel
 {
-	private static final long serialVersionUID = 506193875239713408L;
+	private static final long serialVersionUID = 1L;
 
 	private final OWL2RLModel owl2RLModel;
-	private final List<OWL2RLTableActivationButton> buttons;
+	private final List<OWL2RLTableActivationButton> tableActivationButtons;
 
 	public OWL2RLTablesControlPanel(OWL2RLModel owl2RLModel)
 	{
 		this.owl2RLModel = owl2RLModel;
-		this.buttons = new ArrayList<OWL2RLTableActivationButton>();
+		this.tableActivationButtons = new ArrayList<OWL2RLTableActivationButton>();
 
 		initialize();
 	}
 
 	public void update()
 	{
-		for (OWL2RLTableActivationButton button : this.buttons)
+		for (OWL2RLTableActivationButton button : this.tableActivationButtons)
 			button.update();
 	}
 
@@ -35,7 +35,7 @@ public class OWL2RLTablesControlPanel extends JPanel
 
 		for (OWL2RLNames.Table table : getOWL2RLModel().getOWL2RLEngine().getTables()) {
 			OWL2RLTableActivationButton button = new OWL2RLTableActivationButton(getOWL2RLModel(), table);
-			this.buttons.add(button);
+			this.tableActivationButtons.add(button);
 			add(button);
 		}
 	}

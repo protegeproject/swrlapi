@@ -22,7 +22,7 @@ import org.swrlapi.sqwrl.exceptions.SQWRLInvalidQueryNameException;
 
 public class SQWRLQueryControlPanel extends JPanel
 {
-	private static final long serialVersionUID = -7466410717705438076L;
+	private static final long serialVersionUID = 1L;
 
 	private final SQWRLQueryEngine queryEngine;
 	private final JTextArea textArea;
@@ -33,10 +33,6 @@ public class SQWRLQueryControlPanel extends JPanel
 
 	public SQWRLQueryControlPanel(SQWRLQueryEngine queryEngine, Icon queryEngineIcon, SWRLRuleSelector ruleSelector)
 	{
-		JPanel panel;
-		JButton button;
-		JScrollPane scrollPane;
-
 		this.queryEngine = queryEngine;
 		this.queryEngineIcon = queryEngineIcon;
 		this.ruleSelector = ruleSelector;
@@ -46,14 +42,15 @@ public class SQWRLQueryControlPanel extends JPanel
 		setLayout(new BorderLayout());
 
 		this.textArea = createTextArea();
-		scrollPane = new JScrollPane(this.textArea);
+		JScrollPane scrollPane = new JScrollPane(this.textArea);
 		scrollPane.setPreferredSize(new Dimension(900, 300));
 
 		add(BorderLayout.CENTER, scrollPane);
 
-		panel = new JPanel(new FlowLayout());
+		JPanel panel = new JPanel(new FlowLayout());
 
-		button = createButton("Run", "Run all SWRL rules and SQWRL queries", new RunActionListener(this.textArea, this));
+		JButton button = createButton("Run", "Run all SWRL rules and SQWRL queries", new RunActionListener(this.textArea,
+				this));
 		panel.add(button);
 
 		add(BorderLayout.SOUTH, panel);
@@ -114,8 +111,8 @@ public class SQWRLQueryControlPanel extends JPanel
 
 	private class ListenerBase
 	{
-		protected JTextArea listenerTextArea;
-		protected SQWRLQueryControlPanel controlPanel;
+		protected final JTextArea listenerTextArea;
+		protected final SQWRLQueryControlPanel controlPanel;
 
 		public ListenerBase(JTextArea textArea, SQWRLQueryControlPanel controlPanel)
 		{

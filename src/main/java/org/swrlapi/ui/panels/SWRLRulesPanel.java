@@ -12,26 +12,23 @@ import org.swrlapi.core.SWRLRuleEngine;
 
 public class SWRLRulesPanel extends JPanel
 {
-	private static final long serialVersionUID = -4915968331047546704L;
+	private static final long serialVersionUID = 1L;
 
 	private final SWRLRuleEngine ruleEngine;
-	private final RulesModel rulesModel;
-	private final JTable table;
+	private final SWRLRulesTableModel rulesTableModel;
+	private final JTable rulesTable;
 
 	public SWRLRulesPanel(SWRLRuleEngine ruleEngine)
 	{
-		JScrollPane scrollPane;
-		JViewport viewPort;
-
 		this.ruleEngine = ruleEngine;
-		this.rulesModel = new RulesModel();
-		this.table = new JTable(this.rulesModel);
+		this.rulesTableModel = new SWRLRulesTableModel();
+		this.rulesTable = new JTable(this.rulesTableModel);
 
 		setLayout(new BorderLayout());
 
-		scrollPane = new JScrollPane(this.table);
-		viewPort = scrollPane.getViewport();
-		viewPort.setBackground(this.table.getBackground());
+		JScrollPane scrollPane = new JScrollPane(this.rulesTable);
+		JViewport viewPort = scrollPane.getViewport();
+		viewPort.setBackground(this.rulesTable.getBackground());
 
 		add(BorderLayout.CENTER, scrollPane);
 	}
@@ -39,13 +36,13 @@ public class SWRLRulesPanel extends JPanel
 	@Override
 	public void validate()
 	{
-		this.rulesModel.fireTableDataChanged();
+		this.rulesTableModel.fireTableDataChanged();
 		super.validate();
 	}
 
-	private class RulesModel extends AbstractTableModel
+	private class SWRLRulesTableModel extends AbstractTableModel
 	{
-		private static final long serialVersionUID = -951029122187501424L;
+		private static final long serialVersionUID = 1L;
 
 		@Override
 		public int getRowCount()
@@ -62,20 +59,16 @@ public class SWRLRulesPanel extends JPanel
 		@Override
 		public String getColumnName(int column)
 		{
-			return "Imported Rules and Queries";
+			return "Rules and Queries";
 		}
 
 		@Override
 		public Object getValueAt(int row, int column)
 		{
-			Object result = null;
-
 			if (row < 0 || row >= getRowCount())
-				result = new String("OUT OF BOUNDS");
+				return new String("OUT OF BOUNDS");
 			else
-				result = SWRLRulesPanel.this.ruleEngine.getSWRLRules().toArray()[row];
-
-			return result;
+				return SWRLRulesPanel.this.ruleEngine.getSWRLRules().toArray()[row];
 		}
 	}
 }

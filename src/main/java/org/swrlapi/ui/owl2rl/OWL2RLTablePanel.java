@@ -10,37 +10,37 @@ import org.swrlapi.owl2rl.OWL2RLNames;
 
 public class OWL2RLTablePanel extends JPanel
 {
-	private static final long serialVersionUID = 1972703711110563090L;
+	private static final long serialVersionUID = 1L;
 
 	private final OWL2RLModel owl2RLModel;
-	private final OWL2RLNames.Table table;
-	private final List<OWL2RLRuleActivationButton> radioButtons;
+	private final OWL2RLNames.Table owl2RLRuleTable;
+	private final List<OWL2RLRuleActivationButton> ruleActivationButtons;
 
 	public OWL2RLTablePanel(OWL2RLModel owl2RLModel, OWL2RLNames.Table table)
 	{
 		this.owl2RLModel = owl2RLModel;
-		this.table = table;
-		this.radioButtons = new ArrayList<OWL2RLRuleActivationButton>();
+		this.owl2RLRuleTable = table;
+		this.ruleActivationButtons = new ArrayList<OWL2RLRuleActivationButton>();
 
 		initialize();
 	}
 
 	public void update()
 	{
-		for (OWL2RLRuleActivationButton button : this.radioButtons)
+		for (OWL2RLRuleActivationButton button : this.ruleActivationButtons)
 			button.update();
 	}
 
 	private void initialize()
 	{
-		int numberOfButtons = getOWL2RLModel().getOWL2RLEngine().getRules(this.table).size();
+		int numberOfButtons = getOWL2RLModel().getOWL2RLEngine().getRules(this.owl2RLRuleTable).size();
 		int n = 1 + (int)java.lang.Math.sqrt(numberOfButtons);
 
 		setLayout(new GridLayout(n, n));
 
-		for (OWL2RLNames.Rule rule : getOWL2RLModel().getOWL2RLEngine().getRules(this.table)) {
+		for (OWL2RLNames.Rule rule : getOWL2RLModel().getOWL2RLEngine().getRules(this.owl2RLRuleTable)) {
 			OWL2RLRuleActivationButton button = new OWL2RLRuleActivationButton(getOWL2RLModel(), rule);
-			this.radioButtons.add(button);
+			this.ruleActivationButtons.add(button);
 			add(button);
 		}
 	}

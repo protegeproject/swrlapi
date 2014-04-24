@@ -10,7 +10,7 @@ import org.swrlapi.owl2rl.OWL2RLNames;
 
 public class OWL2RLTabbedPane extends JTabbedPane
 {
-	private static final long serialVersionUID = -4421681774525818086L;
+	private static final long serialVersionUID = 1L;
 
 	private final OWL2RLModel owl2RLModel;
 	private final OWL2RLControlPanel controlPanel;

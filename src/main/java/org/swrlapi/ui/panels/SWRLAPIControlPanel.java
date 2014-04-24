@@ -15,32 +15,27 @@ import javax.swing.JTextArea;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.exceptions.SWRLRuleEngineException;
 
-public class SWRLControlPanel extends JPanel
+public class SWRLAPIControlPanel extends JPanel
 {
-	private static final long serialVersionUID = -5576805226747255245L;
+	private static final long serialVersionUID = 1L;
 
 	private final String ruleEngineName;
 
-	public SWRLControlPanel(SWRLRuleEngine ruleEngine, String ruleEngineName)
+	public SWRLAPIControlPanel(SWRLRuleEngine ruleEngine, String ruleEngineName)
 	{
-		JTextArea textArea;
-		JButton button;
-		JScrollPane scrollPane;
-		JPanel buttonsPanel;
-
 		this.ruleEngineName = ruleEngineName;
 
 		setLayout(new BorderLayout());
 
-		textArea = createTextArea();
-		scrollPane = new JScrollPane(textArea);
+		JTextArea textArea = createTextArea();
+		JScrollPane scrollPane = new JScrollPane(textArea);
 		scrollPane.setPreferredSize(new Dimension(900, 300));
 
 		add(BorderLayout.CENTER, scrollPane);
 
-		buttonsPanel = new JPanel(new FlowLayout());
+		JPanel buttonsPanel = new JPanel(new FlowLayout());
 
-		button = createButton("OWL+SWRL->" + ruleEngineName,
+		JButton button = createButton("OWL+SWRL->" + ruleEngineName,
 				"Translate SWRL rules and relevant OWL knowledge to rule engine", new ImportActionListener(ruleEngine,
 						textArea, this));
 		buttonsPanel.add(button);
@@ -71,6 +66,7 @@ public class SWRLControlPanel extends JPanel
 	private JButton createButton(String text, String toolTipText, ActionListener listener)
 	{
 		JButton button = new JButton(text);
+
 		button.setToolTipText(toolTipText);
 		button.setPreferredSize(new Dimension(160, 30));
 		button.addActionListener(listener);
@@ -81,19 +77,21 @@ public class SWRLControlPanel extends JPanel
 	private JTextArea createTextArea()
 	{
 		JTextArea textArea = new JTextArea(10, 80);
+
 		textArea.setLineWrap(true);
 		textArea.setBackground(Color.WHITE);
 		textArea.setEditable(false);
+
 		return textArea;
 	}
 
 	private class ListenerBase
 	{
-		protected SWRLRuleEngine ruleEngine;
-		protected JTextArea textArea;
-		protected SWRLControlPanel controlPanel;
+		protected final SWRLRuleEngine ruleEngine;
+		protected final JTextArea textArea;
+		protected final SWRLAPIControlPanel controlPanel;
 
-		public ListenerBase(SWRLRuleEngine ruleEngine, JTextArea textArea, SWRLControlPanel controlPanel)
+		public ListenerBase(SWRLRuleEngine ruleEngine, JTextArea textArea, SWRLAPIControlPanel controlPanel)
 		{
 			this.ruleEngine = ruleEngine;
 			this.textArea = textArea;
@@ -103,7 +101,7 @@ public class SWRLControlPanel extends JPanel
 
 	private class ImportActionListener extends ListenerBase implements ActionListener
 	{
-		public ImportActionListener(SWRLRuleEngine ruleEngine, JTextArea textArea, SWRLControlPanel controlPanel)
+		public ImportActionListener(SWRLRuleEngine ruleEngine, JTextArea textArea, SWRLAPIControlPanel controlPanel)
 		{
 			super(ruleEngine, textArea, controlPanel);
 		}
@@ -130,7 +128,7 @@ public class SWRLControlPanel extends JPanel
 				this.textArea.append("Total number of OWL axioms exported to rule engine: "
 						+ this.ruleEngine.getNumberOfAssertedOWLAxioms() + "\n");
 				this.textArea.append("The transfer took " + (System.currentTimeMillis() - startTime) + " millisecond(s).\n");
-				this.textArea.append("Press the 'Run " + SWRLControlPanel.this.ruleEngineName
+				this.textArea.append("Press the 'Run " + SWRLAPIControlPanel.this.ruleEngineName
 						+ "' button to run the rule engine.\n");
 			} catch (SWRLRuleEngineException e) {
 				this.textArea.append("Exception importing SWRL rules and OWL knowledge: " + e.toString() + "\n");
@@ -141,7 +139,7 @@ public class SWRLControlPanel extends JPanel
 
 	private class RunActionListener extends ListenerBase implements ActionListener
 	{
-		public RunActionListener(SWRLRuleEngine ruleEngine, JTextArea textArea, SWRLControlPanel controlPanel)
+		public RunActionListener(SWRLRuleEngine ruleEngine, JTextArea textArea, SWRLAPIControlPanel controlPanel)
 		{
 			super(ruleEngine, textArea, controlPanel);
 		}
@@ -160,7 +158,7 @@ public class SWRLControlPanel extends JPanel
 							+ this.ruleEngine.getNumberOfInjectedOWLAxioms() + "\n");
 				this.textArea.append("The process took " + (System.currentTimeMillis() - startTime) + " millisecond(s).\n");
 				this.textArea.append("Look at the 'Inferred Axioms' tab to see the inferred axioms.\n");
-				this.textArea.append("Press the '" + SWRLControlPanel.this.ruleEngineName
+				this.textArea.append("Press the '" + SWRLAPIControlPanel.this.ruleEngineName
 						+ "->OWL' button to translate the inferred axioms to OWL knowledge.\n");
 			} catch (SWRLRuleEngineException e) {
 				this.textArea.append("Exception running rule engine: " + e.getMessage() + "\n");
@@ -171,7 +169,7 @@ public class SWRLControlPanel extends JPanel
 
 	private class ExportActionListener extends ListenerBase implements ActionListener
 	{
-		public ExportActionListener(SWRLRuleEngine ruleEngine, JTextArea textArea, SWRLControlPanel controlPanel)
+		public ExportActionListener(SWRLRuleEngine ruleEngine, JTextArea textArea, SWRLAPIControlPanel controlPanel)
 		{
 			super(ruleEngine, textArea, controlPanel);
 		}

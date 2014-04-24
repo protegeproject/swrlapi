@@ -10,7 +10,7 @@ import javax.swing.JTextArea;
 
 public class OWL2RLControlPanel extends JPanel
 {
-	private static final long serialVersionUID = 5752143738619057723L;
+	private static final long serialVersionUID = 1L;
 
 	private final OWL2RLTablesControlPanel tablesControlPanel;
 
@@ -59,9 +59,11 @@ public class OWL2RLControlPanel extends JPanel
 	private JTextArea createTextArea()
 	{
 		JTextArea textArea = new JTextArea(10, 80);
+
 		textArea.setLineWrap(true);
 		textArea.setBackground(Color.WHITE);
 		textArea.setEditable(false);
+
 		return textArea;
 	}
 }

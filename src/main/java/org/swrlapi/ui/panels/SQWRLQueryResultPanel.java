@@ -25,15 +25,18 @@ import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLNamedResultValue;
 import org.swrlapi.sqwrl.values.SQWRLResultValue;
 
+/**
+ * A panel holding the result for a single SQWRL query
+ */
 public class SQWRLQueryResultPanel extends JPanel
 {
-	private static final long serialVersionUID = -7760249381644759870L;
+	private static final long serialVersionUID = 1L;
 
 	private final String queryName;
 	private final JTable table;
 	private final SQWRLQueryEngine queryEngine;
 	private final SQWRLQueryControlPanel controlPanel;
-	private final SQWRLQueryResultModel swrlQueryResultModel;
+	private final SQWRLQueryResultTableModel swrlQueryResultModel;
 	private SQWRLResult result;
 
 	private static File currentDirectory = null;
@@ -45,7 +48,7 @@ public class SQWRLQueryResultPanel extends JPanel
 		this.queryName = queryName;
 		this.result = result;
 		this.controlPanel = controlPanel;
-		this.swrlQueryResultModel = new SQWRLQueryResultModel();
+		this.swrlQueryResultModel = new SQWRLQueryResultTableModel();
 		this.table = new JTable(this.swrlQueryResultModel);
 
 		setLayout(new BorderLayout());
@@ -196,52 +199,39 @@ public class SQWRLQueryResultPanel extends JPanel
 		return button;
 	}
 
-	private class SQWRLQueryResultModel extends AbstractTableModel
+	private class SQWRLQueryResultTableModel extends AbstractTableModel
 	{
-		private static final long serialVersionUID = -3862264549852664485L;
+		private static final long serialVersionUID = 1L;
 
 		@Override
 		public int getRowCount()
 		{
-			int count;
-
 			try {
-				count = (SQWRLQueryResultPanel.this.result == null) ? 0 : SQWRLQueryResultPanel.this.result.getNumberOfRows();
+				return (SQWRLQueryResultPanel.this.result == null) ? 0 : SQWRLQueryResultPanel.this.result.getNumberOfRows();
 			} catch (SQWRLException e) {
-				count = 0;
+				return 0;
 			}
-
-			return count;
 		}
 
 		@Override
 		public int getColumnCount()
 		{
-			int count;
-
 			try {
-				count = (SQWRLQueryResultPanel.this.result == null) ? 0 : SQWRLQueryResultPanel.this.result
-						.getNumberOfColumns();
+				return (SQWRLQueryResultPanel.this.result == null) ? 0 : SQWRLQueryResultPanel.this.result.getNumberOfColumns();
 			} catch (SQWRLException e) {
-				count = 0;
+				return 0;
 			}
-
-			return count;
 		}
 
 		@Override
 		public String getColumnName(int columnIndex)
 		{
-			String columnName;
-
 			try {
-				columnName = (SQWRLQueryResultPanel.this.result == null) ? "" : SQWRLQueryResultPanel.this.result
+				return (SQWRLQueryResultPanel.this.result == null) ? "" : SQWRLQueryResultPanel.this.result
 						.getColumnName(columnIndex);
 			} catch (SQWRLException e) {
-				columnName = "INVALID";
+				return "INVALID";
 			}
-
-			return columnName;
 		}
 
 		@Override
@@ -250,11 +240,11 @@ public class SQWRLQueryResultPanel extends JPanel
 			try {
 				SQWRLResultValue value = (SQWRLQueryResultPanel.this.result == null) ? null : SQWRLQueryResultPanel.this.result
 						.getValue(column, row);
-				if (value instanceof SQWRLNamedResultValue) {
-					SQWRLNamedResultValue namedValue = (SQWRLNamedResultValue)value;
+				if (value.isNamed()) {
+					SQWRLNamedResultValue namedValue = value.asNamedResult();
 					return namedValue.getPrefixedName();
-				} else if (value instanceof SQWRLLiteralResultValue) {
-					SQWRLLiteralResultValue literalValue = (SQWRLLiteralResultValue)value;
+				} else if (value.isLiteral()) {
+					SQWRLLiteralResultValue literalValue = value.asLiteralResult();
 					return literalValue.getLiteral();
 				} else
 					return "INVALID";

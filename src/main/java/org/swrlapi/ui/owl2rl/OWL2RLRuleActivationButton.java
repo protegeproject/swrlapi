@@ -10,7 +10,7 @@ import org.swrlapi.owl2rl.OWL2RLNames;
 
 public class OWL2RLRuleActivationButton extends JCheckBox implements ActionListener
 {
-	private static final long serialVersionUID = 2147290781863250401L;
+	private static final long serialVersionUID = 1L;
 
 	private final OWL2RLModel owl2RLModel;
 	private final OWL2RLNames.Rule rule;
