@@ -10,7 +10,7 @@ import javax.swing.table.AbstractTableModel;
 
 import org.swrlapi.core.SWRLRuleEngine;
 
-public class SWRLAPIAssertedAxiomsPanel extends JPanel
+public class SWRLTabAssertedAxiomsPanel extends JPanel
 {
 	private static final long serialVersionUID = 1L;
 
@@ -18,7 +18,7 @@ public class SWRLAPIAssertedAxiomsPanel extends JPanel
 	private final SWRLAPIAssertedAxiomsTableModel assertedAxiomsModel;
 	private final JTable table;
 
-	public SWRLAPIAssertedAxiomsPanel(SWRLRuleEngine ruleEngine)
+	public SWRLTabAssertedAxiomsPanel(SWRLRuleEngine ruleEngine)
 	{
 		this.ruleEngine = ruleEngine;
 		this.assertedAxiomsModel = new SWRLAPIAssertedAxiomsTableModel();
@@ -47,7 +47,7 @@ public class SWRLAPIAssertedAxiomsPanel extends JPanel
 		@Override
 		public int getRowCount()
 		{
-			return SWRLAPIAssertedAxiomsPanel.this.ruleEngine.getNumberOfAssertedOWLAxioms();
+			return SWRLTabAssertedAxiomsPanel.this.ruleEngine.getNumberOfAssertedOWLAxioms();
 		}
 
 		@Override
@@ -68,7 +68,7 @@ public class SWRLAPIAssertedAxiomsPanel extends JPanel
 			if (row < 0 || row >= getRowCount())
 				return new String("OUT OF BOUNDS");
 			else
-				return SWRLAPIAssertedAxiomsPanel.this.ruleEngine.getAssertedOWLAxioms().toArray()[row];
+				return SWRLTabAssertedAxiomsPanel.this.ruleEngine.getAssertedOWLAxioms().toArray()[row];
 		}
 	}
 }

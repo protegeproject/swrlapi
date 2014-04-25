@@ -8,7 +8,7 @@ import javax.swing.JTabbedPane;
 import org.swrlapi.owl2rl.OWL2RLEngine;
 import org.swrlapi.owl2rl.OWL2RLNames;
 
-public class OWL2RLTabbedPane extends JTabbedPane
+public class SWRLTabOWL2RLPanel extends JTabbedPane
 {
 	private static final long serialVersionUID = 1L;
 
@@ -16,7 +16,7 @@ public class OWL2RLTabbedPane extends JTabbedPane
 	private final OWL2RLControlPanel controlPanel;
 	private final List<OWL2RLTablePanel> tablePanels;
 
-	public OWL2RLTabbedPane(OWL2RLEngine owl2RLEngine)
+	public SWRLTabOWL2RLPanel(OWL2RLEngine owl2RLEngine)
 	{
 		this.owl2RLModel = new OWL2RLModel(this, owl2RLEngine);
 		this.tablePanels = new ArrayList<OWL2RLTablePanel>();

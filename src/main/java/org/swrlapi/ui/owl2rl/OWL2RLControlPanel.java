@@ -28,8 +28,8 @@ public class OWL2RLControlPanel extends JPanel
 
 	private void initialize()
 	{
-		JTextArea textArea = createTextArea();
-		JScrollPane scrollPane = new JScrollPane(textArea);
+		JTextArea console = createConsole();
+		JScrollPane scrollPane = new JScrollPane(console);
 
 		setLayout(new BorderLayout());
 
@@ -37,26 +37,25 @@ public class OWL2RLControlPanel extends JPanel
 
 		add(BorderLayout.CENTER, scrollPane);
 
-		textArea
-				.append("The SWRLTab supports an OWL profile called OWL 2 RL and uses an OWL 2 RL-based reasoner to perform reasoning.\n");
-		textArea
-				.append("OWL 2 RL reasoning is performed in the SWRLTab primarily via a set of implication rules. These rules are described\n");
-		textArea.append("in the following W3C document: http://www.w3.org/TR/owl2-profiles/#OWL_2_RL.\n\n");
-		textArea
-				.append("In this document, the rules are divided into a set of numbered tables and and each rule is given a unique name.\n");
-		textArea
+		console
+				.append("The SWRLTab supports an OWL profile called OWL 2 RL and uses an OWL 2 RL-based reasoner to perform reasoning.\n\n");
+		console
+				.append("OWL 2 RL reasoning is performed primarily via a set of implication rules. These rules are described\n");
+		console.append("in the following W3C document: http://www.w3.org/TR/owl2-profiles/#OWL_2_RL.\n\n");
+		console
+				.append("This document divides these rules into a set of numbered tables and each rule is given a unique name.\n");
+		console
 				.append("The following subtabs list these rule names, indicate their support status, and allow suported rules to be\n");
-		textArea
+		console
 				.append("enabled or disabled. A check next to each rule indicates whether that rule is enabled or disabled. Greyed-out\n");
-		textArea
+		console
 				.append("rules are either permanently enabled or currently unsupported and cannot be toggled. The toggle buttons below\n");
-		textArea.append("allow all rules in particular tables to be enabled and disabled.\n\n");
-		textArea.append("Further information can be found at: http://protege.cim3.net/cgi-bin/wiki.pl?SWRLTabOWL2RL.\n");
+		console.append("allow all rules in particular tables to be enabled and disabled.\n\n");
 
 		add(BorderLayout.SOUTH, this.tablesControlPanel);
 	}
 
-	private JTextArea createTextArea()
+	private JTextArea createConsole()
 	{
 		JTextArea textArea = new JTextArea(10, 80);
 

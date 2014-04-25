@@ -35,14 +35,14 @@ public class SQWRLQueryResultPanel extends JPanel
 	private final String queryName;
 	private final JTable table;
 	private final SQWRLQueryEngine queryEngine;
-	private final SQWRLQueryControlPanel controlPanel;
+	private final SWRLTabSQWRLControlPanel controlPanel;
 	private final SQWRLQueryResultTableModel swrlQueryResultModel;
 	private SQWRLResult result;
 
 	private static File currentDirectory = null;
 
 	public SQWRLQueryResultPanel(SQWRLQueryEngine queryEngine, String queryName, SQWRLResult result,
-			SQWRLQueryControlPanel controlPanel)
+			SWRLTabSQWRLControlPanel controlPanel)
 	{
 		this.queryEngine = queryEngine;
 		this.queryName = queryName;

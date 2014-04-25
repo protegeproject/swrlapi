@@ -81,17 +81,6 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 	@Override
 	public String toDisplayText()
 	{
-		return this.ruleName;
-	}
-
-	@Override
-	public String toString()
-	{
-		return this.ruleName + ": " + getRuleText();
-	}
-
-	public String getRuleText()
-	{
 		String result = "";
 		boolean isFirst = true;
 
@@ -112,6 +101,12 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 			isFirst = false;
 		}
 		return result;
+	}
+
+	@Override
+	public String toString()
+	{
+		return toDisplayText();
 	}
 
 	@Override
@@ -136,10 +131,12 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 		List<SWRLAPIBuiltInAtom> bodyBuiltInAtoms = new ArrayList<SWRLAPIBuiltInAtom>();
 		List<SWRLAtom> bodyNonBuiltInAtoms = new ArrayList<SWRLAtom>();
 		List<SWRLAtom> finalBodyAtoms = new ArrayList<SWRLAtom>();
-		Set<String> variableShortNamesUsedByNonBuiltInBodyAtoms = new HashSet<String>(); // By definition, these will always be
-																																								// bound.
-		Set<String> variableShortNamesBoundByBuiltIns = new HashSet<String>(); // Names of variables bound by built-ins in this
-																																			// rule
+		Set<String> variableShortNamesUsedByNonBuiltInBodyAtoms = new HashSet<String>(); // By definition, these will always
+																																											// be
+		// bound.
+		Set<String> variableShortNamesBoundByBuiltIns = new HashSet<String>(); // Names of variables bound by built-ins in
+																																						// this
+		// rule
 
 		// Process body atoms to build list of (1) built-in body atoms, and (2) the variables used by non-built-in atoms.
 		for (SWRLAtom atom : getBodyAtoms()) {
@@ -165,7 +162,8 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 					if (!variableShortNamesUsedByNonBuiltInBodyAtoms.contains(argumentVariableShortName)
 							&& !variableShortNamesBoundByBuiltIns.contains(argumentVariableShortName)) {
 						argument.asVariable().setUnbound(); // Tell the built-in that it is expected to bind this argument
-						variableShortNamesBoundByBuiltIns.add(argumentVariableShortName); // Flag as a bound variable for later built-ins
+						variableShortNamesBoundByBuiltIns.add(argumentVariableShortName); // Flag as a bound variable for later
+																																							// built-ins
 					}
 				}
 			}
