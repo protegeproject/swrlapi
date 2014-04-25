@@ -26,4 +26,5 @@ public class SWRLAPIRuleEnginePluginPanel extends JTabbedPane
 
 		addTab("OWL 2 RL", reasonerIcon, new OWL2RLTabbedPane(ruleEngine.getOWL2RLEngine()), "OWL 2 RL Tab");
 	}
+
 }

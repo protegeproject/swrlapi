@@ -469,7 +469,6 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 
 	public void checkThatArgumentIsALiteral(SWRLBuiltInArgument argument) throws BuiltInException
 	{
-
 		if (!(argument instanceof SWRLLiteralBuiltInArgument))
 			throw new InvalidBuiltInArgumentException(makeInvalidArgumentTypeMessage(argument, "data value"));
 	}
@@ -481,7 +480,7 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
 		if (!isArgumentNumeric(argumentNumber, arguments))
 			throw new InvalidBuiltInArgumentException(argumentNumber, makeInvalidArgumentTypeMessage(
 					arguments.get(argumentNumber), "numeric"));
-	} // checkThatArgumentIsNumeric
+	}
 
 	@Override
 	public void checkThatArgumentIsOfAnOrderedType(int argumentNumber, List<SWRLBuiltInArgument> arguments)
