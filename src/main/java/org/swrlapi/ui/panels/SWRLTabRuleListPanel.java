@@ -1,6 +1,7 @@
 package org.swrlapi.ui.panels;
 
 import java.awt.BorderLayout;
+import java.util.Set;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -8,21 +9,26 @@ import javax.swing.JTable;
 import javax.swing.JViewport;
 import javax.swing.table.AbstractTableModel;
 
+import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.SWRLRuleEngine;
+import org.swrlapi.ext.SWRLAPIRule;
+import org.swrlapi.ext.impl.SWRLAPIRulePrinter;
 
 public class SWRLTabRuleListPanel extends JPanel
 {
 	private static final long serialVersionUID = 1L;
 
 	private final SWRLRuleEngine ruleEngine;
+	private final SWRLAPIRulePrinter rulePrinter;
 	private final SWRLRulesTableModel rulesTableModel;
 	private final JTable rulesTable;
 
-	public SWRLTabRuleListPanel(SWRLRuleEngine ruleEngine)
+	public SWRLTabRuleListPanel(SWRLRuleEngine ruleEngine, DefaultPrefixManager prefixManager)
 	{
 		this.ruleEngine = ruleEngine;
 		this.rulesTableModel = new SWRLRulesTableModel();
 		this.rulesTable = new JTable(this.rulesTableModel);
+		this.rulePrinter = new SWRLAPIRulePrinter(prefixManager);
 
 		setLayout(new BorderLayout());
 
@@ -66,9 +72,13 @@ public class SWRLTabRuleListPanel extends JPanel
 		public Object getValueAt(int row, int column)
 		{
 			if (row < 0 || row >= getRowCount())
-				return new String("OUT OF BOUNDS");
-			else
-				return SWRLTabRuleListPanel.this.ruleEngine.getSWRLRules().toArray()[row];
+				return new String("OUT OF BOUNDS!");
+			else {
+				Set<SWRLAPIRule> rules = SWRLTabRuleListPanel.this.ruleEngine.getSWRLRules();
+				SWRLAPIRule[] arr = rules.toArray(new SWRLAPIRule[rules.size()]);
+				SWRLAPIRule rule = arr[row];
+				return rule.accept(rulePrinter);
+			}
 		}
 	}
 }
