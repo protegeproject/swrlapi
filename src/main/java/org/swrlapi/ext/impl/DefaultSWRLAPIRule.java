@@ -79,37 +79,6 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 	}
 
 	@Override
-	public String toDisplayText()
-	{
-		String result = "";
-		boolean isFirst = true;
-
-		for (SWRLAtom atom : getBodyAtoms()) {
-			if (!isFirst)
-				result += " ^ ";
-			result += "" + atom;
-			isFirst = false;
-		}
-
-		result += " -> ";
-
-		isFirst = true;
-		for (SWRLAtom atom : getHeadAtoms()) {
-			if (!isFirst)
-				result += " ^ ";
-			result += "" + atom;
-			isFirst = false;
-		}
-		return result;
-	}
-
-	@Override
-	public String toString()
-	{
-		return toDisplayText();
-	}
-
-	@Override
 	public List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromHead(Set<String> builtInNames)
 	{
 		return getBuiltInAtoms(getHeadAtoms(), builtInNames);

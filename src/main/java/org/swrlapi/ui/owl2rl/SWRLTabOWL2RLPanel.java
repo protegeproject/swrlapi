@@ -35,7 +35,7 @@ public class SWRLTabOWL2RLPanel extends JTabbedPane
 
 	private void initialize()
 	{
-		addTab("Control", this.controlPanel);
+		addTab("OWL2RL Control", this.controlPanel);
 
 		for (OWL2RLNames.Table table : getOWL2RLModel().getOWL2RLEngine().getTables()) {
 			OWL2RLTablePanel tablePanel = new OWL2RLTablePanel(getOWL2RLModel(), table);

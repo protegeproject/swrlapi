@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.semanticweb.owlapi.model.IRI;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
+import org.swrlapi.core.arguments.SWRLBuiltInArgumentVisitorEx;
 import org.swrlapi.core.arguments.SWRLMultiValueVariableBuiltInArgument;
 
 /**
@@ -67,8 +68,8 @@ class SWRLMultiValueVariableBuiltInArgumentImpl extends SWRLVariableBuiltInArgum
 	}
 
 	@Override
-	public String toDisplayText()
+	public <T> T accept(SWRLBuiltInArgumentVisitorEx<T> visitor)
 	{
-		throw new RuntimeException("Not implemented");
+		return visitor.visit(this);
 	}
 }

@@ -11,10 +11,6 @@ import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
-import org.semanticweb.owlapi.model.OWLObjectVisitor;
-import org.semanticweb.owlapi.model.OWLObjectVisitorEx;
-import org.semanticweb.owlapi.model.SWRLObjectVisitor;
-import org.semanticweb.owlapi.model.SWRLObjectVisitorEx;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLVariableBuiltInArgument;
@@ -73,19 +69,6 @@ public abstract class SWRLBuiltInArgumentImpl implements SWRLBuiltInArgument
 	}
 
 	@Override
-	public void accept(SWRLObjectVisitor visitor)
-	{
-		// TODO
-	}
-
-	@Override
-	public <O> O accept(SWRLObjectVisitorEx<O> visitor)
-	{
-		// TODO
-		return null;
-	}
-
-	@Override
 	public Set<OWLEntity> getSignature()
 	{
 		return null; // TODO
@@ -131,18 +114,6 @@ public abstract class SWRLBuiltInArgumentImpl implements SWRLBuiltInArgument
 	public Set<OWLClassExpression> getNestedClassExpressions()
 	{
 		return Collections.emptySet(); // TODO
-	}
-
-	@Override
-	public void accept(OWLObjectVisitor visitor)
-	{
-		// TODO
-	}
-
-	@Override
-	public <O> O accept(OWLObjectVisitorEx<O> visitor)
-	{
-		return null; // TODO
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package org.swrlapi.core.arguments.impl;
 
 import org.semanticweb.owlapi.model.OWLClass;
+import org.swrlapi.core.arguments.SWRLBuiltInArgumentVisitorEx;
 import org.swrlapi.core.arguments.SWRLClassBuiltInArgument;
 
 class SWRLClassBuiltInArgumentImpl extends SWRLNamedBuiltInArgumentImpl implements SWRLClassBuiltInArgument
@@ -16,5 +17,11 @@ class SWRLClassBuiltInArgumentImpl extends SWRLNamedBuiltInArgumentImpl implemen
 	public OWLClass getOWLClass()
 	{
 		return getOWLEntity().asOWLClass();
+	}
+
+	@Override
+	public <T> T accept(SWRLBuiltInArgumentVisitorEx<T> visitor)
+	{
+		return visitor.visit(this);
 	}
 }

@@ -2,6 +2,7 @@ package org.swrlapi.core.arguments.impl;
 
 import org.semanticweb.owlapi.model.IRI;
 import org.swrlapi.core.arguments.SQWRLCollectionVariableBuiltInArgument;
+import org.swrlapi.core.arguments.SWRLBuiltInArgumentVisitorEx;
 
 class SQWRLCollectionVariableBuiltInArgumentImpl extends SWRLVariableBuiltInArgumentImpl implements
 		SQWRLCollectionVariableBuiltInArgument
@@ -38,9 +39,9 @@ class SQWRLCollectionVariableBuiltInArgumentImpl extends SWRLVariableBuiltInArgu
 	}
 
 	@Override
-	public String toDisplayText()
+	public <T> T accept(SWRLBuiltInArgumentVisitorEx<T> visitor)
 	{
-		return getQueryName() + ":" + getCollectionName() + "@" + getGroupID();
+		return visitor.visit(this);
 	}
 
 	@Override

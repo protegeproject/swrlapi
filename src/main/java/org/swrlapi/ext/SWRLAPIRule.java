@@ -36,6 +36,4 @@ public interface SWRLAPIRule extends SWRLRule
 	boolean isActive();
 
 	String comment();
-
-	String toDisplayText();
 }

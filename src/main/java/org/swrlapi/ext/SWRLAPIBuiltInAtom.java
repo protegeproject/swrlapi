@@ -63,6 +63,4 @@ public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtom
 	void setUsesSQWRLCollectionResults();
 
 	boolean usesSQWRLCollectionResults();
-
-	String toDisplayText();
 }

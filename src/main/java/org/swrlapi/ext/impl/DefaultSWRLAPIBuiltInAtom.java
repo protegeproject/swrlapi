@@ -214,29 +214,6 @@ public class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SW
 		return this.sqwrlCollectionResultsUsed;
 	}
 
-	@Override
-	public String toString()
-	{
-		return toDisplayText();
-	}
-
-	@Override
-	public String toDisplayText()
-	{
-		String result = this.builtInShortName + "(";
-		boolean isFirst = true;
-
-		for (SWRLBuiltInArgument argument : getBuiltInArguments()) {
-			if (!isFirst)
-				result += ", ";
-			result += argument.toDisplayText();
-			isFirst = false;
-		}
-		result += ")";
-
-		return result;
-	}
-
 	private void checkArgumentNumber(int argumentNumber)
 	{
 		if (argumentNumber < 0 || argumentNumber > this.arguments.size())

@@ -1,6 +1,7 @@
 package org.swrlapi.core.arguments.impl;
 
 import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.swrlapi.core.arguments.SWRLBuiltInArgumentVisitorEx;
 import org.swrlapi.core.arguments.SWRLObjectPropertyBuiltInArgument;
 
 class SWRLObjectPropertyBuiltInArgumentImpl extends SWRLNamedBuiltInArgumentImpl implements
@@ -17,5 +18,11 @@ class SWRLObjectPropertyBuiltInArgumentImpl extends SWRLNamedBuiltInArgumentImpl
 	public OWLObjectProperty getOWLObjectProperty()
 	{
 		return getOWLEntity().asOWLObjectProperty();
+	}
+
+	@Override
+	public <T> T accept(SWRLBuiltInArgumentVisitorEx<T> visitor)
+	{
+		return visitor.visit(this);
 	}
 }

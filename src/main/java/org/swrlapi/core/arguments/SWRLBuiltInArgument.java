@@ -45,5 +45,5 @@ public interface SWRLBuiltInArgument extends SWRLDArgument
 
 	void setBoundVariableName(String boundVariableName);
 
-	String toDisplayText();
+	<T> T accept(SWRLBuiltInArgumentVisitorEx<T> visitor);
 }
