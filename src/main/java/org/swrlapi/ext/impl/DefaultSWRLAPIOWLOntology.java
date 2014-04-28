@@ -40,6 +40,7 @@ import org.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLMultiValueVariableBuiltInArgument;
+import org.swrlapi.core.arguments.SWRLNamedBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.ext.SWRLAPIBuiltInAtom;
 import org.swrlapi.ext.SWRLAPIOWLDataFactory;
@@ -319,14 +320,17 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	}
 
 	/**
-	 * The OWLAPI follows the OWL Specification and does not explicitly allow named OWL entities as parameters. However,
-	 * if OWLAPI parsers encounter OWL entities as parameters they appear to represent them as SWRL variables - with the
-	 * variable IRI set to the IRI of the entity ({@link OWLEntity} classes represent named OWL concepts so have an IRI).
-	 * So if we are processing built-in parameters and encounter variables with an IRI referring to named OWL entities in
-	 * the active ontology we can transform them to the appropriate SWRLAPI built-in argument for the named entity.
+	 * The OWLAPI follows the OWL Specification and does not explicitly allow named OWL entities as arguments to
+	 * built-ins. However, if OWLAPI parsers encounter OWL entities as parameters they appear to represent them as SWRL
+	 * variables - with the variable IRI set to the IRI of the entity ({@link OWLEntity} classes represent named OWL
+	 * concepts so have an IRI). So if we are processing built-in parameters and encounter variables with an IRI referring
+	 * to named OWL entities in the active ontology we can transform them to the appropriate SWRLAPI built-in argument for
+	 * the named entity.
 	 * <p>
 	 * Note: An important restriction here is that variable names do not intersect with named entities in their OWL
 	 * ontology.
+	 * 
+	 * @see SWRLNamedBuiltInArgument
 	 */
 	private SWRLBuiltInArgument convertSWRLVariable2SWRLBuiltInArgument(SWRLVariable swrlVariable)
 	{

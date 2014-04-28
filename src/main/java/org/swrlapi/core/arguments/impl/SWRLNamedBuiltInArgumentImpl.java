@@ -65,24 +65,24 @@ abstract class SWRLNamedBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl impl
 	@Override
 	public void accept(SWRLObjectVisitor visitor)
 	{
-		// TODO
+		visitor.visit(this);
 	}
 
 	@Override
 	public <O> O accept(SWRLObjectVisitorEx<O> visitor)
 	{
-		return null; // TODO
+		return visitor.visit(this);
 	}
 
 	@Override
 	public void accept(OWLObjectVisitor visitor)
 	{
-		// TODO
+		visitor.visit(this);
 	}
 
 	@Override
 	public <O> O accept(OWLObjectVisitorEx<O> visitor)
 	{
-		return null; // TODO
+		return visitor.visit(this);
 	}
 }

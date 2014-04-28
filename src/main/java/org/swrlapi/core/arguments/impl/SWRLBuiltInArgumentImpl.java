@@ -127,5 +127,4 @@ public abstract class SWRLBuiltInArgumentImpl implements SWRLBuiltInArgument
 	{
 		return false;
 	}
-
 }
