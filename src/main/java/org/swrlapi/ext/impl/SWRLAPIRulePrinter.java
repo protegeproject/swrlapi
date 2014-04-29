@@ -264,7 +264,7 @@ public class SWRLAPIRulePrinter implements SWRLAPIEntityVisitorEx<String>
 	private String visit(OWLClassExpression classExpression)
 	{
 		if (classExpression.isAnonymous())
-			return classExpression.toString(); // Use the OWLAPI's rendering
+			return classExpression.toString(); // TODO See if we can get an OWLAPI renderer
 		else {
 			OWLClass cls = classExpression.asOWLClass();
 			return visit(cls);
@@ -281,13 +281,13 @@ public class SWRLAPIRulePrinter implements SWRLAPIEntityVisitorEx<String>
 		if (individual.isNamed())
 			return prefixManager.getShortForm(individual.asOWLNamedIndividual().getIRI());
 		else
-			return individual.toString(); // Use the OWLAPI's rendering
+			return individual.toString(); // TODO See if we can get an OWLAPI renderer
 	}
 
 	private String visit(OWLObjectPropertyExpression objectPropertyExpression)
 	{
 		if (objectPropertyExpression.isAnonymous())
-			return objectPropertyExpression.toString(); // Use the OWLAPI's rendering
+			return objectPropertyExpression.toString(); // TODO See if we can get an OWLAPI renderer
 		else {
 			OWLObjectProperty property = objectPropertyExpression.asOWLObjectProperty();
 			return visit(property);
@@ -302,7 +302,7 @@ public class SWRLAPIRulePrinter implements SWRLAPIEntityVisitorEx<String>
 	private String visit(OWLDataPropertyExpression dataPropertyExpression)
 	{
 		if (dataPropertyExpression.isAnonymous())
-			return dataPropertyExpression.toString(); // Use the OWLAPI's rendering
+			return dataPropertyExpression.toString(); // TODO See if we can get an OWLAPI renderer
 		else {
 			OWLDataProperty property = dataPropertyExpression.asOWLDataProperty();
 			return visit(property);
