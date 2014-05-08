@@ -244,11 +244,11 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 			if (isSWRLBuiltInAtom(atom)) {
 				SWRLBuiltInAtom builtInAtom = (SWRLBuiltInAtom)atom;
 				IRI builtInIRI = builtInAtom.getPredicate();
-				String builtInShortName = getOWLIRIResolver().iri2ShortName(builtInIRI);
+				String builtInPrefixedName = getOWLIRIResolver().iri2PrefixedName(builtInIRI);
 				List<SWRLDArgument> swrlDArguments = builtInAtom.getArguments();
 				List<SWRLBuiltInArgument> swrlBuiltInArguments = convertSWRLDArguments2SWRLBuiltInArguments(swrlDArguments);
 				SWRLBuiltInAtom swrlapiAtom = getSWRLAPIOWLDataFactory().getSWRLAPIBuiltInAtom(ruleName, builtInIRI,
-						builtInShortName, swrlBuiltInArguments);
+						builtInPrefixedName, swrlBuiltInArguments);
 				swrlapiBodyAtoms.add(swrlapiAtom);
 			} else
 				swrlapiBodyAtoms.add(atom); // Only built-in atoms are converted; other atoms remain the same
@@ -258,11 +258,11 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 			if (isSWRLBuiltInAtom(atom)) {
 				SWRLBuiltInAtom builtInAtom = (SWRLBuiltInAtom)atom;
 				IRI builtInIRI = builtInAtom.getPredicate();
-				String builtInShortName = getOWLIRIResolver().iri2ShortName(builtInIRI);
+				String builtInPrefixedName = getOWLIRIResolver().iri2PrefixedName(builtInIRI);
 				List<SWRLDArgument> swrlDArguments = builtInAtom.getArguments();
 				List<SWRLBuiltInArgument> swrlBuiltInArguments = convertSWRLDArguments2SWRLBuiltInArguments(swrlDArguments);
 				SWRLBuiltInAtom swrlapiAtom = getSWRLAPIOWLDataFactory().getSWRLAPIBuiltInAtom(ruleName, builtInIRI,
-						builtInShortName, swrlBuiltInArguments);
+						builtInPrefixedName, swrlBuiltInArguments);
 				swrlapiHeadAtoms.add(swrlapiAtom);
 			} else
 				swrlapiHeadAtoms.add(atom); // Only built-in atoms are converted; other atoms remain the same

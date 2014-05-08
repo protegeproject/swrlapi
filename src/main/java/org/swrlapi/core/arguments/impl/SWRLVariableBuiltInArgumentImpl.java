@@ -16,18 +16,18 @@ class SWRLVariableBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements
 	private static final long serialVersionUID = 1L;
 
 	private final IRI iri;
-	private final String variableShortName;
+	private final String variablePrefixedName;
 
 	// There is an equals methods defined for this class.
 	private SWRLBuiltInArgument builtInResult; // Used to store result of binding for unbound arguments
 	boolean isBound;
 
-	public SWRLVariableBuiltInArgumentImpl(IRI iri, String variableShortName)
+	public SWRLVariableBuiltInArgumentImpl(IRI iri, String variablePrefixedName)
 	{
 		this.iri = iri;
 		this.builtInResult = null;
 		this.isBound = true;
-		this.variableShortName = variableShortName;
+		this.variablePrefixedName = variablePrefixedName;
 	}
 
 	@Override
@@ -61,9 +61,9 @@ class SWRLVariableBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements
 	}
 
 	@Override
-	public String getVariableShortName()
+	public String getVariablePrefixedName()
 	{
-		return variableShortName;
+		return variablePrefixedName;
 	}
 
 	@Override

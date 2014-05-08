@@ -139,10 +139,10 @@ public class SWRLAPIRulePrinter implements SWRLAPIEntityVisitorEx<String>
 	public String visit(SWRLBuiltInAtom builtInAtom)
 	{
 		IRI iri = builtInAtom.getPredicate();
-		String builtInShortName = prefixManager.getShortForm(iri);
+		String builtInPrefixedName = prefixManager.getPrefixIRI(iri);
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(builtInShortName + "(");
+		sb.append(builtInPrefixedName + "(");
 
 		boolean isFirst = true;
 		for (SWRLDArgument argument : builtInAtom.getArguments()) {
@@ -159,8 +159,8 @@ public class SWRLAPIRulePrinter implements SWRLAPIEntityVisitorEx<String>
 	@Override
 	public String visit(SWRLAPIBuiltInAtom swrlapiBuiltInAtom)
 	{
-		String builtInShortName = swrlapiBuiltInAtom.getBuiltInShortName();
-		StringBuilder sb = new StringBuilder(builtInShortName + "(");
+		String builtInPrefixedName = swrlapiBuiltInAtom.getBuiltInPrefixedName();
+		StringBuilder sb = new StringBuilder(builtInPrefixedName + "(");
 		boolean isFirst = true;
 
 		for (SWRLBuiltInArgument argument : swrlapiBuiltInAtom.getBuiltInArguments()) {
@@ -178,9 +178,9 @@ public class SWRLAPIRulePrinter implements SWRLAPIEntityVisitorEx<String>
 	@Override
 	public String visit(SWRLVariable variable)
 	{
-		String variableShortName = prefixManager.getShortForm(variable.getIRI());
+		String variablePrefixedName = prefixManager.getShortForm(variable.getIRI());
 
-		return variableShortName2VariableName(variableShortName);
+		return variablePrefixedName2VariableName(variablePrefixedName);
 	}
 
 	@Override
@@ -375,25 +375,25 @@ public class SWRLAPIRulePrinter implements SWRLAPIEntityVisitorEx<String>
 	@Override
 	public String visit(SWRLVariableBuiltInArgument argument)
 	{
-		String variableShortName = argument.getVariableShortName();
+		String variablePrefixedName = argument.getVariablePrefixedName();
 
-		return variableShortName2VariableName(variableShortName);
+		return variablePrefixedName2VariableName(variablePrefixedName);
 	}
 
 	@Override
 	public String visit(SWRLMultiValueVariableBuiltInArgument argument)
 	{
-		String variableShortName = argument.getVariableShortName();
+		String variablePrefixedName = argument.getVariablePrefixedName();
 
-		return variableShortName2VariableName(variableShortName);
+		return variablePrefixedName2VariableName(variablePrefixedName);
 	}
 
 	@Override
 	public String visit(SQWRLCollectionVariableBuiltInArgument argument)
 	{
-		String variableShortName = argument.getVariableShortName();
+		String variablePrefixedName = argument.getVariablePrefixedName();
 
-		return variableShortName2VariableName(variableShortName);
+		return variablePrefixedName2VariableName(variablePrefixedName);
 	}
 
 	private String visit(OWLLiteral literal)
@@ -404,11 +404,11 @@ public class SWRLAPIRulePrinter implements SWRLAPIEntityVisitorEx<String>
 		return "\"" + value + "\"^^" + visit(datatype);
 	}
 
-	private String variableShortName2VariableName(String variableShortName)
+	private String variablePrefixedName2VariableName(String variablePrefixedName)
 	{
-		if (variableShortName.startsWith(":"))
-			return "?" + variableShortName.substring(1);
+		if (variablePrefixedName.startsWith(":"))
+			return "?" + variablePrefixedName.substring(1);
 		else
-			return "?" + variableShortName;
+			return "?" + variablePrefixedName;
 	}
 }

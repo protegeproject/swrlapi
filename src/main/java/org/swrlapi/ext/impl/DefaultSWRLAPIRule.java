@@ -100,11 +100,13 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 		List<SWRLAPIBuiltInAtom> bodyBuiltInAtoms = new ArrayList<SWRLAPIBuiltInAtom>();
 		List<SWRLAtom> bodyNonBuiltInAtoms = new ArrayList<SWRLAtom>();
 		List<SWRLAtom> finalBodyAtoms = new ArrayList<SWRLAtom>();
-		Set<String> variableShortNamesUsedByNonBuiltInBodyAtoms = new HashSet<String>(); // By definition, these will always
-																																											// be
+		Set<String> variablePrefixedNamesUsedByNonBuiltInBodyAtoms = new HashSet<String>(); // By definition, these will
+																																												// always
+		// be
 		// bound.
-		Set<String> variableShortNamesBoundByBuiltIns = new HashSet<String>(); // Names of variables bound by built-ins in
-																																						// this
+		Set<String> variablePrefixedNamesBoundByBuiltIns = new HashSet<String>(); // Names of variables bound by built-ins
+																																							// in
+		// this
 		// rule
 
 		// Process body atoms to build list of (1) built-in body atoms, and (2) the variables used by non-built-in atoms.
@@ -113,7 +115,7 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 				bodyBuiltInAtoms.add((SWRLAPIBuiltInAtom)atom);
 			else {
 				bodyNonBuiltInAtoms.add(atom);
-				variableShortNamesUsedByNonBuiltInBodyAtoms.addAll(getReferencedVariableShortNames(atom));
+				variablePrefixedNamesUsedByNonBuiltInBodyAtoms.addAll(getReferencedVariablePrefixedNames(atom));
 			}
 		}
 
@@ -122,17 +124,18 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 																															// are unbound.
 			for (SWRLBuiltInArgument argument : builtInAtom.getBuiltInArguments()) {
 				if (argument.isVariable()) {
-					String argumentVariableShortName = argument.asVariable().getVariableShortName();
+					String argumentVariablePrefixedName = argument.asVariable().getVariablePrefixedName();
 
 					// If a variable argument is not used by any non built-in body atom or is not bound by another body built-in
 					// atom it will therefore be unbound when this built-in is called. We thus set this built-in argument to
 					// unbound. If a built-in binds an argument, all later built-ins (proceeding from left to right) will be
 					// passed the bound value of this variable during rule execution.
-					if (!variableShortNamesUsedByNonBuiltInBodyAtoms.contains(argumentVariableShortName)
-							&& !variableShortNamesBoundByBuiltIns.contains(argumentVariableShortName)) {
+					if (!variablePrefixedNamesUsedByNonBuiltInBodyAtoms.contains(argumentVariablePrefixedName)
+							&& !variablePrefixedNamesBoundByBuiltIns.contains(argumentVariablePrefixedName)) {
 						argument.asVariable().setUnbound(); // Tell the built-in that it is expected to bind this argument
-						variableShortNamesBoundByBuiltIns.add(argumentVariableShortName); // Flag as a bound variable for later
-																																							// built-ins
+						variablePrefixedNamesBoundByBuiltIns.add(argumentVariablePrefixedName); // Flag as a bound variable for
+																																										// later
+						// built-ins
 					}
 				}
 			}
@@ -174,29 +177,29 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 		for (SWRLAtom atom : atoms) {
 			if (atom instanceof SWRLAPIBuiltInAtom) {
 				SWRLAPIBuiltInAtom builtInAtom = (SWRLAPIBuiltInAtom)atom;
-				if (builtInNames.contains(builtInAtom.getBuiltInShortName()))
+				if (builtInNames.contains(builtInAtom.getBuiltInPrefixedName()))
 					result.add(builtInAtom);
 			}
 		}
 		return result;
 	}
 
-	private Set<String> getReferencedVariableShortNames(SWRLAtom atom)
+	private Set<String> getReferencedVariablePrefixedNames(SWRLAtom atom)
 	{
-		Set<String> referencedVariableShortNames = new HashSet<String>();
+		Set<String> referencedVariablePrefixedNames = new HashSet<String>();
 
 		for (SWRLArgument argument : atom.getAllArguments()) {
 			if (argument instanceof SWRLVariable) {
 				SWRLVariable variable = (SWRLVariable)argument;
 				IRI iri = variable.getIRI();
-				String variableShortName = getOWLIRIResolver().iri2ShortName(iri);
-				referencedVariableShortNames.add(variableShortName);
+				String variablePrefixedName = getOWLIRIResolver().iri2PrefixedName(iri);
+				referencedVariablePrefixedNames.add(variablePrefixedName);
 			} else if (argument instanceof SWRLVariableBuiltInArgument) {
 				SWRLVariableBuiltInArgument variableBuiltInArgument = (SWRLVariableBuiltInArgument)argument;
-				referencedVariableShortNames.add(variableBuiltInArgument.getVariableShortName());
+				referencedVariablePrefixedNames.add(variableBuiltInArgument.getVariablePrefixedName());
 			}
 		}
-		return referencedVariableShortNames;
+		return referencedVariablePrefixedNames;
 	}
 
 	private OWLIRIResolver getOWLIRIResolver()

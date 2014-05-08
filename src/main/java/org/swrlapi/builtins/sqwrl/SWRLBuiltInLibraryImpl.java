@@ -1255,7 +1255,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 				&& !this.collectionGroupElementNumbersMap.containsKey(collectionKey)) {
 			// Collection variable already used in non collection context
 			throw new BuiltInException("collection variable ?"
-					+ arguments.get(collectionArgumentNumber).asVariable().getVariableShortName()
+					+ arguments.get(collectionArgumentNumber).asVariable().getVariablePrefixedName()
 					+ " already used in non collection context in query " + queryName);
 		}
 
@@ -1434,7 +1434,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	private String getCollectionName(List<SWRLBuiltInArgument> arguments, int collectionArgumentNumber)
 			throws BuiltInException
 	{
-		return getVariableShortName(collectionArgumentNumber, arguments);
+		return getVariablePrefixedName(collectionArgumentNumber, arguments);
 	}
 
 	private int getNumberOfGroupElements(String queryName, String collectionName) throws BuiltInException

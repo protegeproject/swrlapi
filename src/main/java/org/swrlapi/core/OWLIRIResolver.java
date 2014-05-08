@@ -26,68 +26,68 @@ import org.swrlapi.exceptions.TargetRuleEngineException;
 public class OWLIRIResolver
 {
 	private final DefaultPrefixManager prefixManager;
-	private final Map<String, IRI> shortName2IRI;
-	private final Map<IRI, String> iri2ShortNameCache;
+	private final Map<String, IRI> prefixedName2IRI;
+	private final Map<IRI, String> iri2PrefixedNameCache;
 
-	private final Set<String> variableShortNames;
-	private final Set<String> classShortNames;
-	private final Set<String> namedIndividualShortNames;
-	private final Set<String> objectPropertyShortNames;
-	private final Set<String> dataPropertyShortNames;
-	private final Set<String> annotationPropertyShortNames;
-	private final Set<String> datatypeShortNames;
+	private final Set<String> variablePrefixedNames;
+	private final Set<String> classPrefixedNames;
+	private final Set<String> namedIndividualPrefixedNames;
+	private final Set<String> objectPropertyPrefixedNames;
+	private final Set<String> dataPropertyPrefixedNames;
+	private final Set<String> annotationPropertyPrefixedNames;
+	private final Set<String> datatypePrefixedNames;
 
 	public OWLIRIResolver(DefaultPrefixManager prefixManager)
 	{
 		this.prefixManager = prefixManager;
 
-		this.shortName2IRI = new HashMap<String, IRI>();
-		this.iri2ShortNameCache = new HashMap<IRI, String>();
+		this.prefixedName2IRI = new HashMap<String, IRI>();
+		this.iri2PrefixedNameCache = new HashMap<IRI, String>();
 
-		this.variableShortNames = new HashSet<String>();
-		this.classShortNames = new HashSet<String>();
-		this.namedIndividualShortNames = new HashSet<String>();
-		this.objectPropertyShortNames = new HashSet<String>();
-		this.dataPropertyShortNames = new HashSet<String>();
-		this.annotationPropertyShortNames = new HashSet<String>();
-		this.datatypeShortNames = new HashSet<String>();
+		this.variablePrefixedNames = new HashSet<String>();
+		this.classPrefixedNames = new HashSet<String>();
+		this.namedIndividualPrefixedNames = new HashSet<String>();
+		this.objectPropertyPrefixedNames = new HashSet<String>();
+		this.dataPropertyPrefixedNames = new HashSet<String>();
+		this.annotationPropertyPrefixedNames = new HashSet<String>();
+		this.datatypePrefixedNames = new HashSet<String>();
 	}
 
 	public void reset()
 	{
-		this.shortName2IRI.clear();
-		this.iri2ShortNameCache.clear();
-		this.variableShortNames.clear();
-		this.classShortNames.clear();
-		this.namedIndividualShortNames.clear();
-		this.objectPropertyShortNames.clear();
-		this.dataPropertyShortNames.clear();
-		this.annotationPropertyShortNames.clear();
-		this.datatypeShortNames.clear();
+		this.prefixedName2IRI.clear();
+		this.iri2PrefixedNameCache.clear();
+		this.variablePrefixedNames.clear();
+		this.classPrefixedNames.clear();
+		this.namedIndividualPrefixedNames.clear();
+		this.objectPropertyPrefixedNames.clear();
+		this.dataPropertyPrefixedNames.clear();
+		this.annotationPropertyPrefixedNames.clear();
+		this.datatypePrefixedNames.clear();
 	}
 
-	public String iri2ShortName(IRI iri)
+	public String iri2PrefixedName(IRI iri)
 	{
-		if (this.iri2ShortNameCache.containsKey(iri))
-			return this.iri2ShortNameCache.get(iri);
+		if (this.iri2PrefixedNameCache.containsKey(iri))
+			return this.iri2PrefixedNameCache.get(iri);
 		else {
-			String shortName = prefixManager.getShortForm(iri);
-			if (shortName != null)
-				return shortName;
+			String prefixedName = prefixManager.getShortForm(iri);
+			if (prefixedName != null)
+				return prefixedName;
 			else
 				throw new RuntimeException("could not find short name for IRI " + iri);
 		}
 	}
 
-	public IRI shortName2IRI(String shortName) throws TargetRuleEngineException
+	public IRI prefixedName2IRI(String prefixedName) throws TargetRuleEngineException
 	{
-		if (this.shortName2IRI.containsKey(shortName))
-			return this.shortName2IRI.get(shortName);
+		if (this.prefixedName2IRI.containsKey(prefixedName))
+			return this.prefixedName2IRI.get(prefixedName);
 		else {
 			try {
-				return prefixManager.getIRI(shortName);
+				return prefixManager.getIRI(prefixedName);
 			} catch (RuntimeException e) {
-				throw new TargetRuleEngineException("could not find IRI for short name " + shortName);
+				throw new TargetRuleEngineException("could not find IRI for short name " + prefixedName);
 			}
 		}
 	}
@@ -95,142 +95,142 @@ public class OWLIRIResolver
 	public void recordSWRLVariable(SWRLVariable variable)
 	{
 		IRI iri = variable.getIRI();
-		String variableShortName = iri2ShortName(iri);
-		this.shortName2IRI.put(variableShortName, iri);
-		this.variableShortNames.add(variableShortName);
+		String variablePrefixedName = iri2PrefixedName(iri);
+		this.prefixedName2IRI.put(variablePrefixedName, iri);
+		this.variablePrefixedNames.add(variablePrefixedName);
 	}
 
 	public void recordOWLClass(OWLEntity cls)
 	{
 		IRI iri = cls.getIRI();
-		String shortName = iri2ShortName(iri);
+		String prefixedName = iri2PrefixedName(iri);
 
-		recordPrefixedName2IRIMapping(shortName, iri);
+		recordPrefixedName2IRIMapping(prefixedName, iri);
 
-		this.classShortNames.add(shortName);
+		this.classPrefixedNames.add(prefixedName);
 	}
 
 	public void recordOWLNamedIndividual(OWLEntity individual)
 	{
 		IRI iri = individual.getIRI();
-		String shortName = iri2ShortName(iri);
+		String prefixedName = iri2PrefixedName(iri);
 
-		recordPrefixedName2IRIMapping(shortName, iri);
+		recordPrefixedName2IRIMapping(prefixedName, iri);
 
-		this.namedIndividualShortNames.add(shortName);
+		this.namedIndividualPrefixedNames.add(prefixedName);
 	}
 
 	public void recordOWLObjectProperty(OWLEntity property)
 	{
 		IRI iri = property.getIRI();
-		String shortName = iri2ShortName(iri);
+		String prefixedName = iri2PrefixedName(iri);
 
-		recordPrefixedName2IRIMapping(shortName, iri);
+		recordPrefixedName2IRIMapping(prefixedName, iri);
 
-		this.objectPropertyShortNames.add(shortName);
+		this.objectPropertyPrefixedNames.add(prefixedName);
 	}
 
 	public void recordOWLDataProperty(OWLEntity property)
 	{
 		IRI iri = property.getIRI();
-		String shortName = iri2ShortName(iri);
+		String prefixedName = iri2PrefixedName(iri);
 
-		recordPrefixedName2IRIMapping(shortName, iri);
+		recordPrefixedName2IRIMapping(prefixedName, iri);
 
-		this.dataPropertyShortNames.add(shortName);
+		this.dataPropertyPrefixedNames.add(prefixedName);
 	}
 
 	public void recordOWLAnnotationProperty(OWLEntity property)
 	{
 		IRI iri = property.getIRI();
-		String shortName = iri2ShortName(iri);
+		String prefixedName = iri2PrefixedName(iri);
 
-		recordPrefixedName2IRIMapping(shortName, iri);
+		recordPrefixedName2IRIMapping(prefixedName, iri);
 
-		this.annotationPropertyShortNames.add(shortName);
+		this.annotationPropertyPrefixedNames.add(prefixedName);
 	}
 
 	public void recordOWLDatatype(OWLEntity datatype)
 	{
 		IRI iri = datatype.getIRI();
-		String shortName = iri2ShortName(iri);
+		String prefixedName = iri2PrefixedName(iri);
 
-		recordPrefixedName2IRIMapping(shortName, iri);
+		recordPrefixedName2IRIMapping(prefixedName, iri);
 
-		this.datatypeShortNames.add(shortName);
+		this.datatypePrefixedNames.add(prefixedName);
 	}
 
 	public void record(SWRLClassBuiltInArgument classArgument)
 	{
 		IRI iri = classArgument.getIRI();
-		String shortName = iri2ShortName(iri);
+		String prefixedName = iri2PrefixedName(iri);
 
-		recordPrefixedName2IRIMapping(shortName, iri);
-		this.classShortNames.add(shortName);
+		recordPrefixedName2IRIMapping(prefixedName, iri);
+		this.classPrefixedNames.add(prefixedName);
 	}
 
 	public void record(SWRLNamedIndividualBuiltInArgument individualArgument)
 	{
 		IRI iri = individualArgument.getIRI();
-		String shortName = iri2ShortName(iri);
+		String prefixedName = iri2PrefixedName(iri);
 
-		recordPrefixedName2IRIMapping(shortName, iri);
-		this.namedIndividualShortNames.add(shortName);
+		recordPrefixedName2IRIMapping(prefixedName, iri);
+		this.namedIndividualPrefixedNames.add(prefixedName);
 	}
 
 	public void record(SWRLObjectPropertyBuiltInArgument propertyArgument)
 	{
 		IRI iri = propertyArgument.getIRI();
-		String shortName = iri2ShortName(iri);
+		String prefixedName = iri2PrefixedName(iri);
 
-		recordPrefixedName2IRIMapping(shortName, iri);
-		this.objectPropertyShortNames.add(shortName);
+		recordPrefixedName2IRIMapping(prefixedName, iri);
+		this.objectPropertyPrefixedNames.add(prefixedName);
 	}
 
 	public void record(SWRLDataPropertyBuiltInArgument propertyArgument)
 	{
 		IRI iri = propertyArgument.getIRI();
-		String shortName = iri2ShortName(iri);
+		String prefixedName = iri2PrefixedName(iri);
 
-		recordPrefixedName2IRIMapping(shortName, iri);
-		this.dataPropertyShortNames.add(shortName);
+		recordPrefixedName2IRIMapping(prefixedName, iri);
+		this.dataPropertyPrefixedNames.add(prefixedName);
 	}
 
-	public void recordPrefixedName2IRIMapping(String shortName, IRI iri)
+	public void recordPrefixedName2IRIMapping(String prefixedName, IRI iri)
 	{
-		if (!this.shortName2IRI.containsKey(shortName)) {
-			this.shortName2IRI.put(shortName, iri);
-			this.iri2ShortNameCache.put(iri, shortName);
+		if (!this.prefixedName2IRI.containsKey(prefixedName)) {
+			this.prefixedName2IRI.put(prefixedName, iri);
+			this.iri2PrefixedNameCache.put(iri, prefixedName);
 		}
 	}
 
-	public boolean isOWLClass(String shortName)
+	public boolean isOWLClass(String prefixedName)
 	{
-		return this.classShortNames.contains(shortName);
+		return this.classPrefixedNames.contains(prefixedName);
 	}
 
-	public boolean isOWLNamedIndividual(String shortName)
+	public boolean isOWLNamedIndividual(String prefixedName)
 	{
-		return this.namedIndividualShortNames.contains(shortName);
+		return this.namedIndividualPrefixedNames.contains(prefixedName);
 	}
 
-	public boolean isOWLObjectProperty(String shortName)
+	public boolean isOWLObjectProperty(String prefixedName)
 	{
-		return this.objectPropertyShortNames.contains(shortName);
+		return this.objectPropertyPrefixedNames.contains(prefixedName);
 	}
 
-	public boolean isOWLDataProperty(String shortName)
+	public boolean isOWLDataProperty(String prefixedName)
 	{
-		return this.dataPropertyShortNames.contains(shortName);
+		return this.dataPropertyPrefixedNames.contains(prefixedName);
 	}
 
-	public boolean isOWLAnnotationProperty(String shortName)
+	public boolean isOWLAnnotationProperty(String prefixedName)
 	{
-		return this.annotationPropertyShortNames.contains(shortName);
+		return this.annotationPropertyPrefixedNames.contains(prefixedName);
 	}
 
-	public boolean isOWLDatatype(String shortName)
+	public boolean isOWLDatatype(String prefixedName)
 	{
-		return this.datatypeShortNames.contains(shortName);
+		return this.datatypePrefixedNames.contains(prefixedName);
 	}
 }

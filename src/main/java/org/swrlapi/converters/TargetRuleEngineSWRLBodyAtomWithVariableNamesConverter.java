@@ -21,23 +21,24 @@ import org.swrlapi.ext.SWRLAPIBuiltInAtom;
  */
 public interface TargetRuleEngineSWRLBodyAtomWithVariableNamesConverter<T> extends TargetRuleEngineConverter
 {
-	T convert(SWRLClassAtom atom, Set<String> previouslyEncounteredVariableShortNames) throws TargetRuleEngineException;
-
-	T convert(SWRLDataPropertyAtom atom, Set<String> previouslyEncounteredVariableShortNames)
+	T convert(SWRLClassAtom atom, Set<String> previouslyEncounteredVariablePrefixedNames)
 			throws TargetRuleEngineException;
 
-	T convert(SWRLObjectPropertyAtom atom, Set<String> previouslyEncounteredVariableShortNames)
+	T convert(SWRLDataPropertyAtom atom, Set<String> previouslyEncounteredVariablePrefixedNames)
 			throws TargetRuleEngineException;
 
-	T convert(SWRLSameIndividualAtom atom, Set<String> previouslyEncounteredVariableShortNames)
+	T convert(SWRLObjectPropertyAtom atom, Set<String> previouslyEncounteredVariablePrefixedNames)
 			throws TargetRuleEngineException;
 
-	T convert(SWRLDifferentIndividualsAtom atom, Set<String> previouslyEncounteredVariableShortNames)
+	T convert(SWRLSameIndividualAtom atom, Set<String> previouslyEncounteredVariablePrefixedNames)
 			throws TargetRuleEngineException;
 
-	T convert(SWRLAPIBuiltInAtom atom, Set<String> previouslyEncounteredVariableShortNames)
+	T convert(SWRLDifferentIndividualsAtom atom, Set<String> previouslyEncounteredVariablePrefixedNames)
 			throws TargetRuleEngineException;
 
-	T convert(SWRLDataRangeAtom atom, Set<String> previouslyEncounteredVariableShortNames)
+	T convert(SWRLAPIBuiltInAtom atom, Set<String> previouslyEncounteredVariablePrefixedNames)
+			throws TargetRuleEngineException;
+
+	T convert(SWRLDataRangeAtom atom, Set<String> previouslyEncounteredVariablePrefixedNames)
 			throws TargetRuleEngineException;
 }

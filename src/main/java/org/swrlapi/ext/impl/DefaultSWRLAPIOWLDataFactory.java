@@ -54,10 +54,10 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
 	}
 
 	@Override
-	public SWRLAPIBuiltInAtom getSWRLAPIBuiltInAtom(String ruleName, IRI builtInIRI, String builtInShortName,
+	public SWRLAPIBuiltInAtom getSWRLAPIBuiltInAtom(String ruleName, IRI builtInIRI, String builtInPrefixedName,
 			List<SWRLBuiltInArgument> arguments)
 	{
-		return new DefaultSWRLAPIBuiltInAtom(ruleName, builtInIRI, builtInShortName, arguments);
+		return new DefaultSWRLAPIBuiltInAtom(ruleName, builtInIRI, builtInPrefixedName, arguments);
 	}
 
 	@Override

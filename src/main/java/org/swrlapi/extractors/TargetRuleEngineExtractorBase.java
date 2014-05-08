@@ -9,8 +9,8 @@ import org.swrlapi.core.OWLLiteralFactory;
 import org.swrlapi.core.SWRLRuleEngineBridge;
 import org.swrlapi.core.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.exceptions.TargetRuleEngineException;
-import org.swrlapi.ext.SWRLAPIOWLDatatypeFactory;
 import org.swrlapi.ext.SWRLAPIOWLDataFactory;
+import org.swrlapi.ext.SWRLAPIOWLDatatypeFactory;
 
 /**
  * This interface describes a set of methods that will be needed by target rule engines to create OWLAPI representations
@@ -65,9 +65,9 @@ public abstract class TargetRuleEngineExtractorBase implements TargetRuleEngineE
 		return getBridge().getOWLIRIResolver();
 	}
 
-	protected IRI shortName2IRI(String shortName) throws TargetRuleEngineException
+	protected IRI prefixedName2IRI(String prefixedName) throws TargetRuleEngineException
 	{
-		return getOWLIRIResolver().shortName2IRI(shortName);
+		return getOWLIRIResolver().prefixedName2IRI(prefixedName);
 	}
 
 	private SWRLRuleEngineBridge getBridge()

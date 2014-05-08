@@ -7,7 +7,7 @@ import org.semanticweb.owlapi.model.SWRLVariable;
  */
 public interface SWRLVariableBuiltInArgument extends SWRLBuiltInArgument, SWRLVariable
 {
-	String getVariableShortName();
+	String getVariablePrefixedName();
 
 	@Override
 	boolean isVariable();

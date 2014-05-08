@@ -112,17 +112,17 @@ public class SWRLAPIRegressionTester
 					String actualRawLiteral = literalResultValue.getLiteral();
 					@SuppressWarnings("unused")
 					OWLDatatype datatype = literalResultValue.getOWLDatatype();
-					String actualDatatypeShortName = "XXX"; // TODO
+					String actualDatatypePrefixedName = "XXX"; // TODO
 					String testRawLiteral = testValueString.substring(1, testValueString.indexOf("^^") - 1);
-					String testDatatypeShortName = testValueString.substring(testValueString.indexOf("^^") + 2);
+					String testDatatypePrefixedName = testValueString.substring(testValueString.indexOf("^^") + 2);
 
 					if (!actualRawLiteral.equals(testRawLiteral)) {
 						System.out.print("Literal values unequal - " + actualRawLiteral + " != " + testRawLiteral);
 						return false;
 					}
 
-					if (!actualDatatypeShortName.equals(testDatatypeShortName)) {
-						System.out.print("Types unequal - " + actualDatatypeShortName + " != " + testDatatypeShortName);
+					if (!actualDatatypePrefixedName.equals(testDatatypePrefixedName)) {
+						System.out.print("Types unequal - " + actualDatatypePrefixedName + " != " + testDatatypePrefixedName);
 						return false;
 					}
 				}
