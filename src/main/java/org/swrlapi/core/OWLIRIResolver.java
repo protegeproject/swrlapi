@@ -71,11 +71,11 @@ public class OWLIRIResolver
 		if (this.iri2PrefixedNameCache.containsKey(iri))
 			return this.iri2PrefixedNameCache.get(iri);
 		else {
-			String prefixedName = prefixManager.getShortForm(iri);
+			String prefixedName = prefixManager.getPrefixIRI(iri);
 			if (prefixedName != null)
 				return prefixedName;
 			else
-				throw new RuntimeException("could not find short name for IRI " + iri);
+				throw new RuntimeException("could not find prefixed name for IRI " + iri);
 		}
 	}
 
@@ -87,7 +87,7 @@ public class OWLIRIResolver
 			try {
 				return prefixManager.getIRI(prefixedName);
 			} catch (RuntimeException e) {
-				throw new TargetRuleEngineException("could not find IRI for short name " + prefixedName);
+				throw new TargetRuleEngineException("could not find IRI for prefixed name " + prefixedName);
 			}
 		}
 	}

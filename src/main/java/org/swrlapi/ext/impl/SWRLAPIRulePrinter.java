@@ -178,7 +178,7 @@ public class SWRLAPIRulePrinter implements SWRLAPIEntityVisitorEx<String>
 	@Override
 	public String visit(SWRLVariable variable)
 	{
-		String variablePrefixedName = prefixManager.getShortForm(variable.getIRI());
+		String variablePrefixedName = prefixManager.getPrefixIRI(variable.getIRI());
 
 		return variablePrefixedName2VariableName(variablePrefixedName);
 	}
@@ -273,13 +273,13 @@ public class SWRLAPIRulePrinter implements SWRLAPIEntityVisitorEx<String>
 
 	private String visit(OWLClass cls)
 	{
-		return prefixManager.getShortForm(cls.getIRI());
+		return prefixManager.getPrefixIRI(cls.getIRI());
 	}
 
 	private String visit(OWLIndividual individual)
 	{
 		if (individual.isNamed())
-			return prefixManager.getShortForm(individual.asOWLNamedIndividual().getIRI());
+			return prefixManager.getPrefixIRI(individual.asOWLNamedIndividual().getIRI());
 		else
 			return individual.toString(); // TODO See if we can get an OWLAPI renderer
 	}
@@ -296,7 +296,7 @@ public class SWRLAPIRulePrinter implements SWRLAPIEntityVisitorEx<String>
 
 	private String visit(OWLObjectProperty property)
 	{
-		return prefixManager.getShortForm(property.getIRI());
+		return prefixManager.getPrefixIRI(property.getIRI());
 	}
 
 	private String visit(OWLDataPropertyExpression dataPropertyExpression)
@@ -311,14 +311,14 @@ public class SWRLAPIRulePrinter implements SWRLAPIEntityVisitorEx<String>
 
 	private String visit(OWLDataProperty property)
 	{
-		return prefixManager.getShortForm(property.getIRI());
+		return prefixManager.getPrefixIRI(property.getIRI());
 	}
 
 	private String visit(OWLDataRange dataRange)
 	{
 		if (dataRange.isDatatype()) {
 			OWLDatatype datatype = dataRange.asOWLDatatype();
-			return prefixManager.getShortForm(datatype.getIRI());
+			return prefixManager.getPrefixIRI(datatype.getIRI());
 		} else
 			return dataRange.toString(); // Use the OWLAPI's rendering
 	}
@@ -327,42 +327,42 @@ public class SWRLAPIRulePrinter implements SWRLAPIEntityVisitorEx<String>
 	public String visit(SWRLClassBuiltInArgument argument)
 	{
 		OWLClass cls = argument.getOWLClass();
-		return prefixManager.getShortForm(cls.getIRI());
+		return prefixManager.getPrefixIRI(cls.getIRI());
 	}
 
 	@Override
 	public String visit(SWRLNamedIndividualBuiltInArgument argument)
 	{
 		OWLNamedIndividual individual = argument.getOWLNamedIndividual();
-		return prefixManager.getShortForm(individual.getIRI());
+		return prefixManager.getPrefixIRI(individual.getIRI());
 	}
 
 	@Override
 	public String visit(SWRLObjectPropertyBuiltInArgument argument)
 	{
 		OWLObjectProperty property = argument.getOWLObjectProperty();
-		return prefixManager.getShortForm(property.getIRI());
+		return prefixManager.getPrefixIRI(property.getIRI());
 	}
 
 	@Override
 	public String visit(SWRLDataPropertyBuiltInArgument argument)
 	{
 		OWLDataProperty property = argument.getOWLDataProperty();
-		return prefixManager.getShortForm(property.getIRI());
+		return prefixManager.getPrefixIRI(property.getIRI());
 	}
 
 	@Override
 	public String visit(SWRLAnnotationPropertyBuiltInArgument argument)
 	{
 		OWLAnnotationProperty property = argument.getOWLAnnotationProperty();
-		return prefixManager.getShortForm(property.getIRI());
+		return prefixManager.getPrefixIRI(property.getIRI());
 	}
 
 	@Override
 	public String visit(SWRLDatatypeBuiltInArgument argument)
 	{
 		OWLDatatype datatype = argument.getOWLDatatype();
-		return prefixManager.getShortForm(datatype.getIRI());
+		return prefixManager.getPrefixIRI(datatype.getIRI());
 	}
 
 	@Override

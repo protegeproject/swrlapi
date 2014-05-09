@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.IRI;
@@ -143,9 +142,10 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	@Override
 	public OWLClass getInjectedOWLClass()
 	{
-		// TODO This is rough and ready
+		// TODO This is incorrect!!
 		IRI iri = IRI
-				.create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + UUID.randomUUID().toString());
+		// .create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + UUID.randomUUID().toString());
+				.create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + "fred");
 
 		return getSWRLAPIOWLDataFactory().getOWLClass(iri);
 	}
@@ -153,10 +153,11 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	@Override
 	public OWLNamedIndividual getInjectedOWLNamedIndividual()
 	{
-		// TODO This is rough and ready
+		// TODO This is incorrect!
 
 		IRI iri = IRI
-				.create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + UUID.randomUUID().toString());
+		// .create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + UUID.randomUUID().toString());
+				.create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + "fred");
 
 		return getSWRLAPIOWLDataFactory().getOWLNamedIndividual(iri);
 	}
@@ -315,8 +316,11 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 
 	private boolean hackIRI(IRI iri)
 	{
-		String shortForm = prefixManager.getShortForm(iri);
-		return !shortForm.equals(":name");
+		String prefixedName = prefixManager.getPrefixIRI(iri);
+
+		if (prefixedName.equals(":name"))
+			System.out.println("Hullo");
+		return !prefixedName.equals(":name");
 	}
 
 	/**

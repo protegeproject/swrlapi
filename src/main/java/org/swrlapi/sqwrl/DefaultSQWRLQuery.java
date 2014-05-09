@@ -8,10 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.SWRLArgument;
 import org.semanticweb.owlapi.model.SWRLAtom;
-import org.semanticweb.owlapi.model.SWRLVariable;
 import org.swrlapi.core.OWLIRIResolver;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
@@ -909,12 +907,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		Set<String> referencedVariablePrefixedNames = new HashSet<String>();
 
 		for (SWRLArgument argument : atom.getAllArguments()) {
-			if (argument instanceof SWRLVariable) {
-				SWRLVariable variable = (SWRLVariable)argument;
-				IRI iri = variable.getIRI();
-				String variablePrefixedName = getOWLIRIResolver().iri2PrefixedName(iri);
-				referencedVariablePrefixedNames.add(variablePrefixedName);
-			} else if (argument instanceof SWRLVariableBuiltInArgument) {
+			if (argument instanceof SWRLVariableBuiltInArgument) {
 				SWRLVariableBuiltInArgument variableBuiltInArgument = (SWRLVariableBuiltInArgument)argument;
 				referencedVariablePrefixedNames.add(variableBuiltInArgument.getVariablePrefixedName());
 			}
