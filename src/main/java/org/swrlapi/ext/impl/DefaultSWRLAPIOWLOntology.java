@@ -326,8 +326,6 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	{
 		String prefixedName = prefixManager.getPrefixIRI(iri);
 
-		if (prefixedName.equals(":name"))
-			System.out.println("Hullo");
 		return !prefixedName.equals(":name");
 	}
 
