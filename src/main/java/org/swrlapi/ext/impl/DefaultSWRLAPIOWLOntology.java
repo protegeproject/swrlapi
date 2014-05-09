@@ -83,7 +83,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	{
 		Set<SWRLAPIRule> swrlapiRules = new HashSet<SWRLAPIRule>();
 
-		for (SWRLRule owlapiRule : getOWLOntology().getAxioms(AxiomType.SWRL_RULE)) {
+		for (SWRLRule owlapiRule : getOWLOntology().getAxioms(AxiomType.SWRL_RULE, true)) {
 			SWRLAPIRule swrlapiRule = convertOWLAPIRule2SWRLAPIRule(owlapiRule);
 			swrlapiRules.add(swrlapiRule);
 		}
@@ -139,6 +139,16 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		// TODO
 	}
 
+	// void addRuleNameAnnotation(SWRLRule rule, String ruleName)
+	// {
+	// OWLAnnotationProperty labelAnnotationProperty = getOWLDataFactory().getRDFSLabel();
+	// OWLLiteral label = getOWLDataFactory().getOWLLiteral(ruleName, "en");
+	// OWLAnnotation labelAnnotation = getOWLDataFactory().getOWLAnnotation(labelAnnotationProperty, label);
+	//
+	// OWLAxiom anotationAssertionAxiom = getOWLDataFactory().getOWLAnnotationAssertionAxiom(rule, labelAnnotation);
+	// this.ontologyManager.applyChange(new AddAxiom(this.ontology, anotationAssertionAxiom));
+	// }
+
 	@Override
 	public OWLClass getInjectedOWLClass()
 	{
@@ -187,14 +197,12 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	{
 		String ruleName = "XX" + owlapiRule.hashCode(); // TODO Get rule name from annotation property if there.
 
-		// OWLAnnotationProperty labelAnnotation = getOWLDataFactory().getOWLAnnotationProperty(
-		// OWLRDFVocabulary.RDFS_LABEL.getIRI());
+		OWLAnnotationProperty labelAnnotation = getOWLDataFactory().getOWLAnnotationProperty(
+				OWLRDFVocabulary.RDFS_LABEL.getIRI());
 
-		// for (OWLAnnotation annotation : owlapiRule.getAnnotations(labelAnnotation)) {
-		// for (OWLAnnotation annotation : owlapiRule.getAnnotations()) {
-		// System.err.println("ann: " + annotation);
-		// }
-
+		for (OWLAnnotation annotation : owlapiRule.getAnnotations(labelAnnotation)) {
+			System.err.println("ann: " + annotation);
+		}
 		return ruleName;
 	}
 
@@ -233,13 +241,13 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	 */
 	private SWRLAPIRule convertOWLAPIRule2SWRLAPIRule(SWRLRule owlapiRule)
 	{
-		String ruleName = getRuleName(owlapiRule);
-		boolean isActive = getIsActive(owlapiRule);
-		String comment = getComment(owlapiRule);
 		List<SWRLAtom> owlapiBodyAtoms = new ArrayList<SWRLAtom>(owlapiRule.getBody());
 		List<SWRLAtom> owlapiHeadAtoms = new ArrayList<SWRLAtom>(owlapiRule.getHead());
 		List<SWRLAtom> swrlapiBodyAtoms = new ArrayList<SWRLAtom>();
 		List<SWRLAtom> swrlapiHeadAtoms = new ArrayList<SWRLAtom>();
+		String ruleName = getRuleName(owlapiRule);
+		boolean isActive = getIsActive(owlapiRule);
+		String comment = getComment(owlapiRule);
 
 		for (SWRLAtom atom : owlapiBodyAtoms) {
 			if (isSWRLBuiltInAtom(atom)) {

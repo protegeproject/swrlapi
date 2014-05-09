@@ -299,10 +299,11 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 	private void processSWRLRuleOrSQWRLQuery(SWRLAPIRule ruleOrQuery) throws SQWRLException
 	{
 		if (isSQWRLQuery(ruleOrQuery)) {
-			boolean active = true; // TODO
-			String comment = ""; // TODO
-			SQWRLQuery query = new DefaultSQWRLQuery(ruleOrQuery.getRuleName(), ruleOrQuery.getBodyAtoms(),
-					ruleOrQuery.getHeadAtoms(), getSWRLAPIOWLDataFactory(), getOWLIRIResolver(), active, comment);
+			String ruleName = ruleOrQuery.getRuleName();
+			boolean active = ruleOrQuery.isActive();
+			String comment = ruleOrQuery.comment();
+			SQWRLQuery query = new DefaultSQWRLQuery(ruleName, ruleOrQuery.getBodyAtoms(), ruleOrQuery.getHeadAtoms(),
+					getSWRLAPIOWLDataFactory(), getOWLIRIResolver(), active, comment);
 			this.queries.put(ruleOrQuery.getRuleName(), query);
 		} else {
 			this.rules.put(ruleOrQuery.getRuleName(), ruleOrQuery);
