@@ -34,26 +34,24 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	private boolean active; // Like a SWRLRule, a SQWRL query can also be inactive.
 	private final String comment;
 
-	public DefaultSQWRLQuery(String queryName, List<SWRLAtom> bodyAtoms, List<SWRLAtom> headAtoms,
-			SWRLAPIOWLDataFactory swrlapiOWLDataFactory, boolean active, String comment) throws SQWRLException
+	public DefaultSQWRLQuery(String queryName, List<SWRLAtom> bodyAtoms, List<SWRLAtom> headAtoms, boolean active,
+			String comment, SWRLAPIOWLDataFactory swrlapiOWLDataFactory) throws SQWRLException
 	{
 		this.queryName = queryName;
 		this.bodyAtoms = bodyAtoms;
 		this.headAtoms = headAtoms;
-		this.sqwrlResult = new DefaultSQWRLResult(swrlapiOWLDataFactory.getSQWRLResultValueFactory());
-		this.collectionGroupArgumentsMap = new HashMap<String, List<SWRLBuiltInArgument>>();
-
-		this.swrlapiOWLDataFactory = swrlapiOWLDataFactory;
-
 		this.active = active;
 		this.comment = comment;
+		this.sqwrlResult = new DefaultSQWRLResult(swrlapiOWLDataFactory.getSQWRLResultValueFactory());
+		this.collectionGroupArgumentsMap = new HashMap<String, List<SWRLBuiltInArgument>>();
+		this.swrlapiOWLDataFactory = swrlapiOWLDataFactory;
 
 		processSQWRLBuiltIns();
 		generateBuiltInAtomVariableDependencies();
 	}
 
 	@Override
-	public String getName()
+	public String getQueryName()
 	{
 		return this.queryName;
 	}
@@ -71,7 +69,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	}
 
 	@Override
-	public SQWRLResult getResult() throws SQWRLException
+	public SQWRLResult getSQWRLResult() throws SQWRLException
 	{
 		if (!this.sqwrlResult.isPrepared())
 			this.sqwrlResult.prepared();
@@ -80,13 +78,13 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	}
 
 	@Override
-	public SQWRLResultGenerator getResultGenerator()
+	public SQWRLResultGenerator getSQWRLResultGenerator()
 	{
 		return this.sqwrlResult;
 	}
 
 	@Override
-	public boolean hasCollections()
+	public boolean hasSQWRLCollections()
 	{
 		return !getBuiltInAtomsFromBody(SQWRLNames.getCollectionMakeBuiltInNames()).isEmpty();
 	}
@@ -247,7 +245,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		this.sqwrlResult.configured();
 		this.sqwrlResult.openRow();
 
-		if (hasCollections())
+		if (hasSQWRLCollections())
 			this.sqwrlResult.setIsDistinct();
 	}
 

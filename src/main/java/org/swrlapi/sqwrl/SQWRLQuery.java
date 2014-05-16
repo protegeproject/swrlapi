@@ -16,7 +16,7 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
  */
 public interface SQWRLQuery
 {
-	String getName();
+	String getQueryName();
 
 	boolean isActive();
 
@@ -28,11 +28,11 @@ public interface SQWRLQuery
 
 	String getQueryText();
 
-	SQWRLResult getResult() throws SQWRLException;
+	SQWRLResult getSQWRLResult() throws SQWRLException;
 
 	List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromBody(Set<String> builtInNames);
 
-	boolean hasCollections();
+	boolean hasSQWRLCollections();
 
 	List<SWRLAtom> getSQWRLPhase1BodyAtoms();
 
@@ -40,5 +40,5 @@ public interface SQWRLQuery
 
 	void setActive(boolean isActive);
 
-	SQWRLResultGenerator getResultGenerator();
+	SQWRLResultGenerator getSQWRLResultGenerator();
 }

@@ -37,7 +37,7 @@ public class SWRLAPIRegressionTester
 			// queryEngine.getOWL2RLEngine().enableTables(OWL2RLNames.Table.Table5);
 
 			for (SQWRLQuery query : queryEngine.getSQWRLQueries()) {
-				String queryName = query.getName();
+				String queryName = query.getQueryName();
 				System.out.print("\n*****Running test " + queryName + "...");
 				numberOfTests++;
 				try {

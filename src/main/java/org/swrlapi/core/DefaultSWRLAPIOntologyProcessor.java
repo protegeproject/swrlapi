@@ -234,7 +234,7 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 		if (!this.queries.containsKey(queryName))
 			throw new SQWRLInvalidQueryNameException(queryName);
 
-		return this.queries.get(queryName).getResult();
+		return this.queries.get(queryName).getSQWRLResult();
 	}
 
 	/**
@@ -246,7 +246,7 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 		if (!this.queries.containsKey(queryName))
 			throw new SQWRLInvalidQueryNameException(queryName);
 
-		return this.queries.get(queryName).getResultGenerator();
+		return this.queries.get(queryName).getSQWRLResultGenerator();
 	}
 
 	/**
@@ -303,7 +303,7 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 			boolean active = ruleOrQuery.isActive();
 			String comment = ruleOrQuery.comment();
 			SQWRLQuery query = new DefaultSQWRLQuery(ruleName, ruleOrQuery.getBodyAtoms(), ruleOrQuery.getHeadAtoms(),
-					getSWRLAPIOWLDataFactory(), active, comment);
+					active, comment, getSWRLAPIOWLDataFactory());
 			this.queries.put(ruleOrQuery.getRuleName(), query);
 		} else {
 			this.rules.put(ruleOrQuery.getRuleName(), ruleOrQuery);

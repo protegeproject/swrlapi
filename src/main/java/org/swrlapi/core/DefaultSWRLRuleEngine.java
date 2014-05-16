@@ -341,7 +341,7 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 			TargetRuleEngineException, BuiltInException
 	{
 		for (SQWRLQuery query : getSWRLAPIOntologyProcessor().getSQWRLQueries()) {
-			query.setActive(query.getName().equalsIgnoreCase(activeQueryName));
+			query.setActive(query.getQueryName().equalsIgnoreCase(activeQueryName));
 			exportSQWRLQuery2TargetRuleEngine(query);
 		}
 	}
