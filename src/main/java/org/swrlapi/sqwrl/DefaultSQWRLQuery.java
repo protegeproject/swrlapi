@@ -10,7 +10,6 @@ import java.util.Set;
 
 import org.semanticweb.owlapi.model.SWRLArgument;
 import org.semanticweb.owlapi.model.SWRLAtom;
-import org.swrlapi.core.OWLIRIResolver;
 import org.swrlapi.core.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.core.arguments.SWRLVariableBuiltInArgument;
@@ -31,14 +30,12 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 																																										// arguments; applies only to
 																																										// grouped collections
 	private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
-	private final OWLIRIResolver iriResolver;
 
 	private boolean active; // Like a SWRLRule, a SQWRL query can also be inactive.
 	private final String comment;
 
 	public DefaultSQWRLQuery(String queryName, List<SWRLAtom> bodyAtoms, List<SWRLAtom> headAtoms,
-			SWRLAPIOWLDataFactory swrlapiOWLDataFactory, OWLIRIResolver iriResolver, boolean active, String comment)
-			throws SQWRLException
+			SWRLAPIOWLDataFactory swrlapiOWLDataFactory, boolean active, String comment) throws SQWRLException
 	{
 		this.queryName = queryName;
 		this.bodyAtoms = bodyAtoms;
@@ -47,7 +44,6 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		this.collectionGroupArgumentsMap = new HashMap<String, List<SWRLBuiltInArgument>>();
 
 		this.swrlapiOWLDataFactory = swrlapiOWLDataFactory;
-		this.iriResolver = iriResolver;
 
 		this.active = active;
 		this.comment = comment;
@@ -923,10 +919,5 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	private SWRLAPILiteralFactory getSWRLAPILiteralFactory()
 	{
 		return this.swrlapiOWLDataFactory.getSWRLAPILiteralFactory();
-	}
-
-	private OWLIRIResolver getOWLIRIResolver()
-	{
-		return this.iriResolver;
 	}
 }

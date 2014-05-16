@@ -303,7 +303,7 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 			boolean active = ruleOrQuery.isActive();
 			String comment = ruleOrQuery.comment();
 			SQWRLQuery query = new DefaultSQWRLQuery(ruleName, ruleOrQuery.getBodyAtoms(), ruleOrQuery.getHeadAtoms(),
-					getSWRLAPIOWLDataFactory(), getOWLIRIResolver(), active, comment);
+					getSWRLAPIOWLDataFactory(), active, comment);
 			this.queries.put(ruleOrQuery.getRuleName(), query);
 		} else {
 			this.rules.put(ruleOrQuery.getRuleName(), ruleOrQuery);
