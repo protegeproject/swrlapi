@@ -2,6 +2,7 @@ package org.swrlapi.parser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.semanticweb.owlapi.model.SWRLAtom;
 import org.semanticweb.owlapi.model.SWRLBuiltInAtom;
@@ -12,17 +13,19 @@ import org.semanticweb.owlapi.model.SWRLDifferentIndividualsAtom;
 import org.semanticweb.owlapi.model.SWRLIArgument;
 import org.semanticweb.owlapi.model.SWRLLiteralArgument;
 import org.semanticweb.owlapi.model.SWRLObjectPropertyAtom;
+import org.semanticweb.owlapi.model.SWRLRule;
 import org.semanticweb.owlapi.model.SWRLSameIndividualAtom;
 import org.semanticweb.owlapi.model.SWRLVariable;
-import org.swrlapi.ext.SWRLAPIRule;
+import org.semanticweb.owlapi.util.DefaultPrefixManager;
+import org.swrlapi.ext.SWRLAPIOWLOntology;
 
 public class SWRLParser
 {
 	private final SWRLParserSupport swrlParserSupport;
 
-	public SWRLParser()
+	public SWRLParser(SWRLAPIOWLOntology swrlapiOWLOntology, DefaultPrefixManager prefixManager)
 	{
-		this.swrlParserSupport = new SWRLParserSupport();
+		this.swrlParserSupport = new SWRLParserSupport(swrlapiOWLOntology, prefixManager);
 	}
 
 	/**
@@ -51,11 +54,11 @@ public class SWRLParser
 	 * If {@link #parseOnly} is true, only checking is performed - no SWRL rules are created; if it is false, rules are
 	 * created.
 	 */
-	public SWRLAPIRule parseSWRLRule(String ruleText, boolean parseOnly) throws SWRLParseException
+	public SWRLRule parseSWRLRule(String ruleText, boolean parseOnly) throws SWRLParseException
 	{
 		SWRLTokenizer tokenizer = new SWRLTokenizer(ruleText.trim(), parseOnly);
-		List<SWRLAtom> head = !tokenizer.isParseOnly() ? swrlParserSupport.getSWRLHeadAtomList() : null;
-		List<SWRLAtom> body = !tokenizer.isParseOnly() ? swrlParserSupport.getSWRLBodyAtomList() : null;
+		Set<SWRLAtom> head = !tokenizer.isParseOnly() ? swrlParserSupport.getSWRLHeadAtomList() : null;
+		Set<SWRLAtom> body = !tokenizer.isParseOnly() ? swrlParserSupport.getSWRLBodyAtomList() : null;
 		boolean atLeastOneAtom = false, justProcessedAtom = true, isInHead = false;
 		String message;
 
@@ -223,7 +226,7 @@ public class SWRLParser
 			return parseSWRLVariable(tokenizer, isInHead);
 		else { // The entity is an OWL named entity or a literal
 			if (swrlParserSupport.isOWLNamedIndividual(token)) {
-				return !tokenizer.isParseOnly() ? swrlParserSupport.getOWLNamedIndividual(token) : null;
+				return !tokenizer.isParseOnly() ? swrlParserSupport.getSWRLIndividualArgument(token) : null;
 			} else {
 				if (tokenizer.hasMoreTokens())
 					throw new SWRLParseException("Invalid OWL individual name " + token);
@@ -248,22 +251,22 @@ public class SWRLParser
 		if (token.equals("\"")) { // The parsed entity is a string
 			String stringValue = tokenizer.getNextStringToken("Expected a string");
 
-			return !tokenizer.isParseOnly() ? swrlParserSupport.getOWLXSDStringLiteral(stringValue) : null;
+			return !tokenizer.isParseOnly() ? swrlParserSupport.getXSDStringSWRLLiteralArgument(stringValue) : null;
 		} else if (token.startsWith("t") || token.startsWith("T") || token.startsWith("f") || token.startsWith("F")) {
 			// According to the XSD Specification, xsd:boolean's have the lexical space: {true, false, 1, 0}. We don't allow
 			// {1, 0} since these are parsed as xsd:ints.
 			if (tokenizer.hasMoreTokens()) {
 				if (token.equalsIgnoreCase("true") || token.equalsIgnoreCase("false")) {
-					return !tokenizer.isParseOnly() ? swrlParserSupport.getOWLXSDBooleanLiteral(token) : null;
+					return !tokenizer.isParseOnly() ? swrlParserSupport.getXSDBooleanSWRLLiteralArgument(token) : null;
 				} else
 					throw new SWRLParseException("Invalid OWL literal " + token);
 			} else
 				return null;
 		} else { // Is it a long or double then
 			if (token.contains(".")) {
-				return !tokenizer.isParseOnly() ? swrlParserSupport.getOWLXSDDoubleLiteral(token) : null;
+				return !tokenizer.isParseOnly() ? swrlParserSupport.getXSDDoubleSWRLLiteralArgument(token) : null;
 			} else {
-				return !tokenizer.isParseOnly() ? swrlParserSupport.getOWLXSDLongLiteral(token) : null;
+				return !tokenizer.isParseOnly() ? swrlParserSupport.getXSDLongSWRLLiteralArgument(token) : null;
 			}
 		}
 	}
@@ -278,18 +281,19 @@ public class SWRLParser
 			String entityShortName = token;
 
 			if (swrlParserSupport.isOWLNamedIndividual(entityShortName)) {
-				return tokenizer.isParseOnly() ? null : swrlParserSupport.getOWLNamedIndividualBuiltInArgument(entityShortName);
+				return tokenizer.isParseOnly() ? null : swrlParserSupport
+						.getSWRLNamedIndividualBuiltInArgument(entityShortName);
 			} else if (swrlParserSupport.isOWLClass(entityShortName)) {
-				return tokenizer.isParseOnly() ? null : swrlParserSupport.getOWLClassBuiltInArgument(entityShortName);
+				return tokenizer.isParseOnly() ? null : swrlParserSupport.getSWRLClassBuiltInArgument(entityShortName);
 			} else if (swrlParserSupport.isOWLObjectProperty(entityShortName)) {
-				return tokenizer.isParseOnly() ? null : swrlParserSupport.getOWLObjectPropertyBuiltInArgument(entityShortName);
+				return tokenizer.isParseOnly() ? null : swrlParserSupport.getSWRLObjectPropertyBuiltInArgument(entityShortName);
 			} else if (swrlParserSupport.isOWLDataProperty(entityShortName)) {
-				return tokenizer.isParseOnly() ? null : swrlParserSupport.getOWLDataPropertyBuiltInArgument(entityShortName);
+				return tokenizer.isParseOnly() ? null : swrlParserSupport.getSWRLDataPropertyBuiltInArgument(entityShortName);
 			} else if (swrlParserSupport.isOWLAnnotationProperty(entityShortName)) {
 				return tokenizer.isParseOnly() ? null : swrlParserSupport
-						.getOWLAnnotationPropertyBuiltInArgument(entityShortName);
+						.getSWRLAnnotationPropertyBuiltInArgument(entityShortName);
 			} else if (swrlParserSupport.isOWLDatatype(entityShortName)) {
-				return tokenizer.isParseOnly() ? null : swrlParserSupport.getOWLDatatypeBuiltInArgument(entityShortName);
+				return tokenizer.isParseOnly() ? null : swrlParserSupport.getSWRLDatatypeBuiltInArgument(entityShortName);
 			} else {
 				if (tokenizer.hasMoreTokens())
 					throw new SWRLParseException("Invalid OWL entity name " + entityShortName);

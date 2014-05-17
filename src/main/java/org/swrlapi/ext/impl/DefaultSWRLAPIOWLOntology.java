@@ -172,6 +172,12 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		return getSWRLAPIOWLDataFactory().getOWLNamedIndividual(iri);
 	}
 
+	@Override
+	public boolean isSWRLBuiltIn(IRI iri)
+	{
+		throw new RuntimeException("isSWRLBuiltIn not implemented");
+	}
+
 	// TODO We really do not want the following three methods here. They are convenience methods only and are used only by
 	// a the temporal built-in library.
 	@Override
@@ -448,11 +454,6 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 			}
 			return false;
 		}
-	}
-
-	private boolean isSWRLBuiltIn(IRI iri)
-	{
-		throw new RuntimeException("isSWRLBuiltIn not implemented");
 	}
 
 	private boolean isURI(OWLDatatype datatype)

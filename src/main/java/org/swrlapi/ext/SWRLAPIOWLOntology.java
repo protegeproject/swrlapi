@@ -63,6 +63,8 @@ public interface SWRLAPIOWLOntology
 
 	void resetOntologyChanged();
 
+	boolean isSWRLBuiltIn(IRI iri);
+
 	OWLClass getInjectedOWLClass(); // Auto-generate an OWL class with a unique IRI
 
 	OWLNamedIndividual getInjectedOWLNamedIndividual(); // Auto-generate an OWL individual with a unique IRI
