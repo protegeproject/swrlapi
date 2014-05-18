@@ -59,7 +59,7 @@ public class SWRLParser
 		SWRLTokenizer tokenizer = new SWRLTokenizer(ruleText.trim(), parseOnly);
 		Set<SWRLAtom> head = !tokenizer.isParseOnly() ? swrlParserSupport.getSWRLHeadAtomList() : null;
 		Set<SWRLAtom> body = !tokenizer.isParseOnly() ? swrlParserSupport.getSWRLBodyAtomList() : null;
-		boolean atLeastOneAtom = false, justProcessedAtom = true, isInHead = false;
+		boolean atLeastOneAtom = false, justProcessedAtom = false, isInHead = false;
 		String message;
 
 		if (!tokenizer.isParseOnly() && !tokenizer.hasMoreTokens())
@@ -70,9 +70,10 @@ public class SWRLParser
 				message = isInHead ? "Expecting " + SWRLTokenizer.AND_CHAR : "Expecting " + SWRLTokenizer.IMP_CHAR + " or "
 						+ SWRLTokenizer.AND_CHAR + " or " + SWRLTokenizer.RING_CHAR;
 			else
-				message = isInHead ? "Expecting atom" : "Expecting atom or " + SWRLTokenizer.IMP_CHAR;
+				message = isInHead ? "Expecting atom" : "Expecting atom or " + SWRLTokenizer.IMP_CHAR + " or "
+						+ SWRLTokenizer.RING_CHAR;
 
-			SWRLToken currentToken = tokenizer.getNextToken(message);
+			SWRLToken currentToken = tokenizer.getToken(message);
 
 			if (currentToken.getTokenType() == SWRLToken.SWRLTokenType.IMP) { // An empty body is ok
 				if (isInHead)
@@ -84,7 +85,7 @@ public class SWRLParser
 					throw new SWRLParseException(SWRLTokenizer.AND_CHAR + " may occur only after an atom");
 				justProcessedAtom = false;
 			} else if (currentToken.getTokenType() == SWRLToken.SWRLTokenType.RING) {
-				if (isInHead || !justProcessedAtom)
+				if (isInHead)
 					throw new SWRLParseException(SWRLTokenizer.RING_CHAR + " may only occur in query body");
 				justProcessedAtom = false;
 			} else if (currentToken.getTokenType() == SWRLToken.SWRLTokenType.IDENTIFIER
@@ -99,7 +100,7 @@ public class SWRLParser
 						body.add(atom);
 				}
 			} else
-				throw new SWRLParseException("Unexpected token " + currentToken.getValue());
+				throw new SWRLParseException("Unexpected token '" + currentToken.getValue() + "'");
 			justProcessedAtom = true;
 		} while (tokenizer.hasMoreTokens());
 
@@ -114,31 +115,29 @@ public class SWRLParser
 	private SWRLAtom parseSWRLAtom(String predicate, SWRLTokenizer tokenizer, boolean isInHead) throws SWRLParseException
 	{
 		if (predicate.equalsIgnoreCase("sameAs")) {
-			tokenizer.checkAndSkipToken(SWRLToken.SWRLTokenType.LPAREN,
-					"Expecting parentheses-enclosed arguments for same individual atom");
+			tokenizer.checkAndSkipLParen("Expecting parentheses-enclosed arguments for same individual atom");
 			return parseSWRLSameAsAtomArguments(tokenizer, isInHead);
 		} else if (predicate.equalsIgnoreCase("differentFrom")) {
-			tokenizer.checkAndSkipToken(SWRLToken.SWRLTokenType.LPAREN,
-					"Expecting parentheses-enclosed arguments for different individuals atom");
+			tokenizer.checkAndSkipLParen("Expecting parentheses-enclosed arguments for different individuals atom");
 			return parseSWRLDifferentFromAtomArguments(tokenizer, isInHead);
 		} else if (swrlParserSupport.isOWLClass(predicate)) {
-			tokenizer.checkAndSkipToken(SWRLToken.SWRLTokenType.LPAREN,
-					"Expecting parentheses-enclosed arguments for class atom");
+			tokenizer.checkAndSkipLParen("Expecting parentheses-enclosed arguments for class atom");
 			return parseSWRLClassAtomArguments(predicate, tokenizer, isInHead);
 		} else if (swrlParserSupport.isOWLObjectProperty(predicate)) {
-			tokenizer.checkAndSkipToken(SWRLToken.SWRLTokenType.LPAREN,
-					"Expecting parentheses-enclosed arguments for object property atom");
+			tokenizer.checkAndSkipLParen("Expecting parentheses-enclosed arguments for object property atom");
 			return parseSWRLObjectPropertyAtomArguments(predicate, tokenizer, isInHead);
 		} else if (swrlParserSupport.isOWLDataProperty(predicate)) {
-			tokenizer.checkAndSkipToken(SWRLToken.SWRLTokenType.LPAREN,
-					"Expecting parentheses-enclosed arguments for data property atom");
+			tokenizer.checkAndSkipLParen("Expecting parentheses-enclosed arguments for data property atom");
 			return parseSWRLDataPropertyAtomArguments(predicate, tokenizer, isInHead);
 		} else if (swrlParserSupport.isSWRLBuiltIn(predicate)) {
-			tokenizer.checkAndSkipToken(SWRLToken.SWRLTokenType.LPAREN,
-					"Expecting parentheses-enclosed arguments for built-in atom");
+			tokenizer.checkAndSkipLParen("Expecting parentheses-enclosed arguments for built-in atom");
 			return parseSWRLBuiltinAtomArguments(predicate, tokenizer, isInHead);
-		} else
-			throw new SWRLParseException("Invalid SWRL atom predicate " + predicate);
+		} else {
+			if (!tokenizer.isParseOnly())
+				throw new SWRLParseException("Invalid SWRL atom predicate " + predicate);
+			else
+				throw new SWRLIncompleteRuleException("Possibly incomplete SWRL atom predicate " + predicate);
+		}
 	}
 
 	private SWRLClassAtom parseSWRLClassAtomArguments(String predicate, SWRLTokenizer tokenizer, boolean isInHead)
@@ -146,8 +145,7 @@ public class SWRLParser
 	{
 		SWRLIArgument iArgument = parseIArgument(tokenizer, isInHead);
 
-		tokenizer.checkAndSkipToken(SWRLToken.SWRLTokenType.RPAREN,
-				"Expecting closing parenthesis for argument for class atom " + predicate);
+		tokenizer.checkAndSkipRParen("Expecting closing parenthesis for argument for class atom " + predicate);
 
 		return !tokenizer.isParseOnly() ? swrlParserSupport.getSWRLClassAtom(predicate, iArgument) : null;
 	}
@@ -156,11 +154,10 @@ public class SWRLParser
 			boolean isInHead) throws SWRLParseException
 	{
 		SWRLIArgument iArgument1 = parseIArgument(tokenizer, isInHead);
-		tokenizer.checkAndSkipToken(SWRLToken.SWRLTokenType.COMMA,
-				"Expecting comma-separated second argument for object property atom " + predicate);
+		tokenizer.checkAndSkipComma("Expecting comma-separated second argument for object property atom " + predicate);
 		SWRLIArgument iArgument2 = parseIArgument(tokenizer, isInHead);
-		tokenizer.checkAndSkipToken(SWRLToken.SWRLTokenType.RPAREN,
-				"Expecting closing parenthesis after second argument of object property atom " + predicate);
+		tokenizer.checkAndSkipRParen("Expecting closing parenthesis after second argument of object property atom "
+				+ predicate);
 
 		return !tokenizer.isParseOnly() ? swrlParserSupport.getSWRLObjectPropertyAtom(predicate, iArgument1, iArgument2)
 				: null;
@@ -170,11 +167,10 @@ public class SWRLParser
 			boolean isInHead) throws SWRLParseException
 	{
 		SWRLIArgument iArgument = parseIArgument(tokenizer, isInHead);
-		tokenizer.checkAndSkipToken(SWRLToken.SWRLTokenType.COMMA,
-				"Expecting comma-separated second parameter for data property atom " + predicate);
+		tokenizer.checkAndSkipComma("Expecting comma-separated second parameter for data property atom " + predicate);
 		SWRLDArgument dArgument = parseDArgument(tokenizer, isInHead, false);
-		tokenizer.checkAndSkipToken(SWRLToken.SWRLTokenType.RPAREN,
-				"Expecting closing parenthesis after second argument of data property atom " + predicate);
+		tokenizer.checkAndSkipRParen("Expecting closing parenthesis after second argument of data property atom "
+				+ predicate);
 
 		return !tokenizer.isParseOnly() ? swrlParserSupport.getSWRLDataPropertyAtom(predicate, iArgument, dArgument) : null;
 	}
@@ -191,11 +187,9 @@ public class SWRLParser
 			throws SWRLParseException
 	{
 		SWRLIArgument iArgument1 = parseIArgument(tokenizer, isInHead);
-		tokenizer.checkAndSkipToken(SWRLToken.SWRLTokenType.COMMA,
-				"Expecting comma-separated second argument for same individual atom");
+		tokenizer.checkAndSkipComma("Expecting comma-separated second argument for same individual atom");
 		SWRLIArgument iArgument2 = parseIArgument(tokenizer, isInHead);
-		tokenizer.checkAndSkipToken(SWRLToken.SWRLTokenType.RPAREN,
-				"Expecting closing parenthesis after second argument to same individual atom");
+		tokenizer.checkAndSkipRParen("Expecting closing parenthesis after second argument to same individual atom");
 
 		return tokenizer.isParseOnly() ? null : swrlParserSupport.getSWRLSameIndividualAtom(iArgument1, iArgument2);
 	}
@@ -204,19 +198,16 @@ public class SWRLParser
 			throws SWRLParseException
 	{
 		SWRLIArgument iArgument1 = parseIArgument(tokenizer, isInHead);
-		tokenizer.checkAndSkipToken(SWRLToken.SWRLTokenType.COMMA,
-				"Expecting comma-separated second argument for different individuals atom");
+		tokenizer.checkAndSkipComma("Expecting comma-separated second argument for different individuals atom");
 		SWRLIArgument iArgument2 = parseIArgument(tokenizer, isInHead);
-
-		tokenizer.checkAndSkipToken(SWRLToken.SWRLTokenType.RPAREN,
-				"Expecting closing parenthesis after second argument to different individuals atom");
+		tokenizer.checkAndSkipRParen("Expecting closing parenthesis after second argument to different individuals atom");
 
 		return tokenizer.isParseOnly() ? null : swrlParserSupport.getSWRLDifferentIndividualsAtom(iArgument1, iArgument2);
 	}
 
 	private SWRLVariable parseSWRLVariable(SWRLTokenizer tokenizer, boolean isInHead) throws SWRLParseException
 	{
-		SWRLToken token = tokenizer.getNextToken(SWRLToken.SWRLTokenType.IDENTIFIER, "Expecting variable name");
+		SWRLToken token = tokenizer.getToken(SWRLToken.SWRLTokenType.IDENTIFIER, "Expecting variable name");
 		String variableName = token.getValue();
 		swrlParserSupport.checkThatSWRLVariableNameIsValid(variableName);
 
@@ -232,7 +223,7 @@ public class SWRLParser
 
 	private SWRLIArgument parseIArgument(SWRLTokenizer tokenizer, boolean isInHead) throws SWRLParseException
 	{ // Parse a SWRL variable or an OWL named individual
-		SWRLToken token = tokenizer.getNextToken();
+		SWRLToken token = tokenizer.getToken();
 
 		if (token.getTokenType() == SWRLToken.SWRLTokenType.QUESTION)
 			return parseSWRLVariable(tokenizer, isInHead);
@@ -246,14 +237,20 @@ public class SWRLParser
 				else
 					throw new SWRLIncompleteRuleException("Incomplete rule - OWL individual name " + token + " not valid");
 			}
-		} else
-			throw new SWRLParseException("Expecting variable or OWL entity name");
+		} else {
+			if (!tokenizer.isParseOnly())
+				throw new SWRLParseException("Expecting variable or OWL entity name '" + token.getValue() + "'");
+			else
+				throw new SWRLIncompleteRuleException("Expecting variable or OWL entity name, got '" + token.getValue() + "'");
+		}
 	}
 
 	private SWRLDArgument parseDArgument(SWRLTokenizer tokenizer, boolean isInHead, boolean isInBuiltIn)
 			throws SWRLParseException
 	{ // Parse a SWRL variable or an OWL literal
-		SWRLToken token = tokenizer.getNextToken("Expecting variable or OWL entity name");
+		String message = isInBuiltIn ? "Expecting variable, literal or OWL entity name as built-in atom argument"
+				: "Expecting variable or literal of datatype atom argument";
+		SWRLToken token = tokenizer.getToken(message);
 
 		if (token.getTokenType() == SWRLToken.SWRLTokenType.QUESTION)
 			return parseSWRLVariable(tokenizer, isInHead);
@@ -296,11 +293,13 @@ public class SWRLParser
 			}
 		} else if (token.getTokenType() == SWRLToken.SWRLTokenType.STRING) {
 			String literalValue = token.getValue();
-			if (tokenizer.peekNextToken(SWRLTokenType.TYPE_QUAL)) {
-				tokenizer.getNextToken(); // Skip the peeked token
-				SWRLToken datatypeToken = tokenizer.getNextToken(SWRLToken.SWRLTokenType.IDENTIFIER,
+			if (tokenizer.peekToken().getTokenType() == SWRLTokenType.TYPE_QUAL) {
+				tokenizer.skipToken(); // Skip the peeked token
+				SWRLToken datatypeToken = tokenizer.getToken(SWRLToken.SWRLTokenType.STRING,
 						"Expected quotation-enclosed datatype after ^^");
 				String datatype = datatypeToken.getValue();
+				if (datatype.length() == 0)
+					throw new SWRLParseException("Empty datatype qualifier - must supply a datatype");
 				return !tokenizer.isParseOnly() ? swrlParserSupport.getSWRLLiteralArgument(literalValue, datatype) : null;
 			} else
 				return !tokenizer.isParseOnly() ? swrlParserSupport.getXSDStringSWRLLiteralArgument(literalValue) : null;
@@ -311,7 +310,7 @@ public class SWRLParser
 			// return !tokenizer.isParseOnly() ? swrlParserSupport.getXSDLongSWRLLiteralArgument(token) : null;
 			return null;
 		} else
-			throw new SWRLParseException("Expecting variable or OWL literal");
+			throw new SWRLParseException("Expecting variable or OWL literal, got '" + token.getValue() + "'");
 	}
 
 	private List<SWRLDArgument> parseBuiltInArgumentList(SWRLTokenizer tokenizer, boolean isInHead)
@@ -325,14 +324,14 @@ public class SWRLParser
 			dArguments.add(dArgument);
 
 		SWRLToken token = tokenizer
-				.getNextToken("Expecting additional comma-separated variables or literals or closing parenthesis");
+				.getToken("Expecting additional comma-separated built-in arguments or closing parenthesis");
 		while (token.getTokenType() == SWRLToken.SWRLTokenType.COMMA) {
 			dArgument = parseDArgument(tokenizer, isInHead, true);
 			if (!tokenizer.isParseOnly())
 				dArguments.add(dArgument);
-			token = tokenizer.getNextToken("Expecting ',' or ')'");
+			token = tokenizer.getToken("Expecting ',' or ')'");
 			if (!(token.getTokenType() == SWRLToken.SWRLTokenType.COMMA || token.getTokenType() == SWRLToken.SWRLTokenType.RPAREN))
-				throw new SWRLParseException("Expecting ',' or ')', got " + token.getValue());
+				throw new SWRLParseException("Expecting ',' or ')', got '" + token.getValue() + "'");
 		}
 		return dArguments;
 	}
