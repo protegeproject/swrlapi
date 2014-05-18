@@ -1,27 +1,42 @@
 package org.swrlapi.parser;
 
+import java.io.IOException;
+import java.io.StreamTokenizer;
+import java.io.StringReader;
 import java.util.HashSet;
-import java.util.NoSuchElementException;
 import java.util.Set;
-import java.util.StringTokenizer;
+
+import org.swrlapi.parser.SWRLToken.SWRLTokenType;
 
 public class SWRLTokenizer
 {
 	public final static char AND_CHAR = '\u2227'; // ^
 	public final static char IMP_CHAR = '\u2192'; // >
 	public final static char RING_CHAR = '\u02da'; // .
-	public final static String delimiters = " ?\n\t()[],\"'" + AND_CHAR + IMP_CHAR + RING_CHAR; // Note space
 
-	private final StringTokenizer internalTokenizer;
+	private final StreamTokenizer tokenizer;
 
 	private final Set<String> swrlVariables;
 	private final boolean parseOnly;
 
 	public SWRLTokenizer(String input, boolean parseOnly)
 	{
-		this.internalTokenizer = new StringTokenizer(input, delimiters, true);
+		this.tokenizer = new StreamTokenizer(new StringReader(input));
 		this.swrlVariables = new HashSet<String>();
 		this.parseOnly = parseOnly;
+
+		this.tokenizer.parseNumbers();
+		this.tokenizer.wordChars(':', ':');
+		this.tokenizer.ordinaryChar(AND_CHAR);
+		this.tokenizer.ordinaryChar(IMP_CHAR);
+		this.tokenizer.ordinaryChar(RING_CHAR);
+		this.tokenizer.ordinaryChar('-');
+		this.tokenizer.ordinaryChar('.');
+		this.tokenizer.ordinaryChar('^');
+		this.tokenizer.ordinaryChar('>');
+		this.tokenizer.ordinaryChar('(');
+		this.tokenizer.ordinaryChar(')');
+		this.tokenizer.ordinaryChar('?');
 	}
 
 	public boolean isParseOnly()
@@ -39,84 +54,143 @@ public class SWRLTokenizer
 		this.swrlVariables.add(variableName);
 	}
 
-	public boolean hasMoreTokens()
+	public SWRLToken getNextToken() throws SWRLParseException
 	{
-		return this.internalTokenizer.hasMoreTokens();
-	}
-
-	public String nextToken(String myDelimiters)
-	{
-		return this.internalTokenizer.nextToken(myDelimiters);
-	}
-
-	public String nextToken() throws NoSuchElementException
-	{
-		String token = this.internalTokenizer.nextToken(delimiters);
-		if (!token.equals("'"))
-			return token;
-
-		StringBuffer buffer = new StringBuffer();
-		while (this.internalTokenizer.hasMoreTokens() && !(token = this.internalTokenizer.nextToken()).equals("'")) {
-			buffer.append(token);
+		try {
+			return convertToken2SWRLToken(tokenizer.nextToken());
+		} catch (IOException e) {
+			throw new SWRLParseException("Error tokenizing " + e.getMessage());
 		}
-		return buffer.toString();
 	}
 
-	public String getNextNonSpaceToken(String noTokenMessage) throws SWRLParseException
+	public SWRLToken getNextToken(SWRLToken.SWRLTokenType expectedTokenType, String unexpectedTokenMessage)
+			throws SWRLParseException
 	{
-		String token = "";
-		String errorMessage = "Incomplete rule. " + noTokenMessage;
-
-		if (!hasMoreTokens()) {
-			if (parseOnly)
-				throw new SWRLIncompleteRuleException(errorMessage);
-			else
-				throw new SWRLParseException(errorMessage);
-		}
-
-		while (hasMoreTokens()) {
-			token = nextToken();
-			if (!(token.equals(" ") || token.equals("\n") || token.equals("\t")))
+		try {
+			int tokenType = tokenizer.nextToken();
+			SWRLToken token = convertToken2SWRLToken(tokenType);
+			if (token.getTokenType() == expectedTokenType)
 				return token;
+			else
+				throw new SWRLParseException(unexpectedTokenMessage + ", found " + tokenizer.sval);
+		} catch (IOException e) {
+			throw new SWRLParseException("Error tokenizing " + e.getMessage());
 		}
-
-		if (parseOnly)
-			throw new SWRLIncompleteRuleException(errorMessage);
-		else
-			throw new SWRLParseException(errorMessage); // Should not get here
 	}
 
-	public void checkAndSkipToken(String skipToken, String unexpectedTokenMessage) throws SWRLParseException
+	public SWRLToken getNextToken(String noTokenMessage) throws SWRLParseException
 	{
-		String token = getNextNonSpaceToken(unexpectedTokenMessage);
-
-		if (!token.equalsIgnoreCase(skipToken))
-			throw new SWRLParseException("Expecting " + skipToken + ", got " + token + "; " + unexpectedTokenMessage);
+		try {
+			if (hasMoreTokens())
+				return convertToken2SWRLToken(tokenizer.nextToken());
+			else
+				throw new SWRLParseException(noTokenMessage);
+		} catch (IOException e) {
+			throw new SWRLParseException("Error tokenizing " + e.getMessage());
+		}
 	}
 
-	public String getNextStringToken(String noTokenMessage) throws SWRLParseException
-	{ // TODO Does not deal with escaped quotation characters
-		String errorMessage = "Incomplete rule. " + noTokenMessage;
-
-		if (!hasMoreTokens()) {
-			if (parseOnly)
-				throw new SWRLIncompleteRuleException(errorMessage);
+	public SWRLToken peekNextToken(String noTokenMessage) throws SWRLParseException
+	{
+		try {
+			int nextToken = this.tokenizer.nextToken();
+			this.tokenizer.pushBack();
+			if (nextToken != StreamTokenizer.TT_EOF)
+				return convertToken2SWRLToken(nextToken);
 			else
-				throw new SWRLParseException(errorMessage);
+				throw new SWRLParseException(noTokenMessage);
+		} catch (IOException e) {
+			throw new SWRLParseException("Error tokenizing " + e.getMessage());
 		}
+	}
 
-		while (hasMoreTokens()) {
-			String token = nextToken("\"");
-			if (token.equals("\""))
-				token = ""; // Empty string
-			else
-				checkAndSkipToken("\"", "Expected \" to close string.");
-			return token;
+	public SWRLToken peekNextToken() throws SWRLParseException
+	{
+		try {
+			int nextToken = this.tokenizer.nextToken();
+			this.tokenizer.pushBack();
+			return convertToken2SWRLToken(nextToken);
+		} catch (IOException e) {
+			throw new SWRLParseException("Error tokenizing " + e.getMessage());
 		}
+	}
 
-		if (parseOnly)
-			throw new SWRLIncompleteRuleException(errorMessage);
-		else
-			throw new SWRLParseException(errorMessage); // Should not get here
+	public boolean peekNextToken(SWRLTokenType tokenType) throws SWRLParseException
+	{
+		return peekNextToken().getTokenType() == tokenType;
+	}
+
+	private SWRLToken convertToken2SWRLToken(int tokenType) throws SWRLParseException, IOException
+	{
+		switch (tokenType) {
+		case StreamTokenizer.TT_EOF:
+		case StreamTokenizer.TT_EOL:
+			return new SWRLToken(SWRLToken.SWRLTokenType.END_OF_INPUT, "");
+		case StreamTokenizer.TT_NUMBER:
+			return new SWRLToken(SWRLToken.SWRLTokenType.NUMBER, "" + tokenizer.nval);
+		case StreamTokenizer.TT_WORD:
+			return new SWRLToken(SWRLToken.SWRLTokenType.IDENTIFIER, tokenizer.sval);
+		case '"':
+			return new SWRLToken(SWRLToken.SWRLTokenType.STRING, tokenizer.sval);
+		case ',':
+			return new SWRLToken(SWRLToken.SWRLTokenType.COMMA, ",");
+		case '?':
+			return new SWRLToken(SWRLToken.SWRLTokenType.QUESTION, ",");
+		case '(':
+			return new SWRLToken(SWRLToken.SWRLTokenType.LPAREN, "(");
+		case ')':
+			return new SWRLToken(SWRLToken.SWRLTokenType.RPAREN, ")");
+		case '.':
+		case RING_CHAR:
+			return new SWRLToken(SWRLToken.SWRLTokenType.RING, ".");
+		case '^':
+			if (hasMoreTokens()) {
+				int nextTokenType = tokenizer.nextToken();
+				if (nextTokenType == '^') {
+					return new SWRLToken(SWRLToken.SWRLTokenType.TYPE_QUAL, "^^");
+				} else {
+					this.tokenizer.pushBack();
+					return new SWRLToken(SWRLToken.SWRLTokenType.AND, "^");
+				}
+			} else
+				return new SWRLToken(SWRLToken.SWRLTokenType.AND, "^");
+		case AND_CHAR:
+			return new SWRLToken(SWRLToken.SWRLTokenType.AND, "^");
+		case IMP_CHAR:
+			return new SWRLToken(SWRLToken.SWRLTokenType.IMP, "->");
+		case '-':
+			if (!hasMoreTokens())
+				return new SWRLToken(SWRLToken.SWRLTokenType.END_OF_INPUT, "");
+			else {
+				int nextTokenType = tokenizer.nextToken();
+				if (nextTokenType == '>')
+					return new SWRLToken(SWRLToken.SWRLTokenType.IMP, "->");
+				else
+					throw new SWRLParseException("Expecting '>' after '-', got '" + nextTokenType + "'");
+			}
+		default:
+			throw new SWRLParseException("Error tokenizing - unexpected token type " + tokenType);
+		}
+	}
+
+	public void checkAndSkipToken(SWRLToken.SWRLTokenType tokenType, String unexpectedTokenMessage)
+			throws SWRLParseException
+	{
+		SWRLToken token = getNextToken(unexpectedTokenMessage);
+
+		if (token.getTokenType() != tokenType)
+			throw new SWRLParseException("Expecting " + tokenType.getName() + ", got " + token + "; "
+					+ unexpectedTokenMessage);
+	}
+
+	public boolean hasMoreTokens() throws SWRLParseException
+	{
+		try {
+			int nextToken = this.tokenizer.nextToken();
+			this.tokenizer.pushBack();
+			return nextToken != StreamTokenizer.TT_EOF;
+		} catch (IOException e) {
+			throw new SWRLParseException("Error parsing rule " + e.getMessage());
+		}
 	}
 }

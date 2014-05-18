@@ -175,7 +175,8 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	@Override
 	public boolean isSWRLBuiltIn(IRI iri)
 	{
-		throw new RuntimeException("isSWRLBuiltIn not implemented");
+		return true;
+		// throw new RuntimeException("isSWRLBuiltIn not implemented");
 	}
 
 	// TODO We really do not want the following three methods here. They are convenience methods only and are used only by
