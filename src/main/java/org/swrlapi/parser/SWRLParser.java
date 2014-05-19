@@ -23,6 +23,9 @@ public class SWRLParser
 {
 	private final SWRLParserSupport swrlParserSupport;
 
+	private static final String SAME_AS_PREDICATE = "sameAs";
+	private static final String DIFFERENT_FROM_PREDICATE = "differentFrom";
+
 	public SWRLParser(SWRLAPIOWLOntology swrlapiOWLOntology, DefaultPrefixManager prefixManager)
 	{
 		this.swrlParserSupport = new SWRLParserSupport(swrlapiOWLOntology, prefixManager);
@@ -114,10 +117,10 @@ public class SWRLParser
 
 	private SWRLAtom parseSWRLAtom(String predicate, SWRLTokenizer tokenizer, boolean isInHead) throws SWRLParseException
 	{
-		if (predicate.equalsIgnoreCase("sameAs")) {
+		if (predicate.equalsIgnoreCase(SAME_AS_PREDICATE)) {
 			tokenizer.checkAndSkipLParen("Expecting parentheses-enclosed arguments for same individual atom");
 			return parseSWRLSameAsAtomArguments(tokenizer, isInHead);
-		} else if (predicate.equalsIgnoreCase("differentFrom")) {
+		} else if (predicate.equalsIgnoreCase(DIFFERENT_FROM_PREDICATE)) {
 			tokenizer.checkAndSkipLParen("Expecting parentheses-enclosed arguments for different individuals atom");
 			return parseSWRLDifferentFromAtomArguments(tokenizer, isInHead);
 		} else if (swrlParserSupport.isOWLClass(predicate)) {
@@ -233,9 +236,10 @@ public class SWRLParser
 				return !tokenizer.isParseOnly() ? swrlParserSupport.getSWRLIndividualArgument(identifier) : null;
 			} else {
 				if (tokenizer.hasMoreTokens())
-					throw new SWRLParseException("Invalid OWL individual name " + token);
+					throw new SWRLParseException("Invalid OWL individual name '" + token.getValue() + "'");
 				else
-					throw new SWRLIncompleteRuleException("Incomplete rule - OWL individual name " + token + " not valid");
+					throw new SWRLIncompleteRuleException("Incomplete rule - OWL individual name '" + token.getValue()
+							+ "' not valid");
 			}
 		} else {
 			if (!tokenizer.isParseOnly())
@@ -256,17 +260,10 @@ public class SWRLParser
 			return parseSWRLVariable(tokenizer, isInHead);
 		else if (token.getTokenType() == SWRLToken.SWRLTokenType.IDENTIFIER) {
 			String identifier = token.getValue();
-			if (identifier.startsWith("t") || identifier.startsWith("T") || identifier.startsWith("f")
-					|| identifier.startsWith("F")) {
-				// According to the XSD Specification, xsd:boolean's have the lexical space: {true, false, 1, 0}. We don't allow
-				// {1, 0} since these are parsed as xsd:longs.
-				if (tokenizer.hasMoreTokens()) {
-					if (identifier.equalsIgnoreCase("true") || identifier.equalsIgnoreCase("false")) {
-						return !tokenizer.isParseOnly() ? swrlParserSupport.getXSDBooleanSWRLLiteralArgument(identifier) : null;
-					} else
-						throw new SWRLParseException("Invalid OWL boolean " + identifier);
-				} else
-					return null;
+			// According to the XSD Specification, xsd:boolean's have the lexical space: {true, false, 1, 0}. We don't allow
+			// {1, 0} since these are parsed as xsd:longs.
+			if (identifier.equalsIgnoreCase("true") || identifier.equalsIgnoreCase("false")) {
+				return !tokenizer.isParseOnly() ? swrlParserSupport.getXSDBooleanSWRLLiteralArgument(identifier) : null;
 			} else {
 				if (isInBuiltIn) {
 					if (swrlParserSupport.isOWLNamedIndividual(identifier)) {

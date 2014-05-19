@@ -209,17 +209,16 @@ public class SWRLTokenizer
 		case '.':
 		case RING_CHAR:
 			return new SWRLToken(SWRLToken.SWRLTokenType.RING, ".");
-		case '^': {
+		case '^':
+		case AND_CHAR: {
 			int nextTokenType = tokenizer.nextToken();
-			if (nextTokenType == '^') {
+			if (nextTokenType == '^' || nextTokenType == AND_CHAR) {
 				return new SWRLToken(SWRLToken.SWRLTokenType.TYPE_QUAL, "^^");
 			} else { // Not ^^
 				this.tokenizer.pushBack();
 				return new SWRLToken(SWRLToken.SWRLTokenType.AND, "^");
 			}
 		}
-		case AND_CHAR:
-			return new SWRLToken(SWRLToken.SWRLTokenType.AND, "^");
 		case IMP_CHAR:
 			return new SWRLToken(SWRLToken.SWRLTokenType.IMP, "->");
 		case '-': {
@@ -236,5 +235,4 @@ public class SWRLTokenizer
 					+ tokenType);
 		}
 	}
-
 }
