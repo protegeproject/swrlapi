@@ -8,6 +8,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Tokenizer generates a {@link SWRLParseException} for invalid input and a {@link SWRLIncompleteRuleException} (which
+ * is a subclass of {@link SWRLParseException}) for valid but incomplete input.
+ */
 public class SWRLTokenizer
 {
 	public final static char AND_CHAR = '\u2227'; // ^
@@ -35,6 +39,7 @@ public class SWRLTokenizer
 		this.tokenizer.ordinaryChar('-');
 		this.tokenizer.ordinaryChar('.');
 		this.tokenizer.ordinaryChar('^');
+		this.tokenizer.ordinaryChar('<');
 		this.tokenizer.ordinaryChar('>');
 		this.tokenizer.ordinaryChar('(');
 		this.tokenizer.ordinaryChar(')');
@@ -57,7 +62,7 @@ public class SWRLTokenizer
 		if (this.tokenPosition < this.tokens.size())
 			return this.tokens.get(tokenPosition++);
 		else
-			throw new SWRLParseException("No more tokens!");
+			throw generateException("Incomplete rule!");
 	}
 
 	public SWRLToken getToken(SWRLToken.SWRLTokenType expectedTokenType, String unexpectedTokenMessage)
@@ -70,24 +75,16 @@ public class SWRLTokenizer
 				return token;
 			else
 				throw new SWRLParseException(unexpectedTokenMessage);
-		} else {
-			if (!isParseOnly())
-				throw new SWRLParseException(unexpectedTokenMessage + ", got end of rule");
-			else
-				throw new SWRLIncompleteRuleException(unexpectedTokenMessage + ", got end of rule");
-		}
+		} else
+			throw generateException(unexpectedTokenMessage + ", got end of rule");
 	}
 
 	public SWRLToken getToken(String noTokenMessage) throws SWRLParseException
 	{
 		if (hasMoreTokens())
 			return getToken();
-		else {
-			if (!isParseOnly())
-				throw new SWRLParseException(noTokenMessage);
-			else
-				throw new SWRLIncompleteRuleException(noTokenMessage);
-		}
+		else
+			throw generateException(noTokenMessage);
 	}
 
 	public boolean hasMoreTokens()
@@ -99,24 +96,16 @@ public class SWRLTokenizer
 	{
 		if (this.tokenPosition < this.tokens.size())
 			return this.tokens.get(tokenPosition);
-		else {
-			if (!isParseOnly())
-				throw new SWRLParseException("Unexpectedly reached end of rule!");
-			else
-				throw new SWRLIncompleteRuleException("Rule incomplete!");
-		}
+		else
+			throw generateException("End of rule reached!");
 	}
 
 	public void skipToken() throws SWRLParseException
 	{
 		if (this.tokenPosition < this.tokens.size())
 			tokenPosition++;
-		else {
-			if (!isParseOnly())
-				throw new SWRLParseException("Unexpectedly reached end of rule!");
-			else
-				throw new SWRLIncompleteRuleException("Rule incomplete!");
-		}
+		else
+			throw generateException("End of rule reached unexpectedly!");
 	}
 
 	public boolean isParseOnly()
@@ -142,12 +131,8 @@ public class SWRLTokenizer
 
 			if (token.getTokenType() != tokenType)
 				throw new SWRLParseException(unexpectedTokenMessage + ", got '" + token.getValue() + "'");
-		} else {
-			if (!isParseOnly())
-				throw new SWRLParseException(unexpectedTokenMessage + ", got end of rule");
-			else
-				throw new SWRLIncompleteRuleException(unexpectedTokenMessage + ", got end of rule");
-		}
+		} else
+			throw generateException(unexpectedTokenMessage + ", got end of rule");
 	}
 
 	public void checkAndSkipLParen(String unexpectedTokenMessage) throws SWRLParseException
@@ -192,10 +177,15 @@ public class SWRLTokenizer
 			return new SWRLToken(SWRLToken.SWRLTokenType.END_OF_INPUT, "");
 		case StreamTokenizer.TT_EOL:
 			return new SWRLToken(SWRLToken.SWRLTokenType.END_OF_INPUT, "");
-		case StreamTokenizer.TT_NUMBER:
-			return new SWRLToken(SWRLToken.SWRLTokenType.NUMBER, "" + tokenizer.nval);
+		case StreamTokenizer.TT_NUMBER: {
+			double value = tokenizer.nval;
+			if (value % 1 == 0.0) // Appears to be no way of determining whether double/float used originally
+				return new SWRLToken(SWRLToken.SWRLTokenType.LONG, "" + tokenizer.nval);
+			else
+				return new SWRLToken(SWRLToken.SWRLTokenType.DOUBLE, "" + tokenizer.nval);
+		}
 		case StreamTokenizer.TT_WORD:
-			return new SWRLToken(SWRLToken.SWRLTokenType.IDENTIFIER, tokenizer.sval);
+			return new SWRLToken(SWRLToken.SWRLTokenType.SHORTNAME, tokenizer.sval);
 		case '"':
 			return new SWRLToken(SWRLToken.SWRLTokenType.STRING, tokenizer.sval);
 		case ',':
@@ -219,6 +209,22 @@ public class SWRLTokenizer
 				return new SWRLToken(SWRLToken.SWRLTokenType.AND, "^");
 			}
 		}
+		case '<': {
+			int nextTokenType = tokenizer.nextToken();
+			if (nextTokenType == StreamTokenizer.TT_WORD) {
+				String iri = tokenizer.sval;
+				nextTokenType = tokenizer.nextToken();
+				if (nextTokenType == '>')
+					return new SWRLToken(SWRLToken.SWRLTokenType.SHORTNAME, iri);
+				else if (nextTokenType == StreamTokenizer.TT_EOF)
+					throw generateException("Expecting '>' after IRI, got end of rule");
+				else
+					throw new SWRLParseException("Expecting IRI after '<'");
+			} else if (nextTokenType == StreamTokenizer.TT_EOF)
+				throw generateException("Expecting IRI after '<', got end of rule");
+			else
+				throw new SWRLParseException("Expecting IRI after '<'"); // Some other token
+		}
 		case IMP_CHAR:
 			return new SWRLToken(SWRLToken.SWRLTokenType.IMP, "->");
 		case '-': {
@@ -226,13 +232,21 @@ public class SWRLTokenizer
 			if (nextTokenType == '>')
 				return new SWRLToken(SWRLToken.SWRLTokenType.IMP, "->");
 			else if (nextTokenType == StreamTokenizer.TT_EOF)
-				throw new SWRLIncompleteRuleException("Expecting '>' after '-', got end of rule");
+				throw generateException("Expecting '>' after '-', got end of rule");
 			else
-				throw new SWRLParseException("Expecting '>' after '-'");
+				throw new SWRLParseException("Expecting '>' after '-' for implication token");
 		}
 		default:
 			throw new SWRLParseException("Error tokenizing - unexpected token '" + tokenizer.sval + "' with type "
 					+ tokenType);
 		}
+	}
+
+	private SWRLParseException generateException(String message)
+	{
+		if (this.hasMoreTokens() || !this.isParseOnly())
+			return new SWRLParseException(message);
+		else
+			return new SWRLIncompleteRuleException(message);
 	}
 }

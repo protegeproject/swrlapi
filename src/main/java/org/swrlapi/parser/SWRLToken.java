@@ -24,12 +24,12 @@ public class SWRLToken
 	@Override
 	public String toString()
 	{
-		return tokenType.getName() + "<" + value + ">";
+		return "[" + tokenType.getName() + "with value '" + value + "']";
 	}
 
 	public static enum SWRLTokenType {
-		IDENTIFIER("indentifier"), STRING("quoted string"), NUMBER("number"), TYPE_QUAL("^^"), AND("^"), IMP("->"), RING(
-				"."), LPAREN("("), RPAREN(")"), COMMA(","), QUESTION("?"), END_OF_INPUT("end");
+		SHORTNAME("short name"), IRI("IRI"), STRING("quoted string"), DOUBLE("double"), LONG("long"), TYPE_QUAL("^^"), AND(
+				"^"), IMP("->"), RING("."), LPAREN("("), RPAREN(")"), COMMA(","), QUESTION("?"), END_OF_INPUT("end");
 
 		private final String name;
 

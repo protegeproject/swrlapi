@@ -17,8 +17,20 @@ import org.semanticweb.owlapi.model.SWRLSameIndividualAtom;
 import org.semanticweb.owlapi.model.SWRLVariable;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.ext.SWRLAPIOWLOntology;
+import org.swrlapi.ext.SWRLAPIRule;
 import org.swrlapi.parser.SWRLToken.SWRLTokenType;
 
+/**
+ * A basic SWRL parser that allows both complete and incomplete rules to be parsed.
+ * <p>
+ * This parser will throw a {@link SWRLParseException} if it finds an error in the supplied rule. If the rule is correct
+ * but incomplete, a {@link SWRLIncompleteRuleException} (which is a subclass of {@link SWRLParseException}) will be
+ * thrown.
+ * <p>
+ * The {@link #parseSWRLRule(String, boolean)} method parses a rule. If {@link #parseOnly} argument to this method is
+ * true, only checking is performed - no SWRL rules are created; if it is false, a {@link SWRLAPIRule} object is
+ * created.
+ */
 public class SWRLParser
 {
 	private final SWRLParserSupport swrlParserSupport;
@@ -49,14 +61,6 @@ public class SWRLParser
 		return result;
 	}
 
-	/**
-	 * This parser will throw a {@link SWRLParseException} if it finds an error in the supplied rule. If the rule is
-	 * correct but incomplete, a {@link SWRLIncompleteRuleException} (which is a subclass of {@link SWRLParseException})
-	 * will be thrown.
-	 * <p>
-	 * If {@link #parseOnly} is true, only checking is performed - no SWRL rules are created; if it is false, rules are
-	 * created.
-	 */
 	public SWRLRule parseSWRLRule(String ruleText, boolean parseOnly) throws SWRLParseException
 	{
 		SWRLTokenizer tokenizer = new SWRLTokenizer(ruleText.trim(), parseOnly);
@@ -91,7 +95,7 @@ public class SWRLParser
 				if (isInHead)
 					throw new SWRLParseException(SWRLTokenizer.RING_CHAR + " may only occur in query body");
 				justProcessedAtom = false;
-			} else if (currentToken.getTokenType() == SWRLToken.SWRLTokenType.IDENTIFIER
+			} else if (currentToken.getTokenType() == SWRLToken.SWRLTokenType.SHORTNAME
 					|| currentToken.getTokenType() == SWRLToken.SWRLTokenType.STRING) {
 				String predicate = currentToken.getValue();
 				SWRLAtom atom = parseSWRLAtom(predicate, tokenizer, isInHead);
@@ -135,12 +139,8 @@ public class SWRLParser
 		} else if (swrlParserSupport.isSWRLBuiltIn(predicate)) {
 			tokenizer.checkAndSkipLParen("Expecting parentheses-enclosed arguments for built-in atom");
 			return parseSWRLBuiltinAtomArguments(predicate, tokenizer, isInHead);
-		} else {
-			if (!tokenizer.isParseOnly())
-				throw new SWRLParseException("Invalid SWRL atom predicate " + predicate);
-			else
-				throw new SWRLIncompleteRuleException("Possibly incomplete SWRL atom predicate " + predicate);
-		}
+		} else
+			throw generateException("Invalid SWRL atom predicate '" + predicate + "'", tokenizer);
 	}
 
 	private SWRLClassAtom parseSWRLClassAtomArguments(String predicate, SWRLTokenizer tokenizer, boolean isInHead)
@@ -210,7 +210,7 @@ public class SWRLParser
 
 	private SWRLVariable parseSWRLVariable(SWRLTokenizer tokenizer, boolean isInHead) throws SWRLParseException
 	{
-		SWRLToken token = tokenizer.getToken(SWRLToken.SWRLTokenType.IDENTIFIER, "Expecting variable name");
+		SWRLToken token = tokenizer.getToken(SWRLToken.SWRLTokenType.SHORTNAME, "Expecting variable name");
 		String variableName = token.getValue();
 		swrlParserSupport.checkThatSWRLVariableNameIsValid(variableName);
 
@@ -230,42 +230,32 @@ public class SWRLParser
 
 		if (token.getTokenType() == SWRLToken.SWRLTokenType.QUESTION)
 			return parseSWRLVariable(tokenizer, isInHead);
-		else if (token.getTokenType() == SWRLToken.SWRLTokenType.IDENTIFIER) {
+		else if (token.getTokenType() == SWRLToken.SWRLTokenType.SHORTNAME) {
 			String identifier = token.getValue();
 			if (swrlParserSupport.isOWLNamedIndividual(identifier)) {
 				return !tokenizer.isParseOnly() ? swrlParserSupport.getSWRLIndividualArgument(identifier) : null;
-			} else {
-				if (tokenizer.hasMoreTokens())
-					throw new SWRLParseException("Invalid OWL individual name '" + token.getValue() + "'");
-				else
-					throw new SWRLIncompleteRuleException("Incomplete rule - OWL individual name '" + token.getValue()
-							+ "' not valid");
-			}
-		} else {
-			if (!tokenizer.isParseOnly())
-				throw new SWRLParseException("Expecting variable or OWL entity name '" + token.getValue() + "'");
-			else
-				throw new SWRLIncompleteRuleException("Expecting variable or OWL entity name, got '" + token.getValue() + "'");
-		}
+			} else
+				throw generateException("Invalid OWL individual name '" + token.getValue() + "'", tokenizer);
+		} else
+			throw generateException("Invalid variable or OWL entity name '" + token.getValue() + "'", tokenizer);
 	}
 
 	private SWRLDArgument parseDArgument(SWRLTokenizer tokenizer, boolean isInHead, boolean isInBuiltIn)
 			throws SWRLParseException
-	{ // Parse a SWRL variable or an OWL literal
-		String message = isInBuiltIn ? "Expecting variable, literal or OWL entity name as built-in atom argument"
-				: "Expecting variable or literal of datatype atom argument";
+	{ // Parse a SWRL variable or an OWL literal; if we are processing built-in arguments we also allow OWL entity names
+		String message = isInBuiltIn ? "Expecting variable, literal or OWL entity name for built-in atom argument"
+				: "Expecting variable or literal for datatype atom argument";
 		SWRLToken token = tokenizer.getToken(message);
 
 		if (token.getTokenType() == SWRLToken.SWRLTokenType.QUESTION)
 			return parseSWRLVariable(tokenizer, isInHead);
-		else if (token.getTokenType() == SWRLToken.SWRLTokenType.IDENTIFIER) {
+		else if (token.getTokenType() == SWRLToken.SWRLTokenType.SHORTNAME) {
 			String identifier = token.getValue();
-			// According to the XSD Specification, xsd:boolean's have the lexical space: {true, false, 1, 0}. We don't allow
-			// {1, 0} since these are parsed as xsd:longs.
+			// We allow the values "true" and "false" and interpret them as OWL literals of type xsd:boolean.
 			if (identifier.equalsIgnoreCase("true") || identifier.equalsIgnoreCase("false")) {
 				return !tokenizer.isParseOnly() ? swrlParserSupport.getXSDBooleanSWRLLiteralArgument(identifier) : null;
-			} else {
-				if (isInBuiltIn) {
+			} else { // Not "true" or "false"
+				if (isInBuiltIn) { // SWRL built-ins in the SWRLAPI allow OWL entity names as arguments
 					if (swrlParserSupport.isOWLNamedIndividual(identifier)) {
 						return tokenizer.isParseOnly() ? null : swrlParserSupport.getSWRLNamedIndividualBuiltInArgument(identifier);
 					} else if (swrlParserSupport.isOWLClass(identifier)) {
@@ -279,35 +269,30 @@ public class SWRLParser
 								.getSWRLAnnotationPropertyBuiltInArgument(identifier);
 					} else if (swrlParserSupport.isOWLDatatype(identifier)) {
 						return tokenizer.isParseOnly() ? null : swrlParserSupport.getSWRLDatatypeBuiltInArgument(identifier);
-					} else {
-						if (tokenizer.hasMoreTokens())
-							throw new SWRLParseException("Invalid OWL entity name " + identifier);
-						else
-							throw new SWRLIncompleteRuleException("Incomplete rule - OWL entity name " + identifier + " not valid");
-					}
+					} else
+						throw generateException("Expecting boolean or OWL entity name, got '" + identifier + "'", tokenizer);
 				} else
-					throw new SWRLParseException("Invalid OWL boolean " + identifier);
+					// Not "true" or "false" and not a built-in argument
+					throw generateException("Expecting boolean, got '" + identifier + "'", tokenizer);
 			}
 		} else if (token.getTokenType() == SWRLToken.SWRLTokenType.STRING) {
 			String literalValue = token.getValue();
 			if (tokenizer.peekToken().getTokenType() == SWRLTokenType.TYPE_QUAL) {
 				tokenizer.skipToken(); // Skip the peeked token
 				SWRLToken datatypeToken = tokenizer.getToken(SWRLToken.SWRLTokenType.STRING,
-						"Expected quotation-enclosed datatype after ^^");
+						"Expecting quotation-enclosed datatype after ^^");
 				String datatype = datatypeToken.getValue();
 				if (datatype.length() == 0)
-					throw new SWRLParseException("Empty datatype qualifier - must supply a datatype");
+					throw generateException("Empty datatype qualifier - must supply a datatype", tokenizer);
 				return !tokenizer.isParseOnly() ? swrlParserSupport.getSWRLLiteralArgument(literalValue, datatype) : null;
 			} else
 				return !tokenizer.isParseOnly() ? swrlParserSupport.getXSDStringSWRLLiteralArgument(literalValue) : null;
-		} else if (token.getTokenType() == SWRLToken.SWRLTokenType.NUMBER) {
-			// if (token.contains("."))
-			// return !tokenizer.isParseOnly() ? swrlParserSupport.getXSDDoubleSWRLLiteralArgument(token) : null;
-			// else
-			// return !tokenizer.isParseOnly() ? swrlParserSupport.getXSDLongSWRLLiteralArgument(token) : null;
-			return null;
+		} else if (token.getTokenType() == SWRLToken.SWRLTokenType.LONG) {
+			return !tokenizer.isParseOnly() ? swrlParserSupport.getXSDLongSWRLLiteralArgument(token.getValue()) : null;
+		} else if (token.getTokenType() == SWRLToken.SWRLTokenType.DOUBLE) {
+			return !tokenizer.isParseOnly() ? swrlParserSupport.getXSDDoubleSWRLLiteralArgument(token.getValue()) : null;
 		} else
-			throw new SWRLParseException("Expecting variable or OWL literal, got '" + token.getValue() + "'");
+			throw generateException("Expecting variable or OWL literal, got '" + token.getValue() + "'", tokenizer);
 	}
 
 	private List<SWRLDArgument> parseBuiltInArgumentList(SWRLTokenizer tokenizer, boolean isInHead)
@@ -331,5 +316,13 @@ public class SWRLParser
 				throw new SWRLParseException("Expecting ',' or ')', got '" + token.getValue() + "'");
 		}
 		return dArguments;
+	}
+
+	private SWRLParseException generateException(String message, SWRLTokenizer tokenizer)
+	{
+		if (tokenizer.hasMoreTokens() || !tokenizer.isParseOnly())
+			return new SWRLParseException(message);
+		else
+			return new SWRLIncompleteRuleException(message);
 	}
 }
