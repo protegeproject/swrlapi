@@ -35,21 +35,21 @@ public class SQWRLQueryResultPanel extends JPanel
 	private final String queryName;
 	private final JTable table;
 	private final SQWRLQueryEngine queryEngine;
-	private final SWRLTabSQWRLControlPanel controlPanel;
-	private final SQWRLQueryResultTableModel swrlQueryResultModel;
-	private SQWRLResult result;
+	private final SWRLTabSQWRLControlPanel sqwrlControlPanel;
+	private final SQWRLQueryResultTableModel sqwrlQueryResultTableModel;
+	private SQWRLResult sqwrlResult;
 
 	private static File currentDirectory = null;
 
-	public SQWRLQueryResultPanel(SQWRLQueryEngine queryEngine, String queryName, SQWRLResult result,
+	public SQWRLQueryResultPanel(SQWRLQueryEngine sqwrlQueryEngine, String queryName, SQWRLResult sqwrlResult,
 			SWRLTabSQWRLControlPanel controlPanel)
 	{
-		this.queryEngine = queryEngine;
+		this.queryEngine = sqwrlQueryEngine;
 		this.queryName = queryName;
-		this.result = result;
-		this.controlPanel = controlPanel;
-		this.swrlQueryResultModel = new SQWRLQueryResultTableModel();
-		this.table = new JTable(this.swrlQueryResultModel);
+		this.sqwrlResult = sqwrlResult;
+		this.sqwrlControlPanel = controlPanel;
+		this.sqwrlQueryResultTableModel = new SQWRLQueryResultTableModel();
+		this.table = new JTable(this.sqwrlQueryResultTableModel);
 
 		setLayout(new BorderLayout());
 
@@ -76,7 +76,7 @@ public class SQWRLQueryResultPanel extends JPanel
 	@Override
 	public void validate()
 	{
-		this.swrlQueryResultModel.fireTableStructureChanged();
+		this.sqwrlQueryResultTableModel.fireTableStructureChanged();
 		super.validate();
 	}
 
@@ -85,23 +85,23 @@ public class SQWRLQueryResultPanel extends JPanel
 		@Override
 		public void actionPerformed(ActionEvent event)
 		{
-			SQWRLQueryResultPanel.this.result = null;
+			SQWRLQueryResultPanel.this.sqwrlResult = null;
 
 			try {
-				SQWRLQueryResultPanel.this.result = SQWRLQueryResultPanel.this.queryEngine
+				SQWRLQueryResultPanel.this.sqwrlResult = SQWRLQueryResultPanel.this.queryEngine
 						.runSQWRLQuery(SQWRLQueryResultPanel.this.queryName);
 
-				if (SQWRLQueryResultPanel.this.result == null || SQWRLQueryResultPanel.this.result.getNumberOfRows() == 0) {
-					SQWRLQueryResultPanel.this.controlPanel.appendText("No result returned for SQWRL query '"
+				if (SQWRLQueryResultPanel.this.sqwrlResult == null || SQWRLQueryResultPanel.this.sqwrlResult.getNumberOfRows() == 0) {
+					SQWRLQueryResultPanel.this.sqwrlControlPanel.appendText("No result returned for SQWRL query '"
 							+ SQWRLQueryResultPanel.this.queryName + "' - closing tab.\n");
-					SQWRLQueryResultPanel.this.controlPanel.removeResultPanel(SQWRLQueryResultPanel.this.queryName);
+					SQWRLQueryResultPanel.this.sqwrlControlPanel.removeResultPanel(SQWRLQueryResultPanel.this.queryName);
 				} else
 					validate();
 			} catch (SQWRLInvalidQueryNameException e) {
-				SQWRLQueryResultPanel.this.controlPanel.appendText("Invalid query name " + SQWRLQueryResultPanel.this.queryName
+				SQWRLQueryResultPanel.this.sqwrlControlPanel.appendText("Invalid query name " + SQWRLQueryResultPanel.this.queryName
 						+ ".\n");
 			} catch (SQWRLException e) {
-				SQWRLQueryResultPanel.this.controlPanel.appendText("Exception running SQWRL query '"
+				SQWRLQueryResultPanel.this.sqwrlControlPanel.appendText("Exception running SQWRL query '"
 						+ SQWRLQueryResultPanel.this.queryName + "': " + e.getMessage() + "\n");
 			}
 
@@ -116,8 +116,8 @@ public class SQWRLQueryResultPanel extends JPanel
 		@Override
 		public void actionPerformed(ActionEvent event)
 		{
-			SQWRLQueryResultPanel.this.controlPanel.removeResultPanel(SQWRLQueryResultPanel.this.queryName);
-			SQWRLQueryResultPanel.this.controlPanel
+			SQWRLQueryResultPanel.this.sqwrlControlPanel.removeResultPanel(SQWRLQueryResultPanel.this.queryName);
+			SQWRLQueryResultPanel.this.sqwrlControlPanel
 					.appendText("'" + SQWRLQueryResultPanel.this.queryName + "' tab closed.\n");
 		}
 	}
@@ -140,7 +140,7 @@ public class SQWRLQueryResultPanel extends JPanel
 
 		private void saveResults()
 		{
-			int returnValue = this.chooser.showOpenDialog(SQWRLQueryResultPanel.this.controlPanel);
+			int returnValue = this.chooser.showOpenDialog(SQWRLQueryResultPanel.this.sqwrlControlPanel);
 			FileWriter writer;
 
 			try {
@@ -148,22 +148,22 @@ public class SQWRLQueryResultPanel extends JPanel
 					File selectedFile = this.chooser.getSelectedFile();
 					currentDirectory = this.chooser.getCurrentDirectory();
 					writer = new FileWriter(selectedFile);
-					SQWRLQueryResultPanel.this.result = SQWRLQueryResultPanel.this.queryEngine
+					SQWRLQueryResultPanel.this.sqwrlResult = SQWRLQueryResultPanel.this.queryEngine
 							.getSQWRLResult(SQWRLQueryResultPanel.this.queryName);
 
-					if (SQWRLQueryResultPanel.this.result != null) {
-						int numberOfColumns = SQWRLQueryResultPanel.this.result.getNumberOfColumns();
+					if (SQWRLQueryResultPanel.this.sqwrlResult != null) {
+						int numberOfColumns = SQWRLQueryResultPanel.this.sqwrlResult.getNumberOfColumns();
 
 						for (int i = 0; i < numberOfColumns; i++) {
 							if (i != 0)
 								writer.write(", ");
-							writer.write(SQWRLQueryResultPanel.this.result.getColumnName(i));
+							writer.write(SQWRLQueryResultPanel.this.sqwrlResult.getColumnName(i));
 						}
 						writer.write("\n");
 
-						while (SQWRLQueryResultPanel.this.result.hasNext()) {
+						while (SQWRLQueryResultPanel.this.sqwrlResult.hasNext()) {
 							for (int i = 0; i < numberOfColumns; i++) {
-								SQWRLResultValue value = SQWRLQueryResultPanel.this.result.getValue(i);
+								SQWRLResultValue value = SQWRLQueryResultPanel.this.sqwrlResult.getValue(i);
 								if (i != 0)
 									writer.write(", ");
 								if (value instanceof SQWRLLiteralResultValue && ((SQWRLLiteralResultValue)value).isQuotableType())
@@ -172,11 +172,11 @@ public class SQWRLQueryResultPanel extends JPanel
 									writer.write("" + value);
 							}
 							writer.write("\n");
-							SQWRLQueryResultPanel.this.result.next();
+							SQWRLQueryResultPanel.this.sqwrlResult.next();
 						}
-						SQWRLQueryResultPanel.this.result.reset();
+						SQWRLQueryResultPanel.this.sqwrlResult.reset();
 						writer.close();
-						SQWRLQueryResultPanel.this.controlPanel.appendText("Sucessfully saved results of query "
+						SQWRLQueryResultPanel.this.sqwrlControlPanel.appendText("Sucessfully saved results of query "
 								+ SQWRLQueryResultPanel.this.queryName + " to CSV file " + selectedFile.getPath() + ".\n");
 					}
 				}
@@ -207,7 +207,7 @@ public class SQWRLQueryResultPanel extends JPanel
 		public int getRowCount()
 		{
 			try {
-				return (SQWRLQueryResultPanel.this.result == null) ? 0 : SQWRLQueryResultPanel.this.result.getNumberOfRows();
+				return (SQWRLQueryResultPanel.this.sqwrlResult == null) ? 0 : SQWRLQueryResultPanel.this.sqwrlResult.getNumberOfRows();
 			} catch (SQWRLException e) {
 				return 0;
 			}
@@ -217,7 +217,7 @@ public class SQWRLQueryResultPanel extends JPanel
 		public int getColumnCount()
 		{
 			try {
-				return (SQWRLQueryResultPanel.this.result == null) ? 0 : SQWRLQueryResultPanel.this.result.getNumberOfColumns();
+				return (SQWRLQueryResultPanel.this.sqwrlResult == null) ? 0 : SQWRLQueryResultPanel.this.sqwrlResult.getNumberOfColumns();
 			} catch (SQWRLException e) {
 				return 0;
 			}
@@ -227,7 +227,7 @@ public class SQWRLQueryResultPanel extends JPanel
 		public String getColumnName(int columnIndex)
 		{
 			try {
-				return (SQWRLQueryResultPanel.this.result == null) ? "" : SQWRLQueryResultPanel.this.result
+				return (SQWRLQueryResultPanel.this.sqwrlResult == null) ? "" : SQWRLQueryResultPanel.this.sqwrlResult
 						.getColumnName(columnIndex);
 			} catch (SQWRLException e) {
 				return "INVALID";
@@ -238,7 +238,7 @@ public class SQWRLQueryResultPanel extends JPanel
 		public Object getValueAt(int row, int column)
 		{
 			try {
-				SQWRLResultValue value = (SQWRLQueryResultPanel.this.result == null) ? null : SQWRLQueryResultPanel.this.result
+				SQWRLResultValue value = (SQWRLQueryResultPanel.this.sqwrlResult == null) ? null : SQWRLQueryResultPanel.this.sqwrlResult
 						.getValue(column, row);
 				if (value.isNamed()) {
 					SQWRLNamedResultValue namedValue = value.asNamedResult();
