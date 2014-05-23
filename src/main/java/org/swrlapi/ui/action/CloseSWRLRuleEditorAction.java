@@ -3,58 +3,65 @@ package org.swrlapi.ui.action;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import org.swrlapi.ui.ApplicationController;
-import org.swrlapi.ui.core.ApplicationModel;
-import org.swrlapi.ui.core.ApplicationView;
-import org.swrlapi.ui.dialog.ApplicationDialogManager;
-import org.swrlapi.ui.model.SWRLRulesModel;
+import org.swrlapi.ui.SWRLAPIApplicationController;
+import org.swrlapi.ui.core.SQWRLApplicationView;
+import org.swrlapi.ui.core.SWRLAPIApplicationModel;
+import org.swrlapi.ui.dialog.SWRLAPIApplicationDialogManager;
+import org.swrlapi.ui.model.SWRLRulesTableModel;
 
 public class CloseSWRLRuleEditorAction implements ActionListener
 {
-	private final ApplicationController application;
+	private final SWRLAPIApplicationController applicationController;
 
-	public CloseSWRLRuleEditorAction(ApplicationController application)
+	public CloseSWRLRuleEditorAction(SWRLAPIApplicationController applicationController)
 	{
-		this.application = application;
+		this.applicationController = applicationController;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		closeSWRLRuleEditor(application);
+		confirmCloseSWRLRuleEditor();
 	}
 
-	public void closeSWRLRuleEditor(ApplicationController application)
+	public void confirmCloseSWRLRuleEditor()
 	{
-		SWRLRulesModel mappingExpressionsModel = application.getApplicationModel().getSWRLRulesModel();
-		ApplicationView applicationViewController = application.getApplicationViewController();
-		ApplicationModel applicationModel = application.getApplicationModel();
-
-		if (mappingExpressionsModel.hasSWRLRuleModels()
-				&& applicationModel.areMappingsModified()
-				&& getApplicationDialogManager().showConfirmDialog(applicationViewController, "Close Mappings",
-						"Do you really want to close the mappings?")) {
-			close(application);
+		if (hasSWRLRulesModel()
+				&& getApplicationModel().areMappingsModified()
+				&& getApplicationDialogManager().showConfirmDialog(getApplicationView(), "Close Editor",
+						"Do you really want to close the editor?")) {
+			closeSWRLRuleEditor();
 		} else
-			close(application);
+			closeSWRLRuleEditor();
 	}
 
-	private static void close(ApplicationController application)
+	private void closeSWRLRuleEditor()
 	{
-		SWRLRulesModel mappingsExpressionsModel = application.getApplicationModel().getSWRLRulesModel();
-		ApplicationModel applicationModel = application.getApplicationModel();
-
-		mappingsExpressionsModel.clearSWRLRuleModels();
-		applicationModel.clearMappingFileName();
-		applicationModel.clearModifiedStatus();
+		getSWRLRulesModel().clearSWRLRules();
+		getApplicationModel().clearModifiedStatus();
 	}
 
-	private ApplicationView getApplicationView()
+	private SWRLAPIApplicationModel getApplicationModel()
 	{
-		return application.getApplicationViewController();
+		return applicationController.getApplicationModel();
 	}
 
-	private ApplicationDialogManager getApplicationDialogManager()
+	private SWRLRulesTableModel getSWRLRulesModel()
+	{
+		return getApplicationModel().getSWRLRulesTableModel();
+	}
+
+	private boolean hasSWRLRulesModel()
+	{
+		return getApplicationModel().getSWRLRulesTableModel() != null;
+	}
+
+	private SQWRLApplicationView getApplicationView()
+	{
+		return applicationController.getApplicationView();
+	}
+
+	private SWRLAPIApplicationDialogManager getApplicationDialogManager()
 	{
 		return getApplicationView().getApplicationDialogManager();
 	}

@@ -1,4 +1,4 @@
-package org.swrlapi.ui.core;
+package org.swrlapi.ui.model;
 
 public class SWRLRuleModel
 {

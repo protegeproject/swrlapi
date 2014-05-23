@@ -18,16 +18,16 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import org.swrlapi.ui.ApplicationController;
-import org.swrlapi.ui.core.ApplicationView;
-import org.swrlapi.ui.core.SWRLRuleModel;
-import org.swrlapi.ui.model.SWRLRulesModel;
+import org.swrlapi.ui.SWRLAPIApplicationController;
+import org.swrlapi.ui.core.SQWRLApplicationView;
+import org.swrlapi.ui.model.SWRLRuleModel;
+import org.swrlapi.ui.model.SWRLRulesTableModel;
 
 public class EditSWRLRuleDialog extends JDialog
 {
 	private static final long serialVersionUID = 1L;
 
-	private final ApplicationController application;
+	private final SWRLAPIApplicationController application;
 
 	private JLabel ruleNameLabel, ruleTextLabel, commentLabel;
 	private JTextField ruleNameTextField, commentTextField;
@@ -36,7 +36,7 @@ public class EditSWRLRuleDialog extends JDialog
 	private boolean editMode = false;
 	private SWRLRuleModel swrlRuleModel;
 
-	public EditSWRLRuleDialog(ApplicationController application)
+	public EditSWRLRuleDialog(SWRLAPIApplicationController application)
 	{
 		setTitle("Edit SWRL Rule");
 		setModal(true);
@@ -45,7 +45,7 @@ public class EditSWRLRuleDialog extends JDialog
 
 		createComponents();
 
-		setLocationRelativeTo(application.getApplicationViewController());
+		setLocationRelativeTo(application.getApplicationView());
 
 		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 
@@ -177,11 +177,11 @@ public class EditSWRLRuleDialog extends JDialog
 			if (!errorOccurred) {
 				if (editMode) {
 					swrlRuleModel.update(ruleName, ruleText, comment);
-					getSWRLRulesModel().removeSWRLRuleModel(swrlRuleModel); // Remove original
-					getSWRLRulesModel().addSWRLRuleModel(swrlRuleModel);
+					getSWRLRulesModel().removeSWRLRule(ruleName); // Remove original
+					getSWRLRulesModel().addSWRLRule(swrlRuleModel);
 				} else {
 					SWRLRuleModel swrlRuleModel = new SWRLRuleModel(ruleName, ruleText, comment);
-					getSWRLRulesModel().addSWRLRuleModel(swrlRuleModel);
+					getSWRLRulesModel().addSWRLRule(swrlRuleModel);
 				}
 
 				setVisible(false);
@@ -190,17 +190,17 @@ public class EditSWRLRuleDialog extends JDialog
 		}
 	}
 
-	private SWRLRulesModel getSWRLRulesModel()
+	private SWRLRulesTableModel getSWRLRulesModel()
 	{
-		return application.getApplicationModel().getSWRLRulesModel();
+		return application.getApplicationModel().getSWRLRulesTableModel();
 	}
 
-	private ApplicationView getApplicationView()
+	private SQWRLApplicationView getApplicationView()
 	{
-		return application.getApplicationViewController();
+		return application.getApplicationView();
 	}
 
-	private ApplicationDialogManager getApplicationDialogManager()
+	private SWRLAPIApplicationDialogManager getApplicationDialogManager()
 	{
 		return getApplicationView().getApplicationDialogManager();
 	}

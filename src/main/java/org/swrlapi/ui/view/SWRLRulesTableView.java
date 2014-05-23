@@ -13,29 +13,29 @@ import javax.swing.JTable;
 import javax.swing.JViewport;
 import javax.swing.table.TableColumnModel;
 
-import org.swrlapi.ui.ApplicationController;
-import org.swrlapi.ui.core.ApplicationView;
-import org.swrlapi.ui.core.SWRLRuleModel;
-import org.swrlapi.ui.core.View;
-import org.swrlapi.ui.dialog.ApplicationDialogManager;
-import org.swrlapi.ui.model.SWRLRulesModel;
+import org.swrlapi.ui.SWRLAPIApplicationController;
+import org.swrlapi.ui.core.SQWRLApplicationView;
+import org.swrlapi.ui.core.SWRLAPIView;
+import org.swrlapi.ui.dialog.SWRLAPIApplicationDialogManager;
+import org.swrlapi.ui.model.SWRLRuleModel;
+import org.swrlapi.ui.model.SWRLRulesTableModel;
 
-public class SWRLRulesView extends JPanel implements View
+public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 {
 	private static final long serialVersionUID = 1L;
 
-	private final ApplicationController applicationController;
+	private final SWRLAPIApplicationController applicationController;
 	private final JTable swrlRulesTable;
 
-	public SWRLRulesView(ApplicationController applicationController)
+	public SWRLRulesTableView(SWRLAPIApplicationController applicationController)
 	{
 		this.applicationController = applicationController;
+		this.swrlRulesTable = new JTable(getSWRLRulesTableModel());
 
-		swrlRulesTable = new JTable(getMappingExpressionsModel());
 		addTableListeners();
 		setPreferredColumnWidths();
 
-		getMappingExpressionsModel().setView(this);
+		getSWRLRulesTableModel().setView(this);
 
 		createComponents();
 	}
@@ -75,20 +75,17 @@ public class SWRLRulesView extends JPanel implements View
 	@Override
 	public void update()
 	{
-		getMappingExpressionsModel().fireTableDataChanged();
+		getSWRLRulesTableModel().fireTableDataChanged();
 		validate();
 	}
 
-	/**
-	 * Returns the selected class map if one is selected; null is returned otherwise.
-	 */
-	public SWRLRuleModel getSelectedClassMap()
+	public SWRLRuleModel getSelectedSWRLRule()
 	{
 		SWRLRuleModel selectedClassMap = null;
 		int selectedRow = swrlRulesTable.getSelectedRow();
 
 		if (selectedRow != -1)
-			selectedClassMap = (SWRLRuleModel)getMappingExpressionsModel().getSWRLRuleModels().toArray()[selectedRow];
+			selectedClassMap = (SWRLRuleModel)getSWRLRulesTableModel().getSWRLRuleModels().toArray()[selectedRow];
 
 		return selectedClassMap;
 	}
@@ -133,7 +130,7 @@ public class SWRLRulesView extends JPanel implements View
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
-			getApplicationDialogManager().getCreateMappingExpressionDialog().setVisible(true);
+			getDialogManager().getCreateSWRLRuleDialog().setVisible(true);
 		}
 	}
 
@@ -148,11 +145,11 @@ public class SWRLRulesView extends JPanel implements View
 
 	private void editSelectedClassMap()
 	{
-		SWRLRuleModel selectedClassMap = getSelectedClassMap();
+		SWRLRuleModel swrlRuleModel = getSelectedSWRLRule();
 
-		if (selectedClassMap != null && getMappingExpressionsModel().hasSWRLRuleModel(selectedClassMap)) {
-			getApplicationDialogManager().getCreateMappingExpressionDialog(selectedClassMap).setVisible(true);
-		} // if
+		if (swrlRuleModel != null && getSWRLRulesTableModel().hasSWRLRule(swrlRuleModel.getRuleName())) {
+			getDialogManager().getCreateSWRLRuleDialog(swrlRuleModel).setVisible(true);
+		}
 	}
 
 	private class DeleteButtonActionListener implements ActionListener
@@ -160,27 +157,27 @@ public class SWRLRulesView extends JPanel implements View
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
-			SWRLRuleModel selectedClassMap = getSelectedClassMap();
+			SWRLRuleModel swrlRuleModel = getSelectedSWRLRule();
 
-			if (getMappingExpressionsModel().hasSWRLRuleModel(selectedClassMap)
-					&& getApplicationDialogManager().showConfirmDialog(getApplicationView(), "Delete Expression",
-							"Do you really want to delete the expression?")) {
-				getMappingExpressionsModel().removeSWRLRuleModel(selectedClassMap);
-			} // if
+			if (getSWRLRulesTableModel().hasSWRLRule(swrlRuleModel.getRuleName())
+					&& getDialogManager().showConfirmDialog(getApplicationView(), "Delete rule",
+							"Do you really want to delete the rule?")) {
+				getSWRLRulesTableModel().removeSWRLRule(swrlRuleModel.getRuleName());
+			}
 		}
 	}
 
-	private SWRLRulesModel getMappingExpressionsModel()
+	private SWRLRulesTableModel getSWRLRulesTableModel()
 	{
-		return applicationController.getApplicationModel().getSWRLRulesModel();
+		return applicationController.getApplicationModel().getSWRLRulesTableModel();
 	}
 
-	private ApplicationView getApplicationView()
+	private SQWRLApplicationView getApplicationView()
 	{
-		return applicationController.getApplicationViewController();
+		return applicationController.getApplicationView();
 	}
 
-	private ApplicationDialogManager getApplicationDialogManager()
+	private SWRLAPIApplicationDialogManager getDialogManager()
 	{
 		return getApplicationView().getApplicationDialogManager();
 	}

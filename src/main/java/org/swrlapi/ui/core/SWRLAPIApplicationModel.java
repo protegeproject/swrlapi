@@ -1,42 +1,41 @@
 package org.swrlapi.ui.core;
 
-import org.swrlapi.ui.action.SaveSWRLRulesAction;
-import org.swrlapi.ui.model.SWRLRulesDataSourceModel;
-import org.swrlapi.ui.model.SWRLRulesModel;
-import org.swrlapi.ui.view.MappingsControlView;
+import org.swrlapi.ui.action.SaveSWRLRuleAction;
+import org.swrlapi.ui.model.SWRLRulesTableModel;
+import org.swrlapi.ui.view.SQWRLQueryControllerView;
 
-public class ApplicationModel implements Model
+public class SWRLAPIApplicationModel implements SWRLAPIModel
 {
-	private ApplicationView applicationView;
-	private final SWRLRulesDataSourceModel dataSourceModel;
-	private final SWRLRulesModel swrlRulesModel;
-	private final SWRLRuleExecutor swrlRuleExecutor;
+	private SQWRLApplicationView applicationView;
+	private final SWRLAPIRulesDataSource swrlRulesDataSource;
+	private final SWRLRulesTableModel swrlRulesModel;
+	private final SWRLAPIRuleExecutor swrlRuleExecutor;
 	private final ConfigurationOptionsManager configurationOptionsManager;
 	private final SWRLRulesPersistenceLayer swrlRulesPersistenceLayer;
-	private SaveSWRLRulesAction saveRulesAction;
+	private SaveSWRLRuleAction saveRulesAction;
 	private String mappingFileName = null;
 
-	public ApplicationModel(SWRLRulesDataSource swrlRulesDataSource, SWRLRuleExecutor renderer,
+	public SWRLAPIApplicationModel(SWRLAPIRulesDataSource swrlRulesDataSource, SWRLAPIRuleExecutor swrlRuleExecutor,
 			SWRLRulesPersistenceLayer swrlRulesPersistenceLayer)
 	{
-		this.dataSourceModel = new SWRLRulesDataSourceModel(swrlRulesDataSource);
-		this.swrlRulesModel = new SWRLRulesModel();
-		this.swrlRuleExecutor = renderer;
-		this.configurationOptionsManager = new ConfigurationOptionsManager(renderer);
+		this.swrlRulesDataSource = swrlRulesDataSource;
+		this.swrlRulesModel = new SWRLRulesTableModel();
+		this.swrlRuleExecutor = swrlRuleExecutor;
+		this.configurationOptionsManager = new ConfigurationOptionsManager(swrlRuleExecutor);
 		this.swrlRulesPersistenceLayer = swrlRulesPersistenceLayer;
 	}
 
-	public SWRLRulesDataSourceModel getDataSourceModel()
+	public SWRLAPIRulesDataSource getSWRLRulesDataSource()
 	{
-		return dataSourceModel;
+		return this.swrlRulesDataSource;
 	}
 
-	public SWRLRulesModel getSWRLRulesModel()
+	public SWRLRulesTableModel getSWRLRulesTableModel()
 	{
-		return swrlRulesModel;
+		return this.swrlRulesModel;
 	}
 
-	public SWRLRuleExecutor getSWRLRuleExecutor()
+	public SWRLAPIRuleExecutor getSWRLRuleExecutor()
 	{
 		return swrlRuleExecutor;
 	}
@@ -51,30 +50,25 @@ public class ApplicationModel implements Model
 		return swrlRulesPersistenceLayer;
 	}
 
-	public void setApplicationView(ApplicationView applicationView)
+	public void setApplicationView(SQWRLApplicationView applicationView)
 	{
 		this.applicationView = applicationView;
 	}
 
-	public ApplicationView getApplicationView()
+	public SQWRLApplicationView getApplicationView()
 	{
 		return applicationView;
-	}
-
-	public void setSaveSWRLRuleAction(SaveSWRLRulesAction saveSWRLRulesAction)
-	{
-		this.saveRulesAction = saveSWRLRulesAction;
 	}
 
 	public void saveSWRLRules()
 	{
 		if (saveRulesAction != null)
-			saveRulesAction.saveSWRLRules();
+			saveRulesAction.saveSWRLRule();
 	}
 
 	public void dataSourceUpdated()
 	{
-		swrlRuleExecutor.setDataSource(getDataSourceModel().getSWRLRulesDataSource());
+		swrlRuleExecutor.setSWRLRuleDataSource(getSWRLRulesDataSource());
 	}
 
 	public void setMappingFileName(String mappingFileName)
@@ -115,8 +109,8 @@ public class ApplicationModel implements Model
 			applicationView.update();
 	}
 
-	private MappingsControlView getMappingsControlView()
+	private SQWRLQueryControllerView getMappingsControlView()
 	{
-		return applicationView.getMappingsControlView();
+		return applicationView.getSQWRLQueryControllerView();
 	}
 }

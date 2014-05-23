@@ -2,77 +2,49 @@ package org.swrlapi.ui.action;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.util.Set;
 
-import javax.swing.JFileChooser;
-
-import org.swrlapi.ui.ApplicationController;
-import org.swrlapi.ui.core.ApplicationModel;
-import org.swrlapi.ui.core.ApplicationView;
-import org.swrlapi.ui.core.SWRLRuleModel;
-import org.swrlapi.ui.dialog.ApplicationDialogManager;
-import org.swrlapi.ui.model.SWRLRulesModel;
-import org.swrlapi.ui.view.MappingsControlView;
+import org.swrlapi.ui.SWRLAPIApplicationController;
+import org.swrlapi.ui.core.SQWRLApplicationView;
+import org.swrlapi.ui.core.SWRLAPIApplicationModel;
+import org.swrlapi.ui.dialog.SWRLAPIApplicationDialogManager;
+import org.swrlapi.ui.model.SWRLRulesTableModel;
 
 public class OpenSWRLRuleEditorAction implements ActionListener
 {
-	private final ApplicationController application;
+	private final SWRLAPIApplicationController applicationController;
 
-	public OpenSWRLRuleEditorAction(ApplicationController application)
+	public OpenSWRLRuleEditorAction(SWRLAPIApplicationController applicationController)
 	{
-		this.application = application;
+		this.applicationController = applicationController;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		openMappings();
+		openSWRLRuleEditor();
 	}
 
-	public void openMappings()
+	public void openSWRLRuleEditor()
 	{
-		SWRLRulesModel mappingExpressionsModel = application.getApplicationModel().getSWRLRulesModel();
-		ApplicationView applicationView = application.getApplicationViewController();
-		ApplicationModel applicationModel = application.getApplicationModel();
-		MappingsControlView mappingsControlView = applicationView.getMappingsControlView();
 
-		JFileChooser fileChooser = getApplicationDialogManager().createFileChooser("Open Mapping Ontology", "owl");
-
-		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-			File file = fileChooser.getSelectedFile();
-			String fileName = file.getAbsolutePath();
-			Set<SWRLRuleModel> mappingExpressions = null;
-
-			mappingsControlView.statusWindowAppend("Opening mappings file '" + fileName + "'...\n");
-
-			try {
-				mappingExpressions = application.getMappingExpressionsPersistenceLayer().getSWRLRuleModels(fileName);
-
-				mappingsControlView.statusWindowAppend("Mapping file successfully opened.\n");
-			} catch (Exception ex) {
-				getApplicationDialogManager().showErrorMessageDialog(applicationView, ex.getMessage());
-				mappingsControlView.statusWindowAppend("Error opening mapping file: " + ex.getMessage() + "\n");
-			}
-
-			if (mappingExpressions != null) {
-				mappingsControlView.statusWindowAppend("Found " + mappingExpressions.size()
-						+ " mapping expressions(s) in mapping file.\n");
-				mappingExpressionsModel.setSWRLRuleModels(mappingExpressions);
-				applicationModel.setMappingFileName(fileName);
-			} else
-				mappingsControlView.statusWindowAppend("No mappings defined in mapping file.\n");
-
-			applicationModel.clearModifiedStatus();
-		} // if
 	}
 
-	private ApplicationView getApplicationView()
+	private SWRLRulesTableModel getSWRLRulesModel()
 	{
-		return application.getApplicationViewController();
+		return applicationController.getApplicationModel().getSWRLRulesTableModel();
 	}
 
-	private ApplicationDialogManager getApplicationDialogManager()
+	private SWRLAPIApplicationModel getApplicationModel()
+	{
+		return this.applicationController.getApplicationModel();
+	}
+
+	private SQWRLApplicationView getApplicationView()
+	{
+		return applicationController.getApplicationView();
+	}
+
+	private SWRLAPIApplicationDialogManager getApplicationDialogManager()
 	{
 		return getApplicationView().getApplicationDialogManager();
 	}

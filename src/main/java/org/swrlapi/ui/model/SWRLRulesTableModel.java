@@ -1,15 +1,16 @@
 package org.swrlapi.ui.model;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import javax.swing.table.AbstractTableModel;
 
-import org.swrlapi.ui.core.Model;
-import org.swrlapi.ui.core.SWRLRuleModel;
-import org.swrlapi.ui.core.View;
+import org.swrlapi.ui.core.SWRLAPIModel;
+import org.swrlapi.ui.core.SWRLAPIView;
 
-public class SWRLRulesModel extends AbstractTableModel implements Model
+public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIModel
 {
 	private static final long serialVersionUID = 1L;
 
@@ -19,77 +20,73 @@ public class SWRLRulesModel extends AbstractTableModel implements Model
 	private static int SOURCE_SHEET_NAME_COLUMN = 3;
 	private static int NUMBER_OF_COLUMNS = 4;
 
-	private View view = null;
+	private SWRLAPIView view = null;
 	private boolean isModified = false;
 
-	private Set<SWRLRuleModel> swrlRuleModels;
+	private final Map<String, SWRLRuleModel> swrlRuleModels;
 
-	public SWRLRulesModel(Set<SWRLRuleModel> swrlRuleModels)
+	public SWRLRulesTableModel(Map<String, SWRLRuleModel> swrlRuleModels)
 	{
 		this.swrlRuleModels = swrlRuleModels;
 	}
 
-	public SWRLRulesModel()
+	public SWRLRulesTableModel()
 	{
-		this.swrlRuleModels = new HashSet<SWRLRuleModel>();
+		this.swrlRuleModels = new HashMap<String, SWRLRuleModel>();
 	}
 
 	public Set<SWRLRuleModel> getSWRLRuleModels()
 	{
-		return new HashSet<SWRLRuleModel>(swrlRuleModels);
+		return new HashSet<SWRLRuleModel>(swrlRuleModels.values());
 	}
 
 	public Set<SWRLRuleModel> getSWRLRuleModels(boolean isActiveFlag)
 	{
-		Set<SWRLRuleModel> res = new HashSet<SWRLRuleModel>();
-		for (SWRLRuleModel expr : swrlRuleModels) {
-			if (expr.isActive() == isActiveFlag) {
-				res.add(expr);
+		Set<SWRLRuleModel> result = new HashSet<SWRLRuleModel>();
+		for (SWRLRuleModel swrlRuleModel : swrlRuleModels.values()) {
+			if (swrlRuleModel.isActive() == isActiveFlag) {
+				result.add(swrlRuleModel);
 			}
 		}
-		return res;
+		return result;
 	}
 
-	public boolean hasSWRLRuleModels()
+	public boolean hasSWRLRules()
 	{
 		return !swrlRuleModels.isEmpty();
 	}
 
-	public boolean hasSWRLRuleModel(SWRLRuleModel swrlRuleModel)
+	public boolean hasSWRLRule(String ruleName)
 	{
-		return swrlRuleModels.contains(swrlRuleModel);
+		return swrlRuleModels.containsKey(ruleName);
 	}
 
-	public void setSWRLRuleModels(Set<SWRLRuleModel> swrlRuleModels)
+	public void addSWRLRule(SWRLRuleModel swrlRuleModel)
 	{
-		this.swrlRuleModels = new HashSet<SWRLRuleModel>(swrlRuleModels);
-		updateView();
-	}
+		String ruleName = swrlRuleModel.getRuleName();
 
-	public void addSWRLRuleModel(SWRLRuleModel swrlRuleModel)
-	{
-		if (!swrlRuleModels.contains(swrlRuleModel))
-			swrlRuleModels.add(swrlRuleModel);
+		if (!swrlRuleModels.containsKey(ruleName))
+			swrlRuleModels.put(ruleName, swrlRuleModel);
 		isModified = true;
 		updateView();
 	}
 
-	public void removeSWRLRuleModel(SWRLRuleModel swrlRuleModel)
+	public void removeSWRLRule(String ruleName)
 	{
-		if (swrlRuleModels.contains(swrlRuleModel))
-			swrlRuleModels.remove(swrlRuleModel);
+		if (swrlRuleModels.containsKey(ruleName))
+			swrlRuleModels.remove(ruleName);
 		isModified = true;
 		updateView();
 	}
 
-	public void clearSWRLRuleModels()
+	public void clearSWRLRules()
 	{
-		swrlRuleModels = new HashSet<SWRLRuleModel>();
+		this.swrlRuleModels.clear();
 		updateView();
 		isModified = false;
 	}
 
-	public void setView(View view)
+	public void setView(SWRLAPIView view)
 	{
 		this.view = view;
 	}
@@ -140,13 +137,13 @@ public class SWRLRulesModel extends AbstractTableModel implements Model
 			result = new String("OUT OF BOUNDS");
 		else {
 			if (column == RULE_TEXT_COLUMN)
-				result = ((SWRLRuleModel)swrlRuleModels.toArray()[row]).getRuleText();
+				result = ((SWRLRuleModel)swrlRuleModels.values().toArray()[row]).getRuleText();
 			else if (column == RULE_NAME_COLUMN)
-				result = ((SWRLRuleModel)swrlRuleModels.toArray()[row]).getRuleName();
+				result = ((SWRLRuleModel)swrlRuleModels.values().toArray()[row]).getRuleName();
 			else if (column == SOURCE_SHEET_NAME_COLUMN)
-				result = ((SWRLRuleModel)swrlRuleModels.toArray()[row]).getComment();
+				result = ((SWRLRuleModel)swrlRuleModels.values().toArray()[row]).getComment();
 			else if (column == ACTIVE_COLUMN)
-				result = ((SWRLRuleModel)swrlRuleModels.toArray()[row]).isActive();
+				result = ((SWRLRuleModel)swrlRuleModels.values().toArray()[row]).isActive();
 		}
 
 		return result;
@@ -172,7 +169,7 @@ public class SWRLRulesModel extends AbstractTableModel implements Model
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex)
 	{
 		if (columnIndex == ACTIVE_COLUMN) {
-			((SWRLRuleModel)swrlRuleModels.toArray()[rowIndex]).setActive((Boolean)aValue);
+			((SWRLRuleModel)swrlRuleModels.values().toArray()[rowIndex]).setActive((Boolean)aValue);
 		} else {
 			super.setValueAt(aValue, rowIndex, columnIndex);
 		}

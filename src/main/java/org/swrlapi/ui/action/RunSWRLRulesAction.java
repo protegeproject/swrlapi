@@ -4,34 +4,32 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Set;
 
-import org.swrlapi.ui.ApplicationController;
-import org.swrlapi.ui.core.ApplicationModel;
-import org.swrlapi.ui.core.ApplicationView;
-import org.swrlapi.ui.core.SWRLRuleModel;
-import org.swrlapi.ui.dialog.ApplicationDialogManager;
-import org.swrlapi.ui.model.SWRLRulesDataSourceModel;
-import org.swrlapi.ui.model.SWRLRulesModel;
+import org.swrlapi.ui.SWRLAPIApplicationController;
+import org.swrlapi.ui.core.SQWRLApplicationView;
+import org.swrlapi.ui.dialog.SWRLAPIApplicationDialogManager;
+import org.swrlapi.ui.model.SWRLRuleModel;
+import org.swrlapi.ui.model.SWRLRulesTableModel;
 
 public class RunSWRLRulesAction implements ActionListener
 {
-	private final ApplicationController application;
+	private final SWRLAPIApplicationController applicationController;
 
-	public RunSWRLRulesAction(ApplicationController application)
+	public RunSWRLRulesAction(SWRLAPIApplicationController applicationController)
 	{
-		this.application = application;
+		this.applicationController = applicationController;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (!getMappingExpressionsModel().hasSWRLRuleModels())
-			getApplicationDialogManager().showMessageDialog(getApplicationView(), "No mappings defined!");
-		else if (!getDataSourceModel().hasSWRLRulesDataSource())
+		if (!getSWRLRulesModel().hasSWRLRules())
+			getApplicationDialogManager().showMessageDialog(getApplicationView(), "No rule!");
+		else if (hasSWRLRulesDataSource())
 			getApplicationDialogManager().showMessageDialog(getApplicationView(), "No data source loaded!");
 		else {
 			try {
 				@SuppressWarnings("unused")
-				Set<SWRLRuleModel> mappingExpressions = getMappingExpressionsModel().getSWRLRuleModels(true);
+				Set<SWRLRuleModel> swrlRuleModels = getSWRLRulesModel().getSWRLRuleModels(true);
 
 				// TODO Run the query
 
@@ -43,28 +41,22 @@ public class RunSWRLRulesAction implements ActionListener
 		}
 	}
 
-	private SWRLRulesModel getMappingExpressionsModel()
+	private SWRLRulesTableModel getSWRLRulesModel()
 	{
-		return application.getApplicationModel().getSWRLRulesModel();
+		return applicationController.getApplicationModel().getSWRLRulesTableModel();
 	}
 
-	private SWRLRulesDataSourceModel getDataSourceModel()
+	private boolean hasSWRLRulesDataSource()
 	{
-		return application.getApplicationModel().getDataSourceModel();
+		return applicationController.getApplicationModel().getSWRLRulesDataSource() != null;
 	}
 
-	private ApplicationView getApplicationView()
+	private SQWRLApplicationView getApplicationView()
 	{
-		return application.getApplicationViewController();
+		return applicationController.getApplicationView();
 	}
 
-	@SuppressWarnings("unused")
-	private ApplicationModel getApplicationModel()
-	{
-		return application.getApplicationModel();
-	}
-
-	private ApplicationDialogManager getApplicationDialogManager()
+	private SWRLAPIApplicationDialogManager getApplicationDialogManager()
 	{
 		return getApplicationView().getApplicationDialogManager();
 	}

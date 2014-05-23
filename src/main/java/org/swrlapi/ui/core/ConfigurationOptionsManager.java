@@ -2,14 +2,14 @@ package org.swrlapi.ui.core;
 
 public class ConfigurationOptionsManager
 {
-	private final SWRLRuleExecutor swrlRuleExecutor;
+	private final SWRLAPIRuleExecutor swrlRuleExecutor;
 
-	public ConfigurationOptionsManager(SWRLRuleExecutor swrlRuleExecutor)
+	public ConfigurationOptionsManager(SWRLAPIRuleExecutor swrlRuleExecutor)
 	{
 		this.swrlRuleExecutor = swrlRuleExecutor;
 	}
 
-	public SWRLRuleExecutor getSWRLRuleExecutor()
+	public SWRLAPIRuleExecutor getSWRLRuleExecutor()
 	{
 		return this.swrlRuleExecutor;
 	}

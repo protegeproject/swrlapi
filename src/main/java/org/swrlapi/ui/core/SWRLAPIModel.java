@@ -1,5 +1,5 @@
 package org.swrlapi.ui.core;
 
-public interface Model
+public interface SWRLAPIModel
 {
 }

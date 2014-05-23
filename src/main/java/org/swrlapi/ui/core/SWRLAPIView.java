@@ -1,6 +1,6 @@
 package org.swrlapi.ui.core;
 
-public interface View
+public interface SWRLAPIView
 {
 	void update();
 }

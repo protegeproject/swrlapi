@@ -14,25 +14,25 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import org.swrlapi.ui.ApplicationController;
+import org.swrlapi.ui.SWRLAPIApplicationController;
 import org.swrlapi.ui.action.CloseSWRLRuleEditorAction;
 import org.swrlapi.ui.action.OpenSWRLRuleEditorAction;
 import org.swrlapi.ui.action.RunSWRLRulesAction;
-import org.swrlapi.ui.action.SaveSWRLRulesAction;
-import org.swrlapi.ui.core.ApplicationModel;
+import org.swrlapi.ui.action.SaveSWRLRuleAction;
+import org.swrlapi.ui.core.SWRLAPIApplicationModel;
 import org.swrlapi.ui.core.ConfigurationOptionsManager;
-import org.swrlapi.ui.core.View;
+import org.swrlapi.ui.core.SWRLAPIView;
 
-public class MappingsControlView extends JPanel implements View
+public class SQWRLQueryControllerView extends JPanel implements SWRLAPIView
 {
 	private static final long serialVersionUID = 1L;
 
-	private final ApplicationController application;
+	private final SWRLAPIApplicationController application;
 	private JTextField fileNameTextField;
 	private JTextArea statusWindow;
 	private JButton saveButton, saveAsButton;
 
-	public MappingsControlView(ApplicationController application)
+	public SQWRLQueryControllerView(SWRLAPIApplicationController application)
 	{
 		this.application = application;
 
@@ -123,12 +123,12 @@ public class MappingsControlView extends JPanel implements View
 		fileButtonPanel.add(openButton);
 
 		saveButton = new JButton("Save");
-		saveButton.addActionListener(new SaveSWRLRulesAction(application));
+		saveButton.addActionListener(new SaveSWRLRuleAction(application));
 		saveButton.setEnabled(false);
 		fileButtonPanel.add(saveButton);
 
 		saveAsButton = new JButton("Save As...");
-		saveAsButton.addActionListener(new SaveSWRLRulesAction(application));
+		saveAsButton.addActionListener(new SaveSWRLRuleAction(application));
 		saveAsButton.setEnabled(true);
 		fileButtonPanel.add(saveAsButton, BorderLayout.CENTER);
 
@@ -137,7 +137,7 @@ public class MappingsControlView extends JPanel implements View
 		fileButtonPanel.add(closeButton);
 	}
 
-	private ApplicationModel getApplicationModel()
+	private SWRLAPIApplicationModel getApplicationModel()
 	{
 		return application.getApplicationModel();
 	}
