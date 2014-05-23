@@ -8,7 +8,7 @@ import org.swrlapi.ui.dialog.SWRLAPIApplicationDialogManager;
 import org.swrlapi.ui.view.SQWRLQueryControllerView;
 import org.swrlapi.ui.view.SWRLRulesTableView;
 
-public class SQWRLApplicationView extends JSplitPane implements SWRLAPIView
+public class SQWRLApplicationView extends JSplitPane implements SWRLAPIApplicationView
 {
 	private static final long serialVersionUID = 1L;
 

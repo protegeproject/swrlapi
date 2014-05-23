@@ -2,12 +2,10 @@ package org.swrlapi.ui.action;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Set;
 
 import org.swrlapi.ui.SWRLAPIApplicationController;
 import org.swrlapi.ui.core.SQWRLApplicationView;
 import org.swrlapi.ui.dialog.SWRLAPIApplicationDialogManager;
-import org.swrlapi.ui.model.SWRLRuleModel;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
 
 public class RunSWRLRulesAction implements ActionListener
@@ -22,33 +20,22 @@ public class RunSWRLRulesAction implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (!getSWRLRulesModel().hasSWRLRules())
-			getApplicationDialogManager().showMessageDialog(getApplicationView(), "No rule!");
-		else if (hasSWRLRulesDataSource())
-			getApplicationDialogManager().showMessageDialog(getApplicationView(), "No data source loaded!");
+		if (!getSWRLRulesTableModel().hasSWRLRules())
+			getApplicationDialogManager().showMessageDialog(getApplicationView(), "No rules!");
 		else {
 			try {
-				@SuppressWarnings("unused")
-				Set<SWRLRuleModel> swrlRuleModels = getSWRLRulesModel().getSWRLRuleModels(true);
-
-				// TODO Run the query
-
-				getApplicationDialogManager().showMessageDialog(getApplicationView(), "Mappings performed successfully.");
+				// TODO Run the query; get it from getSWRLRulesTableModel()
 			} catch (Exception ex) {
 				ex.printStackTrace();
-				getApplicationDialogManager().showErrorMessageDialog(getApplicationView(), "Mapping error: " + ex.getMessage());
+				getApplicationDialogManager().showErrorMessageDialog(getApplicationView(),
+						"Error running SQWRL query: " + ex.getMessage());
 			}
 		}
 	}
 
-	private SWRLRulesTableModel getSWRLRulesModel()
+	private SWRLRulesTableModel getSWRLRulesTableModel()
 	{
 		return applicationController.getApplicationModel().getSWRLRulesTableModel();
-	}
-
-	private boolean hasSWRLRulesDataSource()
-	{
-		return applicationController.getApplicationModel().getSWRLRulesDataSource() != null;
 	}
 
 	private SQWRLApplicationView getApplicationView()

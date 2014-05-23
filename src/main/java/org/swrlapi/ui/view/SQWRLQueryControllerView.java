@@ -18,9 +18,8 @@ import org.swrlapi.ui.SWRLAPIApplicationController;
 import org.swrlapi.ui.action.CloseSWRLRuleEditorAction;
 import org.swrlapi.ui.action.OpenSWRLRuleEditorAction;
 import org.swrlapi.ui.action.RunSWRLRulesAction;
-import org.swrlapi.ui.action.SaveSWRLRuleAction;
-import org.swrlapi.ui.core.SWRLAPIApplicationModel;
 import org.swrlapi.ui.core.ConfigurationOptionsManager;
+import org.swrlapi.ui.core.SWRLAPIApplicationModel;
 import org.swrlapi.ui.core.SWRLAPIView;
 
 public class SQWRLQueryControllerView extends JPanel implements SWRLAPIView
@@ -38,24 +37,15 @@ public class SQWRLQueryControllerView extends JPanel implements SWRLAPIView
 
 		createComponents();
 
-		statusWindowAppend("MappingMaster V0.95\n\n");
-		statusWindowAppend("See http://protege.cim3.net/cgi-bin/wiki.pl?MappingMaster for documentation.\n");
-		statusWindowAppend("Use the Expressions tab to define mappings using MappingMaster's DSL.\n");
-		statusWindowAppend("Click the Map button to perform mappings.\n");
+		statusWindowAppend("SQWRL Query Tab 1.0\n\n");
 	}
 
 	@Override
 	public void update()
 	{
-		if (getApplicationModel().hasMappingFile()) {
-			fileNameTextField.setText(getApplicationModel().getMappingFileName());
-			saveButton.setEnabled(true);
-			saveAsButton.setEnabled(true);
-		} else {
-			fileNameTextField.setText("");
-			saveButton.setEnabled(false);
-			saveAsButton.setEnabled(true);
-		}
+		fileNameTextField.setText("");
+		saveButton.setEnabled(false);
+		saveAsButton.setEnabled(true);
 
 		validate();
 	}
@@ -121,16 +111,6 @@ public class SQWRLQueryControllerView extends JPanel implements SWRLAPIView
 		openButton = new JButton("Open");
 		openButton.addActionListener(new OpenSWRLRuleEditorAction(application));
 		fileButtonPanel.add(openButton);
-
-		saveButton = new JButton("Save");
-		saveButton.addActionListener(new SaveSWRLRuleAction(application));
-		saveButton.setEnabled(false);
-		fileButtonPanel.add(saveButton);
-
-		saveAsButton = new JButton("Save As...");
-		saveAsButton.addActionListener(new SaveSWRLRuleAction(application));
-		saveAsButton.setEnabled(true);
-		fileButtonPanel.add(saveAsButton, BorderLayout.CENTER);
 
 		closeButton = new JButton("Close");
 		closeButton.addActionListener(new CloseSWRLRuleEditorAction(application));

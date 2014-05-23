@@ -17,7 +17,6 @@ import org.swrlapi.ui.SWRLAPIApplicationController;
 import org.swrlapi.ui.core.SQWRLApplicationView;
 import org.swrlapi.ui.core.SWRLAPIView;
 import org.swrlapi.ui.dialog.SWRLAPIApplicationDialogManager;
-import org.swrlapi.ui.model.SWRLRuleModel;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
 
 public class SWRLRulesTableView extends JPanel implements SWRLAPIView
@@ -48,7 +47,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 			{
 				if (e.getClickCount() == 2) {
 					if (e.getSource() == swrlRulesTable) {
-						editSelectedClassMap();
+						editSelectedSWRLRule();
 					}
 				}
 			}
@@ -79,15 +78,14 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 		validate();
 	}
 
-	public SWRLRuleModel getSelectedSWRLRule()
+	public String getSelectedSWRLRuleName()
 	{
-		SWRLRuleModel selectedClassMap = null;
 		int selectedRow = swrlRulesTable.getSelectedRow();
 
 		if (selectedRow != -1)
-			selectedClassMap = (SWRLRuleModel)getSWRLRulesTableModel().getSWRLRuleModels().toArray()[selectedRow];
-
-		return selectedClassMap;
+			return getSWRLRulesTableModel().getSWRLRuleNameByIndex(selectedRow);
+		else
+			return "";
 	}
 
 	private void createComponents()
@@ -139,16 +137,16 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
-			editSelectedClassMap();
+			editSelectedSWRLRule();
 		}
 	}
 
-	private void editSelectedClassMap()
+	private void editSelectedSWRLRule()
 	{
-		SWRLRuleModel swrlRuleModel = getSelectedSWRLRule();
+		String selectedRuleName = getSelectedSWRLRuleName();
 
-		if (swrlRuleModel != null && getSWRLRulesTableModel().hasSWRLRule(swrlRuleModel.getRuleName())) {
-			getDialogManager().getCreateSWRLRuleDialog(swrlRuleModel).setVisible(true);
+		if (getSWRLRulesTableModel().hasSWRLRule(selectedRuleName)) {
+			getDialogManager().getCreateSWRLRuleDialog(selectedRuleName, "TODO", "TODO").setVisible(true);
 		}
 	}
 
@@ -157,12 +155,12 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
-			SWRLRuleModel swrlRuleModel = getSelectedSWRLRule();
+			String selectedRuleName = getSelectedSWRLRuleName();
 
-			if (getSWRLRulesTableModel().hasSWRLRule(swrlRuleModel.getRuleName())
+			if (getSWRLRulesTableModel().hasSWRLRule(selectedRuleName)
 					&& getDialogManager().showConfirmDialog(getApplicationView(), "Delete rule",
 							"Do you really want to delete the rule?")) {
-				getSWRLRulesTableModel().removeSWRLRule(swrlRuleModel.getRuleName());
+				getSWRLRulesTableModel().removeSWRLRule(selectedRuleName);
 			}
 		}
 	}

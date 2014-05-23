@@ -25,11 +25,6 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 
 	private final Map<String, SWRLRuleModel> swrlRuleModels;
 
-	public SWRLRulesTableModel(Map<String, SWRLRuleModel> swrlRuleModels)
-	{
-		this.swrlRuleModels = swrlRuleModels;
-	}
-
 	public SWRLRulesTableModel()
 	{
 		this.swrlRuleModels = new HashMap<String, SWRLRuleModel>();
@@ -56,14 +51,22 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 		return !swrlRuleModels.isEmpty();
 	}
 
+	public String getSWRLRuleNameByIndex(int ruleIndex)
+	{
+		if (ruleIndex >= 0 && ruleIndex < swrlRuleModels.values().size())
+			return ((SWRLRuleModel)swrlRuleModels.values().toArray()[ruleIndex]).getRuleName();
+		else
+			return "";
+	}
+
 	public boolean hasSWRLRule(String ruleName)
 	{
 		return swrlRuleModels.containsKey(ruleName);
 	}
 
-	public void addSWRLRule(SWRLRuleModel swrlRuleModel)
+	public void addSWRLRule(String ruleName, String ruleText, String comment)
 	{
-		String ruleName = swrlRuleModel.getRuleName();
+		SWRLRuleModel swrlRuleModel = new SWRLRuleModel(ruleName, ruleText, comment);
 
 		if (!swrlRuleModels.containsKey(ruleName))
 			swrlRuleModels.put(ruleName, swrlRuleModel);
@@ -179,5 +182,51 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 	{
 		if (view != null)
 			view.update();
+	}
+
+	private class SWRLRuleModel
+	{
+		private final String ruleName, ruleText, comment;
+		private boolean active;
+
+		public SWRLRuleModel(String ruleName, String ruleText, String comment)
+		{
+			this.active = true;
+			this.ruleText = ruleText;
+			this.ruleName = ruleName;
+			this.comment = comment;
+		}
+
+		public void setActive(boolean active)
+		{
+			this.active = active;
+		}
+
+		public boolean isActive()
+		{
+			return active;
+		}
+
+		public String getRuleText()
+		{
+			return ruleText;
+		}
+
+		public String getRuleName()
+		{
+			return ruleName;
+		}
+
+		public String getComment()
+		{
+			return comment;
+		}
+
+		@Override
+		public String toString()
+		{
+			return "(ruleName: " + ruleName + ", ruleText: " + ruleText + ", comment: " + comment + ", active: " + active
+					+ ")";
+		}
 	}
 }

@@ -5,7 +5,6 @@ import java.awt.Component;
 import javax.swing.JDialog;
 
 import org.swrlapi.ui.SWRLAPIApplicationController;
-import org.swrlapi.ui.model.SWRLRuleModel;
 
 public interface SWRLAPIApplicationDialogManager
 {
@@ -13,7 +12,7 @@ public interface SWRLAPIApplicationDialogManager
 
 	JDialog getCreateSWRLRuleDialog();
 
-	JDialog getCreateSWRLRuleDialog(SWRLRuleModel swrlRulesModel);
+	JDialog getCreateSWRLRuleDialog(String ruleName, String ruleText, String comment);
 
 	boolean showConfirmDialog(Component component, String title, String message);
 

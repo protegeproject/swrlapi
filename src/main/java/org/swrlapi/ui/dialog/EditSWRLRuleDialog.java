@@ -20,7 +20,6 @@ import javax.swing.JTextField;
 
 import org.swrlapi.ui.SWRLAPIApplicationController;
 import org.swrlapi.ui.core.SQWRLApplicationView;
-import org.swrlapi.ui.model.SWRLRuleModel;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
 
 public class EditSWRLRuleDialog extends JDialog
@@ -34,7 +33,6 @@ public class EditSWRLRuleDialog extends JDialog
 	private JTextArea ruleTextTextArea;
 
 	private boolean editMode = false;
-	private SWRLRuleModel swrlRuleModel;
 
 	public EditSWRLRuleDialog(SWRLAPIApplicationController application)
 	{
@@ -62,14 +60,8 @@ public class EditSWRLRuleDialog extends JDialog
 		clearEntryFields();
 	}
 
-	public void setEditMappingExpression(SWRLRuleModel swrlRuleModel)
+	public void setEditMappingExpression(String ruleName, String ruleText, String comment)
 	{
-		String ruleName = swrlRuleModel.getRuleName();
-		String ruleText = swrlRuleModel.getRuleText();
-		String comment = swrlRuleModel.getComment();
-
-		this.swrlRuleModel = swrlRuleModel;
-
 		clearEntryFields();
 
 		ruleNameTextField.setText(ruleName);
@@ -89,7 +81,6 @@ public class EditSWRLRuleDialog extends JDialog
 		commentTextField.setText("");
 
 		editMode = false;
-		this.swrlRuleModel = null;
 	}
 
 	private void createComponents()
@@ -169,6 +160,7 @@ public class EditSWRLRuleDialog extends JDialog
 				ruleText = ruleTextTextArea.getText().trim().toUpperCase();
 				comment = commentTextField.getText().trim().toUpperCase();
 
+				// Check the rule and name
 			} catch (Exception ex) {
 				getApplicationDialogManager().showErrorMessageDialog(ex.getMessage());
 				errorOccurred = true;
@@ -176,14 +168,11 @@ public class EditSWRLRuleDialog extends JDialog
 
 			if (!errorOccurred) {
 				if (editMode) {
-					swrlRuleModel.update(ruleName, ruleText, comment);
 					getSWRLRulesModel().removeSWRLRule(ruleName); // Remove original
-					getSWRLRulesModel().addSWRLRule(swrlRuleModel);
+					getSWRLRulesModel().addSWRLRule(ruleName, ruleText, comment);
 				} else {
-					SWRLRuleModel swrlRuleModel = new SWRLRuleModel(ruleName, ruleText, comment);
-					getSWRLRulesModel().addSWRLRule(swrlRuleModel);
+					getSWRLRulesModel().addSWRLRule(ruleName, ruleText, comment);
 				}
-
 				setVisible(false);
 				clearEntryFields();
 			}
