@@ -1,4 +1,4 @@
-package org.swrlapi.ui.owl2rl;
+package org.swrlapi.ui.view.owl2rl;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -8,22 +8,26 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-public class OWL2RLControlPanel extends JPanel
+import org.swrlapi.ui.model.OWL2RLModel;
+import org.swrlapi.ui.view.SWRLAPIView;
+
+public class OWL2RLControlView extends JPanel implements SWRLAPIView
 {
 	private static final long serialVersionUID = 1L;
 
-	private final OWL2RLTablesControlPanel tablesControlPanel;
+	private final OWL2RLTablesControlView owl2RLTablesControlView;
 
-	public OWL2RLControlPanel(OWL2RLModel owl2RLModel)
+	public OWL2RLControlView(OWL2RLModel owl2RLModel)
 	{
-		this.tablesControlPanel = new OWL2RLTablesControlPanel(owl2RLModel);
+		this.owl2RLTablesControlView = new OWL2RLTablesControlView(owl2RLModel);
 
 		initialize();
 	}
 
+	@Override
 	public void update()
 	{
-		this.tablesControlPanel.update();
+		this.owl2RLTablesControlView.update();
 	}
 
 	private void initialize()
@@ -32,13 +36,11 @@ public class OWL2RLControlPanel extends JPanel
 		JScrollPane scrollPane = new JScrollPane(console);
 
 		setLayout(new BorderLayout());
-
 		scrollPane.setPreferredSize(new Dimension(900, 300));
-
 		add(BorderLayout.CENTER, scrollPane);
 
 		console
-				.append("The SWRLTab supports an OWL profile called OWL 2 RL and uses an OWL 2 RL-based reasoner to perform reasoning.\n\n");
+				.append("The SWRLAPI supports an OWL profile called OWL 2 RL and uses an OWL 2 RL-based reasoner to perform reasoning.\n\n");
 		console
 				.append("OWL 2 RL reasoning is performed primarily via a set of implication rules. These rules are described\n");
 		console.append("in the following W3C document: http://www.w3.org/TR/owl2-profiles/#OWL_2_RL.\n");
@@ -51,7 +53,7 @@ public class OWL2RLControlPanel extends JPanel
 				.append("enabled or disabled. A check next to each rule indicates whether that rule is enabled or disabled. Greyed-out\n");
 		console.append("rules are either permanently enabled or currently unsupported and cannot be toggled.\n\n");
 
-		add(BorderLayout.SOUTH, this.tablesControlPanel);
+		add(BorderLayout.SOUTH, this.owl2RLTablesControlView);
 	}
 
 	private JTextArea createConsole()

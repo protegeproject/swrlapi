@@ -1,4 +1,4 @@
-package org.swrlapi.ui.owl2rl;
+package org.swrlapi.ui.view.owl2rl;
 
 import java.awt.GridLayout;
 import java.util.ArrayList;
@@ -7,24 +7,27 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import org.swrlapi.owl2rl.OWL2RLNames;
+import org.swrlapi.ui.model.OWL2RLModel;
+import org.swrlapi.ui.view.SWRLAPIView;
 
-public class OWL2RLTablePanel extends JPanel
+public class OWL2RLRuleTableView extends JPanel implements SWRLAPIView
 {
 	private static final long serialVersionUID = 1L;
 
 	private final OWL2RLModel owl2RLModel;
-	private final OWL2RLNames.Table owl2RLRuleTable;
+	private final OWL2RLNames.RuleTable owl2RLRuleTable;
 	private final List<OWL2RLRuleActivationButton> ruleActivationButtons;
 
-	public OWL2RLTablePanel(OWL2RLModel owl2RLModel, OWL2RLNames.Table table)
+	public OWL2RLRuleTableView(OWL2RLModel owl2RLModel, OWL2RLNames.RuleTable owl2RLRuleTable)
 	{
 		this.owl2RLModel = owl2RLModel;
-		this.owl2RLRuleTable = table;
+		this.owl2RLRuleTable = owl2RLRuleTable;
 		this.ruleActivationButtons = new ArrayList<OWL2RLRuleActivationButton>();
 
 		initialize();
 	}
 
+	@Override
 	public void update()
 	{
 		for (OWL2RLRuleActivationButton button : this.ruleActivationButtons)

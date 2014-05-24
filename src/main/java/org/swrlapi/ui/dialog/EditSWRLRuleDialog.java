@@ -18,15 +18,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import org.swrlapi.ui.core.SQWRLApplicationView;
-import org.swrlapi.ui.core.SWRLAPIApplicationController;
+import org.swrlapi.ui.controller.SWRLAPIApplicationController;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
 
 public class EditSWRLRuleDialog extends JDialog
 {
 	private static final long serialVersionUID = 1L;
 
-	private final SWRLAPIApplicationController application;
+	private final SWRLAPIApplicationController applicationController;
 
 	private JLabel ruleNameLabel, ruleTextLabel, commentLabel;
 	private JTextField ruleNameTextField, commentTextField;
@@ -34,16 +33,16 @@ public class EditSWRLRuleDialog extends JDialog
 
 	private boolean editMode = false;
 
-	public EditSWRLRuleDialog(SWRLAPIApplicationController application)
+	public EditSWRLRuleDialog(SWRLAPIApplicationController applicationController)
 	{
 		setTitle("Edit SWRL Rule");
 		setModal(true);
 
-		this.application = application;
+		this.applicationController = applicationController;
 
 		createComponents();
 
-		setLocationRelativeTo(application.getApplicationView());
+		// TODO setLocationRelativeTo(applicationController.getApplicationView());
 
 		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 
@@ -160,7 +159,7 @@ public class EditSWRLRuleDialog extends JDialog
 				ruleText = ruleTextTextArea.getText().trim().toUpperCase();
 				comment = commentTextField.getText().trim().toUpperCase();
 
-				// Check the rule and name
+				// TODO Check the rule and name
 			} catch (Exception ex) {
 				getApplicationDialogManager().showErrorMessageDialog(ex.getMessage());
 				errorOccurred = true;
@@ -181,16 +180,11 @@ public class EditSWRLRuleDialog extends JDialog
 
 	private SWRLRulesTableModel getSWRLRulesModel()
 	{
-		return application.getApplicationModel().getSWRLRulesTableModel();
-	}
-
-	private SQWRLApplicationView getApplicationView()
-	{
-		return application.getApplicationView();
+		return applicationController.getApplicationModel().getSWRLRulesTableModel();
 	}
 
 	private SWRLAPIApplicationDialogManager getApplicationDialogManager()
 	{
-		return getApplicationView().getApplicationDialogManager();
+		return applicationController.getApplicationDialogManager();
 	}
 }

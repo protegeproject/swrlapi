@@ -13,7 +13,6 @@ import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.ext.SWRLAPIRule;
 import org.swrlapi.ext.impl.SWRLAPIRulePrinter;
-import org.swrlapi.ui.core.SWRLAPIView;
 
 public class SWRLRulesView extends JPanel implements SWRLAPIView
 {

@@ -3,10 +3,9 @@ package org.swrlapi.ui.action;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import org.swrlapi.ui.core.SQWRLApplicationView;
-import org.swrlapi.ui.core.SWRLAPIApplicationController;
-import org.swrlapi.ui.core.SWRLAPIApplicationModel;
+import org.swrlapi.ui.controller.SWRLAPIApplicationController;
 import org.swrlapi.ui.dialog.SWRLAPIApplicationDialogManager;
+import org.swrlapi.ui.model.SWRLAPIApplicationModel;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
 
 public class CloseSWRLRuleEditorAction implements ActionListener
@@ -26,10 +25,8 @@ public class CloseSWRLRuleEditorAction implements ActionListener
 
 	public void confirmCloseSWRLRuleEditor()
 	{
-		if (hasSWRLRulesModel()
-				&& getApplicationModel().areRulesModified()
-				&& getApplicationDialogManager().showConfirmDialog(getApplicationView(), "Close Editor",
-						"Do you really want to close the editor?")) {
+		if (hasSWRLRulesModel() && getApplicationModel().areRulesModified()
+				&& getApplicationDialogManager().showConfirmDialog("Close Editor", "Do you really want to close the editor?")) {
 			closeSWRLRuleEditor();
 		} else
 			closeSWRLRuleEditor();
@@ -56,13 +53,8 @@ public class CloseSWRLRuleEditorAction implements ActionListener
 		return getApplicationModel().getSWRLRulesTableModel() != null;
 	}
 
-	private SQWRLApplicationView getApplicationView()
-	{
-		return applicationController.getApplicationView();
-	}
-
 	private SWRLAPIApplicationDialogManager getApplicationDialogManager()
 	{
-		return getApplicationView().getApplicationDialogManager();
+		return applicationController.getApplicationDialogManager();
 	}
 }

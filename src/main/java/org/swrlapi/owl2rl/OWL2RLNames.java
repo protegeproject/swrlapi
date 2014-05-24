@@ -4,7 +4,7 @@ public interface OWL2RLNames
 {
 	public final static String SWRLA_NAMESPACE = "http://swrl.stanford.edu/ontologies/3.3/swrla.owl#";
 	
-	enum Table { Table4, Table5, Table6, Table7, Table8, Table9 };
+	enum RuleTable { RuleTable4, RuleTable5, RuleTable6, RuleTable7, RuleTable8, RuleTable9 };
 
 	enum Rule { EQ_REF, EQ_SYM, EQ_TRANS, EQ_REP_S, EQ_REP_P, EQ_REP_O, EQ_DIFF1, EQ_DIFF2, EQ_DIFF3, PRP_AP, PRP_DOM, PRP_RNG, PRP_FP,
 			PRP_IFP, PRP_IRP, PRP_SYMP, PRP_ASYP, PRP_TRP, PRP_SPO1, PRP_SPO2, PRP_EQP1, PRP_EQP2, PRP_PDW, PRP_ADP, PRP_INV1, PRP_INV2, PRP_KEY, PRP_NPA1, PRP_NPA2,

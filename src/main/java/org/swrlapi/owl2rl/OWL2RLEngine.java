@@ -23,7 +23,7 @@ public interface OWL2RLEngine extends OWL2RLNames
 
 	void setRuleSelectionChanged();
 
-	List<Table> getTables();
+	List<RuleTable> getRuleTables();
 
 	int getNumberOfRules();
 
@@ -31,7 +31,7 @@ public interface OWL2RLEngine extends OWL2RLNames
 
 	List<Rule> getRules();
 
-	List<Rule> getRules(Table table);
+	List<Rule> getRules(RuleTable table);
 
 	Set<Rule> getEnabledRules();
 
@@ -45,17 +45,17 @@ public interface OWL2RLEngine extends OWL2RLNames
 
 	void disableAll();
 
-	void enableTables(Table... tables);
+	void enableTables(RuleTable... tables);
 
-	void disableTables(Table... table);
+	void disableTables(RuleTable... table);
 
 	void enableRules(Rule... rules);
 
 	void disableRules(Rule... rules);
 
-	boolean hasEnabledRules(Table table);
+	boolean hasEnabledRules(RuleTable table);
 
-	boolean hasSwitchableRules(Table table);
+	boolean hasSwitchableRules(RuleTable table);
 
 	boolean isRuleEnabled(Rule rule);
 

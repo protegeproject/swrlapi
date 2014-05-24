@@ -1,13 +1,14 @@
-package org.swrlapi.ui.view;
+package org.swrlapi.ui.view.rules;
 
 import javax.swing.Icon;
 import javax.swing.JTabbedPane;
 
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.SWRLRuleEngine;
-import org.swrlapi.ui.core.SWRLAPIApplicationModel;
-import org.swrlapi.ui.core.SWRLAPIView;
-import org.swrlapi.ui.owl2rl.SWRLTabOWL2RLPanel;
+import org.swrlapi.ui.model.SWRLAPIApplicationModel;
+import org.swrlapi.ui.view.SWRLAPIView;
+import org.swrlapi.ui.view.SWRLRulesView;
+import org.swrlapi.ui.view.owl2rl.OWL2RLRuleTablesView;
 
 public class SWRLAPIRulesView extends JTabbedPane implements SWRLAPIView
 {
@@ -26,7 +27,7 @@ public class SWRLAPIRulesView extends JTabbedPane implements SWRLAPIView
 
 		addTab("Inferred Axioms", reasonerIcon, new InferredOWLAxiomsView(swrlRuleEngine), "Inferred OWL Axioms Tab");
 
-		addTab("OWL 2 RL", reasonerIcon, new SWRLTabOWL2RLPanel(swrlRuleEngine.getOWL2RLEngine()), "OWL 2 RL Tab");
+		addTab("OWL 2 RL", reasonerIcon, new OWL2RLRuleTablesView(swrlRuleEngine.getOWL2RLEngine()), "OWL 2 RL Tab");
 	}
 
 	@Override

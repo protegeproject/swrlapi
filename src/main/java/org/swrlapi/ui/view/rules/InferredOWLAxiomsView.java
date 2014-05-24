@@ -1,4 +1,4 @@
-package org.swrlapi.ui.view;
+package org.swrlapi.ui.view.rules;
 
 import java.awt.BorderLayout;
 
@@ -9,7 +9,7 @@ import javax.swing.JViewport;
 import javax.swing.table.AbstractTableModel;
 
 import org.swrlapi.core.SWRLRuleEngine;
-import org.swrlapi.ui.core.SWRLAPIView;
+import org.swrlapi.ui.view.SWRLAPIView;
 
 public class InferredOWLAxiomsView extends JPanel implements SWRLAPIView
 {

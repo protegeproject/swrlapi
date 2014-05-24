@@ -1,4 +1,4 @@
-package org.swrlapi.ui.view;
+package org.swrlapi.ui.view.queries;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -24,7 +24,7 @@ import org.swrlapi.sqwrl.exceptions.SQWRLInvalidQueryNameException;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLNamedResultValue;
 import org.swrlapi.sqwrl.values.SQWRLResultValue;
-import org.swrlapi.ui.core.SWRLAPIView;
+import org.swrlapi.ui.view.SWRLAPIView;
 
 /**
  * A panel holding the result for a single SQWRL query

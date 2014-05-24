@@ -1,5 +1,4 @@
-package org.swrlapi.ui.core;
-
+package org.swrlapi.ui.view;
 
 public interface SWRLAPIView
 {

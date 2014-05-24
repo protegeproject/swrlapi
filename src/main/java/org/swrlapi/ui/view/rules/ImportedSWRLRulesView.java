@@ -1,4 +1,4 @@
-package org.swrlapi.ui.view;
+package org.swrlapi.ui.view.rules;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -13,30 +13,34 @@ import javax.swing.JTable;
 import javax.swing.JViewport;
 import javax.swing.table.TableColumnModel;
 
-import org.swrlapi.ui.core.SQWRLApplicationView;
-import org.swrlapi.ui.core.SWRLAPIApplicationController;
-import org.swrlapi.ui.core.SWRLAPIView;
+import org.swrlapi.ui.controller.SWRLAPIApplicationController;
 import org.swrlapi.ui.dialog.SWRLAPIApplicationDialogManager;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
+import org.swrlapi.ui.view.SWRLAPIView;
 
-public class SWRLRulesTableView extends JPanel implements SWRLAPIView
+public class ImportedSWRLRulesView extends JPanel implements SWRLAPIView
 {
 	private static final long serialVersionUID = 1L;
 
 	private final SWRLAPIApplicationController applicationController;
 	private final JTable swrlRulesTable;
 
-	public SWRLRulesTableView(SWRLAPIApplicationController applicationController)
+	public ImportedSWRLRulesView(SWRLAPIApplicationController applicationController)
 	{
 		this.applicationController = applicationController;
 		this.swrlRulesTable = new JTable(getSWRLRulesTableModel());
 
 		addTableListeners();
 		setPreferredColumnWidths();
-
 		getSWRLRulesTableModel().setView(this);
-
 		createComponents();
+	}
+
+	@Override
+	public void update()
+	{
+		getSWRLRulesTableModel().fireTableDataChanged();
+		validate();
 	}
 
 	private void addTableListeners()
@@ -69,13 +73,6 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 		columnModel.getColumn(5).setMaxWidth(150);
 		columnModel.getColumn(6).setMaxWidth(100);
 		columnModel.getColumn(7).setMaxWidth(100);
-	}
-
-	@Override
-	public void update()
-	{
-		getSWRLRulesTableModel().fireTableDataChanged();
-		validate();
 	}
 
 	public String getSelectedSWRLRuleName()
@@ -128,7 +125,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
-			getDialogManager().getCreateSWRLRuleDialog().setVisible(true);
+			getApplicationDialogManager().getCreateSWRLRuleDialog().setVisible(true);
 		}
 	}
 
@@ -146,7 +143,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 		String selectedRuleName = getSelectedSWRLRuleName();
 
 		if (getSWRLRulesTableModel().hasSWRLRule(selectedRuleName)) {
-			getDialogManager().getCreateSWRLRuleDialog(selectedRuleName, "TODO", "TODO").setVisible(true);
+			getApplicationDialogManager().getCreateSWRLRuleDialog(selectedRuleName, "TODO", "TODO").setVisible(true);
 		}
 	}
 
@@ -158,8 +155,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 			String selectedRuleName = getSelectedSWRLRuleName();
 
 			if (getSWRLRulesTableModel().hasSWRLRule(selectedRuleName)
-					&& getDialogManager().showConfirmDialog(getApplicationView(), "Delete rule",
-							"Do you really want to delete the rule?")) {
+					&& getApplicationDialogManager().showConfirmDialog("Delete rule", "Do you really want to delete the rule?")) {
 				getSWRLRulesTableModel().removeSWRLRule(selectedRuleName);
 			}
 		}
@@ -170,13 +166,8 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 		return applicationController.getApplicationModel().getSWRLRulesTableModel();
 	}
 
-	private SQWRLApplicationView getApplicationView()
+	private SWRLAPIApplicationDialogManager getApplicationDialogManager()
 	{
-		return applicationController.getApplicationView();
-	}
-
-	private SWRLAPIApplicationDialogManager getDialogManager()
-	{
-		return getApplicationView().getApplicationDialogManager();
+		return applicationController.getApplicationDialogManager();
 	}
 }

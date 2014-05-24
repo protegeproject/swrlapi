@@ -1,4 +1,4 @@
-package org.swrlapi.ui.view;
+package org.swrlapi.ui.view.rules;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -14,7 +14,7 @@ import javax.swing.JTextArea;
 
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.exceptions.SWRLRuleEngineException;
-import org.swrlapi.ui.core.SWRLAPIView;
+import org.swrlapi.ui.view.SWRLAPIView;
 
 public class SWRLRulesControlView extends JPanel implements SWRLAPIView
 {

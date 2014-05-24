@@ -1,4 +1,4 @@
-package org.swrlapi.ui.view;
+package org.swrlapi.ui.view.queries;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -19,7 +19,8 @@ import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.exceptions.SQWRLInvalidQueryNameException;
-import org.swrlapi.ui.core.SWRLAPIView;
+import org.swrlapi.ui.view.SWRLAPIView;
+import org.swrlapi.ui.view.SWRLRuleSelector;
 
 public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
 {

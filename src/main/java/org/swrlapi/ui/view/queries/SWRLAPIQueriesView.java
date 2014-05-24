@@ -1,12 +1,13 @@
-package org.swrlapi.ui.view;
+package org.swrlapi.ui.view.queries;
 
 import javax.swing.Icon;
 import javax.swing.JTabbedPane;
 
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
-import org.swrlapi.ui.core.SWRLAPIApplicationModel;
-import org.swrlapi.ui.core.SWRLAPIView;
-import org.swrlapi.ui.owl2rl.SWRLTabOWL2RLPanel;
+import org.swrlapi.ui.model.SWRLAPIApplicationModel;
+import org.swrlapi.ui.view.SWRLAPIView;
+import org.swrlapi.ui.view.SWRLRuleSelector;
+import org.swrlapi.ui.view.owl2rl.OWL2RLRuleTablesView;
 
 public class SWRLAPIQueriesView extends JTabbedPane implements SWRLAPIView
 {
@@ -17,10 +18,10 @@ public class SWRLAPIQueriesView extends JTabbedPane implements SWRLAPIView
 	{
 		SQWRLQueryEngine queryEngine = applicationModel.getSQWRLQueryEngine();
 
-		addTab("SWRLTab Qeries", queryEngineIcon, new SQWRLQueryControlView(queryEngine, ruleSelector, queryEngineIcon),
+		addTab("SWRLTab Queries", queryEngineIcon, new SQWRLQueryControlView(queryEngine, ruleSelector, queryEngineIcon),
 				"Control Panel");
 
-		addTab("OWL 2 RL", reasonerIcon, new SWRLTabOWL2RLPanel(queryEngine.getOWL2RLEngine()), "OWL 2 RL Tab");
+		addTab("OWL 2 RL", reasonerIcon, new OWL2RLRuleTablesView(queryEngine.getOWL2RLEngine()), "OWL 2 RL Tab");
 	}
 
 	@Override

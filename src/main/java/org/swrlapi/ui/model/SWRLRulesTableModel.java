@@ -7,7 +7,7 @@ import java.util.Set;
 
 import javax.swing.table.AbstractTableModel;
 
-import org.swrlapi.ui.core.SWRLAPIView;
+import org.swrlapi.ui.view.SWRLAPIView;
 
 public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIModel
 {
@@ -19,7 +19,7 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 	private static int SOURCE_SHEET_NAME_COLUMN = 3;
 	private static int NUMBER_OF_COLUMNS = 4;
 
-	private SWRLAPIView view = null;
+	private SWRLAPIView swrlapiView = null;
 	private boolean isModified = false;
 
 	private final Map<String, SWRLRuleModel> swrlRuleModels;
@@ -90,7 +90,7 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 
 	public void setView(SWRLAPIView view)
 	{
-		this.view = view;
+		this.swrlapiView = view;
 	}
 
 	public boolean hasBeenModified()
@@ -179,8 +179,8 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 
 	private void updateView()
 	{
-		if (view != null)
-			view.update();
+		if (swrlapiView != null)
+			swrlapiView.update();
 	}
 
 	private class SWRLRuleModel

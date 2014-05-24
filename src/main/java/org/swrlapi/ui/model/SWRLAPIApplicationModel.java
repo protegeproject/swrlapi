@@ -1,10 +1,9 @@
-package org.swrlapi.ui.core;
+package org.swrlapi.ui.model;
 
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
-import org.swrlapi.ui.model.SWRLAPIModel;
-import org.swrlapi.ui.model.SWRLRulesTableModel;
+import org.swrlapi.ui.view.SWRLAPIApplicationView;
 
 public class SWRLAPIApplicationModel implements SWRLAPIModel
 {
@@ -50,7 +49,7 @@ public class SWRLAPIApplicationModel implements SWRLAPIModel
 		return this.swrlRulesTableModel;
 	}
 
-	public void setApplicationView(SQWRLApplicationView applicationView)
+	public void setApplicationView(SWRLAPIApplicationView applicationView)
 	{
 		this.applicationView = applicationView;
 	}

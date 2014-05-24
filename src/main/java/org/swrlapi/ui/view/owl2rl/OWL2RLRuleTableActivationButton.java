@@ -1,4 +1,4 @@
-package org.swrlapi.ui.owl2rl;
+package org.swrlapi.ui.view.owl2rl;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -7,15 +7,16 @@ import java.awt.event.ActionListener;
 import javax.swing.JCheckBox;
 
 import org.swrlapi.owl2rl.OWL2RLNames;
+import org.swrlapi.ui.model.OWL2RLModel;
 
-public class OWL2RLTableActivationButton extends JCheckBox implements ActionListener
+public class OWL2RLRuleTableActivationButton extends JCheckBox implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
 
 	private final OWL2RLModel owl2RLModel;
-	private final OWL2RLNames.Table table;
+	private final OWL2RLNames.RuleTable table;
 
-	public OWL2RLTableActivationButton(OWL2RLModel owl2RLModel, OWL2RLNames.Table table)
+	public OWL2RLRuleTableActivationButton(OWL2RLModel owl2RLModel, OWL2RLNames.RuleTable table)
 	{
 		super(table.toString());
 

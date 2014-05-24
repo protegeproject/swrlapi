@@ -12,9 +12,9 @@ import java.util.Set;
 
 public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 {
-	private final List<Table> tables;
+	private final List<RuleTable> tables;
 	private final Set<Rule> rules;
-	private final Map<Table, List<Rule>> table2RulesMap;
+	private final Map<RuleTable, List<Rule>> table2RulesMap;
 	private final Set<Set<Rule>> groupedRuleSets;
 	private final OWL2RLPersistenceLayer persistenceLayer;
 	private final Set<Rule> unsupportedRules;
@@ -29,15 +29,15 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 			Set<Set<Rule>> groupedRuleSets)
 	{
 		this.persistenceLayer = persistenceLayer;
-		this.tables = new ArrayList<Table>(Arrays.asList(Table.values()));
+		this.tables = new ArrayList<RuleTable>(Arrays.asList(RuleTable.values()));
 		this.rules = EnumSet.allOf(Rule.class);
-		this.table2RulesMap = new HashMap<Table, List<Rule>>();
-		this.table2RulesMap.put(Table.Table4, new ArrayList<Rule>(Arrays.asList(Table4Rules)));
-		this.table2RulesMap.put(Table.Table5, new ArrayList<Rule>(Arrays.asList(Table5Rules)));
-		this.table2RulesMap.put(Table.Table6, new ArrayList<Rule>(Arrays.asList(Table6Rules)));
-		this.table2RulesMap.put(Table.Table7, new ArrayList<Rule>(Arrays.asList(Table7Rules)));
-		this.table2RulesMap.put(Table.Table8, new ArrayList<Rule>(Arrays.asList(Table8Rules)));
-		this.table2RulesMap.put(Table.Table9, new ArrayList<Rule>(Arrays.asList(Table9Rules)));
+		this.table2RulesMap = new HashMap<RuleTable, List<Rule>>();
+		this.table2RulesMap.put(RuleTable.RuleTable4, new ArrayList<Rule>(Arrays.asList(Table4Rules)));
+		this.table2RulesMap.put(RuleTable.RuleTable5, new ArrayList<Rule>(Arrays.asList(Table5Rules)));
+		this.table2RulesMap.put(RuleTable.RuleTable6, new ArrayList<Rule>(Arrays.asList(Table6Rules)));
+		this.table2RulesMap.put(RuleTable.RuleTable7, new ArrayList<Rule>(Arrays.asList(Table7Rules)));
+		this.table2RulesMap.put(RuleTable.RuleTable8, new ArrayList<Rule>(Arrays.asList(Table8Rules)));
+		this.table2RulesMap.put(RuleTable.RuleTable9, new ArrayList<Rule>(Arrays.asList(Table9Rules)));
 		this.unsupportedRules = unsupportedRules;
 		this.permanentlyOnRules = permanentlyOnRules;
 		this.groupedRuleSets = groupedRuleSets;
@@ -74,7 +74,7 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 		return this.ruleSelectionChanged;
 	}
 
-	public List<Table> getTables()
+	public List<RuleTable> getRuleTables()
 	{
 		return this.tables;
 	}
@@ -94,7 +94,7 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 		return new ArrayList<Rule>(this.rules);
 	}
 
-	public List<Rule> getRules(Table table)
+	public List<Rule> getRules(RuleTable table)
 	{
 		return this.table2RulesMap.get(table);
 	}
@@ -135,9 +135,9 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 		getOWL2RLPersistenceLayer().disableAll();
 	}
 
-	public void enableTables(Table... enabledTables)
+	public void enableTables(RuleTable... enabledTables)
 	{
-		for (Table table : enabledTables) {
+		for (RuleTable table : enabledTables) {
 			for (Rule rule : this.table2RulesMap.get(table))
 				this.enabledRules.add(rule);
 		}
@@ -145,11 +145,11 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 		getOWL2RLPersistenceLayer().setEnabledRules(this.enabledRules);
 	}
 
-	public void disableTables(Table... disabledTables)
+	public void disableTables(RuleTable... disabledTables)
 	{
 		Set<Rule> disabledRules = new HashSet<Rule>();
 
-		for (Table table : disabledTables)
+		for (RuleTable table : disabledTables)
 			for (Rule rule : this.table2RulesMap.get(table))
 				disabledRules.add(rule);
 
@@ -207,7 +207,7 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 		return this.switchableRules.contains(rule);
 	}
 
-	public boolean hasEnabledRules(Table table)
+	public boolean hasEnabledRules(RuleTable table)
 	{
 		for (Rule rule : getRules(table)) {
 			if (isRuleEnabled(rule))
@@ -216,7 +216,7 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 		return false;
 	}
 
-	public boolean hasSwitchableRules(Table table)
+	public boolean hasSwitchableRules(RuleTable table)
 	{
 		for (Rule rule : getRules(table)) {
 			if (isRuleSwitchable(rule))
