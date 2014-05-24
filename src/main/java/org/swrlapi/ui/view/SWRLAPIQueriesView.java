@@ -8,11 +8,11 @@ import org.swrlapi.ui.core.SWRLAPIApplicationModel;
 import org.swrlapi.ui.core.SWRLAPIView;
 import org.swrlapi.ui.owl2rl.SWRLTabOWL2RLPanel;
 
-public class SWRLTabQueriesView extends JTabbedPane implements SWRLAPIView
+public class SWRLAPIQueriesView extends JTabbedPane implements SWRLAPIView
 {
 	private static final long serialVersionUID = 1L;
 
-	public SWRLTabQueriesView(SWRLAPIApplicationModel applicationModel, Icon queryEngineIcon, Icon reasonerIcon,
+	public SWRLAPIQueriesView(SWRLAPIApplicationModel applicationModel, Icon queryEngineIcon, Icon reasonerIcon,
 			SWRLRuleSelector ruleSelector)
 	{
 		SQWRLQueryEngine queryEngine = applicationModel.getSQWRLQueryEngine();
