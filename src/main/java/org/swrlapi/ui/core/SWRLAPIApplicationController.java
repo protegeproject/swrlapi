@@ -1,7 +1,4 @@
-package org.swrlapi.ui;
-
-import org.swrlapi.ui.core.SQWRLApplicationView;
-import org.swrlapi.ui.core.SWRLAPIApplicationModel;
+package org.swrlapi.ui.core;
 
 public class SWRLAPIApplicationController
 {

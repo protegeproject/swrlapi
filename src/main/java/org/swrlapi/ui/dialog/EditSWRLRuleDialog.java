@@ -18,8 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import org.swrlapi.ui.SWRLAPIApplicationController;
 import org.swrlapi.ui.core.SQWRLApplicationView;
+import org.swrlapi.ui.core.SWRLAPIApplicationController;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
 
 public class EditSWRLRuleDialog extends JDialog

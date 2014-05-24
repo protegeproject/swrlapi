@@ -3,16 +3,16 @@ package org.swrlapi.ui.action;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import org.swrlapi.ui.SWRLAPIApplicationController;
 import org.swrlapi.ui.core.SQWRLApplicationView;
+import org.swrlapi.ui.core.SWRLAPIApplicationController;
 import org.swrlapi.ui.dialog.SWRLAPIApplicationDialogManager;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
 
-public class RunSWRLRulesAction implements ActionListener
+public class RunSQWRLQueriesAction implements ActionListener
 {
 	private final SWRLAPIApplicationController applicationController;
 
-	public RunSWRLRulesAction(SWRLAPIApplicationController applicationController)
+	public RunSQWRLQueriesAction(SWRLAPIApplicationController applicationController)
 	{
 		this.applicationController = applicationController;
 	}

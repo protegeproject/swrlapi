@@ -3,8 +3,8 @@ package org.swrlapi.ui.action;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import org.swrlapi.ui.SWRLAPIApplicationController;
 import org.swrlapi.ui.core.SQWRLApplicationView;
+import org.swrlapi.ui.core.SWRLAPIApplicationController;
 import org.swrlapi.ui.core.SWRLAPIApplicationModel;
 import org.swrlapi.ui.dialog.SWRLAPIApplicationDialogManager;
 import org.swrlapi.ui.model.SWRLRulesTableModel;

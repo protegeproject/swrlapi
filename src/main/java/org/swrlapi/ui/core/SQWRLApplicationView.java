@@ -1,11 +1,10 @@
 package org.swrlapi.ui.core;
 
+import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 
-import org.swrlapi.ui.SWRLAPIApplicationController;
 import org.swrlapi.ui.dialog.SWRLAPIApplicationDialogManager;
-import org.swrlapi.ui.view.SQWRLQueryControllerView;
 import org.swrlapi.ui.view.SWRLRulesTableView;
 
 public class SQWRLApplicationView extends JSplitPane implements SWRLAPIApplicationView
@@ -15,7 +14,7 @@ public class SQWRLApplicationView extends JSplitPane implements SWRLAPIApplicati
 	private final SWRLAPIApplicationController applicationController;
 	private final SWRLAPIApplicationDialogManager applicationDialogManager;
 	private final JTabbedPane sqwrlQueriesPane;
-	private final SQWRLQueryControllerView sqwrlQueryControllerView;
+	private final JPanel sqwrlQueryControllerView;
 	private final SWRLRulesTableView sqwrlQueriesTableView;
 
 	public SQWRLApplicationView(SWRLAPIApplicationModel applicationModel,
@@ -36,7 +35,7 @@ public class SQWRLApplicationView extends JSplitPane implements SWRLAPIApplicati
 		this.sqwrlQueriesTableView = new SWRLRulesTableView(applicationController);
 		sqwrlQueriesPane.addTab("SWRL Rules", null, sqwrlQueriesTableView, "SWRL Rules Tab");
 
-		this.sqwrlQueryControllerView = new SQWRLQueryControllerView(applicationController);
+		this.sqwrlQueryControllerView = new JPanel();
 		sqwrlQueriesPane.addTab("Mappings Control", null, sqwrlQueryControllerView, "Mappings Control Tab");
 	}
 
@@ -44,15 +43,10 @@ public class SQWRLApplicationView extends JSplitPane implements SWRLAPIApplicati
 	public void update()
 	{
 		sqwrlQueriesTableView.update();
-		sqwrlQueryControllerView.update();
+		// TODO sqwrlQueryControllerView.update();
 	}
 
-	public SWRLAPIApplicationController getApplicationController()
-	{
-		return this.applicationController;
-	}
-
-	public SQWRLQueryControllerView getSQWRLQueryControllerView()
+	public JPanel getSQWRLQueryControllerView()
 	{
 		return this.sqwrlQueryControllerView;
 	}

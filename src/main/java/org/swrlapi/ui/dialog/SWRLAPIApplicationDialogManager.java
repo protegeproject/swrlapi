@@ -4,7 +4,7 @@ import java.awt.Component;
 
 import javax.swing.JDialog;
 
-import org.swrlapi.ui.SWRLAPIApplicationController;
+import org.swrlapi.ui.core.SWRLAPIApplicationController;
 
 public interface SWRLAPIApplicationDialogManager
 {

@@ -1,4 +1,4 @@
-package org.swrlapi.ui.panels;
+package org.swrlapi.ui.view;
 
 import java.awt.BorderLayout;
 import java.util.Set;
@@ -13,28 +13,29 @@ import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.ext.SWRLAPIRule;
 import org.swrlapi.ext.impl.SWRLAPIRulePrinter;
+import org.swrlapi.ui.core.SWRLAPIView;
 
-public class SWRLTabRuleListPanel extends JPanel
+public class SWRLRulesView extends JPanel implements SWRLAPIView
 {
 	private static final long serialVersionUID = 1L;
 
-	private final SWRLRuleEngine ruleEngine;
-	private final SWRLAPIRulePrinter rulePrinter;
-	private final SWRLRulesTableModel rulesTableModel;
-	private final JTable rulesTable;
+	private final SWRLRuleEngine swrlRuleEngine;
+	private final SWRLAPIRulePrinter swrlRulePrinter;
+	private final SWRLRulesTableModel swrlRulesTableModel;
+	private final JTable swrlRulesTable;
 
-	public SWRLTabRuleListPanel(SWRLRuleEngine ruleEngine, DefaultPrefixManager prefixManager)
+	public SWRLRulesView(SWRLRuleEngine ruleEngine, DefaultPrefixManager prefixManager)
 	{
-		this.ruleEngine = ruleEngine;
-		this.rulesTableModel = new SWRLRulesTableModel();
-		this.rulesTable = new JTable(this.rulesTableModel);
-		this.rulePrinter = new SWRLAPIRulePrinter(prefixManager);
+		this.swrlRuleEngine = ruleEngine;
+		this.swrlRulesTableModel = new SWRLRulesTableModel();
+		this.swrlRulesTable = new JTable(this.swrlRulesTableModel);
+		this.swrlRulePrinter = new SWRLAPIRulePrinter(prefixManager);
 
 		setLayout(new BorderLayout());
 
-		JScrollPane scrollPane = new JScrollPane(this.rulesTable);
+		JScrollPane scrollPane = new JScrollPane(this.swrlRulesTable);
 		JViewport viewPort = scrollPane.getViewport();
-		viewPort.setBackground(this.rulesTable.getBackground());
+		viewPort.setBackground(this.swrlRulesTable.getBackground());
 
 		add(BorderLayout.CENTER, scrollPane);
 	}
@@ -42,8 +43,14 @@ public class SWRLTabRuleListPanel extends JPanel
 	@Override
 	public void validate()
 	{
-		this.rulesTableModel.fireTableDataChanged();
+		this.swrlRulesTableModel.fireTableDataChanged();
 		super.validate();
+	}
+
+	@Override
+	public void update()
+	{
+		validate();
 	}
 
 	private class SWRLRulesTableModel extends AbstractTableModel
@@ -53,7 +60,7 @@ public class SWRLTabRuleListPanel extends JPanel
 		@Override
 		public int getRowCount()
 		{
-			return SWRLTabRuleListPanel.this.ruleEngine.getNumberOfImportedSWRLRules();
+			return SWRLRulesView.this.swrlRuleEngine.getNumberOfImportedSWRLRules();
 		}
 
 		@Override
@@ -74,10 +81,10 @@ public class SWRLTabRuleListPanel extends JPanel
 			if (row < 0 || row >= getRowCount())
 				return new String("OUT OF BOUNDS!");
 			else {
-				Set<SWRLAPIRule> rules = SWRLTabRuleListPanel.this.ruleEngine.getSWRLRules();
+				Set<SWRLAPIRule> rules = SWRLRulesView.this.swrlRuleEngine.getSWRLRules();
 				SWRLAPIRule[] arr = rules.toArray(new SWRLAPIRule[rules.size()]);
 				SWRLAPIRule rule = arr[row];
-				return rule.accept(rulePrinter);
+				return rule.accept(swrlRulePrinter);
 			}
 		}
 	}

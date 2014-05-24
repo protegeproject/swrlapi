@@ -1,4 +1,4 @@
-package org.swrlapi.ui.panels;
+package org.swrlapi.ui.view;
 
 import java.awt.BorderLayout;
 
@@ -9,19 +9,20 @@ import javax.swing.JViewport;
 import javax.swing.table.AbstractTableModel;
 
 import org.swrlapi.core.SWRLRuleEngine;
+import org.swrlapi.ui.core.SWRLAPIView;
 
-public class SWRLTabInferredAxiomsPanel extends JPanel
+public class InferredOWLAxiomsView extends JPanel implements SWRLAPIView
 {
 	private static final long serialVersionUID = 1L;
 
 	private final SWRLRuleEngine ruleEngine;
-	private final SWRLAPIInferredAxiomsModel inferredAxiomsModel;
+	private final InferredAxiomsTableModel inferredAxiomsModel;
 	private final JTable table;
 
-	public SWRLTabInferredAxiomsPanel(SWRLRuleEngine ruleEngine)
+	public InferredOWLAxiomsView(SWRLRuleEngine ruleEngine)
 	{
 		this.ruleEngine = ruleEngine;
-		this.inferredAxiomsModel = new SWRLAPIInferredAxiomsModel();
+		this.inferredAxiomsModel = new InferredAxiomsTableModel();
 		this.table = new JTable(this.inferredAxiomsModel);
 
 		setLayout(new BorderLayout());
@@ -40,14 +41,20 @@ public class SWRLTabInferredAxiomsPanel extends JPanel
 		super.validate();
 	}
 
-	private class SWRLAPIInferredAxiomsModel extends AbstractTableModel
+	@Override
+	public void update()
+	{
+		validate();
+	}
+
+	private class InferredAxiomsTableModel extends AbstractTableModel
 	{
 		private static final long serialVersionUID = 1L;
 
 		@Override
 		public int getRowCount()
 		{
-			return SWRLTabInferredAxiomsPanel.this.ruleEngine.getNumberOfInferredOWLAxioms();
+			return InferredOWLAxiomsView.this.ruleEngine.getNumberOfInferredOWLAxioms();
 		}
 
 		@Override
@@ -68,7 +75,7 @@ public class SWRLTabInferredAxiomsPanel extends JPanel
 			if (row < 0 || row >= getRowCount())
 				return new String("OUT OF BOUNDS");
 			else {
-				return SWRLTabInferredAxiomsPanel.this.ruleEngine.getInferredOWLAxioms().toArray()[row];
+				return InferredOWLAxiomsView.this.ruleEngine.getInferredOWLAxioms().toArray()[row];
 			}
 		}
 	}

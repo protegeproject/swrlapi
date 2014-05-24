@@ -1,4 +1,4 @@
-package org.swrlapi.ui.panels;
+package org.swrlapi.ui.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -19,8 +19,9 @@ import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.exceptions.SQWRLInvalidQueryNameException;
+import org.swrlapi.ui.core.SWRLAPIView;
 
-public class SWRLTabSQWRLControlPanel extends JPanel
+public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
 {
 	private static final long serialVersionUID = 1L;
 
@@ -30,9 +31,9 @@ public class SWRLTabSQWRLControlPanel extends JPanel
 	private final SWRLRuleSelector querySelector;
 	private final JTextArea console;
 	private final Icon queryEngineIcon;
-	private final HashMap<String, SQWRLQueryResultPanel> resultPanels = new HashMap<String, SQWRLQueryResultPanel>();
+	private final HashMap<String, SQWRLQueryResultView> resultPanels = new HashMap<String, SQWRLQueryResultView>();
 
-	public SWRLTabSQWRLControlPanel(SQWRLQueryEngine queryEngine, Icon queryEngineIcon, SWRLRuleSelector querySelector)
+	public SQWRLQueryControlView(SQWRLQueryEngine queryEngine, SWRLRuleSelector querySelector, Icon queryEngineIcon)
 	{
 		this.queryEngine = queryEngine;
 		this.queryEngineIcon = queryEngineIcon;
@@ -64,6 +65,12 @@ public class SWRLTabSQWRLControlPanel extends JPanel
 		this.console.append("If the selected query generates a result, the result will appear in a new sub tab.\n\n");
 	}
 
+	@Override
+	public void update()
+	{
+		validate();
+	}
+
 	public void appendText(String text)
 	{
 		this.console.append(text);
@@ -72,7 +79,7 @@ public class SWRLTabSQWRLControlPanel extends JPanel
 	public void removeResultPanel(String queryName)
 	{
 		if (this.resultPanels.containsKey(queryName)) {
-			SQWRLQueryResultPanel resultPanel = this.resultPanels.get(queryName);
+			SQWRLQueryResultView resultPanel = this.resultPanels.get(queryName);
 			this.resultPanels.remove(queryName);
 			((JTabbedPane)getParent()).remove(resultPanel);
 			((JTabbedPane)getParent()).setSelectedIndex(0);
@@ -81,7 +88,7 @@ public class SWRLTabSQWRLControlPanel extends JPanel
 
 	public void removeAllPanels()
 	{
-		for (SQWRLQueryResultPanel resultPanel : this.resultPanels.values())
+		for (SQWRLQueryResultView resultPanel : this.resultPanels.values())
 			((JTabbedPane)getParent()).remove(resultPanel);
 		this.resultPanels.clear();
 	}
@@ -108,10 +115,10 @@ public class SWRLTabSQWRLControlPanel extends JPanel
 
 	private class ListenerBase
 	{
-		protected final SWRLTabSQWRLControlPanel controlPanel;
+		protected final SQWRLQueryControlView controlPanel;
 		protected final JTextArea console;
 
-		public ListenerBase(JTextArea console, SWRLTabSQWRLControlPanel controlPanel)
+		public ListenerBase(JTextArea console, SQWRLQueryControlView controlPanel)
 		{
 			this.console = console;
 			this.controlPanel = controlPanel;
@@ -120,7 +127,7 @@ public class SWRLTabSQWRLControlPanel extends JPanel
 
 	private class RunActionListener extends ListenerBase implements ActionListener
 	{
-		public RunActionListener(JTextArea console, SWRLTabSQWRLControlPanel controlPanel)
+		public RunActionListener(JTextArea console, SQWRLQueryControlView controlPanel)
 		{
 			super(console, controlPanel);
 		}
@@ -130,34 +137,34 @@ public class SWRLTabSQWRLControlPanel extends JPanel
 		{
 			String queryName = "";
 
-			if (SWRLTabSQWRLControlPanel.this.resultPanels.size() == SWRLTabSQWRLControlPanel.this.MaximumOpenResultPanels) {
-				this.console.append("A maximum of " + SWRLTabSQWRLControlPanel.this.MaximumOpenResultPanels
+			if (SQWRLQueryControlView.this.resultPanels.size() == SQWRLQueryControlView.this.MaximumOpenResultPanels) {
+				this.console.append("A maximum of " + SQWRLQueryControlView.this.MaximumOpenResultPanels
 						+ " result tabs may be open at once. ");
 				this.console.append("Please close an existing tab to display results for the selected query.\n");
 			} else {
 				try {
-					SWRLRuleSelector ruleSelector = SWRLTabSQWRLControlPanel.this.querySelector;
+					SWRLRuleSelector ruleSelector = SQWRLQueryControlView.this.querySelector;
 
 					if (ruleSelector == null) {
 						this.console.append("Configuration error: no query selector supplied. No queries can be executed.\n");
 					} else {
-						queryName = SWRLTabSQWRLControlPanel.this.querySelector.getSelectedRuleName();
+						queryName = SQWRLQueryControlView.this.querySelector.getSelectedRuleName();
 
 						if (queryName == null || queryName.length() == 0)
 							this.console.append("No enabled SQWRL query selected.\n");
 						else {
 							long startTime = System.currentTimeMillis();
-							SQWRLResult result = SWRLTabSQWRLControlPanel.this.queryEngine.runSQWRLQuery(queryName);
+							SQWRLResult result = SQWRLQueryControlView.this.queryEngine.runSQWRLQuery(queryName);
 
 							if (result == null || result.getNumberOfRows() == 0) {
 								this.console.append("SQWRL query " + queryName + " did not generate any result.\n");
-								if (SWRLTabSQWRLControlPanel.this.resultPanels.containsKey(queryName)) {
-									SQWRLQueryResultPanel resultPanel = SWRLTabSQWRLControlPanel.this.resultPanels.get(queryName);
-									SWRLTabSQWRLControlPanel.this.resultPanels.remove(resultPanel);
+								if (SQWRLQueryControlView.this.resultPanels.containsKey(queryName)) {
+									SQWRLQueryResultView resultPanel = SQWRLQueryControlView.this.resultPanels.get(queryName);
+									SQWRLQueryControlView.this.resultPanels.remove(resultPanel);
 									((JTabbedPane)getParent()).remove(resultPanel);
 								}
 							} else { // A result was returned
-								SQWRLQueryResultPanel resultPanel;
+								SQWRLQueryResultView resultPanel;
 
 								this.console.append("See the " + queryName + " tab to review results of the SQWRL query.\n");
 								this.console.append("The query took " + (System.currentTimeMillis() - startTime) + " milliseconds. ");
@@ -166,14 +173,14 @@ public class SWRLTabSQWRLControlPanel extends JPanel
 								else
 									this.console.append("" + result.getNumberOfRows() + " rows were returned.\n");
 
-								if (SWRLTabSQWRLControlPanel.this.resultPanels.containsKey(queryName))
-									resultPanel = SWRLTabSQWRLControlPanel.this.resultPanels.get(queryName); // Existing tab found
+								if (SQWRLQueryControlView.this.resultPanels.containsKey(queryName))
+									resultPanel = SQWRLQueryControlView.this.resultPanels.get(queryName); // Existing tab found
 								else { // Create new tab
-									resultPanel = new SQWRLQueryResultPanel(SWRLTabSQWRLControlPanel.this.queryEngine, queryName, result,
+									resultPanel = new SQWRLQueryResultView(SQWRLQueryControlView.this.queryEngine, queryName, result,
 											this.controlPanel);
-									SWRLTabSQWRLControlPanel.this.resultPanels.put(queryName, resultPanel);
-									((JTabbedPane)getParent()).addTab(queryName, SWRLTabSQWRLControlPanel.this.queryEngineIcon,
-											resultPanel, "Result Panel for query '" + queryName + "'");
+									SQWRLQueryControlView.this.resultPanels.put(queryName, resultPanel);
+									((JTabbedPane)getParent()).addTab(queryName, SQWRLQueryControlView.this.queryEngineIcon, resultPanel,
+											"Result Panel for query '" + queryName + "'");
 								}
 								resultPanel.validate();
 								this.controlPanel.getParent().validate();

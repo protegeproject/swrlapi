@@ -1,4 +1,4 @@
-package org.swrlapi.ui.panels;
+package org.swrlapi.ui.view;
 
 public interface SWRLRuleSelector
 {

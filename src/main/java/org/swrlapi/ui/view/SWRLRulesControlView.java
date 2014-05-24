@@ -1,4 +1,4 @@
-package org.swrlapi.ui.panels;
+package org.swrlapi.ui.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -14,8 +14,9 @@ import javax.swing.JTextArea;
 
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.exceptions.SWRLRuleEngineException;
+import org.swrlapi.ui.core.SWRLAPIView;
 
-public class SWRLTabRulesControlPanel extends JPanel
+public class SWRLRulesControlView extends JPanel implements SWRLAPIView
 {
 	private static final long serialVersionUID = 1L;
 
@@ -23,7 +24,7 @@ public class SWRLTabRulesControlPanel extends JPanel
 	private final String ruleEngineName;
 	private final String ruleEngineVersion;
 
-	public SWRLTabRulesControlPanel(SWRLRuleEngine ruleEngine)
+	public SWRLRulesControlView(SWRLRuleEngine ruleEngine)
 	{
 		this.ruleEngine = ruleEngine;
 		this.ruleEngineName = ruleEngine.getTargetRuleEngineName();
@@ -66,6 +67,12 @@ public class SWRLTabRulesControlPanel extends JPanel
 		console.append("See the 'OWL 2 RL' subtab for more information on this reasoner.");
 	}
 
+	@Override
+	public void update()
+	{
+		validate();
+	}
+
 	private JButton createButton(String text, String toolTipText, ActionListener listener)
 	{
 		JButton button = new JButton(text);
@@ -92,9 +99,9 @@ public class SWRLTabRulesControlPanel extends JPanel
 	{
 		protected final SWRLRuleEngine ruleEngine;
 		protected final JTextArea console;
-		protected final SWRLTabRulesControlPanel controlPanel;
+		protected final SWRLRulesControlView controlPanel;
 
-		public ListenerBase(SWRLRuleEngine ruleEngine, JTextArea console, SWRLTabRulesControlPanel controlPanel)
+		public ListenerBase(SWRLRuleEngine ruleEngine, JTextArea console, SWRLRulesControlView controlPanel)
 		{
 			this.ruleEngine = ruleEngine;
 			this.console = console;
@@ -104,7 +111,7 @@ public class SWRLTabRulesControlPanel extends JPanel
 
 	private class ImportActionListener extends ListenerBase implements ActionListener
 	{
-		public ImportActionListener(SWRLRuleEngine ruleEngine, JTextArea console, SWRLTabRulesControlPanel controlPanel)
+		public ImportActionListener(SWRLRuleEngine ruleEngine, JTextArea console, SWRLRulesControlView controlPanel)
 		{
 			super(ruleEngine, console, controlPanel);
 		}
@@ -131,7 +138,7 @@ public class SWRLTabRulesControlPanel extends JPanel
 				this.console.append("Total number of OWL axioms exported to rule engine: "
 						+ this.ruleEngine.getNumberOfAssertedOWLAxioms() + "\n");
 				this.console.append("The transfer took " + (System.currentTimeMillis() - startTime) + " millisecond(s).\n");
-				this.console.append("Press the 'Run " + SWRLTabRulesControlPanel.this.ruleEngineName
+				this.console.append("Press the 'Run " + SWRLRulesControlView.this.ruleEngineName
 						+ "' button to run the rule engine.\n");
 			} catch (SWRLRuleEngineException e) {
 				this.console.append("Exception importing SWRL rules and OWL knowledge: " + e.toString() + "\n");
@@ -142,7 +149,7 @@ public class SWRLTabRulesControlPanel extends JPanel
 
 	private class RunActionListener extends ListenerBase implements ActionListener
 	{
-		public RunActionListener(SWRLRuleEngine ruleEngine, JTextArea textArea, SWRLTabRulesControlPanel controlPanel)
+		public RunActionListener(SWRLRuleEngine ruleEngine, JTextArea textArea, SWRLRulesControlView controlPanel)
 		{
 			super(ruleEngine, textArea, controlPanel);
 		}
@@ -161,7 +168,7 @@ public class SWRLTabRulesControlPanel extends JPanel
 							+ this.ruleEngine.getNumberOfInjectedOWLAxioms() + "\n");
 				this.console.append("The process took " + (System.currentTimeMillis() - startTime) + " millisecond(s).\n");
 				this.console.append("Look at the 'Inferred Axioms' tab to see the inferred axioms.\n");
-				this.console.append("Press the '" + SWRLTabRulesControlPanel.this.ruleEngineName
+				this.console.append("Press the '" + SWRLRulesControlView.this.ruleEngineName
 						+ "->OWL' button to translate the inferred axioms to OWL knowledge.\n");
 			} catch (SWRLRuleEngineException e) {
 				this.console.append("Exception running rule engine: " + e.getMessage() + "\n");
@@ -172,7 +179,7 @@ public class SWRLTabRulesControlPanel extends JPanel
 
 	private class ExportActionListener extends ListenerBase implements ActionListener
 	{
-		public ExportActionListener(SWRLRuleEngine ruleEngine, JTextArea textArea, SWRLTabRulesControlPanel controlPanel)
+		public ExportActionListener(SWRLRuleEngine ruleEngine, JTextArea textArea, SWRLRulesControlView controlPanel)
 		{
 			super(ruleEngine, textArea, controlPanel);
 		}

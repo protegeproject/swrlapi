@@ -1,4 +1,4 @@
-package org.swrlapi.ui.panels;
+package org.swrlapi.ui.view;
 
 import java.awt.BorderLayout;
 
@@ -9,20 +9,21 @@ import javax.swing.JViewport;
 import javax.swing.table.AbstractTableModel;
 
 import org.swrlapi.core.SWRLRuleEngine;
+import org.swrlapi.ui.core.SWRLAPIView;
 
-public class SWRLTabAssertedAxiomsPanel extends JPanel
+public class AssertedOWLAxiomsView extends JPanel implements SWRLAPIView
 {
 	private static final long serialVersionUID = 1L;
 
 	private final SWRLRuleEngine ruleEngine;
-	private final SWRLAPIAssertedAxiomsTableModel assertedAxiomsModel;
+	private final AssertedAxiomsTableModel assertedAxiomsTableModel;
 	private final JTable table;
 
-	public SWRLTabAssertedAxiomsPanel(SWRLRuleEngine ruleEngine)
+	public AssertedOWLAxiomsView(SWRLRuleEngine ruleEngine)
 	{
 		this.ruleEngine = ruleEngine;
-		this.assertedAxiomsModel = new SWRLAPIAssertedAxiomsTableModel();
-		this.table = new JTable(this.assertedAxiomsModel);
+		this.assertedAxiomsTableModel = new AssertedAxiomsTableModel();
+		this.table = new JTable(this.assertedAxiomsTableModel);
 
 		setLayout(new BorderLayout());
 
@@ -36,18 +37,24 @@ public class SWRLTabAssertedAxiomsPanel extends JPanel
 	@Override
 	public void validate()
 	{
-		this.assertedAxiomsModel.fireTableDataChanged();
+		this.assertedAxiomsTableModel.fireTableDataChanged();
 		super.validate();
 	}
 
-	private class SWRLAPIAssertedAxiomsTableModel extends AbstractTableModel
+	@Override
+	public void update()
+	{
+		validate();
+	}
+
+	private class AssertedAxiomsTableModel extends AbstractTableModel
 	{
 		private static final long serialVersionUID = 1L;
 
 		@Override
 		public int getRowCount()
 		{
-			return SWRLTabAssertedAxiomsPanel.this.ruleEngine.getNumberOfAssertedOWLAxioms();
+			return AssertedOWLAxiomsView.this.ruleEngine.getNumberOfAssertedOWLAxioms();
 		}
 
 		@Override
@@ -68,7 +75,7 @@ public class SWRLTabAssertedAxiomsPanel extends JPanel
 			if (row < 0 || row >= getRowCount())
 				return new String("OUT OF BOUNDS");
 			else
-				return SWRLTabAssertedAxiomsPanel.this.ruleEngine.getAssertedOWLAxioms().toArray()[row];
+				return AssertedOWLAxiomsView.this.ruleEngine.getAssertedOWLAxioms().toArray()[row];
 		}
 	}
 }

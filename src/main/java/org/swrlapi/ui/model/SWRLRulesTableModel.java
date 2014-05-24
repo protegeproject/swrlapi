@@ -7,7 +7,6 @@ import java.util.Set;
 
 import javax.swing.table.AbstractTableModel;
 
-import org.swrlapi.ui.core.SWRLAPIModel;
 import org.swrlapi.ui.core.SWRLAPIView;
 
 public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIModel

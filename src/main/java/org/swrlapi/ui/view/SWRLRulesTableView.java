@@ -13,8 +13,8 @@ import javax.swing.JTable;
 import javax.swing.JViewport;
 import javax.swing.table.TableColumnModel;
 
-import org.swrlapi.ui.SWRLAPIApplicationController;
 import org.swrlapi.ui.core.SQWRLApplicationView;
+import org.swrlapi.ui.core.SWRLAPIApplicationController;
 import org.swrlapi.ui.core.SWRLAPIView;
 import org.swrlapi.ui.dialog.SWRLAPIApplicationDialogManager;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
