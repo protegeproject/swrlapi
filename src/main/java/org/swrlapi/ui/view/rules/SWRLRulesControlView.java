@@ -36,10 +36,10 @@ public class SWRLRulesControlView extends JPanel implements SWRLAPIView
 
 		this.swrlRuleEngine = swrlRuleEngine;
 
-		setLayout(new BorderLayout());
 		JTextArea console = createConsole();
 		JScrollPane scrollPane = new JScrollPane(console);
 		scrollPane.setPreferredSize(new Dimension(VIEW_PREFERRED_WIDTH, VIEW_PREFERRED_HEIGHT));
+		setLayout(new BorderLayout());
 		add(BorderLayout.CENTER, scrollPane);
 
 		JPanel buttonsPanel = new JPanel(new FlowLayout());

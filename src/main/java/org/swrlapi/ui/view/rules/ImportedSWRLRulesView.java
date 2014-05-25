@@ -31,9 +31,9 @@ public class ImportedSWRLRulesView extends JPanel implements SWRLAPIView
 		this.swrlRulesTable = new JTable(this.swrlRulesTableModel);
 		this.swrlRulePrinter = new SWRLAPIRulePrinter(prefixManager);
 
-		setLayout(new BorderLayout());
 		JScrollPane scrollPane = new JScrollPane(this.swrlRulesTable);
 		JViewport viewPort = scrollPane.getViewport();
+		setLayout(new BorderLayout());
 		viewPort.setBackground(this.swrlRulesTable.getBackground());
 		add(BorderLayout.CENTER, scrollPane);
 	}
@@ -79,10 +79,10 @@ public class ImportedSWRLRulesView extends JPanel implements SWRLAPIView
 			if (row < 0 || row >= getRowCount())
 				return new String("OUT OF BOUNDS!");
 			else {
-				Set<SWRLAPIRule> rules = ImportedSWRLRulesView.this.swrlRuleEngine.getSWRLRules();
-				SWRLAPIRule[] arr = rules.toArray(new SWRLAPIRule[rules.size()]);
-				SWRLAPIRule rule = arr[row];
-				return rule.accept(swrlRulePrinter);
+				Set<SWRLAPIRule> swrlRules = ImportedSWRLRulesView.this.swrlRuleEngine.getSWRLRules();
+				SWRLAPIRule[] swrlRuleArray = swrlRules.toArray(new SWRLAPIRule[swrlRules.size()]);
+				SWRLAPIRule swrlRule = swrlRuleArray[row];
+				return swrlRule.accept(swrlRulePrinter);
 			}
 		}
 	}
