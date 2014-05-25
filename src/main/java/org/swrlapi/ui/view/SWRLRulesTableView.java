@@ -13,7 +13,6 @@ import javax.swing.JTable;
 import javax.swing.JViewport;
 import javax.swing.table.TableColumnModel;
 
-import org.swrlapi.ui.controller.SWRLAPIApplicationController;
 import org.swrlapi.ui.dialog.SWRLAPIApplicationDialogManager;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
 
@@ -21,21 +20,28 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 {
 	private static final long serialVersionUID = 1L;
 
-	private final SWRLAPIApplicationController applicationController;
+	private static final int ACTIVE_COLUMN_PREFERRED_WIDTH = 30;
+	private static final int ACTIVE_COLUMN_MAX_WIDTH = 50;
+	private static final int RULE_NAME_COLUMN_PREFERRED_WIDTH = 150;
+	private static final int RULE_NAME_COLUMN_MAX_WIDTH = 300;
+	private static final int RULE_TEXT_COLUMN_PREFERRED_WIDTH = 100;
+	private static final int RULE_TEXT_COLUMN_MAX_WIDTH = 200;
+
+	private final SWRLAPIApplicationDialogManager applicationDialogManager;
 	private final SWRLRulesTableModel swrlRulesTableModel;
 	private final JTable swrlRulesTable;
 
-	public SWRLRulesTableView(SWRLAPIApplicationController applicationController,
+	public SWRLRulesTableView(SWRLAPIApplicationDialogManager applicationDialogManager,
 			SWRLRulesTableModel swrlRulesTableModel)
 	{
-		this.applicationController = applicationController;
+		this.applicationDialogManager = applicationDialogManager;
 		this.swrlRulesTableModel = swrlRulesTableModel;
 		this.swrlRulesTable = new JTable(this.swrlRulesTableModel);
 
 		addTableListeners();
 		setPreferredColumnWidths();
 		swrlRulesTableModel.setView(this);
-		createComponents();
+		createComponents(applicationDialogManager);
 	}
 
 	@Override
@@ -43,6 +49,28 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 	{
 		this.swrlRulesTableModel.fireTableDataChanged();
 		validate();
+	}
+
+	public String getSelectedSWRLRuleName()
+	{
+		int selectedRow = this.swrlRulesTable.getSelectedRow();
+
+		if (selectedRow != -1)
+			return this.swrlRulesTableModel.getSWRLRuleNameByIndex(selectedRow);
+		else
+			return "";
+	}
+
+	private void setPreferredColumnWidths()
+	{
+		TableColumnModel columnModel = this.swrlRulesTable.getColumnModel();
+
+		columnModel.getColumn(SWRLRulesTableModel.ACTIVE_COLUMN).setPreferredWidth(ACTIVE_COLUMN_PREFERRED_WIDTH);
+		columnModel.getColumn(SWRLRulesTableModel.ACTIVE_COLUMN).setMaxWidth(ACTIVE_COLUMN_MAX_WIDTH);
+		columnModel.getColumn(SWRLRulesTableModel.RULE_NAME_COLUMN).setPreferredWidth(RULE_NAME_COLUMN_PREFERRED_WIDTH);
+		columnModel.getColumn(SWRLRulesTableModel.RULE_NAME_COLUMN).setPreferredWidth(RULE_NAME_COLUMN_MAX_WIDTH);
+		columnModel.getColumn(SWRLRulesTableModel.RULE_TEXT_COLUMN).setPreferredWidth(RULE_TEXT_COLUMN_PREFERRED_WIDTH);
+		columnModel.getColumn(SWRLRulesTableModel.RULE_TEXT_COLUMN).setMaxWidth(RULE_TEXT_COLUMN_MAX_WIDTH);
 	}
 
 	private void addTableListeners()
@@ -60,34 +88,16 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 		});
 	}
 
-	private void setPreferredColumnWidths()
+	private void editSelectedSWRLRule()
 	{
-		TableColumnModel columnModel = this.swrlRulesTable.getColumnModel();
-		columnModel.getColumn(0).setPreferredWidth(30);
-		columnModel.getColumn(0).setMaxWidth(50);
-		columnModel.getColumn(1).setPreferredWidth(150);
-		columnModel.getColumn(2).setPreferredWidth(300);
-		columnModel.getColumn(3).setPreferredWidth(100);
-		columnModel.getColumn(3).setMaxWidth(200);
-		columnModel.getColumn(4).setPreferredWidth(100);
-		columnModel.getColumn(4).setMaxWidth(150);
-		columnModel.getColumn(5).setPreferredWidth(100);
-		columnModel.getColumn(5).setMaxWidth(150);
-		columnModel.getColumn(6).setMaxWidth(100);
-		columnModel.getColumn(7).setMaxWidth(100);
+		String selectedRuleName = getSelectedSWRLRuleName();
+
+		if (SWRLRulesTableView.this.swrlRulesTableModel.hasSWRLRule(selectedRuleName)) {
+			this.applicationDialogManager.getCreateSWRLRuleDialog(selectedRuleName, "TODO", "TODO").setVisible(true);
+		}
 	}
 
-	public String getSelectedSWRLRuleName()
-	{
-		int selectedRow = this.swrlRulesTable.getSelectedRow();
-
-		if (selectedRow != -1)
-			return this.swrlRulesTableModel.getSWRLRuleNameByIndex(selectedRow);
-		else
-			return "";
-	}
-
-	private void createComponents()
+	private void createComponents(SWRLAPIApplicationDialogManager applicationDialogManager)
 	{
 		JScrollPane scrollPane = new JScrollPane(swrlRulesTable);
 		JViewport viewport = scrollPane.getViewport();
@@ -103,15 +113,15 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 		headingPanel.add(buttonPanel, BorderLayout.EAST);
 
 		JButton addButton = new JButton("Add");
-		addButton.addActionListener(new AddSWRLRuleActionListener());
+		addButton.addActionListener(new AddSWRLRuleActionListener(applicationDialogManager));
 		buttonPanel.add(addButton, BorderLayout.WEST);
 
 		JButton editButton = new JButton("Edit");
-		editButton.addActionListener(new EditSWRLRuleActionListener());
+		editButton.addActionListener(new EditSWRLRuleActionListener(applicationDialogManager));
 		buttonPanel.add(editButton, BorderLayout.CENTER);
 
 		JButton deleteButton = new JButton("Delete");
-		deleteButton.addActionListener(new DeleteSWRLRuleActionListener());
+		deleteButton.addActionListener(new DeleteSWRLRuleActionListener(applicationDialogManager));
 		buttonPanel.add(deleteButton, BorderLayout.EAST);
 
 		add(scrollPane, BorderLayout.CENTER);
@@ -119,17 +129,37 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 		validate();
 	}
 
-	private class AddSWRLRuleActionListener implements ActionListener
+	private abstract class ActionListenerBase implements ActionListener
 	{
-		@Override
-		public void actionPerformed(ActionEvent e)
+		protected final SWRLAPIApplicationDialogManager applicationDialogManager;
+
+		protected ActionListenerBase(SWRLAPIApplicationDialogManager applicationDialogManager)
 		{
-			getApplicationDialogManager().getCreateSWRLRuleDialog().setVisible(true);
+			this.applicationDialogManager = applicationDialogManager;
 		}
 	}
 
-	private class EditSWRLRuleActionListener implements ActionListener
+	private class AddSWRLRuleActionListener extends ActionListenerBase
 	{
+		public AddSWRLRuleActionListener(SWRLAPIApplicationDialogManager applicationDialogManager)
+		{
+			super(applicationDialogManager);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
+			this.applicationDialogManager.getCreateSWRLRuleDialog().setVisible(true);
+		}
+	}
+
+	private class EditSWRLRuleActionListener extends ActionListenerBase
+	{
+		public EditSWRLRuleActionListener(SWRLAPIApplicationDialogManager applicationDialogManager)
+		{
+			super(applicationDialogManager);
+		}
+
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
@@ -137,17 +167,13 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 		}
 	}
 
-	private void editSelectedSWRLRule()
+	private class DeleteSWRLRuleActionListener extends ActionListenerBase
 	{
-		String selectedRuleName = getSelectedSWRLRuleName();
-
-		if (this.swrlRulesTableModel.hasSWRLRule(selectedRuleName)) {
-			getApplicationDialogManager().getCreateSWRLRuleDialog(selectedRuleName, "TODO", "TODO").setVisible(true);
+		public DeleteSWRLRuleActionListener(SWRLAPIApplicationDialogManager applicationDialogManager)
+		{
+			super(applicationDialogManager);
 		}
-	}
 
-	private class DeleteSWRLRuleActionListener implements ActionListener
-	{
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
@@ -159,14 +185,9 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 			String selectedRuleName = getSelectedSWRLRuleName();
 
 			if (SWRLRulesTableView.this.swrlRulesTableModel.hasSWRLRule(selectedRuleName)
-					&& getApplicationDialogManager().showConfirmDialog("Delete rule", "Do you really want to delete the rule?")) {
+					&& this.applicationDialogManager.showConfirmDialog("Delete rule", "Do you really want to delete the rule?")) {
 				SWRLRulesTableView.this.swrlRulesTableModel.removeSWRLRule(selectedRuleName);
 			}
 		}
-	}
-
-	private SWRLAPIApplicationDialogManager getApplicationDialogManager()
-	{
-		return this.applicationController.getApplicationDialogManager();
 	}
 }

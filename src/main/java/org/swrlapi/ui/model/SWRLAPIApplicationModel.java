@@ -2,31 +2,26 @@ package org.swrlapi.ui.model;
 
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.SWRLRuleEngine;
+import org.swrlapi.ext.impl.SWRLAPIRulePrinter;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.ui.view.SWRLAPIApplicationView;
 
 public class SWRLAPIApplicationModel implements SWRLAPIModel
 {
 	private SWRLAPIApplicationView applicationView;
-	private final SWRLRulesTableModel swrlRulesTableModel;
 	private final SWRLRuleEngine ruleEngine;
 	private final SQWRLQueryEngine queryEngine;
 	private final DefaultPrefixManager prefixManager;
+	private final SWRLAPIRulePrinter swrlRulePrinter;
+	private final SWRLRulesTableModel swrlRulesTableModel;
 
 	public SWRLAPIApplicationModel(SWRLRuleEngine ruleEngine, DefaultPrefixManager prefixManager)
 	{
 		this.ruleEngine = ruleEngine;
-		this.queryEngine = null;
+		this.queryEngine = ruleEngine;
 		this.prefixManager = prefixManager;
-		this.swrlRulesTableModel = new SWRLRulesTableModel();
-	}
-
-	public SWRLAPIApplicationModel(SQWRLQueryEngine queryEngine, DefaultPrefixManager prefixManager)
-	{
-		this.ruleEngine = null;
-		this.queryEngine = queryEngine;
-		this.prefixManager = prefixManager;
-		this.swrlRulesTableModel = new SWRLRulesTableModel();
+		this.swrlRulePrinter = new SWRLAPIRulePrinter(prefixManager);
+		this.swrlRulesTableModel = new SWRLRulesTableModel(ruleEngine, swrlRulePrinter);
 	}
 
 	public SWRLRuleEngine getSWRLRuleEngine()

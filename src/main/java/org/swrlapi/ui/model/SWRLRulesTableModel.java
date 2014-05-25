@@ -7,26 +7,42 @@ import java.util.Set;
 
 import javax.swing.table.AbstractTableModel;
 
+import org.swrlapi.core.SWRLRuleEngine;
+import org.swrlapi.ext.SWRLAPIRule;
+import org.swrlapi.ext.impl.SWRLAPIRulePrinter;
 import org.swrlapi.ui.view.SWRLAPIView;
 
+/**
+ * Models a SWRL rule or SQWRL query for display and editing.
+ */
 public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIModel
 {
 	private static final long serialVersionUID = 1L;
 
-	private static int ACTIVE_COLUMN = 0;
-	private static int RULE_NAME_COLUMN = 1;
-	private static int RULE_TEXT_COLUMN = 2;
-	private static int SOURCE_SHEET_NAME_COLUMN = 3;
-	private static int NUMBER_OF_COLUMNS = 4;
+	public static int ACTIVE_COLUMN = 0;
+	public static int RULE_NAME_COLUMN = 1;
+	public static int RULE_TEXT_COLUMN = 2;
+	public static int SOURCE_SHEET_NAME_COLUMN = 3;
+	public static int NUMBER_OF_COLUMNS = 4;
 
 	private SWRLAPIView swrlapiView = null;
 	private boolean isModified = false;
 
+	private final SWRLAPIRulePrinter swrlRulePrinter;
 	private final Map<String, SWRLRuleModel> swrlRuleModels;
 
-	public SWRLRulesTableModel()
+	public SWRLRulesTableModel(SWRLRuleEngine swrlRuleEngine, SWRLAPIRulePrinter swrlRulePrinter)
 	{
+		this.swrlRulePrinter = swrlRulePrinter;
 		this.swrlRuleModels = new HashMap<String, SWRLRuleModel>();
+
+		for (SWRLAPIRule swrlRule : swrlRuleEngine.getSWRLRules()) {
+			String ruleName = swrlRule.getRuleName();
+			String ruleText = swrlRule.accept(swrlRulePrinter);
+			String comment = swrlRule.comment();
+			SWRLRuleModel swrlRuleModel = new SWRLRuleModel(ruleName, ruleText, comment);
+			this.swrlRuleModels.put(ruleName, swrlRuleModel);
+		}
 	}
 
 	public Set<SWRLRuleModel> getSWRLRuleModels()
@@ -61,6 +77,15 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 	public boolean hasSWRLRule(String ruleName)
 	{
 		return swrlRuleModels.containsKey(ruleName);
+	}
+
+	public void addSWRLRule(SWRLAPIRule swrlRule)
+	{
+		String ruleName = swrlRule.getRuleName();
+		String ruleText = swrlRule.accept(swrlRulePrinter);
+		String comment = swrlRule.comment();
+
+		addSWRLRule(ruleName, ruleText, comment);
 	}
 
 	public void addSWRLRule(String ruleName, String ruleText, String comment)
@@ -155,7 +180,7 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 	public boolean isCellEditable(int rowIndex, int columnIndex)
 	{
 		return columnIndex == ACTIVE_COLUMN;
-	};
+	}
 
 	@Override
 	public Class<?> getColumnClass(int columnIndex)
@@ -203,22 +228,22 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 
 		public boolean isActive()
 		{
-			return active;
+			return this.active;
 		}
 
 		public String getRuleText()
 		{
-			return ruleText;
+			return this.ruleText;
 		}
 
 		public String getRuleName()
 		{
-			return ruleName;
+			return this.ruleName;
 		}
 
 		public String getComment()
 		{
-			return comment;
+			return this.comment;
 		}
 
 		@Override
