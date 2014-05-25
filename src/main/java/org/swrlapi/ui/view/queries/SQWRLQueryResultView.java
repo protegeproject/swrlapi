@@ -27,48 +27,45 @@ import org.swrlapi.sqwrl.values.SQWRLResultValue;
 import org.swrlapi.ui.view.SWRLAPIView;
 
 /**
- * A panel holding the result for a single SQWRL query
+ * A view holding the result for a single SQWRL query
  */
 public class SQWRLQueryResultView extends JPanel implements SWRLAPIView
 {
 	private static final long serialVersionUID = 1L;
 
 	private final String queryName;
-	private final JTable table;
 	private final SQWRLQueryEngine queryEngine;
-	private final SQWRLQueryControlView sqwrlControlPanel;
+	private final SQWRLQueryControlView sqwrlQueryControlView;
 	private final SQWRLQueryResultTableModel sqwrlQueryResultTableModel;
+	private final JTable sqwrlQueryResultTable;
 	private SQWRLResult sqwrlResult;
 
 	private static File currentDirectory = null;
 
 	public SQWRLQueryResultView(SQWRLQueryEngine sqwrlQueryEngine, String queryName, SQWRLResult sqwrlResult,
-			SQWRLQueryControlView controlPanel)
+			SQWRLQueryControlView sqwrlQueryControlView)
 	{
 		this.queryEngine = sqwrlQueryEngine;
 		this.queryName = queryName;
 		this.sqwrlResult = sqwrlResult;
-		this.sqwrlControlPanel = controlPanel;
+		this.sqwrlQueryControlView = sqwrlQueryControlView;
 		this.sqwrlQueryResultTableModel = new SQWRLQueryResultTableModel();
-		this.table = new JTable(this.sqwrlQueryResultTableModel);
+		this.sqwrlQueryResultTable = new JTable(this.sqwrlQueryResultTableModel);
 
 		setLayout(new BorderLayout());
 
 		JPanel buttonsPanel = new JPanel(new FlowLayout());
-
 		JButton saveResultButton = createButton("Save as CSV...", "Save the result as a CSV file...",
 				new SaveResultActionListener());
 		buttonsPanel.add(saveResultButton);
-
 		JButton runQueriesButton = createButton("Rerun", "Rerun this SQWRL query", new RunQueriesActionListener());
 		buttonsPanel.add(runQueriesButton);
-
 		JButton closeTabButton = createButton("Close", "Close the tab for this query", new CloseTabActionListener());
 		buttonsPanel.add(closeTabButton);
 
-		JScrollPane scrollPane = new JScrollPane(this.table);
+		JScrollPane scrollPane = new JScrollPane(this.sqwrlQueryResultTable);
 		JViewport viewPort = scrollPane.getViewport();
-		viewPort.setBackground(this.table.getBackground());
+		viewPort.setBackground(this.sqwrlQueryResultTable.getBackground());
 
 		add(BorderLayout.CENTER, scrollPane);
 		add(BorderLayout.SOUTH, buttonsPanel);
@@ -100,21 +97,22 @@ public class SQWRLQueryResultView extends JPanel implements SWRLAPIView
 
 				if (SQWRLQueryResultView.this.sqwrlResult == null
 						|| SQWRLQueryResultView.this.sqwrlResult.getNumberOfRows() == 0) {
-					SQWRLQueryResultView.this.sqwrlControlPanel.appendText("No result returned for SQWRL query '"
+					SQWRLQueryResultView.this.sqwrlQueryControlView.appendToConsole("No result returned for SQWRL query '"
 							+ SQWRLQueryResultView.this.queryName + "' - closing tab.\n");
-					SQWRLQueryResultView.this.sqwrlControlPanel.removeResultPanel(SQWRLQueryResultView.this.queryName);
+					SQWRLQueryResultView.this.sqwrlQueryControlView.removeQueryResultView(SQWRLQueryResultView.this.queryName);
 				} else
 					validate();
 			} catch (SQWRLInvalidQueryNameException e) {
-				SQWRLQueryResultView.this.sqwrlControlPanel.appendText("Invalid query name "
+				SQWRLQueryResultView.this.sqwrlQueryControlView.appendToConsole("Invalid query name "
 						+ SQWRLQueryResultView.this.queryName + ".\n");
 			} catch (SQWRLException e) {
-				SQWRLQueryResultView.this.sqwrlControlPanel.appendText("Exception running SQWRL query '"
+				SQWRLQueryResultView.this.sqwrlQueryControlView.appendToConsole("Exception running SQWRL query '"
 						+ SQWRLQueryResultView.this.queryName + "': " + e.getMessage() + "\n");
 			}
 
 			/*
-			 * if (result == null) { controlPanel.removeAllPanels(); controlPanel.appendText("Closing all result tabs.\n"); }
+			 * if (sqwrlResult == null) { controlPanel.removeAllPanels();
+			 * controlPanel.appendText("Closing all result tabs.\n"); }
 			 */
 		}
 	}
@@ -124,8 +122,8 @@ public class SQWRLQueryResultView extends JPanel implements SWRLAPIView
 		@Override
 		public void actionPerformed(ActionEvent event)
 		{
-			SQWRLQueryResultView.this.sqwrlControlPanel.removeResultPanel(SQWRLQueryResultView.this.queryName);
-			SQWRLQueryResultView.this.sqwrlControlPanel.appendText("'" + SQWRLQueryResultView.this.queryName
+			SQWRLQueryResultView.this.sqwrlQueryControlView.removeQueryResultView(SQWRLQueryResultView.this.queryName);
+			SQWRLQueryResultView.this.sqwrlQueryControlView.appendToConsole("'" + SQWRLQueryResultView.this.queryName
 					+ "' tab closed.\n");
 		}
 	}
@@ -143,25 +141,23 @@ public class SQWRLQueryResultView extends JPanel implements SWRLAPIView
 		@Override
 		public void actionPerformed(ActionEvent event)
 		{
-			saveResults();
+			saveSQWRLResultAsCSV();
 		}
 
-		private void saveResults()
+		private void saveSQWRLResultAsCSV()
 		{
-			int returnValue = this.chooser.showOpenDialog(SQWRLQueryResultView.this.sqwrlControlPanel);
-			FileWriter writer;
-
 			try {
+				int returnValue = this.chooser.showOpenDialog(SQWRLQueryResultView.this.sqwrlQueryControlView);
+
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = this.chooser.getSelectedFile();
 					currentDirectory = this.chooser.getCurrentDirectory();
-					writer = new FileWriter(selectedFile);
+					FileWriter writer = new FileWriter(selectedFile);
 					SQWRLQueryResultView.this.sqwrlResult = SQWRLQueryResultView.this.queryEngine
 							.getSQWRLResult(SQWRLQueryResultView.this.queryName);
 
 					if (SQWRLQueryResultView.this.sqwrlResult != null) {
 						int numberOfColumns = SQWRLQueryResultView.this.sqwrlResult.getNumberOfColumns();
-
 						for (int i = 0; i < numberOfColumns; i++) {
 							if (i != 0)
 								writer.write(", ");
@@ -184,14 +180,13 @@ public class SQWRLQueryResultView extends JPanel implements SWRLAPIView
 						}
 						SQWRLQueryResultView.this.sqwrlResult.reset();
 						writer.close();
-						SQWRLQueryResultView.this.sqwrlControlPanel.appendText("Sucessfully saved results of query "
+						SQWRLQueryResultView.this.sqwrlQueryControlView.appendToConsole("Sucessfully saved results of query "
 								+ SQWRLQueryResultView.this.queryName + " to CSV file " + selectedFile.getPath() + ".\n");
 					}
 				}
 			} catch (Throwable e) {
 				JOptionPane.showMessageDialog(null, "Error saving file: " + e.getMessage(), "Error saving file",
 						JOptionPane.ERROR_MESSAGE);
-				// TODO: findbugs - stream not closed on all paths
 			}
 		}
 	}

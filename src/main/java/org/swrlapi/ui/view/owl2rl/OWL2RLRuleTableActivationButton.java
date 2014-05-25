@@ -13,6 +13,9 @@ public class OWL2RLRuleTableActivationButton extends JCheckBox implements Action
 {
 	private static final long serialVersionUID = 1L;
 
+	private static final int TOOLTIP_PREFERRED_WIDTH = 160;
+	private static final int TOOLTIP_PREFERRED_HEIGHT = 30;
+
 	private final OWL2RLModel owl2RLModel;
 	private final OWL2RLNames.RuleTable table;
 
@@ -44,7 +47,7 @@ public class OWL2RLRuleTableActivationButton extends JCheckBox implements Action
 
 	private void initialize()
 	{
-		setPreferredSize(new Dimension(160, 30));
+		setPreferredSize(new Dimension(TOOLTIP_PREFERRED_WIDTH, TOOLTIP_PREFERRED_HEIGHT));
 		setToolTipText("Click to enable or disable OWL 2 RL table " + this.table.toString() + ".");
 		setEnabled(getOWL2RLModel().getOWL2RLEngine().hasSwitchableRules(this.table));
 		setSelected(getOWL2RLModel().getOWL2RLEngine().hasEnabledRules(this.table));

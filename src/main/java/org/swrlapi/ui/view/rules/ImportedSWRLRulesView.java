@@ -23,29 +23,32 @@ public class ImportedSWRLRulesView extends JPanel implements SWRLAPIView
 	private static final long serialVersionUID = 1L;
 
 	private final SWRLAPIApplicationController applicationController;
+	private final SWRLRulesTableModel swrlRulesTableModel;
 	private final JTable swrlRulesTable;
 
-	public ImportedSWRLRulesView(SWRLAPIApplicationController applicationController)
+	public ImportedSWRLRulesView(SWRLAPIApplicationController applicationController,
+			SWRLRulesTableModel swrlRulesTableModel)
 	{
 		this.applicationController = applicationController;
-		this.swrlRulesTable = new JTable(getSWRLRulesTableModel());
+		this.swrlRulesTableModel = swrlRulesTableModel;
+		this.swrlRulesTable = new JTable(this.swrlRulesTableModel);
 
 		addTableListeners();
 		setPreferredColumnWidths();
-		getSWRLRulesTableModel().setView(this);
+		swrlRulesTableModel.setView(this);
 		createComponents();
 	}
 
 	@Override
 	public void update()
 	{
-		getSWRLRulesTableModel().fireTableDataChanged();
+		this.swrlRulesTableModel.fireTableDataChanged();
 		validate();
 	}
 
 	private void addTableListeners()
 	{
-		swrlRulesTable.addMouseListener(new MouseAdapter() {
+		this.swrlRulesTable.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e)
 			{
@@ -60,7 +63,7 @@ public class ImportedSWRLRulesView extends JPanel implements SWRLAPIView
 
 	private void setPreferredColumnWidths()
 	{
-		TableColumnModel columnModel = swrlRulesTable.getColumnModel();
+		TableColumnModel columnModel = this.swrlRulesTable.getColumnModel();
 		columnModel.getColumn(0).setPreferredWidth(30);
 		columnModel.getColumn(0).setMaxWidth(50);
 		columnModel.getColumn(1).setPreferredWidth(150);
@@ -77,41 +80,38 @@ public class ImportedSWRLRulesView extends JPanel implements SWRLAPIView
 
 	public String getSelectedSWRLRuleName()
 	{
-		int selectedRow = swrlRulesTable.getSelectedRow();
+		int selectedRow = this.swrlRulesTable.getSelectedRow();
 
 		if (selectedRow != -1)
-			return getSWRLRulesTableModel().getSWRLRuleNameByIndex(selectedRow);
+			return this.swrlRulesTableModel.getSWRLRuleNameByIndex(selectedRow);
 		else
 			return "";
 	}
 
 	private void createComponents()
 	{
-		JPanel headingPanel, buttonPanel;
-		JButton addButton, editButton, deleteButton;
-
 		JScrollPane scrollPane = new JScrollPane(swrlRulesTable);
 		JViewport viewport = scrollPane.getViewport();
 
 		setLayout(new BorderLayout());
 
-		headingPanel = new JPanel(new BorderLayout());
+		JPanel headingPanel = new JPanel(new BorderLayout());
 		add(headingPanel, BorderLayout.NORTH);
 
 		viewport.setBackground(swrlRulesTable.getBackground());
 
-		buttonPanel = new JPanel(new BorderLayout());
+		JPanel buttonPanel = new JPanel(new BorderLayout());
 		headingPanel.add(buttonPanel, BorderLayout.EAST);
 
-		addButton = new JButton("Add");
+		JButton addButton = new JButton("Add");
 		addButton.addActionListener(new AddButtonActionListener());
 		buttonPanel.add(addButton, BorderLayout.WEST);
 
-		editButton = new JButton("Edit");
+		JButton editButton = new JButton("Edit");
 		editButton.addActionListener(new EditButtonActionListener());
 		buttonPanel.add(editButton, BorderLayout.CENTER);
 
-		deleteButton = new JButton("Delete");
+		JButton deleteButton = new JButton("Delete");
 		deleteButton.addActionListener(new DeleteButtonActionListener());
 		buttonPanel.add(deleteButton, BorderLayout.EAST);
 
@@ -142,7 +142,7 @@ public class ImportedSWRLRulesView extends JPanel implements SWRLAPIView
 	{
 		String selectedRuleName = getSelectedSWRLRuleName();
 
-		if (getSWRLRulesTableModel().hasSWRLRule(selectedRuleName)) {
+		if (this.swrlRulesTableModel.hasSWRLRule(selectedRuleName)) {
 			getApplicationDialogManager().getCreateSWRLRuleDialog(selectedRuleName, "TODO", "TODO").setVisible(true);
 		}
 	}
@@ -154,20 +154,15 @@ public class ImportedSWRLRulesView extends JPanel implements SWRLAPIView
 		{
 			String selectedRuleName = getSelectedSWRLRuleName();
 
-			if (getSWRLRulesTableModel().hasSWRLRule(selectedRuleName)
+			if (ImportedSWRLRulesView.this.swrlRulesTableModel.hasSWRLRule(selectedRuleName)
 					&& getApplicationDialogManager().showConfirmDialog("Delete rule", "Do you really want to delete the rule?")) {
-				getSWRLRulesTableModel().removeSWRLRule(selectedRuleName);
+				ImportedSWRLRulesView.this.swrlRulesTableModel.removeSWRLRule(selectedRuleName);
 			}
 		}
 	}
 
-	private SWRLRulesTableModel getSWRLRulesTableModel()
-	{
-		return applicationController.getApplicationModel().getSWRLRulesTableModel();
-	}
-
 	private SWRLAPIApplicationDialogManager getApplicationDialogManager()
 	{
-		return applicationController.getApplicationDialogManager();
+		return this.applicationController.getApplicationDialogManager();
 	}
 }

@@ -16,28 +16,25 @@ public class InferredOWLAxiomsView extends JPanel implements SWRLAPIView
 	private static final long serialVersionUID = 1L;
 
 	private final SWRLRuleEngine ruleEngine;
-	private final InferredAxiomsTableModel inferredAxiomsModel;
-	private final JTable table;
+	private final InferredAxiomsTableModel inferredAxiomsTableModel;
 
 	public InferredOWLAxiomsView(SWRLRuleEngine ruleEngine)
 	{
 		this.ruleEngine = ruleEngine;
-		this.inferredAxiomsModel = new InferredAxiomsTableModel();
-		this.table = new JTable(this.inferredAxiomsModel);
+		this.inferredAxiomsTableModel = new InferredAxiomsTableModel();
 
 		setLayout(new BorderLayout());
-
-		JScrollPane scrollPane = new JScrollPane(this.table);
+		JTable inferredAxiomsTable = new JTable(this.inferredAxiomsTableModel);
+		JScrollPane scrollPane = new JScrollPane(inferredAxiomsTable);
 		JViewport viewPort = scrollPane.getViewport();
-		viewPort.setBackground(this.table.getBackground());
-
+		viewPort.setBackground(inferredAxiomsTable.getBackground());
 		add(BorderLayout.CENTER, scrollPane);
 	}
 
 	@Override
 	public void validate()
 	{
-		this.inferredAxiomsModel.fireTableDataChanged();
+		this.inferredAxiomsTableModel.fireTableDataChanged();
 		super.validate();
 	}
 

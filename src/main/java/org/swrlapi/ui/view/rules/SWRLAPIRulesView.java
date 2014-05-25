@@ -7,7 +7,6 @@ import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.ui.model.SWRLAPIApplicationModel;
 import org.swrlapi.ui.view.SWRLAPIView;
-import org.swrlapi.ui.view.SWRLRulesView;
 import org.swrlapi.ui.view.owl2rl.OWL2RLRuleTablesView;
 
 public class SWRLAPIRulesView extends JTabbedPane implements SWRLAPIView

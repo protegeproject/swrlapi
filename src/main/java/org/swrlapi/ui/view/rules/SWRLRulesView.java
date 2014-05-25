@@ -1,4 +1,4 @@
-package org.swrlapi.ui.view;
+package org.swrlapi.ui.view.rules;
 
 import java.awt.BorderLayout;
 import java.util.Set;
@@ -13,6 +13,7 @@ import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.ext.SWRLAPIRule;
 import org.swrlapi.ext.impl.SWRLAPIRulePrinter;
+import org.swrlapi.ui.view.SWRLAPIView;
 
 public class SWRLRulesView extends JPanel implements SWRLAPIView
 {
@@ -31,11 +32,9 @@ public class SWRLRulesView extends JPanel implements SWRLAPIView
 		this.swrlRulePrinter = new SWRLAPIRulePrinter(prefixManager);
 
 		setLayout(new BorderLayout());
-
 		JScrollPane scrollPane = new JScrollPane(this.swrlRulesTable);
 		JViewport viewPort = scrollPane.getViewport();
 		viewPort.setBackground(this.swrlRulesTable.getBackground());
-
 		add(BorderLayout.CENTER, scrollPane);
 	}
 

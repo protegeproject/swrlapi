@@ -15,6 +15,11 @@ public class OWL2RLControlView extends JPanel implements SWRLAPIView
 {
 	private static final long serialVersionUID = 1L;
 
+	private static final int VIEW_PREFERRED_WIDTH = 900;
+	private static final int VIEW_PREFERRED_HEIGHT = 300;
+	private static final int CONSOLE_ROWS = 10;
+	private static final int CONSOLE_COLUMNS = 80;
+
 	private final OWL2RLTablesControlView owl2RLTablesControlView;
 
 	public OWL2RLControlView(OWL2RLModel owl2RLModel)
@@ -36,7 +41,7 @@ public class OWL2RLControlView extends JPanel implements SWRLAPIView
 		JScrollPane scrollPane = new JScrollPane(console);
 
 		setLayout(new BorderLayout());
-		scrollPane.setPreferredSize(new Dimension(900, 300));
+		scrollPane.setPreferredSize(new Dimension(VIEW_PREFERRED_WIDTH, VIEW_PREFERRED_HEIGHT));
 		add(BorderLayout.CENTER, scrollPane);
 
 		console
@@ -58,7 +63,7 @@ public class OWL2RLControlView extends JPanel implements SWRLAPIView
 
 	private JTextArea createConsole()
 	{
-		JTextArea textArea = new JTextArea(10, 80);
+		JTextArea textArea = new JTextArea(CONSOLE_ROWS, CONSOLE_COLUMNS);
 
 		textArea.setLineWrap(true);
 		textArea.setBackground(Color.WHITE);
