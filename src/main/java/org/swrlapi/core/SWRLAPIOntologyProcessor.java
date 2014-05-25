@@ -4,8 +4,6 @@ import java.util.Set;
 
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.swrlapi.exceptions.SWRLRuleException;
-import org.swrlapi.ext.SWRLAPIOWLOntology;
-import org.swrlapi.ext.SWRLAPIRule;
 import org.swrlapi.sqwrl.SQWRLQuery;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;

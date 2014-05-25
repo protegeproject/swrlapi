@@ -16,8 +16,8 @@ import org.semanticweb.owlapi.model.SWRLRule;
 import org.semanticweb.owlapi.model.SWRLSameIndividualAtom;
 import org.semanticweb.owlapi.model.SWRLVariable;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
-import org.swrlapi.ext.SWRLAPIOWLOntology;
-import org.swrlapi.ext.SWRLAPIRule;
+import org.swrlapi.core.SWRLAPIOWLOntology;
+import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.parser.SWRLToken.SWRLTokenType;
 
 /**

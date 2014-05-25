@@ -4,8 +4,6 @@ import java.net.URI;
 
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
-import org.swrlapi.ext.SWRLAPILiteral;
-import org.swrlapi.ext.SWRLAPILiteralFactory;
 import org.swrlapi.xsd.XSDDate;
 import org.swrlapi.xsd.XSDDateTime;
 import org.swrlapi.xsd.XSDDuration;

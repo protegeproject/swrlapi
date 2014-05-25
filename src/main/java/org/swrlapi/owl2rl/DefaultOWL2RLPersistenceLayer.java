@@ -4,7 +4,7 @@ import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.swrlapi.ext.SWRLAPIOWLOntology;
+import org.swrlapi.core.SWRLAPIOWLOntology;
 
 // TODO Implement this
 public class DefaultOWL2RLPersistenceLayer implements OWL2RLPersistenceLayer

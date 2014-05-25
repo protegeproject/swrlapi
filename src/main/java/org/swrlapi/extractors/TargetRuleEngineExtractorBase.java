@@ -2,15 +2,15 @@ package org.swrlapi.extractors;
 
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDataFactory;
+import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.converters.TargetRuleEngineConverterBase;
 import org.swrlapi.core.OWLClassExpressionResolver;
 import org.swrlapi.core.OWLIRIResolver;
 import org.swrlapi.core.OWLLiteralFactory;
+import org.swrlapi.core.SWRLAPIOWLDataFactory;
+import org.swrlapi.core.SWRLAPIOWLDatatypeFactory;
 import org.swrlapi.core.SWRLRuleEngineBridge;
-import org.swrlapi.core.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.exceptions.TargetRuleEngineException;
-import org.swrlapi.ext.SWRLAPIOWLDataFactory;
-import org.swrlapi.ext.SWRLAPIOWLDatatypeFactory;
 
 /**
  * This interface describes a set of methods that will be needed by target rule engines to create OWLAPI representations

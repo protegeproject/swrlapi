@@ -2,7 +2,7 @@ package org.swrlapi.ui.model;
 
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.SWRLRuleEngine;
-import org.swrlapi.ext.impl.SWRLAPIRulePrinter;
+import org.swrlapi.core.impl.DefaultSWRLAPIRulePrinter;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.ui.view.SWRLAPIApplicationView;
 
@@ -12,7 +12,7 @@ public class SWRLAPIApplicationModel implements SWRLAPIModel
 	private final SWRLRuleEngine ruleEngine;
 	private final SQWRLQueryEngine queryEngine;
 	private final DefaultPrefixManager prefixManager;
-	private final SWRLAPIRulePrinter swrlRulePrinter;
+	private final DefaultSWRLAPIRulePrinter swrlRulePrinter;
 	private final SWRLRulesTableModel swrlRulesTableModel;
 
 	public SWRLAPIApplicationModel(SWRLRuleEngine ruleEngine, DefaultPrefixManager prefixManager)
@@ -20,7 +20,7 @@ public class SWRLAPIApplicationModel implements SWRLAPIModel
 		this.ruleEngine = ruleEngine;
 		this.queryEngine = ruleEngine;
 		this.prefixManager = prefixManager;
-		this.swrlRulePrinter = new SWRLAPIRulePrinter(prefixManager);
+		this.swrlRulePrinter = new DefaultSWRLAPIRulePrinter(prefixManager);
 		this.swrlRulesTableModel = new SWRLRulesTableModel(ruleEngine, swrlRulePrinter);
 	}
 

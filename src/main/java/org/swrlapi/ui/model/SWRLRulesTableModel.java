@@ -7,9 +7,9 @@ import java.util.Set;
 
 import javax.swing.table.AbstractTableModel;
 
+import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLRuleEngine;
-import org.swrlapi.ext.SWRLAPIRule;
-import org.swrlapi.ext.impl.SWRLAPIRulePrinter;
+import org.swrlapi.core.impl.DefaultSWRLAPIRulePrinter;
 import org.swrlapi.ui.view.SWRLAPIView;
 
 /**
@@ -28,10 +28,10 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 	private SWRLAPIView swrlapiView = null;
 	private boolean isModified = false;
 
-	private final SWRLAPIRulePrinter swrlRulePrinter;
+	private final DefaultSWRLAPIRulePrinter swrlRulePrinter;
 	private final Map<String, SWRLRuleModel> swrlRuleModels;
 
-	public SWRLRulesTableModel(SWRLRuleEngine swrlRuleEngine, SWRLAPIRulePrinter swrlRulePrinter)
+	public SWRLRulesTableModel(SWRLRuleEngine swrlRuleEngine, DefaultSWRLAPIRulePrinter swrlRulePrinter)
 	{
 		this.swrlRulePrinter = swrlRulePrinter;
 		this.swrlRuleModels = new HashMap<String, SWRLRuleModel>();

@@ -1,7 +1,6 @@
 package org.swrlapi.core;
 
 import org.swrlapi.exceptions.SWRLRuleEngineException;
-import org.swrlapi.ext.SWRLAPIOWLOntology;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 
 public interface SWRLRuleEngineFactory

@@ -10,11 +10,11 @@ import org.swrlapi.ui.model.SWRLRulesTableModel;
 
 public class CloseSWRLRuleEditorAction implements ActionListener
 {
-	private final SWRLAPIApplicationController applicationController;
+	private final SWRLAPIApplicationController applicationDialogManager;
 
 	public CloseSWRLRuleEditorAction(SWRLAPIApplicationController applicationController)
 	{
-		this.applicationController = applicationController;
+		this.applicationDialogManager = applicationController;
 	}
 
 	@Override
@@ -25,7 +25,7 @@ public class CloseSWRLRuleEditorAction implements ActionListener
 
 	public void confirmCloseSWRLRuleEditor()
 	{
-		if (hasSWRLRulesModel() && getApplicationModel().areRulesModified()
+		if (hasSWRLRulesTableModel() && getApplicationModel().areRulesModified()
 				&& getApplicationDialogManager().showConfirmDialog("Close Editor", "Do you really want to close the editor?")) {
 			closeSWRLRuleEditor();
 		} else
@@ -34,27 +34,27 @@ public class CloseSWRLRuleEditorAction implements ActionListener
 
 	private void closeSWRLRuleEditor()
 	{
-		getSWRLRulesModel().clearSWRLRules();
+		getSWRLRulesTableModel().clearSWRLRules();
 		getApplicationModel().clearModifiedStatus();
 	}
 
 	private SWRLAPIApplicationModel getApplicationModel()
 	{
-		return applicationController.getApplicationModel();
+		return applicationDialogManager.getApplicationModel();
 	}
 
-	private SWRLRulesTableModel getSWRLRulesModel()
+	private SWRLRulesTableModel getSWRLRulesTableModel()
 	{
 		return getApplicationModel().getSWRLRulesTableModel();
 	}
 
-	private boolean hasSWRLRulesModel()
+	private boolean hasSWRLRulesTableModel()
 	{
 		return getApplicationModel().getSWRLRulesTableModel() != null;
 	}
 
 	private SWRLAPIApplicationDialogManager getApplicationDialogManager()
 	{
-		return applicationController.getApplicationDialogManager();
+		return applicationDialogManager.getApplicationDialogManager();
 	}
 }

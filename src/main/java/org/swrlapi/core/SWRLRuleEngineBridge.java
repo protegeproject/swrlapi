@@ -3,12 +3,10 @@ package org.swrlapi.core;
 import java.util.List;
 
 import org.semanticweb.owlapi.model.OWLAxiom;
-import org.swrlapi.core.arguments.SWRLBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLBuiltInArgumentFactory;
+import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.exceptions.BuiltInException;
 import org.swrlapi.exceptions.SWRLRuleEngineBridgeException;
-import org.swrlapi.ext.SWRLAPIOWLDataFactory;
-import org.swrlapi.ext.SWRLAPIOWLDatatypeFactory;
 import org.swrlapi.owl2rl.OWL2RLPersistenceLayer;
 
 /**

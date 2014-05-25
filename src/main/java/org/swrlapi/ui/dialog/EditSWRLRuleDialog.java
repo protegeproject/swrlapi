@@ -102,11 +102,11 @@ public class EditSWRLRuleDialog extends JDialog
 
 		cancelButton = new JButton("Cancel");
 		cancelButton.setPreferredSize(new Dimension(100, 30));
-		cancelButton.addActionListener(new CancelButtonActionListener());
+		cancelButton.addActionListener(new CancelSWRLRuleEditActionListener());
 
 		okButton = new JButton("OK");
 		okButton.setPreferredSize(new Dimension(100, 30));
-		okButton.addActionListener(new OkButtonActionListener());
+		okButton.addActionListener(new OkSWRLRuleEditActionListener());
 
 		contentPane.setLayout(new BorderLayout());
 
@@ -134,7 +134,7 @@ public class EditSWRLRuleDialog extends JDialog
 		pack();
 	}
 
-	private class CancelButtonActionListener implements ActionListener
+	private class CancelSWRLRuleEditActionListener implements ActionListener
 	{
 		@Override
 		public void actionPerformed(ActionEvent e)
@@ -144,7 +144,7 @@ public class EditSWRLRuleDialog extends JDialog
 		}
 	}
 
-	private class OkButtonActionListener implements ActionListener
+	private class OkSWRLRuleEditActionListener implements ActionListener
 	{
 		@Override
 		public void actionPerformed(ActionEvent e)

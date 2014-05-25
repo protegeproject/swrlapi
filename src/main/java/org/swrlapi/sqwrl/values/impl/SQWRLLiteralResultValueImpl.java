@@ -4,7 +4,7 @@ import java.util.Comparator;
 
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.swrlapi.core.OWLLiteralComparator;
-import org.swrlapi.ext.impl.DefaultSWRLAPILiteral;
+import org.swrlapi.core.impl.DefaultSWRLAPILiteral;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLNamedResultValue;
 

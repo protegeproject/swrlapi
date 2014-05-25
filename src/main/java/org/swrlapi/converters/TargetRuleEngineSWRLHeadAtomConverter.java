@@ -6,8 +6,8 @@ import org.semanticweb.owlapi.model.SWRLDataRangeAtom;
 import org.semanticweb.owlapi.model.SWRLDifferentIndividualsAtom;
 import org.semanticweb.owlapi.model.SWRLObjectPropertyAtom;
 import org.semanticweb.owlapi.model.SWRLSameIndividualAtom;
+import org.swrlapi.core.SWRLAPIBuiltInAtom;
 import org.swrlapi.exceptions.TargetRuleEngineException;
-import org.swrlapi.ext.SWRLAPIBuiltInAtom;
 
 /**
  * This interface describes methods that can be implemented by a target rule engine to convert SWRL head atoms to native

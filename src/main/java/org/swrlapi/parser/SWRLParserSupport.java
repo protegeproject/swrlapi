@@ -28,15 +28,15 @@ import org.semanticweb.owlapi.model.SWRLRule;
 import org.semanticweb.owlapi.model.SWRLSameIndividualAtom;
 import org.semanticweb.owlapi.model.SWRLVariable;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
-import org.swrlapi.core.arguments.SWRLAnnotationPropertyBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLBuiltInArgumentFactory;
-import org.swrlapi.core.arguments.SWRLClassBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLDataPropertyBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLDatatypeBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLNamedIndividualBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLObjectPropertyBuiltInArgument;
-import org.swrlapi.ext.SWRLAPIOWLDataFactory;
-import org.swrlapi.ext.SWRLAPIOWLOntology;
+import org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
+import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLDatatypeBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
+import org.swrlapi.core.SWRLAPIOWLDataFactory;
+import org.swrlapi.core.SWRLAPIOWLOntology;
 
 public class SWRLParserSupport
 {

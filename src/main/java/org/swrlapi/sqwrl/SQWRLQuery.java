@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.semanticweb.owlapi.model.SWRLAtom;
+import org.swrlapi.core.SWRLAPIBuiltInAtom;
 import org.swrlapi.core.SWRLAPIOntologyProcessor;
-import org.swrlapi.ext.SWRLAPIBuiltInAtom;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
 /**

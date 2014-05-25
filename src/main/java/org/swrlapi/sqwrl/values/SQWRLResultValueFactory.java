@@ -2,11 +2,11 @@ package org.swrlapi.sqwrl.values;
 
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLLiteral;
-import org.swrlapi.core.arguments.SWRLAnnotationPropertyBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLClassBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLDataPropertyBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLNamedIndividualBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLObjectPropertyBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.xsd.XSDDate;
 import org.swrlapi.xsd.XSDDateTime;
 import org.swrlapi.xsd.XSDDuration;

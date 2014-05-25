@@ -6,7 +6,7 @@ public interface SWRLAPIApplicationDialogManager
 {
 	JDialog getCreateSWRLRuleDialog();
 
-	JDialog getCreateSWRLRuleDialog(String ruleName, String ruleText, String comment);
+	JDialog getEditSWRLRuleDialog(String ruleName, String ruleText, String comment);
 
 	boolean showConfirmDialog(String title, String message);
 

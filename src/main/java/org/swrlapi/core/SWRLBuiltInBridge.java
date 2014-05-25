@@ -3,11 +3,9 @@ package org.swrlapi.core;
 import java.util.List;
 
 import org.semanticweb.owlapi.model.OWLAxiom;
-import org.swrlapi.core.arguments.SWRLBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.exceptions.BuiltInException;
 import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
-import org.swrlapi.ext.SWRLAPIOWLDataFactory;
-import org.swrlapi.ext.SWRLAPIOWLOntology;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 

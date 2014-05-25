@@ -93,7 +93,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 		String selectedRuleName = getSelectedSWRLRuleName();
 
 		if (SWRLRulesTableView.this.swrlRulesTableModel.hasSWRLRule(selectedRuleName)) {
-			this.applicationDialogManager.getCreateSWRLRuleDialog(selectedRuleName, "TODO", "TODO").setVisible(true);
+			this.applicationDialogManager.getEditSWRLRuleDialog(selectedRuleName, "TODO", "TODO").setVisible(true);
 		}
 	}
 

@@ -10,14 +10,14 @@ import java.util.Set;
 
 import org.semanticweb.owlapi.model.SWRLArgument;
 import org.semanticweb.owlapi.model.SWRLAtom;
-import org.swrlapi.core.arguments.SWRLBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLVariableBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
+import org.swrlapi.core.SWRLAPIBuiltInAtom;
+import org.swrlapi.core.SWRLAPILiteral;
+import org.swrlapi.core.SWRLAPILiteralFactory;
+import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.exceptions.SQWRLLiteralException;
-import org.swrlapi.ext.SWRLAPIBuiltInAtom;
-import org.swrlapi.ext.SWRLAPILiteral;
-import org.swrlapi.ext.SWRLAPILiteralFactory;
-import org.swrlapi.ext.SWRLAPIOWLDataFactory;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
 public class DefaultSQWRLQuery implements SQWRLQuery

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.nfunk.jep.JEP;
 import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
-import org.swrlapi.core.arguments.SWRLBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.exceptions.BuiltInException;
 
 /**

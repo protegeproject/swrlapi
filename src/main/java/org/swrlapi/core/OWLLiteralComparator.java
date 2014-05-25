@@ -5,7 +5,7 @@ import java.util.Comparator;
 
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
-import org.swrlapi.core.arguments.impl.NaturalOrderComparator;
+import org.swrlapi.builtins.arguments.impl.NaturalOrderComparator;
 import org.swrlapi.xsd.XSDDate;
 import org.swrlapi.xsd.XSDDateTime;
 import org.swrlapi.xsd.XSDDuration;

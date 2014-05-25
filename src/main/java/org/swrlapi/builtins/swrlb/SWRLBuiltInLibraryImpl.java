@@ -1,7 +1,8 @@
 // TODO Built-ins for URIs, and lists are not implemented.
 
 package org.swrlapi.builtins.swrlb;
-import java.util.Calendar;
+
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -13,9 +14,9 @@ import java.util.regex.PatternSyntaxException;
 import org.apache.commons.lang.StringUtils;
 import org.semanticweb.owlapi.model.IRI;
 import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
-import org.swrlapi.core.arguments.SWRLBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLLiteralBuiltInArgument;
-import org.swrlapi.core.arguments.SWRLMultiValueVariableBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.exceptions.BuiltInException;
 import org.swrlapi.exceptions.BuiltInNotImplementedException;
 import org.swrlapi.exceptions.InvalidBuiltInArgumentException;
@@ -25,7 +26,6 @@ import org.swrlapi.xsd.XSDDateTime;
 import org.swrlapi.xsd.XSDDuration;
 import org.swrlapi.xsd.XSDTime;
 import org.swrlapi.xsd.XSDTimeUtil;
-
 
 /**
  * Implementations library for the core SWRL built-in methods. These built-ins are defined <a
