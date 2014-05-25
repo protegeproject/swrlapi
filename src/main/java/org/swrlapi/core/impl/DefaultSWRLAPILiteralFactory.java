@@ -7,10 +7,10 @@ import org.semanticweb.owlapi.model.OWLLiteral;
 import org.swrlapi.core.OWLLiteralFactory;
 import org.swrlapi.core.SWRLAPILiteral;
 import org.swrlapi.core.SWRLAPILiteralFactory;
-import org.swrlapi.xsd.XSDDate;
-import org.swrlapi.xsd.XSDDateTime;
-import org.swrlapi.xsd.XSDDuration;
-import org.swrlapi.xsd.XSDTime;
+import org.swrlapi.core.xsd.XSDDate;
+import org.swrlapi.core.xsd.XSDDateTime;
+import org.swrlapi.core.xsd.XSDDuration;
+import org.swrlapi.core.xsd.XSDTime;
 
 public class DefaultSWRLAPILiteralFactory implements SWRLAPILiteralFactory
 {

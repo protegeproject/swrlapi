@@ -1,6 +1,5 @@
 package org.swrlapi.builtins;
 
-import org.swrlapi.core.SWRLBuiltInBridge;
 import org.swrlapi.exceptions.BuiltInException;
 import org.swrlapi.exceptions.SWRLBuiltInLibraryException;
 

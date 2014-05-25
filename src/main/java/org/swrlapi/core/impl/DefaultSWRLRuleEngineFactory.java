@@ -1,10 +1,10 @@
 package org.swrlapi.core.impl;
 
+import org.swrlapi.bridge.TargetRuleEngine;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.core.SWRLRuleEngineFactory;
 import org.swrlapi.core.SWRLRuleEngineManager;
-import org.swrlapi.core.TargetRuleEngine;
 import org.swrlapi.exceptions.InvalidSWRLRuleEngineNameException;
 import org.swrlapi.exceptions.NoRegisteredRuleEnginesException;
 import org.swrlapi.exceptions.SWRLRuleEngineException;

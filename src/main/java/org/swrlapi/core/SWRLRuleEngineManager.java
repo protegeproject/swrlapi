@@ -2,6 +2,8 @@ package org.swrlapi.core;
 
 import java.util.Set;
 
+import org.swrlapi.bridge.SWRLRuleEngineBridge;
+import org.swrlapi.bridge.TargetRuleEngine;
 import org.swrlapi.exceptions.TargetRuleEngineException;
 
 /**

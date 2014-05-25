@@ -9,15 +9,15 @@ import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
 import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
+import org.swrlapi.builtins.SWRLBuiltInBridge;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
-import org.swrlapi.core.SWRLBuiltInBridge;
+import org.swrlapi.core.xsd.XSDDate;
+import org.swrlapi.core.xsd.XSDDateTime;
 import org.swrlapi.exceptions.BuiltInException;
 import org.swrlapi.exceptions.InvalidBuiltInArgumentException;
 import org.swrlapi.exceptions.SWRLBuiltInLibraryException;
-import org.swrlapi.xsd.XSDDate;
-import org.swrlapi.xsd.XSDDateTime;
 
 /**
  * Implementation library for SWRL temporal built-ins. See <a

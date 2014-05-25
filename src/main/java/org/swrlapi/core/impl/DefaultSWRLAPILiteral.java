@@ -6,11 +6,11 @@ import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
 import org.swrlapi.core.SWRLAPILiteral;
+import org.swrlapi.core.xsd.XSDDate;
+import org.swrlapi.core.xsd.XSDDateTime;
+import org.swrlapi.core.xsd.XSDDuration;
+import org.swrlapi.core.xsd.XSDTime;
 import org.swrlapi.exceptions.SQWRLLiteralException;
-import org.swrlapi.xsd.XSDDate;
-import org.swrlapi.xsd.XSDDateTime;
-import org.swrlapi.xsd.XSDDuration;
-import org.swrlapi.xsd.XSDTime;
 
 public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 {

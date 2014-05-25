@@ -4,10 +4,10 @@ import java.net.URI;
 
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
-import org.swrlapi.xsd.XSDDate;
-import org.swrlapi.xsd.XSDDateTime;
-import org.swrlapi.xsd.XSDDuration;
-import org.swrlapi.xsd.XSDTime;
+import org.swrlapi.core.xsd.XSDDate;
+import org.swrlapi.core.xsd.XSDDateTime;
+import org.swrlapi.core.xsd.XSDDuration;
+import org.swrlapi.core.xsd.XSDTime;
 
 /**
  * A convenience factory to create OWLAPI OWL literals. The SWRLAPI also has a {@link SWRLAPILiteralFactory} that can be

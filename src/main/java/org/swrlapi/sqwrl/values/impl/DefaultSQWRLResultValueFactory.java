@@ -9,6 +9,10 @@ import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.core.OWLIRIResolver;
 import org.swrlapi.core.OWLLiteralFactory;
+import org.swrlapi.core.xsd.XSDDate;
+import org.swrlapi.core.xsd.XSDDateTime;
+import org.swrlapi.core.xsd.XSDDuration;
+import org.swrlapi.core.xsd.XSDTime;
 import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyValue;
 import org.swrlapi.sqwrl.values.SQWRLClassValue;
 import org.swrlapi.sqwrl.values.SQWRLDataPropertyValue;
@@ -16,10 +20,6 @@ import org.swrlapi.sqwrl.values.SQWRLIndividualValue;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLObjectPropertyValue;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
-import org.swrlapi.xsd.XSDDate;
-import org.swrlapi.xsd.XSDDateTime;
-import org.swrlapi.xsd.XSDDuration;
-import org.swrlapi.xsd.XSDTime;
 
 public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
 {

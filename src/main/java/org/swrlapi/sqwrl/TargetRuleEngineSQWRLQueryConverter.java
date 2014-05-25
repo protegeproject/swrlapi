@@ -1,6 +1,6 @@
 package org.swrlapi.sqwrl;
 
-import org.swrlapi.converters.TargetRuleEngineConverter;
+import org.swrlapi.bridge.converters.TargetRuleEngineConverter;
 import org.swrlapi.exceptions.BuiltInException;
 import org.swrlapi.exceptions.TargetRuleEngineException;
 

@@ -17,15 +17,15 @@ import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
+import org.swrlapi.core.xsd.XSDDate;
+import org.swrlapi.core.xsd.XSDDateTime;
+import org.swrlapi.core.xsd.XSDDuration;
+import org.swrlapi.core.xsd.XSDTime;
+import org.swrlapi.core.xsd.XSDTimeUtil;
 import org.swrlapi.exceptions.BuiltInException;
 import org.swrlapi.exceptions.BuiltInNotImplementedException;
 import org.swrlapi.exceptions.InvalidBuiltInArgumentException;
 import org.swrlapi.exceptions.InvalidBuiltInNameException;
-import org.swrlapi.xsd.XSDDate;
-import org.swrlapi.xsd.XSDDateTime;
-import org.swrlapi.xsd.XSDDuration;
-import org.swrlapi.xsd.XSDTime;
-import org.swrlapi.xsd.XSDTimeUtil;
 
 /**
  * Implementations library for the core SWRL built-in methods. These built-ins are defined <a
