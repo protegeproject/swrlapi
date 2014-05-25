@@ -20,7 +20,7 @@ public class SWRLAPIRulesView extends JTabbedPane implements SWRLAPIView
 
 		addTab("Control", ruleEngineIcon, new SWRLRulesControlView(swrlRuleEngine), "Control Tab");
 
-		addTab("Rules", ruleEngineIcon, new SWRLRulesView(swrlRuleEngine, prefixManager), "Rules Tab");
+		addTab("Rules", ruleEngineIcon, new ImportedSWRLRulesView(swrlRuleEngine, prefixManager), "Rules Tab");
 
 		addTab("Asserted Axioms", ruleEngineIcon, new AssertedOWLAxiomsView(swrlRuleEngine), "Asserted OWL Axioms Tab");
 
