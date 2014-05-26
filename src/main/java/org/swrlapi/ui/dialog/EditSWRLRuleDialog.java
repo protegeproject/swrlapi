@@ -18,12 +18,15 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.ui.controller.SWRLAPIApplicationController;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
 
 public class EditSWRLRuleDialog extends JDialog
 {
 	private static final long serialVersionUID = 1L;
+
+	private static final String INVALID_RULE_TITLE = "Invalid Rule";
 
 	private final SWRLAPIApplicationController applicationController;
 
@@ -42,8 +45,6 @@ public class EditSWRLRuleDialog extends JDialog
 
 		createComponents();
 
-		// TODO setLocationRelativeTo(applicationController.getApplicationView());
-
 		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 
 		addWindowListener(new WindowAdapter() {
@@ -59,7 +60,7 @@ public class EditSWRLRuleDialog extends JDialog
 		clearEntryFields();
 	}
 
-	public void setEditMappingExpression(String ruleName, String ruleText, String comment)
+	public void setEditData(String ruleName, String ruleText, String comment)
 	{
 		clearEntryFields();
 
@@ -161,7 +162,7 @@ public class EditSWRLRuleDialog extends JDialog
 
 				// TODO Check the rule and name
 			} catch (Exception ex) {
-				getApplicationDialogManager().showErrorMessageDialog(ex.getMessage());
+				getApplicationDialogManager().showErrorMessageDialog(ex.getMessage(), INVALID_RULE_TITLE);
 				errorOccurred = true;
 			}
 
@@ -176,6 +177,12 @@ public class EditSWRLRuleDialog extends JDialog
 				clearEntryFields();
 			}
 		}
+	}
+
+	@SuppressWarnings("unused")
+	private SWRLParser getSWRLParser()
+	{
+		return applicationController.getApplicationModel().getSWRLParser();
 	}
 
 	private SWRLRulesTableModel getSWRLRulesModel()

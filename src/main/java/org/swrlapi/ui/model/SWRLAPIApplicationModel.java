@@ -1,27 +1,38 @@
 package org.swrlapi.ui.model;
 
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
+import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.core.impl.DefaultSWRLAPIRulePrinter;
+import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.ui.view.SWRLAPIApplicationView;
 
 public class SWRLAPIApplicationModel implements SWRLAPIModel
 {
-	private SWRLAPIApplicationView applicationView;
 	private final SWRLRuleEngine ruleEngine;
 	private final SQWRLQueryEngine queryEngine;
+	private final SWRLParser swrlParser;
 	private final DefaultPrefixManager prefixManager;
 	private final DefaultSWRLAPIRulePrinter swrlRulePrinter;
 	private final SWRLRulesTableModel swrlRulesTableModel;
 
-	public SWRLAPIApplicationModel(SWRLRuleEngine ruleEngine, DefaultPrefixManager prefixManager)
+	private SWRLAPIApplicationView applicationView;
+
+	public SWRLAPIApplicationModel(SWRLAPIOWLOntology swrlapiOWLOntology, SWRLRuleEngine ruleEngine,
+			DefaultPrefixManager prefixManager)
 	{
 		this.ruleEngine = ruleEngine;
 		this.queryEngine = ruleEngine;
+		this.swrlParser = new SWRLParser(swrlapiOWLOntology, prefixManager);
 		this.prefixManager = prefixManager;
 		this.swrlRulePrinter = new DefaultSWRLAPIRulePrinter(prefixManager);
 		this.swrlRulesTableModel = new SWRLRulesTableModel(ruleEngine, swrlRulePrinter);
+	}
+
+	public SWRLAPIApplicationView getApplicationView()
+	{
+		return this.applicationView;
 	}
 
 	public SWRLRuleEngine getSWRLRuleEngine()
@@ -32,6 +43,11 @@ public class SWRLAPIApplicationModel implements SWRLAPIModel
 	public SQWRLQueryEngine getSQWRLQueryEngine()
 	{
 		return this.queryEngine;
+	}
+
+	public SWRLParser getSWRLParser()
+	{
+		return this.swrlParser;
 	}
 
 	public DefaultPrefixManager getPrefixManager()
@@ -47,11 +63,6 @@ public class SWRLAPIApplicationModel implements SWRLAPIModel
 	public void setApplicationView(SWRLAPIApplicationView applicationView)
 	{
 		this.applicationView = applicationView;
-	}
-
-	public SWRLAPIApplicationView getApplicationView()
-	{
-		return this.applicationView;
 	}
 
 	public void saveSWRLRules()

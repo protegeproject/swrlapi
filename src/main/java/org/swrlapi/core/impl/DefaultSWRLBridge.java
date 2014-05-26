@@ -45,14 +45,9 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 		SWRLRuleEngineBridgeController
 {
 	private final SWRLAPIOWLOntology swrlapiOWLOntology;
-	private final OWLClassExpressionResolver classExpressionResolver;
-	private final OWLPropertyExpressionResolver propertyExpressionResolver;
+	private final OWLClassExpressionResolver owlClassExpressionResolver;
+	private final OWLPropertyExpressionResolver owlPropertyExpressionResolver;
 	private final OWL2RLPersistenceLayer owl2RLPersistenceLayer;
-
-	/**
-	 * The target rule engine implementation (e.g., Drools, Jess)
-	 */
-	private TargetRuleEngine targetRuleEngine;
 
 	/**
 	 * OWL axioms inferred by a rule engine (via the {@link #inferOWLAxiom()} call). A {@link SWRLRuleEngine} can retrieve
@@ -66,20 +61,24 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 	 */
 	private final Set<OWLAxiom> injectedOWLAxioms;
 
+	/**
+	 * The target rule engine implementation (e.g., Drools, Jess)
+	 */
+	private TargetRuleEngine targetRuleEngine;
+
 	public DefaultSWRLBridge(SWRLAPIOWLOntology swrlapiOWLOntology, OWL2RLPersistenceLayer owl2RLPersistenceLayer)
 			throws SWRLBuiltInBridgeException
 	{
 		this.swrlapiOWLOntology = swrlapiOWLOntology;
 		this.owl2RLPersistenceLayer = owl2RLPersistenceLayer;
 		this.targetRuleEngine = null;
-
-		this.classExpressionResolver = new OWLClassExpressionResolver(swrlapiOWLOntology.getOWLDataFactory());
-		this.propertyExpressionResolver = new OWLPropertyExpressionResolver();
+		this.owlClassExpressionResolver = new OWLClassExpressionResolver(swrlapiOWLOntology.getOWLDataFactory());
+		this.owlPropertyExpressionResolver = new OWLPropertyExpressionResolver();
 
 		this.inferredOWLAxioms = new HashSet<OWLAxiom>();
 		this.injectedOWLAxioms = new HashSet<OWLAxiom>();
 
-		resetController();
+		reset();
 	}
 
 	@Override
@@ -89,7 +88,7 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 	}
 
 	@Override
-	public void resetController() throws SWRLBuiltInBridgeException
+	public void reset() throws SWRLBuiltInBridgeException
 	{
 		this.inferredOWLAxioms.clear();
 		this.injectedOWLAxioms.clear();
@@ -125,13 +124,13 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 	@Override
 	public OWLClassExpressionResolver getOWLClassExpressionResolver()
 	{
-		return this.classExpressionResolver;
+		return this.owlClassExpressionResolver;
 	}
 
 	@Override
 	public OWLPropertyExpressionResolver getOWLPropertyExpressionResolver()
 	{
-		return this.propertyExpressionResolver;
+		return this.owlPropertyExpressionResolver;
 	}
 
 	@Override

@@ -39,6 +39,12 @@ import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
  */
 public interface SWRLAPIOWLOntology
 {
+	OWLOntologyManager getOWLOntologyManager();
+
+	OWLOntology getOWLOntology();
+
+	OWLDataFactory getOWLDataFactory();
+
 	Set<SWRLAPIRule> getSWRLAPIRules();
 
 	SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory();
@@ -46,12 +52,6 @@ public interface SWRLAPIOWLOntology
 	SWRLAPIOntologyProcessor getSWRLAPIOntologyProcessor();
 
 	OWLIRIResolver getOWLIRIResolver();
-
-	OWLOntology getOWLOntology();
-
-	OWLOntologyManager getOWLOntologyManager();
-
-	OWLDataFactory getOWLDataFactory();
 
 	void startBulkConversion(); // Can be used, for example, to switch off notification during bulk conversion.
 

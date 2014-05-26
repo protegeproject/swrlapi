@@ -10,11 +10,12 @@ public class SWRLAPIApplicationController
 	private final SWRLAPIApplicationModel applicationModel;
 	private final SWRLAPIApplicationDialogManager applicationDialogManager;
 
-	public SWRLAPIApplicationController(SWRLAPIApplicationView applicationView, SWRLAPIApplicationModel applicationModel)
+	public SWRLAPIApplicationController(SWRLAPIApplicationView applicationView, SWRLAPIApplicationModel applicationModel,
+			SWRLAPIApplicationDialogManager applicationDialogManager)
 	{
 		this.applicationView = applicationView;
 		this.applicationModel = applicationModel;
-		this.applicationDialogManager = null; // TODO
+		this.applicationDialogManager = applicationDialogManager;
 	}
 
 	public SWRLAPIApplicationView getApplicationView()

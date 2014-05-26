@@ -10,7 +10,7 @@ import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
  */
 public interface SWRLBuiltInBridgeController
 {
-	void resetController() throws SWRLBuiltInBridgeException;
+	void reset() throws SWRLBuiltInBridgeException;
 
 	int getNumberOfInjectedOWLAxioms();
 

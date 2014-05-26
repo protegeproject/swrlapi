@@ -65,8 +65,8 @@ public class DefaultSWRLRuleEngineFactory implements SWRLRuleEngineFactory
 	}
 
 	/**
-	 * Create a SWRL rule engine. Throws an {@link InvalidSWRLRuleEngineNameException} if an engine of this name is not
-	 * registered.
+	 * Create a SWRL rule engine. Throws an {@link InvalidSWRLRuleEngineNameException} if an engine with the supplied name
+	 * is not registered.
 	 */
 	@Override
 	public SWRLRuleEngine createSWRLRuleEngine(String ruleEngineName, SWRLAPIOWLOntology swrlapiOWLOntology)

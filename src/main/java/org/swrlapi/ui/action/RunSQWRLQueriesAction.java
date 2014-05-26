@@ -11,6 +11,10 @@ public class RunSQWRLQueriesAction implements ActionListener
 {
 	private final SWRLAPIApplicationController applicationController;
 
+	private static final String INVALID_QUERY_TITLE = "Invalid Query";
+	private static final String NO_QUERIES_TITLE = "No SQWRL Queries";
+	private static final String NO_QUERIES_MESSAGE = "No SQWRL queries in ontology";
+
 	public RunSQWRLQueriesAction(SWRLAPIApplicationController applicationController)
 	{
 		this.applicationController = applicationController;
@@ -20,13 +24,13 @@ public class RunSQWRLQueriesAction implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
 		if (!getSWRLRulesTableModel().hasSWRLRules())
-			getApplicationDialogManager().showMessageDialog("No rules!");
+			getApplicationDialogManager().showMessageDialog(NO_QUERIES_MESSAGE, NO_QUERIES_TITLE);
 		else {
 			try {
 				// TODO Run the query; get it from getSWRLRulesTableModel()
 			} catch (Exception ex) {
 				ex.printStackTrace();
-				getApplicationDialogManager().showErrorMessageDialog("Error running SQWRL query: " + ex.getMessage());
+				getApplicationDialogManager().showErrorMessageDialog(ex.getMessage(), INVALID_QUERY_TITLE);
 			}
 		}
 	}

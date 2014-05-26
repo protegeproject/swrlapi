@@ -92,7 +92,7 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 		try {
 			getSWRLAPIOntologyProcessor().reset();
 			getTargetRuleEngine().resetRuleEngine(); // Reset the target rule engine
-			getBuiltInBridgeController().resetController();
+			getBuiltInBridgeController().reset();
 			this.exportedOWLAxioms.clear();
 			getOWL2RLEngine().resetRuleSelectionChanged();
 			getSWRLAPIOWLOntology().resetOntologyChanged();
