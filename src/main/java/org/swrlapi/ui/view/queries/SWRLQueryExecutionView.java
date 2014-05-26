@@ -10,11 +10,11 @@ import org.swrlapi.ui.view.SQWRLQuerySelector;
 import org.swrlapi.ui.view.SWRLAPIView;
 import org.swrlapi.ui.view.owl2rl.OWL2RLRuleTablesView;
 
-public class SWRLAPIQueriesView extends JTabbedPane implements SWRLAPIView
+public class SWRLQueryExecutionView extends JTabbedPane implements SWRLAPIView
 {
 	private static final long serialVersionUID = 1L;
 
-	public SWRLAPIQueriesView(SWRLAPIApplicationModel applicationModel, Icon queryEngineIcon,
+	public SWRLQueryExecutionView(SWRLAPIApplicationModel applicationModel, Icon queryEngineIcon,
 			SQWRLQuerySelector ruleSelector)
 	{
 		SQWRLQueryEngine queryEngine = applicationModel.getSQWRLQueryEngine();

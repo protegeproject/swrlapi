@@ -10,11 +10,11 @@ import org.swrlapi.ui.model.SWRLAPIApplicationModel;
 import org.swrlapi.ui.view.SWRLAPIView;
 import org.swrlapi.ui.view.owl2rl.OWL2RLRuleTablesView;
 
-public class SWRLAPIRulesView extends JTabbedPane implements SWRLAPIView
+public class SWRLRuleExecutionView extends JTabbedPane implements SWRLAPIView
 {
 	private static final long serialVersionUID = 1L;
 
-	public SWRLAPIRulesView(SWRLAPIApplicationModel applicationModel, Icon ruleEngineIcon)
+	public SWRLRuleExecutionView(SWRLAPIApplicationModel applicationModel, Icon ruleEngineIcon)
 	{
 		SWRLRuleEngine swrlRuleEngine = applicationModel.getSWRLRuleEngine();
 		DefaultPrefixManager prefixManager = applicationModel.getPrefixManager();

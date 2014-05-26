@@ -23,9 +23,11 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 	private static final int ACTIVE_COLUMN_PREFERRED_WIDTH = 30;
 	private static final int ACTIVE_COLUMN_MAX_WIDTH = 50;
 	private static final int RULE_NAME_COLUMN_PREFERRED_WIDTH = 150;
-	private static final int RULE_NAME_COLUMN_MAX_WIDTH = 300;
-	private static final int RULE_TEXT_COLUMN_PREFERRED_WIDTH = 100;
-	private static final int RULE_TEXT_COLUMN_MAX_WIDTH = 200;
+	private static final int RULE_NAME_COLUMN_MAX_WIDTH = 200;
+	private static final int RULE_TEXT_COLUMN_PREFERRED_WIDTH = 500;
+	private static final int RULE_TEXT_COLUMN_MAX_WIDTH = 800;
+	private static final int RULE_COMMENT_COLUMN_PREFERRED_WIDTH = 100;
+	private static final int RULE_COMMENT_COLUMN_MAX_WIDTH = 200;
 
 	private final SWRLAPIApplicationDialogManager applicationDialogManager;
 	private final SWRLRulesTableModel swrlRulesTableModel;
@@ -51,12 +53,32 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 		validate();
 	}
 
-	public String getSelectedSWRLRuleName()
+	private String getSelectedSWRLRuleName()
 	{
 		int selectedRow = this.swrlRulesTable.getSelectedRow();
 
 		if (selectedRow != -1)
 			return this.swrlRulesTableModel.getSWRLRuleNameByIndex(selectedRow);
+		else
+			return "";
+	}
+
+	private String getSelectedSWRLRuleText()
+	{
+		int selectedRow = this.swrlRulesTable.getSelectedRow();
+
+		if (selectedRow != -1)
+			return this.swrlRulesTableModel.getSWRLRuleTextByIndex(selectedRow);
+		else
+			return "";
+	}
+
+	private String getSelectedSWRLRuleComment()
+	{
+		int selectedRow = this.swrlRulesTable.getSelectedRow();
+
+		if (selectedRow != -1)
+			return this.swrlRulesTableModel.getSWRLRuleCommentByIndex(selectedRow);
 		else
 			return "";
 	}
@@ -68,9 +90,12 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 		columnModel.getColumn(SWRLRulesTableModel.ACTIVE_COLUMN).setPreferredWidth(ACTIVE_COLUMN_PREFERRED_WIDTH);
 		columnModel.getColumn(SWRLRulesTableModel.ACTIVE_COLUMN).setMaxWidth(ACTIVE_COLUMN_MAX_WIDTH);
 		columnModel.getColumn(SWRLRulesTableModel.RULE_NAME_COLUMN).setPreferredWidth(RULE_NAME_COLUMN_PREFERRED_WIDTH);
-		columnModel.getColumn(SWRLRulesTableModel.RULE_NAME_COLUMN).setPreferredWidth(RULE_NAME_COLUMN_MAX_WIDTH);
+		columnModel.getColumn(SWRLRulesTableModel.RULE_NAME_COLUMN).setMaxWidth(RULE_NAME_COLUMN_MAX_WIDTH);
 		columnModel.getColumn(SWRLRulesTableModel.RULE_TEXT_COLUMN).setPreferredWidth(RULE_TEXT_COLUMN_PREFERRED_WIDTH);
 		columnModel.getColumn(SWRLRulesTableModel.RULE_TEXT_COLUMN).setMaxWidth(RULE_TEXT_COLUMN_MAX_WIDTH);
+		columnModel.getColumn(SWRLRulesTableModel.RULE_COMMENT_COLUMN).setPreferredWidth(
+				RULE_COMMENT_COLUMN_PREFERRED_WIDTH);
+		columnModel.getColumn(SWRLRulesTableModel.RULE_COMMENT_COLUMN).setMaxWidth(RULE_COMMENT_COLUMN_MAX_WIDTH);
 	}
 
 	private void addTableListeners()
@@ -90,11 +115,12 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 
 	private void editSelectedSWRLRule()
 	{
-		String selectedRuleName = getSelectedSWRLRuleName();
+		String ruleName = getSelectedSWRLRuleName();
+		String ruleText = getSelectedSWRLRuleText();
+		String ruleComment = getSelectedSWRLRuleComment();
 
-		if (SWRLRulesTableView.this.swrlRulesTableModel.hasSWRLRule(selectedRuleName)) {
-			this.applicationDialogManager.getEditSWRLRuleDialog(selectedRuleName, "TODO", "TODO").setVisible(true);
-		}
+		if (ruleName.length() != 0)
+			this.applicationDialogManager.getEditSWRLRuleDialog(ruleName, ruleText, ruleComment).setVisible(true);
 	}
 
 	private void createComponents(SWRLAPIApplicationDialogManager applicationDialogManager)
@@ -185,7 +211,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 			String selectedRuleName = getSelectedSWRLRuleName();
 
 			if (SWRLRulesTableView.this.swrlRulesTableModel.hasSWRLRule(selectedRuleName)
-					&& this.applicationDialogManager.showConfirmDialog("Delete rule", "Do you really want to delete the rule?")) {
+					&& this.applicationDialogManager.showConfirmDialog("Do you really want to delete the rule?", "Delete Rule")) {
 				SWRLRulesTableView.this.swrlRulesTableModel.removeSWRLRule(selectedRuleName);
 			}
 		}

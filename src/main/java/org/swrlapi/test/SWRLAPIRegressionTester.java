@@ -15,6 +15,10 @@ import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLNamedResultValue;
 import org.swrlapi.sqwrl.values.SQWRLResultValue;
 
+/**
+ * Individually execute all SQWLR queries in an ontology and compare the generated result with the expected result
+ * stored in the rdfs:comment annotation associated with each query.
+ */
 public class SWRLAPIRegressionTester
 {
 	private final SQWRLQueryEngine queryEngine;

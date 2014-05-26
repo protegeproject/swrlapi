@@ -13,7 +13,7 @@ import org.swrlapi.core.impl.DefaultSWRLAPIRulePrinter;
 import org.swrlapi.ui.view.SWRLAPIView;
 
 /**
- * Models a SWRL rule or SQWRL query for display and editing.
+ * Models a list of SWRL rules or SQWRL queries for tabular display
  */
 public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIModel
 {
@@ -22,14 +22,14 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 	public static int ACTIVE_COLUMN = 0;
 	public static int RULE_NAME_COLUMN = 1;
 	public static int RULE_TEXT_COLUMN = 2;
-	public static int SOURCE_SHEET_NAME_COLUMN = 3;
+	public static int RULE_COMMENT_COLUMN = 3;
 	public static int NUMBER_OF_COLUMNS = 4;
-
-	private SWRLAPIView swrlapiView = null;
-	private boolean isModified = false;
 
 	private final DefaultSWRLAPIRulePrinter swrlRulePrinter;
 	private final Map<String, SWRLRuleModel> swrlRuleModels;
+
+	private SWRLAPIView swrlapiView = null;
+	private boolean isModified = false;
 
 	public SWRLRulesTableModel(SWRLRuleEngine swrlRuleEngine, DefaultSWRLAPIRulePrinter swrlRulePrinter)
 	{
@@ -68,10 +68,32 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 
 	public String getSWRLRuleNameByIndex(int ruleIndex)
 	{
-		if (ruleIndex >= 0 && ruleIndex < swrlRuleModels.values().size())
-			return ((SWRLRuleModel)swrlRuleModels.values().toArray()[ruleIndex]).getRuleName();
+		SWRLRuleModel swrlRuleModel = getSWRLRuleModelByIndex(ruleIndex);
+
+		if (swrlRuleModel != null)
+			return swrlRuleModel.getRuleName();
 		else
-			return "";
+			return "<INVALID_INDEX>";
+	}
+
+	public String getSWRLRuleTextByIndex(int ruleIndex)
+	{
+		SWRLRuleModel swrlRuleModel = getSWRLRuleModelByIndex(ruleIndex);
+
+		if (swrlRuleModel != null)
+			return swrlRuleModel.getRuleText();
+		else
+			return "<INVALID_INDEX>";
+	}
+
+	public String getSWRLRuleCommentByIndex(int ruleIndex)
+	{
+		SWRLRuleModel swrlRuleModel = getSWRLRuleModelByIndex(ruleIndex);
+
+		if (swrlRuleModel != null)
+			return swrlRuleModel.getComment();
+		else
+			return "<INVALID_INDEX>";
 	}
 
 	public boolean hasSWRLRule(String ruleName)
@@ -144,11 +166,11 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 	public String getColumnName(int column)
 	{
 		if (column == RULE_NAME_COLUMN)
-			return new String("Comment");
+			return new String("Name");
 		else if (column == RULE_TEXT_COLUMN)
-			return new String("MM DSL expression");
-		else if (column == SOURCE_SHEET_NAME_COLUMN)
-			return new String("Sheet name");
+			return new String("Rule");
+		else if (column == RULE_COMMENT_COLUMN)
+			return new String("Comment");
 		else if (column == ACTIVE_COLUMN)
 			return new String("");
 		else
@@ -167,12 +189,11 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 				result = ((SWRLRuleModel)swrlRuleModels.values().toArray()[row]).getRuleText();
 			else if (column == RULE_NAME_COLUMN)
 				result = ((SWRLRuleModel)swrlRuleModels.values().toArray()[row]).getRuleName();
-			else if (column == SOURCE_SHEET_NAME_COLUMN)
+			else if (column == RULE_COMMENT_COLUMN)
 				result = ((SWRLRuleModel)swrlRuleModels.values().toArray()[row]).getComment();
 			else if (column == ACTIVE_COLUMN)
 				result = ((SWRLRuleModel)swrlRuleModels.values().toArray()[row]).isActive();
 		}
-
 		return result;
 	}
 
@@ -206,6 +227,14 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 	{
 		if (swrlapiView != null)
 			swrlapiView.update();
+	}
+
+	private SWRLRuleModel getSWRLRuleModelByIndex(int ruleIndex)
+	{
+		if (ruleIndex >= 0 && ruleIndex < swrlRuleModels.values().size())
+			return ((SWRLRuleModel)swrlRuleModels.values().toArray()[ruleIndex]);
+		else
+			return null;
 	}
 
 	private class SWRLRuleModel

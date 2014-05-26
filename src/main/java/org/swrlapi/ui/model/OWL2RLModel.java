@@ -5,18 +5,18 @@ import org.swrlapi.ui.view.owl2rl.OWL2RLRuleTablesView;
 
 public class OWL2RLModel implements SWRLAPIModel
 {
-	private final OWL2RLRuleTablesView owl2RLTablesView;
+	private final OWL2RLRuleTablesView owl2RLRuleTablesView;
 	private final OWL2RLEngine owl2RLEngine;
 
-	public OWL2RLModel(OWL2RLRuleTablesView owl2RLTablesView, OWL2RLEngine owl2RLEngine)
+	public OWL2RLModel(OWL2RLRuleTablesView owl2RLRuleTablesView, OWL2RLEngine owl2RLEngine)
 	{
-		this.owl2RLTablesView = owl2RLTablesView;
+		this.owl2RLRuleTablesView = owl2RLRuleTablesView;
 		this.owl2RLEngine = owl2RLEngine;
 	}
 
-	public OWL2RLRuleTablesView getView()
+	public OWL2RLRuleTablesView getOWL2RLRuleTablesView()
 	{
-		return this.owl2RLTablesView;
+		return this.owl2RLRuleTablesView;
 	}
 
 	public OWL2RLEngine getOWL2RLEngine()
@@ -26,6 +26,6 @@ public class OWL2RLModel implements SWRLAPIModel
 
 	public void fireUpdate()
 	{
-		this.owl2RLTablesView.update();
+		this.owl2RLRuleTablesView.update();
 	}
 }

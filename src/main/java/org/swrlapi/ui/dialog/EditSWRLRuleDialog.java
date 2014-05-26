@@ -30,7 +30,6 @@ public class EditSWRLRuleDialog extends JDialog
 
 	private final SWRLAPIApplicationController applicationController;
 
-	private JLabel ruleNameLabel, ruleTextLabel, commentLabel;
 	private JTextField ruleNameTextField, commentTextField;
 	private JTextArea ruleTextTextArea;
 
@@ -38,10 +37,10 @@ public class EditSWRLRuleDialog extends JDialog
 
 	public EditSWRLRuleDialog(SWRLAPIApplicationController applicationController)
 	{
+		this.applicationController = applicationController;
+
 		setTitle("Edit SWRL Rule");
 		setModal(true);
-
-		this.applicationController = applicationController;
 
 		createComponents();
 
@@ -86,47 +85,43 @@ public class EditSWRLRuleDialog extends JDialog
 	private void createComponents()
 	{
 		Container contentPane = getContentPane();
-		JPanel surroundPanel, buttonPanel, textFieldPanel;
-		JButton cancelButton, okButton;
 
-		ruleNameLabel = new JLabel("Comment");
+		JLabel ruleNameLabel = new JLabel("Name");
 		ruleNameTextField = new JTextField("");
 
+		JLabel ruleTextLabel = new JLabel("Body");
 		ruleTextTextArea = new JTextArea("", 20, 80);
 		ruleTextTextArea.setBorder(BorderFactory.createLoweredBevelBorder());
 
-		ruleTextLabel = new JLabel("Sheet name");
-
-		commentLabel = new JLabel("Start column");
-
+		JLabel commentLabel = new JLabel("Comment");
 		commentTextField = new JTextField("");
 
-		cancelButton = new JButton("Cancel");
+		JButton cancelButton = new JButton("Cancel");
 		cancelButton.setPreferredSize(new Dimension(100, 30));
 		cancelButton.addActionListener(new CancelSWRLRuleEditActionListener());
 
-		okButton = new JButton("OK");
+		JButton okButton = new JButton("OK");
 		okButton.setPreferredSize(new Dimension(100, 30));
 		okButton.addActionListener(new OkSWRLRuleEditActionListener());
 
 		contentPane.setLayout(new BorderLayout());
 
-		surroundPanel = new JPanel(new BorderLayout());
+		JPanel surroundPanel = new JPanel(new BorderLayout());
 		surroundPanel.setBorder(BorderFactory.createLoweredBevelBorder());
 		contentPane.add(surroundPanel, BorderLayout.CENTER);
 
-		textFieldPanel = new JPanel(new GridLayout(6, 2));
+		JPanel innerPanel = new JPanel(new GridLayout(6, 2));
 
-		surroundPanel.add(textFieldPanel, BorderLayout.NORTH);
+		surroundPanel.add(innerPanel, BorderLayout.NORTH);
 		surroundPanel.add(ruleTextTextArea, BorderLayout.CENTER);
 
-		textFieldPanel.add(ruleNameLabel);
-		textFieldPanel.add(ruleNameTextField);
-		textFieldPanel.add(ruleTextLabel);
-		textFieldPanel.add(commentLabel);
-		textFieldPanel.add(commentTextField);
+		innerPanel.add(ruleNameLabel);
+		innerPanel.add(ruleNameTextField);
+		innerPanel.add(commentLabel);
+		innerPanel.add(commentTextField);
+		innerPanel.add(ruleTextLabel);
 
-		buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		buttonPanel.add(cancelButton);
 		buttonPanel.add(okButton);
 
