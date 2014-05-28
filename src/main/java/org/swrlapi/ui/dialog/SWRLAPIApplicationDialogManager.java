@@ -11,7 +11,7 @@ import org.swrlapi.ui.controller.SWRLAPIApplicationController;
 
 public class SWRLAPIApplicationDialogManager
 {
-	private final EditSWRLRuleDialog editSWRLRuleDialog;
+	private final SWRLRuleEditorDialog editSWRLRuleDialog;
 	private Component parent;
 	private File lastDirectory = null;
 
@@ -19,7 +19,7 @@ public class SWRLAPIApplicationDialogManager
 
 	public SWRLAPIApplicationDialogManager(SWRLAPIApplicationController applicationController)
 	{
-		this.editSWRLRuleDialog = new EditSWRLRuleDialog(applicationController);
+		this.editSWRLRuleDialog = new SWRLRuleEditorDialog(applicationController);
 	}
 
 	public JDialog getCreateSWRLRuleDialog()
@@ -27,7 +27,7 @@ public class SWRLAPIApplicationDialogManager
 		return this.editSWRLRuleDialog;
 	}
 
-	public JDialog getEditSWRLRuleDialog(String ruleName, String ruleText, String comment)
+	public JDialog getSWRLRuleEditorDialog(String ruleName, String ruleText, String comment)
 	{
 		this.editSWRLRuleDialog.setEditData(ruleName, ruleText, comment);
 

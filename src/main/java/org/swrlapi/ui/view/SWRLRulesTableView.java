@@ -120,7 +120,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 		String ruleComment = getSelectedSWRLRuleComment();
 
 		if (ruleName.length() != 0)
-			this.applicationDialogManager.getEditSWRLRuleDialog(ruleName, ruleText, ruleComment).setVisible(true);
+			this.applicationDialogManager.getSWRLRuleEditorDialog(ruleName, ruleText, ruleComment).setVisible(true);
 	}
 
 	private void createComponents(SWRLAPIApplicationDialogManager applicationDialogManager)

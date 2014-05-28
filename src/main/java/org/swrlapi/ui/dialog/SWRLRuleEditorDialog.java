@@ -7,6 +7,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -17,16 +19,23 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.JTextComponent;
 
+import org.swrlapi.parser.SWRLIncompleteRuleException;
+import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.ui.controller.SWRLAPIApplicationController;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
 
-public class EditSWRLRuleDialog extends JDialog
+public class SWRLRuleEditorDialog extends JDialog
 {
 	private static final long serialVersionUID = 1L;
 
+	private static final String TITLE = "Edit SWRL Rule";
 	private static final String INVALID_RULE_TITLE = "Invalid Rule";
+	private static final int BUTTON_PREFERRED_WIDTH = 100;
+	private static final int BUTTON_PREFERRED_HEIGHT = 30;
 
 	private final SWRLAPIApplicationController applicationController;
 
@@ -35,14 +44,15 @@ public class EditSWRLRuleDialog extends JDialog
 
 	private boolean editMode = false;
 
-	public EditSWRLRuleDialog(SWRLAPIApplicationController applicationController)
+	public SWRLRuleEditorDialog(SWRLAPIApplicationController applicationController)
 	{
 		this.applicationController = applicationController;
 
-		setTitle("Edit SWRL Rule");
+		setTitle(TITLE);
 		setModal(true);
 
 		createComponents();
+		this.ruleTextTextArea.addKeyListener(new SWRLRuleEditorKeyAdapter());
 
 		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 
@@ -90,18 +100,18 @@ public class EditSWRLRuleDialog extends JDialog
 		ruleNameTextField = new JTextField("");
 
 		JLabel ruleTextLabel = new JLabel("Body");
-		ruleTextTextArea = new JTextArea("", 20, 80);
+		ruleTextTextArea = new JTextArea("", 20, 60);
 		ruleTextTextArea.setBorder(BorderFactory.createLoweredBevelBorder());
 
 		JLabel commentLabel = new JLabel("Comment");
 		commentTextField = new JTextField("");
 
 		JButton cancelButton = new JButton("Cancel");
-		cancelButton.setPreferredSize(new Dimension(100, 30));
+		cancelButton.setPreferredSize(new Dimension(BUTTON_PREFERRED_WIDTH, BUTTON_PREFERRED_HEIGHT));
 		cancelButton.addActionListener(new CancelSWRLRuleEditActionListener());
 
 		JButton okButton = new JButton("OK");
-		okButton.setPreferredSize(new Dimension(100, 30));
+		okButton.setPreferredSize(new Dimension(BUTTON_PREFERRED_WIDTH, BUTTON_PREFERRED_HEIGHT));
 		okButton.addActionListener(new OkSWRLRuleEditActionListener());
 
 		contentPane.setLayout(new BorderLayout());
@@ -128,6 +138,30 @@ public class EditSWRLRuleDialog extends JDialog
 		surroundPanel.add(buttonPanel, BorderLayout.SOUTH);
 
 		pack();
+	}
+
+	private class SWRLRuleEditorKeyAdapter extends KeyAdapter
+	{
+		@Override
+		public void keyTyped(KeyEvent event)
+		{
+			char ch = event.getKeyChar();
+			JTextComponent component = (JTextComponent)event.getSource();
+			try {
+				String ruleText = component.getDocument().getText(0, component.getCaretPosition()).trim();
+				ruleText += ch;
+				// System.out.println("ch: " + ch);
+				System.out.println("ruleText: " + ruleText);
+
+				if (ruleText.length() != 0)
+					getSWRLParser().parseSWRLRule(ruleText, true);
+			} catch (SWRLIncompleteRuleException e) {
+				System.out.println("Incomplete " + e.getMessage());
+			} catch (SWRLParseException e) {
+				System.err.println("Error " + e.getMessage());
+			} catch (BadLocationException e) {
+			}
+		}
 	}
 
 	private class CancelSWRLRuleEditActionListener implements ActionListener
@@ -174,7 +208,6 @@ public class EditSWRLRuleDialog extends JDialog
 		}
 	}
 
-	@SuppressWarnings("unused")
 	private SWRLParser getSWRLParser()
 	{
 		return applicationController.getApplicationModel().getSWRLParser();
