@@ -140,7 +140,7 @@ public class SWRLParser
 			tokenizer.checkAndSkipLParen("Expecting parentheses-enclosed arguments for built-in atom");
 			return parseSWRLBuiltinAtomArguments(predicate, tokenizer, isInHead);
 		} else
-			throw generateException("Invalid SWRL atom predicate '" + predicate + "'", tokenizer);
+			throw generateEndOfRuleException("Invalid SWRL atom predicate '" + predicate + "'", tokenizer);
 	}
 
 	private SWRLClassAtom parseSWRLClassAtomArguments(String predicate, SWRLTokenizer tokenizer, boolean isInHead)
@@ -235,9 +235,9 @@ public class SWRLParser
 			if (swrlParserSupport.isOWLNamedIndividual(identifier)) {
 				return !tokenizer.isParseOnly() ? swrlParserSupport.getSWRLIndividualArgument(identifier) : null;
 			} else
-				throw generateException("Invalid OWL individual name '" + token.getValue() + "'", tokenizer);
+				throw generateEndOfRuleException("Invalid OWL individual name '" + token.getValue() + "'", tokenizer);
 		} else
-			throw generateException("Invalid variable or OWL entity name '" + token.getValue() + "'", tokenizer);
+			throw new SWRLParseException("Expecting variable or OWL entity name, got '" + token.getValue() + "'");
 	}
 
 	private SWRLDArgument parseDArgument(SWRLTokenizer tokenizer, boolean isInHead, boolean isInBuiltIn)
@@ -270,10 +270,11 @@ public class SWRLParser
 					} else if (swrlParserSupport.isOWLDatatype(identifier)) {
 						return tokenizer.isParseOnly() ? null : swrlParserSupport.getSWRLDatatypeBuiltInArgument(identifier);
 					} else
-						throw generateException("Expecting boolean or OWL entity name, got '" + identifier + "'", tokenizer);
+						throw generateEndOfRuleException("Expecting boolean or OWL entity name, got '" + identifier + "'",
+								tokenizer);
 				} else
 					// Not "true" or "false" and not a built-in argument
-					throw generateException("Expecting boolean, got '" + identifier + "'", tokenizer);
+					throw generateEndOfRuleException("Expecting boolean, got '" + identifier + "'", tokenizer);
 			}
 		} else if (token.getTokenType() == SWRLToken.SWRLTokenType.STRING) {
 			String literalValue = token.getValue();
@@ -283,7 +284,7 @@ public class SWRLParser
 						"Expecting quotation-enclosed datatype after ^^");
 				String datatype = datatypeToken.getValue();
 				if (datatype.length() == 0)
-					throw generateException("Empty datatype qualifier - must supply a datatype", tokenizer);
+					throw generateEndOfRuleException("Empty datatype qualifier - must supply a datatype", tokenizer);
 				return !tokenizer.isParseOnly() ? swrlParserSupport.getSWRLLiteralArgument(literalValue, datatype) : null;
 			} else
 				return !tokenizer.isParseOnly() ? swrlParserSupport.getXSDStringSWRLLiteralArgument(literalValue) : null;
@@ -292,7 +293,7 @@ public class SWRLParser
 		} else if (token.getTokenType() == SWRLToken.SWRLTokenType.DOUBLE) {
 			return !tokenizer.isParseOnly() ? swrlParserSupport.getXSDDoubleSWRLLiteralArgument(token.getValue()) : null;
 		} else
-			throw generateException("Expecting variable or OWL literal, got '" + token.getValue() + "'", tokenizer);
+			throw new SWRLParseException("Expecting variable or OWL literal, got '" + token.getValue() + "'");
 	}
 
 	private List<SWRLDArgument> parseBuiltInArgumentList(SWRLTokenizer tokenizer, boolean isInHead)
@@ -318,7 +319,7 @@ public class SWRLParser
 		return dArguments;
 	}
 
-	private SWRLParseException generateException(String message, SWRLTokenizer tokenizer)
+	private SWRLParseException generateEndOfRuleException(String message, SWRLTokenizer tokenizer)
 	{
 		if (tokenizer.hasMoreTokens() || !tokenizer.isParseOnly())
 			return new SWRLParseException(message);
