@@ -185,9 +185,9 @@ public class SWRLRuleEditorDialog extends JDialog
 			comment = ruleNameTextField.getText();
 
 			try {
-				ruleName = ruleNameTextField.getText().trim().toUpperCase();
-				ruleText = ruleTextTextArea.getText().trim().toUpperCase();
-				comment = commentTextField.getText().trim().toUpperCase();
+				ruleName = ruleNameTextField.getText().trim();
+				ruleText = ruleTextTextArea.getText().trim();
+				comment = commentTextField.getText().trim();
 
 				// TODO Check the rule and name
 			} catch (Exception ex) {

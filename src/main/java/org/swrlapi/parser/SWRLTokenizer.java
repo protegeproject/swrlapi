@@ -45,6 +45,17 @@ public class SWRLTokenizer
 		this.tokenizer.ordinaryChar(')');
 		this.tokenizer.ordinaryChar('?');
 
+		// If we want to list:
+		// this.tokenizer.ordinaryChar('!');
+		// // Skip double quote
+		// this.tokenizer.ordinaryChars('$', '/');
+		// // Skip colon
+		// this.tokenizer.ordinaryChars(';', '@');
+		// this.tokenizer.ordinaryChars('[', '^');
+		// // Skip underscore
+		// this.tokenizer.ordinaryChar('`');
+		// this.tokenizer.ordinaryChars('{', '~');
+
 		this.swrlVariables = new HashSet<String>();
 		this.parseOnly = parseOnly;
 
@@ -237,8 +248,8 @@ public class SWRLTokenizer
 				throw new SWRLParseException("Expecting '>' after '-' for implication token");
 		}
 		default:
-			throw new SWRLParseException("Error tokenizing - unexpected token '" + tokenizer.sval + "' with type "
-					+ tokenType);
+			throw new SWRLParseException("Error tokenizing - unexpected character '"
+					+ String.valueOf(Character.toChars(tokenType)) + "'");
 		}
 	}
 

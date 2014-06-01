@@ -131,7 +131,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 		setLayout(new BorderLayout());
 
 		JPanel headingPanel = new JPanel(new BorderLayout());
-		add(headingPanel, BorderLayout.NORTH);
+		add(headingPanel, BorderLayout.SOUTH);
 
 		viewport.setBackground(swrlRulesTable.getBackground());
 
