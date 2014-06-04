@@ -1,4 +1,3 @@
-
 package org.swrlapi.owl2rl;
 
 import java.util.ArrayList;
@@ -20,13 +19,13 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 	private final Set<Rule> unsupportedRules;
 	private final Set<Rule> permanentlyOnRules;
 	private final Set<Rule> switchableRules;
-	
+
 	private Set<Rule> enabledRules;
 	private boolean ruleSelectionChanged;
-	private Map<String, OWL2RLFalseArgumentsDescription> argumentsDescriptionMap;
+	private final Map<String, OWL2RLFalseArgumentsDescription> argumentsDescriptionMap;
 
-	public AbstractOWL2RLEngine(OWL2RLPersistenceLayer persistenceLayer, Set<Rule> unsupportedRules, Set<Rule> permanentlyOnRules,
-			Set<Set<Rule>> groupedRuleSets)
+	public AbstractOWL2RLEngine(OWL2RLPersistenceLayer persistenceLayer, Set<Rule> unsupportedRules,
+			Set<Rule> permanentlyOnRules, Set<Set<Rule>> groupedRuleSets)
 	{
 		this.persistenceLayer = persistenceLayer;
 		this.tables = new ArrayList<RuleTable>(Arrays.asList(RuleTable.values()));
@@ -53,88 +52,105 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 
 		// Persistence layer can indicate rule is disabled.
 		this.enabledRules.retainAll(persistenceLayer.getEnabledRules());
-		
+
 		this.ruleSelectionChanged = false;
+
+		this.argumentsDescriptionMap = new HashMap<String, OWL2RLFalseArgumentsDescription>();
 
 		initializeArgumentsDescriptionMap();
 	}
 
+	@Override
 	public void resetRuleSelectionChanged()
 	{
 		this.ruleSelectionChanged = false;
 	}
-	
+
+	@Override
 	public void setRuleSelectionChanged()
 	{
 		this.ruleSelectionChanged = true;
 	}
-	
+
+	@Override
 	public boolean hasRuleSelectionChanged()
 	{
 		return this.ruleSelectionChanged;
 	}
 
+	@Override
 	public List<RuleTable> getRuleTables()
 	{
 		return this.tables;
 	}
 
+	@Override
 	public int getNumberOfRules()
 	{
 		return this.rules.size();
 	}
 
+	@Override
 	public int getNumberOfTables()
 	{
 		return this.tables.size();
 	}
 
+	@Override
 	public List<Rule> getRules()
 	{
 		return new ArrayList<Rule>(this.rules);
 	}
 
+	@Override
 	public List<Rule> getRules(RuleTable table)
 	{
 		return this.table2RulesMap.get(table);
 	}
 
+	@Override
 	public Set<Rule> getEnabledRules()
 	{
 		return this.enabledRules;
 	}
 
+	@Override
 	public Set<Rule> getUnsupportedRules()
 	{
 		return this.unsupportedRules;
 	}
 
+	@Override
 	public Set<Rule> getPermanentlyOnRules()
 	{
 		return this.permanentlyOnRules;
 	}
 
+	@Override
 	public Set<Rule> getSwitchableRules()
 	{
 		return this.switchableRules;
 	}
 
+	@Override
 	public void enableAll()
 	{
 		this.enabledRules = this.switchableRules;
-		
+
 		setRuleSelectionChanged();
 		getOWL2RLPersistenceLayer().setEnabledRules(this.enabledRules);
 	}
 
+	@Override
 	public void disableAll()
 	{
-		this.enabledRules = new HashSet<Rule>();
-		
+		this.enabledRules.clear();
+
 		setRuleSelectionChanged();
 		getOWL2RLPersistenceLayer().disableAll();
 	}
 
+	@Override
 	public void enableTables(RuleTable... enabledTables)
 	{
 		for (RuleTable table : enabledTables) {
@@ -145,6 +161,7 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 		getOWL2RLPersistenceLayer().setEnabledRules(this.enabledRules);
 	}
 
+	@Override
 	public void disableTables(RuleTable... disabledTables)
 	{
 		Set<Rule> disabledRules = new HashSet<Rule>();
@@ -154,20 +171,22 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 				disabledRules.add(rule);
 
 		this.enabledRules.removeAll(disabledRules);
-					
-					setRuleSelectionChanged();
+
+		setRuleSelectionChanged();
 		getOWL2RLPersistenceLayer().setDisabledRules(disabledRules);
 	}
 
+	@Override
 	public void enableRules(Rule... rulesToEnable)
 	{
 		for (Rule rule : rulesToEnable)
 			enableRule(rule);
 
-				setRuleSelectionChanged();
+		setRuleSelectionChanged();
 		getOWL2RLPersistenceLayer().setEnabledRules(this.enabledRules);
 	}
 
+	@Override
 	public OWL2RLPersistenceLayer getOWL2RLPersistenceLayer()
 	{
 		return this.persistenceLayer;
@@ -178,13 +197,14 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 		for (Rule groupedRule : getGroup(rule))
 			this.enabledRules.add(groupedRule);
 
-				setRuleSelectionChanged();
+		setRuleSelectionChanged();
 		getOWL2RLPersistenceLayer().setEnabledRules(this.enabledRules);
 	}
 
+	@Override
 	public void disableRules(Rule... rulesToDisable)
 	{
-		for (Rule rule : rulesToDisable) 
+		for (Rule rule : rulesToDisable)
 			disableRule(rule);
 	}
 
@@ -197,6 +217,7 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 		}
 	}
 
+	@Override
 	public boolean isRuleEnabled(Rule rule)
 	{
 		return this.enabledRules.contains(rule);
@@ -207,6 +228,7 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 		return this.switchableRules.contains(rule);
 	}
 
+	@Override
 	public boolean hasEnabledRules(RuleTable table)
 	{
 		for (Rule rule : getRules(table)) {
@@ -216,6 +238,7 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 		return false;
 	}
 
+	@Override
 	public boolean hasSwitchableRules(RuleTable table)
 	{
 		for (Rule rule : getRules(table)) {
@@ -225,6 +248,7 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 		return false;
 	}
 
+	@Override
 	public RuleStatus getRuleStatus(Rule rule)
 	{
 		if (this.unsupportedRules.contains(rule))
@@ -235,19 +259,21 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 			return RuleStatus.Switchable;
 	}
 
+	@Override
 	public boolean hasFalseArgumentsDescription(String owl2RLRuleName)
 	{
 		return this.argumentsDescriptionMap.containsKey(owl2RLRuleName);
 	}
 
+	@Override
 	public OWL2RLFalseArgumentsDescription getFalseArgumentsDescription(String owl2RLRuleName)
 	{
 		return this.argumentsDescriptionMap.get(owl2RLRuleName);
 	}
 
 	/**
-	 * Final other rules that are grouped with this rule. Grouped rules are enabled and disabled together. The rule itself is added to the group and associated
-	 * rules (if any) are then found and added.
+	 * Final other rules that are grouped with this rule. Grouped rules are enabled and disabled together. The rule itself
+	 * is added to the group and associated rules (if any) are then found and added.
 	 */
 	private Set<Rule> getGroup(Rule rule)
 	{
@@ -264,18 +290,16 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 
 	private void initializeArgumentsDescriptionMap()
 	{
-		this.argumentsDescriptionMap = new HashMap<String, OWL2RLFalseArgumentsDescription>();
-
 		createArgumentDescription(OWL2RLNames.Rule.EQ_DIFF1.toString(), 0, 2, 0, 0);
 		createArgumentDescription(OWL2RLNames.Rule.PRP_PDW.toString(), 0, 2, 2, 0);
 		createArgumentDescription(OWL2RLNames.Rule.PRP_ASYP.toString(), 0, 2, 1, 0);
 		createArgumentDescription(OWL2RLNames.Rule.CAX_DW.toString(), 2, 1, 0, 0);
 	}
 
-	private void createArgumentDescription(String owl2RLRuleName, int numberOfClassArguments, int numberOfIndividualArguments,
-																					int numberOfObjectPropertyArguments, int numberOfDataPropertyArguments)
+	private void createArgumentDescription(String owl2RLRuleName, int numberOfClassArguments,
+			int numberOfIndividualArguments, int numberOfObjectPropertyArguments, int numberOfDataPropertyArguments)
 	{
-		this.argumentsDescriptionMap.put(owl2RLRuleName, new OWL2RLFalseArgumentsDescription(numberOfClassArguments, numberOfIndividualArguments,
-				numberOfObjectPropertyArguments, numberOfDataPropertyArguments));
+		this.argumentsDescriptionMap.put(owl2RLRuleName, new OWL2RLFalseArgumentsDescription(numberOfClassArguments,
+				numberOfIndividualArguments, numberOfObjectPropertyArguments, numberOfDataPropertyArguments));
 	}
 }

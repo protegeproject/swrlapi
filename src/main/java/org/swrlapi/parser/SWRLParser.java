@@ -21,7 +21,7 @@ import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.parser.SWRLToken.SWRLTokenType;
 
 /**
- * A basic SWRL parser that allows both complete and incomplete rules to be parsed.
+ * A basic SWRL and SQWRL parser that allows both complete and incomplete rules and queries to be parsed.
  * <p>
  * This parser will throw a {@link SWRLParseException} if it finds an error in the supplied rule. If the rule is correct
  * but incomplete, a {@link SWRLIncompleteRuleException} (which is a subclass of {@link SWRLParseException}) will be
@@ -30,6 +30,8 @@ import org.swrlapi.parser.SWRLToken.SWRLTokenType;
  * The {@link #parseSWRLRule(String, boolean)} method parses a rule. If {@link #parseOnly} argument to this method is
  * true, only checking is performed - no SWRL rules are created; if it is false, a {@link SWRLAPIRule} object is
  * created.
+ * 
+ * @see SWRLTokenizer, SWRLParserSupport
  */
 public class SWRLParser
 {
@@ -210,7 +212,7 @@ public class SWRLParser
 
 	private SWRLVariable parseSWRLVariable(SWRLTokenizer tokenizer, boolean isInHead) throws SWRLParseException
 	{
-		SWRLToken token = tokenizer.getToken(SWRLToken.SWRLTokenType.SHORTNAME, "Expecting variable name");
+		SWRLToken token = tokenizer.getToken(SWRLToken.SWRLTokenType.SHORTNAME, "Expecting variable name after ?");
 		String variableName = token.getValue();
 		swrlParserSupport.checkThatSWRLVariableNameIsValid(variableName);
 
@@ -220,13 +222,12 @@ public class SWRLParser
 			else if (!tokenizer.hasVariable(variableName))
 				throw new SWRLParseException("Variable ?" + variableName + " used in consequent is not present in antecedent");
 		}
-
 		return !tokenizer.isParseOnly() ? swrlParserSupport.getSWRLVariable(variableName) : null;
 	}
 
 	private SWRLIArgument parseIArgument(SWRLTokenizer tokenizer, boolean isInHead) throws SWRLParseException
 	{ // Parse a SWRL variable or an OWL named individual
-		SWRLToken token = tokenizer.getToken();
+		SWRLToken token = tokenizer.getToken("Expecting variable or OWL individual name");
 
 		if (token.getTokenType() == SWRLToken.SWRLTokenType.QUESTION)
 			return parseSWRLVariable(tokenizer, isInHead);
@@ -237,7 +238,7 @@ public class SWRLParser
 			} else
 				throw generateEndOfRuleException("Invalid OWL individual name '" + token.getValue() + "'", tokenizer);
 		} else
-			throw new SWRLParseException("Expecting variable or OWL entity name, got '" + token.getValue() + "'");
+			throw new SWRLParseException("Expecting variable or OWL individual name, got '" + token.getValue() + "'");
 	}
 
 	private SWRLDArgument parseDArgument(SWRLTokenizer tokenizer, boolean isInHead, boolean isInBuiltIn)

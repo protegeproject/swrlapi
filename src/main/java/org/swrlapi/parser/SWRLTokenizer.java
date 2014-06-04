@@ -11,6 +11,8 @@ import java.util.Set;
 /**
  * Tokenizer generates a {@link SWRLParseException} for invalid input and a {@link SWRLIncompleteRuleException} (which
  * is a subclass of {@link SWRLParseException}) for valid but incomplete input.
+ * 
+ * @see SWRLParser
  */
 public class SWRLTokenizer
 {
@@ -87,7 +89,7 @@ public class SWRLTokenizer
 			else
 				throw new SWRLParseException(unexpectedTokenMessage);
 		} else
-			throw generateEndOfRuleException(unexpectedTokenMessage + ", got end of rule");
+			throw generateEndOfRuleException(unexpectedTokenMessage);
 	}
 
 	public SWRLToken getToken(String noTokenMessage) throws SWRLParseException
@@ -143,7 +145,7 @@ public class SWRLTokenizer
 			if (token.getTokenType() != tokenType)
 				throw new SWRLParseException(unexpectedTokenMessage + ", got '" + token.getValue() + "'");
 		} else
-			throw generateEndOfRuleException(unexpectedTokenMessage + ", got end of rule");
+			throw generateEndOfRuleException(unexpectedTokenMessage);
 	}
 
 	public void checkAndSkipLParen(String unexpectedTokenMessage) throws SWRLParseException
@@ -228,11 +230,11 @@ public class SWRLTokenizer
 				if (nextTokenType == '>')
 					return new SWRLToken(SWRLToken.SWRLTokenType.SHORTNAME, iri);
 				else if (nextTokenType == StreamTokenizer.TT_EOF)
-					throw generateEndOfRuleException("Expecting '>' after IRI, got end of rule");
+					throw generateEndOfRuleException("Expecting '>' after IRI");
 				else
 					throw new SWRLParseException("Expecting IRI after '<'");
 			} else if (nextTokenType == StreamTokenizer.TT_EOF)
-				throw generateEndOfRuleException("Expecting IRI after '<', got end of rule");
+				throw generateEndOfRuleException("Expecting IRI after '<'");
 			else
 				throw new SWRLParseException("Expecting IRI after '<'"); // Some other token
 		}
@@ -243,13 +245,12 @@ public class SWRLTokenizer
 			if (nextTokenType == '>')
 				return new SWRLToken(SWRLToken.SWRLTokenType.IMP, "->");
 			else if (nextTokenType == StreamTokenizer.TT_EOF)
-				throw generateEndOfRuleException("Expecting '>' after '-', got end of rule");
+				throw generateEndOfRuleException("Expecting '>' after '-'");
 			else
-				throw new SWRLParseException("Expecting '>' after '-' for implication token");
+				throw new SWRLParseException("Expecting '>' after '-' for implication");
 		}
 		default:
-			throw new SWRLParseException("Error tokenizing - unexpected character '"
-					+ String.valueOf(Character.toChars(tokenType)) + "'");
+			throw new SWRLParseException("Unexpected character '" + String.valueOf(Character.toChars(tokenType)) + "'");
 		}
 	}
 

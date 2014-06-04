@@ -1,5 +1,8 @@
 package org.swrlapi.parser;
 
+/**
+ * @see SWRLTokenizer
+ */
 public class SWRLToken
 {
 	private final SWRLTokenType tokenType;
@@ -24,7 +27,7 @@ public class SWRLToken
 	@Override
 	public String toString()
 	{
-		return "[" + tokenType.getName() + "with value '" + value + "']";
+		return "[" + tokenType.getName() + " with value '" + value + "']";
 	}
 
 	public static enum SWRLTokenType {
