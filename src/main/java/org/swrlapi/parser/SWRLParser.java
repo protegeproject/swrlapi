@@ -76,7 +76,7 @@ public class SWRLParser
 
 		do {
 			if (justProcessedAtom)
-				message = isInHead ? "Expecting " + SWRLTokenizer.AND_CHAR : "Expecting " + SWRLTokenizer.IMP_CHAR + " or "
+				message = isInHead ? "Expecting " + SWRLTokenizer.AND_CHAR : "Expecting " + SWRLTokenizer.IMP_CHAR + ", "
 						+ SWRLTokenizer.AND_CHAR + " or " + SWRLTokenizer.RING_CHAR;
 			else
 				message = isInHead ? "Expecting atom" : "Expecting atom or " + SWRLTokenizer.IMP_CHAR + " or "

@@ -36,10 +36,12 @@ public class SWRLRuleEditorDialog extends JDialog
 	private static final String INVALID_RULE_TITLE = "Invalid Rule";
 	private static final int BUTTON_PREFERRED_WIDTH = 100;
 	private static final int BUTTON_PREFERRED_HEIGHT = 30;
+	private static final int RULE_EDIT_AREA_COLUUMNS = 20;
+	private static final int RULE_EDIT_AREA_ROWS = 60;
 
 	private final SWRLAPIApplicationController applicationController;
 
-	private JTextField ruleNameTextField, commentTextField;
+	private JTextField ruleNameTextField, commentTextField, consoleTextField;
 	private JTextArea ruleTextTextArea;
 
 	private boolean editMode = false;
@@ -99,12 +101,15 @@ public class SWRLRuleEditorDialog extends JDialog
 		JLabel ruleNameLabel = new JLabel("Name");
 		ruleNameTextField = new JTextField("");
 
-		JLabel ruleTextLabel = new JLabel("Body");
-		ruleTextTextArea = new JTextArea("", 20, 60);
+		JLabel ruleTextLabel = new JLabel("Rule");
+		ruleTextTextArea = new JTextArea("", RULE_EDIT_AREA_COLUUMNS, RULE_EDIT_AREA_ROWS);
 		ruleTextTextArea.setBorder(BorderFactory.createLoweredBevelBorder());
 
 		JLabel commentLabel = new JLabel("Comment");
 		commentTextField = new JTextField("");
+
+		JLabel consoleLabel = new JLabel("Console");
+		consoleTextField = new JTextField("");
 
 		JButton cancelButton = new JButton("Cancel");
 		cancelButton.setPreferredSize(new Dimension(BUTTON_PREFERRED_WIDTH, BUTTON_PREFERRED_HEIGHT));
@@ -120,7 +125,7 @@ public class SWRLRuleEditorDialog extends JDialog
 		surroundPanel.setBorder(BorderFactory.createLoweredBevelBorder());
 		contentPane.add(surroundPanel, BorderLayout.CENTER);
 
-		JPanel innerPanel = new JPanel(new GridLayout(6, 2));
+		JPanel innerPanel = new JPanel(new GridLayout(8, 2));
 
 		surroundPanel.add(innerPanel, BorderLayout.NORTH);
 		surroundPanel.add(ruleTextTextArea, BorderLayout.CENTER);
@@ -129,6 +134,8 @@ public class SWRLRuleEditorDialog extends JDialog
 		innerPanel.add(ruleNameTextField);
 		innerPanel.add(commentLabel);
 		innerPanel.add(commentTextField);
+		innerPanel.add(consoleLabel);
+		innerPanel.add(consoleTextField);
 		innerPanel.add(ruleTextLabel);
 
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -150,15 +157,15 @@ public class SWRLRuleEditorDialog extends JDialog
 			try {
 				String ruleText = component.getDocument().getText(0, component.getCaretPosition()).trim();
 				ruleText += ch;
-				// System.out.println("ch: " + ch);
 				System.out.println("ruleText: " + ruleText);
 
 				if (ruleText.length() != 0)
 					getSWRLParser().parseSWRLRule(ruleText, true);
+				consoleTextField.setText("Sooper");
 			} catch (SWRLIncompleteRuleException e) {
-				System.out.println("Incomplete " + e.getMessage());
+				consoleTextField.setText(e.getMessage());
 			} catch (SWRLParseException e) {
-				System.err.println("Error " + e.getMessage());
+				consoleTextField.setText("Error: " + e.getMessage());
 			} catch (BadLocationException e) {
 			}
 		}
