@@ -41,9 +41,9 @@ public class SWRLAPIFactory
 	private static final String OWL2RL_ICON_NAME = "OWL2RL.gif";
 
 	public static SWRLAPIApplicationModel createSWRLAPIApplicationModel(SWRLAPIOWLOntology swrlapiOWLOntology,
-			SWRLRuleEngine ruleEngine, DefaultPrefixManager prefixManager)
+			SWRLRuleEngine ruleEngine)
 	{
-		return new SWRLAPIApplicationModel(swrlapiOWLOntology, ruleEngine, prefixManager);
+		return new SWRLAPIApplicationModel(swrlapiOWLOntology, ruleEngine);
 	}
 
 	public static SWRLAPIApplicationController createSWRLAPIApplicationController(SWRLAPIApplicationModel applicationModel)
@@ -118,10 +118,12 @@ public class SWRLAPIFactory
 	private static String[] canned = { "swrl.owl", "swrlb.owl", "swrla.owl", "sqwrl.owl", "swrlm.owl", "temporal.owl",
 			"swrlx.owl", "swrlxml.owl" };
 
-	public static SWRLAPIOWLOntology createSWRLAPIOWLOntology(String owlFileName, DefaultPrefixManager prefixManager)
+	public static SWRLAPIOWLOntology createSWRLAPIOWLOntology(String owlFileName)
 	{
 		try {
 			OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
+			DefaultPrefixManager prefixManager = SWRLAPIFactory.createPrefixManager();
+
 			for (String can : canned) { // TODO Temporary
 				File f = new File("/tmp/" + can);
 				ontologyManager.loadOntologyFromOntologyDocument(f);

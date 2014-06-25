@@ -12,6 +12,7 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.SWRLDArgument;
 import org.semanticweb.owlapi.model.SWRLRule;
+import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 
 /**
@@ -50,6 +51,8 @@ public interface SWRLAPIOWLOntology
 	SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory();
 
 	SWRLAPIOntologyProcessor getSWRLAPIOntologyProcessor();
+
+	DefaultPrefixManager getPrefixManager();
 
 	OWLIRIResolver getOWLIRIResolver();
 

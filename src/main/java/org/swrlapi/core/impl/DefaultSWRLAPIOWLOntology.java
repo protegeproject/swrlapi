@@ -79,6 +79,12 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	}
 
 	@Override
+	public DefaultPrefixManager getPrefixManager()
+	{
+		return this.prefixManager;
+	}
+
+	@Override
 	public Set<SWRLAPIRule> getSWRLAPIRules()
 	{
 		Set<SWRLAPIRule> swrlapiRules = new HashSet<SWRLAPIRule>();

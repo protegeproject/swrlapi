@@ -27,12 +27,11 @@ public class SWRLAPIApplicationModel implements SWRLAPIModel
 
 	private SWRLAPIApplicationView applicationView;
 
-	public SWRLAPIApplicationModel(SWRLAPIOWLOntology swrlapiOWLOntology, SWRLRuleEngine ruleEngine,
-			DefaultPrefixManager prefixManager)
+	public SWRLAPIApplicationModel(SWRLAPIOWLOntology swrlapiOWLOntology, SWRLRuleEngine ruleEngine)
 	{
 		this.ruleEngine = ruleEngine;
 		this.queryEngine = ruleEngine;
-		this.prefixManager = prefixManager;
+		this.prefixManager = swrlapiOWLOntology.getPrefixManager();
 		this.swrlParser = SWRLAPIFactory.createSWRLParser(swrlapiOWLOntology, prefixManager);
 		this.swrlRulePrinter = SWRLAPIFactory.createSWRLAPIRulePrinter(prefixManager);
 		this.swrlRulesTableModel = SWRLAPIFactory.createSWRLRulesTableModel(ruleEngine, swrlRulePrinter);
