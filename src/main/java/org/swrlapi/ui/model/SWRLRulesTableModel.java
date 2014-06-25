@@ -13,7 +13,9 @@ import org.swrlapi.core.impl.DefaultSWRLAPIRulePrinter;
 import org.swrlapi.ui.view.SWRLAPIView;
 
 /**
- * Models a list of SWRL rules or SQWRL queries for tabular display
+ * This class models a list of SWRL rules or SQWRL queries in an ontology for tabular display.
+ * 
+ * @see SWRLAPIApplicationModel
  */
 public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIModel
 {

@@ -25,7 +25,7 @@ public class CloseSWRLRuleEditorAction implements ActionListener
 
 	public void confirmCloseSWRLRuleEditor()
 	{
-		if (hasSWRLRulesTableModel() && getApplicationModel().areRulesModified()
+		if (hasSWRLRulesTableModel() && getApplicationModel().areSWRLRulesModified()
 				&& getApplicationDialogManager().showConfirmDialog("Close Editor", "Do you really want to close the editor?")) {
 			closeSWRLRuleEditor();
 		} else
@@ -35,7 +35,7 @@ public class CloseSWRLRuleEditorAction implements ActionListener
 	private void closeSWRLRuleEditor()
 	{
 		getSWRLRulesTableModel().clearSWRLRules();
-		getApplicationModel().clearModifiedStatus();
+		getApplicationModel().clearSWRLRulesModified();
 	}
 
 	private SWRLAPIApplicationModel getApplicationModel()

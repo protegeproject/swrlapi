@@ -25,16 +25,31 @@ import org.swrlapi.core.impl.DefaultSWRLAPIOWLDataFactory;
 import org.swrlapi.core.impl.DefaultSWRLAPIOWLDatatypeFactory;
 import org.swrlapi.core.impl.DefaultSWRLAPIOWLOntology;
 import org.swrlapi.core.impl.DefaultSWRLAPIOntologyProcessor;
+import org.swrlapi.core.impl.DefaultSWRLAPIRulePrinter;
 import org.swrlapi.core.impl.DefaultSWRLRuleEngineFactory;
 import org.swrlapi.exceptions.SWRLRuleEngineException;
+import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 import org.swrlapi.sqwrl.values.impl.DefaultSQWRLResultValueFactory;
+import org.swrlapi.ui.controller.SWRLAPIApplicationController;
 import org.swrlapi.ui.model.SWRLAPIApplicationModel;
+import org.swrlapi.ui.model.SWRLRulesTableModel;
 
 public class SWRLAPIFactory
 {
 	private static final String SQWRL_ICON_NAME = "SQWRL.gif";
 	private static final String OWL2RL_ICON_NAME = "OWL2RL.gif";
+
+	public static SWRLAPIApplicationModel createSWRLAPIApplicationModel(SWRLAPIOWLOntology swrlapiOWLOntology,
+			SWRLRuleEngine ruleEngine, DefaultPrefixManager prefixManager)
+	{
+		return new SWRLAPIApplicationModel(swrlapiOWLOntology, ruleEngine, prefixManager);
+	}
+
+	public static SWRLAPIApplicationController createSWRLAPIApplicationController(SWRLAPIApplicationModel applicationModel)
+	{
+		return new SWRLAPIApplicationController(applicationModel);
+	}
 
 	public static SWRLAPIOWLOntology createSWRLAPIOWLOntology(OWLOntologyManager ontologyManager,
 			OWLOntology owlOntology, DefaultPrefixManager prefixManager)
@@ -50,6 +65,22 @@ public class SWRLAPIFactory
 	public static SWRLRuleEngineFactory createSWRLRuleEngineFactory()
 	{
 		return new DefaultSWRLRuleEngineFactory();
+	}
+
+	public static SWRLParser createSWRLParser(SWRLAPIOWLOntology swrlapiOWLOntology, DefaultPrefixManager prefixManager)
+	{
+		return new SWRLParser(swrlapiOWLOntology, prefixManager);
+	}
+
+	public static DefaultSWRLAPIRulePrinter createSWRLAPIRulePrinter(DefaultPrefixManager prefixManager)
+	{
+		return new DefaultSWRLAPIRulePrinter(prefixManager);
+	}
+
+	public static SWRLRulesTableModel createSWRLRulesTableModel(SWRLRuleEngine swrlRuleEngine,
+			DefaultSWRLAPIRulePrinter swrlRulePrinter)
+	{
+		return new SWRLRulesTableModel(swrlRuleEngine, swrlRulePrinter);
 	}
 
 	public static SWRLAPIOWLDataFactory createSWRLAPIOWLDataFactory(OWLIRIResolver owlIRIResolver)
@@ -162,12 +193,6 @@ public class SWRLAPIFactory
 			prefixManager.setDefaultPrefix(defaultPrefix);
 		}
 		return prefixManager;
-	}
-
-	public static SWRLAPIApplicationModel createSWRLAPIApplicationModel(SWRLAPIOWLOntology swrlapiOWLOntology,
-			SWRLRuleEngine ruleEngine, DefaultPrefixManager prefixManager)
-	{
-		return new SWRLAPIApplicationModel(swrlapiOWLOntology, ruleEngine, prefixManager);
 	}
 
 	public static SWRLRuleEngine createSQWRLQueryEngine(SWRLAPIOWLOntology swrlapiOWLOntology,

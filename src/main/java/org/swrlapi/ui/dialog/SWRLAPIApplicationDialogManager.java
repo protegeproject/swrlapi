@@ -9,6 +9,12 @@ import javax.swing.JOptionPane;
 
 import org.swrlapi.ui.controller.SWRLAPIApplicationController;
 
+/*
+ * Provides a set of dialogs that can be used to build a MVC-based GUI that uses the SWRLAPI. Used in
+ * conjunction with a {@link SWRLAPIApplicationController}.
+ * 
+ * @see SWRLAPIApplicationController, SWRLAPIApplicationModel, SWRLAPIApplicationView
+ */
 public class SWRLAPIApplicationDialogManager
 {
 	private final SWRLRuleEditorDialog editSWRLRuleDialog;

@@ -9,33 +9,42 @@ import org.swrlapi.ui.model.SWRLAPIApplicationModel;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
 import org.swrlapi.ui.view.SWRLAPIView;
 import org.swrlapi.ui.view.SWRLRulesTableView;
+import org.swrlapi.ui.view.rules.SWRLAPIRulesView;
 
-public class SWRLAPIQueryView extends JSplitPane implements SWRLAPIView
+/**
+ * Graphical component that presents a SQWRL editor and query execution graphical interface. It can be used to embed
+ * SQWRL query editing and execution into an application.
+ * 
+ * @see SWRLAPIRulesView
+ */
+public class SWRLAPIQueriesView extends JSplitPane implements SWRLAPIView
 {
 	private static final long serialVersionUID = 1L;
 
-	private final SWRLRulesTableView ruleTablesView;
+	private final SWRLRulesTableView queryTableView;
 	private final SWRLQueryExecutionView queryExecutionView;
 
-	public SWRLAPIQueryView(SWRLAPIApplicationController applicationController, Icon queryEngineIcon)
+	private static final double SPLIT_PANE_RESIZE_WEIGHT = 0.6;
+
+	public SWRLAPIQueriesView(SWRLAPIApplicationController applicationController, Icon queryEngineIcon)
 	{
 		SWRLAPIApplicationDialogManager applicationDialogManager = applicationController.getApplicationDialogManager();
 		SWRLAPIApplicationModel applicationModel = applicationController.getApplicationModel();
 		SWRLRulesTableModel swrlRulesTableModel = applicationModel.getSWRLRulesTableModel();
 
-		this.ruleTablesView = new SWRLRulesTableView(applicationDialogManager, swrlRulesTableModel);
+		this.queryTableView = new SWRLRulesTableView(applicationDialogManager, swrlRulesTableModel);
 		this.queryExecutionView = new SWRLQueryExecutionView(applicationModel, queryEngineIcon, null);
 
 		setOrientation(JSplitPane.VERTICAL_SPLIT);
-		setResizeWeight(0.6);
-		setTopComponent(this.ruleTablesView);
+		setResizeWeight(SPLIT_PANE_RESIZE_WEIGHT);
+		setTopComponent(this.queryTableView);
 		setBottomComponent(this.queryExecutionView);
 	}
 
 	@Override
 	public void update()
 	{
-		this.ruleTablesView.update();
+		this.queryTableView.update();
 		this.queryExecutionView.update();
 	}
 }
