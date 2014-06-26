@@ -40,6 +40,34 @@ public class SWRLAPIFactory
 	private static final String SQWRL_ICON_NAME = "SQWRL.gif";
 	private static final String OWL2RL_ICON_NAME = "OWL2RL.gif";
 
+	public static SWRLAPIOWLOntology createSWRLAPIOWLOntology(OWLOntologyManager ontologyManager,
+			OWLOntology owlOntology, DefaultPrefixManager prefixManager)
+	{
+		return new DefaultSWRLAPIOWLOntology(ontologyManager, owlOntology, prefixManager);
+	}
+
+	public static SWRLAPIOWLOntology createSWRLAPIOWLOntology(String owlFileName)
+	{
+		final String[] canned = { "swrl.owl", "swrlb.owl", "swrla.owl", "sqwrl.owl", "swrlm.owl", "temporal.owl",
+				"swrlx.owl", "swrlxml.owl" }; // TODO Temporary
+
+		try {
+			OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
+			DefaultPrefixManager prefixManager = createPrefixManager();
+
+			for (String can : canned) { // TODO Temporary
+				File f = new File("/tmp/" + can);
+				ontologyManager.loadOntologyFromOntologyDocument(f);
+			}
+			File file = new File(owlFileName);
+			OWLOntology ontology = ontologyManager.loadOntologyFromOntologyDocument(file);
+
+			return SWRLAPIFactory.createSWRLAPIOWLOntology(ontologyManager, ontology, prefixManager);
+		} catch (OWLOntologyCreationException e) {
+			throw new RuntimeException("Error creating OWL ontology: " + e.getMessage());
+		}
+	}
+
 	public static SWRLAPIApplicationModel createSWRLAPIApplicationModel(SWRLAPIOWLOntology swrlapiOWLOntology,
 			SWRLRuleEngine ruleEngine)
 	{
@@ -49,12 +77,6 @@ public class SWRLAPIFactory
 	public static SWRLAPIApplicationController createSWRLAPIApplicationController(SWRLAPIApplicationModel applicationModel)
 	{
 		return new SWRLAPIApplicationController(applicationModel);
-	}
-
-	public static SWRLAPIOWLOntology createSWRLAPIOWLOntology(OWLOntologyManager ontologyManager,
-			OWLOntology owlOntology, DefaultPrefixManager prefixManager)
-	{
-		return new DefaultSWRLAPIOWLOntology(ontologyManager, owlOntology, prefixManager);
 	}
 
 	public static SWRLAPIOntologyProcessor createSWRLAPIOntologyProcessor(SWRLAPIOWLOntology swrlapiOWLOntology)
@@ -67,9 +89,9 @@ public class SWRLAPIFactory
 		return new DefaultSWRLRuleEngineFactory();
 	}
 
-	public static SWRLParser createSWRLParser(SWRLAPIOWLOntology swrlapiOWLOntology, DefaultPrefixManager prefixManager)
+	public static SWRLParser createSWRLParser(SWRLAPIOWLOntology swrlapiOWLOntology)
 	{
-		return new SWRLParser(swrlapiOWLOntology, prefixManager);
+		return new SWRLParser(swrlapiOWLOntology);
 	}
 
 	public static DefaultSWRLAPIRulePrinter createSWRLAPIRulePrinter(DefaultPrefixManager prefixManager)
@@ -115,88 +137,6 @@ public class SWRLAPIFactory
 		return new DefaultSQWRLResultValueFactory(owlIRIResolver, owlLiteralFactory);
 	}
 
-	private static String[] canned = { "swrl.owl", "swrlb.owl", "swrla.owl", "sqwrl.owl", "swrlm.owl", "temporal.owl",
-			"swrlx.owl", "swrlxml.owl" };
-
-	public static SWRLAPIOWLOntology createSWRLAPIOWLOntology(String owlFileName)
-	{
-		try {
-			OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
-			DefaultPrefixManager prefixManager = SWRLAPIFactory.createPrefixManager();
-
-			for (String can : canned) { // TODO Temporary
-				File f = new File("/tmp/" + can);
-				ontologyManager.loadOntologyFromOntologyDocument(f);
-			}
-			File file = new File(owlFileName);
-			OWLOntology ontology = ontologyManager.loadOntologyFromOntologyDocument(file);
-
-			return SWRLAPIFactory.createSWRLAPIOWLOntology(ontologyManager, ontology, prefixManager);
-		} catch (OWLOntologyCreationException e) {
-			throw new RuntimeException("Error creating OWL ontology: " + e.getMessage());
-		}
-	}
-
-	public static OWLOntology createOWLOntology(OWLOntologyManager ontologyManager, File file)
-	{
-		Map<String, String> map = new HashMap<String, String>();
-
-		// TODO Put in resources dir?
-		map.put("http://swrl.stanford.edu/ontologies/3.3/swrla.owl", "file:///tmp/swrla.owl");
-		map.put("http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlm.owl", "file:///tmp/swrlm.owl");
-		map.put("http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlm.owl", "file:///tmp/swrlm.owl");
-		map.put("http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl", "file:///tmp/swrlx.owl");
-		map.put("http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlxml.owl", "file:///tmp/swrlxml.owl");
-		map.put("http://swrl.stanford.edu/ontologies/built-ins/3.3/temporal.owl", "file:///tmp/temporal.owl");
-		map.put("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl", "file:///tmp/sqwrl.owl");
-
-		for (String key : map.keySet())
-			ontologyManager.addIRIMapper(new SimpleIRIMapper(IRI.create(key), IRI.create(map.get(key))));
-
-		try {
-			return ontologyManager.loadOntologyFromOntologyDocument(file);
-		} catch (OWLOntologyCreationException e) {
-			throw new RuntimeException("Error create OWL ontology from file " + file.getAbsolutePath() + ": "
-					+ e.getMessage());
-		}
-	}
-
-	public static DefaultPrefixManager createPrefixManager()
-	{ // TODO
-		DefaultPrefixManager prefixManager = new DefaultPrefixManager(
-		// "http://swrl.stanford.edu/ontologies/tests/4.3/SWRLSimple.owl#");
-		// "http://swrl.stanford.edu/ontologies/tests/4.3/SQWRLCollectionsTests.owl#");
-		// "http://swrl.stanford.edu/ontologies/tests/4.3/SQWRLCoreTests.owl#");
-		// "http://swrl.stanford.edu/ontologies/tests/4.3/SWRLInferenceTests.owl#");
-				"http://swrl.stanford.edu/ontologies/tests/4.3/SWRLCoreTests.owl#");
-		prefixManager.setPrefix("swrl:", "http://www.w3.org/2003/11/swrl#");
-		prefixManager.setPrefix("swrlb:", "http://www.w3.org/2003/11/swrlb#");
-		prefixManager.setPrefix("sqwrl:", "http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#");
-		prefixManager.setPrefix("swrlm:", "http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlm.owl#");
-		prefixManager.setPrefix("temporal:", "http://swrl.stanford.edu/ontologies/built-ins/3.3/temporal.owl#");
-		prefixManager.setPrefix("swrlx:", "http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#");
-		prefixManager.setPrefix("swrlxml:", "http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlxml.owl#");
-		prefixManager.setPrefix("swrla:", "http://swrl.stanford.edu/ontologies/3.3/swrla.owl#");
-
-		return prefixManager;
-	}
-
-	public static DefaultPrefixManager createPrefixManager(OWLOntologyManager owlOntologyManager, OWLOntology owlOntology)
-	{
-		DefaultPrefixManager prefixManager = new DefaultPrefixManager();
-		OWLOntologyFormat ontologyFormat = owlOntologyManager.getOntologyFormat(owlOntology);
-
-		if (ontologyFormat.isPrefixOWLOntologyFormat()) {
-			PrefixOWLOntologyFormat prefixOntologyFormat = ontologyFormat.asPrefixOWLOntologyFormat();
-			String defaultPrefix = prefixOntologyFormat.getDefaultPrefix();
-			Map<String, String> map = prefixOntologyFormat.getPrefixName2PrefixMap();
-			for (String prefix : map.keySet())
-				prefixManager.setPrefix(prefix, map.get(prefix));
-			prefixManager.setDefaultPrefix(defaultPrefix);
-		}
-		return prefixManager;
-	}
-
 	public static SWRLRuleEngine createSQWRLQueryEngine(SWRLAPIOWLOntology swrlapiOWLOntology,
 			SWRLRuleEngineManager.TargetSWRLRuleEngineCreator swrlRuleEngineCreator)
 	{
@@ -228,5 +168,67 @@ public class SWRLAPIFactory
 			return new ImageIcon(url);
 		else
 			throw new RuntimeException("No SQWRL icon found!");
+	}
+
+	private static DefaultPrefixManager createPrefixManager()
+	{ // TODO
+		DefaultPrefixManager prefixManager = new DefaultPrefixManager(
+		// "http://swrl.stanford.edu/ontologies/tests/4.3/SWRLSimple.owl#");
+		// "http://swrl.stanford.edu/ontologies/tests/4.3/SQWRLCollectionsTests.owl#");
+		// "http://swrl.stanford.edu/ontologies/tests/4.3/SQWRLCoreTests.owl#");
+		// "http://swrl.stanford.edu/ontologies/tests/4.3/SWRLInferenceTests.owl#");
+				"http://swrl.stanford.edu/ontologies/tests/4.3/SWRLCoreTests.owl#");
+		prefixManager.setPrefix("swrl:", "http://www.w3.org/2003/11/swrl#");
+		prefixManager.setPrefix("swrlb:", "http://www.w3.org/2003/11/swrlb#");
+		prefixManager.setPrefix("sqwrl:", "http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#");
+		prefixManager.setPrefix("swrlm:", "http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlm.owl#");
+		prefixManager.setPrefix("temporal:", "http://swrl.stanford.edu/ontologies/built-ins/3.3/temporal.owl#");
+		prefixManager.setPrefix("swrlx:", "http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#");
+		prefixManager.setPrefix("swrlxml:", "http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlxml.owl#");
+		prefixManager.setPrefix("swrla:", "http://swrl.stanford.edu/ontologies/3.3/swrla.owl#");
+
+		return prefixManager;
+	}
+
+	@SuppressWarnings("unused")
+	private static DefaultPrefixManager createPrefixManager(OWLOntologyManager owlOntologyManager, OWLOntology owlOntology)
+	{
+		DefaultPrefixManager prefixManager = new DefaultPrefixManager();
+		OWLOntologyFormat ontologyFormat = owlOntologyManager.getOntologyFormat(owlOntology);
+
+		if (ontologyFormat.isPrefixOWLOntologyFormat()) {
+			PrefixOWLOntologyFormat prefixOntologyFormat = ontologyFormat.asPrefixOWLOntologyFormat();
+			String defaultPrefix = prefixOntologyFormat.getDefaultPrefix();
+			Map<String, String> map = prefixOntologyFormat.getPrefixName2PrefixMap();
+			for (String prefix : map.keySet())
+				prefixManager.setPrefix(prefix, map.get(prefix));
+			prefixManager.setDefaultPrefix(defaultPrefix);
+		}
+		return prefixManager;
+	}
+
+	@SuppressWarnings("unused")
+	private static OWLOntology createOWLOntology(OWLOntologyManager ontologyManager, File file)
+	{
+		Map<String, String> map = new HashMap<String, String>();
+
+		// TODO Put in resources dir?
+		map.put("http://swrl.stanford.edu/ontologies/3.3/swrla.owl", "file:///tmp/swrla.owl");
+		map.put("http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlm.owl", "file:///tmp/swrlm.owl");
+		map.put("http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlm.owl", "file:///tmp/swrlm.owl");
+		map.put("http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl", "file:///tmp/swrlx.owl");
+		map.put("http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlxml.owl", "file:///tmp/swrlxml.owl");
+		map.put("http://swrl.stanford.edu/ontologies/built-ins/3.3/temporal.owl", "file:///tmp/temporal.owl");
+		map.put("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl", "file:///tmp/sqwrl.owl");
+
+		for (String key : map.keySet())
+			ontologyManager.addIRIMapper(new SimpleIRIMapper(IRI.create(key), IRI.create(map.get(key))));
+
+		try {
+			return ontologyManager.loadOntologyFromOntologyDocument(file);
+		} catch (OWLOntologyCreationException e) {
+			throw new RuntimeException("Error create OWL ontology from file " + file.getAbsolutePath() + ": "
+					+ e.getMessage());
+		}
 	}
 }

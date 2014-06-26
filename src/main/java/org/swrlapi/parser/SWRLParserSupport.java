@@ -48,10 +48,10 @@ public class SWRLParserSupport
 	private final SWRLAPIOWLOntology swrlapiOWLOntology;
 	private final DefaultPrefixManager prefixManager;
 
-	public SWRLParserSupport(SWRLAPIOWLOntology swrlapiOWLOntology, DefaultPrefixManager prefixManager)
+	public SWRLParserSupport(SWRLAPIOWLOntology swrlapiOWLOntology)
 	{
 		this.swrlapiOWLOntology = swrlapiOWLOntology;
-		this.prefixManager = prefixManager;
+		this.prefixManager = swrlapiOWLOntology.getPrefixManager();
 	}
 
 	public boolean isOWLEntity(String entityShortName)

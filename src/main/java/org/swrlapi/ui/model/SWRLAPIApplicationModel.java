@@ -32,7 +32,7 @@ public class SWRLAPIApplicationModel implements SWRLAPIModel
 		this.ruleEngine = ruleEngine;
 		this.queryEngine = ruleEngine;
 		this.prefixManager = swrlapiOWLOntology.getPrefixManager();
-		this.swrlParser = SWRLAPIFactory.createSWRLParser(swrlapiOWLOntology, prefixManager);
+		this.swrlParser = SWRLAPIFactory.createSWRLParser(swrlapiOWLOntology);
 		this.swrlRulePrinter = SWRLAPIFactory.createSWRLAPIRulePrinter(prefixManager);
 		this.swrlRulesTableModel = SWRLAPIFactory.createSWRLRulesTableModel(ruleEngine, swrlRulePrinter);
 	}

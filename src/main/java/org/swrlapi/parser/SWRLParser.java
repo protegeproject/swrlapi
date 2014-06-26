@@ -15,7 +15,6 @@ import org.semanticweb.owlapi.model.SWRLObjectPropertyAtom;
 import org.semanticweb.owlapi.model.SWRLRule;
 import org.semanticweb.owlapi.model.SWRLSameIndividualAtom;
 import org.semanticweb.owlapi.model.SWRLVariable;
-import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.parser.SWRLToken.SWRLTokenType;
@@ -40,9 +39,9 @@ public class SWRLParser
 	private static final String SAME_AS_PREDICATE = "sameAs";
 	private static final String DIFFERENT_FROM_PREDICATE = "differentFrom";
 
-	public SWRLParser(SWRLAPIOWLOntology swrlapiOWLOntology, DefaultPrefixManager prefixManager)
+	public SWRLParser(SWRLAPIOWLOntology swrlapiOWLOntology)
 	{
-		this.swrlParserSupport = new SWRLParserSupport(swrlapiOWLOntology, prefixManager);
+		this.swrlParserSupport = new SWRLParserSupport(swrlapiOWLOntology);
 	}
 
 	/**
