@@ -13,7 +13,7 @@ import org.semanticweb.owlapi.model.SWRLClassAtom;
 import org.semanticweb.owlapi.model.SWRLVariable;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
-import org.swrlapi.core.OWLIRIResolver;
+import org.swrlapi.core.SWRLAPIIRIResolver;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
 import org.swrlapi.core.SWRLAPIRule;
 
@@ -30,10 +30,10 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 	private List<SWRLAtom> bodyAtoms; // Body atoms can be reorganized during processing
 	private final List<SWRLAtom> headAtoms;
 
-	private final OWLIRIResolver iriResolver;
+	private final SWRLAPIIRIResolver iriResolver;
 
 	public DefaultSWRLAPIRule(String ruleName, List<? extends SWRLAtom> bodyAtoms, List<? extends SWRLAtom> headAtoms,
-			OWLIRIResolver iriResolver, boolean active, String comment)
+			SWRLAPIIRIResolver iriResolver, boolean active, String comment)
 	{
 		// TODO Rule name
 		super(new HashSet<SWRLAtom>(bodyAtoms), new HashSet<SWRLAtom>(headAtoms), new HashSet<OWLAnnotation>());
@@ -192,7 +192,7 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 			if (argument instanceof SWRLVariable) {
 				SWRLVariable variable = (SWRLVariable)argument;
 				IRI iri = variable.getIRI();
-				String variablePrefixedName = getOWLIRIResolver().iri2PrefixedName(iri);
+				String variablePrefixedName = getIRIResolver().iri2PrefixedName(iri);
 				referencedVariablePrefixedNames.add(variablePrefixedName);
 			} else if (argument instanceof SWRLVariableBuiltInArgument) {
 				SWRLVariableBuiltInArgument variableBuiltInArgument = (SWRLVariableBuiltInArgument)argument;
@@ -202,7 +202,7 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 		return referencedVariablePrefixedNames;
 	}
 
-	private OWLIRIResolver getOWLIRIResolver()
+	private SWRLAPIIRIResolver getIRIResolver()
 	{
 		return this.iriResolver;
 	}

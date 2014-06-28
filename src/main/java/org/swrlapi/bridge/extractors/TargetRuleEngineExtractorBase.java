@@ -6,7 +6,7 @@ import org.swrlapi.bridge.SWRLRuleEngineBridge;
 import org.swrlapi.bridge.converters.TargetRuleEngineConverterBase;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.core.OWLClassExpressionResolver;
-import org.swrlapi.core.OWLIRIResolver;
+import org.swrlapi.core.SWRLAPIIRIResolver;
 import org.swrlapi.core.OWLLiteralFactory;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLDatatypeFactory;
@@ -60,14 +60,14 @@ public abstract class TargetRuleEngineExtractorBase implements TargetRuleEngineE
 		return getBridge().getOWLClassExpressionResolver();
 	}
 
-	protected OWLIRIResolver getOWLIRIResolver()
+	protected SWRLAPIIRIResolver getIRIResolver()
 	{
-		return getBridge().getOWLIRIResolver();
+		return getBridge().getIRIResolver();
 	}
 
 	protected IRI prefixedName2IRI(String prefixedName) throws TargetRuleEngineException
 	{
-		return getOWLIRIResolver().prefixedName2IRI(prefixedName);
+		return getIRIResolver().prefixedName2IRI(prefixedName);
 	}
 
 	private SWRLRuleEngineBridge getBridge()

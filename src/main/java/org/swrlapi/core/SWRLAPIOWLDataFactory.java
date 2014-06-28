@@ -42,7 +42,7 @@ public interface SWRLAPIOWLDataFactory extends OWLDataFactory
 
 	SWRLAPILiteralFactory getSWRLAPILiteralFactory();
 
-	OWLIRIResolver getOWLIRIResolver();
+	SWRLAPIIRIResolver getIRIResolver();
 
 	// We provide convenience methods for defining these declaration axioms, though we do not specialize the
 	// OWLDeclarationAxiom itself.
@@ -58,4 +58,8 @@ public interface SWRLAPIOWLDataFactory extends OWLDataFactory
 	OWLDeclarationAxiom getOWLAnnotationPropertyDeclarationAxiom(OWLAnnotationProperty property);
 
 	OWLDeclarationAxiom getOWLDatatypeDeclarationAxiom(OWLDatatype datatype);
+
+	OWLClass getInjectedOWLClass(); // Generate an OWL class with a unique IRI
+
+	OWLNamedIndividual getInjectedOWLNamedIndividual(); // Generate an OWL individual with a unique IRI
 }

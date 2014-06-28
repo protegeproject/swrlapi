@@ -35,6 +35,9 @@ import org.swrlapi.ui.controller.SWRLAPIApplicationController;
 import org.swrlapi.ui.model.SWRLAPIApplicationModel;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
 
+/**
+ * Factory for generating some of the core entities defined by the SWRLAPI.
+ */
 public class SWRLAPIFactory
 {
 	private static final String SQWRL_ICON_NAME = "SQWRL.gif";
@@ -105,9 +108,9 @@ public class SWRLAPIFactory
 		return new SWRLRulesTableModel(swrlRuleEngine, swrlRulePrinter);
 	}
 
-	public static SWRLAPIOWLDataFactory createSWRLAPIOWLDataFactory(OWLIRIResolver owlIRIResolver)
+	public static SWRLAPIOWLDataFactory createSWRLAPIOWLDataFactory(SWRLAPIIRIResolver iriResolver)
 	{
-		return new DefaultSWRLAPIOWLDataFactory(owlIRIResolver);
+		return new DefaultSWRLAPIOWLDataFactory(iriResolver);
 	}
 
 	public static SWRLAPIOWLDatatypeFactory createSWRLAPIOWLDatatypeFactory()
@@ -125,16 +128,16 @@ public class SWRLAPIFactory
 		return new DefaultSWRLAPILiteralFactory(owlLiteralFactory);
 	}
 
-	public static SWRLBuiltInArgumentFactory createSWRLBuiltInArgumentFactory(OWLIRIResolver owlIRIResolver,
+	public static SWRLBuiltInArgumentFactory createSWRLBuiltInArgumentFactory(SWRLAPIIRIResolver iriResolver,
 			OWLLiteralFactory owlLiteralFactory)
 	{
-		return new DefaultSWRLBuiltInArgumentFactory(owlIRIResolver, owlLiteralFactory);
+		return new DefaultSWRLBuiltInArgumentFactory(iriResolver, owlLiteralFactory);
 	}
 
-	public static SQWRLResultValueFactory createSQWRLResultValueFactory(OWLIRIResolver owlIRIResolver,
+	public static SQWRLResultValueFactory createSQWRLResultValueFactory(SWRLAPIIRIResolver iriResolver,
 			OWLLiteralFactory owlLiteralFactory)
 	{
-		return new DefaultSQWRLResultValueFactory(owlIRIResolver, owlLiteralFactory);
+		return new DefaultSQWRLResultValueFactory(iriResolver, owlLiteralFactory);
 	}
 
 	public static SWRLRuleEngine createSQWRLQueryEngine(SWRLAPIOWLOntology swrlapiOWLOntology,

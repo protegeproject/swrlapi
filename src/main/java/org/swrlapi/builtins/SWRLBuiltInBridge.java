@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
-import org.swrlapi.core.OWLIRIResolver;
+import org.swrlapi.core.SWRLAPIIRIResolver;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.exceptions.BuiltInException;
@@ -38,10 +38,10 @@ public interface SWRLBuiltInBridge
 	SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory();
 
 	/**
-	 * All named objects are recorded by a {@link OWLIRIResolver}. If a built-in injects a named object it should also
+	 * All named objects are recorded by a {@link SWRLAPIIRIResolver}. If a built-in injects a named object it should also
 	 * record it with this resolver.
 	 */
-	OWLIRIResolver getOWLIRIResolver();
+	SWRLAPIIRIResolver getIRIResolver();
 
 	/**
 	 * This call can be used by built-ins to access the current active ontology. In general, built-ins should not directly

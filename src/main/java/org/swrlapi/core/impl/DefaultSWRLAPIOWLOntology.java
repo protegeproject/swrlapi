@@ -38,9 +38,9 @@ import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
-import org.swrlapi.core.OWLIRIResolver;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
 import org.swrlapi.core.SWRLAPIFactory;
+import org.swrlapi.core.SWRLAPIIRIResolver;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIOntologyProcessor;
@@ -51,7 +51,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	private final OWLOntologyManager ontologyManager;
 	private final OWLOntology ontology;
 	private final DefaultPrefixManager prefixManager;
-	private final OWLIRIResolver owlIRIResolver;
+	private final SWRLAPIIRIResolver iriResolver;
 	private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
 	private final SWRLAPIOntologyProcessor swrlapiOntologyProcessor;
 
@@ -61,8 +61,8 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		this.ontologyManager = ontologyManager;
 		this.ontology = ontology;
 		this.prefixManager = prefixManager;
-		this.owlIRIResolver = new OWLIRIResolver(this.prefixManager);
-		this.swrlapiOWLDataFactory = SWRLAPIFactory.createSWRLAPIOWLDataFactory(owlIRIResolver);
+		this.iriResolver = new SWRLAPIIRIResolver(this.prefixManager);
+		this.swrlapiOWLDataFactory = SWRLAPIFactory.createSWRLAPIOWLDataFactory(iriResolver);
 		this.swrlapiOntologyProcessor = SWRLAPIFactory.createSWRLAPIOntologyProcessor(this);
 	}
 
@@ -116,9 +116,9 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	}
 
 	@Override
-	public OWLIRIResolver getOWLIRIResolver()
+	public SWRLAPIIRIResolver getIRIResolver()
 	{
-		return getSWRLAPIOWLDataFactory().getOWLIRIResolver();
+		return getSWRLAPIOWLDataFactory().getIRIResolver();
 	}
 
 	@Override
@@ -154,29 +154,6 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	// OWLAxiom anotationAssertionAxiom = getOWLDataFactory().getOWLAnnotationAssertionAxiom(rule, labelAnnotation);
 	// this.ontologyManager.applyChange(new AddAxiom(this.ontology, anotationAssertionAxiom));
 	// }
-
-	@Override
-	public OWLClass getInjectedOWLClass()
-	{
-		// TODO This is incorrect!!
-		IRI iri = IRI
-		// .create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + UUID.randomUUID().toString());
-				.create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + "fred");
-
-		return getSWRLAPIOWLDataFactory().getOWLClass(iri);
-	}
-
-	@Override
-	public OWLNamedIndividual getInjectedOWLNamedIndividual()
-	{
-		// TODO This is incorrect!
-
-		IRI iri = IRI
-		// .create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + UUID.randomUUID().toString());
-				.create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + "fred");
-
-		return getSWRLAPIOWLDataFactory().getOWLNamedIndividual(iri);
-	}
 
 	@Override
 	public boolean isSWRLBuiltIn(IRI iri)
@@ -266,7 +243,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 			if (isSWRLBuiltInAtom(atom)) {
 				SWRLBuiltInAtom builtInAtom = (SWRLBuiltInAtom)atom;
 				IRI builtInIRI = builtInAtom.getPredicate();
-				String builtInPrefixedName = getOWLIRIResolver().iri2PrefixedName(builtInIRI);
+				String builtInPrefixedName = getIRIResolver().iri2PrefixedName(builtInIRI);
 				List<SWRLDArgument> swrlDArguments = builtInAtom.getArguments();
 				List<SWRLBuiltInArgument> swrlBuiltInArguments = convertSWRLDArguments2SWRLBuiltInArguments(swrlDArguments);
 				SWRLBuiltInAtom swrlapiAtom = getSWRLAPIOWLDataFactory().getSWRLAPIBuiltInAtom(ruleName, builtInIRI,
@@ -280,7 +257,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 			if (isSWRLBuiltInAtom(atom)) {
 				SWRLBuiltInAtom builtInAtom = (SWRLBuiltInAtom)atom;
 				IRI builtInIRI = builtInAtom.getPredicate();
-				String builtInPrefixedName = getOWLIRIResolver().iri2PrefixedName(builtInIRI);
+				String builtInPrefixedName = getIRIResolver().iri2PrefixedName(builtInIRI);
 				List<SWRLDArgument> swrlDArguments = builtInAtom.getArguments();
 				List<SWRLBuiltInArgument> swrlBuiltInArguments = convertSWRLDArguments2SWRLBuiltInArguments(swrlDArguments);
 				SWRLBuiltInAtom swrlapiAtom = getSWRLAPIOWLDataFactory().getSWRLAPIBuiltInAtom(ruleName, builtInIRI,
@@ -289,7 +266,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 			} else
 				swrlapiHeadAtoms.add(atom); // Only built-in atoms are converted; other atoms remain the same
 		}
-		return new DefaultSWRLAPIRule(ruleName, swrlapiBodyAtoms, swrlapiHeadAtoms, getOWLIRIResolver(), isActive, comment);
+		return new DefaultSWRLAPIRule(ruleName, swrlapiBodyAtoms, swrlapiHeadAtoms, getIRIResolver(), isActive, comment);
 	}
 
 	/**
@@ -386,7 +363,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		} else {
 			IRI variableIRI = swrlVariable.getIRI();
 			SWRLVariableBuiltInArgument argument = getSWRLBuiltInArgumentFactory().getVariableBuiltInArgument(variableIRI);
-			getOWLIRIResolver().recordSWRLVariable(swrlVariable);
+			getIRIResolver().recordSWRLVariable(swrlVariable);
 
 			return argument;
 		}

@@ -55,7 +55,7 @@ import org.semanticweb.owlapi.model.OWLSubObjectPropertyOfAxiom;
 import org.semanticweb.owlapi.model.OWLSubPropertyChainOfAxiom;
 import org.semanticweb.owlapi.model.OWLSymmetricObjectPropertyAxiom;
 import org.semanticweb.owlapi.model.OWLTransitiveObjectPropertyAxiom;
-import org.swrlapi.core.OWLIRIResolver;
+import org.swrlapi.core.SWRLAPIIRIResolver;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIOntologyProcessor;
@@ -106,7 +106,7 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 		this.rules.clear();
 		this.queries.clear();
 
-		getOWLIRIResolver().reset();
+		getIRIResolver().reset();
 
 		this.assertedOWLAxioms.clear();
 
@@ -253,7 +253,7 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 
 	/**
 	 * Process currently supported OWL axioms. The processing consists of recording any OWL entities in the processed
-	 * axioms (with an instance of the {@link OWLIRIResolver} class) and generating declaration axioms for these entities.
+	 * axioms (with an instance of the {@link SWRLAPIIRIResolver} class) and generating declaration axioms for these entities.
 	 * <p>
 	 * TODO The current approach is clunky. A better approach would be to walk the axioms with a visitor and record the
 	 * entities and generate the declaration axioms.
@@ -923,27 +923,27 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 
 	private void recordOWLClass(OWLEntity cls)
 	{
-		getOWLIRIResolver().recordOWLClass(cls);
+		getIRIResolver().recordOWLClass(cls);
 	}
 
 	private void recordOWLNamedIndividual(OWLEntity individual)
 	{
-		getOWLIRIResolver().recordOWLNamedIndividual(individual);
+		getIRIResolver().recordOWLNamedIndividual(individual);
 	}
 
 	private void recordOWLObjectProperty(OWLEntity property)
 	{
-		getOWLIRIResolver().recordOWLObjectProperty(property);
+		getIRIResolver().recordOWLObjectProperty(property);
 	}
 
 	private void recordOWLDataProperty(OWLEntity property)
 	{
-		getOWLIRIResolver().recordOWLDataProperty(property);
+		getIRIResolver().recordOWLDataProperty(property);
 	}
 
 	private void recordOWLAnnotationProperty(OWLEntity property)
 	{
-		getOWLIRIResolver().recordOWLAnnotationProperty(property);
+		getIRIResolver().recordOWLAnnotationProperty(property);
 	}
 
 	private SWRLAPIOWLOntology getSWRLAPIOWLOntology()
@@ -956,9 +956,9 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 		return getSWRLAPIOWLOntology().getOWLOntology();
 	}
 
-	private OWLIRIResolver getOWLIRIResolver()
+	private SWRLAPIIRIResolver getIRIResolver()
 	{
-		return getSWRLAPIOWLOntology().getOWLIRIResolver();
+		return getSWRLAPIOWLOntology().getIRIResolver();
 	}
 
 	private SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory()

@@ -23,7 +23,7 @@ import org.swrlapi.exceptions.TargetRuleEngineException;
  * 
  * @see SWRLAPIOntologyProcessor
  */
-public class OWLIRIResolver
+public class SWRLAPIIRIResolver
 {
 	private final DefaultPrefixManager prefixManager;
 	private final Map<String, IRI> prefixedName2IRI;
@@ -37,7 +37,7 @@ public class OWLIRIResolver
 	private final Set<String> annotationPropertyPrefixedNames;
 	private final Set<String> datatypePrefixedNames;
 
-	public OWLIRIResolver(DefaultPrefixManager prefixManager)
+	public SWRLAPIIRIResolver(DefaultPrefixManager prefixManager)
 	{
 		this.prefixManager = prefixManager;
 

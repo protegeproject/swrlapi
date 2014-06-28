@@ -17,7 +17,7 @@ import org.swrlapi.builtins.SWRLBuiltInLibraryManager;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.core.OWLClassExpressionResolver;
-import org.swrlapi.core.OWLIRIResolver;
+import org.swrlapi.core.SWRLAPIIRIResolver;
 import org.swrlapi.core.OWLLiteralFactory;
 import org.swrlapi.core.OWLPropertyExpressionResolver;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
@@ -116,9 +116,9 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 	}
 
 	@Override
-	public OWLIRIResolver getOWLIRIResolver()
+	public SWRLAPIIRIResolver getIRIResolver()
 	{
-		return this.swrlapiOWLOntology.getOWLIRIResolver();
+		return this.swrlapiOWLOntology.getIRIResolver();
 	}
 
 	@Override

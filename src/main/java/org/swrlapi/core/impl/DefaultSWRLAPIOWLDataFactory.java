@@ -12,10 +12,10 @@ import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
-import org.swrlapi.core.OWLIRIResolver;
 import org.swrlapi.core.OWLLiteralFactory;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
 import org.swrlapi.core.SWRLAPIFactory;
+import org.swrlapi.core.SWRLAPIIRIResolver;
 import org.swrlapi.core.SWRLAPILiteralFactory;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLDatatypeFactory;
@@ -28,22 +28,22 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
 {
 	private static final long serialVersionUID = 1L;
 
-	private final OWLIRIResolver owlIRIResolver;
+	private final SWRLAPIIRIResolver iriResolver;
 	private final OWLLiteralFactory owlLiteralFactory;
 	private final SWRLAPIOWLDatatypeFactory swrlapiOWLDatatypeFactory;
 	private final SWRLAPILiteralFactory swrlapiLiteralFactory;
 	private final SWRLBuiltInArgumentFactory swrlBuiltInArgumentFactory;
 	private final SQWRLResultValueFactory sqwrlResultValueFactory;
 
-	public DefaultSWRLAPIOWLDataFactory(OWLIRIResolver owlIRIResolver)
+	public DefaultSWRLAPIOWLDataFactory(SWRLAPIIRIResolver iriResolver)
 	{
-		this.owlIRIResolver = owlIRIResolver;
+		this.iriResolver = iriResolver;
 		this.swrlapiOWLDatatypeFactory = SWRLAPIFactory.createSWRLAPIOWLDatatypeFactory();
 		this.owlLiteralFactory = SWRLAPIFactory.createOWLLiteralFactory(this.swrlapiOWLDatatypeFactory);
 		this.swrlapiLiteralFactory = SWRLAPIFactory.createSWRLAPILiteralFactory(this.owlLiteralFactory);
-		this.swrlBuiltInArgumentFactory = SWRLAPIFactory.createSWRLBuiltInArgumentFactory(this.owlIRIResolver,
+		this.swrlBuiltInArgumentFactory = SWRLAPIFactory.createSWRLBuiltInArgumentFactory(this.iriResolver,
 				this.owlLiteralFactory);
-		this.sqwrlResultValueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(this.owlIRIResolver,
+		this.sqwrlResultValueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(this.iriResolver,
 				this.owlLiteralFactory);
 	}
 
@@ -127,9 +127,30 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
 	}
 
 	@Override
-	public OWLIRIResolver getOWLIRIResolver()
+	public SWRLAPIIRIResolver getIRIResolver()
 	{
-		return this.owlIRIResolver;
+		return this.iriResolver;
 	}
 
+	@Override
+	public OWLClass getInjectedOWLClass()
+	{
+		// TODO This is incorrect!!
+		IRI iri = IRI
+		// .create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + UUID.randomUUID().toString());
+				.create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + "fred");
+
+		return getOWLClass(iri);
+	}
+
+	@Override
+	public OWLNamedIndividual getInjectedOWLNamedIndividual()
+	{
+		// TODO This is incorrect!
+		IRI iri = IRI
+		// .create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + UUID.randomUUID().toString());
+				.create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + "fred");
+
+		return getOWLNamedIndividual(iri);
+	}
 }
