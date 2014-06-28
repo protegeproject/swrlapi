@@ -14,9 +14,6 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
 /**
  * The SWRL Built-in Bridge defines the methods seen by SWRL built-in implementations at run time.
- * <p>
- * Detailed documentation for the SWRL rule engine bridge mechanism can be found <a
- * href="http://protege.cim3.net/cgi-bin/wiki.pl?SWRLRuleEngineBridgeFAQ">here </a>.
  */
 public interface SWRLBuiltInBridge
 {

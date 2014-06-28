@@ -35,8 +35,7 @@ import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLObjectPropertyValue;
 
 /**
- * Implementation library for SQWRL built-ins. See <a href="http://protege.cim3.net/cgi-bin/wiki.pl?SQWRL">here</a> for
- * documentation.
+ * Implementation library for SQWRL built-ins.
  * <p>
  * Unlike other built-in libraries, queries that use built-ins in this library need to be preprocessed by a SQWRL-aware
  * processor. See the {@link DefaultSQWRLQuery} class for an example of this processing.

@@ -9,9 +9,6 @@ import org.swrlapi.sqwrl.SQWRLQueryEngine;
 
 /**
  * This interface defines methods that must be provided by a SWRL rule engine.
- * <p>
- * Detailed documentation for this mechanism can be found <a
- * href="http://protege.cim3.net/cgi-bin/wiki.pl?SWRLRuleEngineBridgeFAQ">here</a>.
  */
 public interface SWRLRuleEngine extends SQWRLQueryEngine
 {

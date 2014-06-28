@@ -29,11 +29,7 @@ import org.swrlapi.exceptions.InvalidBuiltInNameException;
 
 /**
  * Implementations library for the core SWRL built-in methods. These built-ins are defined <a
- * href="http://www.daml.org/2004/04/swrl/builtins.html">here</a> and are documented <a
- * href="http://protege.cim3.net/cgi-bin/wiki.pl?CoreSWRLBuiltIns">here</a>.
- * <p>
- * See <a href="http://protege.cim3.net/cgi-bin/wiki.pl?SWRLBuiltInBridge">here</a> for documentation on defining SWRL
- * built-in libraries.
+ * href="http://www.daml.org/2004/04/swrl/builtins.html">here</a>.
  * <p>
  * Built-ins for lists and URIs not yet implemented.
  */

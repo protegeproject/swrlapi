@@ -25,9 +25,7 @@ import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
 /**
- * This class provides an implementation of some of the core functionality required by a SWRL rule engine. Detailed
- * documentation for this mechanism can be found <a
- * href="http://protege.cim3.net/cgi-bin/wiki.pl?SWRLRuleEngineBridgeFAQ">here</a>.
+ * This class provides an implementation of some of the core functionality required by a SWRL rule engine.
  */
 public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 {

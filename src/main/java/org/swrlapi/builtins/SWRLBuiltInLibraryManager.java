@@ -22,13 +22,7 @@ import org.swrlapi.exceptions.UnresolvedBuiltInMethodException;
 /**
  * This class manages the dynamic loading of SWRL built-in libraries and the invocation of built-ins in those libraries.
  * A library is identified by a prefix and this prefix is used to find and dynamically load a Java class implementing
- * the built-ins in this library. For example, the <a
- * href="http://protege.cim3.net/cgi-bin/wiki.pl?CoreSWRLBuiltIns">core SWRL built-in library</a> is identified by the
- * prefix swrlb; built-ins in this library can then be referred to in SWRL rules using this prefix followed by the
- * built-in name, e.g., swrlb:lessThanOrEqual.
- * <p>
- * See <a href="http://protege.cim3.net/cgi-bin/wiki.pl?SWRLBuiltInBridge">here</a> for documentation on defining these
- * built-in libraries.
+ * the built-ins in this library.
  */
 public abstract class SWRLBuiltInLibraryManager
 {

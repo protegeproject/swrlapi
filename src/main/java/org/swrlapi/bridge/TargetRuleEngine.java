@@ -10,9 +10,6 @@ import org.swrlapi.sqwrl.SQWRLQuery;
  * This interface defines the methods that must be provided by an implementation of a SWRL rule engine.
  * <p>
  * A target rule engine can communicate with the bridge using the {@link SWRLRuleEngineBridge} interface.
- * <p>
- * Detailed documentation for this mechanism can be found <a
- * href="http://protege.cim3.net/cgi-bin/wiki.pl?SWRLRuleEngineBridgeFAQ">here</a>.
  */
 public interface TargetRuleEngine
 {

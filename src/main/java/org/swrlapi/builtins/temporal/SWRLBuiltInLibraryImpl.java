@@ -20,9 +20,7 @@ import org.swrlapi.exceptions.InvalidBuiltInArgumentException;
 import org.swrlapi.exceptions.SWRLBuiltInLibraryException;
 
 /**
- * Implementation library for SWRL temporal built-ins. See <a
- * href="http://protege.cim3.net/cgi-bin/wiki.pl?SWRLTemporalBuiltIns">here</a> for documentation on this built-in
- * library.
+ * Implementation library for SWRL temporal built-ins.
  */
 public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 {

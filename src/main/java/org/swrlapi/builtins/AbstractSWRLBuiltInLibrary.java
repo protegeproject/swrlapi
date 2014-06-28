@@ -46,23 +46,23 @@ import org.swrlapi.exceptions.InvalidBuiltInArgumentNumberException;
 import org.swrlapi.exceptions.SWRLBuiltInLibraryException;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 
+// TODO Should move the methods implementing the SWRLBuiltInArgumentHandler,
+// SWRLBuiltInArgumentResultHandler, and SWRLBuiltInArgumentCreator interfaces.
+
 /**
- * A class that must be subclassed by a class implementing a library of SWRL built-in methods. See <a
- * href="http://protege.cim3.net/cgi-bin/wiki.pl?SWRLBuiltInBridge">here</a> for documentation.
+ * A class that must be subclassed by a class implementing a library of SWRL built-in methods.
  * <p>
  * Provides implementations for a large number of SWRL built-in argument processing methods.
  */
-public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary
+public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, SWRLBuiltInArgumentHandler,
+		SWRLBuiltInArgumentResultHandler, SWRLBuiltInArgumentCreator
 {
 	private final String libraryName;
 
 	// Bridge, rule name, built-in index, and head or body location within rule of built-in currently invoking its
-	// associated Java
-	// implementation. The invokingRuleName, invokingBuiltInIndex, and isInConsequent variables are valid only when a
-	// built-in currently being
-	// invoked so should only be retrieved through their associated accessor methods from within a built-in; the
-	// invokingBridge method is valid
-	// only in built-ins and in the reset method.
+	// associated Java implementation. The invokingRuleName, invokingBuiltInIndex, and isInConsequent variables are valid
+	// only when a built-in currently being invoked so should only be retrieved through their associated accessor methods
+	// from within a built-in; the invokingBridge method is valid only in built-ins and in the reset method.
 	private SWRLBuiltInBridge invokingBridge;
 	private String invokingRuleName = "";
 	private int invokingBuiltInIndex = -1;

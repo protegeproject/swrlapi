@@ -13,8 +13,8 @@ import org.semanticweb.owlapi.model.SWRLClassAtom;
 import org.semanticweb.owlapi.model.SWRLVariable;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
-import org.swrlapi.core.SWRLAPIIRIResolver;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
+import org.swrlapi.core.SWRLAPIIRIResolver;
 import org.swrlapi.core.SWRLAPIRule;
 
 import uk.ac.manchester.cs.owl.owlapi.SWRLRuleImpl;
@@ -91,23 +91,15 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 	}
 
 	/**
-	 * Find all built-in atoms with unbound arguments and tell them which of their arguments are unbound. See <a
-	 * href="http://protege.cim3.net/cgi-bin/wiki.pl?SWRLBuiltInBridge#nid88T">here</a> for a discussion of the role of
-	 * this method.
+	 * Find all built-in atoms with unbound arguments and tell them which of their arguments are unbound.
 	 */
 	private void processUnboundBuiltInArguments()
 	{
 		List<SWRLAPIBuiltInAtom> bodyBuiltInAtoms = new ArrayList<SWRLAPIBuiltInAtom>();
 		List<SWRLAtom> bodyNonBuiltInAtoms = new ArrayList<SWRLAtom>();
 		List<SWRLAtom> finalBodyAtoms = new ArrayList<SWRLAtom>();
-		Set<String> variablePrefixedNamesUsedByNonBuiltInBodyAtoms = new HashSet<String>(); // By definition, these will
-																																												// always
-		// be
-		// bound.
-		Set<String> variablePrefixedNamesBoundByBuiltIns = new HashSet<String>(); // Names of variables bound by built-ins
-																																							// in
-		// this
-		// rule
+		Set<String> variablePrefixedNamesUsedByNonBuiltInBodyAtoms = new HashSet<String>(); // By definition, always bound
+		Set<String> variablePrefixedNamesBoundByBuiltIns = new HashSet<String>(); // Variables bound by built-ins in rule
 
 		// Process body atoms to build list of (1) built-in body atoms, and (2) the variables used by non-built-in atoms.
 		for (SWRLAtom atom : getBodyAtoms()) {

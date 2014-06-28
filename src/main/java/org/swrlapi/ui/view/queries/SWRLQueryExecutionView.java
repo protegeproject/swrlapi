@@ -20,7 +20,7 @@ public class SWRLQueryExecutionView extends JTabbedPane implements SWRLAPIView
 		SQWRLQueryEngine queryEngine = applicationModel.getSQWRLQueryEngine();
 		Icon owl2RLIcon = SWRLAPIFactory.getOWL2RLReasonerIcon();
 
-		addTab("SWRLTab Queries", queryEngineIcon, new SQWRLQueryControlView(queryEngine, ruleSelector, queryEngineIcon),
+		addTab("SWRLAPI Queries", queryEngineIcon, new SQWRLQueryControlView(queryEngine, ruleSelector, queryEngineIcon),
 				"Control Panel");
 
 		addTab("OWL 2 RL", owl2RLIcon, new OWL2RLRuleTablesView(queryEngine.getOWL2RLEngine()), "OWL 2 RL Tab");

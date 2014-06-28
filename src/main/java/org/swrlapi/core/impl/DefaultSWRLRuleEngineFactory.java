@@ -34,7 +34,7 @@ public class DefaultSWRLRuleEngineFactory implements SWRLRuleEngineFactory
 	{
 		this.ruleEngineManager.registerRuleEngine(ruleEngineCreator.getRuleEngineName(), ruleEngineCreator);
 
-		// log.info("Rule engine '" + ruleEngineName + "' registered with the SWRLTab rule engine manager.");
+		// log.info("Rule engine '" + ruleEngineName + "' registered with the SWRLAPI rule engine manager.");
 	}
 
 	@Override
