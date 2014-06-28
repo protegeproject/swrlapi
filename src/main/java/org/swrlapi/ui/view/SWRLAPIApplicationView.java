@@ -10,4 +10,5 @@ import org.swrlapi.ui.controller.SWRLAPIApplicationController;
  */
 public interface SWRLAPIApplicationView extends SWRLAPIView
 {
+	String getApplicationName();
 }

@@ -174,7 +174,7 @@ public class SWRLAPIFactory
 	}
 
 	private static DefaultPrefixManager createPrefixManager()
-	{ // TODO
+	{ // TODO Hard coding hack!
 		DefaultPrefixManager prefixManager = new DefaultPrefixManager(
 		// "http://swrl.stanford.edu/ontologies/tests/4.3/SWRLSimple.owl#");
 		// "http://swrl.stanford.edu/ontologies/tests/4.3/SQWRLCollectionsTests.owl#");
