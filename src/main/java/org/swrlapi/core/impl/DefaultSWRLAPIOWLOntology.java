@@ -55,10 +55,9 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
 	private final SWRLAPIOntologyProcessor swrlapiOntologyProcessor;
 
-	public DefaultSWRLAPIOWLOntology(OWLOntologyManager ontologyManager, OWLOntology ontology,
-			DefaultPrefixManager prefixManager)
+	public DefaultSWRLAPIOWLOntology(OWLOntology ontology, DefaultPrefixManager prefixManager)
 	{
-		this.ontologyManager = ontologyManager;
+		this.ontologyManager = ontology.getOWLOntologyManager();
 		this.ontology = ontology;
 		this.prefixManager = prefixManager;
 		this.iriResolver = new SWRLAPIIRIResolver(this.prefixManager);

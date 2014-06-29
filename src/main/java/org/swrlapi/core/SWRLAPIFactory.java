@@ -43,10 +43,16 @@ public class SWRLAPIFactory
 	private static final String SQWRL_ICON_NAME = "SQWRL.gif";
 	private static final String OWL2RL_ICON_NAME = "OWL2RL.gif";
 
-	public static SWRLAPIOWLOntology createSWRLAPIOWLOntology(OWLOntologyManager ontologyManager,
-			OWLOntology owlOntology, DefaultPrefixManager prefixManager)
+	public static SWRLAPIOWLOntology createSWRLAPIOWLOntology(OWLOntology ontology)
 	{
-		return new DefaultSWRLAPIOWLOntology(ontologyManager, owlOntology, prefixManager);
+		DefaultPrefixManager prefixManager = createPrefixManager(ontology);
+
+		return new DefaultSWRLAPIOWLOntology(ontology, prefixManager);
+	}
+
+	public static SWRLAPIOWLOntology createSWRLAPIOWLOntology(OWLOntology ontology, DefaultPrefixManager prefixManager)
+	{
+		return new DefaultSWRLAPIOWLOntology(ontology, prefixManager);
 	}
 
 	public static SWRLAPIOWLOntology createSWRLAPIOWLOntology(String owlFileName)
@@ -56,19 +62,36 @@ public class SWRLAPIFactory
 
 		try {
 			OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
-			DefaultPrefixManager prefixManager = createPrefixManager();
 
-			for (String can : canned) { // TODO Temporary
+			for (String can : canned) { // TODO Temporary hack!
 				File f = new File("/tmp/" + can);
 				ontologyManager.loadOntologyFromOntologyDocument(f);
 			}
-			File file = new File(owlFileName);
-			OWLOntology ontology = ontologyManager.loadOntologyFromOntologyDocument(file);
+			File owlFile = new File(owlFileName);
+			OWLOntology ontology = ontologyManager.loadOntologyFromOntologyDocument(owlFile);
+			DefaultPrefixManager prefixManager = createPrefixManager(ontology);
 
-			return SWRLAPIFactory.createSWRLAPIOWLOntology(ontologyManager, ontology, prefixManager);
+			return SWRLAPIFactory.createSWRLAPIOWLOntology(ontology, prefixManager);
 		} catch (OWLOntologyCreationException e) {
 			throw new RuntimeException("Error creating OWL ontology: " + e.getMessage());
 		}
+	}
+
+	public static DefaultPrefixManager createPrefixManager(OWLOntology ontology)
+	{
+		DefaultPrefixManager prefixManager = new DefaultPrefixManager();
+		OWLOntologyManager owlOntologyManager = ontology.getOWLOntologyManager();
+		OWLOntologyFormat ontologyFormat = owlOntologyManager.getOntologyFormat(ontology);
+
+		if (ontologyFormat.isPrefixOWLOntologyFormat()) {
+			PrefixOWLOntologyFormat prefixOntologyFormat = ontologyFormat.asPrefixOWLOntologyFormat();
+			String defaultPrefix = prefixOntologyFormat.getDefaultPrefix();
+			Map<String, String> map = prefixOntologyFormat.getPrefixName2PrefixMap();
+			for (String prefix : map.keySet())
+				prefixManager.setPrefix(prefix, map.get(prefix));
+			prefixManager.setDefaultPrefix(defaultPrefix);
+		}
+		return prefixManager;
 	}
 
 	public static SWRLAPIApplicationModel createSWRLAPIApplicationModel(SWRLAPIOWLOntology swrlapiOWLOntology,
@@ -173,6 +196,7 @@ public class SWRLAPIFactory
 			throw new RuntimeException("No SQWRL icon found!");
 	}
 
+	@SuppressWarnings("unused")
 	private static DefaultPrefixManager createPrefixManager()
 	{ // TODO Hard coding hack!
 		DefaultPrefixManager prefixManager = new DefaultPrefixManager(
@@ -190,23 +214,6 @@ public class SWRLAPIFactory
 		prefixManager.setPrefix("swrlxml:", "http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlxml.owl#");
 		prefixManager.setPrefix("swrla:", "http://swrl.stanford.edu/ontologies/3.3/swrla.owl#");
 
-		return prefixManager;
-	}
-
-	@SuppressWarnings("unused")
-	private static DefaultPrefixManager createPrefixManager(OWLOntologyManager owlOntologyManager, OWLOntology owlOntology)
-	{
-		DefaultPrefixManager prefixManager = new DefaultPrefixManager();
-		OWLOntologyFormat ontologyFormat = owlOntologyManager.getOntologyFormat(owlOntology);
-
-		if (ontologyFormat.isPrefixOWLOntologyFormat()) {
-			PrefixOWLOntologyFormat prefixOntologyFormat = ontologyFormat.asPrefixOWLOntologyFormat();
-			String defaultPrefix = prefixOntologyFormat.getDefaultPrefix();
-			Map<String, String> map = prefixOntologyFormat.getPrefixName2PrefixMap();
-			for (String prefix : map.keySet())
-				prefixManager.setPrefix(prefix, map.get(prefix));
-			prefixManager.setDefaultPrefix(defaultPrefix);
-		}
 		return prefixManager;
 	}
 
