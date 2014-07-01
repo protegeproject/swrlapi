@@ -8,7 +8,6 @@ import org.swrlapi.core.impl.DefaultSWRLAPIRulePrinter;
 import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.ui.controller.SWRLAPIApplicationController;
-import org.swrlapi.ui.view.SWRLAPIApplicationView;
 
 /**
  * Provides an application model that can be used to build a MVC-based GUI that uses the SWRLAPI. Used in conjunction
@@ -25,8 +24,6 @@ public class SWRLAPIApplicationModel implements SWRLAPIModel
 	private final DefaultPrefixManager prefixManager;
 	private final DefaultSWRLAPIRulePrinter swrlRulePrinter;
 
-	private SWRLAPIApplicationView applicationView;
-
 	public SWRLAPIApplicationModel(SWRLAPIOWLOntology swrlapiOWLOntology, SWRLRuleEngine ruleEngine)
 	{
 		this.ruleEngine = ruleEngine;
@@ -35,11 +32,6 @@ public class SWRLAPIApplicationModel implements SWRLAPIModel
 		this.swrlParser = SWRLAPIFactory.createSWRLParser(swrlapiOWLOntology);
 		this.swrlRulePrinter = SWRLAPIFactory.createSWRLAPIRulePrinter(prefixManager);
 		this.swrlRulesTableModel = SWRLAPIFactory.createSWRLRulesTableModel(ruleEngine, swrlRulePrinter);
-	}
-
-	public SWRLAPIApplicationView getApplicationView()
-	{
-		return this.applicationView;
 	}
 
 	public SWRLRuleEngine getSWRLRuleEngine()
@@ -65,11 +57,6 @@ public class SWRLAPIApplicationModel implements SWRLAPIModel
 	public SWRLRulesTableModel getSWRLRulesTableModel()
 	{
 		return this.swrlRulesTableModel;
-	}
-
-	public void setApplicationView(SWRLAPIApplicationView applicationView)
-	{
-		this.applicationView = applicationView;
 	}
 
 	public void saveSWRLRules()
