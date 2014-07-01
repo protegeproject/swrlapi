@@ -11,7 +11,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-import org.apache.commons.lang.StringUtils;
 import org.semanticweb.owlapi.model.IRI;
 import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
@@ -469,7 +468,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		String argument2 = getArgumentAsAString(1, arguments);
 		String argument3 = getArgumentAsAString(2, arguments);
 		String argument4 = getArgumentAsAString(3, arguments);
-		String operationResult = StringUtils.replaceChars(argument2, argument3, argument4);
+		String operationResult = argument2.replace(argument3, argument4);
 
 		return processResultArgument(arguments, 0, operationResult);
 	}
@@ -480,7 +479,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 		String argument2 = getArgumentAsAString(1, arguments);
 		String argument3 = getArgumentAsAString(2, arguments);
-		String operationResult = StringUtils.substringAfter(argument2, argument3);
+		String operationResult = substringAfter(argument2, argument3);
 
 		return processResultArgument(arguments, 0, operationResult);
 	}
@@ -491,7 +490,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 		String argument2 = getArgumentAsAString(1, arguments);
 		String argument3 = getArgumentAsAString(2, arguments);
-		String operationResult = StringUtils.substringBefore(argument2, argument3);
+		String operationResult = substringBefore(argument2, argument3);
 
 		return processResultArgument(arguments, 0, operationResult);
 	}
@@ -1207,4 +1206,35 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	{
 		return new XSDTime(time);
 	}
+
+	private String substringAfter(String str, String separator)
+	{
+		if (str == null || str.length() == 0) {
+			return str;
+		}
+		if (separator == null) {
+			return "";
+		}
+		int pos = str.indexOf(separator);
+		if (pos == -1) {
+			return "";
+		}
+		return str.substring(pos + separator.length());
+	}
+
+	private String substringBefore(String str, String separator)
+	{
+		if (str == null || str.length() == 0 || separator == null) {
+			return str;
+		}
+		if (separator.length() == 0) {
+			return "";
+		}
+		int pos = str.indexOf(separator);
+		if (pos == -1) {
+			return str;
+		}
+		return str.substring(0, pos);
+	}
+
 }

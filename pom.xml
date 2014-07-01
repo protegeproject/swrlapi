@@ -13,7 +13,6 @@
 		<owlapi.version>3.5.0</owlapi.version> 
     <jep.version>2.4.0</jep.version>
     <axis.version>1.4</axis.version>
-    <commons.lang.version>2.3</commons.lang.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
   </properties>
@@ -47,11 +46,11 @@
       <version>${owlapi.version}</version>
     </dependency>
 
-    <dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-			<version>${commons.lang.version}</version>
-    </dependency>
+		<dependency>
+			<groupId>org.apache.axis</groupId>
+			<artifactId>axis</artifactId>
+			<version>${axis.version}</version>
+		</dependency>
 
     <!-- This is in a local project repository (in ./lib) because we could not find a public Maven repository containing it. -->
     <dependency>
@@ -59,12 +58,6 @@
       <artifactId>jep</artifactId>
       <version>${jep.version}</version>
     </dependency>
-
-		<dependency>
-			<groupId>org.apache.axis</groupId>
-			<artifactId>axis</artifactId>
-			<version>${axis.version}</version>
-		</dependency>
 
 	</dependencies>
 
