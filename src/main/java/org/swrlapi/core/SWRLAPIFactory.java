@@ -89,7 +89,8 @@ public class SWRLAPIFactory
 			Map<String, String> map = prefixOntologyFormat.getPrefixName2PrefixMap();
 			for (String prefix : map.keySet())
 				prefixManager.setPrefix(prefix, map.get(prefix));
-			prefixManager.setDefaultPrefix(defaultPrefix);
+			if (defaultPrefix != null)
+				prefixManager.setDefaultPrefix(defaultPrefix);
 		}
 		return prefixManager;
 	}
