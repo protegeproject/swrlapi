@@ -62,7 +62,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		this.prefixManager = prefixManager;
 		this.iriResolver = new SWRLAPIIRIResolver(this.prefixManager);
 		this.swrlapiOWLDataFactory = SWRLAPIFactory.createSWRLAPIOWLDataFactory(iriResolver);
-		this.swrlapiOntologyProcessor = SWRLAPIFactory.createSWRLAPIOntologyProcessor(this);
+		this.swrlapiOntologyProcessor = SWRLAPIFactory.createOntologyProcessor(this);
 	}
 
 	@Override

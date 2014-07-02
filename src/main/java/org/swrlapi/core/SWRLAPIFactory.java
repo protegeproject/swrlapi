@@ -43,19 +43,19 @@ public class SWRLAPIFactory
 	private static final String SQWRL_ICON_NAME = "SQWRL.gif";
 	private static final String OWL2RL_ICON_NAME = "OWL2RL.gif";
 
-	public static SWRLAPIOWLOntology createSWRLAPIOWLOntology(OWLOntology ontology)
+	public static SWRLAPIOWLOntology createOntology(OWLOntology ontology)
 	{
 		DefaultPrefixManager prefixManager = createPrefixManager(ontology);
 
 		return new DefaultSWRLAPIOWLOntology(ontology, prefixManager);
 	}
 
-	public static SWRLAPIOWLOntology createSWRLAPIOWLOntology(OWLOntology ontology, DefaultPrefixManager prefixManager)
+	public static SWRLAPIOWLOntology createOntology(OWLOntology ontology, DefaultPrefixManager prefixManager)
 	{
 		return new DefaultSWRLAPIOWLOntology(ontology, prefixManager);
 	}
 
-	public static SWRLAPIOWLOntology createSWRLAPIOWLOntology(String owlFileName)
+	public static SWRLAPIOWLOntology createOntology(String owlFileName)
 	{
 		final String[] canned = { "swrl.owl", "swrlb.owl", "swrla.owl", "sqwrl.owl", "swrlm.owl", "temporal.owl",
 				"swrlx.owl", "swrlxml.owl" }; // TODO Temporary
@@ -71,7 +71,7 @@ public class SWRLAPIFactory
 			OWLOntology ontology = ontologyManager.loadOntologyFromOntologyDocument(owlFile);
 			DefaultPrefixManager prefixManager = createPrefixManager(ontology);
 
-			return SWRLAPIFactory.createSWRLAPIOWLOntology(ontology, prefixManager);
+			return SWRLAPIFactory.createOntology(ontology, prefixManager);
 		} catch (OWLOntologyCreationException e) {
 			throw new RuntimeException("Error creating OWL ontology: " + e.getMessage());
 		}
@@ -95,18 +95,18 @@ public class SWRLAPIFactory
 		return prefixManager;
 	}
 
-	public static SWRLAPIApplicationModel createSWRLAPIApplicationModel(SWRLAPIOWLOntology swrlapiOWLOntology,
+	public static SWRLAPIApplicationModel createApplicationModel(SWRLAPIOWLOntology swrlapiOWLOntology,
 			SWRLRuleEngine ruleEngine)
 	{
 		return new SWRLAPIApplicationModel(swrlapiOWLOntology, ruleEngine);
 	}
 
-	public static SWRLAPIApplicationController createSWRLAPIApplicationController(SWRLAPIApplicationModel applicationModel)
+	public static SWRLAPIApplicationController createApplicationController(SWRLAPIApplicationModel applicationModel)
 	{
 		return new SWRLAPIApplicationController(applicationModel);
 	}
 
-	public static SWRLAPIOntologyProcessor createSWRLAPIOntologyProcessor(SWRLAPIOWLOntology swrlapiOWLOntology)
+	public static SWRLAPIOntologyProcessor createOntologyProcessor(SWRLAPIOWLOntology swrlapiOWLOntology)
 	{
 		return new DefaultSWRLAPIOntologyProcessor(swrlapiOWLOntology);
 	}
@@ -121,7 +121,7 @@ public class SWRLAPIFactory
 		return new SWRLParser(swrlapiOWLOntology);
 	}
 
-	public static DefaultSWRLAPIRulePrinter createSWRLAPIRulePrinter(DefaultPrefixManager prefixManager)
+	public static DefaultSWRLAPIRulePrinter createRulePrinter(DefaultPrefixManager prefixManager)
 	{
 		return new DefaultSWRLAPIRulePrinter(prefixManager);
 	}
@@ -164,7 +164,7 @@ public class SWRLAPIFactory
 		return new DefaultSQWRLResultValueFactory(iriResolver, owlLiteralFactory);
 	}
 
-	public static SWRLRuleEngine createSQWRLQueryEngine(SWRLAPIOWLOntology swrlapiOWLOntology,
+	public static SWRLRuleEngine createQueryEngine(SWRLAPIOWLOntology swrlapiOWLOntology,
 			SWRLRuleEngineManager.TargetSWRLRuleEngineCreator swrlRuleEngineCreator)
 	{
 		try {
