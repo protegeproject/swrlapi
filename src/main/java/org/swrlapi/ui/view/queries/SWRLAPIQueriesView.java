@@ -3,6 +3,7 @@ package org.swrlapi.ui.view.queries;
 import javax.swing.Icon;
 import javax.swing.JSplitPane;
 
+import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.ui.controller.SWRLAPIApplicationController;
 import org.swrlapi.ui.dialog.SWRLAPIApplicationDialogManager;
 import org.swrlapi.ui.model.SWRLAPIApplicationModel;
@@ -27,6 +28,7 @@ public class SWRLAPIQueriesView extends JSplitPane implements SWRLAPIView
 	private static final double SPLIT_PANE_RESIZE_WEIGHT = 0.6;
 
 	public SWRLAPIQueriesView(SWRLAPIApplicationController applicationController, Icon queryEngineIcon)
+			throws SWRLAPIException
 	{
 		SWRLAPIApplicationDialogManager applicationDialogManager = applicationController.getApplicationDialogManager();
 		SWRLAPIApplicationModel applicationModel = applicationController.getApplicationModel();

@@ -13,6 +13,8 @@
 		<owlapi.version>3.5.0</owlapi.version> 
     <jep.version>2.4.0</jep.version>
     <axis.version>1.4</axis.version>
+    <log4j.version>1.2.17</log4j.version>
+
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
   </properties>
@@ -58,6 +60,12 @@
       <artifactId>jep</artifactId>
       <version>${jep.version}</version>
     </dependency>
+
+    <dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+      <version>${log4j.version}</version>
+    </dependency>    
 
 	</dependencies>
 

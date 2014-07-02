@@ -64,12 +64,6 @@ public class AssertedOWLAxiomsView extends JPanel implements SWRLAPIView
 		}
 
 		@Override
-		public String getColumnName(int column)
-		{
-			return "Asserted Axioms";
-		}
-
-		@Override
 		public Object getValueAt(int row, int column)
 		{
 			if (row < 0 || row >= getRowCount())

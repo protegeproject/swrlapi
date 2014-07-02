@@ -27,7 +27,7 @@ import org.swrlapi.core.impl.DefaultSWRLAPIOWLOntology;
 import org.swrlapi.core.impl.DefaultSWRLAPIOntologyProcessor;
 import org.swrlapi.core.impl.DefaultSWRLAPIRulePrinter;
 import org.swrlapi.core.impl.DefaultSWRLRuleEngineFactory;
-import org.swrlapi.exceptions.SWRLRuleEngineException;
+import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 import org.swrlapi.sqwrl.values.impl.DefaultSQWRLResultValueFactory;
@@ -165,36 +165,32 @@ public class SWRLAPIFactory
 	}
 
 	public static SWRLRuleEngine createQueryEngine(SWRLAPIOWLOntology swrlapiOWLOntology,
-			SWRLRuleEngineManager.TargetSWRLRuleEngineCreator swrlRuleEngineCreator)
+			SWRLRuleEngineManager.TargetSWRLRuleEngineCreator swrlRuleEngineCreator) throws SWRLAPIException
 	{
-		try {
-			SWRLRuleEngineFactory swrlRuleEngineFactory = SWRLAPIFactory.createSWRLRuleEngineFactory();
-			swrlRuleEngineFactory.registerRuleEngine(swrlRuleEngineCreator);
+		SWRLRuleEngineFactory swrlRuleEngineFactory = SWRLAPIFactory.createSWRLRuleEngineFactory();
+		swrlRuleEngineFactory.registerRuleEngine(swrlRuleEngineCreator);
 
-			return swrlRuleEngineFactory.createSWRLRuleEngine(swrlapiOWLOntology);
-		} catch (SWRLRuleEngineException e) {
-			throw new RuntimeException("Error creating rule engine: " + e.getMessage());
-		}
+		return swrlRuleEngineFactory.createSWRLRuleEngine(swrlapiOWLOntology);
 	}
 
-	public static Icon getOWL2RLReasonerIcon()
+	public static Icon getOWL2RLReasonerIcon() throws SWRLAPIException
 	{
 		URL url = SWRLAPIFactory.class.getResource(OWL2RL_ICON_NAME);
 
 		if (url != null)
 			return new ImageIcon(url);
 		else
-			throw new RuntimeException("No OWL 2 RL icon found!");
+			throw new SWRLAPIException("No OWL 2 RL icon found!");
 	}
 
-	public static Icon getSQWRLIcon()
+	public static Icon getSQWRLIcon() throws SWRLAPIException
 	{
 		URL url = SWRLAPIFactory.class.getResource(SQWRL_ICON_NAME);
 
 		if (url != null)
 			return new ImageIcon(url);
 		else
-			throw new RuntimeException("No SQWRL icon found!");
+			throw new SWRLAPIException("No SQWRL icon found!");
 	}
 
 	@SuppressWarnings("unused")
@@ -219,7 +215,7 @@ public class SWRLAPIFactory
 	}
 
 	@SuppressWarnings("unused")
-	private static OWLOntology createOWLOntology(OWLOntologyManager ontologyManager, File file)
+	private static OWLOntology createOWLOntology(OWLOntologyManager ontologyManager, File file) throws SWRLAPIException
 	{
 		Map<String, String> map = new HashMap<String, String>();
 
@@ -238,7 +234,7 @@ public class SWRLAPIFactory
 		try {
 			return ontologyManager.loadOntologyFromOntologyDocument(file);
 		} catch (OWLOntologyCreationException e) {
-			throw new RuntimeException("Error create OWL ontology from file " + file.getAbsolutePath() + ": "
+			throw new SWRLAPIException("Error create OWL ontology from file " + file.getAbsolutePath() + ": "
 					+ e.getMessage());
 		}
 	}

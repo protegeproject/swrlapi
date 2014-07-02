@@ -2,7 +2,7 @@ package org.swrlapi.exceptions;
 
 public class SWRLAPIException extends Exception
 {
-	private static final long serialVersionUID = 7546875909720217803L;
+	private static final long serialVersionUID = 1L;
 
 	public SWRLAPIException()
 	{

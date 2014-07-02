@@ -29,9 +29,9 @@ public class SWRLAPIApplicationModel implements SWRLAPIModel
 		this.ruleEngine = ruleEngine;
 		this.queryEngine = ruleEngine;
 		this.prefixManager = swrlapiOWLOntology.getPrefixManager();
-		this.swrlParser = SWRLAPIFactory.createSWRLParser(swrlapiOWLOntology);
 		this.swrlRulePrinter = SWRLAPIFactory.createRulePrinter(prefixManager);
 		this.swrlRulesTableModel = SWRLAPIFactory.createSWRLRulesTableModel(ruleEngine, swrlRulePrinter);
+		this.swrlParser = SWRLAPIFactory.createSWRLParser(swrlapiOWLOntology);
 	}
 
 	public SWRLRuleEngine getSWRLRuleEngine()

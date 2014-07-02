@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.swing.table.AbstractTableModel;
 
+import org.apache.log4j.Logger;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.core.impl.DefaultSWRLAPIRulePrinter;
@@ -20,6 +21,8 @@ import org.swrlapi.ui.view.SWRLAPIView;
 public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIModel
 {
 	private static final long serialVersionUID = 1L;
+
+	private static final Logger log = Logger.getLogger(SWRLRulesTableModel.class);
 
 	public static int ACTIVE_COLUMN = 0;
 	public static int RULE_NAME_COLUMN = 1;
@@ -37,6 +40,8 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 	{
 		this.swrlRulePrinter = swrlRulePrinter;
 		this.swrlRuleModels = new HashMap<String, SWRLRuleModel>();
+
+		log.info("#Rules " + swrlRuleEngine.getNumberOfImportedSWRLRules());
 
 		for (SWRLAPIRule swrlRule : swrlRuleEngine.getSWRLRules()) {
 			String ruleName = swrlRule.getRuleName();

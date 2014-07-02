@@ -4,6 +4,7 @@ import javax.swing.Icon;
 import javax.swing.JTabbedPane;
 
 import org.swrlapi.core.SWRLAPIFactory;
+import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.ui.model.SWRLAPIApplicationModel;
 import org.swrlapi.ui.view.SQWRLQuerySelector;
@@ -15,7 +16,7 @@ public class SWRLQueryExecutionView extends JTabbedPane implements SWRLAPIView
 	private static final long serialVersionUID = 1L;
 
 	public SWRLQueryExecutionView(SWRLAPIApplicationModel applicationModel, Icon queryEngineIcon,
-			SQWRLQuerySelector ruleSelector)
+			SQWRLQuerySelector ruleSelector) throws SWRLAPIException
 	{
 		SQWRLQueryEngine queryEngine = applicationModel.getSQWRLQueryEngine();
 		Icon owl2RLIcon = SWRLAPIFactory.getOWL2RLReasonerIcon();

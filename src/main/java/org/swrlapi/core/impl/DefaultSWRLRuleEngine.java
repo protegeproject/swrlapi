@@ -44,6 +44,8 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 		this.builtInBridgeController = builtInBridgeController;
 		this.ruleEngineBridgeController = ruleEngineBridgeController;
 		this.exportedOWLAxioms = new HashSet<OWLAxiom>();
+
+		importSWRLRulesAndOWLKnowledge();
 	}
 
 	/**

@@ -68,12 +68,6 @@ public class ImportedSWRLRulesView extends JPanel implements SWRLAPIView
 		}
 
 		@Override
-		public String getColumnName(int column)
-		{
-			return "Rules and Queries";
-		}
-
-		@Override
 		public Object getValueAt(int row, int column)
 		{
 			if (row < 0 || row >= getRowCount())

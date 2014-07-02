@@ -25,9 +25,9 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 	private static final int RULE_NAME_COLUMN_PREFERRED_WIDTH = 150;
 	private static final int RULE_NAME_COLUMN_MAX_WIDTH = 200;
 	private static final int RULE_TEXT_COLUMN_PREFERRED_WIDTH = 500;
-	private static final int RULE_TEXT_COLUMN_MAX_WIDTH = 800;
-	private static final int RULE_COMMENT_COLUMN_PREFERRED_WIDTH = 100;
-	private static final int RULE_COMMENT_COLUMN_MAX_WIDTH = 200;
+	private static final int RULE_TEXT_COLUMN_MAX_WIDTH = 1400;
+	private static final int RULE_COMMENT_COLUMN_PREFERRED_WIDTH = 200;
+	private static final int RULE_COMMENT_COLUMN_MAX_WIDTH = 300;
 
 	private final SWRLAPIApplicationDialogManager applicationDialogManager;
 	private final SWRLRulesTableModel swrlRulesTableModel;

@@ -36,7 +36,7 @@ public class SWRLRuleEditorDialog extends JDialog
 	private static final String INVALID_RULE_TITLE = "Invalid Rule";
 	private static final int BUTTON_PREFERRED_WIDTH = 100;
 	private static final int BUTTON_PREFERRED_HEIGHT = 30;
-	private static final int RULE_EDIT_AREA_COLUUMNS = 20;
+	private static final int RULE_EDIT_AREA_COLUMNS = 20;
 	private static final int RULE_EDIT_AREA_ROWS = 60;
 
 	private final SWRLAPIApplicationController applicationController;
@@ -102,7 +102,7 @@ public class SWRLRuleEditorDialog extends JDialog
 		ruleNameTextField = new JTextField("");
 
 		JLabel ruleTextLabel = new JLabel("Rule");
-		ruleTextTextArea = new JTextArea("", RULE_EDIT_AREA_COLUUMNS, RULE_EDIT_AREA_ROWS);
+		ruleTextTextArea = new JTextArea("", RULE_EDIT_AREA_COLUMNS, RULE_EDIT_AREA_ROWS);
 		ruleTextTextArea.setBorder(BorderFactory.createLoweredBevelBorder());
 
 		JLabel commentLabel = new JLabel("Comment");
