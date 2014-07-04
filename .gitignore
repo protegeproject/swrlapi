@@ -9,6 +9,8 @@
 .pydevproject
 .metadata
 
+*.iml
+
 # Exclude build directory
 target/*
 .

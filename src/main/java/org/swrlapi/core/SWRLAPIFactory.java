@@ -1,32 +1,13 @@
 package org.swrlapi.core;
 
-import java.io.File;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-
 import org.semanticweb.owlapi.apibinding.OWLManager;
-import org.semanticweb.owlapi.model.IRI;
-import org.semanticweb.owlapi.model.OWLOntology;
-import org.semanticweb.owlapi.model.OWLOntologyCreationException;
-import org.semanticweb.owlapi.model.OWLOntologyFormat;
-import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.semanticweb.owlapi.util.SimpleIRIMapper;
 import org.semanticweb.owlapi.vocab.PrefixOWLOntologyFormat;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.builtins.arguments.impl.DefaultSWRLBuiltInArgumentFactory;
-import org.swrlapi.core.impl.DefaultOWLLiteralFactory;
-import org.swrlapi.core.impl.DefaultSWRLAPILiteralFactory;
-import org.swrlapi.core.impl.DefaultSWRLAPIOWLDataFactory;
-import org.swrlapi.core.impl.DefaultSWRLAPIOWLDatatypeFactory;
-import org.swrlapi.core.impl.DefaultSWRLAPIOWLOntology;
-import org.swrlapi.core.impl.DefaultSWRLAPIOntologyProcessor;
-import org.swrlapi.core.impl.DefaultSWRLAPIRulePrinter;
-import org.swrlapi.core.impl.DefaultSWRLRuleEngineFactory;
+import org.swrlapi.core.impl.*;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
@@ -34,6 +15,12 @@ import org.swrlapi.sqwrl.values.impl.DefaultSQWRLResultValueFactory;
 import org.swrlapi.ui.controller.SWRLAPIApplicationController;
 import org.swrlapi.ui.model.SWRLAPIApplicationModel;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
+
+import javax.swing.*;
+import java.io.File;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Factory for generating some of the core entities defined by the SWRLAPI.
@@ -55,24 +42,15 @@ public class SWRLAPIFactory
 		return new DefaultSWRLAPIOWLOntology(ontology, prefixManager);
 	}
 
-	public static SWRLAPIOWLOntology createOntology(String owlFileName)
+	public static SWRLAPIOWLOntology createOntology(File owlFile)
 	{
-		final String[] canned = { "swrl.owl", "swrlb.owl", "swrla.owl", "sqwrl.owl", "swrlm.owl", "temporal.owl",
-				"swrlx.owl", "swrlxml.owl" }; // TODO Temporary
-
 		try {
 			OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
-
-			for (String can : canned) { // TODO Temporary hack!
-				File f = new File("/tmp/" + can);
-				ontologyManager.loadOntologyFromOntologyDocument(f);
-			}
-			File owlFile = new File(owlFileName);
-			OWLOntology ontology = ontologyManager.loadOntologyFromOntologyDocument(owlFile);
+			OWLOntology ontology = createOWLOntology(ontologyManager, owlFile);
 			DefaultPrefixManager prefixManager = createPrefixManager(ontology);
 
 			return SWRLAPIFactory.createOntology(ontology, prefixManager);
-		} catch (OWLOntologyCreationException e) {
+		} catch (SWRLAPIException e) {
 			throw new RuntimeException("Error creating OWL ontology: " + e.getMessage());
 		}
 	}
@@ -197,10 +175,10 @@ public class SWRLAPIFactory
 	private static DefaultPrefixManager createPrefixManager()
 	{ // TODO Hard coding hack!
 		DefaultPrefixManager prefixManager = new DefaultPrefixManager(
-		// "http://swrl.stanford.edu/ontologies/tests/4.3/SWRLSimple.owl#");
-		// "http://swrl.stanford.edu/ontologies/tests/4.3/SQWRLCollectionsTests.owl#");
-		// "http://swrl.stanford.edu/ontologies/tests/4.3/SQWRLCoreTests.owl#");
-		// "http://swrl.stanford.edu/ontologies/tests/4.3/SWRLInferenceTests.owl#");
+				// "http://swrl.stanford.edu/ontologies/tests/4.3/SWRLSimple.owl#");
+				// "http://swrl.stanford.edu/ontologies/tests/4.3/SQWRLCollectionsTests.owl#");
+				// "http://swrl.stanford.edu/ontologies/tests/4.3/SQWRLCoreTests.owl#");
+				// "http://swrl.stanford.edu/ontologies/tests/4.3/SWRLInferenceTests.owl#");
 				"http://swrl.stanford.edu/ontologies/tests/4.3/SWRLCoreTests.owl#");
 		prefixManager.setPrefix("swrl:", "http://www.w3.org/2003/11/swrl#");
 		prefixManager.setPrefix("swrlb:", "http://www.w3.org/2003/11/swrlb#");
@@ -214,19 +192,18 @@ public class SWRLAPIFactory
 		return prefixManager;
 	}
 
-	@SuppressWarnings("unused")
 	private static OWLOntology createOWLOntology(OWLOntologyManager ontologyManager, File file) throws SWRLAPIException
 	{
 		Map<String, String> map = new HashMap<String, String>();
 
-		// TODO Put in resources dir?
-		map.put("http://swrl.stanford.edu/ontologies/3.3/swrla.owl", "file:///tmp/swrla.owl");
-		map.put("http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlm.owl", "file:///tmp/swrlm.owl");
-		map.put("http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlm.owl", "file:///tmp/swrlm.owl");
-		map.put("http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl", "file:///tmp/swrlx.owl");
-		map.put("http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlxml.owl", "file:///tmp/swrlxml.owl");
-		map.put("http://swrl.stanford.edu/ontologies/built-ins/3.3/temporal.owl", "file:///tmp/temporal.owl");
-		map.put("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl", "file:///tmp/sqwrl.owl");
+		map.put("http://www.w3.org/2003/11/swrl#", resourceName2File("owl/swrl.owl"));
+		map.put("http://www.w3.org/2003/11/swrlb#", resourceName2File("owl/swrlb.owl"));
+		map.put("http://swrl.stanford.edu/ontologies/3.3/swrla.owl", resourceName2File("owl/swrla.owl"));
+		map.put("http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlm.owl", resourceName2File("owl/swrlm.owl"));
+		map.put("http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl", resourceName2File("owl/swrlx.owl"));
+		map.put("http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlxml.owl", resourceName2File("owl/swrlxml.owl"));
+		map.put("http://swrl.stanford.edu/ontologies/built-ins/3.3/temporal.owl", resourceName2File("owl/temporal.owl"));
+		map.put("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl", resourceName2File("owl/sqwrl.owl"));
 
 		for (String key : map.keySet())
 			ontologyManager.addIRIMapper(new SimpleIRIMapper(IRI.create(key), IRI.create(map.get(key))));
@@ -237,5 +214,13 @@ public class SWRLAPIFactory
 			throw new SWRLAPIException("Error create OWL ontology from file " + file.getAbsolutePath() + ": "
 					+ e.getMessage());
 		}
+	}
+
+	private static String resourceName2File(String resourceName)
+	{
+		URL url = SWRLAPIFactory.class.getClassLoader().getResource(resourceName);
+		if (url == null)
+			throw new RuntimeException("Could not find resource " + resourceName);
+		return "file:///" + url.getFile();
 	}
 }
