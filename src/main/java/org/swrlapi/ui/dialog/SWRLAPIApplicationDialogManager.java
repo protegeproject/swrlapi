@@ -7,7 +7,7 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-import org.swrlapi.ui.controller.SWRLAPIApplicationController;
+import org.swrlapi.ui.model.SWRLAPIApplicationModel;
 
 /*
  * Provides a set of dialogs that can be used to build a MVC-based GUI that uses the SWRLAPI. Used in
@@ -23,9 +23,9 @@ public class SWRLAPIApplicationDialogManager
 
 	// TODO setLocationRelativeTo(Component parent);
 
-	public SWRLAPIApplicationDialogManager(SWRLAPIApplicationController applicationController)
+	public SWRLAPIApplicationDialogManager(SWRLAPIApplicationModel applicationModel)
 	{
-		this.editSWRLRuleDialog = new SWRLRuleEditorDialog(applicationController);
+		this.editSWRLRuleDialog = new SWRLRuleEditorDialog(applicationModel, this);
 	}
 
 	public JDialog getCreateSWRLRuleDialog()

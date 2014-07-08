@@ -1,26 +1,40 @@
 package org.swrlapi.core;
 
+import java.io.File;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
 import org.semanticweb.owlapi.apibinding.OWLManager;
-import org.semanticweb.owlapi.model.*;
+import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyFormat;
+import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.semanticweb.owlapi.util.SimpleIRIMapper;
 import org.semanticweb.owlapi.vocab.PrefixOWLOntologyFormat;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.builtins.arguments.impl.DefaultSWRLBuiltInArgumentFactory;
-import org.swrlapi.core.impl.*;
+import org.swrlapi.core.impl.DefaultOWLLiteralFactory;
+import org.swrlapi.core.impl.DefaultSWRLAPILiteralFactory;
+import org.swrlapi.core.impl.DefaultSWRLAPIOWLDataFactory;
+import org.swrlapi.core.impl.DefaultSWRLAPIOWLDatatypeFactory;
+import org.swrlapi.core.impl.DefaultSWRLAPIOWLOntology;
+import org.swrlapi.core.impl.DefaultSWRLAPIOntologyProcessor;
+import org.swrlapi.core.impl.DefaultSWRLAPIRulePrinter;
+import org.swrlapi.core.impl.DefaultSWRLRuleEngineFactory;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 import org.swrlapi.sqwrl.values.impl.DefaultSQWRLResultValueFactory;
 import org.swrlapi.ui.controller.SWRLAPIApplicationController;
+import org.swrlapi.ui.dialog.SWRLAPIApplicationDialogManager;
 import org.swrlapi.ui.model.SWRLAPIApplicationModel;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
-
-import javax.swing.*;
-import java.io.File;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Factory for generating some of the core entities defined by the SWRLAPI.
@@ -42,16 +56,26 @@ public class SWRLAPIFactory
 		return new DefaultSWRLAPIOWLOntology(ontology, prefixManager);
 	}
 
-	public static SWRLAPIOWLOntology createOntology(File owlFile)
+	public static SWRLAPIOWLOntology createOntology(File owlFile) throws SWRLAPIException
+	{
+		OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
+		OWLOntology ontology = createOWLOntology(ontologyManager, owlFile);
+		DefaultPrefixManager prefixManager = createPrefixManager(ontology);
+
+		return SWRLAPIFactory.createOntology(ontology, prefixManager);
+	}
+
+	public static SWRLAPIOWLOntology createOntology() throws SWRLAPIException
 	{
 		try {
 			OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
-			OWLOntology ontology = createOWLOntology(ontologyManager, owlFile);
+			OWLOntology ontology = ontologyManager.createOntology();
+
 			DefaultPrefixManager prefixManager = createPrefixManager(ontology);
 
 			return SWRLAPIFactory.createOntology(ontology, prefixManager);
-		} catch (SWRLAPIException e) {
-			throw new RuntimeException("Error creating OWL ontology: " + e.getMessage());
+		} catch (OWLOntologyCreationException e) {
+			throw new SWRLAPIException("Error creating OWL ontology", e);
 		}
 	}
 
@@ -82,6 +106,11 @@ public class SWRLAPIFactory
 	public static SWRLAPIApplicationController createApplicationController(SWRLAPIApplicationModel applicationModel)
 	{
 		return new SWRLAPIApplicationController(applicationModel);
+	}
+
+	public static SWRLAPIApplicationDialogManager createApplicationDialogManager(SWRLAPIApplicationModel applicationModel)
+	{
+		return new SWRLAPIApplicationDialogManager(applicationModel);
 	}
 
 	public static SWRLAPIOntologyProcessor createOntologyProcessor(SWRLAPIOWLOntology swrlapiOWLOntology)
@@ -175,10 +204,10 @@ public class SWRLAPIFactory
 	private static DefaultPrefixManager createPrefixManager()
 	{ // TODO Hard coding hack!
 		DefaultPrefixManager prefixManager = new DefaultPrefixManager(
-				// "http://swrl.stanford.edu/ontologies/tests/4.3/SWRLSimple.owl#");
-				// "http://swrl.stanford.edu/ontologies/tests/4.3/SQWRLCollectionsTests.owl#");
-				// "http://swrl.stanford.edu/ontologies/tests/4.3/SQWRLCoreTests.owl#");
-				// "http://swrl.stanford.edu/ontologies/tests/4.3/SWRLInferenceTests.owl#");
+		// "http://swrl.stanford.edu/ontologies/tests/4.3/SWRLSimple.owl#");
+		// "http://swrl.stanford.edu/ontologies/tests/4.3/SQWRLCollectionsTests.owl#");
+		// "http://swrl.stanford.edu/ontologies/tests/4.3/SQWRLCoreTests.owl#");
+		// "http://swrl.stanford.edu/ontologies/tests/4.3/SWRLInferenceTests.owl#");
 				"http://swrl.stanford.edu/ontologies/tests/4.3/SWRLCoreTests.owl#");
 		prefixManager.setPrefix("swrl:", "http://www.w3.org/2003/11/swrl#");
 		prefixManager.setPrefix("swrlb:", "http://www.w3.org/2003/11/swrlb#");

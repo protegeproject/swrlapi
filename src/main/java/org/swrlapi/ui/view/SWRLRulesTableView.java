@@ -33,8 +33,8 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 	private final SWRLRulesTableModel swrlRulesTableModel;
 	private final JTable swrlRulesTable;
 
-	public SWRLRulesTableView(SWRLAPIApplicationDialogManager applicationDialogManager,
-			SWRLRulesTableModel swrlRulesTableModel)
+	public SWRLRulesTableView(SWRLRulesTableModel swrlRulesTableModel,
+			SWRLAPIApplicationDialogManager applicationDialogManager)
 	{
 		this.applicationDialogManager = applicationDialogManager;
 		this.swrlRulesTableModel = swrlRulesTableModel;

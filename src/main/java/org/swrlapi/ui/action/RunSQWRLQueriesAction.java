@@ -3,21 +3,24 @@ package org.swrlapi.ui.action;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import org.swrlapi.ui.controller.SWRLAPIApplicationController;
 import org.swrlapi.ui.dialog.SWRLAPIApplicationDialogManager;
+import org.swrlapi.ui.model.SWRLAPIApplicationModel;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
 
 public class RunSQWRLQueriesAction implements ActionListener
 {
-	private final SWRLAPIApplicationController applicationController;
-
 	private static final String INVALID_QUERY_TITLE = "Invalid Query";
 	private static final String NO_QUERIES_TITLE = "No SQWRL Queries";
 	private static final String NO_QUERIES_MESSAGE = "No SQWRL queries in ontology";
 
-	public RunSQWRLQueriesAction(SWRLAPIApplicationController applicationController)
+	private final SWRLAPIApplicationModel applicationModel;
+	private final SWRLAPIApplicationDialogManager applicationDialogManager;
+
+	public RunSQWRLQueriesAction(SWRLAPIApplicationModel applicationModel,
+			SWRLAPIApplicationDialogManager applicationDialogManager)
 	{
-		this.applicationController = applicationController;
+		this.applicationModel = applicationModel;
+		this.applicationDialogManager = applicationDialogManager;
 	}
 
 	@Override
@@ -37,11 +40,16 @@ public class RunSQWRLQueriesAction implements ActionListener
 
 	private SWRLRulesTableModel getSWRLRulesTableModel()
 	{
-		return applicationController.getApplicationModel().getSWRLRulesTableModel();
+		return getApplicationModel().getSWRLRulesTableModel();
+	}
+
+	private SWRLAPIApplicationModel getApplicationModel()
+	{
+		return this.applicationModel;
 	}
 
 	private SWRLAPIApplicationDialogManager getApplicationDialogManager()
 	{
-		return applicationController.getApplicationDialogManager();
+		return this.applicationDialogManager;
 	}
 }

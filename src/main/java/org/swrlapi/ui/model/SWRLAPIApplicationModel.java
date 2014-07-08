@@ -17,10 +17,10 @@ import org.swrlapi.ui.controller.SWRLAPIApplicationController;
  */
 public class SWRLAPIApplicationModel implements SWRLAPIModel
 {
-	private final SWRLRuleEngine ruleEngine;
-	private final SWRLParser swrlParser;
 	private final SWRLRulesTableModel swrlRulesTableModel;
 	private final SQWRLQueryEngine queryEngine;
+	private final SWRLRuleEngine ruleEngine;
+	private final SWRLParser swrlParser;
 	private final DefaultPrefixManager prefixManager;
 	private final DefaultSWRLAPIRulePrinter swrlRulePrinter;
 

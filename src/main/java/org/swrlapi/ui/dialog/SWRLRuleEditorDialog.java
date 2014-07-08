@@ -25,7 +25,7 @@ import javax.swing.text.JTextComponent;
 import org.swrlapi.parser.SWRLIncompleteRuleException;
 import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.parser.SWRLParser;
-import org.swrlapi.ui.controller.SWRLAPIApplicationController;
+import org.swrlapi.ui.model.SWRLAPIApplicationModel;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
 
 public class SWRLRuleEditorDialog extends JDialog
@@ -39,16 +39,19 @@ public class SWRLRuleEditorDialog extends JDialog
 	private static final int RULE_EDIT_AREA_COLUMNS = 20;
 	private static final int RULE_EDIT_AREA_ROWS = 60;
 
-	private final SWRLAPIApplicationController applicationController;
+	private final SWRLAPIApplicationModel applicationModel;
+	private final SWRLAPIApplicationDialogManager applicationDialogManager;
 
 	private JTextField ruleNameTextField, commentTextField, consoleTextField;
 	private JTextArea ruleTextTextArea;
 
 	private boolean editMode = false;
 
-	public SWRLRuleEditorDialog(SWRLAPIApplicationController applicationController)
+	public SWRLRuleEditorDialog(SWRLAPIApplicationModel applicationModel,
+			SWRLAPIApplicationDialogManager applicationDialogManager)
 	{
-		this.applicationController = applicationController;
+		this.applicationModel = applicationModel;
+		this.applicationDialogManager = applicationDialogManager;
 
 		setTitle(TITLE);
 		setModal(true);
@@ -217,16 +220,16 @@ public class SWRLRuleEditorDialog extends JDialog
 
 	private SWRLParser getSWRLParser()
 	{
-		return applicationController.getApplicationModel().getSWRLParser();
+		return this.applicationModel.getSWRLParser();
 	}
 
 	private SWRLRulesTableModel getSWRLRulesModel()
 	{
-		return applicationController.getApplicationModel().getSWRLRulesTableModel();
+		return this.applicationModel.getSWRLRulesTableModel();
 	}
 
 	private SWRLAPIApplicationDialogManager getApplicationDialogManager()
 	{
-		return applicationController.getApplicationDialogManager();
+		return this.applicationDialogManager;
 	}
 }

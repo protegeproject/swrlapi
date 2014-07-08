@@ -4,7 +4,6 @@ import javax.swing.Icon;
 import javax.swing.JSplitPane;
 
 import org.swrlapi.exceptions.SWRLAPIException;
-import org.swrlapi.ui.controller.SWRLAPIApplicationController;
 import org.swrlapi.ui.dialog.SWRLAPIApplicationDialogManager;
 import org.swrlapi.ui.model.SWRLAPIApplicationModel;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
@@ -27,15 +26,13 @@ public class SWRLAPIQueriesView extends JSplitPane implements SWRLAPIView
 
 	private static final double SPLIT_PANE_RESIZE_WEIGHT = 0.6;
 
-	public SWRLAPIQueriesView(SWRLAPIApplicationController applicationController, Icon queryEngineIcon)
-			throws SWRLAPIException
+	public SWRLAPIQueriesView(SWRLAPIApplicationModel applicationModel,
+			SWRLAPIApplicationDialogManager applicationDialogManager, Icon queryEngineIcon) throws SWRLAPIException
 	{
-		SWRLAPIApplicationDialogManager applicationDialogManager = applicationController.getApplicationDialogManager();
-		SWRLAPIApplicationModel applicationModel = applicationController.getApplicationModel();
 		SWRLRulesTableModel swrlRulesTableModel = applicationModel.getSWRLRulesTableModel();
 
-		this.queryTableView = new SWRLRulesTableView(applicationDialogManager, swrlRulesTableModel);
-		this.queryExecutionView = new SWRLQueryExecutionView(applicationModel, queryEngineIcon, null);
+		this.queryTableView = new SWRLRulesTableView(swrlRulesTableModel, applicationDialogManager);
+		this.queryExecutionView = new SWRLQueryExecutionView(applicationModel, queryEngineIcon, null); // TODO
 
 		setOrientation(JSplitPane.VERTICAL_SPLIT);
 		setResizeWeight(SPLIT_PANE_RESIZE_WEIGHT);

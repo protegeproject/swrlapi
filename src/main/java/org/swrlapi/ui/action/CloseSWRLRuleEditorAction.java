@@ -3,18 +3,20 @@ package org.swrlapi.ui.action;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import org.swrlapi.ui.controller.SWRLAPIApplicationController;
 import org.swrlapi.ui.dialog.SWRLAPIApplicationDialogManager;
 import org.swrlapi.ui.model.SWRLAPIApplicationModel;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
 
 public class CloseSWRLRuleEditorAction implements ActionListener
 {
-	private final SWRLAPIApplicationController applicationDialogManager;
+	private final SWRLAPIApplicationModel applicationModel;
+	private final SWRLAPIApplicationDialogManager applicationDialogManager;
 
-	public CloseSWRLRuleEditorAction(SWRLAPIApplicationController applicationController)
+	public CloseSWRLRuleEditorAction(SWRLAPIApplicationModel applicationModel,
+			SWRLAPIApplicationDialogManager applicationDialogManager)
 	{
-		this.applicationDialogManager = applicationController;
+		this.applicationModel = applicationModel;
+		this.applicationDialogManager = applicationDialogManager;
 	}
 
 	@Override
@@ -38,11 +40,6 @@ public class CloseSWRLRuleEditorAction implements ActionListener
 		getApplicationModel().clearSWRLRulesModified();
 	}
 
-	private SWRLAPIApplicationModel getApplicationModel()
-	{
-		return applicationDialogManager.getApplicationModel();
-	}
-
 	private SWRLRulesTableModel getSWRLRulesTableModel()
 	{
 		return getApplicationModel().getSWRLRulesTableModel();
@@ -53,8 +50,13 @@ public class CloseSWRLRuleEditorAction implements ActionListener
 		return getApplicationModel().getSWRLRulesTableModel() != null;
 	}
 
+	private SWRLAPIApplicationModel getApplicationModel()
+	{
+		return this.applicationModel;
+	}
+
 	private SWRLAPIApplicationDialogManager getApplicationDialogManager()
 	{
-		return applicationDialogManager.getApplicationDialogManager();
+		return this.applicationDialogManager;
 	}
 }
