@@ -5,13 +5,7 @@ import java.util.List;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
-import org.swrlapi.core.OWLClassExpressionResolver;
-import org.swrlapi.core.SWRLAPIIRIResolver;
-import org.swrlapi.core.OWLLiteralFactory;
-import org.swrlapi.core.OWLPropertyExpressionResolver;
-import org.swrlapi.core.SWRLAPIOWLDataFactory;
-import org.swrlapi.core.SWRLAPIOWLDatatypeFactory;
-import org.swrlapi.core.SWRLRuleEngine;
+import org.swrlapi.core.*;
 import org.swrlapi.exceptions.BuiltInException;
 import org.swrlapi.exceptions.SWRLRuleEngineBridgeException;
 import org.swrlapi.owl2rl.OWL2RLPersistenceLayer;
@@ -61,6 +55,11 @@ public interface SWRLRuleEngineBridge
 	 * A class expression resolver can be used by a target rule engine to resolve OWL class expressions.
 	 */
 	OWLClassExpressionResolver getOWLClassExpressionResolver();
+
+	/**
+	 * A class expression resolver can be used by a target rule engine to resolve OWL data ranges
+	 */
+	OWLDataRangeResolver getOWLDataRangeResolver();
 
 	/**
 	 * A property expression resolver can be used by a target rule engine to resolve OWL property expressions.
