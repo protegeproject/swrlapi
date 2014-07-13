@@ -5,11 +5,7 @@ import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.swrlapi.bridge.SWRLRuleEngineBridge;
 import org.swrlapi.bridge.converters.TargetRuleEngineConverterBase;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
-import org.swrlapi.core.OWLClassExpressionResolver;
-import org.swrlapi.core.SWRLAPIIRIResolver;
-import org.swrlapi.core.OWLLiteralFactory;
-import org.swrlapi.core.SWRLAPIOWLDataFactory;
-import org.swrlapi.core.SWRLAPIOWLDatatypeFactory;
+import org.swrlapi.core.*;
 import org.swrlapi.exceptions.TargetRuleEngineException;
 
 /**
@@ -58,6 +54,11 @@ public abstract class TargetRuleEngineExtractorBase implements TargetRuleEngineE
 	protected OWLClassExpressionResolver getOWLClassExpressionResolver()
 	{
 		return getBridge().getOWLClassExpressionResolver();
+	}
+
+	protected OWLDataRangeResolver getOWLDataRangeResolver()
+	{
+		return getBridge().getOWLDataRangeResolver();
 	}
 
 	protected SWRLAPIIRIResolver getIRIResolver()
