@@ -10,7 +10,7 @@ import org.swrlapi.exceptions.TargetRuleEngineException;
 
 /**
  * This interface describes a set of methods that will be needed by a target rule engine to create OWLAPI representations
- * of OWL entities from the rule engine's native rule engine representation of those entities.
+ * of OWL properties from the rule engine's native rule engine representation of those properties.
  * <p>
  * The corresponding {@link TargetRuleEngineConverterBase} is used when creating native rule engine representations of
  * OWLAPI OWL objects.

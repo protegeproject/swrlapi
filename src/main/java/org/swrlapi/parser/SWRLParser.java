@@ -298,7 +298,7 @@ public class SWRLParser
 
 	private List<SWRLDArgument> parseBuiltInArgumentList(SWRLTokenizer tokenizer, boolean isInHead)
 			throws SWRLParseException
-	{ // Parse a list of variables, OWL named entities, and literals
+	{ // Parse a list of variables, OWL named properties, and literals
 		List<SWRLDArgument> dArguments = !tokenizer.isParseOnly() ? new ArrayList<SWRLDArgument>() : null;
 
 		SWRLDArgument dArgument = parseDArgument(tokenizer, isInHead, true);

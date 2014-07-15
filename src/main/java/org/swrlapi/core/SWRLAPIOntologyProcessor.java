@@ -22,7 +22,7 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
  * {@link SQWRLException} if it finds invalid SQWRL queries in the ontology.
  * <p>
  * In addition to extracting SWRL rules and SQWRL queries, this processor also generates OWL declaration axioms for all
- * OWL entities encountered during axiom processing and records their type, IRI and prefixed names using the
+ * OWL properties encountered during axiom processing and records their type, IRI and prefixed names using the
  * {@link SWRLAPIIRIResolver} class. This class can be used by rule engines to resolve OWL named objects using their short
  * name.
  * 

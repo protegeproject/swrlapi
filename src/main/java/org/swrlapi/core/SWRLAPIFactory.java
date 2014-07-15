@@ -37,7 +37,7 @@ import org.swrlapi.ui.model.SWRLAPIApplicationModel;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
 
 /**
- * Factory for generating some of the core entities defined by the SWRLAPI.
+ * Factory for generating some of the core properties defined by the SWRLAPI.
  */
 public class SWRLAPIFactory
 {

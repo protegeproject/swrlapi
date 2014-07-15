@@ -252,11 +252,11 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 	}
 
 	/**
-	 * Process currently supported OWL axioms. The processing consists of recording any OWL entities in the processed
-	 * axioms (with an instance of the {@link SWRLAPIIRIResolver} class) and generating declaration axioms for these entities.
+	 * Process currently supported OWL axioms. The processing consists of recording any OWL properties in the processed
+	 * axioms (with an instance of the {@link SWRLAPIIRIResolver} class) and generating declaration axioms for these properties.
 	 * <p>
 	 * TODO The current approach is clunky. A better approach would be to walk the axioms with a visitor and record the
-	 * entities and generate the declaration axioms.
+	 * properties and generate the declaration axioms.
 	 */
 	private void processOWLAxioms()
 	{

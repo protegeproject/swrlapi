@@ -291,7 +291,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	/**
 	 * The {@link SWRLBuiltInArgument} interface is the SWRLAPI extension point to the OWLAPI to represent arguments to
 	 * SWRL built-in atoms. In the OWL Specification only data values or variables referencing them are allowed as
-	 * parameters to built-in atoms. The SWRLAPI named OWL entities (classes, named individuals, properties, and
+	 * parameters to built-in atoms. The SWRLAPI named OWL properties (classes, named individuals, properties, and
 	 * datatypes) can also be passed to built-ins.
 	 * <p>
 	 * 
@@ -319,14 +319,14 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	}
 
 	/**
-	 * The OWLAPI follows the OWL Specification and does not explicitly allow named OWL entities as arguments to
-	 * built-ins. However, if OWLAPI parsers encounter OWL entities as parameters they appear to represent them as SWRL
+	 * The OWLAPI follows the OWL Specification and does not explicitly allow named OWL properties as arguments to
+	 * built-ins. However, if OWLAPI parsers encounter OWL properties as parameters they appear to represent them as SWRL
 	 * variables - with the variable IRI set to the IRI of the entity ({@link OWLEntity} classes represent named OWL
 	 * concepts so have an IRI). So if we are processing built-in parameters and encounter variables with an IRI referring
-	 * to named OWL entities in the active ontology we can transform them to the appropriate SWRLAPI built-in argument for
+	 * to named OWL properties in the active ontology we can transform them to the appropriate SWRLAPI built-in argument for
 	 * the named entity.
 	 * <p>
-	 * Note: An important restriction here is that variable names do not intersect with named entities in their OWL
+	 * Note: An important restriction here is that variable names do not intersect with named properties in their OWL
 	 * ontology.
 	 * 
 	 * @see SWRLNamedBuiltInArgument
