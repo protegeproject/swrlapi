@@ -1,10 +1,7 @@
 package org.swrlapi.bridge.converters;
 
 import org.swrlapi.bridge.SWRLRuleEngineBridge;
-import org.swrlapi.core.OWLClassExpressionResolver;
-import org.swrlapi.core.OWLDataRangeResolver;
-import org.swrlapi.core.SWRLAPIIRIResolver;
-import org.swrlapi.core.OWLPropertyExpressionResolver;
+import org.swrlapi.core.*;
 
 /**
  * This interface represents provides utility methods converters implemented by target rule engines to convert OWL
@@ -34,9 +31,14 @@ public abstract class TargetRuleEngineConverterBase implements TargetRuleEngineC
 		return getBridge().getOWLDataRangeResolver();
 	}
 
-	protected OWLPropertyExpressionResolver getOWLPropertyExpressionResolver()
+	protected OWLDataPropertyExpressionResolver getOWLDataPropertyExpressionResolver()
 	{
-		return getBridge().getOWLPropertyExpressionResolver();
+		return getBridge().getOWLDataPropertyExpressionResolver();
+	}
+
+	protected OWLObjectPropertyExpressionResolver getOWLObjectPropertyExpressionResolver()
+	{
+		return getBridge().getOWLObjectPropertyExpressionResolver();
 	}
 
 	protected SWRLRuleEngineBridge getBridge()

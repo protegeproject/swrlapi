@@ -62,9 +62,14 @@ public interface SWRLRuleEngineBridge
 	OWLDataRangeResolver getOWLDataRangeResolver();
 
 	/**
-	 * A property expression resolver can be used by a target rule engine to resolve OWL property expressions.
+	 * An object property expression resolver can be used by a target rule engine to resolve OWL property expressions.
 	 */
-	OWLPropertyExpressionResolver getOWLPropertyExpressionResolver();
+	OWLObjectPropertyExpressionResolver getOWLObjectPropertyExpressionResolver();
+
+	/**
+	 * A data property expression resolver can be used by a target rule engine to resolve OWL property expressions.
+	 */
+	OWLDataPropertyExpressionResolver getOWLDataPropertyExpressionResolver();
 
 	/**
 	 * Get the underlying persistence layer for the OWL 2 RL reasoner used by the rule and query engine.

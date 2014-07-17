@@ -29,7 +29,7 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
 /**
  * Default implementation of a SWRL rule engine bridge, built-in bridge, built-in bridge controller, and rule engine
  * bridge controller.
- * <p>
+ * <p/>
  * Asserted OWL axioms are managed by a {@link SWRLRuleEngine}, which passes them to a {@link TargetRuleEngine} using
  * the {@link TargetRuleEngine#defineOWLAxiom(OWLAxiom)} call.
  */
@@ -39,7 +39,8 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 	private final SWRLAPIOWLOntology swrlapiOWLOntology;
 	private final OWLClassExpressionResolver owlClassExpressionResolver;
 	private final OWLDataRangeResolver owlDataRangeResolver;
-	private final OWLPropertyExpressionResolver owlPropertyExpressionResolver;
+	private final OWLDataPropertyExpressionResolver owlDataPropertyExpressionResolver;
+	private final OWLObjectPropertyExpressionResolver owlObjectPropertyExpressionResolver;
 	private final OWL2RLPersistenceLayer owl2RLPersistenceLayer;
 
 	/**
@@ -69,7 +70,8 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 		this.targetRuleEngine = null;
 		this.owlClassExpressionResolver = new OWLClassExpressionResolver(swrlapiOWLOntology.getOWLDataFactory());
 		this.owlDataRangeResolver = new OWLDataRangeResolver(swrlapiOWLOntology.getOWLDataFactory());
-		this.owlPropertyExpressionResolver = new OWLPropertyExpressionResolver();
+		this.owlObjectPropertyExpressionResolver = new OWLObjectPropertyExpressionResolver();
+		this.owlDataPropertyExpressionResolver = new OWLDataPropertyExpressionResolver();
 
 		this.inferredOWLAxioms = new HashSet<OWLAxiom>();
 		this.injectedOWLAxioms = new HashSet<OWLAxiom>();
@@ -130,9 +132,15 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 	}
 
 	@Override
-	public OWLPropertyExpressionResolver getOWLPropertyExpressionResolver()
+	public OWLObjectPropertyExpressionResolver getOWLObjectPropertyExpressionResolver()
 	{
-		return this.owlPropertyExpressionResolver;
+		return this.owlObjectPropertyExpressionResolver;
+	}
+
+	@Override
+	public OWLDataPropertyExpressionResolver getOWLDataPropertyExpressionResolver()
+	{
+		return this.owlDataPropertyExpressionResolver;
 	}
 
 	@Override

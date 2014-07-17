@@ -55,6 +55,14 @@ public abstract class TargetRuleEngineExtractorBase implements TargetRuleEngineE
 		return getBridge().getOWLClassExpressionResolver();
 	}
 
+	protected OWLObjectPropertyExpressionResolver getOWLObjectPropertyExpressionResolver() {
+		return getBridge().getOWLObjectPropertyExpressionResolver();
+	}
+
+	protected OWLDataPropertyExpressionResolver getOWLDataPropertyExpressionResolver() {
+		return getBridge().getOWLDataPropertyExpressionResolver();
+	}
+
 	protected OWLDataRangeResolver getOWLDataRangeResolver()
 	{
 		return getBridge().getOWLDataRangeResolver();
