@@ -31,11 +31,11 @@ public class OWLClassExpressionResolver
 	public void reset()
 	{
 		this.classExpressionMap.clear();
-		recordOWLClassExpression(OWLRDFVocabulary.OWL_THING.getPrefixedName(), getOWLDataFactory().getOWLThing());
-		recordOWLClassExpression(OWLRDFVocabulary.OWL_NOTHING.getPrefixedName(), getOWLDataFactory().getOWLNothing());
+		record(OWLRDFVocabulary.OWL_THING.getPrefixedName(), getOWLDataFactory().getOWLThing());
+		record(OWLRDFVocabulary.OWL_NOTHING.getPrefixedName(), getOWLDataFactory().getOWLNothing());
 	}
 
-	public void recordOWLClassExpression(String classExpressionID, OWLClassExpression classExpression)
+	public void record(String classExpressionID, OWLClassExpression classExpression)
 	{
 		this.classExpressionMap.put(classExpressionID, classExpression);
 	}
