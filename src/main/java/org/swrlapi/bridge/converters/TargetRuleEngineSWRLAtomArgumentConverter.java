@@ -19,6 +19,8 @@ import org.swrlapi.exceptions.TargetRuleEngineException;
  * native rule clauses.
  * <p>
  * Implementors may also chose an alternate conversion approach.
+ *
+ * @see org.semanticweb.owlapi.model.SWRLArgument
  */
 public interface TargetRuleEngineSWRLAtomArgumentConverter<T> extends TargetRuleEngineConverter
 {

@@ -9,6 +9,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * This class provides utility methods that can be used by implementations on an OWL 2 RL engine in the SWRLAPI.
+ *
+ * @see org.swrlapi.owl2rl.OWL2RLEngine
+ */
 public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 {
 	private final List<RuleTable> ruleTables;

@@ -18,6 +18,8 @@ import org.swrlapi.exceptions.TargetRuleEngineException;
  * This interface can be used by implementation that need to track variable definitions as each atom is defined.
  * <p>
  * Implementors may also chose an alternate conversion approach.
+ *
+ * @see org.semanticweb.owlapi.model.SWRLAtom
  */
 public interface TargetRuleEngineSWRLBodyAtomWithVariableNamesConverter<T> extends TargetRuleEngineConverter
 {

@@ -2,7 +2,7 @@ package org.swrlapi.exceptions;
 
 public class BuiltInException extends SWRLAPIException
 {
-	private static final long serialVersionUID = -7520067079848111367L;
+	private static final long serialVersionUID = 1L;
 
 	public BuiltInException()
 	{

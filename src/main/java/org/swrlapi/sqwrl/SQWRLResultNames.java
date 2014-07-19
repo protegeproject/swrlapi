@@ -2,6 +2,10 @@ package org.swrlapi.sqwrl;
 
 import org.swrlapi.sqwrl.exceptions.SQWRLInvalidAggregateFunctionNameException;
 
+/**
+ * @see org.swrlapi.sqwrl.SQWRLQuery
+ * @see org.swrlapi.sqwrl.SQWRLResult
+ */
 public class SQWRLResultNames
 {
 	// Aggregation

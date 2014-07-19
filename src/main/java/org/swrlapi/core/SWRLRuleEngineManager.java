@@ -3,7 +3,7 @@ package org.swrlapi.core;
 import java.util.Set;
 
 import org.swrlapi.bridge.SWRLRuleEngineBridge;
-import org.swrlapi.bridge.TargetRuleEngine;
+import org.swrlapi.bridge.TargetSWRLRuleEngine;
 import org.swrlapi.exceptions.TargetRuleEngineException;
 
 /**
@@ -27,7 +27,7 @@ public interface SWRLRuleEngineManager
 
 	public interface TargetSWRLRuleEngineCreator
 	{
-		TargetRuleEngine create(SWRLRuleEngineBridge bridge) throws TargetRuleEngineException;
+		TargetSWRLRuleEngine create(SWRLRuleEngineBridge bridge) throws TargetRuleEngineException;
 
 		String getRuleEngineName();
 	}

@@ -2,7 +2,7 @@ package org.swrlapi.exceptions;
 
 public class InvalidBuiltInArgumentException extends BuiltInException
 {
-	private static final long serialVersionUID = -6350000189524699264L;
+	private static final long serialVersionUID = 1L;
 
 	public InvalidBuiltInArgumentException(int argumentNumber, String message)
 	{

@@ -46,7 +46,7 @@ import org.swrlapi.exceptions.InvalidBuiltInArgumentNumberException;
 import org.swrlapi.exceptions.SWRLBuiltInLibraryException;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 
-// TODO Should move the methods implementing the SWRLBuiltInArgumentHandler,
+// TODO Too long. Should separate the methods implementing the SWRLBuiltInArgumentHandler,
 // SWRLBuiltInArgumentResultHandler, and SWRLBuiltInArgumentCreator interfaces.
 
 /**

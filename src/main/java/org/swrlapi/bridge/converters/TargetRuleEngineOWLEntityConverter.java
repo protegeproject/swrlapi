@@ -8,6 +8,9 @@ import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.swrlapi.exceptions.TargetRuleEngineException;
 
+/**
+ * @see org.semanticweb.owlapi.model.OWLEntity
+ */
 public interface TargetRuleEngineOWLEntityConverter<TR> extends TargetRuleEngineConverter
 {
 	TR convert(OWLClass cls) throws TargetRuleEngineException;

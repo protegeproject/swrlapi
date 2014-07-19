@@ -13,6 +13,8 @@ import java.util.Map;
  * data ranges, though) so rather than translating native rule engine representations of data range back to
  * the OWLAPI representation returning inferred axioms, the original data range supplied to the engine can be tracked
  * via an ID and recorded and retrieved using this class.
+ *
+ * @see org.semanticweb.owlapi.model.OWLDataRange
  * */
 public class OWLDataRangeResolver
 {

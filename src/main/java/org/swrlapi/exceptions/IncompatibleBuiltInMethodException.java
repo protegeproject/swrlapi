@@ -2,7 +2,7 @@ package org.swrlapi.exceptions;
 
 public class IncompatibleBuiltInMethodException extends BuiltInException
 {
-	private static final long serialVersionUID = 3609759610672991949L;
+	private static final long serialVersionUID = 1L;
 
 	public IncompatibleBuiltInMethodException(String ruleName, String prefix, String builtInMethodName, String message)
 	{

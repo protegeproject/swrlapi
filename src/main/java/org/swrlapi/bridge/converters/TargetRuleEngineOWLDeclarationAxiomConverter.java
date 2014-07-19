@@ -7,6 +7,9 @@ import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.swrlapi.exceptions.TargetRuleEngineException;
 
+/**
+ * @see org.semanticweb.owlapi.model.OWLDeclarationAxiom
+ */
 public interface TargetRuleEngineOWLDeclarationAxiomConverter extends TargetRuleEngineConverter
 {
 	void convert(OWLClass cls) throws TargetRuleEngineException;

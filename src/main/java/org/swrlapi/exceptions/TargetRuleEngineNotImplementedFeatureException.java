@@ -2,7 +2,7 @@ package org.swrlapi.exceptions;
 
 public class TargetRuleEngineNotImplementedFeatureException extends TargetRuleEngineException
 {
-	private static final long serialVersionUID = -83157273121976289L;
+	private static final long serialVersionUID = 1L;
 
 	public TargetRuleEngineNotImplementedFeatureException(String message)
 	{

@@ -3,7 +3,7 @@ package org.swrlapi.sqwrl.exceptions;
 
 public class SQWRLInvalidQueryException extends SQWRLException
 {
-	private static final long serialVersionUID = 7164479181999770966L;
+	private static final long serialVersionUID = 1L;
 
 	public SQWRLInvalidQueryException(String message)
 	{

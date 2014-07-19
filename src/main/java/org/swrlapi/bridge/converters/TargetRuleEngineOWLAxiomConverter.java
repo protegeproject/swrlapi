@@ -45,7 +45,8 @@ import org.swrlapi.exceptions.TargetRuleEngineException;
  * This interface describes methods that can be implemented by a target rule engine to convert OWL axioms to a native
  * rule engine representation. SWRL rules are also a type of OWL axiom so are also converted here.
  * 
- * @see OWLAxiom, SWRLAPIRule
+ * @see org.semanticweb.owlapi.model.OWLAxiom
+ * @see org.swrlapi.core.SWRLAPIRule
  */
 public interface TargetRuleEngineOWLAxiomConverter extends TargetRuleEngineConverter
 {

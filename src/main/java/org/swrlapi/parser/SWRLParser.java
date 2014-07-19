@@ -26,11 +26,12 @@ import org.swrlapi.parser.SWRLToken.SWRLTokenType;
  * but incomplete, a {@link SWRLIncompleteRuleException} (which is a subclass of {@link SWRLParseException}) will be
  * thrown.
  * <p>
- * The {@link #parseSWRLRule(String, boolean)} method parses a rule. If {@link #parseOnly} argument to this method is
+ * The {@link #parseSWRLRule(String, boolean)} method parses a rule. If <code>parseOnly</code> argument to this method is
  * true, only checking is performed - no SWRL rules are created; if it is false, a {@link SWRLAPIRule} object is
  * created.
  * 
- * @see SWRLTokenizer, SWRLParserSupport
+ * @see org.swrlapi.parser.SWRLTokenizer
+ * @see org.swrlapi.parser.SWRLParserSupport
  */
 public class SWRLParser
 {

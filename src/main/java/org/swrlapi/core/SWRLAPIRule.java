@@ -19,7 +19,9 @@ import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
  * <p>
  * These SWRLAPI rules are extracted from an OWL ontology by the {@link SWRLAPIOWLOntology#getSWRLAPIRules()} method.
  * 
- * @see SWRLAPIBuiltInAtom, SWRLBuiltInArgument, SWRLAPIOWLOntology
+ * @see org.swrlapi.core.SWRLAPIBuiltInAtom
+ * @see org.swrlapi.builtins.arguments.SWRLBuiltInArgument
+ * @see org.swrlapi.core.SWRLAPIOWLOntology
  */
 public interface SWRLAPIRule extends SWRLRule
 {

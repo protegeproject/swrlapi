@@ -2,7 +2,7 @@ package org.swrlapi.exceptions;
 
 public class InfiniteBindingBuiltInException extends BuiltInException
 {
-	private static final long serialVersionUID = 8633346352864873441L;
+	private static final long serialVersionUID = 1L;
 
 	public InfiniteBindingBuiltInException()
 	{

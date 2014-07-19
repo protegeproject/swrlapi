@@ -4,7 +4,7 @@ import org.swrlapi.exceptions.BuiltInException;
 
 public class SQWRLException extends BuiltInException
 {
-	private static final long serialVersionUID = -7828511121047813348L;
+	private static final long serialVersionUID = 1L;
 
 	public SQWRLException(String message)
 	{

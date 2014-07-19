@@ -11,6 +11,9 @@ import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.exceptions.TargetRuleEngineException;
 
+/**
+ * @see org.swrlapi.builtins.arguments.SWRLBuiltInArgument
+ */
 public interface TargetRuleEngineSWRLBuiltInArgumentConverter<T> extends TargetRuleEngineConverter
 {
 	T convert(SWRLVariableBuiltInArgument argument) throws TargetRuleEngineException;

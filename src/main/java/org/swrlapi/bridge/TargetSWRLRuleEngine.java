@@ -7,11 +7,16 @@ import org.swrlapi.owl2rl.OWL2RLEngine;
 import org.swrlapi.sqwrl.SQWRLQuery;
 
 /**
- * This interface defines the methods that must be provided by an implementation of a SWRL rule engine.
+ * This interface defines the methods that must be provided by an implementation of a SWRLAPI-based SWRL rule engine.
+ * </p>
+ * A SWRL rule engine must also implement an OWL 2 RL reasoner.
  * <p>
  * A target rule engine can communicate with the bridge using the {@link SWRLRuleEngineBridge} interface.
+ *
+ * @see org.swrlapi.owl2rl.OWL2RLEngine
+ * @see org.swrlapi.bridge.SWRLRuleEngineBridge
  */
-public interface TargetRuleEngine
+public interface TargetSWRLRuleEngine
 {
 	/**
 	 * Define a target rule engine representation of an OWL axiom. SWRL rules are a type of OWL axiom.
@@ -44,7 +49,7 @@ public interface TargetRuleEngine
 	String getVersion();
 
 	/**
-	 * Get the underlying controller for the OWL 2 RL reasoner used by the rule engine.
+	 * Get the underlying OWL 2 RL reasoner provided by the rule engine.
 	 */
 	OWL2RLEngine getOWL2RLEngine();
 }

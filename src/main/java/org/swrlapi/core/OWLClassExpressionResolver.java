@@ -14,6 +14,8 @@ import org.swrlapi.exceptions.TargetRuleEngineException;
  * class expressions, though) so rather than translating native rule engine representations of class expressions back to
  * the OWLAPI representation returning inferred axioms, the original expressions supplied to the engine can be tracked
  * via an ID and recorded and retrieved using this class.
+ *
+ * @see org.semanticweb.owlapi.model.OWLClassExpression
  * */
 public class OWLClassExpressionResolver
 {

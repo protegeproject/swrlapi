@@ -11,6 +11,9 @@ import org.swrlapi.core.xsd.XSDDateTime;
 import org.swrlapi.core.xsd.XSDDuration;
 import org.swrlapi.core.xsd.XSDTime;
 
+/**
+* @see org.semanticweb.owlapi.model.OWLLiteral
+ */
 public final class OWLLiteralComparator implements Comparator<OWLLiteral>
 {
 	private static Comparator<String> naturalOrderComparator = NaturalOrderComparator.NUMERICAL_ORDER;

@@ -16,6 +16,9 @@ import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.exceptions.TargetRuleEngineException;
 
+/**
+ * @see org.semanticweb.owlapi.model.SWRLArgument
+ */
 public interface TargetRuleEngineSWRLBodyAtomArgumentWithVariableNamesConverter<T> extends TargetRuleEngineConverter
 {
 	T convert(SWRLVariable variableArgument) throws TargetRuleEngineException;

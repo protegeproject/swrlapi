@@ -4,7 +4,7 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
 public class SQWRLLiteralException extends SQWRLException
 {
-	private static final long serialVersionUID = 3454888878622415382L;
+	private static final long serialVersionUID = 1L;
 
 	public SQWRLLiteralException(String message)
 	{

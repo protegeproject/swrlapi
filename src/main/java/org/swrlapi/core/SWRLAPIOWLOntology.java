@@ -24,16 +24,19 @@ import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
  * {@link SWRLDArgument}. A {@link SWRLAPIOWLOntology} will construct SWRLAPI rules from the SWRL rules in an
  * OWLAPI-based ontology to contain these additional built-in argument types.
  * <p>
- * The {@link startBulkConversion}, {@link completeBulkConversion}, {@link hasOntologyChanged}, and
- * {@link resetOntologyChanged} methods can be used for optimization purposes. For example, in the Protege-OWL API the
- * {@link startBulkConversion} method turns off listener notification so that bulk transfer of OWL axioms can be
- * performed more efficiently. The {@link hasOntologyChanged} method can be used by rule engines to avoid unnecessary
+ * The {@link #startBulkConversion()}, {@link #completeBulkConversion()}, {@link #hasOntologyChanged()}, and
+ * {@link #resetOntologyChanged()} methods can be used for optimization purposes. For example, in the Protege-OWL API the
+ * {@link #startBulkConversion()} method turns off listener notification so that bulk transfer of OWL axioms can be
+ * performed more efficiently. The {@link #hasOntologyChanged()} method can be used by rule engines to avoid unnecessary
  * regeneration of knowledge.
  * <p>
  * A SWRLAPI ontology does not directly deal with SQWRL queries. Instead, a {@link SWRLAPIOntologyProcessor} is used to
  * extract SQWRL queries - which are stored as SWRL rules - from a {@link SWRLAPIOWLOntology}.
  * 
- * @see SWRLAPIRule, SWRLBuiltInArgument, SWRLAPIOntologyProcessor, SWRLAPIOWLDataFactory
+ * @see org.swrlapi.core.SWRLAPIRule
+ * @see org.swrlapi.builtins.arguments.SWRLBuiltInArgument
+ * @see org.swrlapi.core.SWRLAPIOntologyProcessor
+ * @see org.swrlapi.core.SWRLAPIOWLDataFactory
  */
 public interface SWRLAPIOWLOntology
 {
@@ -55,6 +58,14 @@ public interface SWRLAPIOWLOntology
 
 	boolean isSWRLBuiltIn(IRI iri); // The SWRLAPI provides built-ins beyond the core set defined in the SWRL submission.
 
+	OWLOntologyManager getOWLOntologyManager();
+
+	DefaultPrefixManager getPrefixManager();
+
+	OWLOntology getOWLOntology();
+
+	OWLDataFactory getOWLDataFactory();
+
 	// TODO We don't want this method here. It is a convenience method and used only by the temporal built-in library.
 	boolean isOWLIndividualOfType(IRI individualIRI, IRI classIRI);
 
@@ -63,12 +74,4 @@ public interface SWRLAPIOWLOntology
 
 	// TODO We don't want this method here. It is a convenience method and used only by the temporal built-in library.
 	Set<OWLDataPropertyAssertionAxiom> getOWLDataPropertyAssertionAxioms(IRI individualIRI, IRI propertyIRI);
-
-	OWLOntologyManager getOWLOntologyManager();
-
-	DefaultPrefixManager getPrefixManager();
-
-	OWLOntology getOWLOntology();
-
-	OWLDataFactory getOWLDataFactory();
 }

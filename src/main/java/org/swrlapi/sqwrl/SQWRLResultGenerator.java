@@ -8,6 +8,9 @@ import org.swrlapi.sqwrl.values.SQWRLResultValue;
 /**
  * Interface to configure a query result and add data to it. See the {@link DefaultSQWRLResult} class for detailed
  * comments.
+ *
+ * @see org.swrlapi.sqwrl.SQWRLQuery
+ * @see org.swrlapi.sqwrl.SQWRLQueryEngine
  */
 public interface SQWRLResultGenerator
 {

@@ -26,7 +26,8 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
  * {@link SWRLAPIIRIResolver} class. This class can be used by rule engines to resolve OWL named objects using their short
  * name.
  * 
- * @see SWRLAPIRule, SQWRLQuery
+ * @see org.swrlapi.core.SWRLAPIRule
+ * @see org.swrlapi.sqwrl.SQWRLQuery
  */
 public interface SWRLAPIOntologyProcessor
 {

@@ -2,7 +2,7 @@ package org.swrlapi.exceptions;
 
 public class SWRLRuleEngineBridgeException extends SWRLRuleEngineException
 {
-	private static final long serialVersionUID = 2491216464345938044L;
+	private static final long serialVersionUID = 1L;
 
 	public SWRLRuleEngineBridgeException()
 	{

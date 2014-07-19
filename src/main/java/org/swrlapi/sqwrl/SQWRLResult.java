@@ -11,6 +11,8 @@ import org.swrlapi.sqwrl.values.SQWRLResultValue;
 /**
  * Interface that defines methods to process results from a query. See the {@link DefaultSQWRLResult} class for detailed
  * comments.
+ *
+ * @see org.swrlapi.sqwrl.SQWRLQuery
  */
 public interface SQWRLResult
 {

@@ -2,7 +2,7 @@ package org.swrlapi.exceptions;
 
 public class InvalidRuleNameException extends SWRLRuleEngineException
 {
-	private static final long serialVersionUID = -5027542614288847266L;
+	private static final long serialVersionUID = -1L;
 
 	public InvalidRuleNameException(String ruleName)
 	{

@@ -8,6 +8,9 @@ import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLDatatypeRestriction;
 import org.swrlapi.exceptions.TargetRuleEngineException;
 
+/**
+ * @see org.semanticweb.owlapi.model.OWLDataRange
+ */
 public interface TargetRuleEngineOWLDataRangeConverter<TR> extends TargetRuleEngineConverter
 {
 	TR convert(OWLDatatype range) throws TargetRuleEngineException;

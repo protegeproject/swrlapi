@@ -3,7 +3,7 @@ package org.swrlapi.sqwrl.exceptions;
 
 public class SQWRLInvalidColumnIndexException extends SQWRLException
 {
-	private static final long serialVersionUID = -568999029279798655L;
+	private static final long serialVersionUID = 1L;
 
 	public SQWRLInvalidColumnIndexException(String message)
 	{

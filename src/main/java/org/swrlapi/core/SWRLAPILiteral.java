@@ -12,6 +12,8 @@ import org.swrlapi.exceptions.SQWRLLiteralException;
 
 /**
  * The SWRLAPI's literal wraps an OWLAPI literal to provide additional convenience methods used by the SWRLAPI.
+ *
+ * @see org.semanticweb.owlapi.model.OWLLiteral
  */
 public interface SWRLAPILiteral
 {

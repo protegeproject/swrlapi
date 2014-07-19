@@ -2,7 +2,7 @@ package org.swrlapi.exceptions;
 
 public class NoRegisteredRuleEnginesException extends SWRLRuleEngineBridgeException
 {
-	private static final long serialVersionUID = -7466254522301889416L;
+	private static final long serialVersionUID = 1L;
 
 	public NoRegisteredRuleEnginesException()
 	{

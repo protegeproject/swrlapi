@@ -2,7 +2,7 @@ package org.swrlapi.exceptions;
 
 public class BuiltInNotImplementedException extends BuiltInException
 {
-	private static final long serialVersionUID = -7262158767998970466L;
+	private static final long serialVersionUID = 1L;
 
 	public BuiltInNotImplementedException()
 	{

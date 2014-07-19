@@ -2,7 +2,7 @@ package org.swrlapi.exceptions;
 
 public class InvalidPropertyNameException extends SWRLFactoryException
 {
-	private static final long serialVersionUID = 7189171515548788381L;
+	private static final long serialVersionUID = 1L;
 
 	public InvalidPropertyNameException(String message)
 	{

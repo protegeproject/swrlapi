@@ -13,13 +13,15 @@ import org.swrlapi.owl2rl.OWL2RLPersistenceLayer;
 /**
  * A SWRL rule engine bridge defines the interface seen by a target implementation of a SWRL rule engine. The
  * implementation uses this interface primarily to supply axioms that it has inferred and to invoke built-ins.
+ *
+ * @see TargetSWRLRuleEngine
  */
 public interface SWRLRuleEngineBridge
 {
 	/**
 	 * This method is used by a target rule engine to inform the bridge of its implementation.
 	 */
-	void setTargetRuleEngine(TargetRuleEngine targetRuleEngine);
+	void setTargetSWRLRuleEngine(TargetSWRLRuleEngine targetSWRLRuleEngine);
 
 	/**
 	 * The infer methods are used by a target rule engines to put inferred axioms into the bridge.
@@ -39,10 +41,19 @@ public interface SWRLRuleEngineBridge
 	 */
 	SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory();
 
+	/**
+	 * A target rule engine can create OWL datatypes using the OWL factory supplied by the bridge.
+	 */
 	SWRLAPIOWLDatatypeFactory getOWLDatatypeFactory();
 
+	/**
+	 * A target rule engine can create OWL literals using the OWL factory supplied by the bridge.
+	 */
 	OWLLiteralFactory getOWLLiteralFactory();
 
+	/**
+	 * A target rule engine can create SWRK built-in arguments using the OWL factory supplied by the bridge.
+	 */
 	SWRLBuiltInArgumentFactory getSWRLBuiltInArgumentFactory();
 
 	/**

@@ -1,5 +1,8 @@
 package org.swrlapi.owl2rl;
 
+/**
+ * @see org.swrlapi.owl2rl.OWL2RLEngine
+ */
 public interface OWL2RLNames
 {
 	public final static String SWRLA_NAMESPACE = "http://swrl.stanford.edu/ontologies/3.3/swrla.owl#";

@@ -1,6 +1,6 @@
 package org.swrlapi.core.impl;
 
-import org.swrlapi.bridge.TargetRuleEngine;
+import org.swrlapi.bridge.TargetSWRLRuleEngine;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.core.SWRLRuleEngineFactory;
@@ -27,7 +27,7 @@ public class DefaultSWRLRuleEngineFactory implements SWRLRuleEngineFactory
 	/**
 	 * Register a rule engine. The {@link SWRLRuleEngineManager.TargetSWRLRuleEngineCreator} interface specifies a
 	 * {@link SWRLRuleEngineManager.TargetSWRLRuleEngineCreator#create(org.swrlapi.core.SWRLRuleEngineBridge)} method that
-	 * returns an implementation of a {@link TargetRuleEngine}.
+	 * returns an implementation of a {@link org.swrlapi.bridge.TargetSWRLRuleEngine}.
 	 */
 	@Override
 	public void registerRuleEngine(SWRLRuleEngineManager.TargetSWRLRuleEngineCreator ruleEngineCreator)
@@ -76,12 +76,12 @@ public class DefaultSWRLRuleEngineFactory implements SWRLRuleEngineFactory
 			try {
 				OWL2RLPersistenceLayer owl2RLPersistenceLayer = new DefaultOWL2RLPersistenceLayer(swrlapiOWLOntology);
 				DefaultSWRLBridge bridge = new DefaultSWRLBridge(swrlapiOWLOntology, owl2RLPersistenceLayer);
-				TargetRuleEngine targetRuleEngine = ruleEngineManager.getRegisteredRuleEngineCreator(ruleEngineName).create(
+				TargetSWRLRuleEngine targetSWRLRuleEngine = ruleEngineManager.getRegisteredRuleEngineCreator(ruleEngineName).create(
 						bridge);
 
-				bridge.setTargetRuleEngine(targetRuleEngine);
+				bridge.setTargetSWRLRuleEngine(targetSWRLRuleEngine);
 
-				return new DefaultSWRLRuleEngine(swrlapiOWLOntology, targetRuleEngine, bridge, bridge);
+				return new DefaultSWRLRuleEngine(swrlapiOWLOntology, targetSWRLRuleEngine, bridge, bridge);
 			} catch (Throwable e) {
 				throw new SWRLRuleEngineException("Error creating rule engine " + ruleEngineName + ". Exception: "
 						+ e.getClass().getCanonicalName() + ". Message: " + e.getMessage(), e);

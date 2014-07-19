@@ -2,7 +2,7 @@ package org.swrlapi.exceptions;
 
 public class IncompatibleBuiltInClassException extends SWRLBuiltInLibraryException
 {
-	private static final long serialVersionUID = 767063480450933165L;
+	private static final long serialVersionUID = 1L;
 
 	public IncompatibleBuiltInClassException(String ruleName, String prefix, String className, String message,
 			Throwable cause)

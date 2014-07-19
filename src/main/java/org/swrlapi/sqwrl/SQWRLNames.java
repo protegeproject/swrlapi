@@ -6,6 +6,9 @@ import java.util.Set;
 
 import org.swrlapi.sqwrl.exceptions.SQWRLInvalidAggregateFunctionNameException;
 
+/**
+ * @see org.swrlapi.sqwrl.SQWRLQuery
+ */
 public class SQWRLNames
 {
 	public static String SQWRLBuiltInLibraryName = "SQWRLBuiltIns";
@@ -98,35 +101,44 @@ public class SQWRLNames
 	public static final String NthGreatestSlice = SQWRLPrefix + "nthGreatestSlice";
 	public static final String NotNthGreatestSlice = SQWRLPrefix + "notNthGreatestSlice";
 
-	private static final String headSelectionBuiltInNamesArray[] = { Select, SelectDistinct, OrderBy, OrderByDescending, ColumnNames };
+	private static final String headSelectionBuiltInNamesArray[] = { Select, SelectDistinct, OrderBy, OrderByDescending,
+			ColumnNames };
 	private static final String headAggregationBuiltInNamesArray[] = { Count, CountDistinct, Avg, Min, Max, Sum };
 
-	private static final String headSlicingBuiltInNamesArray[] = { Limit, Nth, NthGreatest, NthLast, NthSlice, NthLastSlice, NthGreatestSlice,
-			NotNthGreatestSlice, NotNthLastSlice, NotNthSlice, NotNth, NotNthLast, NotNthGreatest, NotFirst, NotFirstN, NotLast, NotLastN, NotGreatestN, NotGreatest,
+	private static final String headSlicingBuiltInNamesArray[] = { Limit, Nth, NthGreatest, NthLast, NthSlice,
+			NthLastSlice, NthGreatestSlice,
+			NotNthGreatestSlice, NotNthLastSlice, NotNthSlice, NotNth, NotNthLast, NotNthGreatest, NotFirst, NotFirstN,
+			NotLast, NotLastN, NotGreatestN, NotGreatest,
 			NotLeastN, NotLeast, LastN, FirstN, LeastN, GreatestN };
 
 	private static final String collectionMakeBuiltInNamesArray[] = { MakeSet, MakeBag };
 	private static final String collectionGroupByBuiltInNamesArray[] = { GroupBy };
 
-	private static final String singleCollectionOperationWithoutCollectionCreateBuiltInNamesArray[] = { Size, IsEmpty, NotIsEmpty, Element, NotElement, First,
+	private static final String singleCollectionOperationWithoutCollectionCreateBuiltInNamesArray[] = { Size, IsEmpty,
+			NotIsEmpty, Element, NotElement, First,
 			Last, Least, Greatest, Min, Max, Sum, Avg, Median, Nth, NthGreatest, NthLast };
 
-	private static final String singleCollectionOperationWithCollectionCreateBuiltInNamesArray[] = { NthSlice, NthLastSlice, NthGreatestSlice,
-			NotNthGreatestSlice, NotNthLastSlice, NotNthSlice, NotNth, NotNthLast, NotNthGreatest, NotFirst, NotFirstN, NotLast, NotLastN, NotGreatestN, NotGreatest,
+	private static final String singleCollectionOperationWithCollectionCreateBuiltInNamesArray[] = { NthSlice,
+			NthLastSlice, NthGreatestSlice,
+			NotNthGreatestSlice, NotNthLastSlice, NotNthSlice, NotNth, NotNthLast, NotNthGreatest, NotFirst, NotFirstN,
+			NotLast, NotLastN, NotGreatestN, NotGreatest,
 			NotLeastN, NotLeast, LastN, FirstN, LeastN, GreatestN };
 
-	private static final String multiCollectionOperationWithoutCollectionCreateBuiltInNamesArray[] = { Intersects, NotIntersects, Equal, NotEqual, Contains,
+	private static final String multiCollectionOperationWithoutCollectionCreateBuiltInNamesArray[] = { Intersects,
+			NotIntersects, Equal, NotEqual, Contains,
 			NotContains };
 
-	private static final String multiCollectionOperationWithCollectionCreateBuiltInNamesArray[] = { Intersection, Union, Difference, Append };
+	private static final String multiCollectionOperationWithCollectionCreateBuiltInNamesArray[] = { Intersection, Union,
+			Difference, Append };
 
-	public static final String aggregateFunctionNames[] = { MinAggregateFunction, MaxAggregateFunction, SumAggregateFunction, AvgAggregateFunction,
+	public static final String aggregateFunctionNames[] = { MinAggregateFunction, MaxAggregateFunction,
+			SumAggregateFunction, AvgAggregateFunction,
 			MedianAggregateFunction, CountAggregateFunction, CountDistinctAggregateFunction };
-	
+
 	private static Set<String> sqwrlBuiltInNames;
 	private static Set<String> headBuiltInNames, headSelectionBuiltInNames, headAggregationBuiltInNames, headSlicingBuiltInNames;
 	private static Set<String> collectionMakeBuiltInNames, collectionGroupByBuiltInNames;
-	
+
 	private static Set<String> collectionCreateOperationBuiltInNames, collectionOperationBuiltInNames, singleCollectionOperationWithCollectionCreateBuiltInNames,
 			singleCollectionOperationWithoutCollectionCreateBuiltInNames, multiCollectionOperationWithCollectionCreateBuiltInNames,
 			multiCollectionOperationWithoutCollectionCreateBuiltInNames;
@@ -190,7 +202,7 @@ public class SQWRLNames
 			multiCollectionOperationWithoutCollectionCreateBuiltInNames.add(builtInName);
 		collectionOperationBuiltInNames.addAll(multiCollectionOperationWithoutCollectionCreateBuiltInNames);
 		sqwrlBuiltInNames.addAll(multiCollectionOperationWithoutCollectionCreateBuiltInNames);
-	} 
+	}
 
 	public static Set<String> getSQWRLBuiltInNames()
 	{
@@ -277,7 +289,8 @@ public class SQWRLNames
 		return collectionOperationBuiltInNames.contains(builtInName);
 	}
 
-	public static void checkAggregateFunctionName(String aggregateFunctionName) throws SQWRLInvalidAggregateFunctionNameException
+	public static void checkAggregateFunctionName(String aggregateFunctionName)
+			throws SQWRLInvalidAggregateFunctionNameException
 	{
 		boolean found = false;
 

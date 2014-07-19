@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * The SWRLAPI uses an OWL 2 RL-based reasoner. Each back end for a particular rule engine will provide an
- * implementation of such a reasoner. This interface can be used to determine the level of support provided by a
- * particular rule engine and to control the set of enabled rules.
+ * The SWRLAPI expects that each implementation of a SWRL rule engine will provide an OWL 2 RL-based reasoner. 
+ *
+ * @see org.swrlapi.bridge.TargetSWRLRuleEngine
  */
 public interface OWL2RLEngine extends OWL2RLNames
 {

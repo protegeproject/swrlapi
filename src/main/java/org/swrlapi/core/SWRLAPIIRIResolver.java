@@ -20,8 +20,8 @@ import org.swrlapi.exceptions.TargetRuleEngineException;
  * {@link SWRLAPIOntologyProcessor} will record all the OWL named objects in an ontology together with their types. Rule
  * engines can then use this class to determine the type of OWL properties using their prefixed name and to map those
  * prefixed names to and from IRIs if necessary.
- * 
- * @see SWRLAPIOntologyProcessor
+ *
+ * @see org.swrlapi.core.SWRLAPIOntologyProcessor
  */
 public class SWRLAPIIRIResolver
 {

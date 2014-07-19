@@ -64,22 +64,22 @@ import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
  * 
  * result.openRow();
  * result.addRowData(new SQWRLIndividualValue(&quot;Fred&quot;));
- * result.addRowData(new SQWRLLiteralValue(27));
+ * result.addRowData(new SQWRLLiteralResultValue(27));
  * result.closeRow();
  * result.openRow();
  * result.adRowdData(new SQWRLIndividualValue(&quot;Joe&quot;));
- * result.addRowData(new SQWRLLiteralValue(34));
+ * result.addRowData(new SQWRLLiteralResultValue(34));
  * result.closeRow();
  * result.openRow();
  * result.addRowData(new SQWRLIndividualValue(&quot;Joe&quot;));
- * result.addRowData(new SQWRLLiteralValue(21));
+ * result.addRowData(new SQWRLLiteralResultValue(21));
  * result.closeRow();
  * result.prepared();
  * </pre>
  * <p>
  * The result is now available for reading. The interface {@link SQWRLResult} defines the assessor methods. A row
  * consists of a list of objects defined by the interface {@link SQWRLResultValue}. There are four possible types of
- * values (1) {@link SQWRLLiteralValue}, representing literals; (2) {@link SQWRLIndividualValue}, representing OWL
+ * values (1) {@link SQWRLLiteralResultValue}, representing literals; (2) {@link SQWRLIndividualValue}, representing OWL
  * individuals; (3) {@link SQWRLClassValue}, representing OWL classes; and (4) {@link SQWRLPropertyValue}, representing
  * OWL properties (object, data, and annotation).
  * <p>

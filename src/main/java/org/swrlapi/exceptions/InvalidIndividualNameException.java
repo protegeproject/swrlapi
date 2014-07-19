@@ -2,7 +2,7 @@ package org.swrlapi.exceptions;
 
 public class InvalidIndividualNameException extends SWRLFactoryException
 {
-	private static final long serialVersionUID = 3422362408029163085L;
+	private static final long serialVersionUID = 1L;
 
 	public InvalidIndividualNameException(String name)
 	{

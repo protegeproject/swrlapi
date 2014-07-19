@@ -8,7 +8,7 @@ import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.swrlapi.bridge.SWRLRuleEngineBridgeController;
-import org.swrlapi.bridge.TargetRuleEngine;
+import org.swrlapi.bridge.TargetSWRLRuleEngine;
 import org.swrlapi.builtins.SWRLBuiltInBridgeController;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
@@ -30,17 +30,17 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
 public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 {
 	private final SWRLAPIOWLOntology swrlapiOWLOntology;
-	private final TargetRuleEngine targetRuleEngine;
+	private final TargetSWRLRuleEngine targetSWRLRuleEngine;
 	private final SWRLBuiltInBridgeController builtInBridgeController;
 	private final SWRLRuleEngineBridgeController ruleEngineBridgeController;
 	private final Set<OWLAxiom> exportedOWLAxioms; // Axioms exported to target rule engine
 
-	public DefaultSWRLRuleEngine(SWRLAPIOWLOntology swrlapiOWLOntology, TargetRuleEngine targetRuleEngine,
+	public DefaultSWRLRuleEngine(SWRLAPIOWLOntology swrlapiOWLOntology, TargetSWRLRuleEngine targetSWRLRuleEngine,
 			SWRLRuleEngineBridgeController ruleEngineBridgeController, SWRLBuiltInBridgeController builtInBridgeController)
 			throws SWRLRuleEngineException
 	{
 		this.swrlapiOWLOntology = swrlapiOWLOntology;
-		this.targetRuleEngine = targetRuleEngine;
+		this.targetSWRLRuleEngine = targetSWRLRuleEngine;
 		this.builtInBridgeController = builtInBridgeController;
 		this.ruleEngineBridgeController = ruleEngineBridgeController;
 		this.exportedOWLAxioms = new HashSet<OWLAxiom>();
@@ -91,7 +91,7 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 	{
 		try {
 			getSWRLAPIOntologyProcessor().reset();
-			getTargetRuleEngine().resetRuleEngine(); // Reset the target rule engine
+			getTargetSWRLRuleEngine().resetRuleEngine(); // Reset the target rule engine
 			getBuiltInBridgeController().reset();
 			this.exportedOWLAxioms.clear();
 			getOWL2RLEngine().resetRuleSelectionChanged();
@@ -114,7 +114,7 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 	{
 		try {
 			getSWRLAPIOntologyProcessor().processOntology();
-			getTargetRuleEngine().runRuleEngine();
+			getTargetSWRLRuleEngine().runRuleEngine();
 		} catch (SQWRLException e) {
 			throw new SWRLRuleEngineException("error running rule engine: " + e.getMessage(), e);
 		} catch (TargetRuleEngineException e) {
@@ -246,7 +246,7 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 	@Override
 	public OWL2RLEngine getOWL2RLEngine()
 	{
-		return this.targetRuleEngine.getOWL2RLEngine();
+		return this.targetSWRLRuleEngine.getOWL2RLEngine();
 	}
 
 	// Convenience methods to display bridge activity
@@ -333,13 +333,13 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 	@Override
 	public String getTargetRuleEngineName()
 	{
-		return this.targetRuleEngine.getName();
+		return this.targetSWRLRuleEngine.getName();
 	}
 
 	@Override
 	public String getTargetRuleEngineVersion()
 	{
-		return this.targetRuleEngine.getVersion();
+		return this.targetSWRLRuleEngine.getVersion();
 	}
 
 	private void exportSQWRLQueries2TargetRuleEngine(String activeQueryName) throws SWRLRuleEngineException,
@@ -363,15 +363,15 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 	private void exportSQWRLQuery2TargetRuleEngine(SQWRLQuery query) throws SWRLRuleEngineException,
 			TargetRuleEngineException, BuiltInException
 	{
-		getTargetRuleEngine().defineSQWRLQuery(query);
+		getTargetSWRLRuleEngine().defineSQWRLQuery(query);
 	}
 
-	private TargetRuleEngine getTargetRuleEngine() throws SWRLRuleEngineException
+	private TargetSWRLRuleEngine getTargetSWRLRuleEngine() throws SWRLRuleEngineException
 	{
-		if (this.targetRuleEngine == null)
+		if (this.targetSWRLRuleEngine == null)
 			throw new SWRLRuleEngineException("no target rule engine specified");
 
-		return this.targetRuleEngine;
+		return this.targetSWRLRuleEngine;
 	}
 
 	private void exportOWLAxioms2TargetRuleEngine(Set<OWLAxiom> axioms) throws SWRLRuleEngineException,
@@ -379,7 +379,7 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 	{
 		for (OWLAxiom axiom : axioms) {
 			if (!this.exportedOWLAxioms.contains(axiom))
-				getTargetRuleEngine().defineOWLAxiom(axiom);
+				getTargetSWRLRuleEngine().defineOWLAxiom(axiom);
 		}
 	}
 
