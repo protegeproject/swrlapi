@@ -19,10 +19,10 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 	private final Set<Rule> unsupportedRules;
 	private final Set<Rule> permanentlyOnRules;
 	private final Set<Rule> switchableRules;
+	private final Map<String, OWL2RLFalseArgumentsDescription> argumentsDescriptionMap;
 
 	private Set<Rule> enabledRules;
 	private boolean ruleSelectionChanged;
-	private final Map<String, OWL2RLFalseArgumentsDescription> argumentsDescriptionMap;
 
 	public AbstractOWL2RLEngine(OWL2RLPersistenceLayer persistenceLayer, Set<Rule> unsupportedRules,
 			Set<Rule> permanentlyOnRules, Set<Set<Rule>> groupedRuleSets)
@@ -41,12 +41,12 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 		this.permanentlyOnRules = permanentlyOnRules;
 		this.groupedRuleSets = groupedRuleSets;
 
-		// Switchable rules are the subset of rules that are not permanently on or unsupported.
+		// Switchable rules are the subset of rules that are not permanently and are not unsupported.
 		this.switchableRules = new HashSet<Rule>(this.rules);
 		this.switchableRules.removeAll(this.permanentlyOnRules);
 		this.switchableRules.removeAll(this.unsupportedRules);
 
-		// Enabled rule all switchable rules plus permanently on rules
+		// Enabled all switchable rules plus permanently on rules
 		this.enabledRules = new HashSet<Rule>(this.switchableRules);
 		this.enabledRules.addAll(this.permanentlyOnRules);
 
@@ -272,7 +272,7 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 	}
 
 	/**
-	 * Final other rules that are grouped with this rule. Grouped rules are enabled and disabled together. The rule itself
+	 * Find other rules that are grouped with this rule. Grouped rules are enabled and disabled together. The rule itself
 	 * is added to the group and associated rules (if any) are then found and added.
 	 */
 	private Set<Rule> getGroup(Rule rule)

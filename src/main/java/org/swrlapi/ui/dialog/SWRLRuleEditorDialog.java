@@ -160,7 +160,7 @@ public class SWRLRuleEditorDialog extends JDialog
 			try {
 				String ruleText = component.getDocument().getText(0, component.getCaretPosition()).trim();
 				ruleText += ch;
-				System.out.println("ruleText: " + ruleText);
+				//System.out.println("ruleText: " + ruleText);
 
 				if (ruleText.length() != 0)
 					getSWRLParser().parseSWRLRule(ruleText, true);
