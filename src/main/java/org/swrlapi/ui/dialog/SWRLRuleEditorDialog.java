@@ -170,6 +170,7 @@ public class SWRLRuleEditorDialog extends JDialog
 			} catch (SWRLParseException e) {
 				consoleTextField.setText("Error: " + e.getMessage());
 			} catch (BadLocationException e) {
+				// Not much we can do here!
 			}
 		}
 	}

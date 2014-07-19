@@ -12,24 +12,21 @@ public class DefaultSWRLAPIOWLDatatypeFactory implements SWRLAPIOWLDatatypeFacto
 	@Override
 	public OWLDatatype getOWLDatatype(IRI iri)
 	{
-		OWLDatatype datatype = new OWLDatatypeImpl(iri);
-		return datatype;
+		return new OWLDatatypeImpl(iri);
 	}
 
 	@Override
 	public OWLDatatype getOWLBooleanDatatype()
 	{
 		IRI iri = XSDVocabulary.BOOLEAN.getIRI();
-		OWLDatatype datatype = new OWLDatatypeImpl(iri);
-		return datatype;
+		return new OWLDatatypeImpl(iri);
 	}
 
 	@Override
 	public OWLDatatype getOWLShortDatatype()
 	{
 		IRI iri = XSDVocabulary.SHORT.getIRI();
-		OWLDatatype datatype = new OWLDatatypeImpl(iri);
-		return datatype;
+		return new OWLDatatypeImpl(iri);
 	}
 
 	@Override

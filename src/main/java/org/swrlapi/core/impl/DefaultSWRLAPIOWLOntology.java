@@ -301,8 +301,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	{
 		if (swrlDArgument instanceof SWRLLiteralArgument) {
 			SWRLLiteralArgument swrlLiteralArgument = (SWRLLiteralArgument)swrlDArgument;
-			SWRLBuiltInArgument swrlBuiltInArgument = convertSWRLLiteralArgument2SWRLBuiltInArgument(swrlLiteralArgument);
-			return swrlBuiltInArgument;
+			return convertSWRLLiteralArgument2SWRLBuiltInArgument(swrlLiteralArgument);
 		} else if (swrlDArgument instanceof SWRLVariable) {
 			SWRLVariable swrlVariable = (SWRLVariable)swrlDArgument;
 			return convertSWRLVariable2SWRLBuiltInArgument(swrlVariable);
@@ -420,8 +419,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 				return getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(literal);
 			}
 		} else {
-			SWRLLiteralBuiltInArgument argument = getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(literal);
-			return argument;
+			return getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(literal);
 		}
 	}
 

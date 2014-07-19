@@ -12,7 +12,10 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
  * Represents a SQWRL query in the SWRLAPI. A {@link SWRLAPIOntologyProcessor} can be used to extract SQWRL queries -
  * which are stored as SWRL rules - from an OWL ontology.
  * 
- * @see SWRLAPIOntologyProcessor, SWRLAPIRule
+ * @see org.swrlapi.core.SWRLAPIOntologyProcessor
+ * @see org.swrlapi.core.SWRLAPIRule
+ * @see org.swrlapi.sqwrl.SQWRLResult
+ * @see org.swrlapi.sqwrl.SQWRLResultGenerator
  */
 public interface SQWRLQuery
 {

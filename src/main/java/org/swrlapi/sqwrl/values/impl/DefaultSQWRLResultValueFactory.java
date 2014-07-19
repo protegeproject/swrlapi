@@ -13,13 +13,8 @@ import org.swrlapi.core.xsd.XSDDate;
 import org.swrlapi.core.xsd.XSDDateTime;
 import org.swrlapi.core.xsd.XSDDuration;
 import org.swrlapi.core.xsd.XSDTime;
-import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyValue;
-import org.swrlapi.sqwrl.values.SQWRLClassValue;
-import org.swrlapi.sqwrl.values.SQWRLDataPropertyValue;
-import org.swrlapi.sqwrl.values.SQWRLIndividualValue;
-import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
-import org.swrlapi.sqwrl.values.SQWRLObjectPropertyValue;
-import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
+import org.swrlapi.sqwrl.values.*;
+import org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue;
 
 public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
 {
@@ -33,80 +28,80 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
 	}
 
 	@Override
-	public SQWRLClassValue getClassValue(SWRLClassBuiltInArgument classArgument)
+	public SQWRLClassResultValue getClassValue(SWRLClassBuiltInArgument classArgument)
 	{
 		return getClassValue(classArgument.getIRI());
 	}
 
 	@Override
-	public SQWRLClassValue getClassValue(IRI classIRI)
+	public SQWRLClassResultValue getClassValue(IRI classIRI)
 	{
 		String prefixedName = getIRIResolver().iri2PrefixedName(classIRI);
 
-		return new SQWRLClassValueImpl(classIRI, prefixedName);
+		return new SQWRLClassResultValueImpl(classIRI, prefixedName);
 	}
 
 	@Override
-	public SQWRLIndividualValue getIndividualValue(SWRLNamedIndividualBuiltInArgument individualArgument)
+	public SQWRLIndividualResultValue getIndividualValue(SWRLNamedIndividualBuiltInArgument individualArgument)
 	{
 		String prefixedName = getIRIResolver().iri2PrefixedName(individualArgument.getIRI());
 
-		return new SQWRLIndividualValueImpl(individualArgument.getIRI(), prefixedName);
+		return new SQWRLIndividualResultValueImpl(individualArgument.getIRI(), prefixedName);
 	}
 
 	@Override
-	public SQWRLIndividualValue getIndividualValue(IRI individualIRI)
+	public SQWRLIndividualResultValue getIndividualValue(IRI individualIRI)
 	{
 		String prefixedName = getIRIResolver().iri2PrefixedName(individualIRI);
 
-		return new SQWRLIndividualValueImpl(individualIRI, prefixedName);
+		return new SQWRLIndividualResultValueImpl(individualIRI, prefixedName);
 	}
 
 	@Override
-	public SQWRLObjectPropertyValue getObjectPropertyValue(SWRLObjectPropertyBuiltInArgument objectPropertyArgument)
+	public SQWRLObjectPropertyResultValue getObjectPropertyValue(SWRLObjectPropertyBuiltInArgument objectPropertyArgument)
 	{
 		return getObjectPropertyValue(objectPropertyArgument.getIRI());
 	}
 
 	@Override
-	public SQWRLObjectPropertyValue getObjectPropertyValue(IRI propertyIRI)
+	public SQWRLObjectPropertyResultValue getObjectPropertyValue(IRI propertyIRI)
 	{
 		String prefixedName = getIRIResolver().iri2PrefixedName(propertyIRI);
 
-		return new SQWRLObjectPropertyValueImpl(propertyIRI, prefixedName);
+		return new SQWRLObjectPropertyResultValueImpl(propertyIRI, prefixedName);
 	}
 
 	@Override
-	public SQWRLDataPropertyValue getDataPropertyValue(SWRLDataPropertyBuiltInArgument dataPropertyArgument)
+	public SQWRLDataPropertyResultValue getDataPropertyValue(SWRLDataPropertyBuiltInArgument dataPropertyArgument)
 	{
 		String prefixedName = getIRIResolver().iri2PrefixedName(dataPropertyArgument.getIRI());
 
-		return new SQWRLDataPropertyValueImpl(dataPropertyArgument.getIRI(), prefixedName);
+		return new SQWRLDataPropertyResultValueImpl(dataPropertyArgument.getIRI(), prefixedName);
 	}
 
 	@Override
-	public SQWRLDataPropertyValue getDataPropertyValue(IRI propertyIRI)
+	public SQWRLDataPropertyResultValue getDataPropertyValue(IRI propertyIRI)
 	{
 		String prefixedName = getIRIResolver().iri2PrefixedName(propertyIRI);
 
-		return new SQWRLDataPropertyValueImpl(propertyIRI, prefixedName);
+		return new SQWRLDataPropertyResultValueImpl(propertyIRI, prefixedName);
 	}
 
 	@Override
-	public SQWRLAnnotationPropertyValue getAnnotationPropertyValue(
+	public SQWRLAnnotationPropertyResultValue getAnnotationPropertyValue(
 			SWRLAnnotationPropertyBuiltInArgument annotationPropertyArgument)
 	{
 		String prefixedName = getIRIResolver().iri2PrefixedName(annotationPropertyArgument.getIRI());
 
-		return new SQWRLAnnotationPropertyValueImpl(annotationPropertyArgument.getIRI(), prefixedName);
+		return new SQWRLAnnotationPropertyResultValueImpl(annotationPropertyArgument.getIRI(), prefixedName);
 	}
 
 	@Override
-	public SQWRLAnnotationPropertyValue getAnnotationPropertyValue(IRI propertyIRI)
+	public SQWRLAnnotationPropertyResultValue getAnnotationPropertyValue(IRI propertyIRI)
 	{
 		String prefixedName = getIRIResolver().iri2PrefixedName(propertyIRI);
 
-		return new SQWRLAnnotationPropertyValueImpl(propertyIRI, prefixedName);
+		return new SQWRLAnnotationPropertyResultValueImpl(propertyIRI, prefixedName);
 	}
 
 	@Override

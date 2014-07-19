@@ -27,12 +27,8 @@ import org.swrlapi.exceptions.InvalidBuiltInArgumentException;
 import org.swrlapi.sqwrl.DefaultSQWRLQuery;
 import org.swrlapi.sqwrl.SQWRLNames;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
-import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyValue;
-import org.swrlapi.sqwrl.values.SQWRLClassValue;
-import org.swrlapi.sqwrl.values.SQWRLDataPropertyValue;
-import org.swrlapi.sqwrl.values.SQWRLIndividualValue;
-import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
-import org.swrlapi.sqwrl.values.SQWRLObjectPropertyValue;
+import org.swrlapi.sqwrl.values.*;
+import org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue;
 
 /**
  * Implementation library for SQWRL built-ins.
@@ -93,25 +89,25 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 				resultGenerator.addRowData(literal);
 			} else if (argument instanceof SWRLNamedIndividualBuiltInArgument) {
 				SWRLNamedIndividualBuiltInArgument individualArgument = (SWRLNamedIndividualBuiltInArgument)argument;
-				SQWRLIndividualValue individualValue = getSQWRLResultValueFactory().getIndividualValue(individualArgument);
+				SQWRLIndividualResultValue individualValue = getSQWRLResultValueFactory().getIndividualValue(individualArgument);
 				resultGenerator.addRowData(individualValue);
 			} else if (argument instanceof SWRLClassBuiltInArgument) {
 				SWRLClassBuiltInArgument classArgument = (SWRLClassBuiltInArgument)argument;
-				SQWRLClassValue classValue = getSQWRLResultValueFactory().getClassValue(classArgument);
+				SQWRLClassResultValue classValue = getSQWRLResultValueFactory().getClassValue(classArgument);
 				resultGenerator.addRowData(classValue);
 			} else if (argument instanceof SWRLObjectPropertyBuiltInArgument) {
 				SWRLObjectPropertyBuiltInArgument objectPropertyArgument = (SWRLObjectPropertyBuiltInArgument)argument;
-				SQWRLObjectPropertyValue objectPropertyValue = getSQWRLResultValueFactory().getObjectPropertyValue(
+				SQWRLObjectPropertyResultValue objectPropertyValue = getSQWRLResultValueFactory().getObjectPropertyValue(
 						objectPropertyArgument);
 				resultGenerator.addRowData(objectPropertyValue);
 			} else if (argument instanceof SWRLDataPropertyBuiltInArgument) {
 				SWRLDataPropertyBuiltInArgument dataPropertyArgument = (SWRLDataPropertyBuiltInArgument)argument;
-				SQWRLDataPropertyValue dataPropertyValue = getSQWRLResultValueFactory().getDataPropertyValue(
+				SQWRLDataPropertyResultValue dataPropertyValue = getSQWRLResultValueFactory().getDataPropertyValue(
 						dataPropertyArgument);
 				resultGenerator.addRowData(dataPropertyValue);
 			} else if (argument instanceof SWRLAnnotationPropertyBuiltInArgument) {
 				SWRLAnnotationPropertyBuiltInArgument annotationPropertyArgument = (SWRLAnnotationPropertyBuiltInArgument)argument;
-				SQWRLAnnotationPropertyValue annotationPropertyValue = getSQWRLResultValueFactory().getAnnotationPropertyValue(
+				SQWRLAnnotationPropertyResultValue annotationPropertyValue = getSQWRLResultValueFactory().getAnnotationPropertyValue(
 						annotationPropertyArgument);
 				resultGenerator.addRowData(annotationPropertyValue);
 			} else if (argument instanceof SQWRLCollectionVariableBuiltInArgument) {
@@ -151,25 +147,25 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 			resultGenerator.addRowData(literal);
 		} else if (argument instanceof SWRLNamedIndividualBuiltInArgument) {
 			SWRLNamedIndividualBuiltInArgument individualArgument = (SWRLNamedIndividualBuiltInArgument)argument;
-			SQWRLIndividualValue individualValue = getSQWRLResultValueFactory().getIndividualValue(individualArgument);
+			SQWRLIndividualResultValue individualValue = getSQWRLResultValueFactory().getIndividualValue(individualArgument);
 			resultGenerator.addRowData(individualValue);
 		} else if (argument instanceof SWRLClassBuiltInArgument) {
 			SWRLClassBuiltInArgument classArgument = (SWRLClassBuiltInArgument)argument;
-			SQWRLClassValue classValue = getSQWRLResultValueFactory().getClassValue(classArgument);
+			SQWRLClassResultValue classValue = getSQWRLResultValueFactory().getClassValue(classArgument);
 			resultGenerator.addRowData(classValue);
 		} else if (argument instanceof SWRLObjectPropertyBuiltInArgument) {
 			SWRLObjectPropertyBuiltInArgument objectPropertyArgument = (SWRLObjectPropertyBuiltInArgument)argument;
-			SQWRLObjectPropertyValue objectPropertyValue = getSQWRLResultValueFactory().getObjectPropertyValue(
+			SQWRLObjectPropertyResultValue objectPropertyValue = getSQWRLResultValueFactory().getObjectPropertyValue(
 					objectPropertyArgument);
 			resultGenerator.addRowData(objectPropertyValue);
 		} else if (argument instanceof SWRLDataPropertyBuiltInArgument) {
 			SWRLDataPropertyBuiltInArgument dataPropertyArgument = (SWRLDataPropertyBuiltInArgument)argument;
-			SQWRLDataPropertyValue dataPropertyValue = getSQWRLResultValueFactory()
+			SQWRLDataPropertyResultValue dataPropertyValue = getSQWRLResultValueFactory()
 					.getDataPropertyValue(dataPropertyArgument);
 			resultGenerator.addRowData(dataPropertyValue);
 		} else if (argument instanceof SWRLAnnotationPropertyBuiltInArgument) {
 			SWRLAnnotationPropertyBuiltInArgument annotationPropertyArgument = (SWRLAnnotationPropertyBuiltInArgument)argument;
-			SQWRLAnnotationPropertyValue annotationPropertyValue = getSQWRLResultValueFactory().getAnnotationPropertyValue(
+			SQWRLAnnotationPropertyResultValue annotationPropertyValue = getSQWRLResultValueFactory().getAnnotationPropertyValue(
 					annotationPropertyArgument);
 			resultGenerator.addRowData(annotationPropertyValue);
 		} else if (argument instanceof SQWRLCollectionVariableBuiltInArgument) {

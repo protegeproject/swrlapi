@@ -3,16 +3,15 @@ package org.swrlapi.sqwrl;
 import java.util.List;
 
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
-import org.swrlapi.sqwrl.values.SQWRLClassValue;
-import org.swrlapi.sqwrl.values.SQWRLIndividualValue;
-import org.swrlapi.sqwrl.values.SQWRLPropertyValue;
-import org.swrlapi.sqwrl.values.SQWRLResultValue;
+import org.swrlapi.sqwrl.values.*;
 
 /**
  * Interface that defines methods to process results from a query. See the {@link DefaultSQWRLResult} class for detailed
  * comments.
  *
  * @see org.swrlapi.sqwrl.SQWRLQuery
+ * @see org.swrlapi.sqwrl.values.SQWRLResultValue
+ * @see org.swrlapi.sqwrl.SQWRLResultGenerator
  */
 public interface SQWRLResult
 {
@@ -56,23 +55,23 @@ public interface SQWRLResult
 
 	SQWRLResultValue getValue(int columnIndex, int rowIndex) throws SQWRLException;
 
-	SQWRLClassValue getClassValue(String columnName) throws SQWRLException;
-
-	SQWRLClassValue getClassValue(int columnIndex) throws SQWRLException;
-
-	SQWRLIndividualValue getObjectValue(String columnName) throws SQWRLException;
-
-	SQWRLIndividualValue getObjectValue(int columnIndex) throws SQWRLException;
-
-	SQWRLPropertyValue getPropertyValue(String columnName) throws SQWRLException;
-
-	SQWRLPropertyValue getPropertyValue(int columnIndex) throws SQWRLException;
-
-	SQWRLResultValue getLiteralValue(String columnName) throws SQWRLException;
-
-	SQWRLResultValue getLiteralValue(int columnIndex) throws SQWRLException;
-
 	List<SQWRLResultValue> getColumn(String columnName) throws SQWRLException;
 
 	List<SQWRLResultValue> getColumn(int columnIndex) throws SQWRLException;
+
+	SQWRLClassResultValue getClassValue(String columnName) throws SQWRLException;
+
+	SQWRLClassResultValue getClassValue(int columnIndex) throws SQWRLException;
+
+	SQWRLIndividualResultValue getObjectValue(String columnName) throws SQWRLException;
+
+	SQWRLIndividualResultValue getObjectValue(int columnIndex) throws SQWRLException;
+
+	SQWRLPropertyResultValue getPropertyValue(String columnName) throws SQWRLException;
+
+	SQWRLPropertyResultValue getPropertyValue(int columnIndex) throws SQWRLException;
+
+	SQWRLLiteralResultValue getLiteralValue(String columnName) throws SQWRLException;
+
+	SQWRLLiteralResultValue getLiteralValue(int columnIndex) throws SQWRLException;
 }

@@ -3,6 +3,7 @@ package org.swrlapi.core.impl;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.semanticweb.owlapi.model.AxiomType;
@@ -73,16 +74,16 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 {
 	private final SWRLAPIOWLOntology swrlapiOWLOntology;
 
-	private final HashMap<String, SWRLAPIRule> rules;
-	private final HashMap<String, SQWRLQuery> queries;
+	private final Map<String, SWRLAPIRule> rules;
+	private final Map<String, SQWRLQuery> queries;
 
 	private final Set<OWLAxiom> assertedOWLAxioms; // All asserted OWL axioms extracted from the supplied ontology
 
-	private final HashMap<IRI, OWLDeclarationAxiom> owlClassDeclarationAxioms;
-	private final HashMap<IRI, OWLDeclarationAxiom> owlIndividualDeclarationAxioms;
-	private final HashMap<IRI, OWLDeclarationAxiom> owlObjectPropertyDeclarationAxioms;
-	private final HashMap<IRI, OWLDeclarationAxiom> owlDataPropertyDeclarationAxioms;
-	private final HashMap<IRI, OWLDeclarationAxiom> owlAnnotationPropertyDeclarationAxioms;
+	private final Map<IRI, OWLDeclarationAxiom> owlClassDeclarationAxioms;
+	private final Map<IRI, OWLDeclarationAxiom> owlIndividualDeclarationAxioms;
+	private final Map<IRI, OWLDeclarationAxiom> owlObjectPropertyDeclarationAxioms;
+	private final Map<IRI, OWLDeclarationAxiom> owlDataPropertyDeclarationAxioms;
+	private final Map<IRI, OWLDeclarationAxiom> owlAnnotationPropertyDeclarationAxioms;
 
 	public DefaultSWRLAPIOntologyProcessor(SWRLAPIOWLOntology swrlapiOWLOntology)
 	{
@@ -111,10 +112,10 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 		this.assertedOWLAxioms.clear();
 
 		this.owlClassDeclarationAxioms.clear();
+		this.owlIndividualDeclarationAxioms.clear();
 		this.owlObjectPropertyDeclarationAxioms.clear();
 		this.owlDataPropertyDeclarationAxioms.clear();
 		this.owlAnnotationPropertyDeclarationAxioms.clear();
-		this.owlIndividualDeclarationAxioms.clear();
 	}
 
 	@Override
@@ -254,7 +255,7 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 	/**
 	 * Process currently supported OWL axioms. The processing consists of recording any OWL properties in the processed
 	 * axioms (with an instance of the {@link SWRLAPIIRIResolver} class) and generating declaration axioms for these properties.
-	 * <p>
+	 * <p/>
 	 * TODO The current approach is clunky. A better approach would be to walk the axioms with a visitor and record the
 	 * properties and generate the declaration axioms.
 	 */

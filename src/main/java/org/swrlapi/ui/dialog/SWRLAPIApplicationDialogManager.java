@@ -87,8 +87,7 @@ public class SWRLAPIApplicationDialogManager
 		if (fileExtension == null) {
 			chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		} else if (fileExtension.length() > 0) {
-			String text = fileDescription;
-			chooser.setFileFilter(new ExtensionFilter(fileExtension, text));
+			chooser.setFileFilter(new ExtensionFilter(fileExtension, fileDescription));
 		}
 		return chooser;
 	}

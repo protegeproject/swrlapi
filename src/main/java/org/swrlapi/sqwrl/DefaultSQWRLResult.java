@@ -18,76 +18,76 @@ import org.swrlapi.sqwrl.exceptions.SQWRLInvalidColumnTypeException;
 import org.swrlapi.sqwrl.exceptions.SQWRLInvalidQueryException;
 import org.swrlapi.sqwrl.exceptions.SQWRLInvalidRowIndexException;
 import org.swrlapi.sqwrl.exceptions.SQWRLResultStateException;
-import org.swrlapi.sqwrl.values.SQWRLClassValue;
-import org.swrlapi.sqwrl.values.SQWRLIndividualValue;
+import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
+import org.swrlapi.sqwrl.values.SQWRLIndividualResultValue;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
-import org.swrlapi.sqwrl.values.SQWRLPropertyValue;
+import org.swrlapi.sqwrl.values.SQWRLPropertyResultValue;
+import org.swrlapi.sqwrl.values.SQWRLPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLResultValue;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 
 /**
  * This class implements the interfaces {@link SQWRLResult} and {@link SQWRLResultGenerator}. It can be used to generate
  * a result structure and populate it with data; it can also be used to retrieve those data from the result.
- * <p>
+ * <p/>
  * This class operates in three phases:
- * <p>
+ * <p/>
  * (1) Configuration Phase: In this phase the structure of the result is defined. This phase opened by a call to the
- * {@link #configure} method (which will also clear any existing data). In this phase the columns are defined;
+ * {@link #configured()}  method (which will also clear any existing data). In this phase the columns are defined;
  * aggregation or ordering is also specified in this phase. This phase is closed by a call to the {@link #configured}
  * method.
- * <p>
+ * <p/>
  * (2) Preparation Phase: In this phase data are added to the result. This phase is implicitly opened by the call to the
  * {@link #configured} method. It is closed by a call to the {@link #prepared} method.
- * <p>
+ * <p/>
  * A convenience method {@link #addColumns} that takes a list of column names is also supplied.
- * <p>
- * There is also a convenience method {@link #addRow}, which takes a list of {@link SQWRResultValue} objects. This
+ * <p/>
+ * There is also a convenience method {@link #addRow}, which takes a list of {@link SQWRLResultValue} objects. This
  * method automatically does a row open and close. It is expecting the exact same number of list elements as there are
  * columns in the result.
- * <p>
+ * <p/>
  * The interface {@link SQWRLResultGenerator} defines the calls used in these two phases.
- * <p>
- * (3) Processing Phase: In this phase data may be retrieved from the result. This phase is implicitly opened by the
- * call to the {@link #closed} method.
- * <p>
+ * <p/>
+ * (3) Processing Phase: In this phase data may be retrieved from the result.
+ * <p/>
  * The interface {@link SQWRLResult} defines the calls used in the processing phase.
- * <p>
+ * <p/>
  * An example configuration, data generation, and result retrieval is:
- * <p>
- * 
+ * <p/>
+ * <p/>
  * <pre>
  * DefaultSQWRLResult result = new DefaultSQWRLResult(&quot;TestResult&quot;);
- * 
+ *
  * result.addColumn(&quot;name&quot;);
  * result.addAggregateColumn(&quot;average&quot;, SQWRLResultNames.AvgAggregateFunction);
  * result.configured();
- * 
+ *
  * result.openRow();
- * result.addRowData(new SQWRLIndividualValue(&quot;Fred&quot;));
+ * result.addRowData(new SQWRLIndividualResultValue(&quot;Fred&quot;));
  * result.addRowData(new SQWRLLiteralResultValue(27));
  * result.closeRow();
  * result.openRow();
- * result.adRowdData(new SQWRLIndividualValue(&quot;Joe&quot;));
+ * result.addRowData(new SQWRLIndividualResultValue(&quot;Joe&quot;));
  * result.addRowData(new SQWRLLiteralResultValue(34));
  * result.closeRow();
  * result.openRow();
- * result.addRowData(new SQWRLIndividualValue(&quot;Joe&quot;));
+ * result.addRowData(new SQWRLIndividualResultValue(&quot;Joe&quot;));
  * result.addRowData(new SQWRLLiteralResultValue(21));
  * result.closeRow();
  * result.prepared();
  * </pre>
- * <p>
+ * <p/>
  * The result is now available for reading. The interface {@link SQWRLResult} defines the assessor methods. A row
  * consists of a list of objects defined by the interface {@link SQWRLResultValue}. There are four possible types of
- * values (1) {@link SQWRLLiteralResultValue}, representing literals; (2) {@link SQWRLIndividualValue}, representing OWL
- * individuals; (3) {@link SQWRLClassValue}, representing OWL classes; and (4) {@link SQWRLPropertyValue}, representing
- * OWL properties (object, data, and annotation).
- * <p>
- * 
+ * values (1) {@link SQWRLLiteralResultValue}, representing literals;
+ * (2) {@link org.swrlapi.sqwrl.values.SQWRLIndividualResultValue}, representing OWL individuals;
+ * (3) {@link org.swrlapi.sqwrl.values.SQWRLClassResultValue}, representing OWL classes; and
+ * (4) {@link org.swrlapi.sqwrl.values.SQWRLPropertyResultValue}, representing OWL properties (object, data, and annotation).
+ * <p/>
  * <pre>
  * while (result.hasNext()) {
- * 	SQWRLIndividualValue nameValue = result.getIndividualValue(&quot;name&quot;);
- * 	SQWRLLiteralValue averageValue = result.getLiteralValue(&quot;average&quot;);
+ * 	SQWRLIndividualResultValue nameValue = result.getIndividualValue(&quot;name&quot;);
+ * 	SQWRLLiteralResultValue averageValue = result.getLiteralValue(&quot;average&quot;);
  * 	System.out.println(&quot;Name: &quot; + nameValue.getURI());
  * 	System.out.println(&quot;Average: &quot; + averageValue.getInt());
  * }
@@ -185,7 +185,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 	{
 		throwExceptionIfAlreadyConfigured();
 
-		this.selectedColumnIndexes.add(Integer.valueOf(this.numberOfColumns));
+		this.selectedColumnIndexes.add(this.numberOfColumns);
 		this.allColumnNames.add(columnName);
 		this.numberOfColumns++;
 	}
@@ -197,7 +197,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 
 		SQWRLResultNames.checkAggregateFunctionName(aggregateFunctionName);
 
-		this.aggregateColumnIndexes.put(Integer.valueOf(this.numberOfColumns), aggregateFunctionName);
+		this.aggregateColumnIndexes.put(this.numberOfColumns, aggregateFunctionName);
 		this.allColumnNames.add(columnName);
 		this.numberOfColumns++;
 	}
@@ -222,7 +222,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 		this.isOrdered = true;
 		this.isAscending = ascending;
 
-		this.orderByColumnIndexes.add(Integer.valueOf(orderedColumnIndex));
+		this.orderByColumnIndexes.add(orderedColumnIndex);
 	}
 
 	@Override
@@ -329,11 +329,11 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 		if (this.currentRowDataColumnIndex == getNumberOfColumns())
 			throw new SQWRLResultStateException("attempt to add data beyond the end of a row");
 
-		if (this.aggregateColumnIndexes.containsKey(Integer.valueOf(this.currentRowDataColumnIndex))
-				&& (!this.aggregateColumnIndexes.get(Integer.valueOf(this.currentRowDataColumnIndex)).equals(
-						SQWRLResultNames.CountAggregateFunction))
-				&& (!this.aggregateColumnIndexes.get(Integer.valueOf(this.currentRowDataColumnIndex)).equals(
-						SQWRLResultNames.CountDistinctAggregateFunction)) && (!isNumericValue(value)))
+		if (this.aggregateColumnIndexes.containsKey(this.currentRowDataColumnIndex)
+				&& (!this.aggregateColumnIndexes.get(this.currentRowDataColumnIndex).equals(
+				SQWRLResultNames.CountAggregateFunction))
+				&& (!this.aggregateColumnIndexes.get(this.currentRowDataColumnIndex).equals(
+				SQWRLResultNames.CountDistinctAggregateFunction)) && (!isNumericValue(value)))
 			throw new SQWRLException("attempt to add non numeric value " + value
 					+ " to min, max, sum, or avg aggregate column " + this.allColumnNames.get(this.currentRowDataColumnIndex));
 		this.rowData.add(value);
@@ -491,57 +491,57 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 	}
 
 	@Override
-	public SQWRLIndividualValue getObjectValue(String columnName) throws SQWRLException
+	public SQWRLIndividualResultValue getObjectValue(String columnName) throws SQWRLException
 	{
 		if (!hasObjectValue(columnName))
 			throw new SQWRLInvalidColumnTypeException("expecting ObjectValue type for column " + columnName);
-		return (SQWRLIndividualValue)getValue(columnName);
+		return (SQWRLIndividualResultValue)getValue(columnName);
 	}
 
 	@Override
-	public SQWRLIndividualValue getObjectValue(int columnIndex) throws SQWRLException
+	public SQWRLIndividualResultValue getObjectValue(int columnIndex) throws SQWRLException
 	{
 		return getObjectValue(getColumnName(columnIndex));
 	}
 
 	@Override
-	public SQWRLResultValue getLiteralValue(String columnName) throws SQWRLException
+	public SQWRLLiteralResultValue getLiteralValue(String columnName) throws SQWRLException
 	{
 		if (!hasLiteralValue(columnName))
 			throw new SQWRLInvalidColumnTypeException("expecting LiteralValue type for column " + columnName);
-		return getValue(columnName);
+		return (SQWRLLiteralResultValue)getValue(columnName);
 	}
 
 	@Override
-	public SQWRLClassValue getClassValue(String columnName) throws SQWRLException
+	public SQWRLClassResultValue getClassValue(String columnName) throws SQWRLException
 	{
 		if (!hasClassValue(columnName))
 			throw new SQWRLInvalidColumnTypeException("expecting ClassValue type for column " + columnName);
-		return (SQWRLClassValue)getValue(columnName);
+		return (SQWRLClassResultValue)getValue(columnName);
 	}
 
 	@Override
-	public SQWRLClassValue getClassValue(int columnIndex) throws SQWRLException
+	public SQWRLClassResultValue getClassValue(int columnIndex) throws SQWRLException
 	{
 		return getClassValue(getColumnName(columnIndex));
 	}
 
 	@Override
-	public SQWRLPropertyValue getPropertyValue(int columnIndex) throws SQWRLException
+	public SQWRLPropertyResultValue getPropertyValue(int columnIndex) throws SQWRLException
 	{
 		return getPropertyValue(getColumnName(columnIndex));
 	}
 
 	@Override
-	public SQWRLPropertyValue getPropertyValue(String columnName) throws SQWRLException
+	public SQWRLPropertyResultValue getPropertyValue(String columnName) throws SQWRLException
 	{
 		if (!hasPropertyValue(columnName))
 			throw new SQWRLInvalidColumnTypeException("expecting PropertyValue type for column " + columnName);
-		return (SQWRLPropertyValue)getValue(columnName);
+		return (SQWRLPropertyResultValue)getValue(columnName);
 	}
 
 	@Override
-	public SQWRLResultValue getLiteralValue(int columnIndex) throws SQWRLException
+	public SQWRLLiteralResultValue getLiteralValue(int columnIndex) throws SQWRLException
 	{
 		return getLiteralValue(getColumnName(columnIndex));
 	}
@@ -566,49 +566,49 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 	@Override
 	public boolean hasObjectValue(String columnName) throws SQWRLException
 	{
-		return getValue(columnName) instanceof SQWRLIndividualValue;
+		return getValue(columnName) instanceof SQWRLIndividualResultValue;
 	}
 
 	@Override
 	public boolean hasObjectValue(int columnIndex) throws SQWRLException
 	{
-		return getValue(columnIndex) instanceof SQWRLIndividualValue;
+		return getValue(columnIndex) instanceof SQWRLIndividualResultValue;
 	}
 
 	@Override
 	public boolean hasLiteralValue(String columnName) throws SQWRLException
 	{
-		return getValue(columnName) instanceof SQWRLResultValue;
+		return getValue(columnName) instanceof SQWRLLiteralResultValue;
 	}
 
 	@Override
 	public boolean hasLiteralValue(int columnIndex) throws SQWRLException
 	{
-		return getValue(columnIndex) instanceof SQWRLResultValue;
+		return getValue(columnIndex) instanceof SQWRLLiteralResultValue;
 	}
 
 	@Override
 	public boolean hasClassValue(String columnName) throws SQWRLException
 	{
-		return getValue(columnName) instanceof SQWRLClassValue;
+		return getValue(columnName) instanceof SQWRLClassResultValue;
 	}
 
 	@Override
 	public boolean hasClassValue(int columnIndex) throws SQWRLException
 	{
-		return getValue(columnIndex) instanceof SQWRLClassValue;
+		return getValue(columnIndex) instanceof SQWRLClassResultValue;
 	}
 
 	@Override
 	public boolean hasPropertyValue(String columnName) throws SQWRLException
 	{
-		return getValue(columnName) instanceof SQWRLPropertyValue;
+		return getValue(columnName) instanceof SQWRLPropertyResultValue;
 	}
 
 	@Override
 	public boolean hasPropertyValue(int columnIndex) throws SQWRLException
 	{
-		return getValue(columnIndex) instanceof SQWRLPropertyValue;
+		return getValue(columnIndex) instanceof SQWRLPropertyResultValue;
 	}
 
 	// nth, firstN, etc. are 1-indexed
@@ -1012,7 +1012,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 		List<List<SQWRLResultValue>> localRows = new ArrayList<List<SQWRLResultValue>>(sourceRows);
 		List<List<SQWRLResultValue>> processedRows = new ArrayList<List<SQWRLResultValue>>();
 		SQWRLResultRowComparator rowComparator = new SQWRLResultRowComparator(this.allColumnNames, true); // Look at the
-																																																			// entire row.
+		// entire row.
 
 		try {
 			Collections.sort(localRows, rowComparator); // Binary search is expecting a sorted list
@@ -1034,7 +1034,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 		// Key is index of aggregated row in result, value is hash map of aggregate column index to list of original values.
 		HashMap<Integer, HashMap<Integer, List<SQWRLResultValue>>> aggregatesMap = new HashMap<Integer, HashMap<Integer, List<SQWRLResultValue>>>();
 		HashMap<Integer, List<SQWRLResultValue>> aggregateRowMap; // Map of column indexes to value lists; used to
-																															// accumulate
+		// accumulate
 		// values for aggregation.
 		List<SQWRLResultValue> values;
 		SQWRLResultValue value;
@@ -1042,23 +1042,23 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 
 		for (List<SQWRLResultValue> row : sourceRows) {
 			rowIndex = findRowIndex(result, row, rowComparator); // Find a row with the same values for non aggregated
-																														// columns.
+			// columns.
 
 			if (rowIndex < 0) { // Row with same values for non aggregated columns not yet present in result.
 				aggregateRowMap = new HashMap<Integer, List<SQWRLResultValue>>();
 				// Find value for each aggregated column in row and add each to map indexed by result row
 				for (Integer aggregateColumnIndex : this.aggregateColumnIndexes.keySet()) {
 					values = new ArrayList<SQWRLResultValue>();
-					value = row.get(aggregateColumnIndex.intValue());
+					value = row.get(aggregateColumnIndex);
 					values.add(value);
 					aggregateRowMap.put(aggregateColumnIndex, values);
 				}
-				aggregatesMap.put(Integer.valueOf(result.size()), aggregateRowMap); //
+				aggregatesMap.put(result.size(), aggregateRowMap); //
 				result.add(row);
 			} else { // We found a row that has the same values for the non aggregated columns.
 				aggregateRowMap = aggregatesMap.get(Integer.valueOf(rowIndex)); // Find the aggregate map
 				for (Integer aggregateColumnIndex : this.aggregateColumnIndexes.keySet()) {
-					value = row.get(aggregateColumnIndex.intValue()); // Find value
+					value = row.get(aggregateColumnIndex); // Find value
 					values = aggregateRowMap.get(aggregateColumnIndex); // Find row map
 					values.add(value); // Add value
 				}
@@ -1097,7 +1097,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 				else
 					throw new SQWRLInvalidAggregateFunctionNameException("invalid aggregate function " + aggregateFunctionName);
 
-				row.set(aggregateColumnIndex.intValue(), value);
+				row.set(aggregateColumnIndex, value);
 			}
 			rowIndex++;
 		}
@@ -1300,7 +1300,8 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 		}
 	}
 
-	private List<SQWRLLiteralResultValue> convert2LiteralResultValues(List<SQWRLResultValue> columnValues, int columnIndex)
+	private List<SQWRLLiteralResultValue> convert2LiteralResultValues(List<SQWRLResultValue> columnValues,
+			int columnIndex)
 			throws SQWRLException
 	{
 		List<SQWRLLiteralResultValue> literalValues = new ArrayList<SQWRLLiteralResultValue>();

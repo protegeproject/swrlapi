@@ -14,25 +14,25 @@ import org.swrlapi.core.xsd.XSDTime;
 
 public interface SQWRLResultValueFactory
 {
-	SQWRLClassValue getClassValue(SWRLClassBuiltInArgument classArgument);
+	SQWRLClassResultValue getClassValue(SWRLClassBuiltInArgument classArgument);
 
-	SQWRLClassValue getClassValue(IRI classIRI);
+	SQWRLClassResultValue getClassValue(IRI classIRI);
 
-	SQWRLIndividualValue getIndividualValue(SWRLNamedIndividualBuiltInArgument individualArgument);
+	SQWRLIndividualResultValue getIndividualValue(SWRLNamedIndividualBuiltInArgument individualArgument);
 
-	SQWRLIndividualValue getIndividualValue(IRI individualIRI);
+	SQWRLIndividualResultValue getIndividualValue(IRI individualIRI);
 
-	SQWRLObjectPropertyValue getObjectPropertyValue(SWRLObjectPropertyBuiltInArgument objectPropertyArgument);
+	SQWRLObjectPropertyResultValue getObjectPropertyValue(SWRLObjectPropertyBuiltInArgument objectPropertyArgument);
 
-	SQWRLObjectPropertyValue getObjectPropertyValue(IRI propertyIRI);
+	SQWRLObjectPropertyResultValue getObjectPropertyValue(IRI propertyIRI);
 
-	SQWRLDataPropertyValue getDataPropertyValue(SWRLDataPropertyBuiltInArgument dataPropertyArgument);
+	SQWRLDataPropertyResultValue getDataPropertyValue(SWRLDataPropertyBuiltInArgument dataPropertyArgument);
 
-	SQWRLDataPropertyValue getDataPropertyValue(IRI propertyIRI);
+	SQWRLDataPropertyResultValue getDataPropertyValue(IRI propertyIRI);
 
-	SQWRLAnnotationPropertyValue getAnnotationPropertyValue(SWRLAnnotationPropertyBuiltInArgument dataPropertyArgument);
+	SQWRLAnnotationPropertyResultValue getAnnotationPropertyValue(SWRLAnnotationPropertyBuiltInArgument dataPropertyArgument);
 
-	SQWRLAnnotationPropertyValue getAnnotationPropertyValue(IRI propertyIRI);
+	SQWRLAnnotationPropertyResultValue getAnnotationPropertyValue(IRI propertyIRI);
 
 	SQWRLLiteralResultValue getLiteral(OWLLiteral literal);
 

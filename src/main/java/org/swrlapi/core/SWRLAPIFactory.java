@@ -37,7 +37,7 @@ import org.swrlapi.ui.model.SWRLAPIApplicationModel;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
 
 /**
- * Factory for generating some of the core properties defined by the SWRLAPI.
+ * Factory for generating some of the core entities defined by the SWRLAPI.
  */
 public class SWRLAPIFactory
 {
@@ -200,27 +200,6 @@ public class SWRLAPIFactory
 			throw new SWRLAPIException("No SQWRL icon found!");
 	}
 
-	@SuppressWarnings("unused")
-	private static DefaultPrefixManager createPrefixManager()
-	{ // TODO Hard coding hack!
-		DefaultPrefixManager prefixManager = new DefaultPrefixManager(
-		// "http://swrl.stanford.edu/ontologies/tests/4.3/SWRLSimple.owl#");
-		// "http://swrl.stanford.edu/ontologies/tests/4.3/SQWRLCollectionsTests.owl#");
-		// "http://swrl.stanford.edu/ontologies/tests/4.3/SQWRLCoreTests.owl#");
-		// "http://swrl.stanford.edu/ontologies/tests/4.3/SWRLInferenceTests.owl#");
-				"http://swrl.stanford.edu/ontologies/tests/4.3/SWRLCoreTests.owl#");
-		prefixManager.setPrefix("swrl:", "http://www.w3.org/2003/11/swrl#");
-		prefixManager.setPrefix("swrlb:", "http://www.w3.org/2003/11/swrlb#");
-		prefixManager.setPrefix("sqwrl:", "http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#");
-		prefixManager.setPrefix("swrlm:", "http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlm.owl#");
-		prefixManager.setPrefix("temporal:", "http://swrl.stanford.edu/ontologies/built-ins/3.3/temporal.owl#");
-		prefixManager.setPrefix("swrlx:", "http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#");
-		prefixManager.setPrefix("swrlxml:", "http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlxml.owl#");
-		prefixManager.setPrefix("swrla:", "http://swrl.stanford.edu/ontologies/3.3/swrla.owl#");
-
-		return prefixManager;
-	}
-
 	private static OWLOntology createOWLOntology(OWLOntologyManager ontologyManager, File file) throws SWRLAPIException
 	{
 		Map<String, String> map = new HashMap<String, String>();
@@ -251,5 +230,26 @@ public class SWRLAPIFactory
 		if (url == null)
 			throw new RuntimeException("Could not find resource " + resourceName);
 		return "file:///" + url.getFile();
+	}
+
+	@SuppressWarnings("unused")
+	private static DefaultPrefixManager createPrefixManager()
+	{ // TODO Hard coding hack! Delete this method soon.
+		DefaultPrefixManager prefixManager = new DefaultPrefixManager(
+				// "http://swrl.stanford.edu/ontologies/tests/4.3/SWRLSimple.owl#");
+				// "http://swrl.stanford.edu/ontologies/tests/4.3/SQWRLCollectionsTests.owl#");
+				// "http://swrl.stanford.edu/ontologies/tests/4.3/SQWRLCoreTests.owl#");
+				// "http://swrl.stanford.edu/ontologies/tests/4.3/SWRLInferenceTests.owl#");
+				"http://swrl.stanford.edu/ontologies/tests/4.3/SWRLCoreTests.owl#");
+		prefixManager.setPrefix("swrl:", "http://www.w3.org/2003/11/swrl#");
+		prefixManager.setPrefix("swrlb:", "http://www.w3.org/2003/11/swrlb#");
+		prefixManager.setPrefix("sqwrl:", "http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#");
+		prefixManager.setPrefix("swrlm:", "http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlm.owl#");
+		prefixManager.setPrefix("temporal:", "http://swrl.stanford.edu/ontologies/built-ins/3.3/temporal.owl#");
+		prefixManager.setPrefix("swrlx:", "http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#");
+		prefixManager.setPrefix("swrlxml:", "http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlxml.owl#");
+		prefixManager.setPrefix("swrla:", "http://swrl.stanford.edu/ontologies/3.3/swrla.owl#");
+
+		return prefixManager;
 	}
 }

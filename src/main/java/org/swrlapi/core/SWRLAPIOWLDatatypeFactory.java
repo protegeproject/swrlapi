@@ -5,6 +5,8 @@ import org.semanticweb.owlapi.model.OWLDatatype;
 
 /**
  * A convenience factory to create OWLAPI OWL datatypes.
+ *
+ * @see org.semanticweb.owlapi.model.OWLDatatype
  */
 public interface SWRLAPIOWLDatatypeFactory
 {
