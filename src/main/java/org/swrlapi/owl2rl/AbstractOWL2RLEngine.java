@@ -11,7 +11,7 @@ import java.util.Set;
 
 public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 {
-	private final List<RuleTable> tables;
+	private final List<RuleTable> ruleTables;
 	private final Set<Rule> rules;
 	private final Map<RuleTable, List<Rule>> table2RulesMap;
 	private final Set<Set<Rule>> groupedRuleSets;
@@ -28,7 +28,7 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 			Set<Rule> permanentlyOnRules, Set<Set<Rule>> groupedRuleSets)
 	{
 		this.persistenceLayer = persistenceLayer;
-		this.tables = new ArrayList<RuleTable>(Arrays.asList(RuleTable.values()));
+		this.ruleTables = new ArrayList<RuleTable>(Arrays.asList(RuleTable.values()));
 		this.rules = EnumSet.allOf(Rule.class);
 		this.table2RulesMap = new HashMap<RuleTable, List<Rule>>();
 		this.table2RulesMap.put(RuleTable.RuleTable4, new ArrayList<Rule>(Arrays.asList(Table4Rules)));
@@ -81,7 +81,7 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 	@Override
 	public List<RuleTable> getRuleTables()
 	{
-		return this.tables;
+		return this.ruleTables;
 	}
 
 	@Override
@@ -93,7 +93,7 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 	@Override
 	public int getNumberOfTables()
 	{
-		return this.tables.size();
+		return this.ruleTables.size();
 	}
 
 	@Override
