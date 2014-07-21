@@ -24,7 +24,6 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 	private final Set<Rule> unsupportedRules;
 	private final Set<Rule> permanentlyOnRules;
 	private final Set<Rule> switchableRules;
-	private final Map<String, OWL2RLFalseArgumentsDescription> argumentsDescriptionMap;
 
 	private Set<Rule> enabledRules;
 	private boolean ruleSelectionChanged;
@@ -59,10 +58,6 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 		this.enabledRules.retainAll(persistenceLayer.getEnabledRules());
 
 		this.ruleSelectionChanged = false;
-
-		this.argumentsDescriptionMap = new HashMap<String, OWL2RLFalseArgumentsDescription>();
-
-		initializeArgumentsDescriptionMap();
 	}
 
 	@Override
@@ -264,18 +259,6 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 			return RuleStatus.Switchable;
 	}
 
-	@Override
-	public boolean hasFalseArgumentsDescription(String owl2RLRuleName)
-	{
-		return this.argumentsDescriptionMap.containsKey(owl2RLRuleName);
-	}
-
-	@Override
-	public OWL2RLFalseArgumentsDescription getFalseArgumentsDescription(String owl2RLRuleName)
-	{
-		return this.argumentsDescriptionMap.get(owl2RLRuleName);
-	}
-
 	/**
 	 * Find other rules that are grouped with this rule. Grouped rules are enabled and disabled together. The rule itself
 	 * is added to the group and associated rules (if any) are then found and added.
@@ -291,20 +274,5 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 				result.addAll(group);
 		}
 		return result;
-	}
-
-	private void initializeArgumentsDescriptionMap()
-	{
-		createArgumentDescription(OWL2RLNames.Rule.EQ_DIFF1.toString(), 0, 2, 0, 0);
-		createArgumentDescription(OWL2RLNames.Rule.PRP_PDW.toString(), 0, 2, 2, 0);
-		createArgumentDescription(OWL2RLNames.Rule.PRP_ASYP.toString(), 0, 2, 1, 0);
-		createArgumentDescription(OWL2RLNames.Rule.CAX_DW.toString(), 2, 1, 0, 0);
-	}
-
-	private void createArgumentDescription(String owl2RLRuleName, int numberOfClassArguments,
-			int numberOfIndividualArguments, int numberOfObjectPropertyArguments, int numberOfDataPropertyArguments)
-	{
-		this.argumentsDescriptionMap.put(owl2RLRuleName, new OWL2RLFalseArgumentsDescription(numberOfClassArguments,
-				numberOfIndividualArguments, numberOfObjectPropertyArguments, numberOfDataPropertyArguments));
 	}
 }
