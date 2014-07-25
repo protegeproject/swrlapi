@@ -33,17 +33,15 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	 */
 	public boolean sqrt(List<SWRLBuiltInArgument> arguments) throws BuiltInException
 	{
-		double argument1, argument2;
-
 		checkNumberOfArgumentsAtLeast(2, arguments.size());
 
-		argument2 = getArgumentAsADouble(1, arguments);
+		double argument2 = getArgumentAsADouble(1, arguments);
 
 		if (isUnboundArgument(0, arguments)) {
 			arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument(java.lang.Math.sqrt(argument2)));
 			return true;
 		} else {
-			argument1 = getArgumentAsADouble(0, arguments);
+			double argument1 = getArgumentAsADouble(0, arguments);
 			return argument1 == java.lang.Math.sqrt(argument2);
 		}
 	}
@@ -54,17 +52,15 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	 */
 	public boolean log(List<SWRLBuiltInArgument> arguments) throws BuiltInException
 	{
-		double argument1, argument2;
-
 		checkNumberOfArgumentsAtLeast(2, arguments.size());
 
-		argument2 = getArgumentAsADouble(1, arguments);
+		double argument2 = getArgumentAsADouble(1, arguments);
 
 		if (isUnboundArgument(0, arguments)) {
 			arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument(java.lang.Math.log(argument2)));
 			return true;
 		} else {
-			argument1 = getArgumentAsADouble(0, arguments);
+			double argument1 = getArgumentAsADouble(0, arguments);
 			return argument1 == java.lang.Math.log(argument2);
 		}
 	}
@@ -76,12 +72,9 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	 */
 	public boolean eval(List<SWRLBuiltInArgument> arguments) throws BuiltInException
 	{
-		double value;
-		String expression;
-
 		checkNumberOfArgumentsAtLeast(2, arguments.size());
 
-		expression = getArgumentAsAString(1, arguments);
+		String expression = getArgumentAsAString(1, arguments);
 
 		if (arguments.size() > 2) {
 			List<SWRLBuiltInArgument> variableArguments = arguments.subList(2, arguments.size());
@@ -101,7 +94,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		if (getJEP().hasError())
 			throw new BuiltInException("exception parsing expression '" + expression + "': " + getJEP().getErrorInfo());
 
-		value = getJEP().getValue();
+		double value = getJEP().getValue();
 
 		if (getJEP().hasError())
 			throw new BuiltInException("exception parsing expression '" + expression + "': " + getJEP().getErrorInfo());

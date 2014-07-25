@@ -1,7 +1,7 @@
 package org.swrlapi.builtins.arguments;
 
 /**
- * @see SWRLBuiltInArgument
+ * @see org.swrlapi.builtins.arguments.SWRLBuiltInArgument
  */
 public interface SWRLBuiltInArgumentVisitorEx<T>
 {

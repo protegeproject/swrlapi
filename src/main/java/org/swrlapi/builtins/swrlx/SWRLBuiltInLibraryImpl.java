@@ -2,6 +2,7 @@ package org.swrlapi.builtins.swrlx;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
@@ -16,12 +17,14 @@ import org.swrlapi.exceptions.BuiltInException;
 public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 {
 	private static final String SWRLXLibraryName = "SWRLExtensionsBuiltIns";
-	private final HashMap<String, OWLClass> classInvocationMap;
-	private final HashMap<String, OWLNamedIndividual> individualInvocationMap;
+
+	private final Map<String, OWLClass> classInvocationMap;
+	private final Map<String, OWLNamedIndividual> individualInvocationMap;
 
 	public SWRLBuiltInLibraryImpl()
 	{
 		super(SWRLXLibraryName);
+
 		this.classInvocationMap = new HashMap<String, OWLClass>();
 		this.individualInvocationMap = new HashMap<String, OWLNamedIndividual>();
 	}

@@ -19,7 +19,7 @@ import org.swrlapi.core.xsd.XSDTime;
 /**
  * Factory for creating SWRLAPI {@link SWRLBuiltInArgument} objects.
  * 
- * @see SWRLBuiltInArgument
+ * @see org.swrlapi.builtins.arguments.SWRLBuiltInArgument
  */
 public interface SWRLBuiltInArgumentFactory
 {

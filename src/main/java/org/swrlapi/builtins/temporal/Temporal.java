@@ -54,13 +54,13 @@ public class Temporal
 	// separately. Leap years are also handled separately.
 	private static final long conversion_table[][] = {
 	/* year, month, day, hours, minutes, seconds, milliseconds */
-	{ 1, 12, 365, 365 * 24, 365 * 24 * 60, 365 * 24 * 60 * 60, 365 * 24 * 60 * 60 * 1000L }, /* year */
-	{ 0, 1, 0, 0, 0, 0, 0 }, /* month */
-	{ 365, 0, 1, 24, 24 * 60, 24 * 60 * 60, 24 * 60 * 60 * 1000 }, /* day */
-	{ 365 * 24, 0, 24, 1, 60, 60 * 60, 60 * 60 * 1000 }, /* hour */
-	{ 365 * 24 * 60, 0, 24 * 60, 60, 1, 60, 60 * 1000 }, /* minute */
-	{ 365 * 24 * 60 * 60, 0, 24 * 60 * 60, 60 * 60, 60, 1, 1000 }, /* second */
-	{ 365 * 24 * 60 * 60 * 1000L, 0, 24 * 60 * 60 * 1000, 60 * 60 * 1000, 60 * 1000, 1000, 1 } /* mseconds */
+			{ 1, 12, 365, 365 * 24, 365 * 24 * 60, 365 * 24 * 60 * 60, 365 * 24 * 60 * 60 * 1000L }, /* year */
+			{ 0, 1, 0, 0, 0, 0, 0 }, /* month */
+			{ 365, 0, 1, 24, 24 * 60, 24 * 60 * 60, 24 * 60 * 60 * 1000 }, /* day */
+			{ 365 * 24, 0, 24, 1, 60, 60 * 60, 60 * 60 * 1000 }, /* hour */
+			{ 365 * 24 * 60, 0, 24 * 60, 60, 1, 60, 60 * 1000 }, /* minute */
+			{ 365 * 24 * 60 * 60, 0, 24 * 60 * 60, 60 * 60, 60, 1, 1000 }, /* second */
+			{ 365 * 24 * 60 * 60 * 1000L, 0, 24 * 60 * 60 * 1000, 60 * 60 * 1000, 60 * 1000, 1000, 1 } /* mseconds */
 	};
 
 	private static final String[] stringGranularityRepresentation = { "years", "months", "days", "hours", "minutes",
@@ -155,7 +155,7 @@ public class Temporal
 	}
 
 	/**
-	 ** Take a java.sql.Timestamp and return the number of granules at the specified granularity since 1 C.E.
+	 * * Take a java.sql.Timestamp and return the number of granules at the specified granularity since 1 C.E.
 	 */
 	public long sqlTimestamp2GranuleCount(Timestamp timestamp, int granularity) throws TemporalException
 	{
@@ -170,35 +170,33 @@ public class Temporal
 	 */
 	public long datetimeString2GranuleCount(String datetimeString, int granularity) throws TemporalException
 	{
-		int years, months, days, hours, minutes, seconds, milliseconds;
-
 		checkGranularity(granularity);
 
-		years = getDatetimeStringProcessor().getYears(datetimeString);
+		int years = getDatetimeStringProcessor().getYears(datetimeString);
 		if (years < 1 || years > 9999)
 			throw new TemporalException("years must be between 1  and 9999 in datetime: " + datetimeString);
 
-		months = getDatetimeStringProcessor().getMonths(datetimeString);
+		int months = getDatetimeStringProcessor().getMonths(datetimeString);
 		if (months < 1 | months > 12)
 			throw new TemporalException("months must be between 1 and 12 in datetime: " + datetimeString);
 
-		days = getDatetimeStringProcessor().getDays(datetimeString);
+		int days = getDatetimeStringProcessor().getDays(datetimeString);
 		if (days < 1 || days > 31)
 			throw new TemporalException("days must be between 1 and 31 in datetime: " + datetimeString);
 
-		hours = getDatetimeStringProcessor().getHours(datetimeString);
+		int hours = getDatetimeStringProcessor().getHours(datetimeString);
 		if (hours < 0 || hours > 23)
 			throw new TemporalException("hours must bebetween 0 and 23 in datetime: " + datetimeString);
 
-		minutes = getDatetimeStringProcessor().getMinutes(datetimeString);
+		int minutes = getDatetimeStringProcessor().getMinutes(datetimeString);
 		if (minutes < 0 || minutes > 59)
 			throw new TemporalException("minutes must be between 0 and 59 in datetime: " + datetimeString);
 
-		seconds = getDatetimeStringProcessor().getSeconds(datetimeString);
+		int seconds = getDatetimeStringProcessor().getSeconds(datetimeString);
 		if (seconds < 0)
 			throw new TemporalException("seconds must be 0 or greater in datetime: " + datetimeString);
 
-		milliseconds = getDatetimeStringProcessor().getMilliseconds(datetimeString);
+		int milliseconds = getDatetimeStringProcessor().getMilliseconds(datetimeString);
 		if (milliseconds < 0)
 			throw new TemporalException("milliseconds must be 0 or greater in datetime: " + datetimeString);
 
@@ -233,7 +231,7 @@ public class Temporal
 	public static long convertGranuleCount(long granuleCount, int from_granularity, int to_granularity)
 			throws TemporalException
 	{
-		long result, localGranuleCount, leapOffsetGranuleCount = 0;
+		long result, leapOffsetGranuleCount = 0;
 
 		checkGranularity(from_granularity);
 		checkGranularity(to_granularity);
@@ -241,7 +239,7 @@ public class Temporal
 		if (from_granularity == to_granularity)
 			return granuleCount;
 
-		localGranuleCount = granuleCount;
+		long localGranuleCount = granuleCount;
 
 		// If we are converting from a granularity of days or finer to months or years, we need to account for the extra
 		// day's worth of granules
@@ -340,11 +338,9 @@ public class Temporal
 	public static java.util.Date addGranuleCount(java.util.Date date, long granuleCount, int granularity)
 			throws TemporalException
 	{
-		long resultGranuleCount;
-
 		checkGranularity(granularity);
 
-		resultGranuleCount = utilDate2GranuleCount(date, granularity) + granuleCount;
+		long resultGranuleCount = utilDate2GranuleCount(date, granularity) + granuleCount;
 
 		return granuleCount2UtilDate(resultGranuleCount, granularity);
 	}
@@ -352,11 +348,9 @@ public class Temporal
 	public static java.util.Date subtractGranuleCount(java.util.Date date, long granuleCount, int granularity)
 			throws TemporalException
 	{
-		long resultGranuleCount;
-
 		checkGranularity(granularity);
 
-		resultGranuleCount = utilDate2GranuleCount(date, granularity) - granuleCount;
+		long resultGranuleCount = utilDate2GranuleCount(date, granularity) - granuleCount;
 
 		return granuleCount2UtilDate(resultGranuleCount, granularity);
 	}
@@ -382,14 +376,14 @@ public class Temporal
 	 * Take a granule count (from the beginning of calendar time, e.g., '0000-01-01 00:00:00.000' in JDBC timestamp
 	 * format) at any granularity and convert it to a Timestamp. Java Timestamp record time as milliseconds from January
 	 * 1st 1970.
-	 * 
+	 * <p/>
 	 * java.sql.Timestamp will take car of the time zone offset plus daylight savings time.
 	 */
 	public static java.sql.Timestamp granuleCount2Timestamp(long granuleCount, int granularity) throws TemporalException
 	{
 		long granuleCountInMilliSeconds = convertGranuleCount(granuleCount, granularity, MILLISECONDS); // Also checks
-																																																		// granularity for
-																																																		// sanity
+		// granularity for
+		// sanity
 
 		// java.sql.Timestamp will correctly deal with negative milliseconds.
 		granuleCountInMilliSeconds -= MillisecondsTo1970;
@@ -401,14 +395,14 @@ public class Temporal
 	 * Take a granule count (from the beginning of calendar time, e.g., '0000-01-01 00:00:00.000' in JDBC timestamp
 	 * format) at any granularity and convert it to a java.util.Date. Date record time as milliseconds from January 1st
 	 * 1970.
-	 * 
+	 * <p/>
 	 * java.util.Date will take car of the time zone offset plus daylight savings time.
 	 */
 	public static java.util.Date granuleCount2UtilDate(long granuleCount, int granularity) throws TemporalException
 	{
 		long granuleCountInMilliseconds = convertGranuleCount(granuleCount, granularity, MILLISECONDS); // Also checks
-																																																		// granularity for
-																																																		// sanity
+		// granularity for
+		// sanity
 
 		// java.util.Date will correctly deal with negative milliseconds.
 		granuleCountInMilliseconds -= MillisecondsTo1970;
@@ -420,16 +414,14 @@ public class Temporal
 	 * Take a granule count (from the beginning of calendar time, e.g., '0000-01-01 00:00:00.000' in JDBC timestamp
 	 * format) at any granularity and convert it to a java.sql.Date. Date record time as milliseconds from January 1st
 	 * 1970.
-	 * 
+	 * <p/>
 	 * java.sql.Date will take car of the time zone offset plus daylight savings time.
 	 */
 	public static java.sql.Date granuleCount2SQLDate(long granuleCount, int granularity) throws TemporalException
 	{
-		long granuleCountInMilliseconds;
-
 		checkGranularity(granularity);
 
-		granuleCountInMilliseconds = convertGranuleCount(granuleCount, granularity, MILLISECONDS);
+		long granuleCountInMilliseconds = convertGranuleCount(granuleCount, granularity, MILLISECONDS);
 
 		// java.sql.Date will correctly deal with negative milliseconds.
 		granuleCountInMilliseconds -= MillisecondsTo1970;
@@ -523,11 +515,9 @@ public class Temporal
 
 	public String addGranuleCount(String datetimeString, long granuleCount, int granularity) throws TemporalException
 	{
-		long resultGranuleCount;
-
 		checkGranularity(granularity);
 
-		resultGranuleCount = datetimeString2GranuleCount(datetimeString, granularity) + granuleCount;
+		long resultGranuleCount = datetimeString2GranuleCount(datetimeString, granularity) + granuleCount;
 
 		return granuleCount2DatetimeString(resultGranuleCount, granularity);
 	}
@@ -535,17 +525,15 @@ public class Temporal
 	public String subtractGranuleCount(String datetimeString, long granuleCount, int granularity)
 			throws TemporalException
 	{
-		long resultGranuleCount;
-
 		checkGranularity(granularity);
 
-		resultGranuleCount = datetimeString2GranuleCount(datetimeString, granularity) - granuleCount;
+		long resultGranuleCount = datetimeString2GranuleCount(datetimeString, granularity) - granuleCount;
 
 		return granuleCount2DatetimeString(resultGranuleCount, granularity);
 	}
 
 	/**
-	 ** Take a granule count (from the beginning of calendar time, i.e., January 1st 1 C.E) at any granularity and convert
+	 * * Take a granule count (from the beginning of calendar time, i.e., January 1st 1 C.E) at any granularity and convert
 	 * it to a datetime string.
 	 */
 	public String granuleCount2DatetimeString(long granuleCount, int granularity) throws TemporalException

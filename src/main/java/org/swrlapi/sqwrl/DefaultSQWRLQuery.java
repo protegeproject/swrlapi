@@ -25,9 +25,8 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	private final List<SWRLAtom> bodyAtoms;
 	private final List<SWRLAtom> headAtoms;
 	private final DefaultSQWRLResult sqwrlResult;
-	private final Map<String, List<SWRLBuiltInArgument>> collectionGroupArgumentsMap; // Map of collection name to group
-	// arguments; applies only to
-	// grouped collections
+	// Map of collection name to group  arguments; applies only to grouped collections
+	private final Map<String, List<SWRLBuiltInArgument>> collectionGroupArgumentsMap;
 	private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
 
 	private boolean active; // Like a SWRLRule, a SQWRL query can also be inactive.

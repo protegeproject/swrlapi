@@ -13,9 +13,9 @@ public abstract class DatetimeStringProcessor
 	private final SimpleDateFormat dateFormat;
 	private final String delimiters;
 	private final int[] gTokenIndex; // The number of tokens (including delimeters) necessary to strip a datetime to a
-																		// specified granularity
+	// specified granularity
 	private final String datetimeRoundDownPadding[], datetimeRoundUpPadding[]; // Strings to pad a partially specified
-																																							// datetime
+	// datetime
 
 	public DatetimeStringProcessor(SimpleDateFormat dateFormat, String delimiters, int gTokenIndex[],
 			String datetimeRoundDownPadding[], String datetimeRoundUpPadding[])
@@ -56,7 +56,7 @@ public abstract class DatetimeStringProcessor
 			throws TemporalException
 	{
 		String localDatetimeString = stripDatetimeString(datetimeString, granularity); // Also checks granularity for
-																																										// sanity.
+		// sanity.
 
 		return padDatetimeString(localDatetimeString, roundUp);
 	}
@@ -123,7 +123,7 @@ public abstract class DatetimeStringProcessor
 		tokenizer = new StringTokenizer(localDatetimeString, this.delimiters); // Do not count delimeters as tokens.
 
 		numberOfTokens = tokenizer.countTokens(); // YEARS will have one token, MONTHS 2, etc., so we can subtract one to
-																							// get the granularity.
+		// get the granularity.
 
 		if (numberOfTokens == 0)
 			Temporal.throwInvalidDatetimeStringException(datetimeString);
@@ -193,7 +193,7 @@ public abstract class DatetimeStringProcessor
 	public int getFinestSpecifiedGranularity(String datetimeString) throws TemporalException
 	{
 		StringTokenizer tokenizer = new StringTokenizer(datetimeString, this.delimiters, true); // Return all tokens
-																																														// including delimiters.
+		// including delimiters.
 		int numberOfTokens = tokenizer.countTokens();
 		int granularity = -1;
 

@@ -4,6 +4,8 @@ import org.semanticweb.owlapi.model.SWRLVariable;
 
 /**
  * Represents a variable argument to a SWRL built-in atom.
+ *
+ * @see org.semanticweb.owlapi.model.SWRLVariable
  */
 public interface SWRLVariableBuiltInArgument extends SWRLBuiltInArgument, SWRLVariable
 {
