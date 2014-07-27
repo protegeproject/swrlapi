@@ -83,6 +83,11 @@ public interface SWRLRuleEngineBridge
 	OWLDataPropertyExpressionResolver getOWLDataPropertyExpressionResolver();
 
 	/**
+	 * An individual resolver can be used by a target rule engine to resolve OWL individuals.
+	 */
+	OWLIndividualResolver getOWLIndividualResolver();
+
+	/**
 	 * Get the underlying persistence layer for the OWL 2 RL reasoner used by the rule and query engine.
 	 */
 	OWL2RLPersistenceLayer getOWL2RLPersistenceLayer();

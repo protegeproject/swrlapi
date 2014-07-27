@@ -37,11 +37,12 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 		SWRLRuleEngineBridgeController
 {
 	private final SWRLAPIOWLOntology swrlapiOWLOntology;
+	private final OWL2RLPersistenceLayer owl2RLPersistenceLayer;
 	private final OWLClassExpressionResolver owlClassExpressionResolver;
 	private final OWLDataRangeResolver owlDataRangeResolver;
 	private final OWLDataPropertyExpressionResolver owlDataPropertyExpressionResolver;
 	private final OWLObjectPropertyExpressionResolver owlObjectPropertyExpressionResolver;
-	private final OWL2RLPersistenceLayer owl2RLPersistenceLayer;
+	private final OWLIndividualResolver owlIndividualResolver;
 
 	/**
 	 * OWL axioms inferred by a rule engine (via the {@link #inferOWLAxiom(org.semanticweb.owlapi.model.OWLAxiom)} call).
@@ -72,6 +73,7 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 		this.owlDataRangeResolver = new OWLDataRangeResolver(swrlapiOWLOntology.getOWLDataFactory());
 		this.owlObjectPropertyExpressionResolver = new OWLObjectPropertyExpressionResolver();
 		this.owlDataPropertyExpressionResolver = new OWLDataPropertyExpressionResolver();
+		this.owlIndividualResolver = new OWLIndividualResolver();
 
 		this.inferredOWLAxioms = new HashSet<OWLAxiom>();
 		this.injectedOWLAxioms = new HashSet<OWLAxiom>();
@@ -141,6 +143,12 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 	public OWLDataPropertyExpressionResolver getOWLDataPropertyExpressionResolver()
 	{
 		return this.owlDataPropertyExpressionResolver;
+	}
+
+	@Override
+	public OWLIndividualResolver getOWLIndividualResolver()
+	{
+		return this.owlIndividualResolver;
 	}
 
 	@Override
