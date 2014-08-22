@@ -17,6 +17,8 @@ import org.swrlapi.ui.view.SWRLAPIView;
  * This class models a list of SWRL rules or SQWRL queries in an ontology for tabular display.
  * 
  * @see org.swrlapi.ui.model.SWRLAPIApplicationModel
+ * @see org.swrlapi.core.SWRLAPIRule
+ * @see org.swrlapi.sqwrl.SQWRLQuery
  */
 public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIModel
 {
@@ -28,10 +30,11 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 	public static int RULE_NAME_COLUMN = 1;
 	public static int RULE_TEXT_COLUMN = 2;
 	public static int RULE_COMMENT_COLUMN = 3;
+
 	public static int NUMBER_OF_COLUMNS = 4;
 
 	private final DefaultSWRLAPIRulePrinter swrlRulePrinter;
-	private final Map<String, SWRLRuleModel> swrlRuleModels;
+	private final Map<String, SWRLRuleModel> swrlRuleModels; // rule name -> SWRLRuleModel
 
 	private SWRLAPIView swrlapiView = null;
 	private boolean isModified = false;
@@ -50,6 +53,11 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 			SWRLRuleModel swrlRuleModel = new SWRLRuleModel(ruleName, ruleText, comment);
 			this.swrlRuleModels.put(ruleName, swrlRuleModel);
 		}
+	}
+
+	public void setView(SWRLAPIView view)
+	{
+		this.swrlapiView = view;
 	}
 
 	public Set<SWRLRuleModel> getSWRLRuleModels()
@@ -140,11 +148,6 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 		this.swrlRuleModels.clear();
 		updateView();
 		isModified = false;
-	}
-
-	public void setView(SWRLAPIView view)
-	{
-		this.swrlapiView = view;
 	}
 
 	public boolean hasBeenModified()

@@ -15,7 +15,7 @@ import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 
-public abstract class SWRLBuiltInArgumentImpl implements SWRLBuiltInArgument
+abstract class SWRLBuiltInArgumentImpl implements SWRLBuiltInArgument
 {
 	private static final long serialVersionUID = 1L;
 	private String boundVariableName = null;

@@ -368,7 +368,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	}
 
 	private boolean isOWLClass(IRI iri)
-	{ // TODO This is likely not robust. Also see similar method in DefaultSWRLBridge
+	{
 		return getOWLOntology().containsClassInSignature(iri, true) || iri.equals(OWLRDFVocabulary.OWL_THING.getIRI())
 				|| iri.equals(OWLRDFVocabulary.OWL_NOTHING.getIRI());
 	}

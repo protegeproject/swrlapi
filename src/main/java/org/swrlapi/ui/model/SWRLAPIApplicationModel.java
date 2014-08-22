@@ -11,9 +11,11 @@ import org.swrlapi.ui.controller.SWRLAPIApplicationController;
 
 /**
  * Provides an application model that can be used to build a MVC-based GUI that uses the SWRLAPI. Used in conjunction
- * with a {@link SWRLAPIApplicationModel} and a {@link SWRLAPIApplicationController}.
+ * with a {@link org.swrlapi.ui.model.SWRLAPIApplicationModel} and
+ * a {@link org.swrlapi.ui.controller.SWRLAPIApplicationController}.
  * 
- * @see SWRLAPIApplicationView, SWRLAPIApplicationController
+ * @see org.swrlapi.ui.view.SWRLAPIApplicationView
+ * @see org.swrlapi.ui.controller.SWRLAPIApplicationController
  */
 public class SWRLAPIApplicationModel implements SWRLAPIModel
 {
@@ -59,15 +61,9 @@ public class SWRLAPIApplicationModel implements SWRLAPIModel
 		return this.swrlRulesTableModel;
 	}
 
-	public void saveSWRLRules()
-	{
-		// TODO
-	}
+	public void saveSWRLRules() {} // TODO
 
-	public boolean areSWRLRulesModified()
-	{
-		return swrlRulesTableModel.hasBeenModified();
-	}
+	public boolean areSWRLRulesModified() { return swrlRulesTableModel.hasBeenModified(); }
 
 	public void clearSWRLRulesModified()
 	{

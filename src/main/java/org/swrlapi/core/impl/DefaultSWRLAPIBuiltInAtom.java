@@ -14,7 +14,7 @@ import org.swrlapi.core.SWRLAPIBuiltInAtom;
 
 import uk.ac.manchester.cs.owl.owlapi.SWRLBuiltInAtomImpl;
 
-public class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SWRLAPIBuiltInAtom
+class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SWRLAPIBuiltInAtom
 {
 	private static final long serialVersionUID = 1L;
 

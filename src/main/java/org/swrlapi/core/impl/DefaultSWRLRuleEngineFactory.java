@@ -51,9 +51,8 @@ public class DefaultSWRLRuleEngineFactory implements SWRLRuleEngineFactory
 	}
 
 	/**
-	 * Create an instance of a rule engine. If no engine is registered, a {@link NoRegisteredRuleEnginesException} is
-	 * generated. If no default engine is specified in the {@link SWRLNames#DEFAULT_RULE_ENGINE} property in the
-	 * protege.properties file then the Drools rule engine is returned (if it is registered).
+	 * Create an instance of a rule engine. If no engine is registered, a {@link org.swrlapi.exceptions.NoRegisteredRuleEnginesException} is
+	 * generated.
 	 */
 	@Override
 	public SWRLRuleEngine createSWRLRuleEngine(SWRLAPIOWLOntology swrlapiOWLOntology) throws SWRLRuleEngineException
@@ -65,8 +64,8 @@ public class DefaultSWRLRuleEngineFactory implements SWRLRuleEngineFactory
 	}
 
 	/**
-	 * Create a SWRL rule engine. Throws an {@link InvalidSWRLRuleEngineNameException} if an engine with the supplied name
-	 * is not registered.
+	 * Create a SWRL rule engine. Throws an {@link org.swrlapi.exceptions.InvalidSWRLRuleEngineNameException}
+	 * if an engine with the supplied name is not registered.
 	 */
 	@Override
 	public SWRLRuleEngine createSWRLRuleEngine(String ruleEngineName, SWRLAPIOWLOntology swrlapiOWLOntology)

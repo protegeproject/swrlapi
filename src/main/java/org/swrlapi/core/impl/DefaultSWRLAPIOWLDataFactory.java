@@ -63,7 +63,7 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
 	@Override
 	public SWRLAPIRule getSWRLRule(String ruleName, String ruleText)
 	{
-		throw new RuntimeException("SWRL parser not implemented");
+		throw new RuntimeException("SWRL parser not implemented"); // TODO
 	}
 
 	@Override

@@ -46,15 +46,15 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 
 	/**
 	 * OWL axioms inferred by a rule engine (via the {@link #inferOWLAxiom(org.semanticweb.owlapi.model.OWLAxiom)} call).
-	 * A {@link SWRLRuleEngine} can retrieve these using the the {@link #getInjectedOWLAxioms()} call after
-	 * calling {@link org.swrlapi.bridge.TargetSWRLRuleEngine#runRuleEngine()}.
+	 * A {@link org.swrlapi.core.SWRLRuleEngine} can retrieve these using the the {@link #getInjectedOWLAxioms()} call
+	 * after calling {@link org.swrlapi.bridge.TargetSWRLRuleEngine#runRuleEngine()}.
 	 */
 	private final Set<OWLAxiom> inferredOWLAxioms;
 
 	/**
 	 * OWL axioms inferred by SWRL built-ins (via the {@link #inferOWLAxiom(org.semanticweb.owlapi.model.OWLAxiom)}).
-	 * A {@link SWRLRuleEngine} can retrieve these using the {@link #getInjectedOWLAxioms()} call after calling
-	 * {@link org.swrlapi.bridge.TargetSWRLRuleEngine#runRuleEngine()}.
+	 * A {@link org.swrlapi.core.SWRLRuleEngine} can retrieve these using the {@link #getInjectedOWLAxioms()} call
+	 * after calling {@link org.swrlapi.bridge.TargetSWRLRuleEngine#runRuleEngine()}.
 	 */
 	private final Set<OWLAxiom> injectedOWLAxioms;
 
@@ -204,7 +204,7 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 	}
 
 	public boolean isOWLClass(IRI iri)
-	{ // TODO Probably not robust - see DefaultSWRLAPIOWLOntology.isOWLClass
+	{
 		return getOWLOntology().containsClassInSignature(iri, true) || iri.equals(OWLRDFVocabulary.OWL_THING.getIRI())
 				|| iri.equals(OWLRDFVocabulary.OWL_NOTHING);
 	}

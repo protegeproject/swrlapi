@@ -16,8 +16,8 @@ import java.util.Set;
  */
 public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 {
-	private final List<RuleTable> ruleTables;
 	private final Set<Rule> rules;
+	private final List<RuleTable> ruleTables;
 	private final Map<RuleTable, List<Rule>> table2RulesMap;
 	private final Set<Set<Rule>> groupedRuleSets;
 	private final OWL2RLPersistenceLayer persistenceLayer;
@@ -32,8 +32,10 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 			Set<Rule> permanentlyOnRules, Set<Set<Rule>> groupedRuleSets)
 	{
 		this.persistenceLayer = persistenceLayer;
-		this.ruleTables = new ArrayList<RuleTable>(Arrays.asList(RuleTable.values()));
+
 		this.rules = EnumSet.allOf(Rule.class);
+		this.ruleTables = new ArrayList<RuleTable>(Arrays.asList(RuleTable.values()));
+
 		this.table2RulesMap = new HashMap<RuleTable, List<Rule>>();
 		this.table2RulesMap.put(RuleTable.RuleTable4, new ArrayList<Rule>(Arrays.asList(Table4Rules)));
 		this.table2RulesMap.put(RuleTable.RuleTable5, new ArrayList<Rule>(Arrays.asList(Table5Rules)));
@@ -41,6 +43,7 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 		this.table2RulesMap.put(RuleTable.RuleTable7, new ArrayList<Rule>(Arrays.asList(Table7Rules)));
 		this.table2RulesMap.put(RuleTable.RuleTable8, new ArrayList<Rule>(Arrays.asList(Table8Rules)));
 		this.table2RulesMap.put(RuleTable.RuleTable9, new ArrayList<Rule>(Arrays.asList(Table9Rules)));
+
 		this.unsupportedRules = unsupportedRules;
 		this.permanentlyOnRules = permanentlyOnRules;
 		this.groupedRuleSets = groupedRuleSets;

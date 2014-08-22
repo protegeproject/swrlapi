@@ -77,7 +77,6 @@ public class SWRLAPIFactory
 		try {
 			OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
 			OWLOntology ontology = ontologyManager.createOntology();
-
 			DefaultPrefixManager prefixManager = createPrefixManager(ontology);
 
 			return SWRLAPIFactory.createOntology(ontology, prefixManager);
