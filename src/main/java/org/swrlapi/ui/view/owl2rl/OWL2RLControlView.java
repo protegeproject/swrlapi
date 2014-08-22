@@ -11,6 +11,9 @@ import javax.swing.JTextArea;
 import org.swrlapi.ui.model.OWL2RLModel;
 import org.swrlapi.ui.view.SWRLAPIView;
 
+/**
+ * @see org.swrlapi.ui.model.OWL2RLModel
+ */
 public class OWL2RLControlView extends JPanel implements SWRLAPIView
 {
 	private static final long serialVersionUID = 1L;

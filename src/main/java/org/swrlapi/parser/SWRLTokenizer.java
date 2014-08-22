@@ -9,10 +9,13 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Tokenizer generates a {@link SWRLParseException} for invalid input and a {@link SWRLIncompleteRuleException} (which
- * is a subclass of {@link SWRLParseException}) for valid but incomplete input.
+ * Tokenizer generates a {@link org.swrlapi.parser.SWRLParseException} for invalid input and
+ * a {@link org.swrlapi.parser.SWRLIncompleteRuleException} (which is a subclass of
+ * {@link org.swrlapi.parser.SWRLParseException}) for valid but incomplete input.
  * 
- * @see SWRLParser
+ * @see org.swrlapi.parser.SWRLParser
+ * @see org.swrlapi.parser.SWRLParseException
+ * @see org.swrlapi.parser.SWRLIncompleteRuleException
  */
 public class SWRLTokenizer
 {

@@ -1,8 +1,9 @@
 package org.swrlapi.bridge.converters;
 
 /**
- * This interface represents converters implemented by target rule engines to convert OWL objects, such as named classes
- * and individuals, and OWL axioms from a native rule engine representation.
+ * This interface represents converters implemented by target rule engines. These converters transform OWLAPI-based OWL
+ * entities, such as named classes, individuals and OWL axioms, to a native rule engine representation of those
+ * entities.
  */
 public interface TargetRuleEngineConverter
 {

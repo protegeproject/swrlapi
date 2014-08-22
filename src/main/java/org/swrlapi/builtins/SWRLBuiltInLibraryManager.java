@@ -23,6 +23,8 @@ import org.swrlapi.exceptions.UnresolvedBuiltInMethodException;
  * This class manages the dynamic loading of SWRL built-in libraries and the invocation of built-ins in those libraries.
  * A library is identified by a prefix and this prefix is used to find and dynamically load a Java class implementing
  * the built-ins in this library.
+ *
+ * @see org.swrlapi.builtins.SWRLBuiltInLibrary
  */
 public abstract class SWRLBuiltInLibraryManager
 {
@@ -203,7 +205,7 @@ public abstract class SWRLBuiltInLibraryManager
 
 		for (int i = 0; i < arguments.size(); i++)
 			if (arguments.get(i) instanceof SWRLMultiValueVariableBuiltInArgument)
-				result.add(Integer.valueOf(i));
+				result.add(i);
 
 		return result;
 	}

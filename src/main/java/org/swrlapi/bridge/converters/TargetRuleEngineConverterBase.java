@@ -4,8 +4,8 @@ import org.swrlapi.bridge.SWRLRuleEngineBridge;
 import org.swrlapi.core.*;
 
 /**
- * This interface represents provides utility methods converters implemented by target rule engines to convert OWL
- * objects, such as named classes and individuals, and OWL axioms from a native rule engine representation.
+ * This interface represents provides utility methods converters implemented by target rule engines to convert
+ * OWLAPI-based OWL entities to a native rule engine representation of those entities.
  */
 public abstract class TargetRuleEngineConverterBase implements TargetRuleEngineConverter
 {

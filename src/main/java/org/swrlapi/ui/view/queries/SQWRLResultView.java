@@ -27,7 +27,11 @@ import org.swrlapi.sqwrl.values.SQWRLResultValue;
 import org.swrlapi.ui.view.SWRLAPIView;
 
 /**
- * A view holding the result for a single SQWRL query
+ * A view holding the result for a single SQWRL query.
+ *
+ * @see org.swrlapi.sqwrl.SQWRLQueryEngine
+ * @see org.swrlapi.sqwrl.SQWRLResult
+ * @see org.swrlapi.ui.view.queries.SQWRLQueryControlView
  */
 public class SQWRLResultView extends JPanel implements SWRLAPIView
 {

@@ -9,6 +9,10 @@ import javax.swing.JCheckBox;
 import org.swrlapi.owl2rl.OWL2RLNames;
 import org.swrlapi.ui.model.OWL2RLModel;
 
+/**
+ * @see org.swrlapi.ui.model.OWL2RLModel
+ * @see org.swrlapi.owl2rl.OWL2RLNames
+ */
 public class OWL2RLRuleTableActivationButton extends JCheckBox implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
@@ -17,30 +21,30 @@ public class OWL2RLRuleTableActivationButton extends JCheckBox implements Action
 	private static final int TOOLTIP_PREFERRED_HEIGHT = 30;
 
 	private final OWL2RLModel owl2RLModel;
-	private final OWL2RLNames.RuleTable table;
+	private final OWL2RLNames.RuleTable ruleTable;
 
-	public OWL2RLRuleTableActivationButton(OWL2RLModel owl2RLModel, OWL2RLNames.RuleTable table)
+	public OWL2RLRuleTableActivationButton(OWL2RLModel owl2RLModel, OWL2RLNames.RuleTable ruleTable)
 	{
-		super(table.toString());
+		super(ruleTable.toString());
 
 		this.owl2RLModel = owl2RLModel;
-		this.table = table;
+		this.ruleTable = ruleTable;
 
 		initialize();
 	}
 
 	public void update()
 	{
-		setSelected(getOWL2RLModel().getOWL2RLEngine().hasEnabledRules(this.table));
+		setSelected(getOWL2RLModel().getOWL2RLEngine().hasEnabledRules(this.ruleTable));
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
 		if (isSelected())
-			getOWL2RLModel().getOWL2RLEngine().enableTables(this.table);
+			getOWL2RLModel().getOWL2RLEngine().enableTables(this.ruleTable);
 		else
-			getOWL2RLModel().getOWL2RLEngine().disableTables(this.table);
+			getOWL2RLModel().getOWL2RLEngine().disableTables(this.ruleTable);
 
 		getOWL2RLModel().fireUpdate();
 	}
@@ -48,9 +52,9 @@ public class OWL2RLRuleTableActivationButton extends JCheckBox implements Action
 	private void initialize()
 	{
 		setPreferredSize(new Dimension(TOOLTIP_PREFERRED_WIDTH, TOOLTIP_PREFERRED_HEIGHT));
-		setToolTipText("Click to enable or disable OWL 2 RL table " + this.table.toString() + ".");
-		setEnabled(getOWL2RLModel().getOWL2RLEngine().hasSwitchableRules(this.table));
-		setSelected(getOWL2RLModel().getOWL2RLEngine().hasEnabledRules(this.table));
+		setToolTipText("Click to enable or disable OWL 2 RL ruleTable " + this.ruleTable.toString() + ".");
+		setEnabled(getOWL2RLModel().getOWL2RLEngine().hasSwitchableRules(this.ruleTable));
+		setSelected(getOWL2RLModel().getOWL2RLEngine().hasEnabledRules(this.ruleTable));
 		addActionListener(this);
 	}
 

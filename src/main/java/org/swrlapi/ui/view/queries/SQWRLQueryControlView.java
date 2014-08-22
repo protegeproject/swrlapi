@@ -22,6 +22,9 @@ import org.swrlapi.sqwrl.exceptions.SQWRLInvalidQueryNameException;
 import org.swrlapi.ui.view.SQWRLQuerySelector;
 import org.swrlapi.ui.view.SWRLAPIView;
 
+/**
+ * @see org.swrlapi.sqwrl.SQWRLQueryEngine
+ */
 public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
 {
 	private static final long serialVersionUID = 1L;

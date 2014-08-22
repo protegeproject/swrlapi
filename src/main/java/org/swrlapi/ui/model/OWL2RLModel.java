@@ -3,6 +3,12 @@ package org.swrlapi.ui.model;
 import org.swrlapi.owl2rl.OWL2RLEngine;
 import org.swrlapi.ui.view.owl2rl.OWL2RLRuleTablesView;
 
+/**
+ * A model that reflects the rules in an OWL 2 RL rule table.
+ *
+ * @see org.swrlapi.owl2rl.OWL2RLEngine
+ * @see org.swrlapi.ui.view.owl2rl.OWL2RLRuleTablesView
+ */
 public class OWL2RLModel implements SWRLAPIModel
 {
 	private final OWL2RLRuleTablesView owl2RLRuleTablesView;

@@ -1,7 +1,11 @@
 package org.swrlapi.parser;
 
 /**
- * @see SWRLTokenizer
+ * Defines a basic token class used by the {@link org.swrlapi.parser.SWRLTokenizer)} and
+ * {@link org.swrlapi.parser.SWRLParser}.
+ *
+ * @see org.swrlapi.parser.SWRLTokenizer
+ * @see org.swrlapi.parser.SWRLParser
  */
 public class SWRLToken
 {

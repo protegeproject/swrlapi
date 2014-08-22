@@ -15,16 +15,16 @@ import org.swrlapi.ui.view.rules.SWRLAPIRulesView;
  * Graphical component that presents a SQWRL editor and query execution graphical interface. It can be used to embed
  * SQWRL query editing and execution into an application.
  * 
- * @see SWRLAPIRulesView
+ * @see org.swrlapi.ui.view.rules.SWRLAPIRulesView
  */
 public class SWRLAPIQueriesView extends JSplitPane implements SWRLAPIView
 {
 	private static final long serialVersionUID = 1L;
 
+	private static final double SPLIT_PANE_RESIZE_WEIGHT = 0.6;
+
 	private final SWRLRulesTableView queryTableView;
 	private final SWRLQueryExecutionView queryExecutionView;
-
-	private static final double SPLIT_PANE_RESIZE_WEIGHT = 0.6;
 
 	public SWRLAPIQueriesView(SWRLAPIApplicationModel applicationModel,
 			SWRLAPIApplicationDialogManager applicationDialogManager, Icon queryEngineIcon) throws SWRLAPIException

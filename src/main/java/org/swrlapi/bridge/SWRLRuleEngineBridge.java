@@ -11,10 +11,14 @@ import org.swrlapi.exceptions.SWRLRuleEngineBridgeException;
 import org.swrlapi.owl2rl.OWL2RLPersistenceLayer;
 
 /**
- * A SWRL rule engine bridge defines the interface seen by a target implementation of a SWRL rule engine. The
- * implementation uses this interface primarily to supply axioms that it has inferred and to invoke built-ins.
+ * A SWRL rule engine bridge defines the interface seen by a target implementation of a SWRL rule engine. A target
+ * implementation uses this interface primarily to get a variety of factories that is uses to create OWL axioms
+ * and associated entities during its inference process. It then uses the
+ * {@link #inferOWLAxiom(org.semanticweb.owlapi.model.OWLAxiom)} method to supply the invoker with the axioms
+ * it has inferred. The target rule engine implementation also uses this interface to invoke SWRL built-ins.
  *
- * @see TargetSWRLRuleEngine
+ * @see org.swrlapi.bridge.TargetSWRLRuleEngine
+ * @see org.swrlapi.bridge.SWRLRuleEngineBridgeController
  */
 public interface SWRLRuleEngineBridge
 {
@@ -52,7 +56,7 @@ public interface SWRLRuleEngineBridge
 	OWLLiteralFactory getOWLLiteralFactory();
 
 	/**
-	 * A target rule engine can create SWRK built-in arguments using the OWL factory supplied by the bridge.
+	 * A target rule engine can create SWRL built-in arguments using the OWL factory supplied by the bridge.
 	 */
 	SWRLBuiltInArgumentFactory getSWRLBuiltInArgumentFactory();
 

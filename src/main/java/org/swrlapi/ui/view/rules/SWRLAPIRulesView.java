@@ -21,10 +21,10 @@ public class SWRLAPIRulesView extends JSplitPane implements SWRLAPIView
 {
 	private static final long serialVersionUID = 1L;
 
+	private static final double SPLIT_PANE_RESIZE_WEIGHT = 0.6;
+
 	private final SWRLRulesTableView ruleTablesView;
 	private final SWRLRuleExecutionView ruleExecutionView;
-
-	private static final double SPLIT_PANE_RESIZE_WEIGHT = 0.6;
 
 	public SWRLAPIRulesView(SWRLAPIApplicationModel applicationModel,
 			SWRLAPIApplicationDialogManager applicationDialogManager, Icon ruleEngineIcon) throws SWRLAPIException

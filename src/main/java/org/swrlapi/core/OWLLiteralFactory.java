@@ -14,8 +14,12 @@ import org.swrlapi.core.xsd.XSDTime;
  * used to create {@link SWRLAPILiteral} objects, which wrap {@link OWLLiteral}s to provide additional convenience
  * methods used be the SWRLAPI.
  * 
- * @see OWLLiteral, SWRLAPILiteralFactory
- * @see XSDDate, XSDTime, XSDDatetime, XSDDuration
+ * @see org.semanticweb.owlapi.model.OWLLiteral
+ * @see org.swrlapi.core.SWRLAPILiteralFactory
+ * @see org.swrlapi.core.xsd.XSDDate
+ * @see org.swrlapi.core.xsd.XSDTime
+ * @see org.swrlapi.core.xsd.XSDDateTime
+ * @see org.swrlapi.core.xsd.XSDDuration
  */
 public interface OWLLiteralFactory
 {

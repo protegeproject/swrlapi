@@ -10,7 +10,8 @@ import org.swrlapi.sqwrl.SQWRLQueryEngine;
 /**
  * This interface defines methods that must be provided by a SWRL rule engine in the SWRLAPI.
  * </p>
- * A {@link org.swrlapi.bridge.TargetSWRLRuleEngine} will provide and implementation.
+ * A native rule engine implementation must implement the {@link org.swrlapi.bridge.TargetSWRLRuleEngine}
+ * interface.
  *
  * @see org.swrlapi.bridge.TargetSWRLRuleEngine
  */
@@ -51,18 +52,24 @@ public interface SWRLRuleEngine extends SQWRLQueryEngine
 	void reset() throws SWRLRuleEngineException;
 
 	/**
-	 * Get the underlying controller for the OWL 2 RL reasoner used by the rule and query engine.
+	 * Get the underlying OWL 2 RL reasoner used by the rule and query engine.
 	 */
 	@Override
 	OWL2RLEngine getOWL2RLEngine();
 
+	/**
+	 * Get the name of the native rule engine implementing this SWRL rule engine.
+	 */
 	@Override
 	String getTargetRuleEngineName();
 
+	/**
+	 * Get the version of the native rule engine implementing this SWRL rule engine.
+	 */
 	@Override
 	String getTargetRuleEngineVersion();
 
-	// Convenience methods to display rule engine activity
+	// The following are convenience methods to display rule engine activity
 
 	Set<SWRLAPIRule> getSWRLRules();
 

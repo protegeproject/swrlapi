@@ -8,6 +8,8 @@ import org.swrlapi.exceptions.TargetRuleEngineException;
 
 /**
  * This interface defines a manager to create and manage instances of SWRL rule engines.
+ *
+ * @see org.swrlapi.bridge.TargetSWRLRuleEngine
  */
 public interface SWRLRuleEngineManager
 {

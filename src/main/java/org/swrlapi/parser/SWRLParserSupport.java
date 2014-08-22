@@ -41,7 +41,7 @@ import org.swrlapi.core.SWRLAPIOWLOntology;
 /**
  * Provides support methods used by the {@link SWRLParser}.
  * 
- * @see SWRLParser
+ * @see org.swrlapi.parser.SWRLParser
  */
 public class SWRLParserSupport
 {

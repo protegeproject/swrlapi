@@ -53,6 +53,11 @@ import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
  * A class that must be subclassed by a class implementing a library of SWRL built-in methods.
  * <p/>
  * Provides implementations for a large number of SWRL built-in argument processing methods.
+ *
+ * @see org.swrlapi.builtins.SWRLBuiltInLibrary
+ * @see org.swrlapi.builtins.SWRLBuiltInArgumentHandler
+ * @see org.swrlapi.builtins.SWRLBuiltInArgumentResultHandler
+ * @see org.swrlapi.builtins.SWRLBuiltInArgumentCreator
  */
 public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, SWRLBuiltInArgumentHandler,
 		SWRLBuiltInArgumentResultHandler, SWRLBuiltInArgumentCreator

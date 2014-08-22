@@ -38,6 +38,13 @@ import org.swrlapi.ui.model.SWRLRulesTableModel;
 
 /**
  * Factory for generating some of the core entities defined by the SWRLAPI.
+ *
+ * @see org.swrlapi.core.SWRLAPIOWLOntology
+ * @see org.swrlapi.core.SWRLAPIOntologyProcessor
+ * @see org.swrlapi.core.SWRLRuleEngineFactory
+ * @see org.swrlapi.sqwrl.values.SQWRLResultValueFactory
+ * @see org.swrlapi.core.SWRLAPIOWLDataFactory
+ * @see org.swrlapi.core.SWRLAPIOWLDatatypeFactory
  */
 public class SWRLAPIFactory
 {

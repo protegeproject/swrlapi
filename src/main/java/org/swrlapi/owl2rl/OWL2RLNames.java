@@ -1,6 +1,8 @@
 package org.swrlapi.owl2rl;
 
 /**
+ * Defines names for OWL 2 RL tables and rules and describes the allocation of rules to rule tables.
+ *
  * @see org.swrlapi.owl2rl.OWL2RLEngine
  */
 public interface OWL2RLNames

@@ -4,9 +4,11 @@ import org.swrlapi.ui.controller.SWRLAPIApplicationController;
 
 /**
  * Provides a base application view that can be used to build a MVC-based GUI that uses the SWRLAPI. Used in conjunction
- * with a {@link SWRLAPIApplicationView} and a {@link SWRLAPIApplicationController}.
+ * with a {@link org.swrlapi.ui.view.SWRLAPIApplicationView} and a
+ * {@link org.swrlapi.ui.controller.SWRLAPIApplicationController}.
  * 
- * @see SWRLAPIApplicationModel, SWRLAPIApplicationController
+ * @see org.swrlapi.ui.model.SWRLAPIApplicationModel
+ * @see org.swrlapi.ui.controller.SWRLAPIApplicationController
  */
 public interface SWRLAPIApplicationView extends SWRLAPIView
 {
