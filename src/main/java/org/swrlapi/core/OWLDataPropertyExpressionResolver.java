@@ -14,6 +14,7 @@ import org.swrlapi.exceptions.TargetRuleEngineException;
  * an ID and recorded and retrieved using this class.
  *
  * @see org.semanticweb.owlapi.model.OWLDataPropertyExpression
+ * @see org.swrlapi.core.OWLObjectPropertyExpressionResolver
  */
 public class OWLDataPropertyExpressionResolver
 {

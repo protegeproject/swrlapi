@@ -11,20 +11,20 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
 /**
  * This interface defines a processor processes an SWRLAPI-based OWL ontology (represented by the interface
- * {@link SWRLAPIOWLOntology}) and provides methods manage the SWRL rules and SQWRL queries in that ontology. The
- * processor can also extract SQWRL queries (which are serialized as SWRL rules) from on ontology. SQWRL query
- * management functionality includes managing query results and result generators.
+ * {@link org.swrlapi.core.SWRLAPIOWLOntology}) and provides methods manage the SWRL rules and SQWRL queries in
+ * that ontology. The processor can also extract SQWRL queries (which are serialized as SWRL rules) from on ontology.
+ * SQWRL query management functionality includes managing query results and result generators.
  * <p>
  * Implementations may decide to optimize ontology processing so that, for example, only axioms relevant to the SWRL
  * rules or SQWRL queries in the ontology are extracted.
  * <p>
- * The {@link #processOntology} method should be called before any axioms are retrieved. It will throw a
- * {@link SQWRLException} if it finds invalid SQWRL queries in the ontology.
+ * The {@link #processOntology()} method should be called before any axioms are retrieved. It will throw a
+ * {@link org.swrlapi.sqwrl.exceptions.SQWRLException} if it finds invalid SQWRL queries in the ontology.
  * <p>
  * In addition to extracting SWRL rules and SQWRL queries, this processor also generates OWL declaration axioms for all
  * OWL properties encountered during axiom processing and records their type, IRI and prefixed names using the
- * {@link SWRLAPIIRIResolver} class. This class can be used by rule engines to resolve OWL named objects using their short
- * name.
+ * {@link org.swrlapi.core.SWRLAPIIRIResolver} class. This class can be used by rule engines to resolve OWL
+ * named objects using their short name.
  * 
  * @see org.swrlapi.core.SWRLAPIRule
  * @see org.swrlapi.sqwrl.SQWRLQuery

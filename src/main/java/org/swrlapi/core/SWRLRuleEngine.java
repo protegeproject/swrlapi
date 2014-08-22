@@ -14,6 +14,7 @@ import org.swrlapi.sqwrl.SQWRLQueryEngine;
  * interface.
  *
  * @see org.swrlapi.bridge.TargetSWRLRuleEngine
+ * @see org.swrlapi.core.impl.DefaultSWRLRuleEngine
  */
 public interface SWRLRuleEngine extends SQWRLQueryEngine
 {

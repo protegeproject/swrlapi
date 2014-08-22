@@ -10,10 +10,11 @@ import org.swrlapi.core.xsd.XSDDuration;
 import org.swrlapi.core.xsd.XSDTime;
 
 /**
- * Factory for constructing SWRLAPI literals, which wrap {@link OWLLiteral}s to provide additional convenience methods
- * used be the SWRLAPI.
+ * Factory for constructing SWRLAPI literals, which wrap {@link org.semanticweb.owlapi.model.OWLLiteral}s
+ * to provide additional convenience methods used be the SWRLAPI.
  * 
  * @see org.swrlapi.core.SWRLAPILiteral
+ * @see org.semanticweb.owlapi.model.OWLLiteral
  */
 public interface SWRLAPILiteralFactory
 {

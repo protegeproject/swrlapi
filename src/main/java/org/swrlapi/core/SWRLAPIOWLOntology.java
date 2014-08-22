@@ -14,14 +14,16 @@ import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 
 /**
- * Wraps the OWLAPI's {@link OWLOntology} class with additional functionality used by the SWRLAPI. Primarily the
- * {@link #getSWRLAPIRules()} method extracts {@link SWRLAPIRule} objects from an OWL ontology. This class, which
- * extends the standard OWLAPI {@link SWRLRule} class, provide the richer representation of a SWRL rule required by the
- * SWRLAPI. In particular, the SWRLAPI has a range of types extending the OWLAPI's {@link SWRLDArgument} interface to
- * define arguments to built-in atoms.
+ * Wraps the OWLAPI's {@link org.semanticweb.owlapi.model.OWLOntology} class with additional functionality used by
+ * the SWRLAPI. Primarily the {@link #getSWRLAPIRules()} method extracts {@link org.swrlapi.core.SWRLAPIRule} objects
+ * from an OWL ontology. This class, which extends the standard OWLAPI {@link org.semanticweb.owlapi.model.SWRLRule}
+ * class, provide the richer representation of a SWRL rule required by the SWRLAPI. In particular, the SWRLAPI has a
+ * range of types extending the OWLAPI's {@link org.semanticweb.owlapi.model.SWRLDArgument} interface to define
+ * arguments to built-in atoms.
  * <p>
- * This extension point is defined by the {@link SWRLBuiltInArgument} interface, which extends the OWLAPI's
- * {@link SWRLDArgument}. A {@link SWRLAPIOWLOntology} will construct SWRLAPI rules from the SWRL rules in an
+ * This extension point is defined by the {@link org.swrlapi.builtins.arguments.SWRLBuiltInArgument} interface,
+ * which extends the OWLAPI's {@link org.semanticweb.owlapi.model.SWRLDArgument}. A
+ * {@link org.swrlapi.core.SWRLAPIOWLOntology} will construct SWRLAPI rules from the SWRL rules in an
  * OWLAPI-based ontology to contain these additional built-in argument types.
  * <p>
  * The {@link #startBulkConversion()}, {@link #completeBulkConversion()}, {@link #hasOntologyChanged()}, and
@@ -30,8 +32,9 @@ import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
  * performed more efficiently. The {@link #hasOntologyChanged()} method can be used by rule engines to avoid unnecessary
  * regeneration of knowledge.
  * <p>
- * A SWRLAPI ontology does not directly deal with SQWRL queries. Instead, a {@link SWRLAPIOntologyProcessor} is used to
- * extract SQWRL queries - which are stored as SWRL rules - from a {@link SWRLAPIOWLOntology}.
+ * A SWRLAPI ontology does not directly deal with SQWRL queries. Instead, a
+ * {@link org.swrlapi.core.SWRLAPIOntologyProcessor} is used to extract SQWRL queries - which are stored as SWRL
+ * rules - from a {@link org.swrlapi.core.SWRLAPIOWLOntology}.
  * 
  * @see org.swrlapi.core.SWRLAPIRule
  * @see org.swrlapi.builtins.arguments.SWRLBuiltInArgument

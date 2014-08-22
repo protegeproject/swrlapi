@@ -3,7 +3,7 @@ package org.swrlapi.core.xsd;
 import org.semanticweb.owlapi.model.IRI;
 
 /**
- * Base class the the small set of XSD types provides by the SWRLAPI.
+ * Base class the the small set of XSD types provided by the SWRLAPI.
  */
 public abstract class XSDType<T> implements Comparable<T>
 {

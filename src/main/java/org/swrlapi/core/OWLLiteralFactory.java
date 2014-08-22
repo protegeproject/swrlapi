@@ -10,8 +10,9 @@ import org.swrlapi.core.xsd.XSDDuration;
 import org.swrlapi.core.xsd.XSDTime;
 
 /**
- * A convenience factory to create OWLAPI OWL literals. The SWRLAPI also has a {@link SWRLAPILiteralFactory} that can be
- * used to create {@link SWRLAPILiteral} objects, which wrap {@link OWLLiteral}s to provide additional convenience
+ * A convenience factory to create OWLAPI OWL literals. The SWRLAPI also has a
+ * {@link org.swrlapi.core.SWRLAPILiteralFactory} that can be used to create {@link org.swrlapi.core.SWRLAPILiteral}
+ * objects, which wrap {@link org.semanticweb.owlapi.model.OWLLiteral}s to provide additional convenience
  * methods used be the SWRLAPI.
  * 
  * @see org.semanticweb.owlapi.model.OWLLiteral

@@ -8,11 +8,14 @@ import org.swrlapi.sqwrl.SQWRLQuery;
 
 /**
  * This interface defines the methods that must be provided by an implementation of a SWRLAPI-based SWRL rule engine.
+ * A {@link org.swrlapi.core.SWRLRuleEngine} uses an implementation of this interface to interact with an underlying
+ * rule engine.
  * </p>
  * A SWRL rule engine must also implement an OWL 2 RL reasoner.
  * <p>
  * A target rule engine can communicate with the bridge using the {@link SWRLRuleEngineBridge} interface.
  *
+ * @see org.swrlapi.core.SWRLRuleEngine
  * @see org.swrlapi.owl2rl.OWL2RLEngine
  * @see org.swrlapi.bridge.SWRLRuleEngineBridge
  */
