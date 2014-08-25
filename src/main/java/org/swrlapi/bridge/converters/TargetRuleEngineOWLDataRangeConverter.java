@@ -13,15 +13,15 @@ import org.swrlapi.exceptions.TargetRuleEngineException;
  */
 public interface TargetRuleEngineOWLDataRangeConverter<TR> extends TargetRuleEngineConverter
 {
-	TR convert(OWLDatatype range) throws TargetRuleEngineException;
+	TR convert(OWLDatatype range);
 
-	TR convert(OWLDataOneOf range) throws TargetRuleEngineException;
+	TR convert(OWLDataOneOf range);
 
-	TR convert(OWLDataComplementOf range) throws TargetRuleEngineException;
+	TR convert(OWLDataComplementOf range);
 
-	TR convert(OWLDataIntersectionOf range) throws TargetRuleEngineException;
+	TR convert(OWLDataIntersectionOf range);
 
-	TR convert(OWLDataUnionOf range) throws TargetRuleEngineException;
+	TR convert(OWLDataUnionOf range);
 
-	TR convert(OWLDatatypeRestriction range) throws TargetRuleEngineException;
+	TR convert(OWLDatatypeRestriction range);
 }

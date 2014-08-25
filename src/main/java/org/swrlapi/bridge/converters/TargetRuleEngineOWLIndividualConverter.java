@@ -5,5 +5,5 @@ import org.swrlapi.exceptions.TargetRuleEngineException;
 
 public interface TargetRuleEngineOWLIndividualConverter<TR> extends TargetRuleEngineConverter
 {
-	TR convert(OWLIndividual individual) throws TargetRuleEngineException;
+	TR convert(OWLIndividual individual);
 }

@@ -6,7 +6,7 @@ import org.swrlapi.exceptions.TargetRuleEngineException;
 
 public interface TargetRuleEngineOWLPropertyExpressionConverter<PE> extends TargetRuleEngineConverter
 {
-	PE convert(OWLObjectPropertyExpression propertyExpression) throws TargetRuleEngineException;
+	PE convert(OWLObjectPropertyExpression propertyExpression);
 
-	PE convert(OWLDataPropertyExpression propertyExpression) throws TargetRuleEngineException;
+	PE convert(OWLDataPropertyExpression propertyExpression);
 }

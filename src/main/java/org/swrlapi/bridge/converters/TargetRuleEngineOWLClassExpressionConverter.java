@@ -10,37 +10,37 @@ import org.swrlapi.exceptions.TargetRuleEngineException;
  */
 public interface TargetRuleEngineOWLClassExpressionConverter<C> extends TargetRuleEngineConverter
 {
-	C convert(OWLClass cls) throws TargetRuleEngineException;
+	C convert(OWLClass cls);
 
-	C convert(OWLObjectOneOf objectOneOf) throws TargetRuleEngineException;
+	C convert(OWLObjectOneOf objectOneOf);
 
-	C convert(OWLObjectIntersectionOf objectIntersectionOf) throws TargetRuleEngineException;
+	C convert(OWLObjectIntersectionOf objectIntersectionOf);
 
-	C convert(OWLObjectUnionOf objectUnionOf) throws TargetRuleEngineException;
+	C convert(OWLObjectUnionOf objectUnionOf);
 
-	C convert(OWLObjectSomeValuesFrom objectSomeValuesFrom) throws TargetRuleEngineException;
+	C convert(OWLObjectSomeValuesFrom objectSomeValuesFrom);
 
-	C convert(OWLObjectComplementOf objectComplementOf) throws TargetRuleEngineException;
+	C convert(OWLObjectComplementOf objectComplementOf);
 
-	C convert(OWLDataSomeValuesFrom dataSomeValuesFrom) throws TargetRuleEngineException;
+	C convert(OWLDataSomeValuesFrom dataSomeValuesFrom);
 
-	C convert(OWLDataExactCardinality dataExactCardinality) throws TargetRuleEngineException;
+	C convert(OWLDataExactCardinality dataExactCardinality);
 
-	C convert(OWLObjectExactCardinality objectExactCardinality) throws TargetRuleEngineException;
+	C convert(OWLObjectExactCardinality objectExactCardinality);
 
-	C convert(OWLDataMinCardinality dataMinCardinality) throws TargetRuleEngineException;
+	C convert(OWLDataMinCardinality dataMinCardinality);
 
-	C convert(OWLObjectMinCardinality objectMinCardinality) throws TargetRuleEngineException;
+	C convert(OWLObjectMinCardinality objectMinCardinality);
 
-	C convert(OWLDataMaxCardinality dataMaxCardinality) throws TargetRuleEngineException;
+	C convert(OWLDataMaxCardinality dataMaxCardinality);
 
-	C convert(OWLObjectMaxCardinality objectMaxCardinality) throws TargetRuleEngineException;
+	C convert(OWLObjectMaxCardinality objectMaxCardinality);
 
-	C convert(OWLDataHasValue dataHasValue) throws TargetRuleEngineException;
+	C convert(OWLDataHasValue dataHasValue);
 
-	C convert(OWLObjectHasValue objectHasValue) throws TargetRuleEngineException;
+	C convert(OWLObjectHasValue objectHasValue);
 
-	C convert(OWLObjectAllValuesFrom objectAllValuesFrom) throws TargetRuleEngineException;
+	C convert(OWLObjectAllValuesFrom objectAllValuesFrom);
 
-	C convert(OWLDataAllValuesFrom dataAllValuesFrom) throws TargetRuleEngineException;
+	C convert(OWLDataAllValuesFrom dataAllValuesFrom);
 }
