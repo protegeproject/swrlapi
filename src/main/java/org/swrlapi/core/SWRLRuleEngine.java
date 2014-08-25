@@ -3,6 +3,7 @@ package org.swrlapi.core;
 import java.util.Set;
 
 import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import org.swrlapi.exceptions.SWRLRuleEngineException;
 import org.swrlapi.owl2rl.OWL2RLEngine;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
@@ -69,6 +70,11 @@ public interface SWRLRuleEngine extends SQWRLQueryEngine
 	 */
 	@Override
 	String getTargetRuleEngineVersion();
+
+	/**
+	 * A rule engine must also define an {@link org.semanticweb.owlapi.reasoner.OWLReasoner}.
+	 */
+	OWLReasoner getOWLReasoner();
 
 	// The following are convenience methods to display rule engine activity
 

@@ -1,6 +1,7 @@
 package org.swrlapi.bridge;
 
 import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import org.swrlapi.exceptions.BuiltInException;
 import org.swrlapi.exceptions.TargetRuleEngineException;
 import org.swrlapi.owl2rl.OWL2RLEngine;
@@ -18,11 +19,13 @@ import org.swrlapi.sqwrl.SQWRLQuery;
  * @see org.swrlapi.core.SWRLRuleEngine
  * @see org.swrlapi.owl2rl.OWL2RLEngine
  * @see org.swrlapi.bridge.SWRLRuleEngineBridge
+ * @see org.semanticweb.owlapi.model.OWLAxiom
+ * @see org.swrlapi.sqwrl.SQWRLQuery
  */
 public interface TargetSWRLRuleEngine
 {
 	/**
-	 * Define a target rule engine representation of an OWL axiom. SWRL rules are a type of OWL axiom.
+	 * Define a target rule engine representation of an OWL axiom. Note that SWRL rules are a type of OWL axiom.
 	 */
 	void defineOWLAxiom(OWLAxiom axiom) throws TargetRuleEngineException;
 
@@ -50,6 +53,11 @@ public interface TargetSWRLRuleEngine
 	 * Return version information of the target rule engine.
 	 */
 	String getVersion();
+
+	/**
+	 * A target rule engine must also define an OWL reasoner implementation.
+	 */
+	OWLReasoner getOWLReasoner();
 
 	/**
 	 * Get the underlying OWL 2 RL reasoner provided by the rule engine.

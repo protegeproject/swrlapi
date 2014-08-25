@@ -7,6 +7,7 @@ import org.semanticweb.owlapi.model.AddAxiom;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import org.swrlapi.bridge.SWRLRuleEngineBridgeController;
 import org.swrlapi.bridge.TargetSWRLRuleEngine;
 import org.swrlapi.builtins.SWRLBuiltInBridgeController;
@@ -341,6 +342,8 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 	{
 		return this.targetSWRLRuleEngine.getVersion();
 	}
+
+	public OWLReasoner getOWLReasoner() { return this.targetSWRLRuleEngine.getOWLReasoner(); }
 
 	private void exportSQWRLQueries2TargetRuleEngine(String activeQueryName) throws SWRLRuleEngineException,
 			TargetRuleEngineException, BuiltInException
