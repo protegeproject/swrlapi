@@ -18,27 +18,41 @@ import org.swrlapi.exceptions.TargetRuleEngineException;
  */
 public class OWLDataPropertyExpressionResolver
 {
-	private final Map<String, OWLDataPropertyExpression> propertyExpressionMap;
+	private final Map<String, OWLDataPropertyExpression> id2OWLPropertyExpression;
+	private final Map<OWLDataPropertyExpression, String> owlPropertyExpression2ID;
 
 	public OWLDataPropertyExpressionResolver()
 	{
-		this.propertyExpressionMap = new HashMap<String, OWLDataPropertyExpression>();
+		this.id2OWLPropertyExpression = new HashMap<String, OWLDataPropertyExpression>();
+		this.owlPropertyExpression2ID = new HashMap<OWLDataPropertyExpression, String>();
 	}
 
 	public void reset()
 	{
-		this.propertyExpressionMap.clear();
+		this.id2OWLPropertyExpression.clear();
+		this.owlPropertyExpression2ID.clear();
 	}
 
 	public void record(String propertyExpressionID, OWLDataPropertyExpression propertyExpression)
 	{
-		this.propertyExpressionMap.put(propertyExpressionID, propertyExpression);
+		this.id2OWLPropertyExpression.put(propertyExpressionID, propertyExpression);
+		this.owlPropertyExpression2ID.put(propertyExpression, propertyExpressionID);
+	}
+
+	public boolean records(OWLDataPropertyExpression propertyExpression)
+	{
+		return this.owlPropertyExpression2ID.containsKey(propertyExpression);
+	}
+
+	public String resolve(OWLDataPropertyExpression propertyExpression)
+	{
+		return this.owlPropertyExpression2ID.get(propertyExpression);
 	}
 
 	public OWLDataPropertyExpression resolve(String propertyExpressionID) throws TargetRuleEngineException
 	{
-		if (this.propertyExpressionMap.containsKey(propertyExpressionID))
-			return this.propertyExpressionMap.get(propertyExpressionID);
+		if (this.id2OWLPropertyExpression.containsKey(propertyExpressionID))
+			return this.id2OWLPropertyExpression.get(propertyExpressionID);
 		else
 			throw new TargetRuleEngineException("internal error: no data property expression found with ID "
 					+ propertyExpressionID);

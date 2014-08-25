@@ -19,33 +19,47 @@ import org.swrlapi.exceptions.TargetRuleEngineException;
  * */
 public class OWLClassExpressionResolver
 {
-	private final Map<String, OWLClassExpression> classExpressionMap;
+	private final Map<String, OWLClassExpression> id2OWLClassExpression;
+	private final Map<OWLClassExpression, String> owlClassExpression2ID;
 
 	private final OWLDataFactory owlDataFactory;
 
 	public OWLClassExpressionResolver(OWLDataFactory owlDataFactory)
 	{
-		this.classExpressionMap = new HashMap<String, OWLClassExpression>();
+		this.id2OWLClassExpression = new HashMap<String, OWLClassExpression>();
+		this.owlClassExpression2ID = new HashMap<OWLClassExpression, String>();
 		this.owlDataFactory = owlDataFactory;
 		reset();
 	}
 
 	public void reset()
 	{
-		this.classExpressionMap.clear();
+		this.id2OWLClassExpression.clear();
+		this.owlClassExpression2ID.clear();
 		record(OWLRDFVocabulary.OWL_THING.getPrefixedName(), getOWLDataFactory().getOWLThing());
 		record(OWLRDFVocabulary.OWL_NOTHING.getPrefixedName(), getOWLDataFactory().getOWLNothing());
 	}
 
 	public void record(String classExpressionID, OWLClassExpression classExpression)
 	{
-		this.classExpressionMap.put(classExpressionID, classExpression);
+		this.id2OWLClassExpression.put(classExpressionID, classExpression);
+		this.owlClassExpression2ID.put(classExpression, classExpressionID);
 	}
 
-	public OWLClassExpression resolveOWLClassExpression(String classExpressionID) throws TargetRuleEngineException
+	public boolean records(OWLClassExpression owlClassExpression)
 	{
-		if (this.classExpressionMap.containsKey(classExpressionID))
-			return this.classExpressionMap.get(classExpressionID);
+		return this.owlClassExpression2ID.containsKey(owlClassExpression);
+	}
+
+	public String resolve(OWLClassExpression owlClassExpression)
+	{
+		return this.owlClassExpression2ID.get(owlClassExpression);
+	}
+
+	public OWLClassExpression resolve(String classExpressionID) throws TargetRuleEngineException
+	{
+		if (this.id2OWLClassExpression.containsKey(classExpressionID))
+			return this.id2OWLClassExpression.get(classExpressionID);
 		else
 			throw new TargetRuleEngineException("internal error: no class expression found with ID " + classExpressionID);
 	}
