@@ -56,12 +56,12 @@ public class OWLClassExpressionResolver
 		return this.owlClassExpression2ID.get(owlClassExpression);
 	}
 
-	public OWLClassExpression resolve(String classExpressionID) throws TargetRuleEngineException
+	public OWLClassExpression resolve(String classExpressionID)
 	{
 		if (this.id2OWLClassExpression.containsKey(classExpressionID))
 			return this.id2OWLClassExpression.get(classExpressionID);
 		else
-			throw new TargetRuleEngineException("internal error: no class expression found with ID " + classExpressionID);
+			throw new RuntimeException("internal error: no class expression found with ID " + classExpressionID);
 	}
 
 	private OWLDataFactory getOWLDataFactory()

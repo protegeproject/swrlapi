@@ -14,7 +14,7 @@ import org.swrlapi.exceptions.TargetRuleEngineException;
  * an ID and recorded and retrieved using this class.
  *
  * @see org.semanticweb.owlapi.model.OWLDataPropertyExpression
- * @see OWLObjectPropertyExpressionResolver
+ * @see org.swrlapi.core.resolvers.OWLObjectPropertyExpressionResolver
  */
 public class OWLDataPropertyExpressionResolver
 {
@@ -49,12 +49,11 @@ public class OWLDataPropertyExpressionResolver
 		return this.owlPropertyExpression2ID.get(propertyExpression);
 	}
 
-	public OWLDataPropertyExpression resolve(String propertyExpressionID) throws TargetRuleEngineException
+	public OWLDataPropertyExpression resolve(String propertyExpressionID)
 	{
 		if (this.id2OWLPropertyExpression.containsKey(propertyExpressionID))
 			return this.id2OWLPropertyExpression.get(propertyExpressionID);
 		else
-			throw new TargetRuleEngineException("internal error: no data property expression found with ID "
-					+ propertyExpressionID);
+			throw new RuntimeException("internal error: no data property expression found with ID " + propertyExpressionID);
 	}
 }

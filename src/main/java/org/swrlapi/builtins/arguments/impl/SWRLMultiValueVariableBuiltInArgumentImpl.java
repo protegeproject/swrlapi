@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.semanticweb.owlapi.model.IRI;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
 import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
 
@@ -71,5 +72,11 @@ class SWRLMultiValueVariableBuiltInArgumentImpl extends SWRLVariableBuiltInArgum
 	public <T> T accept(SWRLBuiltInArgumentVisitorEx<T> visitor)
 	{
 		return visitor.visit(this);
+	}
+
+	@Override
+	public void accept(SWRLBuiltInArgumentVisitor visitor)
+	{
+		visitor.visit(this);
 	}
 }

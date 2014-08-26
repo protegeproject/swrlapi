@@ -6,10 +6,7 @@ import org.semanticweb.owlapi.model.OWLObjectVisitor;
 import org.semanticweb.owlapi.model.OWLObjectVisitorEx;
 import org.semanticweb.owlapi.model.SWRLObjectVisitor;
 import org.semanticweb.owlapi.model.SWRLObjectVisitorEx;
-import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
-import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
+import org.swrlapi.builtins.arguments.*;
 
 class SWRLVariableBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements SWRLVariableBuiltInArgument
 {
@@ -113,12 +110,6 @@ class SWRLVariableBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements
 		this.isBound = true;
 	}
 
-	@Override
-	public <T> T accept(SWRLBuiltInArgumentVisitorEx<T> visitor)
-	{
-		return visitor.visit(this);
-	}
-
 	public int compareTo(SWRLVariableBuiltInArgument o)
 	{
 		return this.getIRI().compareTo(o.getIRI());
@@ -155,6 +146,18 @@ class SWRLVariableBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements
 		hash = hash + (null == this.builtInResult ? 0 : this.builtInResult.hashCode());
 		hash = hash + (this.isBound ? 1 : 0);
 		return hash;
+	}
+
+	@Override
+	public <T> T accept(SWRLBuiltInArgumentVisitorEx<T> visitor)
+	{
+		return visitor.visit(this);
+	}
+
+	@Override
+	public void accept(SWRLBuiltInArgumentVisitor visitor)
+	{
+		visitor.visit(this);
 	}
 
 	@Override

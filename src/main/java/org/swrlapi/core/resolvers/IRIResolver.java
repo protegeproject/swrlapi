@@ -79,7 +79,7 @@ public class IRIResolver
 		}
 	}
 
-	public IRI prefixedName2IRI(String prefixedName) throws TargetRuleEngineException
+	public IRI prefixedName2IRI(String prefixedName)
 	{
 		if (this.prefixedName2IRI.containsKey(prefixedName))
 			return this.prefixedName2IRI.get(prefixedName);
@@ -87,7 +87,7 @@ public class IRIResolver
 			try {
 				return prefixManager.getIRI(prefixedName);
 			} catch (RuntimeException e) {
-				throw new TargetRuleEngineException("could not find IRI for prefixed name " + prefixedName);
+				throw new RuntimeException("could not find IRI for prefixed name " + prefixedName);
 			}
 		}
 	}

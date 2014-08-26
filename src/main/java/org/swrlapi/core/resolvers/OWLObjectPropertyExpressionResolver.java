@@ -50,12 +50,11 @@ public class OWLObjectPropertyExpressionResolver
 		return this.owlPropertyExpression2ID.get(propertyExpression);
 	}
 
-	public OWLObjectPropertyExpression resolve(String propertyExpressionID) throws TargetRuleEngineException
+	public OWLObjectPropertyExpression resolve(String propertyExpressionID)
 	{
 		if (this.id2OWLPropertyExpression.containsKey(propertyExpressionID))
 			return this.id2OWLPropertyExpression.get(propertyExpressionID);
 		else
-			throw new TargetRuleEngineException("internal error: no object property expression found with ID "
-					+ propertyExpressionID);
+			throw new RuntimeException("internal error: no object property expression found with ID " + propertyExpressionID);
 	}
 }

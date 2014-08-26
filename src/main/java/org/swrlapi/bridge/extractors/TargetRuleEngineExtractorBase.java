@@ -5,9 +5,14 @@ import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.swrlapi.bridge.SWRLRuleEngineBridge;
 import org.swrlapi.bridge.converters.TargetRuleEngineConverterBase;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
-import org.swrlapi.core.*;
-import org.swrlapi.core.resolvers.*;
-import org.swrlapi.exceptions.TargetRuleEngineException;
+import org.swrlapi.core.OWLLiteralFactory;
+import org.swrlapi.core.SWRLAPIOWLDataFactory;
+import org.swrlapi.core.SWRLAPIOWLDatatypeFactory;
+import org.swrlapi.core.resolvers.IRIResolver;
+import org.swrlapi.core.resolvers.OWLClassExpressionResolver;
+import org.swrlapi.core.resolvers.OWLDataPropertyExpressionResolver;
+import org.swrlapi.core.resolvers.OWLDataRangeResolver;
+import org.swrlapi.core.resolvers.OWLObjectPropertyExpressionResolver;
 
 /**
  * This interface describes a set of methods that will be needed by a target rule engine to create OWLAPI representations
@@ -74,7 +79,7 @@ public abstract class TargetRuleEngineExtractorBase implements TargetRuleEngineE
 		return getBridge().getIRIResolver();
 	}
 
-	protected IRI prefixedName2IRI(String prefixedName) throws TargetRuleEngineException
+	protected IRI prefixedName2IRI(String prefixedName)
 	{
 		return getIRIResolver().prefixedName2IRI(prefixedName);
 	}

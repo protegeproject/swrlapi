@@ -8,10 +8,7 @@ import org.semanticweb.owlapi.model.OWLObjectVisitor;
 import org.semanticweb.owlapi.model.OWLObjectVisitorEx;
 import org.semanticweb.owlapi.model.SWRLObjectVisitor;
 import org.semanticweb.owlapi.model.SWRLObjectVisitorEx;
-import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
-import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
+import org.swrlapi.builtins.arguments.*;
 import org.swrlapi.core.OWLLiteralComparator;
 
 class SWRLLiteralBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements SWRLLiteralBuiltInArgument
@@ -55,12 +52,6 @@ class SWRLLiteralBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements 
 	public SWRLMultiValueVariableBuiltInArgument asMultiValueVariable()
 	{
 		throw new RuntimeException("Not a SWRLMultiVariableBuiltInArgument");
-	}
-
-	@Override
-	public <T> T accept(SWRLBuiltInArgumentVisitorEx<T> visitor)
-	{
-		return visitor.visit(this);
 	}
 
 	@Override
@@ -115,5 +106,17 @@ class SWRLLiteralBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements 
 	public <O> O accept(OWLObjectVisitorEx<O> visitor)
 	{
 		return visitor.visit(this);
+	}
+
+	@Override
+	public <T> T accept(SWRLBuiltInArgumentVisitorEx<T> visitor)
+	{
+		return visitor.visit(this);
+	}
+
+	@Override
+	public void accept(SWRLBuiltInArgumentVisitor visitor)
+	{
+		visitor.visit(this);
 	}
 }

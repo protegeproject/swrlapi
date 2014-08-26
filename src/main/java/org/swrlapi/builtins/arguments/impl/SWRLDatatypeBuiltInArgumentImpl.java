@@ -1,6 +1,7 @@
 package org.swrlapi.builtins.arguments.impl;
 
 import org.semanticweb.owlapi.model.OWLDatatype;
+import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
 import org.swrlapi.builtins.arguments.SWRLDatatypeBuiltInArgument;
 
@@ -25,4 +26,9 @@ class SWRLDatatypeBuiltInArgumentImpl extends SWRLNamedBuiltInArgumentImpl imple
 		return visitor.visit(this);
 	}
 
+	@Override
+	public void accept(SWRLBuiltInArgumentVisitor visitor)
+	{
+		visitor.visit(this);
+	}
 }

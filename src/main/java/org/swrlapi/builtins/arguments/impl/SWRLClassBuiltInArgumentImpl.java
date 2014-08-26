@@ -1,6 +1,7 @@
 package org.swrlapi.builtins.arguments.impl;
 
 import org.semanticweb.owlapi.model.OWLClass;
+import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
 import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
 
@@ -23,5 +24,11 @@ class SWRLClassBuiltInArgumentImpl extends SWRLNamedBuiltInArgumentImpl implemen
 	public <T> T accept(SWRLBuiltInArgumentVisitorEx<T> visitor)
 	{
 		return visitor.visit(this);
+	}
+
+	@Override
+	public void accept(SWRLBuiltInArgumentVisitor visitor)
+	{
+		visitor.visit(this);
 	}
 }

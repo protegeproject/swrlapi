@@ -17,17 +17,17 @@ import org.swrlapi.exceptions.TargetRuleEngineException;
  */
 public interface TargetRuleEngineSWRLBodyAtomConverter<T> extends TargetRuleEngineConverter
 {
-	T convert(SWRLClassAtom atom) throws TargetRuleEngineException;
+	T convert(SWRLClassAtom atom);
 
-	T convert(SWRLDataPropertyAtom atom) throws TargetRuleEngineException;
+	T convert(SWRLDataPropertyAtom atom);
 
-	T convert(SWRLObjectPropertyAtom atom) throws TargetRuleEngineException;
+	T convert(SWRLObjectPropertyAtom atom);
 
-	T convert(SWRLSameIndividualAtom atom) throws TargetRuleEngineException;
+	T convert(SWRLSameIndividualAtom atom);
 
-	T convert(SWRLDifferentIndividualsAtom atom) throws TargetRuleEngineException;
+	T convert(SWRLDifferentIndividualsAtom atom);
 
-	T convert(SWRLAPIBuiltInAtom atom) throws TargetRuleEngineException;
+	T convert(SWRLAPIBuiltInAtom atom);
 
-	T convert(SWRLDataRangeAtom atom) throws TargetRuleEngineException;
+	T convert(SWRLDataRangeAtom atom);
 }

@@ -5,20 +5,19 @@ import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
-import org.swrlapi.exceptions.TargetRuleEngineException;
 
 /**
  * @see org.semanticweb.owlapi.model.OWLDeclarationAxiom
  */
 public interface TargetRuleEngineOWLDeclarationAxiomConverter extends TargetRuleEngineConverter
 {
-	void convert(OWLClass cls) throws TargetRuleEngineException;
+	void convert(OWLClass cls);
 
-	void convert(OWLNamedIndividual individal) throws TargetRuleEngineException;
+	void convert(OWLNamedIndividual individal);
 
-	void convert(OWLObjectProperty property) throws TargetRuleEngineException;
+	void convert(OWLObjectProperty property);
 
-	void convert(OWLDataProperty property) throws TargetRuleEngineException;
+	void convert(OWLDataProperty property);
 
-	void convert(OWLDatatype datatype) throws TargetRuleEngineException;
+	void convert(OWLDatatype datatype);
 }

@@ -6,22 +6,21 @@ import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
-import org.swrlapi.exceptions.TargetRuleEngineException;
 
 /**
  * @see org.semanticweb.owlapi.model.OWLEntity
  */
 public interface TargetRuleEngineOWLEntityConverter<TR> extends TargetRuleEngineConverter
 {
-	TR convert(OWLClass cls) throws TargetRuleEngineException;
+	TR convert(OWLClass cls);
 
-	TR convert(OWLNamedIndividual individual) throws TargetRuleEngineException;
+	TR convert(OWLNamedIndividual individual);
 
-	TR convert(OWLObjectProperty property) throws TargetRuleEngineException;
+	TR convert(OWLObjectProperty property);
 
-	TR convert(OWLDataProperty property) throws TargetRuleEngineException;
+	TR convert(OWLDataProperty property);
 
-	TR convert(OWLAnnotationProperty property) throws TargetRuleEngineException;
+	TR convert(OWLAnnotationProperty property);
 
-	TR convert(OWLDatatype datatype) throws TargetRuleEngineException;
+	TR convert(OWLDatatype datatype);
 }

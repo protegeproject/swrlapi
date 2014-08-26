@@ -9,28 +9,27 @@ import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
-import org.swrlapi.exceptions.TargetRuleEngineException;
 
 /**
  * @see org.swrlapi.builtins.arguments.SWRLBuiltInArgument
  */
 public interface TargetRuleEngineSWRLBuiltInArgumentConverter<T> extends TargetRuleEngineConverter
 {
-	T convert(SWRLVariableBuiltInArgument argument) throws TargetRuleEngineException;
+	T convert(SWRLVariableBuiltInArgument argument);
 
-	T convert(SWRLClassBuiltInArgument argument) throws TargetRuleEngineException;
+	T convert(SWRLClassBuiltInArgument argument);
 
-	T convert(SWRLNamedIndividualBuiltInArgument argument) throws TargetRuleEngineException;
+	T convert(SWRLNamedIndividualBuiltInArgument argument);
 
-	T convert(SWRLObjectPropertyBuiltInArgument argument) throws TargetRuleEngineException;
+	T convert(SWRLObjectPropertyBuiltInArgument argument);
 
-	T convert(SWRLDataPropertyBuiltInArgument argument) throws TargetRuleEngineException;
+	T convert(SWRLDataPropertyBuiltInArgument argument);
 
-	T convert(SWRLAnnotationPropertyBuiltInArgument argument) throws TargetRuleEngineException;
+	T convert(SWRLAnnotationPropertyBuiltInArgument argument);
 
-	T convert(SWRLDatatypeBuiltInArgument argument) throws TargetRuleEngineException;
+	T convert(SWRLDatatypeBuiltInArgument argument);
 
-	T convert(SWRLLiteralBuiltInArgument argument) throws TargetRuleEngineException;
+	T convert(SWRLLiteralBuiltInArgument argument);
 
-	T convert(SQWRLCollectionVariableBuiltInArgument argument) throws TargetRuleEngineException;
+	T convert(SQWRLCollectionVariableBuiltInArgument argument);
 }

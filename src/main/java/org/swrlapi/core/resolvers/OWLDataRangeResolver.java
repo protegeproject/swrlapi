@@ -39,12 +39,12 @@ public class OWLDataRangeResolver
 		this.dataRangeMap.put(dataRangeID, dataRange);
 	}
 
-	public OWLDataRange resolveOWLDataRange(String dataRangeID) throws TargetRuleEngineException
+	public OWLDataRange resolveOWLDataRange(String dataRangeID)
 	{
 		if (this.dataRangeMap.containsKey(dataRangeID))
 			return this.dataRangeMap.get(dataRangeID);
 		else
-			throw new TargetRuleEngineException("internal error: no data range found with ID " + dataRangeID);
+			throw new RuntimeException("internal error: no data range found with ID " + dataRangeID);
 	}
 
 	private OWLDataFactory getOWLDataFactory()

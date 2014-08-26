@@ -2,6 +2,7 @@ package org.swrlapi.builtins.arguments.impl;
 
 import org.semanticweb.owlapi.model.IRI;
 import org.swrlapi.builtins.arguments.SQWRLCollectionVariableBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
 
 class SQWRLCollectionVariableBuiltInArgumentImpl extends SWRLVariableBuiltInArgumentImpl implements
@@ -42,6 +43,12 @@ class SQWRLCollectionVariableBuiltInArgumentImpl extends SWRLVariableBuiltInArgu
 	public <T> T accept(SWRLBuiltInArgumentVisitorEx<T> visitor)
 	{
 		return visitor.visit(this);
+	}
+
+	@Override
+	public void accept(SWRLBuiltInArgumentVisitor visitor)
+	{
+		visitor.visit(this);
 	}
 
 	@Override
