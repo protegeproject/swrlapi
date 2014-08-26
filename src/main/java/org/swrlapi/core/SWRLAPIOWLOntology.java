@@ -8,10 +8,8 @@ import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
-import org.semanticweb.owlapi.model.SWRLDArgument;
-import org.semanticweb.owlapi.model.SWRLRule;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
-import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
+import org.swrlapi.core.resolvers.IRIResolver;
 
 /**
  * Wraps the OWLAPI's {@link org.semanticweb.owlapi.model.OWLOntology} class with additional functionality used by
@@ -49,7 +47,7 @@ public interface SWRLAPIOWLOntology
 
 	SWRLAPIOntologyProcessor getSWRLAPIOntologyProcessor();
 
-	SWRLAPIIRIResolver getIRIResolver();
+	IRIResolver getIRIResolver();
 
 	void startBulkConversion(); // Can be used, for example, to switch off notification during bulk conversion.
 

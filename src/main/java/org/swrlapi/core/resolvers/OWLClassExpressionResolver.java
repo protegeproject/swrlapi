@@ -1,4 +1,4 @@
-package org.swrlapi.core;
+package org.swrlapi.core.resolvers;
 
 import java.util.HashMap;
 import java.util.Map;

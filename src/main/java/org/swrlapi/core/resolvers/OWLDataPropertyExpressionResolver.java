@@ -1,4 +1,4 @@
-package org.swrlapi.core;
+package org.swrlapi.core.resolvers;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +14,7 @@ import org.swrlapi.exceptions.TargetRuleEngineException;
  * an ID and recorded and retrieved using this class.
  *
  * @see org.semanticweb.owlapi.model.OWLDataPropertyExpression
- * @see org.swrlapi.core.OWLObjectPropertyExpressionResolver
+ * @see OWLObjectPropertyExpressionResolver
  */
 public class OWLDataPropertyExpressionResolver
 {

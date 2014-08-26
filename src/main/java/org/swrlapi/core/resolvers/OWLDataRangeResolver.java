@@ -1,4 +1,4 @@
-package org.swrlapi.core;
+package org.swrlapi.core.resolvers;
 
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLDataRange;

@@ -17,6 +17,7 @@ import org.swrlapi.builtins.SWRLBuiltInLibraryManager;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.core.*;
+import org.swrlapi.core.resolvers.*;
 import org.swrlapi.exceptions.BuiltInException;
 import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
 import org.swrlapi.exceptions.SWRLRuleEngineBridgeException;
@@ -116,7 +117,7 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 	}
 
 	@Override
-	public SWRLAPIIRIResolver getIRIResolver()
+	public IRIResolver getIRIResolver()
 	{
 		return this.swrlapiOWLOntology.getIRIResolver();
 	}

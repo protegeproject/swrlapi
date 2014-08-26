@@ -41,7 +41,7 @@ import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
-import org.swrlapi.core.SWRLAPIEntityVisitorEx;
+import org.swrlapi.core.visitors.SWRLAPIEntityVisitorEx;
 
 public class DefaultSWRLAPIRulePrinter implements SWRLAPIEntityVisitorEx<String>
 {

@@ -1,7 +1,7 @@
 package org.swrlapi.bridge.converters;
 
 import org.swrlapi.bridge.SWRLRuleEngineBridge;
-import org.swrlapi.core.*;
+import org.swrlapi.core.resolvers.*;
 
 /**
  * This interface represents provides utility methods converters implemented by target rule engines to convert
@@ -16,7 +16,7 @@ public abstract class TargetRuleEngineConverterBase implements TargetRuleEngineC
 		this.bridge = bridge;
 	}
 
-	protected SWRLAPIIRIResolver getIRIResolver()
+	protected IRIResolver getIRIResolver()
 	{
 		return getBridge().getIRIResolver();
 	}

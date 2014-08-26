@@ -27,6 +27,7 @@ import org.swrlapi.core.impl.DefaultSWRLAPIOWLOntology;
 import org.swrlapi.core.impl.DefaultSWRLAPIOntologyProcessor;
 import org.swrlapi.core.impl.DefaultSWRLAPIRulePrinter;
 import org.swrlapi.core.impl.DefaultSWRLRuleEngineFactory;
+import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
@@ -145,7 +146,7 @@ public class SWRLAPIFactory
 		return new SWRLRulesTableModel(swrlRuleEngine, swrlRulePrinter);
 	}
 
-	public static SWRLAPIOWLDataFactory createSWRLAPIOWLDataFactory(SWRLAPIIRIResolver iriResolver)
+	public static SWRLAPIOWLDataFactory createSWRLAPIOWLDataFactory(IRIResolver iriResolver)
 	{
 		return new DefaultSWRLAPIOWLDataFactory(iriResolver);
 	}
@@ -165,13 +166,13 @@ public class SWRLAPIFactory
 		return new DefaultSWRLAPILiteralFactory(owlLiteralFactory);
 	}
 
-	public static SWRLBuiltInArgumentFactory createSWRLBuiltInArgumentFactory(SWRLAPIIRIResolver iriResolver,
+	public static SWRLBuiltInArgumentFactory createSWRLBuiltInArgumentFactory(IRIResolver iriResolver,
 			OWLLiteralFactory owlLiteralFactory)
 	{
 		return new DefaultSWRLBuiltInArgumentFactory(iriResolver, owlLiteralFactory);
 	}
 
-	public static SQWRLResultValueFactory createSQWRLResultValueFactory(SWRLAPIIRIResolver iriResolver,
+	public static SQWRLResultValueFactory createSQWRLResultValueFactory(IRIResolver iriResolver,
 			OWLLiteralFactory owlLiteralFactory)
 	{
 		return new DefaultSQWRLResultValueFactory(iriResolver, owlLiteralFactory);

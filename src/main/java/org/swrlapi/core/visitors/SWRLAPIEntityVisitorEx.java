@@ -1,4 +1,4 @@
-package org.swrlapi.core;
+package org.swrlapi.core.visitors;
 
 import org.semanticweb.owlapi.model.SWRLObjectVisitorEx;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;

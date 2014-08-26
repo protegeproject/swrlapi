@@ -1,4 +1,4 @@
-package org.swrlapi.core;
+package org.swrlapi.core.resolvers;
 
 import org.semanticweb.owlapi.model.OWLIndividual;
 import org.swrlapi.exceptions.TargetRuleEngineException;

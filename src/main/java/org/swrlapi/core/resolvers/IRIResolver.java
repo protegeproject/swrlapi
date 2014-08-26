@@ -1,4 +1,4 @@
-package org.swrlapi.core;
+package org.swrlapi.core.resolvers;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -23,7 +23,7 @@ import org.swrlapi.exceptions.TargetRuleEngineException;
  *
  * @see org.swrlapi.core.SWRLAPIOntologyProcessor
  */
-public class SWRLAPIIRIResolver
+public class IRIResolver
 {
 	private final DefaultPrefixManager prefixManager;
 	private final Map<String, IRI> prefixedName2IRI;
@@ -37,7 +37,7 @@ public class SWRLAPIIRIResolver
 	private final Set<String> annotationPropertyPrefixedNames;
 	private final Set<String> datatypePrefixedNames;
 
-	public SWRLAPIIRIResolver(DefaultPrefixManager prefixManager)
+	public IRIResolver(DefaultPrefixManager prefixManager)
 	{
 		this.prefixManager = prefixManager;
 

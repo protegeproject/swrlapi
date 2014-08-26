@@ -23,7 +23,7 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
  * <p>
  * In addition to extracting SWRL rules and SQWRL queries, this processor also generates OWL declaration axioms for all
  * OWL properties encountered during axiom processing and records their type, IRI and prefixed names using the
- * {@link org.swrlapi.core.SWRLAPIIRIResolver} class. This class can be used by rule engines to resolve OWL
+ * {@link org.swrlapi.core.resolvers.IRIResolver} class. This class can be used by rule engines to resolve OWL
  * named objects using their short name.
  * 
  * @see org.swrlapi.core.SWRLAPIRule

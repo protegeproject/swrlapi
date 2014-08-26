@@ -40,7 +40,7 @@ import org.swrlapi.builtins.arguments.SWRLNamedBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
 import org.swrlapi.core.SWRLAPIFactory;
-import org.swrlapi.core.SWRLAPIIRIResolver;
+import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIOntologyProcessor;
@@ -51,7 +51,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	private final OWLOntologyManager ontologyManager;
 	private final OWLOntology ontology;
 	private final DefaultPrefixManager prefixManager;
-	private final SWRLAPIIRIResolver iriResolver;
+	private final IRIResolver iriResolver;
 	private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
 	private final SWRLAPIOntologyProcessor swrlapiOntologyProcessor;
 
@@ -60,7 +60,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		this.ontologyManager = ontology.getOWLOntologyManager();
 		this.ontology = ontology;
 		this.prefixManager = prefixManager;
-		this.iriResolver = new SWRLAPIIRIResolver(this.prefixManager);
+		this.iriResolver = new IRIResolver(this.prefixManager);
 		this.swrlapiOWLDataFactory = SWRLAPIFactory.createSWRLAPIOWLDataFactory(iriResolver);
 		this.swrlapiOntologyProcessor = SWRLAPIFactory.createOntologyProcessor(this);
 	}
@@ -115,7 +115,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	}
 
 	@Override
-	public SWRLAPIIRIResolver getIRIResolver()
+	public IRIResolver getIRIResolver()
 	{
 		return getSWRLAPIOWLDataFactory().getIRIResolver();
 	}

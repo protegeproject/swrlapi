@@ -11,9 +11,9 @@ import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
-import org.semanticweb.owlapi.model.SWRLRule;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
+import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 
 /**
@@ -45,7 +45,7 @@ public interface SWRLAPIOWLDataFactory extends OWLDataFactory
 
 	SWRLAPILiteralFactory getSWRLAPILiteralFactory();
 
-	SWRLAPIIRIResolver getIRIResolver();
+	IRIResolver getIRIResolver();
 
 	// We provide convenience methods for defining these declaration axioms, though we do not specialize the
 	// OWLDeclarationAxiom itself.

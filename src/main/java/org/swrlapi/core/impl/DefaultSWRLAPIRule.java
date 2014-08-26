@@ -14,7 +14,7 @@ import org.semanticweb.owlapi.model.SWRLVariable;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
-import org.swrlapi.core.SWRLAPIIRIResolver;
+import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.core.SWRLAPIRule;
 
 import uk.ac.manchester.cs.owl.owlapi.SWRLRuleImpl;
@@ -30,10 +30,10 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 	private List<SWRLAtom> bodyAtoms; // Body atoms can be reorganized during processing
 	private final List<SWRLAtom> headAtoms;
 
-	private final SWRLAPIIRIResolver iriResolver;
+	private final IRIResolver iriResolver;
 
 	public DefaultSWRLAPIRule(String ruleName, List<? extends SWRLAtom> bodyAtoms, List<? extends SWRLAtom> headAtoms,
-			SWRLAPIIRIResolver iriResolver, boolean active, String comment)
+			IRIResolver iriResolver, boolean active, String comment)
 	{
 		// TODO Rule name
 		super(new HashSet<SWRLAtom>(bodyAtoms), new HashSet<SWRLAtom>(headAtoms), new HashSet<OWLAnnotation>());
@@ -194,7 +194,7 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 		return referencedVariablePrefixedNames;
 	}
 
-	private SWRLAPIIRIResolver getIRIResolver()
+	private IRIResolver getIRIResolver()
 	{
 		return this.iriResolver;
 	}

@@ -56,7 +56,7 @@ import org.semanticweb.owlapi.model.OWLSubObjectPropertyOfAxiom;
 import org.semanticweb.owlapi.model.OWLSubPropertyChainOfAxiom;
 import org.semanticweb.owlapi.model.OWLSymmetricObjectPropertyAxiom;
 import org.semanticweb.owlapi.model.OWLTransitiveObjectPropertyAxiom;
-import org.swrlapi.core.SWRLAPIIRIResolver;
+import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIOntologyProcessor;
@@ -254,7 +254,7 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 
 	/**
 	 * Process currently supported OWL axioms. The processing consists of recording any OWL properties in the processed
-	 * axioms (with an instance of the {@link SWRLAPIIRIResolver} class) and generating declaration axioms for these properties.
+	 * axioms (with an instance of the {@link org.swrlapi.core.resolvers.IRIResolver} class) and generating declaration axioms for these properties.
 	 * <p/>
 	 * TODO The current approach is clunky. A better approach would be to walk the axioms with a visitor and record the
 	 * properties and generate the declaration axioms.
@@ -957,7 +957,7 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 		return getSWRLAPIOWLOntology().getOWLOntology();
 	}
 
-	private SWRLAPIIRIResolver getIRIResolver()
+	private IRIResolver getIRIResolver()
 	{
 		return getSWRLAPIOWLOntology().getIRIResolver();
 	}

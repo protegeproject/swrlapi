@@ -15,7 +15,7 @@ import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.core.OWLLiteralFactory;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
 import org.swrlapi.core.SWRLAPIFactory;
-import org.swrlapi.core.SWRLAPIIRIResolver;
+import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.core.SWRLAPILiteralFactory;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLDatatypeFactory;
@@ -28,14 +28,14 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
 {
 	private static final long serialVersionUID = 1L;
 
-	private final SWRLAPIIRIResolver iriResolver;
+	private final IRIResolver iriResolver;
 	private final OWLLiteralFactory owlLiteralFactory;
 	private final SWRLAPIOWLDatatypeFactory swrlapiOWLDatatypeFactory;
 	private final SWRLAPILiteralFactory swrlapiLiteralFactory;
 	private final SWRLBuiltInArgumentFactory swrlBuiltInArgumentFactory;
 	private final SQWRLResultValueFactory sqwrlResultValueFactory;
 
-	public DefaultSWRLAPIOWLDataFactory(SWRLAPIIRIResolver iriResolver)
+	public DefaultSWRLAPIOWLDataFactory(IRIResolver iriResolver)
 	{
 		this.iriResolver = iriResolver;
 		this.swrlapiOWLDatatypeFactory = SWRLAPIFactory.createSWRLAPIOWLDatatypeFactory();
@@ -127,7 +127,7 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
 	}
 
 	@Override
-	public SWRLAPIIRIResolver getIRIResolver()
+	public IRIResolver getIRIResolver()
 	{
 		return this.iriResolver;
 	}

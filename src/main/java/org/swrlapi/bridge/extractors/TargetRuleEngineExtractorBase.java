@@ -6,6 +6,7 @@ import org.swrlapi.bridge.SWRLRuleEngineBridge;
 import org.swrlapi.bridge.converters.TargetRuleEngineConverterBase;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.core.*;
+import org.swrlapi.core.resolvers.*;
 import org.swrlapi.exceptions.TargetRuleEngineException;
 
 /**
@@ -68,7 +69,7 @@ public abstract class TargetRuleEngineExtractorBase implements TargetRuleEngineE
 		return getBridge().getOWLDataRangeResolver();
 	}
 
-	protected SWRLAPIIRIResolver getIRIResolver()
+	protected IRIResolver getIRIResolver()
 	{
 		return getBridge().getIRIResolver();
 	}

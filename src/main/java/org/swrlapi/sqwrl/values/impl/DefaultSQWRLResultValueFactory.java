@@ -7,7 +7,7 @@ import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
-import org.swrlapi.core.SWRLAPIIRIResolver;
+import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.core.OWLLiteralFactory;
 import org.swrlapi.core.xsd.XSDDate;
 import org.swrlapi.core.xsd.XSDDateTime;
@@ -19,9 +19,9 @@ import org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue;
 public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
 {
 	private final OWLLiteralFactory owlLiteralFactory;
-	private final SWRLAPIIRIResolver iriResolver;
+	private final IRIResolver iriResolver;
 
-	public DefaultSQWRLResultValueFactory(SWRLAPIIRIResolver iriResolver, OWLLiteralFactory owlLiteralFactory)
+	public DefaultSQWRLResultValueFactory(IRIResolver iriResolver, OWLLiteralFactory owlLiteralFactory)
 	{
 		this.owlLiteralFactory = owlLiteralFactory;
 		this.iriResolver = iriResolver;
@@ -181,7 +181,7 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
 		return this.owlLiteralFactory;
 	}
 
-	private SWRLAPIIRIResolver getIRIResolver()
+	private IRIResolver getIRIResolver()
 	{
 		return this.iriResolver;
 	}
