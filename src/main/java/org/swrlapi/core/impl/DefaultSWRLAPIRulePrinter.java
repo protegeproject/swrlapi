@@ -81,12 +81,12 @@ public class DefaultSWRLAPIRulePrinter implements SWRLAPIEntityVisitorEx<String>
 	public String visit(SWRLClassAtom classAtom)
 	{
 		OWLClassExpression classExpression = classAtom.getPredicate();
-		SWRLIArgument argument = classAtom.getArgument();
+		SWRLIArgument iArgument = classAtom.getArgument();
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(visit(classExpression));
 
-		sb.append("(" + visit(argument) + ")");
+		sb.append("(" + visit(iArgument) + ")");
 
 		return sb.toString();
 	}
@@ -95,12 +95,12 @@ public class DefaultSWRLAPIRulePrinter implements SWRLAPIEntityVisitorEx<String>
 	public String visit(SWRLDataRangeAtom dataRangeAtom)
 	{
 		OWLDataRange dataRange = dataRangeAtom.getPredicate();
-		SWRLDArgument argument = dataRangeAtom.getArgument();
+		SWRLDArgument dArgument = dataRangeAtom.getArgument();
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(visit(dataRange));
 
-		sb.append("(" + visit(argument) + ")");
+		sb.append("(" + visit(dArgument) + ")");
 
 		return sb.toString();
 	}
@@ -109,13 +109,13 @@ public class DefaultSWRLAPIRulePrinter implements SWRLAPIEntityVisitorEx<String>
 	public String visit(SWRLObjectPropertyAtom objectPropertyAtom)
 	{
 		OWLObjectPropertyExpression objectPropertyExpression = objectPropertyAtom.getPredicate();
-		SWRLIArgument argument1 = objectPropertyAtom.getFirstArgument();
-		SWRLIArgument argument2 = objectPropertyAtom.getSecondArgument();
+		SWRLIArgument iArgument1 = objectPropertyAtom.getFirstArgument();
+		SWRLIArgument iArgument2 = objectPropertyAtom.getSecondArgument();
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(visit(objectPropertyExpression));
 
-		sb.append("(" + visit(argument1) + ", " + visit(argument2) + ")");
+		sb.append("(" + visit(iArgument1) + ", " + visit(iArgument2) + ")");
 
 		return sb.toString();
 	}
@@ -124,13 +124,13 @@ public class DefaultSWRLAPIRulePrinter implements SWRLAPIEntityVisitorEx<String>
 	public String visit(SWRLDataPropertyAtom dataPropertyAtom)
 	{
 		OWLDataPropertyExpression dataPropertyExpression = dataPropertyAtom.getPredicate();
-		SWRLIArgument argument1 = dataPropertyAtom.getFirstArgument();
-		SWRLDArgument argument2 = dataPropertyAtom.getSecondArgument();
+		SWRLIArgument iArgument1 = dataPropertyAtom.getFirstArgument();
+		SWRLDArgument dArgument2 = dataPropertyAtom.getSecondArgument();
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(visit(dataPropertyExpression));
 
-		sb.append("(" + visit(argument1) + ", " + visit(argument2) + ")");
+		sb.append("(" + visit(iArgument1) + ", " + visit(dArgument2) + ")");
 
 		return sb.toString();
 	}
@@ -166,7 +166,7 @@ public class DefaultSWRLAPIRulePrinter implements SWRLAPIEntityVisitorEx<String>
 		for (SWRLBuiltInArgument argument : swrlapiBuiltInAtom.getBuiltInArguments()) {
 			if (!isFirst)
 				sb.append(", ");
-			// TODO Look at. accept() in SWRLBuiltInArgument and SWRLObject could apply
+			// TODO Look at to get rid of instanceof. accept() in SWRLBuiltInArgument and SWRLObject could apply
 			sb.append(argument.accept((SWRLBuiltInArgumentVisitorEx<String>)this));
 			isFirst = false;
 		}
@@ -247,7 +247,7 @@ public class DefaultSWRLAPIRulePrinter implements SWRLAPIEntityVisitorEx<String>
 
 		if (argument instanceof SWRLBuiltInArgument) {
 			SWRLBuiltInArgument builtInArgument = (SWRLBuiltInArgument)argument;
-			// TODO Look at. accept() in SWRLBuiltInArgument and SWRLObject could apply
+			// TODO Look at to get rid of instanceof. accept() in SWRLBuiltInArgument and SWRLObject could apply
 			sb.append(builtInArgument.accept((SWRLBuiltInArgumentVisitorEx<String>)this));
 		} else if (argument instanceof SWRLLiteralArgument) {
 			SWRLLiteralArgument literalArgument = (SWRLLiteralArgument)argument;
@@ -273,14 +273,16 @@ public class DefaultSWRLAPIRulePrinter implements SWRLAPIEntityVisitorEx<String>
 
 	private String visit(OWLClass cls)
 	{
-		return prefixManager.getPrefixIRI(cls.getIRI());
+		String classNameShortForm = this.prefixManager.getShortForm(cls.getIRI());
+
+		return classNameShortForm.startsWith(":") ? classNameShortForm.substring(1) : classNameShortForm;
 	}
 
 	private String visit(OWLIndividual individual)
 	{
-		if (individual.isNamed())
-			return prefixManager.getPrefixIRI(individual.asOWLNamedIndividual().getIRI());
-		else
+		if (individual.isNamed()) {
+			return visit(individual.asOWLNamedIndividual());
+		} else
 			return individual.toString(); // TODO See if we can get an OWLAPI renderer
 	}
 
@@ -288,37 +290,41 @@ public class DefaultSWRLAPIRulePrinter implements SWRLAPIEntityVisitorEx<String>
 	{
 		if (objectPropertyExpression.isAnonymous())
 			return objectPropertyExpression.toString(); // TODO See if we can get an OWLAPI renderer
-		else {
-			OWLObjectProperty property = objectPropertyExpression.asOWLObjectProperty();
-			return visit(property);
-		}
+		else
+			return visit(objectPropertyExpression.asOWLObjectProperty());
 	}
 
 	private String visit(OWLObjectProperty property)
 	{
-		return prefixManager.getPrefixIRI(property.getIRI());
+		String objectPropertyNameShortForm = prefixManager.getPrefixIRI(property.getIRI());
+
+		return objectPropertyNameShortForm.startsWith(":") ?
+				objectPropertyNameShortForm.substring(1) :
+				objectPropertyNameShortForm;
 	}
 
 	private String visit(OWLDataPropertyExpression dataPropertyExpression)
 	{
 		if (dataPropertyExpression.isAnonymous())
 			return dataPropertyExpression.toString(); // TODO See if we can get an OWLAPI renderer
-		else {
-			OWLDataProperty property = dataPropertyExpression.asOWLDataProperty();
-			return visit(property);
-		}
+		else
+			return visit(dataPropertyExpression.asOWLDataProperty());
 	}
 
 	private String visit(OWLDataProperty property)
 	{
-		return prefixManager.getPrefixIRI(property.getIRI());
+		String dataPropertyNameShortForm = prefixManager.getPrefixIRI(property.getIRI());
+
+		return dataPropertyNameShortForm.startsWith(":") ?
+				dataPropertyNameShortForm.substring(1) :
+				dataPropertyNameShortForm;
 	}
 
 	private String visit(OWLDataRange dataRange)
 	{
 		if (dataRange.isDatatype()) {
 			OWLDatatype datatype = dataRange.asOWLDatatype();
-			return prefixManager.getPrefixIRI(datatype.getIRI());
+			return this.prefixManager.getShortForm(datatype.getIRI());
 		} else
 			return dataRange.toString(); // Use the OWLAPI's rendering
 	}
@@ -327,49 +333,61 @@ public class DefaultSWRLAPIRulePrinter implements SWRLAPIEntityVisitorEx<String>
 	public String visit(SWRLClassBuiltInArgument argument)
 	{
 		OWLClass cls = argument.getOWLClass();
-		return prefixManager.getPrefixIRI(cls.getIRI());
+		String classNameShortForm = this.prefixManager.getShortForm(cls.getIRI());
+
+		return classNameShortForm.startsWith(":") ? classNameShortForm.substring(1) : classNameShortForm;
 	}
 
 	@Override
 	public String visit(SWRLNamedIndividualBuiltInArgument argument)
 	{
 		OWLNamedIndividual individual = argument.getOWLNamedIndividual();
-		return prefixManager.getPrefixIRI(individual.getIRI());
+		String individualNameShortForm = this.prefixManager.getShortForm(individual.getIRI());
+
+		return individualNameShortForm.startsWith(":") ? individualNameShortForm.substring(1) : individualNameShortForm;
 	}
 
 	@Override
 	public String visit(SWRLObjectPropertyBuiltInArgument argument)
 	{
 		OWLObjectProperty property = argument.getOWLObjectProperty();
-		return prefixManager.getPrefixIRI(property.getIRI());
+		String objectPropertyNameShortForm = this.prefixManager.getShortForm(property.getIRI());
+
+		return objectPropertyNameShortForm.startsWith(":") ?
+				objectPropertyNameShortForm.substring(1) : objectPropertyNameShortForm;
 	}
 
 	@Override
 	public String visit(SWRLDataPropertyBuiltInArgument argument)
 	{
 		OWLDataProperty property = argument.getOWLDataProperty();
-		return prefixManager.getPrefixIRI(property.getIRI());
+		String dataPropertyNameShortForm = this.prefixManager.getShortForm(property.getIRI());
+
+		return dataPropertyNameShortForm.startsWith(":") ?
+				dataPropertyNameShortForm.substring(1) : dataPropertyNameShortForm;
 	}
 
 	@Override
 	public String visit(SWRLAnnotationPropertyBuiltInArgument argument)
 	{
 		OWLAnnotationProperty property = argument.getOWLAnnotationProperty();
-		return prefixManager.getPrefixIRI(property.getIRI());
+		String annotationPropertyNameShortForm = this.prefixManager.getShortForm(property.getIRI());
+
+		return annotationPropertyNameShortForm.startsWith(":") ?
+				annotationPropertyNameShortForm.substring(1) : annotationPropertyNameShortForm;
 	}
 
 	@Override
 	public String visit(SWRLDatatypeBuiltInArgument argument)
 	{
 		OWLDatatype datatype = argument.getOWLDatatype();
-		return prefixManager.getPrefixIRI(datatype.getIRI());
+		return this.prefixManager.getShortForm(datatype.getIRI());
 	}
 
 	@Override
 	public String visit(SWRLLiteralBuiltInArgument argument)
 	{
-		OWLLiteral literal = argument.getLiteral();
-		return visit(literal);
+		return visit(argument.getLiteral());
 	}
 
 	@Override
@@ -401,7 +419,7 @@ public class DefaultSWRLAPIRulePrinter implements SWRLAPIEntityVisitorEx<String>
 		OWLDatatype datatype = literal.getDatatype();
 		String value = literal.getLiteral();
 
-		return "\"" + value + "\"^^" + visit(datatype);
+		return "\"" + value + "\"^^\"" + visit(datatype) + "\"";
 	}
 
 	private String variablePrefixedName2VariableName(String variablePrefixedName)

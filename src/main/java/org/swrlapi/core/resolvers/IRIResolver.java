@@ -26,9 +26,9 @@ import org.swrlapi.exceptions.SWRLAPIInternalException;
 public class IRIResolver
 {
 	private final DefaultPrefixManager prefixManager;
+
 	private final Map<String, IRI> prefixedName2IRI;
 	private final Map<IRI, String> iri2PrefixedNameCache;
-
 	private final Set<String> variablePrefixedNames;
 	private final Set<String> classPrefixedNames;
 	private final Set<String> namedIndividualPrefixedNames;
@@ -43,7 +43,6 @@ public class IRIResolver
 
 		this.prefixedName2IRI = new HashMap<String, IRI>();
 		this.iri2PrefixedNameCache = new HashMap<IRI, String>();
-
 		this.variablePrefixedNames = new HashSet<String>();
 		this.classPrefixedNames = new HashSet<String>();
 		this.namedIndividualPrefixedNames = new HashSet<String>();

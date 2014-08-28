@@ -86,7 +86,7 @@ public class SWRLParser
 
 			if (currentToken.getTokenType() == SWRLToken.SWRLTokenType.IMP) { // An empty body is ok
 				if (isInHead)
-					throw new SWRLParseException("Second occurence of " + SWRLTokenizer.IMP_CHAR);
+					throw new SWRLParseException("Second occurrence of " + SWRLTokenizer.IMP_CHAR);
 				isInHead = true;
 				justProcessedAtom = false;
 			} else if (currentToken.getTokenType() == SWRLToken.SWRLTokenType.AND) {

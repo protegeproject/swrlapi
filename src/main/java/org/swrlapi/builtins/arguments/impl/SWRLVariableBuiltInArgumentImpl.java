@@ -11,21 +11,21 @@ import org.swrlapi.exceptions.SWRLBuiltInException;
 
 class SWRLVariableBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements SWRLVariableBuiltInArgument
 {
+	// There is an equals methods defined for this class.
 	private static final long serialVersionUID = 1L;
 
 	private final IRI iri;
 	private final String variablePrefixedName;
 
-	// There is an equals methods defined for this class.
 	private SWRLBuiltInArgument builtInResult; // Used to store result of binding for unbound arguments
 	boolean isBound;
 
 	public SWRLVariableBuiltInArgumentImpl(IRI iri, String variablePrefixedName)
 	{
 		this.iri = iri;
+		this.variablePrefixedName = variablePrefixedName;
 		this.builtInResult = null;
 		this.isBound = true;
-		this.variablePrefixedName = variablePrefixedName;
 	}
 
 	@Override
@@ -61,7 +61,7 @@ class SWRLVariableBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements
 	@Override
 	public String getVariablePrefixedName()
 	{
-		return variablePrefixedName;
+		return this.variablePrefixedName;
 	}
 
 	@Override
@@ -111,44 +111,6 @@ class SWRLVariableBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements
 		this.isBound = true;
 	}
 
-	public int compareTo(SWRLVariableBuiltInArgument o)
-	{
-		return this.getIRI().compareTo(o.getIRI());
-	}
-
-	@Override
-	public int compareTo(OWLObject o)
-	{
-		if (!(o instanceof SWRLVariableBuiltInArgument))
-			return -1;
-
-		SWRLVariableBuiltInArgument other = (SWRLVariableBuiltInArgument)o;
-
-		return compareTo(other);
-	}
-
-	@Override
-	public boolean equals(Object obj)
-	{
-		if (this == obj)
-			return true;
-		if ((obj == null) || (obj.getClass() != this.getClass()))
-			return false;
-		SWRLVariableBuiltInArgumentImpl impl = (SWRLVariableBuiltInArgumentImpl)obj;
-		return super.equals(impl)
-				&& ((this.builtInResult == impl.builtInResult) || (this.builtInResult != null && this.builtInResult
-						.equals(impl.builtInResult)) && this.isBound == impl.isBound);
-	}
-
-	@Override
-	public int hashCode()
-	{
-		int hash = 78;
-		hash = hash + (null == this.builtInResult ? 0 : this.builtInResult.hashCode());
-		hash = hash + (this.isBound ? 1 : 0);
-		return hash;
-	}
-
 	@Override
 	public <T> T accept(SWRLBuiltInArgumentVisitorEx<T> visitor)
 	{
@@ -183,5 +145,43 @@ class SWRLVariableBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements
 	public <O> O accept(OWLObjectVisitorEx<O> visitor)
 	{
 		return visitor.visit(this);
+	}
+
+	private int compareTo(SWRLVariableBuiltInArgument o)
+	{
+		return this.getIRI().compareTo(o.getIRI());
+	}
+
+	@Override
+	public int compareTo(OWLObject o)
+	{
+		if (!(o instanceof SWRLVariableBuiltInArgument))
+			return -1;
+
+		SWRLVariableBuiltInArgument other = (SWRLVariableBuiltInArgument)o;
+
+		return compareTo(other);
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if ((obj == null) || (obj.getClass() != this.getClass()))
+			return false;
+		SWRLVariableBuiltInArgumentImpl impl = (SWRLVariableBuiltInArgumentImpl)obj;
+		return super.equals(impl)
+				&& ((this.builtInResult == impl.builtInResult) || (this.builtInResult != null && this.builtInResult
+				.equals(impl.builtInResult)) && this.isBound == impl.isBound);
+	}
+
+	@Override
+	public int hashCode()
+	{
+		int hash = 78;
+		hash = hash + (null == this.builtInResult ? 0 : this.builtInResult.hashCode());
+		hash = hash + (this.isBound ? 1 : 0);
+		return hash;
 	}
 }

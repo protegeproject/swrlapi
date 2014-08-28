@@ -24,6 +24,12 @@ import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.ui.model.SWRLAPIApplicationModel;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
 
+/**
+ * Modal dialog providing a SWRL rule and SQWRL query editor.
+ *
+ * @see org.swrlapi.core.SWRLAPIRule
+ * @see org.swrlapi.sqwrl.SQWRLQuery
+ */
 public class SWRLRuleEditorDialog extends JDialog
 {
 	private static final long serialVersionUID = 1L;
@@ -34,8 +40,9 @@ public class SWRLRuleEditorDialog extends JDialog
 	private static final String STATUS_LABEL_TITLE = "Status";
 	private static final String OK_BUTTON_TITLE = "Ok";
 	private static final String CANCEL_BUTTON_TITLE = "Cancel";
-
+	private static final String INITIAL_STATUS_TEXT = "Please create or edit rule";
 	private static final String INVALID_RULE_TITLE = "Invalid Rule";
+
 	private static final int BUTTON_PREFERRED_WIDTH = 100;
 	private static final int BUTTON_PREFERRED_HEIGHT = 30;
 	private static final int RULE_EDIT_AREA_COLUMNS = 20;
@@ -63,7 +70,8 @@ public class SWRLRuleEditorDialog extends JDialog
 
 		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 
-		addWindowListener(new WindowAdapter() {
+		addWindowListener(new WindowAdapter()
+		{
 			@Override
 			public void windowClosing(WindowEvent we)
 			{
@@ -80,24 +88,25 @@ public class SWRLRuleEditorDialog extends JDialog
 	{
 		clearEntryFields();
 
-		ruleNameTextField.setText(ruleName);
-		ruleTextTextArea.setText(ruleText);
-		commentTextField.setText(comment);
+		this.ruleNameTextField.setText(ruleName);
+		this.ruleTextTextArea.setText(ruleText);
+		this.commentTextField.setText(comment);
+		this.statusTextField.setText(INITIAL_STATUS_TEXT);
 
-		editMode = true;
+		this.editMode = true;
 	}
 
 	private void clearEntryFields()
 	{
-		ruleNameTextField.setText("");
-		ruleNameTextField.setEnabled(true);
-		ruleTextTextArea.setText("");
-		ruleTextTextArea.setEnabled(true);
-		ruleTextTextArea.setText("");
-		commentTextField.setText("");
-		statusTextField.setText("");
+		this.ruleNameTextField.setText("");
+		this.ruleNameTextField.setEnabled(true);
+		this.ruleTextTextArea.setText("");
+		this.ruleTextTextArea.setEnabled(true);
+		this.ruleTextTextArea.setText("");
+		this.commentTextField.setText("");
+		this.statusTextField.setText("");
 
-		editMode = false;
+		this.editMode = false;
 	}
 
 	private void createComponents()
@@ -105,17 +114,19 @@ public class SWRLRuleEditorDialog extends JDialog
 		Container contentPane = getContentPane();
 
 		JLabel ruleNameLabel = new JLabel(RULE_NAME_TITLE);
-		ruleNameTextField = new JTextField("");
+		this.ruleNameTextField = new JTextField("");
 
-		ruleTextTextArea = new JTextArea("", RULE_EDIT_AREA_COLUMNS, RULE_EDIT_AREA_ROWS);
-		ruleTextTextArea.setBorder(BorderFactory.createLoweredBevelBorder());
+		this.ruleTextTextArea = new JTextArea("", RULE_EDIT_AREA_COLUMNS, RULE_EDIT_AREA_ROWS);
+		this.ruleTextTextArea.setBorder(BorderFactory.createLoweredBevelBorder());
+		this.ruleTextTextArea.setLineWrap(true);
+		this.ruleTextTextArea.setWrapStyleWord(true);
 
 		JLabel commentLabel = new JLabel(COMMENT_LABEL_TITLE);
-		commentTextField = new JTextField("");
+		this.commentTextField = new JTextField("");
 
 		JLabel statusLabel = new JLabel(STATUS_LABEL_TITLE);
-		statusTextField = new JTextField("Please enter or edit rule below");
-		statusTextField.setEnabled(false);
+		this.statusTextField = new JTextField(INITIAL_STATUS_TEXT);
+		this.statusTextField.setEnabled(false);
 
 		JButton cancelButton = new JButton(CANCEL_BUTTON_TITLE);
 		cancelButton.setPreferredSize(new Dimension(BUTTON_PREFERRED_WIDTH, BUTTON_PREFERRED_HEIGHT));
@@ -156,24 +167,20 @@ public class SWRLRuleEditorDialog extends JDialog
 	private class SWRLRuleEditorKeyAdapter extends KeyAdapter
 	{
 		@Override
-		public void keyTyped(KeyEvent event)
+		public void keyReleased(KeyEvent event)
 		{
-			char ch = event.getKeyChar();
 			JTextComponent component = (JTextComponent)event.getSource();
 			try {
-				String ruleText = component.getDocument().getText(0, component.getCaretPosition()).trim();
-				ruleText += ch;
+				String ruleText = component.getText().trim();
 				//System.out.println("ruleText: " + ruleText);
 
 				if (ruleText.length() != 0)
 					getSWRLParser().parseSWRLRule(ruleText, true);
-				statusTextField.setText("Sooper");
+				statusTextField.setText("Ok");
 			} catch (SWRLIncompleteRuleException e) {
 				statusTextField.setText(e.getMessage());
 			} catch (SWRLParseException e) {
 				statusTextField.setText("Error: " + e.getMessage());
-			} catch (BadLocationException e) {
-				// Not much we can do here!
 			}
 		}
 	}
@@ -192,7 +199,10 @@ public class SWRLRuleEditorDialog extends JDialog
 	{
 		private final Component parent;
 
-		public OkSWRLRuleEditActionListener(Component parent) { this.parent = parent; }
+		public OkSWRLRuleEditActionListener(Component parent)
+		{
+			this.parent = parent;
+		}
 
 		@Override
 		public void actionPerformed(ActionEvent e)
