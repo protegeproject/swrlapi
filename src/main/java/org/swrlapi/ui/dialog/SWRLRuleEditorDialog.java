@@ -1,10 +1,6 @@
 package org.swrlapi.ui.dialog;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -33,6 +29,12 @@ public class SWRLRuleEditorDialog extends JDialog
 	private static final long serialVersionUID = 1L;
 
 	private static final String TITLE = "Edit SWRL Rule";
+	private static final String RULE_NAME_TITLE = "Rule";
+	private static final String COMMENT_LABEL_TITLE = "Comment";
+	private static final String STATUS_LABEL_TITLE = "Status";
+	private static final String OK_BUTTON_TITLE = "Ok";
+	private static final String CANCEL_BUTTON_TITLE = "Cancel";
+
 	private static final String INVALID_RULE_TITLE = "Invalid Rule";
 	private static final int BUTTON_PREFERRED_WIDTH = 100;
 	private static final int BUTTON_PREFERRED_HEIGHT = 30;
@@ -42,7 +44,7 @@ public class SWRLRuleEditorDialog extends JDialog
 	private final SWRLAPIApplicationModel applicationModel;
 	private final SWRLAPIApplicationDialogManager applicationDialogManager;
 
-	private JTextField ruleNameTextField, commentTextField, consoleTextField;
+	private JTextField ruleNameTextField, commentTextField, statusTextField;
 	private JTextArea ruleTextTextArea;
 
 	private boolean editMode = false;
@@ -93,6 +95,7 @@ public class SWRLRuleEditorDialog extends JDialog
 		ruleTextTextArea.setEnabled(true);
 		ruleTextTextArea.setText("");
 		commentTextField.setText("");
+		statusTextField.setText("");
 
 		editMode = false;
 	}
@@ -101,50 +104,50 @@ public class SWRLRuleEditorDialog extends JDialog
 	{
 		Container contentPane = getContentPane();
 
-		JLabel ruleNameLabel = new JLabel("Name");
+		JLabel ruleNameLabel = new JLabel(RULE_NAME_TITLE);
 		ruleNameTextField = new JTextField("");
 
-		JLabel ruleTextLabel = new JLabel("Rule");
 		ruleTextTextArea = new JTextArea("", RULE_EDIT_AREA_COLUMNS, RULE_EDIT_AREA_ROWS);
 		ruleTextTextArea.setBorder(BorderFactory.createLoweredBevelBorder());
 
-		JLabel commentLabel = new JLabel("Comment");
+		JLabel commentLabel = new JLabel(COMMENT_LABEL_TITLE);
 		commentTextField = new JTextField("");
 
-		JLabel consoleLabel = new JLabel("Console");
-		consoleTextField = new JTextField("");
+		JLabel statusLabel = new JLabel(STATUS_LABEL_TITLE);
+		statusTextField = new JTextField("Please enter or edit rule below");
+		statusTextField.setEnabled(false);
 
-		JButton cancelButton = new JButton("Cancel");
+		JButton cancelButton = new JButton(CANCEL_BUTTON_TITLE);
 		cancelButton.setPreferredSize(new Dimension(BUTTON_PREFERRED_WIDTH, BUTTON_PREFERRED_HEIGHT));
 		cancelButton.addActionListener(new CancelSWRLRuleEditActionListener());
 
-		JButton okButton = new JButton("OK");
+		JButton okButton = new JButton(OK_BUTTON_TITLE);
 		okButton.setPreferredSize(new Dimension(BUTTON_PREFERRED_WIDTH, BUTTON_PREFERRED_HEIGHT));
-		okButton.addActionListener(new OkSWRLRuleEditActionListener());
+		okButton.addActionListener(new OkSWRLRuleEditActionListener(contentPane));
 
 		contentPane.setLayout(new BorderLayout());
 
-		JPanel surroundPanel = new JPanel(new BorderLayout());
-		surroundPanel.setBorder(BorderFactory.createLoweredBevelBorder());
-		contentPane.add(surroundPanel, BorderLayout.CENTER);
+		JPanel upperPanel = new JPanel(new GridLayout(6, 2));
+		upperPanel.setBorder(BorderFactory.createEmptyBorder(0, 3, 0, 3));
+		upperPanel.add(ruleNameLabel);
+		upperPanel.add(ruleNameTextField);
+		upperPanel.add(commentLabel);
+		upperPanel.add(commentTextField);
+		upperPanel.add(statusLabel);
+		upperPanel.add(statusTextField);
 
-		JPanel innerPanel = new JPanel(new GridLayout(8, 2));
-
-		surroundPanel.add(innerPanel, BorderLayout.NORTH);
-		surroundPanel.add(ruleTextTextArea, BorderLayout.CENTER);
-
-		innerPanel.add(ruleNameLabel);
-		innerPanel.add(ruleNameTextField);
-		innerPanel.add(commentLabel);
-		innerPanel.add(commentTextField);
-		innerPanel.add(consoleLabel);
-		innerPanel.add(consoleTextField);
-		innerPanel.add(ruleTextLabel);
+		JPanel rulePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		rulePanel.add(ruleTextTextArea);
 
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		buttonPanel.add(cancelButton);
 		buttonPanel.add(okButton);
 
+		JPanel surroundPanel = new JPanel(new BorderLayout());
+		surroundPanel.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
+		contentPane.add(surroundPanel, BorderLayout.CENTER);
+		surroundPanel.add(upperPanel, BorderLayout.NORTH);
+		surroundPanel.add(rulePanel, BorderLayout.CENTER);
 		surroundPanel.add(buttonPanel, BorderLayout.SOUTH);
 
 		pack();
@@ -164,11 +167,11 @@ public class SWRLRuleEditorDialog extends JDialog
 
 				if (ruleText.length() != 0)
 					getSWRLParser().parseSWRLRule(ruleText, true);
-				consoleTextField.setText("Sooper");
+				statusTextField.setText("Sooper");
 			} catch (SWRLIncompleteRuleException e) {
-				consoleTextField.setText(e.getMessage());
+				statusTextField.setText(e.getMessage());
 			} catch (SWRLParseException e) {
-				consoleTextField.setText("Error: " + e.getMessage());
+				statusTextField.setText("Error: " + e.getMessage());
 			} catch (BadLocationException e) {
 				// Not much we can do here!
 			}
@@ -187,6 +190,10 @@ public class SWRLRuleEditorDialog extends JDialog
 
 	private class OkSWRLRuleEditActionListener implements ActionListener
 	{
+		private final Component parent;
+
+		public OkSWRLRuleEditActionListener(Component parent) { this.parent = parent; }
+
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
@@ -202,7 +209,7 @@ public class SWRLRuleEditorDialog extends JDialog
 
 				// TODO Check the rule and name
 			} catch (Exception ex) {
-				getApplicationDialogManager().showErrorMessageDialog(ex.getMessage(), INVALID_RULE_TITLE);
+				getApplicationDialogManager().showErrorMessageDialog(parent, ex.getMessage(), INVALID_RULE_TITLE);
 				errorOccurred = true;
 			}
 

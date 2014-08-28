@@ -1,5 +1,6 @@
 package org.swrlapi.ui.action;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,12 +14,14 @@ public class RunSQWRLQueriesAction implements ActionListener
 	private static final String NO_QUERIES_TITLE = "No SQWRL Queries";
 	private static final String NO_QUERIES_MESSAGE = "No SQWRL queries in ontology";
 
+	private final Component parent;
 	private final SWRLAPIApplicationModel applicationModel;
 	private final SWRLAPIApplicationDialogManager applicationDialogManager;
 
-	public RunSQWRLQueriesAction(SWRLAPIApplicationModel applicationModel,
+	public RunSQWRLQueriesAction(Component parent, SWRLAPIApplicationModel applicationModel,
 			SWRLAPIApplicationDialogManager applicationDialogManager)
 	{
+		this.parent = parent;
 		this.applicationModel = applicationModel;
 		this.applicationDialogManager = applicationDialogManager;
 	}
@@ -27,13 +30,13 @@ public class RunSQWRLQueriesAction implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
 		if (!getSWRLRulesTableModel().hasSWRLRules())
-			getApplicationDialogManager().showMessageDialog(NO_QUERIES_MESSAGE, NO_QUERIES_TITLE);
+			getApplicationDialogManager().showMessageDialog(parent, NO_QUERIES_MESSAGE, NO_QUERIES_TITLE);
 		else {
 			try {
 				// TODO Run the query; get it from getSWRLRulesTableModel()
 			} catch (Exception ex) {
 				ex.printStackTrace();
-				getApplicationDialogManager().showErrorMessageDialog(ex.getMessage(), INVALID_QUERY_TITLE);
+				getApplicationDialogManager().showErrorMessageDialog(parent, ex.getMessage(), INVALID_QUERY_TITLE);
 			}
 		}
 	}

@@ -1,6 +1,6 @@
 package org.swrlapi.ui.view;
 
-import java.awt.BorderLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -100,7 +100,8 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 
 	private void addTableListeners()
 	{
-		this.swrlRulesTable.addMouseListener(new MouseAdapter() {
+		this.swrlRulesTable.addMouseListener(new MouseAdapter()
+		{
 			@Override
 			public void mouseClicked(MouseEvent e)
 			{
@@ -120,7 +121,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 		String ruleComment = getSelectedSWRLRuleComment();
 
 		if (ruleName.length() != 0)
-			this.applicationDialogManager.getSWRLRuleEditorDialog(ruleName, ruleText, ruleComment).setVisible(true);
+			this.applicationDialogManager.getSWRLRuleEditorDialog(this, ruleName, ruleText, ruleComment).setVisible(true);
 	}
 
 	private void createComponents(SWRLAPIApplicationDialogManager applicationDialogManager)
@@ -139,15 +140,15 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 		headingPanel.add(buttonPanel, BorderLayout.EAST);
 
 		JButton addButton = new JButton("Add");
-		addButton.addActionListener(new AddSWRLRuleActionListener(applicationDialogManager));
+		addButton.addActionListener(new AddSWRLRuleActionListener(this, applicationDialogManager));
 		buttonPanel.add(addButton, BorderLayout.WEST);
 
 		JButton editButton = new JButton("Edit");
-		editButton.addActionListener(new EditSWRLRuleActionListener(applicationDialogManager));
+		editButton.addActionListener(new EditSWRLRuleActionListener(this, applicationDialogManager));
 		buttonPanel.add(editButton, BorderLayout.CENTER);
 
 		JButton deleteButton = new JButton("Delete");
-		deleteButton.addActionListener(new DeleteSWRLRuleActionListener(applicationDialogManager));
+		deleteButton.addActionListener(new DeleteSWRLRuleActionListener(this, applicationDialogManager));
 		buttonPanel.add(deleteButton, BorderLayout.EAST);
 
 		add(scrollPane, BorderLayout.CENTER);
@@ -159,31 +160,34 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 	{
 		protected final SWRLAPIApplicationDialogManager applicationDialogManager;
 
-		protected ActionListenerBase(SWRLAPIApplicationDialogManager applicationDialogManager)
+		protected final Component parent;
+
+		protected ActionListenerBase(Component parent, SWRLAPIApplicationDialogManager applicationDialogManager)
 		{
+			this.parent = parent;
 			this.applicationDialogManager = applicationDialogManager;
 		}
 	}
 
 	private class AddSWRLRuleActionListener extends ActionListenerBase
 	{
-		public AddSWRLRuleActionListener(SWRLAPIApplicationDialogManager applicationDialogManager)
+		public AddSWRLRuleActionListener(Component parent, SWRLAPIApplicationDialogManager applicationDialogManager)
 		{
-			super(applicationDialogManager);
+			super(parent, applicationDialogManager);
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
-			this.applicationDialogManager.getCreateSWRLRuleDialog().setVisible(true);
+			this.applicationDialogManager.getSWRLRuleEditorDialog(parent).setVisible(true);
 		}
 	}
 
 	private class EditSWRLRuleActionListener extends ActionListenerBase
 	{
-		public EditSWRLRuleActionListener(SWRLAPIApplicationDialogManager applicationDialogManager)
+		public EditSWRLRuleActionListener(Component parent, SWRLAPIApplicationDialogManager applicationDialogManager)
 		{
-			super(applicationDialogManager);
+			super(parent, applicationDialogManager);
 		}
 
 		@Override
@@ -195,9 +199,9 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 
 	private class DeleteSWRLRuleActionListener extends ActionListenerBase
 	{
-		public DeleteSWRLRuleActionListener(SWRLAPIApplicationDialogManager applicationDialogManager)
+		public DeleteSWRLRuleActionListener(Component parent, SWRLAPIApplicationDialogManager applicationDialogManager)
 		{
-			super(applicationDialogManager);
+			super(parent, applicationDialogManager);
 		}
 
 		@Override
@@ -211,7 +215,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 			String selectedRuleName = getSelectedSWRLRuleName();
 
 			if (SWRLRulesTableView.this.swrlRulesTableModel.hasSWRLRule(selectedRuleName)
-					&& this.applicationDialogManager.showConfirmDialog("Do you really want to delete the rule?", "Delete Rule")) {
+					&& this.applicationDialogManager.showConfirmDialog(parent, "Do you really want to delete the rule?", "Delete Rule")) {
 				SWRLRulesTableView.this.swrlRulesTableModel.removeSWRLRule(selectedRuleName);
 			}
 		}

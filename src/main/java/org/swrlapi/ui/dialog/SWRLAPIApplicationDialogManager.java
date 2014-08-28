@@ -19,45 +19,44 @@ import org.swrlapi.ui.model.SWRLAPIApplicationModel;
  */
 public class SWRLAPIApplicationDialogManager
 {
-	private final SWRLRuleEditorDialog editSWRLRuleDialog;
-	private Component parent;
+	private final SWRLRuleEditorDialog swrlRuleEditorDialog;
 	private File lastDirectory = null;
-
-	// TODO setLocationRelativeTo(Component parent);
 
 	public SWRLAPIApplicationDialogManager(SWRLAPIApplicationModel applicationModel)
 	{
-		this.editSWRLRuleDialog = new SWRLRuleEditorDialog(applicationModel, this);
+		this.swrlRuleEditorDialog = new SWRLRuleEditorDialog(applicationModel, this);
 	}
 
-	public JDialog getCreateSWRLRuleDialog()
+	public JDialog getSWRLRuleEditorDialog(Component parent)
 	{
-		return this.editSWRLRuleDialog;
+		this.swrlRuleEditorDialog.setLocationRelativeTo(parent);
+		return this.swrlRuleEditorDialog;
 	}
 
-	public JDialog getSWRLRuleEditorDialog(String ruleName, String ruleText, String comment)
+	public JDialog getSWRLRuleEditorDialog(Component parent, String ruleName, String ruleText, String comment)
 	{
-		this.editSWRLRuleDialog.setEditData(ruleName, ruleText, comment);
+		this.swrlRuleEditorDialog.setLocationRelativeTo(parent);
+		this.swrlRuleEditorDialog.setEditData(ruleName, ruleText, comment);
 
-		return this.editSWRLRuleDialog;
+		return this.swrlRuleEditorDialog;
 	}
 
-	public int showConfirmCancelDialog(String message, String title)
+	public int showConfirmCancelDialog(Component parent, String message, String title)
 	{
 		return JOptionPane.showConfirmDialog(parent, message, title, JOptionPane.YES_NO_CANCEL_OPTION);
 	}
 
-	public boolean showConfirmDialog(String message, String title)
+	public boolean showConfirmDialog(Component parent, String message, String title)
 	{
 		return JOptionPane.showConfirmDialog(parent, message, title, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
 	}
 
-	public void showErrorMessageDialog(String message, String title)
+	public void showErrorMessageDialog(Component parent, String message, String title)
 	{
 		JOptionPane.showMessageDialog(parent, message, title, JOptionPane.ERROR_MESSAGE);
 	}
 
-	public String showInputDialog(String message, String initialValue)
+	public String showInputDialog(Component parent, String message, String initialValue)
 	{
 		if (initialValue == null) {
 			initialValue = "";
@@ -65,7 +64,7 @@ public class SWRLAPIApplicationDialogManager
 		return JOptionPane.showInputDialog(parent, message, initialValue);
 	}
 
-	public void showMessageDialog(String message, String title)
+	public void showMessageDialog(Component parent, String message, String title)
 	{
 		JOptionPane.showMessageDialog(parent, message, title, JOptionPane.INFORMATION_MESSAGE);
 	}

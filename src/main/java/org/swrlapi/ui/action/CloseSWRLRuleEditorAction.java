@@ -1,5 +1,6 @@
 package org.swrlapi.ui.action;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,10 +12,12 @@ public class CloseSWRLRuleEditorAction implements ActionListener
 {
 	private final SWRLAPIApplicationModel applicationModel;
 	private final SWRLAPIApplicationDialogManager applicationDialogManager;
+	private final Component parent;
 
-	public CloseSWRLRuleEditorAction(SWRLAPIApplicationModel applicationModel,
+	public CloseSWRLRuleEditorAction(Component parent, SWRLAPIApplicationModel applicationModel,
 			SWRLAPIApplicationDialogManager applicationDialogManager)
 	{
+		this.parent = parent;
 		this.applicationModel = applicationModel;
 		this.applicationDialogManager = applicationDialogManager;
 	}
@@ -28,7 +31,8 @@ public class CloseSWRLRuleEditorAction implements ActionListener
 	public void confirmCloseSWRLRuleEditor()
 	{
 		if (hasSWRLRulesTableModel() && getApplicationModel().areSWRLRulesModified()
-				&& getApplicationDialogManager().showConfirmDialog("Close Editor", "Do you really want to close the editor?")) {
+				&& getApplicationDialogManager()
+				.showConfirmDialog(parent, "Close Editor", "Do you really want to close the editor?")) {
 			closeSWRLRuleEditor();
 		} else
 			closeSWRLRuleEditor();
