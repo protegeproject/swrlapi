@@ -16,10 +16,10 @@ import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIOntologyProcessor;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLRuleEngine;
-import org.swrlapi.exceptions.BuiltInException;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
 import org.swrlapi.exceptions.SWRLRuleEngineException;
-import org.swrlapi.exceptions.TargetRuleEngineException;
+import org.swrlapi.exceptions.TargetSWRLRuleEngineException;
 import org.swrlapi.owl2rl.OWL2RLEngine;
 import org.swrlapi.sqwrl.SQWRLQuery;
 import org.swrlapi.sqwrl.SQWRLResult;
@@ -60,7 +60,7 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 
 		try {
 			exportOWLAxioms2TargetRuleEngine(getSWRLAPIOntologyProcessor().getOWLAxioms()); // OWL axioms include SWRL rules
-		} catch (TargetRuleEngineException e) {
+		} catch (TargetSWRLRuleEngineException e) {
 			throw new SWRLRuleEngineException("error exporting knowledge to rule engine: " + e.getMessage(), e);
 		}
 	}
@@ -77,9 +77,9 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 		try {
 			exportOWLAxioms2TargetRuleEngine(getSWRLAPIOntologyProcessor().getOWLAxioms()); // OWL axioms include SWRL rules
 			exportSQWRLQueries2TargetRuleEngine(queryName);
-		} catch (BuiltInException e) {
+		} catch (SWRLBuiltInException e) {
 			throw new SWRLRuleEngineException("error exporting SQWRL query to rule engine: " + e.getMessage(), e);
-		} catch (TargetRuleEngineException e) {
+		} catch (TargetSWRLRuleEngineException e) {
 			throw new SWRLRuleEngineException("error exporting SQWRL query rule engine: " + e.getMessage(), e);
 		}
 	}
@@ -100,7 +100,7 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 			getSWRLAPIOntologyProcessor().processOntology();
 		} catch (SQWRLException e) {
 			throw new SWRLRuleEngineException("error resetting target rule engine: " + e.getMessage(), e);
-		} catch (TargetRuleEngineException e) {
+		} catch (TargetSWRLRuleEngineException e) {
 			throw new SWRLRuleEngineException("error resetting target rule engine: " + e.getMessage(), e);
 		} catch (SWRLBuiltInBridgeException e) {
 			throw new SWRLRuleEngineException("error resetting built-in libraries: " + e.getMessage(), e);
@@ -118,7 +118,7 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 			getTargetSWRLRuleEngine().runRuleEngine();
 		} catch (SQWRLException e) {
 			throw new SWRLRuleEngineException("error running rule engine: " + e.getMessage(), e);
-		} catch (TargetRuleEngineException e) {
+		} catch (TargetSWRLRuleEngineException e) {
 			throw new SWRLRuleEngineException("error running rule engine: " + e.getMessage(), e);
 		}
 	}
@@ -173,9 +173,9 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 			exportSQWRLQueries2TargetRuleEngine();
 		} catch (SWRLRuleEngineException e) {
 			throw new SQWRLException("error processing SQWRL queries: " + e.getMessage(), e);
-		} catch (TargetRuleEngineException e) {
+		} catch (TargetSWRLRuleEngineException e) {
 			throw new SQWRLException("error processing SQWRL queries: " + e.getMessage(), e);
-		} catch (BuiltInException e) {
+		} catch (SWRLBuiltInException e) {
 			throw new SQWRLException("error processing SQWRL queries: " + e.getMessage(), e);
 		}
 
@@ -346,7 +346,7 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 	public OWLReasoner getOWLReasoner() { return this.targetSWRLRuleEngine.getOWLReasoner(); }
 
 	private void exportSQWRLQueries2TargetRuleEngine(String activeQueryName) throws SWRLRuleEngineException,
-			TargetRuleEngineException, BuiltInException
+			TargetSWRLRuleEngineException, SWRLBuiltInException
 	{
 		for (SQWRLQuery query : getSWRLAPIOntologyProcessor().getSQWRLQueries()) {
 			query.setActive(query.getQueryName().equalsIgnoreCase(activeQueryName));
@@ -354,8 +354,8 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 		}
 	}
 
-	private void exportSQWRLQueries2TargetRuleEngine() throws SWRLRuleEngineException, TargetRuleEngineException,
-			BuiltInException
+	private void exportSQWRLQueries2TargetRuleEngine() throws SWRLRuleEngineException, TargetSWRLRuleEngineException,
+			SWRLBuiltInException
 	{
 		for (SQWRLQuery query : getSWRLAPIOntologyProcessor().getSQWRLQueries()) {
 			query.setActive(true);
@@ -364,7 +364,7 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 	}
 
 	private void exportSQWRLQuery2TargetRuleEngine(SQWRLQuery query) throws SWRLRuleEngineException,
-			TargetRuleEngineException, BuiltInException
+			TargetSWRLRuleEngineException, SWRLBuiltInException
 	{
 		getTargetSWRLRuleEngine().defineSQWRLQuery(query);
 	}
@@ -378,7 +378,7 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 	}
 
 	private void exportOWLAxioms2TargetRuleEngine(Set<OWLAxiom> axioms) throws SWRLRuleEngineException,
-			TargetRuleEngineException
+			TargetSWRLRuleEngineException
 	{
 		for (OWLAxiom axiom : axioms) {
 			if (!this.exportedOWLAxioms.contains(axiom))

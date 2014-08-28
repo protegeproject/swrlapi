@@ -2,7 +2,7 @@ package org.swrlapi.core.resolvers;
 
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLDataRange;
-import org.swrlapi.exceptions.TargetRuleEngineException;
+import org.swrlapi.exceptions.SWRLAPIInternalException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +15,7 @@ import java.util.Map;
  * via an ID and recorded and retrieved using this class.
  *
  * @see org.semanticweb.owlapi.model.OWLDataRange
- * */
+ */
 public class OWLDataRangeResolver
 {
 	private final Map<String, OWLDataRange> dataRangeMap;
@@ -44,7 +44,7 @@ public class OWLDataRangeResolver
 		if (this.dataRangeMap.containsKey(dataRangeID))
 			return this.dataRangeMap.get(dataRangeID);
 		else
-			throw new RuntimeException("internal error: no data range found with ID " + dataRangeID);
+			throw new SWRLAPIInternalException("no data range found with ID " + dataRangeID);
 	}
 
 	private OWLDataFactory getOWLDataFactory()

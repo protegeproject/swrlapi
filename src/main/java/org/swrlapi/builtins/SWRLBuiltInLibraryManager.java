@@ -12,12 +12,12 @@ import java.util.Set;
 
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
-import org.swrlapi.exceptions.BuiltInException;
-import org.swrlapi.exceptions.IncompatibleBuiltInClassException;
+import org.swrlapi.exceptions.IncompatibleSWRLBuiltInClassException;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.IncompatibleBuiltInMethodException;
 import org.swrlapi.exceptions.SWRLBuiltInLibraryException;
-import org.swrlapi.exceptions.UnresolvedBuiltInClassException;
-import org.swrlapi.exceptions.UnresolvedBuiltInMethodException;
+import org.swrlapi.exceptions.UnresolvedSWRLBuiltInClassException;
+import org.swrlapi.exceptions.UnresolvedSWRLBuiltInMethodException;
 
 /**
  * This class manages the dynamic loading of SWRL built-in libraries and the invocation of built-ins in those libraries.
@@ -51,7 +51,7 @@ public abstract class SWRLBuiltInLibraryManager
 	 */
 	public static List<List<SWRLBuiltInArgument>> invokeSWRLBuiltIn(SWRLBuiltInBridge bridge, String ruleName,
 			String builtInName, int builtInIndex, boolean isInConsequent, List<SWRLBuiltInArgument> arguments)
-			throws BuiltInException
+			throws SWRLBuiltInException
 	{
 		String prefix = getPrefix(builtInName);
 		String implementationClassName = getBuiltInLibraryImplementationClassName(prefix);
@@ -64,7 +64,7 @@ public abstract class SWRLBuiltInLibraryManager
 				arguments)) {
 
 			if (hasUnboundArguments(arguments)) // Make sure the built-in has bound all of its arguments.
-				throw new BuiltInException("built-in " + builtInName + "(index " + builtInIndex + ") in rule " + ruleName
+				throw new SWRLBuiltInException("built-in " + builtInName + "(index " + builtInIndex + ") in rule " + ruleName
 						+ " returned with unbound arguments");
 
 			processBoundArguments(arguments);
@@ -77,7 +77,7 @@ public abstract class SWRLBuiltInLibraryManager
 		return argumentPatterns;
 	}
 
-	private static void processBoundArguments(List<SWRLBuiltInArgument> arguments) throws BuiltInException
+	private static void processBoundArguments(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{
 		for (int argumentIndex = 0; argumentIndex < arguments.size(); argumentIndex++) {
 			SWRLBuiltInArgument argument = arguments.get(argumentIndex);
@@ -153,7 +153,7 @@ public abstract class SWRLBuiltInLibraryManager
 	 * must have the same number of elements.
 	 */
 	private static Set<List<SWRLBuiltInArgument>> generateBuiltInArgumentPattern(String ruleName, String builtInName,
-			int builtInIndex, List<SWRLBuiltInArgument> arguments) throws BuiltInException
+			int builtInIndex, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{
 		List<Integer> multiValueBuiltInArgumentIndexes = getMultiValueBuiltInArgumentIndexes(arguments);
 		Set<List<SWRLBuiltInArgument>> pattern = new HashSet<List<SWRLBuiltInArgument>>();
@@ -168,7 +168,7 @@ public abstract class SWRLBuiltInLibraryManager
 			int numberOfArgumentsInMultiValueBuiltInArgument = multiValueBuiltInArgument.getNumberOfArguments();
 
 			if (numberOfArgumentsInMultiValueBuiltInArgument < 1)
-				throw new BuiltInException("empty multi-value argument for built-in " + builtInName + "(index " + builtInIndex
+				throw new SWRLBuiltInException("empty multi-value argument for built-in " + builtInName + "(index " + builtInIndex
 						+ ") in rule " + ruleName);
 
 			for (int i = 1; i < multiValueBuiltInArgumentIndexes.size(); i++) {
@@ -176,7 +176,7 @@ public abstract class SWRLBuiltInLibraryManager
 				multiValueBuiltInArgument = getArgumentAsASWRLMultiValueBuiltInArgument(arguments,
 						multiValueBuiltInArgumentIndex);
 				if (numberOfArgumentsInMultiValueBuiltInArgument != multiValueBuiltInArgument.getNumberOfArguments())
-					throw new BuiltInException("all multi-value arguments must have the same number of elements for built-in "
+					throw new SWRLBuiltInException("all multi-value arguments must have the same number of elements for built-in "
 							+ builtInName + "(index " + builtInIndex + ") in rule " + ruleName);
 			}
 
@@ -190,12 +190,12 @@ public abstract class SWRLBuiltInLibraryManager
 	}
 
 	private static SWRLMultiValueVariableBuiltInArgument getArgumentAsASWRLMultiValueBuiltInArgument(
-			List<SWRLBuiltInArgument> arguments, int argumentIndex) throws BuiltInException
+			List<SWRLBuiltInArgument> arguments, int argumentIndex) throws SWRLBuiltInException
 	{
 		if (arguments.get(argumentIndex) instanceof SWRLMultiValueVariableBuiltInArgument)
 			return (SWRLMultiValueVariableBuiltInArgument)arguments.get(argumentIndex);
 		else
-			throw new BuiltInException("expecting milti-argment for (0-indexed) argument #" + argumentIndex);
+			throw new SWRLBuiltInException("expecting milti-argment for (0-indexed) argument #" + argumentIndex);
 	}
 
 	// Find indices of multi-arguments (if any) in a list of arguments.
@@ -211,7 +211,7 @@ public abstract class SWRLBuiltInLibraryManager
 	}
 
 	private static List<SWRLBuiltInArgument> generateArgumentsPattern(List<SWRLBuiltInArgument> arguments,
-			int multiValueBuiltInArgumentArgumentIndex) throws BuiltInException
+			int multiValueBuiltInArgumentArgumentIndex) throws SWRLBuiltInException
 	{
 		List<SWRLBuiltInArgument> result = new ArrayList<SWRLBuiltInArgument>();
 
@@ -227,7 +227,7 @@ public abstract class SWRLBuiltInLibraryManager
 	}
 
 	private static Method resolveBuiltInMethod(String ruleName, SWRLBuiltInLibrary library, String prefix,
-			String builtInMethodName) throws UnresolvedBuiltInMethodException
+			String builtInMethodName) throws UnresolvedSWRLBuiltInMethodException
 	{
 		String key = prefix + ":" + builtInMethodName;
 
@@ -243,14 +243,14 @@ public abstract class SWRLBuiltInLibraryManager
 
 				return method;
 			} catch (Exception e) {
-				throw new UnresolvedBuiltInMethodException(ruleName, prefix, builtInMethodName, e.getMessage(), e);
+				throw new UnresolvedSWRLBuiltInMethodException(ruleName, prefix, builtInMethodName, e.getMessage(), e);
 			}
 		}
 	}
 
 	// TODO Need to get constructor of library to catch exceptions it may throw.
 	private static SWRLBuiltInLibrary loadBuiltInLibraryImpl(String ruleName, String prefix, String className)
-			throws UnresolvedBuiltInClassException, IncompatibleBuiltInClassException, SWRLBuiltInLibraryException
+			throws UnresolvedSWRLBuiltInClassException, IncompatibleSWRLBuiltInClassException, SWRLBuiltInLibraryException
 	{
 		Class<?> swrlBuiltInLibraryClass;
 		SWRLBuiltInLibrary swrlBuiltInLibrary;
@@ -258,7 +258,7 @@ public abstract class SWRLBuiltInLibraryManager
 		try {
 			swrlBuiltInLibraryClass = Class.forName(className);
 		} catch (Exception e) {
-			throw new UnresolvedBuiltInClassException(ruleName, prefix, e.getMessage(), e);
+			throw new UnresolvedSWRLBuiltInClassException(ruleName, prefix, e.getMessage(), e);
 		}
 
 		checkBuiltInMethodsClassCompatibility(ruleName, prefix, swrlBuiltInLibraryClass); // Check implementation class for
@@ -267,13 +267,13 @@ public abstract class SWRLBuiltInLibraryManager
 		try {
 			swrlBuiltInLibrary = (SWRLBuiltInLibrary)swrlBuiltInLibraryClass.newInstance();
 		} catch (InstantiationException e) {
-			throw new IncompatibleBuiltInClassException(ruleName, prefix, className, e.getMessage(), e);
+			throw new IncompatibleSWRLBuiltInClassException(ruleName, prefix, className, e.getMessage(), e);
 		} catch (ExceptionInInitializerError e) {
-			throw new IncompatibleBuiltInClassException(ruleName, prefix, className, e.getMessage(), e);
+			throw new IncompatibleSWRLBuiltInClassException(ruleName, prefix, className, e.getMessage(), e);
 		} catch (IllegalAccessException e) {
-			throw new IncompatibleBuiltInClassException(ruleName, prefix, className, e.getMessage(), e);
+			throw new IncompatibleSWRLBuiltInClassException(ruleName, prefix, className, e.getMessage(), e);
 		} catch (SecurityException e) {
-			throw new IncompatibleBuiltInClassException(ruleName, prefix, className, e.getMessage(), e);
+			throw new IncompatibleSWRLBuiltInClassException(ruleName, prefix, className, e.getMessage(), e);
 		}
 
 		return swrlBuiltInLibrary;
@@ -290,7 +290,7 @@ public abstract class SWRLBuiltInLibraryManager
 
 		exceptionTypes = method.getExceptionTypes();
 
-		if ((exceptionTypes.length != 1) || (exceptionTypes[0] != BuiltInException.class))
+		if ((exceptionTypes.length != 1) || (exceptionTypes[0] != SWRLBuiltInException.class))
 			throw new IncompatibleBuiltInMethodException(ruleName, prefix, builtInURI,
 					"Java method must throw a single exception of type BuiltInException");
 
@@ -314,10 +314,10 @@ public abstract class SWRLBuiltInLibraryManager
 	}
 
 	private static void checkBuiltInMethodsClassCompatibility(String ruleName, String prefix, Class<?> cls)
-			throws IncompatibleBuiltInClassException
+			throws IncompatibleSWRLBuiltInClassException
 	{
 		if (!SWRLBuiltInLibrary.class.isAssignableFrom(cls))
-			throw new IncompatibleBuiltInClassException(ruleName, prefix, cls.getName(),
+			throw new IncompatibleSWRLBuiltInClassException(ruleName, prefix, cls.getName(),
 					"Java class does not extend SWRLBuiltInLibrary", null);
 	}
 }

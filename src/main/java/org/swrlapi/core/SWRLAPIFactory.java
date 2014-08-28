@@ -179,7 +179,7 @@ public class SWRLAPIFactory
 	}
 
 	public static SWRLRuleEngine createQueryEngine(SWRLAPIOWLOntology swrlapiOWLOntology,
-			SWRLRuleEngineManager.TargetSWRLRuleEngineCreator swrlRuleEngineCreator) throws SWRLAPIException
+			SWRLRuleEngineManager.TargetSWRLRuleEngineCreator swrlRuleEngineCreator)
 	{
 		SWRLRuleEngineFactory swrlRuleEngineFactory = SWRLAPIFactory.createSWRLRuleEngineFactory();
 		swrlRuleEngineFactory.registerRuleEngine(swrlRuleEngineCreator);
@@ -235,7 +235,7 @@ public class SWRLAPIFactory
 	{
 		URL url = SWRLAPIFactory.class.getClassLoader().getResource(resourceName);
 		if (url == null)
-			throw new RuntimeException("Could not find resource " + resourceName);
+			throw new SWRLAPIException("Could not find resource " + resourceName);
 		return "file:///" + url.getFile();
 	}
 

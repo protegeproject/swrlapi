@@ -10,6 +10,7 @@ import org.semanticweb.owlapi.model.SWRLObjectVisitor;
 import org.semanticweb.owlapi.model.SWRLObjectVisitorEx;
 import org.swrlapi.builtins.arguments.*;
 import org.swrlapi.core.OWLLiteralComparator;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 
 class SWRLLiteralBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements SWRLLiteralBuiltInArgument
 {
@@ -45,13 +46,13 @@ class SWRLLiteralBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements 
 	@Override
 	public SWRLVariableBuiltInArgument asVariable()
 	{
-		throw new RuntimeException("Not a SWRLVariableBuiltInArgument");
+		throw new SWRLBuiltInException("Not a SWRLVariableBuiltInArgument");
 	}
 
 	@Override
 	public SWRLMultiValueVariableBuiltInArgument asMultiValueVariable()
 	{
-		throw new RuntimeException("Not a SWRLMultiVariableBuiltInArgument");
+		throw new SWRLBuiltInException("Not a SWRLMultiVariableBuiltInArgument");
 	}
 
 	@Override

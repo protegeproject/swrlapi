@@ -5,7 +5,7 @@ import java.util.List;
 import org.nfunk.jep.JEP;
 import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
-import org.swrlapi.exceptions.BuiltInException;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 
 /**
  * Implementations library for SWRL mathematical built-ins.
@@ -31,7 +31,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	 * Returns true if the first argument is equal to the square root of the second argument. If the first argument is
 	 * unbound, bind it to the square root of the second argument.
 	 */
-	public boolean sqrt(List<SWRLBuiltInArgument> arguments) throws BuiltInException
+	public boolean sqrt(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{
 		checkNumberOfArgumentsAtLeast(2, arguments.size());
 
@@ -50,7 +50,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	 * Returns true if the first argument is equal to the natural logarithm (base e) of the second argument. If the first
 	 * argument is unbound, bind it to the natural logarithm of the second argument.
 	 */
-	public boolean log(List<SWRLBuiltInArgument> arguments) throws BuiltInException
+	public boolean log(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{
 		checkNumberOfArgumentsAtLeast(2, arguments.size());
 
@@ -70,7 +70,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	 * may use the values specified by the variables in the optional subsequent arguments. If the first argument is
 	 * unbound, bind it to the result of the expression.
 	 */
-	public boolean eval(List<SWRLBuiltInArgument> arguments) throws BuiltInException
+	public boolean eval(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{
 		checkNumberOfArgumentsAtLeast(2, arguments.size());
 
@@ -92,12 +92,12 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		getJEP().parseExpression(expression);
 
 		if (getJEP().hasError())
-			throw new BuiltInException("exception parsing expression '" + expression + "': " + getJEP().getErrorInfo());
+			throw new SWRLBuiltInException("exception parsing expression '" + expression + "': " + getJEP().getErrorInfo());
 
 		double value = getJEP().getValue();
 
 		if (getJEP().hasError())
-			throw new BuiltInException("exception parsing expression '" + expression + "': " + getJEP().getErrorInfo());
+			throw new SWRLBuiltInException("exception parsing expression '" + expression + "': " + getJEP().getErrorInfo());
 
 		if (isUnboundArgument(0, arguments)) {
 			arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument(value));

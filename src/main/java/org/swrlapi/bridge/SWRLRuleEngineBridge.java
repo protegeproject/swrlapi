@@ -7,7 +7,7 @@ import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.core.*;
 import org.swrlapi.core.resolvers.*;
-import org.swrlapi.exceptions.BuiltInException;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLRuleEngineBridgeException;
 import org.swrlapi.owl2rl.OWL2RLPersistenceLayer;
 
@@ -39,7 +39,7 @@ public interface SWRLRuleEngineBridge
 	 * arguments where the build-in predicate evaluates to true.
 	 */
 	List<List<SWRLBuiltInArgument>> invokeSWRLBuiltIn(String ruleName, String builtInName, int builtInIndex,
-			boolean isInConsequent, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+			boolean isInConsequent, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	/**
 	 * A target rule engine can create OWL axioms using the OWL factory supplied by the bridge.

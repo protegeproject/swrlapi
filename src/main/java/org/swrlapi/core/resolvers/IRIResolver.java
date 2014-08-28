@@ -13,7 +13,7 @@ import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
-import org.swrlapi.exceptions.TargetRuleEngineException;
+import org.swrlapi.exceptions.SWRLAPIInternalException;
 
 /**
  * For simplicity, SWRL rule engine implementations will typically use the prefixed names of OWL named objects to
@@ -75,7 +75,7 @@ public class IRIResolver
 			if (prefixedName != null)
 				return prefixedName;
 			else
-				throw new RuntimeException("could not find prefixed name for IRI " + iri);
+				throw new SWRLAPIInternalException("could not find prefixed name for IRI " + iri);
 		}
 	}
 
@@ -87,7 +87,7 @@ public class IRIResolver
 			try {
 				return prefixManager.getIRI(prefixedName);
 			} catch (RuntimeException e) {
-				throw new RuntimeException("could not find IRI for prefixed name " + prefixedName);
+				throw new SWRLAPIInternalException("could not find IRI for prefixed name " + prefixedName);
 			}
 		}
 	}

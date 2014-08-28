@@ -2,8 +2,8 @@ package org.swrlapi.bridge;
 
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
-import org.swrlapi.exceptions.BuiltInException;
-import org.swrlapi.exceptions.TargetRuleEngineException;
+import org.swrlapi.exceptions.SWRLBuiltInException;
+import org.swrlapi.exceptions.TargetSWRLRuleEngineException;
 import org.swrlapi.owl2rl.OWL2RLEngine;
 import org.swrlapi.sqwrl.SQWRLQuery;
 
@@ -27,22 +27,22 @@ public interface TargetSWRLRuleEngine
 	/**
 	 * Define a target rule engine representation of an OWL axiom. Note that SWRL rules are a type of OWL axiom.
 	 */
-	void defineOWLAxiom(OWLAxiom axiom) throws TargetRuleEngineException;
+	void defineOWLAxiom(OWLAxiom axiom) throws TargetSWRLRuleEngineException;
 
 	/**
 	 * Define a target rule engine representation of a SQWRL query.
 	 */
-	void defineSQWRLQuery(SQWRLQuery query) throws TargetRuleEngineException, BuiltInException;
+	void defineSQWRLQuery(SQWRLQuery query) throws TargetSWRLRuleEngineException, SWRLBuiltInException;
 
 	/**
 	 * Run the rule engine.
 	 */
-	void runRuleEngine() throws TargetRuleEngineException;
+	void runRuleEngine() throws TargetSWRLRuleEngineException;
 
 	/**
 	 * Reset the rule engine.
 	 */
-	void resetRuleEngine() throws TargetRuleEngineException;
+	void resetRuleEngine() throws TargetSWRLRuleEngineException;
 
 	/**
 	 * Return the name of the target rule engine.

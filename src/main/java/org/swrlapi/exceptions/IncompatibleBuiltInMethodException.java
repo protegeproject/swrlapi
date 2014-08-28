@@ -1,6 +1,6 @@
 package org.swrlapi.exceptions;
 
-public class IncompatibleBuiltInMethodException extends BuiltInException
+public class IncompatibleBuiltInMethodException extends SWRLBuiltInException
 {
 	private static final long serialVersionUID = 1L;
 

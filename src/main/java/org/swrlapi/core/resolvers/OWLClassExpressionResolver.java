@@ -6,7 +6,7 @@ import java.util.Map;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
-import org.swrlapi.exceptions.TargetRuleEngineException;
+import org.swrlapi.exceptions.SWRLAPIInternalException;
 
 /**
  * This class is used to keep track of class expressions, typically by a rule engine implementation. OWL 2 RL-based
@@ -16,7 +16,7 @@ import org.swrlapi.exceptions.TargetRuleEngineException;
  * via an ID and recorded and retrieved using this class.
  *
  * @see org.semanticweb.owlapi.model.OWLClassExpression
- * */
+ */
 public class OWLClassExpressionResolver
 {
 	private final Map<String, OWLClassExpression> id2OWLClassExpression;
@@ -61,7 +61,7 @@ public class OWLClassExpressionResolver
 		if (this.id2OWLClassExpression.containsKey(classExpressionID))
 			return this.id2OWLClassExpression.get(classExpressionID);
 		else
-			throw new RuntimeException("internal error: no class expression found with ID " + classExpressionID);
+			throw new SWRLAPIInternalException("no class expression found with ID " + classExpressionID);
 	}
 
 	private OWLDataFactory getOWLDataFactory()

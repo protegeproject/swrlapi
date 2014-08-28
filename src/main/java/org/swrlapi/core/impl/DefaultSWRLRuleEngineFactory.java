@@ -6,7 +6,7 @@ import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.core.SWRLRuleEngineFactory;
 import org.swrlapi.core.SWRLRuleEngineManager;
 import org.swrlapi.exceptions.InvalidSWRLRuleEngineNameException;
-import org.swrlapi.exceptions.NoRegisteredRuleEnginesException;
+import org.swrlapi.exceptions.NoRegisteredSWRLRuleEnginesException;
 import org.swrlapi.exceptions.SWRLRuleEngineException;
 import org.swrlapi.owl2rl.DefaultOWL2RLPersistenceLayer;
 import org.swrlapi.owl2rl.OWL2RLPersistenceLayer;
@@ -26,7 +26,7 @@ public class DefaultSWRLRuleEngineFactory implements SWRLRuleEngineFactory
 
 	/**
 	 * Register a rule engine. The {@link SWRLRuleEngineManager.TargetSWRLRuleEngineCreator} interface specifies a
-	 * {@link SWRLRuleEngineManager.TargetSWRLRuleEngineCreator#create(org.swrlapi.core.SWRLRuleEngineBridge)} method that
+	 * {@link SWRLRuleEngineManager.TargetSWRLRuleEngineCreator#create(org.swrlapi.bridge.SWRLRuleEngineBridge)} method that
 	 * returns an implementation of a {@link org.swrlapi.bridge.TargetSWRLRuleEngine}.
 	 */
 	@Override
@@ -38,29 +38,28 @@ public class DefaultSWRLRuleEngineFactory implements SWRLRuleEngineFactory
 	}
 
 	@Override
-	public SQWRLQueryEngine createSQWRLQueryEngine(SWRLAPIOWLOntology swrlapiOWLOntology) throws SWRLRuleEngineException
+	public SQWRLQueryEngine createSQWRLQueryEngine(SWRLAPIOWLOntology swrlapiOWLOntology)
 	{
 		return createSWRLRuleEngine(swrlapiOWLOntology);
 	}
 
 	@Override
 	public SQWRLQueryEngine createSQWRLQueryEngine(String ruleEngineName, SWRLAPIOWLOntology swrlapiOWLOntology)
-			throws SWRLRuleEngineException
 	{
 		return createSWRLRuleEngine(ruleEngineName, swrlapiOWLOntology);
 	}
 
 	/**
-	 * Create an instance of a rule engine. If no engine is registered, a {@link org.swrlapi.exceptions.NoRegisteredRuleEnginesException} is
+	 * Create an instance of a rule engine. If no engine is registered, a {@link org.swrlapi.exceptions.NoRegisteredSWRLRuleEnginesException} is
 	 * generated.
 	 */
 	@Override
-	public SWRLRuleEngine createSWRLRuleEngine(SWRLAPIOWLOntology swrlapiOWLOntology) throws SWRLRuleEngineException
+	public SWRLRuleEngine createSWRLRuleEngine(SWRLAPIOWLOntology swrlapiOWLOntology)
 	{
 		if (ruleEngineManager.hasRegisteredRuleEngines()) {
 			return createSWRLRuleEngine(ruleEngineManager.getAnyRegisteredRuleEngineName(), swrlapiOWLOntology);
 		} else
-			throw new NoRegisteredRuleEnginesException();
+			throw new NoRegisteredSWRLRuleEnginesException();
 	}
 
 	/**
@@ -69,14 +68,14 @@ public class DefaultSWRLRuleEngineFactory implements SWRLRuleEngineFactory
 	 */
 	@Override
 	public SWRLRuleEngine createSWRLRuleEngine(String ruleEngineName, SWRLAPIOWLOntology swrlapiOWLOntology)
-			throws SWRLRuleEngineException
 	{
 		if (this.ruleEngineManager.isRuleEngineRegistered(ruleEngineName)) {
 			try {
 				OWL2RLPersistenceLayer owl2RLPersistenceLayer = new DefaultOWL2RLPersistenceLayer(swrlapiOWLOntology);
 				DefaultSWRLBridge bridge = new DefaultSWRLBridge(swrlapiOWLOntology, owl2RLPersistenceLayer);
-				TargetSWRLRuleEngine targetSWRLRuleEngine = ruleEngineManager.getRegisteredRuleEngineCreator(ruleEngineName).create(
-						bridge);
+				TargetSWRLRuleEngine targetSWRLRuleEngine = ruleEngineManager.getRegisteredRuleEngineCreator(ruleEngineName)
+						.create(
+								bridge);
 
 				bridge.setTargetSWRLRuleEngine(targetSWRLRuleEngine);
 

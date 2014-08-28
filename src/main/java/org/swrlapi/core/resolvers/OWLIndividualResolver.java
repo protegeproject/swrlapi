@@ -1,7 +1,7 @@
 package org.swrlapi.core.resolvers;
 
 import org.semanticweb.owlapi.model.OWLIndividual;
-import org.swrlapi.exceptions.TargetRuleEngineException;
+import org.swrlapi.exceptions.TargetSWRLRuleEngineException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,11 +36,11 @@ public class OWLIndividualResolver
 		this.individualID2OWLIndividual.put(individualID, individual);
 	}
 
-	public OWLIndividual resolve(String individualID) throws TargetRuleEngineException
+	public OWLIndividual resolve(String individualID) throws TargetSWRLRuleEngineException
 	{
 		if (this.individualID2OWLIndividual.containsKey(individualID))
 			return this.individualID2OWLIndividual.get(individualID);
 		else
-			throw new TargetRuleEngineException("internal error: no individual found with ID " + individualID);
+			throw new TargetSWRLRuleEngineException("internal error: no individual found with ID " + individualID);
 	}
 }

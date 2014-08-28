@@ -23,57 +23,58 @@ import org.swrlapi.core.xsd.XSDDate;
 import org.swrlapi.core.xsd.XSDDateTime;
 import org.swrlapi.core.xsd.XSDDuration;
 import org.swrlapi.core.xsd.XSDTime;
-import org.swrlapi.exceptions.BuiltInException;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 
 /**
  * Methods that can be used by built-ins to create result arguments.
  */
 public interface SWRLBuiltInArgumentCreator
 {
-	SWRLClassBuiltInArgument createClassBuiltInArgument(OWLClass cls) throws BuiltInException;
+	SWRLClassBuiltInArgument createClassBuiltInArgument(OWLClass cls) throws SWRLBuiltInException;
 
 	SWRLNamedIndividualBuiltInArgument createIndividualBuiltInArgument(OWLNamedIndividual individual)
-			throws BuiltInException;
+			throws SWRLBuiltInException;
 
 	SWRLObjectPropertyBuiltInArgument createObjectPropertyBuiltInArgument(OWLObjectProperty property)
-			throws BuiltInException;
+			throws SWRLBuiltInException;
 
-	SWRLDataPropertyBuiltInArgument createDataPropertyBuiltInArgument(OWLDataProperty property) throws BuiltInException;
+	SWRLDataPropertyBuiltInArgument createDataPropertyBuiltInArgument(OWLDataProperty property) throws
+			SWRLBuiltInException;
 
 	SWRLAnnotationPropertyBuiltInArgument createAnnotationPropertyBuiltInArgument(OWLAnnotationProperty property)
-			throws BuiltInException;
+			throws SWRLBuiltInException;
 
-	SWRLDatatypeBuiltInArgument createDatatypeBuiltInArgument(OWLDatatype datatype) throws BuiltInException;
+	SWRLDatatypeBuiltInArgument createDatatypeBuiltInArgument(OWLDatatype datatype) throws SWRLBuiltInException;
 
-	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(String s) throws BuiltInException;
+	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(String s) throws SWRLBuiltInException;
 
-	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(boolean b) throws BuiltInException;
+	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(boolean b) throws SWRLBuiltInException;
 
-	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(Byte b) throws BuiltInException;
+	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(Byte b) throws SWRLBuiltInException;
 
-	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(short s) throws BuiltInException;
+	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(short s) throws SWRLBuiltInException;
 
-	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(int i) throws BuiltInException;
+	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(int i) throws SWRLBuiltInException;
 
-	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(long l) throws BuiltInException;
+	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(long l) throws SWRLBuiltInException;
 
-	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(float f) throws BuiltInException;
+	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(float f) throws SWRLBuiltInException;
 
-	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(double d) throws BuiltInException;
+	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(double d) throws SWRLBuiltInException;
 
-	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(URI uri) throws BuiltInException;
+	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(URI uri) throws SWRLBuiltInException;
 
-	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(XSDDate date) throws BuiltInException;
+	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(XSDDate date) throws SWRLBuiltInException;
 
-	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(XSDTime time) throws BuiltInException;
+	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(XSDTime time) throws SWRLBuiltInException;
 
-	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(XSDDateTime dateTime) throws BuiltInException;
+	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(XSDDateTime dateTime) throws SWRLBuiltInException;
 
-	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(XSDDuration duration) throws BuiltInException;
+	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(XSDDuration duration) throws SWRLBuiltInException;
 
 	SWRLMultiValueVariableBuiltInArgument createSWRLMultiValueVariableBuiltInArgument(IRI variableIRI)
-			throws BuiltInException;
+			throws SWRLBuiltInException;
 
 	SWRLMultiValueVariableBuiltInArgument createSWRLMultiValueVariableBuiltInArgument(IRI variableIRI,
-			List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+			List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 }

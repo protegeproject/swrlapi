@@ -9,7 +9,7 @@ import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
-import org.swrlapi.exceptions.BuiltInException;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 
 /**
  * Implementations library for SWRL Extensions built-ins.
@@ -40,7 +40,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	 * For every pattern of second and subsequent arguments, create an OWL anonymous class and bind it to the first
 	 * argument. If the first argument is already bound when the built-in is called, this method returns true.
 	 */
-	public boolean makeOWLClass(List<SWRLBuiltInArgument> arguments) throws BuiltInException
+	public boolean makeOWLClass(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{
 		checkNumberOfArgumentsAtLeast(2, arguments.size());
 
@@ -69,7 +69,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	 * For every pattern of second and subsequent arguments, create an OWL individual of type OWL:Thing and bind it to the
 	 * first argument. If the first argument is already bound when the built-in is called, this method returns true.
 	 */
-	public boolean makeOWLIndividual(List<SWRLBuiltInArgument> arguments) throws BuiltInException
+	public boolean makeOWLIndividual(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{
 		checkNumberOfArgumentsAtLeast(2, arguments.size());
 
@@ -96,19 +96,19 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	}
 
 	// For backwards compatability
-	public boolean makeOWLThing(List<SWRLBuiltInArgument> arguments) throws BuiltInException
+	public boolean makeOWLThing(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{
 		return makeOWLIndividual(arguments);
 	}
 
 	// For backwards compatability
-	public boolean createOWLThing(List<SWRLBuiltInArgument> arguments) throws BuiltInException
+	public boolean createOWLThing(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{
 		return makeOWLIndividual(arguments);
 	}
 
 	// TODO: check for invocations to swrlx built-ins, which will cause blocking
-	public boolean invokeSWRLBuiltIn(List<SWRLBuiltInArgument> arguments) throws BuiltInException
+	public boolean invokeSWRLBuiltIn(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{
 		checkNumberOfArgumentsAtLeast(2, arguments.size());
 

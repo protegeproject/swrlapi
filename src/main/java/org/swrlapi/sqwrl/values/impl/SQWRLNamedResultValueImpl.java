@@ -1,6 +1,7 @@
 package org.swrlapi.sqwrl.values.impl;
 
 import org.semanticweb.owlapi.model.IRI;
+import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLNamedResultValue;
 
@@ -42,7 +43,7 @@ abstract class SQWRLNamedResultValueImpl implements SQWRLNamedResultValue
 	@Override
 	public SQWRLLiteralResultValue asLiteralResult()
 	{
-		throw new RuntimeException(getClass().getName() + " is not a " + SQWRLLiteralResultValue.class.getName());
+		throw new SQWRLException(getClass().getName() + " is not a " + SQWRLLiteralResultValue.class.getName());
 	}
 
 	@Override

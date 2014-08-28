@@ -4,7 +4,7 @@ import java.util.Set;
 
 import org.swrlapi.bridge.SWRLRuleEngineBridge;
 import org.swrlapi.bridge.TargetSWRLRuleEngine;
-import org.swrlapi.exceptions.TargetRuleEngineException;
+import org.swrlapi.exceptions.TargetSWRLRuleEngineException;
 
 /**
  * This interface defines a manager to create and manage instances of SWRL rule engines.
@@ -29,7 +29,7 @@ public interface SWRLRuleEngineManager
 
 	public interface TargetSWRLRuleEngineCreator
 	{
-		TargetSWRLRuleEngine create(SWRLRuleEngineBridge bridge) throws TargetRuleEngineException;
+		TargetSWRLRuleEngine create(SWRLRuleEngineBridge bridge) throws TargetSWRLRuleEngineException;
 
 		String getRuleEngineName();
 	}

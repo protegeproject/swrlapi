@@ -7,7 +7,7 @@ import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
-import org.swrlapi.exceptions.BuiltInException;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
@@ -53,5 +53,5 @@ public interface SWRLBuiltInBridge
 	 * should be avoided. It is currently used only by the swrlx built-in library.
 	 */
 	List<List<SWRLBuiltInArgument>> invokeSWRLBuiltIn(String ruleName, String builtInName, int builtInIndex,
-			boolean isInConsequent, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+			boolean isInConsequent, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 }

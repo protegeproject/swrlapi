@@ -20,6 +20,7 @@ import org.swrlapi.core.SWRLAPILiteralFactory;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLDatatypeFactory;
 import org.swrlapi.core.SWRLAPIRule;
+import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
@@ -63,7 +64,7 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
 	@Override
 	public SWRLAPIRule getSWRLRule(String ruleName, String ruleText)
 	{
-		throw new RuntimeException("SWRL parser not implemented"); // TODO
+		throw new SWRLAPIException("SWRL parser not implemented"); // TODO
 	}
 
 	@Override

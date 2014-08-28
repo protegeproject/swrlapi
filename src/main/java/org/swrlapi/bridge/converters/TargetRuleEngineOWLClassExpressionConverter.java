@@ -1,7 +1,6 @@
 package org.swrlapi.bridge.converters;
 
 import org.semanticweb.owlapi.model.*;
-import org.swrlapi.exceptions.TargetRuleEngineException;
 
 /**
  * Interface describing the methods required to convert OWL class expressions to a target rule engine format.

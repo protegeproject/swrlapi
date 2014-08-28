@@ -6,7 +6,6 @@ import org.semanticweb.owlapi.model.OWLDataOneOf;
 import org.semanticweb.owlapi.model.OWLDataUnionOf;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLDatatypeRestriction;
-import org.swrlapi.exceptions.TargetRuleEngineException;
 
 /**
  * @see org.semanticweb.owlapi.model.OWLDataRange

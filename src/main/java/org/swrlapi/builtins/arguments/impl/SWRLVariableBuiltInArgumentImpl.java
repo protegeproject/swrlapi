@@ -7,6 +7,7 @@ import org.semanticweb.owlapi.model.OWLObjectVisitorEx;
 import org.semanticweb.owlapi.model.SWRLObjectVisitor;
 import org.semanticweb.owlapi.model.SWRLObjectVisitorEx;
 import org.swrlapi.builtins.arguments.*;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 
 class SWRLVariableBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements SWRLVariableBuiltInArgument
 {
@@ -54,7 +55,7 @@ class SWRLVariableBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements
 	@Override
 	public SWRLMultiValueVariableBuiltInArgument asMultiValueVariable()
 	{
-		throw new RuntimeException("not a SWRLMultiVariableBuiltInArgument");
+		throw new SWRLBuiltInException("not a SWRLMultiVariableBuiltInArgument");
 	}
 
 	@Override
@@ -67,7 +68,7 @@ class SWRLVariableBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements
 	public void setBuiltInResult(SWRLBuiltInArgument builtInResult)
 	{
 		if (!isUnbound())
-			throw new RuntimeException("attempt to bind value to bound argument " + this.toString());
+			throw new SWRLBuiltInException("attempt to bind value to bound argument " + this.toString());
 
 		setBound();
 

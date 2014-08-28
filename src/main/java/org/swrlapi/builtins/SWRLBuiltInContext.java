@@ -1,6 +1,6 @@
 package org.swrlapi.builtins;
 
-import org.swrlapi.exceptions.BuiltInException;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLBuiltInLibraryException;
 
 public interface SWRLBuiltInContext
@@ -14,9 +14,9 @@ public interface SWRLBuiltInContext
 	void invokeResetMethod(SWRLBuiltInBridge bridge) throws SWRLBuiltInLibraryException;
 
 	// Antecedent or consequent handling
-	void checkThatInConsequent() throws BuiltInException;
+	void checkThatInConsequent() throws SWRLBuiltInException;
 
-	void checkThatInAntecedent() throws BuiltInException;
+	void checkThatInAntecedent() throws SWRLBuiltInException;
 
 	boolean getIsInConsequent() throws SWRLBuiltInLibraryException;
 }

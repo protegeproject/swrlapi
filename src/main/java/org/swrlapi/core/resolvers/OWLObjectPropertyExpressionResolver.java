@@ -5,7 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
-import org.swrlapi.exceptions.TargetRuleEngineException;
+import org.swrlapi.exceptions.SWRLAPIException;
+import org.swrlapi.exceptions.SWRLAPIInternalException;
 
 /**
  * This class is used to keep track of OWL object property expressions, typically by a rule engine implementation. OWL 2 RL-based
@@ -55,6 +56,6 @@ public class OWLObjectPropertyExpressionResolver
 		if (this.id2OWLPropertyExpression.containsKey(propertyExpressionID))
 			return this.id2OWLPropertyExpression.get(propertyExpressionID);
 		else
-			throw new RuntimeException("internal error: no object property expression found with ID " + propertyExpressionID);
+			throw new SWRLAPIInternalException("no OWL object property expression found with ID " + propertyExpressionID);
 	}
 }

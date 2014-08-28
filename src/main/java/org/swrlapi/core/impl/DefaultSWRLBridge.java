@@ -18,10 +18,10 @@ import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.core.*;
 import org.swrlapi.core.resolvers.*;
-import org.swrlapi.exceptions.BuiltInException;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
 import org.swrlapi.exceptions.SWRLRuleEngineBridgeException;
-import org.swrlapi.exceptions.TargetRuleEngineException;
+import org.swrlapi.exceptions.TargetSWRLRuleEngineException;
 import org.swrlapi.owl2rl.OWL2RLPersistenceLayer;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
@@ -198,7 +198,7 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 
 	@Override
 	public List<List<SWRLBuiltInArgument>> invokeSWRLBuiltIn(String ruleName, String builtInName, int builtInIndex,
-			boolean isInConsequent, List<SWRLBuiltInArgument> arguments) throws BuiltInException
+			boolean isInConsequent, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{
 		return SWRLBuiltInLibraryManager.invokeSWRLBuiltIn(this, ruleName, builtInName, builtInIndex, isInConsequent,
 				arguments);
@@ -240,7 +240,7 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 	{
 		try {
 			this.targetSWRLRuleEngine.defineOWLAxiom(axiom);
-		} catch (TargetRuleEngineException e) {
+		} catch (TargetSWRLRuleEngineException e) {
 			throw new SWRLBuiltInBridgeException("error exporting OWL axiom " + axiom + " to target rule engine: "
 					+ e.getMessage(), e);
 		}

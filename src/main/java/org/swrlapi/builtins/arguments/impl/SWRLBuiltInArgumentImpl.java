@@ -14,10 +14,13 @@ import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
+import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 
 abstract class SWRLBuiltInArgumentImpl implements SWRLBuiltInArgument
 {
 	private static final long serialVersionUID = 1L;
+
 	private String boundVariableName = null;
 
 	@Override
@@ -35,13 +38,13 @@ abstract class SWRLBuiltInArgumentImpl implements SWRLBuiltInArgument
 	@Override
 	public SWRLVariableBuiltInArgument asVariable()
 	{
-		throw new RuntimeException("Not a SWRLVariableBuiltInArgument");
+		throw new SWRLBuiltInException("Not a SWRLVariableBuiltInArgument");
 	}
 
 	@Override
 	public SWRLMultiValueVariableBuiltInArgument asMultiValueVariable()
 	{
-		throw new RuntimeException("Not a SWRLMultiVariableBuiltInArgument");
+		throw new SWRLBuiltInBridgeException("Not a SWRLMultiVariableBuiltInArgument");
 	}
 
 	@Override

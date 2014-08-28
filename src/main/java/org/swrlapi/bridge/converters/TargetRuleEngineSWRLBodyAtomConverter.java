@@ -7,7 +7,6 @@ import org.semanticweb.owlapi.model.SWRLDifferentIndividualsAtom;
 import org.semanticweb.owlapi.model.SWRLObjectPropertyAtom;
 import org.semanticweb.owlapi.model.SWRLSameIndividualAtom;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
-import org.swrlapi.exceptions.TargetRuleEngineException;
 
 /**
  * This interface describes methods that can be implemented by a target rule engine to convert SWRL body atoms to native

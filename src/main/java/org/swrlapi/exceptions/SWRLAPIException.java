@@ -1,6 +1,6 @@
 package org.swrlapi.exceptions;
 
-public class SWRLAPIException extends Exception
+public class SWRLAPIException extends RuntimeException
 {
 	private static final long serialVersionUID = 1L;
 

@@ -10,6 +10,7 @@ import org.swrlapi.core.xsd.XSDDate;
 import org.swrlapi.core.xsd.XSDDateTime;
 import org.swrlapi.core.xsd.XSDDuration;
 import org.swrlapi.core.xsd.XSDTime;
+import org.swrlapi.exceptions.SWRLAPIException;
 
 /**
 * @see org.semanticweb.owlapi.model.OWLLiteral
@@ -94,10 +95,10 @@ public final class OWLLiteralComparator implements Comparator<OWLLiteral>
 				// The OWLAPI seems to do a rather odd comparison so we use a natural order comparison
 				return naturalOrderComparator.compare(l1.getLiteral(), l2.getLiteral());
 		} catch (NumberFormatException e) {
-			throw new RuntimeException("Literal " + l1.getLiteral() + " or " + l2.getLiteral() + " not valid "
+			throw new SWRLAPIException("Literal " + l1.getLiteral() + " or " + l2.getLiteral() + " not valid "
 					+ l1.getDatatype().getIRI());
 		} catch (IllegalArgumentException e) {
-			throw new RuntimeException("Literal " + l1.getLiteral() + " or " + l2.getLiteral() + " not valid "
+			throw new SWRLAPIException("Literal " + l1.getLiteral() + " or " + l2.getLiteral() + " not valid "
 					+ l1.getDatatype().getIRI());
 		}
 	}

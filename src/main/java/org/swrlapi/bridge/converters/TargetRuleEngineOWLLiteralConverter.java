@@ -1,7 +1,6 @@
 package org.swrlapi.bridge.converters;
 
 import org.semanticweb.owlapi.model.OWLLiteral;
-import org.swrlapi.exceptions.TargetRuleEngineException;
 
 /**
  * Defines a method for converting OWLAPI {@link org.semanticweb.owlapi.model.OWLLiteral}s to a native rule

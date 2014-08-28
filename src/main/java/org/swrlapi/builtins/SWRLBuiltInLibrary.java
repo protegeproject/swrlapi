@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.semanticweb.owlapi.model.IRI;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
-import org.swrlapi.exceptions.BuiltInException;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLBuiltInLibraryException;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 
@@ -19,23 +19,23 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
 	String getLibraryName();
 
 	// Reset library, discarding any internal state if any (e.g., caches).
-	void reset() throws BuiltInException;
+	void reset() throws SWRLBuiltInException;
 
 	/**
 	 * Method to invoke a built-in in the library. Invoked by {@link SWRLBuiltInLibraryManager}.
 	 */
 	boolean invokeBuiltInMethod(Method method, SWRLBuiltInBridge bridge, String ruleName, String prefix,
 			String builtInMethodName, int builtInIndex, boolean isInConsequent, List<SWRLBuiltInArgument> arguments)
-			throws BuiltInException;
+			throws SWRLBuiltInException;
 
 	/**
 	 * Create a string that represents a unique invocation pattern for a built-in for a bridge/rule/built-in/arguments
 	 * combination.
 	 */
 	String createInvocationPattern(SWRLBuiltInBridge invokingBridge, String invokingRuleName, int invokingBuiltInIndex,
-			boolean isInConsequent, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+			boolean isInConsequent, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	SQWRLResultValueFactory getSQWRLResultValueFactory() throws SWRLBuiltInLibraryException;
 
-	IRI createIRI(String fullName) throws BuiltInException;
+	IRI createIRI(String fullName) throws SWRLBuiltInException;
 }

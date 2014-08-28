@@ -9,238 +9,250 @@ import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
-import org.swrlapi.exceptions.BuiltInException;
-import org.swrlapi.exceptions.InvalidBuiltInArgumentNumberException;
+import org.swrlapi.exceptions.InvalidSWRLBuiltInArgumentNumberException;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 
 public interface SWRLBuiltInArgumentHandler
 {
 	// Unbound argument handling
-	boolean hasUnboundArguments(List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean hasUnboundArguments(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	void checkThatAllArgumentsAreBound(List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	void checkThatAllArgumentsAreBound(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	void checkThatArgumentIsBound(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	void checkThatArgumentIsBound(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	boolean isUnboundArgument(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean isUnboundArgument(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	void checkForUnboundArguments(String ruleName, String builtInName, List<SWRLBuiltInArgument> arguments)
-			throws BuiltInException;
+			throws SWRLBuiltInException;
 
 	/**
 	 * Get 0-offset position of first unbound argument; return -1 if no unbound arguments are found.
 	 */
-	int getFirstUnboundArgument(List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	int getFirstUnboundArgument(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	void checkForUnboundArguments(List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	void checkForUnboundArguments(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	void checkForUnboundArguments(List<SWRLBuiltInArgument> arguments, String message) throws BuiltInException;
+	void checkForUnboundArguments(List<SWRLBuiltInArgument> arguments, String message) throws SWRLBuiltInException;
 
 	void checkThatArgumentsWereBoundVariables(List<SWRLBuiltInArgument> arguments, String message)
-			throws BuiltInException;
+			throws SWRLBuiltInException;
 
-	void checkForUnboundNonFirstArguments(List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	void checkForUnboundNonFirstArguments(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	// Argument counting
-	void checkNumberOfArgumentsEqualTo(int expecting, int actual) throws InvalidBuiltInArgumentNumberException;
+	void checkNumberOfArgumentsEqualTo(int expecting, int actual) throws InvalidSWRLBuiltInArgumentNumberException;
 
-	void checkNumberOfArgumentsAtLeast(int expectingAtLeast, int actual) throws InvalidBuiltInArgumentNumberException;
+	void checkNumberOfArgumentsAtLeast(int expectingAtLeast, int actual) throws InvalidSWRLBuiltInArgumentNumberException;
 
-	void checkNumberOfArgumentsAtMost(int expectingAtMost, int actual) throws InvalidBuiltInArgumentNumberException;
+	void checkNumberOfArgumentsAtMost(int expectingAtMost, int actual) throws InvalidSWRLBuiltInArgumentNumberException;
 
 	void checkNumberOfArgumentsInRange(int expectingAtLeast, int expectingAtMost, int actual)
-			throws InvalidBuiltInArgumentNumberException;
+			throws InvalidSWRLBuiltInArgumentNumberException;
 
-	void checkArgumentNumber(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	void checkArgumentNumber(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	// Named argument handling
-	IRI getArgumentAsAnIRI(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	IRI getArgumentAsAnIRI(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	void checkThatArgumentIsAClassPropertyOrIndividual(int argumentNumber, List<SWRLBuiltInArgument> arguments)
-			throws BuiltInException;
+			throws SWRLBuiltInException;
 
 	boolean isArgumentAClassPropertyOrIndividual(int argumentNumber, List<SWRLBuiltInArgument> arguments)
-			throws BuiltInException;
+			throws SWRLBuiltInException;
 
 	// Class argument handling
-	IRI getArgumentAsAClassIRI(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	IRI getArgumentAsAClassIRI(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	SWRLClassBuiltInArgument getArgumentAsAClass(int argumentNumber, List<SWRLBuiltInArgument> arguments)
-			throws BuiltInException;
+			throws SWRLBuiltInException;
 
-	boolean isArgumentAClass(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean isArgumentAClass(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	void checkThatArgumentIsAClass(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	void checkThatArgumentIsAClass(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	// Individual argument handling
-	boolean isArgumentAnIndividual(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean isArgumentAnIndividual(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	void checkThatArgumentIsAnIndividual(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	void checkThatArgumentIsAnIndividual(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws
+			SWRLBuiltInException;
 
-	IRI getArgumentAsAnIndividualIRI(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	IRI getArgumentAsAnIndividualIRI(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	SWRLNamedIndividualBuiltInArgument getArgumentAsAnIndividual(int argumentNumber, List<SWRLBuiltInArgument> arguments)
-			throws BuiltInException;
+			throws SWRLBuiltInException;
 
 	// Property argument handling
-	boolean isArgumentAProperty(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean isArgumentAProperty(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	boolean isArgumentAnObjectProperty(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean isArgumentAnObjectProperty(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws
+			SWRLBuiltInException;
 
-	boolean isArgumentADataProperty(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean isArgumentADataProperty(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	IRI getArgumentAsAPropertyIRI(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	IRI getArgumentAsAPropertyIRI(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	SWRLObjectPropertyBuiltInArgument getArgumentAsAnObjectProperty(int argumentNumber,
-			List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+			List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	SWRLDataPropertyBuiltInArgument getArgumentAsADataProperty(int argumentNumber, List<SWRLBuiltInArgument> arguments)
-			throws BuiltInException;
+			throws SWRLBuiltInException;
 
-	void checkThatArgumentIsAProperty(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	void checkThatArgumentIsAProperty(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws
+			SWRLBuiltInException;
 
 	void checkThatArgumentIsAnObjectProperty(int argumentNumber, List<SWRLBuiltInArgument> arguments)
-			throws BuiltInException;
+			throws SWRLBuiltInException;
 
 	void checkThatArgumentIsADataProperty(int argumentNumber, List<SWRLBuiltInArgument> arguments)
-			throws BuiltInException;
+			throws SWRLBuiltInException;
 
 	// Data value argument handling
-	void checkThatAllArgumentsAreLiterals(List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	void checkThatAllArgumentsAreLiterals(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	boolean areAllArgumentLiterals(List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean areAllArgumentLiterals(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	void checkThatArgumentIsALiteral(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	void checkThatArgumentIsALiteral(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	boolean isArgumentALiteral(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean isArgumentALiteral(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	OWLLiteral getArgumentAsAnOWLLiteral(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	OWLLiteral getArgumentAsAnOWLLiteral(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws
+			SWRLBuiltInException;
 
-	OWLLiteral getArgumentAsAnOWLLiteral(SWRLBuiltInArgument argument) throws BuiltInException;
+	OWLLiteral getArgumentAsAnOWLLiteral(SWRLBuiltInArgument argument) throws SWRLBuiltInException;
 
 	// Boolean
-	boolean areAllArgumentsBooleans(List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean areAllArgumentsBooleans(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	void checkThatArgumentIsABoolean(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	void checkThatArgumentIsABoolean(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	boolean isArgumentABoolean(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean isArgumentABoolean(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	boolean getArgumentAsABoolean(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean getArgumentAsABoolean(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	// Strings
-	void checkThatAllArgumentsAreStrings(List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	void checkThatAllArgumentsAreStrings(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	boolean isArgumentAString(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean isArgumentAString(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	String getArgumentAsAString(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	String getArgumentAsAString(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	boolean areAllArgumentsStrings(List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean areAllArgumentsStrings(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	void checkThatArgumentIsAString(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	void checkThatArgumentIsAString(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	// Ordered typed
 	void checkThatArgumentIsOfAnOrderedType(int argumentNumber, List<SWRLBuiltInArgument> arguments)
-			throws BuiltInException;
+			throws SWRLBuiltInException;
 
-	boolean isArgumentOfAnOrderedType(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean isArgumentOfAnOrderedType(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws
+			SWRLBuiltInException;
 
-	boolean areAllArgumentsOfAnOrderedType(List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean areAllArgumentsOfAnOrderedType(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	// Numeric
-	boolean isArgumentNumeric(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean isArgumentNumeric(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	boolean isArgumentNonNumeric(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean isArgumentNonNumeric(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	void checkThatAllArgumentsAreOfAnOrderedType(List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	void checkThatAllArgumentsAreOfAnOrderedType(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	void checkThatArgumentIsNumeric(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	void checkThatArgumentIsNumeric(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	void checkThatAllArgumentsAreNumeric(List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	void checkThatAllArgumentsAreNumeric(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	boolean areAllArgumentsNumeric(List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean areAllArgumentsNumeric(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	void checkThatArgumentIsNonNumeric(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	void checkThatArgumentIsNonNumeric(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws
+			SWRLBuiltInException;
 
 	// Shorts
-	boolean areAllArgumentsShorts(List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean areAllArgumentsShorts(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	boolean isShortMostPreciseArgument(List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean isShortMostPreciseArgument(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	boolean isArgumentConvertableToShort(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean isArgumentConvertableToShort(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws
+			SWRLBuiltInException;
 
-	boolean isArgumentAShort(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean isArgumentAShort(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	short getArgumentAsAShort(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	short getArgumentAsAShort(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	void checkThatArgumentIsALong(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	void checkThatArgumentIsALong(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	// Integers
-	boolean isIntegerMostPreciseArgument(List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean isIntegerMostPreciseArgument(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	void checkThatAllArgumentsAreIntegers(List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	void checkThatAllArgumentsAreIntegers(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	boolean areAllArgumentsIntegers(List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean areAllArgumentsIntegers(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	boolean isArgumentConvertableToInteger(int argumentNumber, List<SWRLBuiltInArgument> arguments)
-			throws BuiltInException;
+			throws SWRLBuiltInException;
 
-	void checkThatArgumentIsAnInteger(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	void checkThatArgumentIsAnInteger(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws
+			SWRLBuiltInException;
 
-	boolean isArgumentAnInteger(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean isArgumentAnInteger(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	int getArgumentAsAnInteger(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	int getArgumentAsAnInteger(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	int getArgumentAsAPositiveInteger(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	int getArgumentAsAPositiveInteger(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws
+			SWRLBuiltInException;
 
 	// Longs
-	boolean isLongMostPreciseArgument(List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean isLongMostPreciseArgument(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	boolean areAllArgumentsLongs(List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean areAllArgumentsLongs(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	boolean isArgumentConvertableToLong(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean isArgumentConvertableToLong(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws
+			SWRLBuiltInException;
 
-	boolean isArgumentALong(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean isArgumentALong(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	long getArgumentAsALong(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	long getArgumentAsALong(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	long getArgumentAsAPositiveLong(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	long getArgumentAsAPositiveLong(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	// Floats
-	boolean isFloatMostPreciseArgument(List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean isFloatMostPreciseArgument(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	void checkThatAllArgumentsAreFloats(List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	void checkThatAllArgumentsAreFloats(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	boolean areAllArgumentsFloats(List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean areAllArgumentsFloats(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	boolean isArgumentConvertableToFloat(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean isArgumentConvertableToFloat(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws
+			SWRLBuiltInException;
 
-	void checkThatArgumentIsAFloat(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	void checkThatArgumentIsAFloat(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	boolean isArgumentAFloat(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean isArgumentAFloat(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	float getArgumentAsAFloat(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	float getArgumentAsAFloat(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	float getArgumentAsAFloat(SWRLBuiltInArgument argument) throws BuiltInException;
+	float getArgumentAsAFloat(SWRLBuiltInArgument argument) throws SWRLBuiltInException;
 
 	// Doubles
-	boolean areAllArgumentsDoubles(List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean areAllArgumentsDoubles(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	boolean isArgumentConvertableToDouble(int argumentNumber, List<SWRLBuiltInArgument> arguments)
-			throws BuiltInException;
+			throws SWRLBuiltInException;
 
-	void checkThatArgumentIsADouble(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	void checkThatArgumentIsADouble(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	boolean isArgumentADouble(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	boolean isArgumentADouble(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	double getArgumentAsADouble(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	double getArgumentAsADouble(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	double getArgumentAsADouble(SWRLBuiltInArgument argument) throws BuiltInException;
+	double getArgumentAsADouble(SWRLBuiltInArgument argument) throws SWRLBuiltInException;
 
 	// Random methods
 
-	List<SWRLBuiltInArgument> cloneArguments(List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	List<SWRLBuiltInArgument> cloneArguments(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	Object getArgumentAsAPropertyValue(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	Object getArgumentAsAPropertyValue(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws
+			SWRLBuiltInException;
 
 	// Variable name handling
-	String getVariablePrefixedName(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws BuiltInException;
+	String getVariablePrefixedName(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 }

@@ -1,10 +1,10 @@
 package org.swrlapi.exceptions;
 
-public class InvalidBuiltInMethodsImplementationClass extends BuiltInException
+public class InvalidSWRLBuiltInMethodsImplementationClass extends SWRLBuiltInException
 {
 	private static final long serialVersionUID = 1L;
 
-	public InvalidBuiltInMethodsImplementationClass(String className)
+	public InvalidSWRLBuiltInMethodsImplementationClass(String className)
 	{
 		super("Class " + className + " does not implement the interface SWRLBuiltInMethods");
 	}
