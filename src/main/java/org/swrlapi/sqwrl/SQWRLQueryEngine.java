@@ -53,7 +53,7 @@ public interface SQWRLQueryEngine
 	/**
 	 * Reset the query engine.
 	 */
-	void reset() throws SWRLRuleEngineException;
+	void reset();
 
 	/**
 	 * Returns the name of the underlying target rule engine.

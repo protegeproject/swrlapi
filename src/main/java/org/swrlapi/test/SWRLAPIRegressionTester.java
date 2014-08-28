@@ -16,16 +16,16 @@ import org.swrlapi.sqwrl.values.SQWRLNamedResultValue;
 import org.swrlapi.sqwrl.values.SQWRLResultValue;
 
 /**
- * Individually execute all SQWLR queries in an ontology and compare the generated result with the expected result
- * stored in the rdfs:comment annotation associated with each query.
+ * Individually execute all SQWRL queries in an ontology and compare the generated result with the expected result
+ * stored in the <code>rdfs:comment</code> annotation associated with each query.
  */
 public class SWRLAPIRegressionTester
 {
-	private final SQWRLQueryEngine queryEngine;
+	private final SQWRLQueryEngine sqwrlQueryEngine;
 
 	public SWRLAPIRegressionTester(SQWRLQueryEngine sqwrlQueryEngine)
 	{
-		this.queryEngine = sqwrlQueryEngine;
+		this.sqwrlQueryEngine = sqwrlQueryEngine;
 	}
 
 	public void run()
@@ -35,17 +35,17 @@ public class SWRLAPIRegressionTester
 		int passedTests = 0;
 
 		try {
-			queryEngine.getOWL2RLEngine().enableAll();
-			queryEngine.reset();
-			// queryEngine.getOWL2RLEngine().disableAll();
-			// queryEngine.getOWL2RLEngine().enableTables(OWL2RLNames.Table.Table5);
+			sqwrlQueryEngine.getOWL2RLEngine().enableAll();
+			sqwrlQueryEngine.reset();
+			// sqwrlQueryEngine.getOWL2RLEngine().disableAll();
+			// sqwrlQueryEngine.getOWL2RLEngine().enableTables(OWL2RLNames.Table.Table5);
 
-			for (SQWRLQuery query : queryEngine.getSQWRLQueries()) {
+			for (SQWRLQuery query : sqwrlQueryEngine.getSQWRLQueries()) {
 				String queryName = query.getQueryName();
 				System.out.print("\n*****Running test " + queryName + "...");
 				numberOfTests++;
 				try {
-					SQWRLResult result = queryEngine.runSQWRLQuery(queryName);
+					SQWRLResult result = sqwrlQueryEngine.runSQWRLQuery(queryName);
 					if (result.isEmpty()) {
 						System.out.println("FAILED - no result returned!");
 						failedTests.add(queryName);
@@ -78,16 +78,16 @@ public class SWRLAPIRegressionTester
 				System.out.println("Failed test names: " + failedTests);
 			} else
 				System.out.println("Passed " + passedTests + " test(s)!");
-		} catch (SWRLRuleEngineException e) {
-			System.out.println("Internal error running tests: " + e.getMessage());
 		} catch (SQWRLException e) {
+			System.out.println("SQWRL exception running tests: " + e.getMessage());
+		} catch (RuntimeException e) {
 			System.out.println("Internal error running tests: " + e.getMessage());
 		}
 	}
 
-	private boolean compare(SQWRLResult result, String resultString) throws SQWRLException
+	private boolean compare(SQWRLResult result, String expectedResultString) throws SQWRLException
 	{
-		StringTokenizer resultTokenizer = new StringTokenizer(resultString, "\n");
+		StringTokenizer resultTokenizer = new StringTokenizer(expectedResultString, "\n");
 
 		if (result.getNumberOfRows() != resultTokenizer.countTokens()) {
 			System.out.print("Number of rows unequal");

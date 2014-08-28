@@ -14,8 +14,8 @@ import org.swrlapi.ui.view.queries.SWRLAPIQueriesView;
 /**
  * Component that presents a SWRL editor and rule execution graphical interface. It can be used to embed SWRL rule
  * editing and execution into an application.
- * 
- * @see SWRLAPIQueriesView
+ *
+ * @see org.swrlapi.ui.view.queries.SWRLAPIQueriesView
  */
 public class SWRLAPIRulesView extends JSplitPane implements SWRLAPIView
 {

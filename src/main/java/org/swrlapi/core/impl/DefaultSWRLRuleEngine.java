@@ -88,23 +88,15 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 	 * Clear all knowledge from rule engine.
 	 */
 	@Override
-	public void reset() throws SWRLRuleEngineException
+	public void reset()
 	{
-		try {
-			getSWRLAPIOntologyProcessor().reset();
-			getTargetSWRLRuleEngine().resetRuleEngine(); // Reset the target rule engine
-			getBuiltInBridgeController().reset();
-			this.exportedOWLAxioms.clear();
-			getOWL2RLEngine().resetRuleSelectionChanged();
-			getSWRLAPIOWLOntology().resetOntologyChanged();
-			getSWRLAPIOntologyProcessor().processOntology();
-		} catch (SQWRLException e) {
-			throw new SWRLRuleEngineException("error resetting target rule engine: " + e.getMessage(), e);
-		} catch (TargetSWRLRuleEngineException e) {
-			throw new SWRLRuleEngineException("error resetting target rule engine: " + e.getMessage(), e);
-		} catch (SWRLBuiltInBridgeException e) {
-			throw new SWRLRuleEngineException("error resetting built-in libraries: " + e.getMessage(), e);
-		}
+		getSWRLAPIOntologyProcessor().reset();
+		getTargetSWRLRuleEngine().resetRuleEngine(); // Reset the target rule engine
+		getBuiltInBridgeController().reset();
+		this.exportedOWLAxioms.clear();
+		getOWL2RLEngine().resetRuleSelectionChanged();
+		getSWRLAPIOWLOntology().resetOntologyChanged();
+		getSWRLAPIOntologyProcessor().processOntology();
 	}
 
 	/**
@@ -343,7 +335,10 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 		return this.targetSWRLRuleEngine.getVersion();
 	}
 
-	public OWLReasoner getOWLReasoner() { return this.targetSWRLRuleEngine.getOWLReasoner(); }
+	public OWLReasoner getOWLReasoner()
+	{
+		return this.targetSWRLRuleEngine.getOWLReasoner();
+	}
 
 	private void exportSQWRLQueries2TargetRuleEngine(String activeQueryName) throws SWRLRuleEngineException,
 			TargetSWRLRuleEngineException, SWRLBuiltInException
@@ -397,7 +392,7 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 		}
 	}
 
-	private void writeOWLAxiom2OWLOntology(OWLAxiom axiom) throws RuntimeException
+	private void writeOWLAxiom2OWLOntology(OWLAxiom axiom)
 	{
 		AddAxiom addAxiomChange = new AddAxiom(getOWLOntology(), axiom);
 

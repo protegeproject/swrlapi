@@ -51,7 +51,7 @@ public interface SWRLRuleEngine extends SQWRLQueryEngine
 	 * Reset the rule engine.
 	 */
 	@Override
-	void reset() throws SWRLRuleEngineException;
+	void reset();
 
 	/**
 	 * Get the underlying OWL 2 RL reasoner used by the rule and query engine.

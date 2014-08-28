@@ -11,8 +11,8 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
 /**
  * This interface defines a processor processes an SWRLAPI-based OWL ontology (represented by the interface
- * {@link org.swrlapi.core.SWRLAPIOWLOntology}) and provides methods manage the SWRL rules and SQWRL queries in
- * that ontology. The processor can also extract SQWRL queries (which are serialized as SWRL rules) from on ontology.
+ * {@link org.swrlapi.core.SWRLAPIOWLOntology}) and provides methods to manage the SWRL rules and SQWRL queries in
+ * that ontology. The processor can also extract SQWRL queries (which are serialized as SWRL rules) from the ontology.
  * SQWRL query management functionality includes managing query results and result generators.
  * <p>
  * Implementations may decide to optimize ontology processing so that, for example, only axioms relevant to the SWRL
@@ -43,11 +43,11 @@ public interface SWRLAPIOntologyProcessor
 
 	SWRLAPIRule getSWRLRule(String ruleName) throws SWRLRuleException;
 
+	SQWRLQuery getSQWRLQuery(String queryName) throws SQWRLException;
+
 	int getNumberOfSQWRLQueries();
 
 	Set<String> getSQWRLQueryNames();
-
-	SQWRLQuery getSQWRLQuery(String queryName) throws SQWRLException;
 
 	Set<SQWRLQuery> getSQWRLQueries();
 
