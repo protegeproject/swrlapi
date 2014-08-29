@@ -12,6 +12,11 @@ import org.swrlapi.core.xsd.XSDDateTime;
 import org.swrlapi.core.xsd.XSDDuration;
 import org.swrlapi.core.xsd.XSDTime;
 
+/**
+ * A factory for creating {@link org.swrlapi.sqwrl.values.SQWRLResultValue} objects.
+ *
+ * @see org.swrlapi.sqwrl.values.SQWRLResultValue
+ */
 public interface SQWRLResultValueFactory
 {
 	SQWRLClassResultValue getClassValue(SWRLClassBuiltInArgument classArgument);

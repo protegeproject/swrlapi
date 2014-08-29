@@ -46,21 +46,21 @@ import org.swrlapi.exceptions.SWRLBuiltInMethodRuntimeException;
 import org.swrlapi.exceptions.SWRLBuiltInLibraryException;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 
-// TODO Too long. Should separate the methods implementing the SWRLBuiltInArgumentHandler,
-// SWRLBuiltInArgumentResultHandler, and SWRLBuiltInArgumentCreator interfaces.
-
 /**
  * A class that must be subclassed by a class implementing a library of SWRL built-in methods.
  * <p/>
- * Provides implementations for a large number of SWRL built-in argument processing methods.
+ * Provides invocation context for invoked built-ins (such the name of invoking rule, whether the invocation is
+ * in the consequent or the antecedent) and access to the invoking {@link org.swrlapi.builtins.SWRLBuiltInBridge}.
+ * Also provides implementations for a large number of SWRL built-in argument processing methods.
  *
  * @see org.swrlapi.builtins.SWRLBuiltInLibrary
- * @see org.swrlapi.builtins.SWRLBuiltInArgumentHandler
- * @see org.swrlapi.builtins.SWRLBuiltInArgumentResultHandler
+ * @see org.swrlapi.builtins.SWRLBuiltInContext
+ * @see SWRLBuiltInInputArgumentHandler
+ * @see SWRLBuiltInResultArgumentHandler
  * @see org.swrlapi.builtins.SWRLBuiltInArgumentCreator
  */
-public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, SWRLBuiltInArgumentHandler,
-		SWRLBuiltInArgumentResultHandler, SWRLBuiltInArgumentCreator
+public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, SWRLBuiltInInputArgumentHandler,
+		SWRLBuiltInResultArgumentHandler, SWRLBuiltInArgumentCreator
 {
 	private final String libraryName;
 
@@ -96,24 +96,6 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, 
 					"invalid call to getInvokingBridge - should only be called from within a built-in");
 
 		return this.invokingBridge;
-	}
-
-	@Override
-	public SQWRLResultValueFactory getSQWRLResultValueFactory() throws SWRLBuiltInLibraryException
-	{
-		return getBuiltInBridge().getSWRLAPIOWLDataFactory().getSQWRLResultValueFactory();
-	}
-
-	protected OWLNamedIndividual injectOWLNamedIndividualOfClass(OWLClass cls) throws SWRLBuiltInException
-	{
-		OWLNamedIndividual individual = getSWRLAPIOWLDataFactory().getInjectedOWLNamedIndividual();
-		OWLDeclarationAxiom declarationAxiom = getSWRLAPIOWLDataFactory().getOWLIndividualDeclarationAxiom(individual);
-		OWLClassAssertionAxiom classAssertionAxiom = getSWRLAPIOWLDataFactory().getOWLClassAssertionAxiom(cls, individual);
-		getBuiltInBridge().getIRIResolver().recordOWLNamedIndividual(individual);
-		getBuiltInBridge().injectOWLAxiom(declarationAxiom);
-		getBuiltInBridge().injectOWLAxiom(classAssertionAxiom);
-
-		return individual;
 	}
 
 	@Override
@@ -208,7 +190,8 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, 
 					throw new SWRLBuiltInException("exception thrown by built-in " + builtInName + " in rule " + ruleName + ": "
 							+ targetException.getMessage(), targetException);
 				} else if (targetException instanceof RuntimeException) { // A runtime exception was thrown by the built-in.
-					throw new SWRLBuiltInMethodRuntimeException(ruleName, builtInName, targetException.getMessage(), targetException);
+					throw new SWRLBuiltInMethodRuntimeException(ruleName, builtInName, targetException.getMessage(),
+							targetException);
 				} else
 					throw new SWRLBuiltInException("unknown exception thrown by built-in " + builtInName + " in rule " + ruleName
 							+ ": " + e.toString(), e);
@@ -224,6 +207,61 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, 
 
 		return result;
 	}
+
+	@Override
+	public SQWRLResultValueFactory getSQWRLResultValueFactory() throws SWRLBuiltInLibraryException
+	{
+		return getBuiltInBridge().getSWRLAPIOWLDataFactory().getSQWRLResultValueFactory();
+	}
+
+	/**
+	 * Create a string that represents a key of a unique invocation pattern for a built-in for a
+	 * bridge/rule/built-in/arguments combination.
+	 */
+	@Override
+	public String createInvocationPattern(SWRLBuiltInBridge bridge, String ruleName, int builtInIndex,
+			boolean inConsequent, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+	{
+		String pattern = "" + bridge.hashCode() + "." + ruleName + "." + builtInIndex + "." + inConsequent;
+		String result;
+
+		for (int i = 0; i < arguments.size(); i++)
+			pattern += "." + getArgumentAsAPropertyValue(i, arguments);
+
+		if (this.invocationPatternMap.containsKey(pattern))
+			result = this.invocationPatternMap.get(pattern).toString();
+		else {
+			this.invocationPatternMap.put(pattern, this.invocationPatternID);
+			result = this.invocationPatternID.toString();
+			this.invocationPatternID++;
+		}
+
+		return result;
+	}
+
+	@Override
+	public IRI createIRI(String fullName) throws SWRLBuiltInException
+	{
+		try {
+			return IRI.create(fullName);
+		} catch (RuntimeException e) {
+			throw new SWRLBuiltInException("error creating IRI from full name " + fullName + ": " + e.getMessage(), e);
+		}
+	}
+
+	protected OWLNamedIndividual injectOWLNamedIndividualOfClass(OWLClass cls) throws SWRLBuiltInException
+	{
+		OWLNamedIndividual individual = getSWRLAPIOWLDataFactory().getInjectedOWLNamedIndividual();
+		OWLDeclarationAxiom declarationAxiom = getSWRLAPIOWLDataFactory().getOWLIndividualDeclarationAxiom(individual);
+		OWLClassAssertionAxiom classAssertionAxiom = getSWRLAPIOWLDataFactory().getOWLClassAssertionAxiom(cls, individual);
+		getBuiltInBridge().getIRIResolver().recordOWLNamedIndividual(individual);
+		getBuiltInBridge().injectOWLAxiom(declarationAxiom);
+		getBuiltInBridge().injectOWLAxiom(classAssertionAxiom);
+
+		return individual;
+	}
+
+	// Argument handling methods
 
 	public void checkNumberOfArgumentsAtLeastOne(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{
@@ -614,7 +652,8 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, 
 		else if (isArgumentAnIndividual(argumentNumber, arguments))
 			return ((SWRLNamedIndividualBuiltInArgument)arguments.get(argumentNumber)).getIRI();
 		else
-			throw new SWRLBuiltInException("internal error: unknown argument type " + arguments.get(argumentNumber).getClass());
+			throw new SWRLBuiltInException(
+					"internal error: unknown argument type " + arguments.get(argumentNumber).getClass());
 	}
 
 	@Override
@@ -1264,31 +1303,6 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, 
 			throw new SWRLBuiltInException("argument " + argument + " of unknown type " + argument.getClass());
 	}
 
-	/**
-	 * Create a string that represents a key of a unique invocation pattern for a built-in for a
-	 * bridge/rule/built-in/arguments combination.
-	 */
-	@Override
-	public String createInvocationPattern(SWRLBuiltInBridge bridge, String ruleName, int builtInIndex,
-			boolean inConsequent, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
-	{
-		String pattern = "" + bridge.hashCode() + "." + ruleName + "." + builtInIndex + "." + inConsequent;
-		String result;
-
-		for (int i = 0; i < arguments.size(); i++)
-			pattern += "." + getArgumentAsAPropertyValue(i, arguments);
-
-		if (this.invocationPatternMap.containsKey(pattern))
-			result = this.invocationPatternMap.get(pattern).toString();
-		else {
-			this.invocationPatternMap.put(pattern, this.invocationPatternID);
-			result = this.invocationPatternID.toString();
-			this.invocationPatternID++;
-		}
-
-		return result;
-	}
-
 	@Override
 	public void checkForUnboundArguments(String ruleName, String builtInName, List<SWRLBuiltInArgument> arguments)
 			throws SWRLBuiltInException
@@ -1439,16 +1453,6 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, 
 			XSDDuration resultArgument) throws SWRLBuiltInException
 	{
 		return processResultArgument(arguments, resultArgumentNumber, createLiteralBuiltInArgument(resultArgument));
-	}
-
-	@Override
-	public IRI createIRI(String fullName) throws SWRLBuiltInException
-	{
-		try {
-			return IRI.create(fullName);
-		} catch (RuntimeException e) {
-			throw new SWRLBuiltInException("error creating IRI from full name " + fullName + ": " + e.getMessage(), e);
-		}
 	}
 
 	@Override

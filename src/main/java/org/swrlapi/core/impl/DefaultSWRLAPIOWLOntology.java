@@ -94,7 +94,6 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 			SWRLAPIRule swrlapiRule = convertOWLAPIRule2SWRLAPIRule(owlapiRule);
 			swrlapiRules.add(swrlapiRule);
 		}
-
 		return swrlapiRules;
 	}
 
@@ -163,8 +162,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		// throw new SWRLAPIException("isSWRLBuiltIn not implemented");
 	}
 
-	// TODO We really do not want the following three methods here. They are convenience methods only and are used only by
-	// a the temporal built-in library.
+	// TODO Do not want here. They are convenience methods only and are used only by the temporal built-in library.
 	@Override
 	public boolean isOWLIndividualOfType(IRI individualIRI, IRI classIRI)
 	{
@@ -184,7 +182,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		throw new SWRLAPIException("Not implemented");
 	}
 
-	private String getRuleName(SWRLRule owlapiRule)
+	private String getSWRLRuleName(SWRLRule owlapiRule)
 	{
 		String ruleName = "XX" + owlapiRule.hashCode(); // TODO Get rule name from annotation property if there.
 
@@ -227,8 +225,12 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	}
 
 	/**
-	 * We basically take an OWLAPI {@link SWRLRule} object and for every OWLAPI {@link SWRLBuiltInAtom} in it we create a
-	 * SWRLAPI {@link SWRLAPIBuiltInAtom}; all other atoms remain the same.
+	 * We basically take an OWLAPI {@link org.semanticweb.owlapi.model.SWRLRule} object and for every
+	 * OWLAPI {@link org.semanticweb.owlapi.model.SWRLBuiltInAtom} in it we create a
+	 * SWRLAPI {@link org.swrlapi.core.SWRLAPIBuiltInAtom}; all other atoms remain the same.
+	 *
+	 * @see org.semanticweb.owlapi.model.SWRLRule
+	 * @see org.swrlapi.core.SWRLAPIRule
 	 */
 	private SWRLAPIRule convertOWLAPIRule2SWRLAPIRule(SWRLRule owlapiRule)
 	{
@@ -236,7 +238,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		List<SWRLAtom> owlapiHeadAtoms = new ArrayList<SWRLAtom>(owlapiRule.getHead());
 		List<SWRLAtom> swrlapiBodyAtoms = new ArrayList<SWRLAtom>();
 		List<SWRLAtom> swrlapiHeadAtoms = new ArrayList<SWRLAtom>();
-		String ruleName = getRuleName(owlapiRule);
+		String ruleName = getSWRLRuleName(owlapiRule);
 		boolean isActive = getIsActive(owlapiRule);
 		String comment = getComment(owlapiRule);
 
@@ -271,12 +273,12 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	}
 
 	/**
-	 * Both the OWLAPI and the SWRLAPI use the {@link SWRLBuiltInAtom} class to represent built-in atoms. However, the
-	 * SWRLAPI has a richer range of possible argument types. The OWLAPI allows {@link SWRLDArgument} built-in arguments
-	 * only, whereas the SWRLAPI has a range of types. These types are represented buy the {@link SWRLBuiltInArgument}
-	 * interface.
+	 * Both the OWLAPI and the SWRLAPI use the {@link org.semanticweb.owlapi.model.SWRLBuiltInAtom} class to represent
+	 * built-in atoms. However, the SWRLAPI has a richer range of possible argument types. The OWLAPI allows
+	 * {@link org.semanticweb.owlapi.model.SWRLDArgument} built-in arguments only, whereas the SWRLAPI has a range of
+	 * types. These types are represented buy the {@link org.swrlapi.builtins.arguments.SWRLBuiltInArgument} interface.
 	 *
-	 * @see SWRLBuiltInArgument
+	 * @see org.swrlapi.builtins.arguments.SWRLBuiltInArgument
 	 */
 	private List<SWRLBuiltInArgument> convertSWRLDArguments2SWRLBuiltInArguments(List<SWRLDArgument> swrlDArguments)
 	{
@@ -297,7 +299,10 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	 * datatypes) can also be passed to built-ins.
 	 * <p/>
 	 *
-	 * @see SWRLBuiltInArgument, SWRLLiteralArgument, SWRLDArgument, SWRLVariable
+	 * @see org.swrlapi.builtins.arguments.SWRLBuiltInArgument
+	 * @see org.semanticweb.owlapi.model.SWRLLiteralArgument
+	 * @see org.semanticweb.owlapi.model.SWRLDArgument
+	 * @see org.semanticweb.owlapi.model.SWRLVariable
 	 */
 	private SWRLBuiltInArgument convertSWRLDArgument2SWRLBuiltInArgument(SWRLDArgument swrlDArgument)
 	{
@@ -312,7 +317,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 					+ swrlDArgument.getClass().getName());
 	}
 
-	private boolean hackIRI(IRI iri)
+	private boolean hackIRI(IRI iri) // TODO
 	{
 		String prefixedName = prefixManager.getPrefixIRI(iri);
 
@@ -322,15 +327,15 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	/**
 	 * The OWLAPI follows the OWL Specification and does not explicitly allow named OWL properties as arguments to
 	 * built-ins. However, if OWLAPI parsers encounter OWL properties as parameters they appear to represent them as SWRL
-	 * variables - with the variable IRI set to the IRI of the entity ({@link OWLEntity} classes represent named OWL
-	 * concepts so have an IRI). So if we are processing built-in parameters and encounter variables with an IRI referring
-	 * to named OWL properties in the active ontology we can transform them to the appropriate SWRLAPI built-in argument for
-	 * the named entity.
+	 * variables - with the variable IRI set to the IRI of the entity ({@link org.semanticweb.owlapi.model.OWLEntity}
+	 * classes represent named OWL concepts so have an IRI). So if we are processing built-in parameters and encounter
+	 * variables with an IRI referring to named OWL properties in the active ontology we can transform them to
+	 * the appropriate SWRLAPI built-in argument for the named entity.
 	 * <p/>
 	 * Note: An important restriction here is that variable names do not intersect with named properties in their OWL
-	 * ontology.
+	 * ontology. A SWRL parser should check for this on inpit and report an error.
 	 *
-	 * @see SWRLNamedBuiltInArgument
+	 * @see org.swrlapi.builtins.arguments.SWRLNamedBuiltInArgument
 	 */
 	private SWRLBuiltInArgument convertSWRLVariable2SWRLBuiltInArgument(SWRLVariable swrlVariable)
 	{
@@ -383,14 +388,20 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	 * ontology and if so we create specific SWRLAPI built-in argument types for it.
 	 * <p/>
 	 * The SWRLAPI allows SQWRL collection built-in arguments (represented by a
-	 * {@link SQWRLCollectionVariableBuiltInArgument}) and multi-value variables (represented by a
-	 * {@link SWRLMultiValueVariableBuiltInArgument}). These two argument types are not instantiated directly as built-in
-	 * argument types. They are created at runtime during rule execution and passed as result values in SWRL variable
-	 * built-in arguments.
+	 * {@link org.swrlapi.builtins.arguments.SQWRLCollectionVariableBuiltInArgument}) and multi-value variables
+	 * (represented by a {@link org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument}).
+	 * These two argument types are not instantiated directly as built-in argument types. They are created at runtime
+	 * during rule execution and passed as result values in SWRL variable built-in arguments.
 	 *
-	 * @see SWRLLiteralBuiltInArgument, SWRLClassBuiltInArgument, SWRLIndividualBuiltInArgument,
-	 * SWRLObjectPropertyBuiltInArgument, SWRLDataPropertyBuiltInArgument, SWRLAnnotationPropertyBuiltInArgument,
-	 * SWRLDatatypeBuiltInArgument, SQWRLCollectionBuiltInArgument, SWRLMultiValueBuiltInArgument
+	 * @see org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument
+	 * @see org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument
+	 * @see org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument
+	 * @see org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument
+	 * @see org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument
+	 * @see org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument
+	 * @see org.swrlapi.builtins.arguments.SWRLDatatypeBuiltInArgument
+	 * @see org.swrlapi.builtins.arguments.SQWRLCollectionVariableBuiltInArgument
+	 * @see org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument
 	 */
 	private SWRLBuiltInArgument convertSWRLLiteralArgument2SWRLBuiltInArgument(SWRLLiteralArgument swrlLiteralArgument)
 	{

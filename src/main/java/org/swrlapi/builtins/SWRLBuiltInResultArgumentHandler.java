@@ -8,7 +8,12 @@ import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 
-public interface SWRLBuiltInArgumentResultHandler
+/**
+ * Utility methods for dealing with result arguments from SWRL built-ins.
+ *
+ * @see org.swrlapi.builtins.AbstractSWRLBuiltInLibrary
+ */
+public interface SWRLBuiltInResultArgumentHandler
 {
 	boolean processResultArgument(List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
 			Collection<SWRLBuiltInArgument> resultArguments) throws SWRLBuiltInException;

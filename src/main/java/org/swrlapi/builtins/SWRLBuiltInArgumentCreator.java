@@ -26,7 +26,9 @@ import org.swrlapi.core.xsd.XSDTime;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 
 /**
- * Methods that can be used by built-ins to create result arguments.
+ * Utility methods that can be used by built-ins to create SWRL built-in result arguments.
+ *
+ * @see org.swrlapi.builtins.AbstractSWRLBuiltInLibrary
  */
 public interface SWRLBuiltInArgumentCreator
 {

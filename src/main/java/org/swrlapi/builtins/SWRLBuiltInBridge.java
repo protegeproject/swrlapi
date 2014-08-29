@@ -14,6 +14,8 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
 /**
  * The SWRL Built-in Bridge defines the methods seen by SWRL built-in implementations at run time.
+ *
+ * @see org.swrlapi.builtins.SWRLBuiltInLibrary
  */
 public interface SWRLBuiltInBridge
 {

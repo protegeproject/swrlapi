@@ -10,9 +10,15 @@ import org.swrlapi.exceptions.SWRLBuiltInLibraryException;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 
 /**
- * Defines an interface for a SWRL built-in library.
+ * Defines a base interface for a SWRL built-in library. All built-in library implementation muse implement this
+ * interface.
  * <p>
- * The class {@link AbstractSWRLBuiltInLibrary} provides an implementation of this interface.
+ * The class {@link org.swrlapi.builtins.AbstractSWRLBuiltInLibrary} provides a default implementation of this
+ * interface and provides and array if methods for dealing with built-in arguments.
+ *
+ * @see org.swrlapi.builtins.AbstractSWRLBuiltInLibrary
+ * @see org.swrlapi.builtins.SWRLBuiltInContext
+ * @see org.swrlapi.builtins.SWRLBuiltInBridge
  */
 public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
 {

@@ -12,7 +12,12 @@ import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.exceptions.InvalidSWRLBuiltInArgumentNumberException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 
-public interface SWRLBuiltInArgumentHandler
+/**
+ * Utility methods for dealing with input arguments to SWRL built-ins.
+ *
+ * @see org.swrlapi.builtins.AbstractSWRLBuiltInLibrary
+ */
+public interface SWRLBuiltInInputArgumentHandler
 {
 	// Unbound argument handling
 	boolean hasUnboundArguments(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
