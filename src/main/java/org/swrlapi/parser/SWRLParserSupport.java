@@ -130,7 +130,7 @@ public class SWRLParserSupport
 
 		if (isOWLEntity(variableName))
 			throw new SWRLParseException("Invalid SWRL variable name " + variableName
-					+ ". Cannot use name of existing OWL class, individual, property, or datatype");
+					+ " - cannot use name of existing OWL class, individual, property, or datatype");
 	}
 
 	public OWLClass getOWLClass(String classShortName) throws SWRLParseException

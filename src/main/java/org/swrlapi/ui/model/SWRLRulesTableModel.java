@@ -15,7 +15,7 @@ import org.swrlapi.ui.view.SWRLAPIView;
 
 /**
  * This class models a list of SWRL rules or SQWRL queries in an ontology for tabular display.
- * 
+ *
  * @see org.swrlapi.ui.model.SWRLAPIApplicationModel
  * @see org.swrlapi.core.SWRLAPIRule
  * @see org.swrlapi.sqwrl.SQWRLQuery
@@ -44,7 +44,7 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 		this.swrlRulePrinter = swrlRulePrinter;
 		this.swrlRuleModels = new HashMap<String, SWRLRuleModel>();
 
-		log.info("#Rules " + swrlRuleEngine.getNumberOfImportedSWRLRules());
+		log.info("#Rules " + swrlRuleEngine.getNumberOfImportedSWRLRules()); // TODO Kill
 
 		for (SWRLAPIRule swrlRule : swrlRuleEngine.getSWRLRules()) {
 			String ruleName = swrlRule.getRuleName();

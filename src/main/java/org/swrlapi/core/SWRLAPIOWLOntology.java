@@ -59,6 +59,8 @@ public interface SWRLAPIOWLOntology
 
 	boolean isSWRLBuiltIn(IRI iri); // The SWRLAPI provides built-ins beyond the core set defined in the SWRL submission.
 
+	void addSWRLBuiltIn(IRI iri);
+
 	OWLOntologyManager getOWLOntologyManager();
 
 	DefaultPrefixManager getPrefixManager();
