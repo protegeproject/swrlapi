@@ -207,7 +207,7 @@ public class SWRLTokenizer
 		case ',':
 			return new SWRLToken(SWRLToken.SWRLTokenType.COMMA, ",");
 		case '?':
-			return new SWRLToken(SWRLToken.SWRLTokenType.QUESTION, ",");
+			return new SWRLToken(SWRLToken.SWRLTokenType.QUESTION, "?");
 		case '(':
 			return new SWRLToken(SWRLToken.SWRLTokenType.LPAREN, "(");
 		case ')':

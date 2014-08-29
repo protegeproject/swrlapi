@@ -281,7 +281,9 @@ public class DefaultSWRLAPIRulePrinter implements SWRLAPIEntityVisitorEx<String>
 	private String visit(OWLIndividual individual)
 	{
 		if (individual.isNamed()) {
-			return visit(individual.asOWLNamedIndividual());
+			String individualNameShortForm = this.prefixManager.getShortForm(individual.asOWLNamedIndividual().getIRI());
+
+			return individualNameShortForm.startsWith(":") ? individualNameShortForm.substring(1) : individualNameShortForm;
 		} else
 			return individual.toString(); // TODO See if we can get an OWLAPI renderer
 	}
