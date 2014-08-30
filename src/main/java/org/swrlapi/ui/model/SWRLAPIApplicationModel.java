@@ -4,10 +4,9 @@ import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.SWRLAPIFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLRuleEngine;
-import org.swrlapi.core.impl.DefaultSWRLAPIRulePrinter;
+import org.swrlapi.core.impl.DefaultSWRLAPIRuleRenderer;
 import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
-import org.swrlapi.ui.controller.SWRLAPIApplicationController;
 
 /**
  * Provides an application model that can be used to build a MVC-based GUI that uses the SWRLAPI. Used in conjunction
@@ -24,7 +23,7 @@ public class SWRLAPIApplicationModel implements SWRLAPIModel
 	private final SWRLRuleEngine ruleEngine;
 	private final SWRLParser swrlParser;
 	private final DefaultPrefixManager prefixManager;
-	private final DefaultSWRLAPIRulePrinter swrlRulePrinter;
+	private final DefaultSWRLAPIRuleRenderer swrlRulePrinter;
 
 	public SWRLAPIApplicationModel(SWRLAPIOWLOntology swrlapiOWLOntology, SWRLRuleEngine ruleEngine)
 	{

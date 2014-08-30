@@ -180,6 +180,8 @@ public class SWRLRuleEditorDialog extends JDialog
 			} catch (SWRLIncompleteRuleException e) {
 				statusTextField.setText(e.getMessage());
 			} catch (SWRLParseException e) {
+				statusTextField.setText("Parse error: " + e.getMessage());
+			} catch (RuntimeException e) {
 				statusTextField.setText("Error: " + e.getMessage());
 			}
 		}

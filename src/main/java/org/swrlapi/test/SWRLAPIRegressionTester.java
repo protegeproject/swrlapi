@@ -42,7 +42,9 @@ public class SWRLAPIRegressionTester
 
 			for (SQWRLQuery query : sqwrlQueryEngine.getSQWRLQueries()) {
 				String queryName = query.getQueryName();
+				String queryText = query.getQueryText();
 				System.out.print("\n*****Running test " + queryName + "...");
+				System.out.println("*****Query: " + queryText);
 				numberOfTests++;
 				try {
 					SQWRLResult result = sqwrlQueryEngine.runSQWRLQuery(queryName);

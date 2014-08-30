@@ -25,7 +25,7 @@ import org.swrlapi.core.impl.DefaultSWRLAPIOWLDataFactory;
 import org.swrlapi.core.impl.DefaultSWRLAPIOWLDatatypeFactory;
 import org.swrlapi.core.impl.DefaultSWRLAPIOWLOntology;
 import org.swrlapi.core.impl.DefaultSWRLAPIOntologyProcessor;
-import org.swrlapi.core.impl.DefaultSWRLAPIRulePrinter;
+import org.swrlapi.core.impl.DefaultSWRLAPIRuleRenderer;
 import org.swrlapi.core.impl.DefaultSWRLRuleEngineFactory;
 import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.exceptions.SWRLAPIException;
@@ -135,13 +135,13 @@ public class SWRLAPIFactory
 		return new SWRLParser(swrlapiOWLOntology);
 	}
 
-	public static DefaultSWRLAPIRulePrinter createRulePrinter(DefaultPrefixManager prefixManager)
+	public static DefaultSWRLAPIRuleRenderer createRulePrinter(DefaultPrefixManager prefixManager)
 	{
-		return new DefaultSWRLAPIRulePrinter(prefixManager);
+		return new DefaultSWRLAPIRuleRenderer(prefixManager);
 	}
 
 	public static SWRLRulesTableModel createSWRLRulesTableModel(SWRLRuleEngine swrlRuleEngine,
-			DefaultSWRLAPIRulePrinter swrlRulePrinter)
+			DefaultSWRLAPIRuleRenderer swrlRulePrinter)
 	{
 		return new SWRLRulesTableModel(swrlRuleEngine, swrlRulePrinter);
 	}
@@ -205,6 +205,11 @@ public class SWRLAPIFactory
 			return new ImageIcon(url);
 		else
 			throw new SWRLAPIException("No SQWRL icon found!");
+	}
+
+	public static SWRLAPIRuleRenderer getSWRLRuleRenderer(SWRLAPIOWLOntology swrlapiowlOntology)
+	{
+		return new DefaultSWRLAPIRuleRenderer(swrlapiowlOntology.getPrefixManager());
 	}
 
 	private static OWLOntology createOWLOntology(OWLOntologyManager ontologyManager, File file) throws SWRLAPIException

@@ -12,7 +12,7 @@ import javax.swing.table.AbstractTableModel;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLRuleEngine;
-import org.swrlapi.core.impl.DefaultSWRLAPIRulePrinter;
+import org.swrlapi.core.impl.DefaultSWRLAPIRuleRenderer;
 import org.swrlapi.ui.view.SWRLAPIView;
 
 public class ImportedSWRLRulesView extends JPanel implements SWRLAPIView
@@ -20,7 +20,7 @@ public class ImportedSWRLRulesView extends JPanel implements SWRLAPIView
 	private static final long serialVersionUID = 1L;
 
 	private final SWRLRuleEngine swrlRuleEngine;
-	private final DefaultSWRLAPIRulePrinter swrlRulePrinter;
+	private final DefaultSWRLAPIRuleRenderer swrlRulePrinter;
 	private final SWRLRulesTableModel swrlRulesTableModel;
 	private final JTable swrlRulesTable;
 
@@ -29,7 +29,7 @@ public class ImportedSWRLRulesView extends JPanel implements SWRLAPIView
 		this.swrlRuleEngine = ruleEngine;
 		this.swrlRulesTableModel = new SWRLRulesTableModel();
 		this.swrlRulesTable = new JTable(this.swrlRulesTableModel);
-		this.swrlRulePrinter = new DefaultSWRLAPIRulePrinter(prefixManager);
+		this.swrlRulePrinter = new DefaultSWRLAPIRuleRenderer(prefixManager);
 
 		JScrollPane scrollPane = new JScrollPane(this.swrlRulesTable);
 		JViewport viewPort = scrollPane.getViewport();

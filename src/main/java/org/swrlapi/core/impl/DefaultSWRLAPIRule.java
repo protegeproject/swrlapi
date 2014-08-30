@@ -27,10 +27,10 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 	private final boolean active;
 	private final String comment;
 
+	private final IRIResolver iriResolver;
+
 	private List<SWRLAtom> bodyAtoms; // Body atoms can be reorganized during processing
 	private final List<SWRLAtom> headAtoms;
-
-	private final IRIResolver iriResolver;
 
 	public DefaultSWRLAPIRule(String ruleName, List<? extends SWRLAtom> bodyAtoms, List<? extends SWRLAtom> headAtoms,
 			IRIResolver iriResolver, boolean active, String comment)

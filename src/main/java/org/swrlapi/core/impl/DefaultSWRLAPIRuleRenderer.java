@@ -41,24 +41,30 @@ import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
+import org.swrlapi.core.SWRLAPIRule;
+import org.swrlapi.core.SWRLAPIRuleRenderer;
 import org.swrlapi.core.visitors.SWRLAPIEntityVisitorEx;
 
-public class DefaultSWRLAPIRulePrinter implements SWRLAPIEntityVisitorEx<String>
+import java.util.ArrayList;
+import java.util.List;
+
+public class DefaultSWRLAPIRuleRenderer implements SWRLAPIRuleRenderer
 {
 	private final DefaultPrefixManager prefixManager;
 
-	public DefaultSWRLAPIRulePrinter(DefaultPrefixManager prefixManager)
+	public DefaultSWRLAPIRuleRenderer(DefaultPrefixManager prefixManager)
 	{
 		this.prefixManager = prefixManager;
 	}
 
 	@Override
-	public String visit(SWRLRule node)
+	public String render(SWRLAPIRule swrlapiRule)
 	{
 		StringBuilder sb = new StringBuilder();
+
 		boolean isFirst = true;
 
-		for (SWRLAtom atom : node.getBody()) {
+		for (SWRLAtom atom : swrlapiRule.getBodyAtoms()) {
 			if (!isFirst)
 				sb.append(" ^ ");
 			sb.append(atom.accept(this));
@@ -68,13 +74,19 @@ public class DefaultSWRLAPIRulePrinter implements SWRLAPIEntityVisitorEx<String>
 		sb.append(" -> ");
 
 		isFirst = true;
-		for (SWRLAtom atom : node.getHead()) {
+		for (SWRLAtom atom : swrlapiRule.getHeadAtoms()) {
 			if (!isFirst)
 				sb.append(" ^ ");
 			sb.append(atom.accept(this));
 			isFirst = false;
 		}
 		return sb.toString();
+	}
+
+	@Override
+	public String visit(SWRLRule swrlRule)
+	{
+		return swrlRule.accept(this);
 	}
 
 	@Override
@@ -200,13 +212,13 @@ public class DefaultSWRLAPIRulePrinter implements SWRLAPIEntityVisitorEx<String>
 	@Override
 	public String visit(SWRLSameIndividualAtom sameIndividualAtom)
 	{
-		SWRLIArgument argument1 = sameIndividualAtom.getFirstArgument();
-		SWRLIArgument argument2 = sameIndividualAtom.getSecondArgument();
+		SWRLIArgument iArgument1 = sameIndividualAtom.getFirstArgument();
+		SWRLIArgument iArgument2 = sameIndividualAtom.getSecondArgument();
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("sameAs");
 
-		sb.append("(" + visit(argument1) + ", " + visit(argument2) + ")");
+		sb.append("(" + visit(iArgument1) + ", " + visit(iArgument2) + ")");
 
 		return sb.toString();
 	}
@@ -214,13 +226,13 @@ public class DefaultSWRLAPIRulePrinter implements SWRLAPIEntityVisitorEx<String>
 	@Override
 	public String visit(SWRLDifferentIndividualsAtom differentIndividualsAtom)
 	{
-		SWRLIArgument argument1 = differentIndividualsAtom.getFirstArgument();
-		SWRLIArgument argument2 = differentIndividualsAtom.getSecondArgument();
+		SWRLIArgument iArgument1 = differentIndividualsAtom.getFirstArgument();
+		SWRLIArgument iArgument2 = differentIndividualsAtom.getSecondArgument();
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("differentFrom");
 
-		sb.append("(" + visit(argument1) + ", " + visit(argument2) + ")");
+		sb.append("(" + visit(iArgument1) + ", " + visit(iArgument2) + ")");
 
 		return sb.toString();
 	}
@@ -264,7 +276,7 @@ public class DefaultSWRLAPIRulePrinter implements SWRLAPIEntityVisitorEx<String>
 	private String visit(OWLClassExpression classExpression)
 	{
 		if (classExpression.isAnonymous())
-			return classExpression.toString(); // TODO See if we can get an OWLAPI renderer
+			return classExpression.toString(); // TODO Use an OWLAPI renderer
 		else {
 			OWLClass cls = classExpression.asOWLClass();
 			return visit(cls);
@@ -285,13 +297,13 @@ public class DefaultSWRLAPIRulePrinter implements SWRLAPIEntityVisitorEx<String>
 
 			return individualNameShortForm.startsWith(":") ? individualNameShortForm.substring(1) : individualNameShortForm;
 		} else
-			return individual.toString(); // TODO See if we can get an OWLAPI renderer
+			return individual.toString(); // TODO Use an OWLAPI renderer
 	}
 
 	private String visit(OWLObjectPropertyExpression objectPropertyExpression)
 	{
 		if (objectPropertyExpression.isAnonymous())
-			return objectPropertyExpression.toString(); // TODO See if we can get an OWLAPI renderer
+			return objectPropertyExpression.toString(); // TODO Use an OWLAPI renderer
 		else
 			return visit(objectPropertyExpression.asOWLObjectProperty());
 	}
@@ -308,7 +320,7 @@ public class DefaultSWRLAPIRulePrinter implements SWRLAPIEntityVisitorEx<String>
 	private String visit(OWLDataPropertyExpression dataPropertyExpression)
 	{
 		if (dataPropertyExpression.isAnonymous())
-			return dataPropertyExpression.toString(); // TODO See if we can get an OWLAPI renderer
+			return dataPropertyExpression.toString(); // TODO Use an OWLAPI renderer
 		else
 			return visit(dataPropertyExpression.asOWLDataProperty());
 	}

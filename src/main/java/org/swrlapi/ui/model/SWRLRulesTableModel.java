@@ -10,7 +10,7 @@ import javax.swing.table.AbstractTableModel;
 import org.apache.log4j.Logger;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLRuleEngine;
-import org.swrlapi.core.impl.DefaultSWRLAPIRulePrinter;
+import org.swrlapi.core.impl.DefaultSWRLAPIRuleRenderer;
 import org.swrlapi.ui.view.SWRLAPIView;
 
 /**
@@ -33,23 +33,23 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 
 	public static int NUMBER_OF_COLUMNS = 4;
 
-	private final DefaultSWRLAPIRulePrinter swrlRulePrinter;
+	private final DefaultSWRLAPIRuleRenderer swrlRuleRenderer;
 	private final Map<String, SWRLRuleModel> swrlRuleModels; // rule name -> SWRLRuleModel
 
 	private SWRLAPIView swrlapiView = null;
 	private boolean isModified = false;
 
-	public SWRLRulesTableModel(SWRLRuleEngine swrlRuleEngine, DefaultSWRLAPIRulePrinter swrlRulePrinter)
+	public SWRLRulesTableModel(SWRLRuleEngine swrlRuleEngine, DefaultSWRLAPIRuleRenderer swrlRuleRenderer)
 	{
-		this.swrlRulePrinter = swrlRulePrinter;
+		this.swrlRuleRenderer = swrlRuleRenderer;
 		this.swrlRuleModels = new HashMap<String, SWRLRuleModel>();
 
 		log.info("#Rules " + swrlRuleEngine.getNumberOfImportedSWRLRules()); // TODO Kill
 
-		for (SWRLAPIRule swrlRule : swrlRuleEngine.getSWRLRules()) {
-			String ruleName = swrlRule.getRuleName();
-			String ruleText = swrlRule.accept(swrlRulePrinter);
-			String comment = swrlRule.comment();
+		for (SWRLAPIRule swrlapiRule : swrlRuleEngine.getSWRLRules()) {
+			String ruleName = swrlapiRule.getRuleName();
+			String ruleText = swrlRuleRenderer.render(swrlapiRule);
+			String comment = swrlapiRule.comment();
 			SWRLRuleModel swrlRuleModel = new SWRLRuleModel(ruleName, ruleText, comment);
 			this.swrlRuleModels.put(ruleName, swrlRuleModel);
 		}
@@ -119,7 +119,7 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 	public void addSWRLRule(SWRLAPIRule swrlRule)
 	{
 		String ruleName = swrlRule.getRuleName();
-		String ruleText = swrlRule.accept(swrlRulePrinter);
+		String ruleText = swrlRule.accept(swrlRuleRenderer);
 		String comment = swrlRule.comment();
 
 		addSWRLRule(ruleName, ruleText, comment);

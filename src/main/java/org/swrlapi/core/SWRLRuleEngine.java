@@ -14,6 +14,7 @@ import org.swrlapi.sqwrl.SQWRLQueryEngine;
  * A native rule engine implementation must implement the {@link org.swrlapi.bridge.TargetSWRLRuleEngine}
  * interface.
  *
+ * @see org.swrlapi.core.SWRLAPIRule
  * @see org.swrlapi.bridge.TargetSWRLRuleEngine
  * @see org.swrlapi.core.impl.DefaultSWRLRuleEngine
  */
