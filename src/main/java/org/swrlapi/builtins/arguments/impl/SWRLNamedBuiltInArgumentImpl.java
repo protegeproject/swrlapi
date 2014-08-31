@@ -85,4 +85,9 @@ abstract class SWRLNamedBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl impl
 	{
 		return visitor.visit(this);
 	}
+
+	@Override public String toString()
+	{
+		return entity.toString();
+	}
 }

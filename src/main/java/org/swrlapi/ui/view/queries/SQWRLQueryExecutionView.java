@@ -7,21 +7,23 @@ import org.swrlapi.core.SWRLAPIFactory;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.ui.model.SWRLAPIApplicationModel;
-import org.swrlapi.ui.view.SQWRLQuerySelector;
 import org.swrlapi.ui.view.SWRLAPIView;
 import org.swrlapi.ui.view.owl2rl.OWL2RLRuleTablesView;
 
-public class SWRLQueryExecutionView extends JTabbedPane implements SWRLAPIView
+/**
+ *
+ */
+public class SQWRLQueryExecutionView extends JTabbedPane implements SWRLAPIView
 {
 	private static final long serialVersionUID = 1L;
 
-	public SWRLQueryExecutionView(SWRLAPIApplicationModel applicationModel, Icon queryEngineIcon,
-			SQWRLQuerySelector ruleSelector) throws SWRLAPIException
+	public SQWRLQueryExecutionView(SWRLAPIApplicationModel applicationModel, Icon queryEngineIcon,
+			SQWRLQuerySelector querySelector) throws SWRLAPIException
 	{
 		SQWRLQueryEngine queryEngine = applicationModel.getSQWRLQueryEngine();
 		Icon owl2RLIcon = SWRLAPIFactory.getOWL2RLReasonerIcon();
 
-		addTab("SWRLAPI Queries", queryEngineIcon, new SQWRLQueryControlView(queryEngine, ruleSelector, queryEngineIcon),
+		addTab("SWRLAPI Queries", queryEngineIcon, new SQWRLQueryControlView(queryEngine, querySelector, queryEngineIcon),
 				"Control Panel");
 
 		addTab("OWL 2 RL", owl2RLIcon, new OWL2RLRuleTablesView(queryEngine.getOWL2RLEngine()), "OWL 2 RL Tab");

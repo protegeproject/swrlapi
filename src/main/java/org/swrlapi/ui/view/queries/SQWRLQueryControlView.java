@@ -19,7 +19,6 @@ import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.exceptions.SQWRLInvalidQueryNameException;
-import org.swrlapi.ui.view.SQWRLQuerySelector;
 import org.swrlapi.ui.view.SWRLAPIView;
 
 /**

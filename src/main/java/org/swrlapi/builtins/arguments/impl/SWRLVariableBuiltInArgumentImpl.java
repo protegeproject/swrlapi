@@ -64,6 +64,13 @@ class SWRLVariableBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements
 		return this.variablePrefixedName;
 	}
 
+	public String getVariableName()
+	{
+		return this.variablePrefixedName.startsWith(":") ?
+				this.variablePrefixedName.substring(1) :
+				this.variablePrefixedName;
+	}
+
 	@Override
 	public void setBuiltInResult(SWRLBuiltInArgument builtInResult)
 	{

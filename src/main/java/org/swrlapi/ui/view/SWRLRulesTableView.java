@@ -53,7 +53,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 		validate();
 	}
 
-	private String getSelectedSWRLRuleName()
+	public String getSelectedSWRLRuleName()
 	{
 		int selectedRow = this.swrlRulesTable.getSelectedRow();
 

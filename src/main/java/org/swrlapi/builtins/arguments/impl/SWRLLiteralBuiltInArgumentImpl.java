@@ -56,22 +56,28 @@ class SWRLLiteralBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements 
 	}
 
 	@Override
-	public boolean equals(Object obj)
+	public boolean equals(Object o)
 	{
-		if (this == obj)
+		if (this == o) {
 			return true;
-		if ((obj == null) || (obj.getClass() != this.getClass()))
+		}
+		if (o == null || getClass() != o.getClass()) {
 			return false;
-		SWRLLiteralBuiltInArgumentImpl impl = (SWRLLiteralBuiltInArgumentImpl)obj;
-		return (getLiteral() == impl.getLiteral() || (getLiteral() != null && getLiteral().equals(impl.getLiteral())));
+		}
+
+		SWRLLiteralBuiltInArgumentImpl that = (SWRLLiteralBuiltInArgumentImpl)o;
+
+		if (!literal.equals(that.literal)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
 	public int hashCode()
 	{
-		int hash = 12;
-		hash = hash + (null == getLiteral() ? 0 : getLiteral().hashCode());
-		return hash;
+		return literal.hashCode();
 	}
 
 	@Override
@@ -119,5 +125,10 @@ class SWRLLiteralBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements 
 	public void accept(SWRLBuiltInArgumentVisitor visitor)
 	{
 		visitor.visit(this);
+	}
+
+	@Override public String toString()
+	{
+		return this.literal.getLiteral();
 	}
 }

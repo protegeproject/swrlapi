@@ -37,10 +37,10 @@ public class SQWRLResultView extends JPanel implements SWRLAPIView
 {
 	private static final long serialVersionUID = 1L;
 
-	private final String queryName;
 	private final SQWRLQueryEngine sqwrlQueryEngine;
 	private final SQWRLQueryControlView sqwrlQueryControlView;
 	private final SQWRLQueryResultTableModel sqwrlQueryResultTableModel;
+	private final String queryName;
 	private SQWRLResult sqwrlResult;
 
 	private static File currentDirectory = null;
@@ -49,10 +49,10 @@ public class SQWRLResultView extends JPanel implements SWRLAPIView
 			SQWRLQueryControlView sqwrlQueryControlView)
 	{
 		this.sqwrlQueryEngine = sqwrlQueryEngine;
-		this.queryName = queryName;
-		this.sqwrlResult = sqwrlResult;
 		this.sqwrlQueryControlView = sqwrlQueryControlView;
 		this.sqwrlQueryResultTableModel = new SQWRLQueryResultTableModel();
+		this.queryName = queryName;
+		this.sqwrlResult = sqwrlResult;
 
 		setLayout(new BorderLayout());
 		JTable sqwrlQueryResultTable = new JTable(this.sqwrlQueryResultTableModel);
@@ -246,6 +246,7 @@ public class SQWRLResultView extends JPanel implements SWRLAPIView
 			try {
 				SQWRLResultValue sqwrlResultValue = (SQWRLResultView.this.sqwrlResult == null) ? null
 						: SQWRLResultView.this.sqwrlResult.getValue(column, row);
+
 				if (sqwrlResultValue.isNamed()) {
 					SQWRLNamedResultValue sqwrlNamedResultValue = sqwrlResultValue.asNamedResult();
 					return sqwrlNamedResultValue.getPrefixedName();
@@ -254,6 +255,7 @@ public class SQWRLResultView extends JPanel implements SWRLAPIView
 					return sqwrLiteralResultValue.getLiteral();
 				} else
 					return "INVALID";
+
 			} catch (SQWRLException e) {
 				return "INVALID";
 			}

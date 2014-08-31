@@ -441,7 +441,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	{
 		String columnName;
 		if (argument.isVariable())
-			columnName = "sum(?" + argument.asVariable().getVariablePrefixedName() + ")";
+			columnName = "sum(?" + argument.asVariable().getVariableName() + ")";
 		else
 			columnName = "sum[" + argument + "]";
 
@@ -452,7 +452,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	{
 		String columnName;
 		if (argument.isVariable())
-			columnName = "max(?" + argument.asVariable().getVariablePrefixedName() + ")";
+			columnName = "max(?" + argument.asVariable().getVariableName() + ")";
 		else
 			columnName = "max[" + argument + "]";
 
@@ -463,7 +463,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	{
 		String columnName;
 		if (argument.isVariable())
-			columnName = "min(?" + argument.asVariable().getVariablePrefixedName() + ")";
+			columnName = "min(?" + argument.asVariable().getVariableName() + ")";
 		else
 			columnName = "min[" + argument + "]";
 
@@ -474,7 +474,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	{
 		String columnName;
 		if (argument.isVariable())
-			columnName = "countDistinct(?" + argument.asVariable().getVariablePrefixedName() + ")";
+			columnName = "countDistinct(?" + argument.asVariable().getVariableName() + ")";
 		else
 			columnName = "[" + argument + "]";
 
@@ -485,7 +485,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	{
 		String columnName;
 		if (argument.isVariable())
-			columnName = "count(?" + argument.asVariable().getVariablePrefixedName() + ")";
+			columnName = "count(?" + argument.asVariable().getVariableName() + ")";
 		else
 			columnName = "[" + argument + "]";
 
@@ -502,7 +502,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	{
 		String columnName;
 		if (argument.isVariable()) {
-			columnName = "?" + argument.asVariable().getVariablePrefixedName();
+			columnName = "?" + argument.asVariable().getVariableName();
 		} else
 			columnName = "[" + argument + "]";
 		this.sqwrlResult.addColumn(columnName);
@@ -512,7 +512,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	{
 		String columnName;
 		if (argument.isVariable())
-			columnName = "avg(?" + argument.asVariable().getVariablePrefixedName() + ")";
+			columnName = "avg(?" + argument.asVariable().getVariableName() + ")";
 		else
 			columnName = "avg[" + argument + "]";
 		this.sqwrlResult.addAggregateColumn(columnName, SQWRLNames.AvgAggregateFunction);
@@ -522,24 +522,26 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 			SWRLVariableBuiltInArgument argument) throws SQWRLException
 	{
 		String variablePrefixedName = argument.getVariablePrefixedName();
+		String variableName = argument.getVariableName();
 
 		if (selectedVariable2ColumnIndices.containsKey(variablePrefixedName)) {
 			for (int selectedColumnIndex : selectedVariable2ColumnIndices.get(variablePrefixedName))
 				this.sqwrlResult.addOrderByColumn(selectedColumnIndex, true);
 		} else
-			throw new SQWRLException("variable ?" + variablePrefixedName + " must be selected before it can be ordered");
+			throw new SQWRLException("variable ?" + variableName + " must be selected before it can be ordered");
 	}
 
 	private void processOrderByDescendingArgument(Map<String, List<Integer>> selectedVariable2ColumnIndices,
 			SWRLVariableBuiltInArgument argument) throws SQWRLException
 	{
 		String variablePrefixedName = argument.getVariablePrefixedName();
+		String variableName = argument.getVariableName();
 
 		if (selectedVariable2ColumnIndices.containsKey(variablePrefixedName)) {
 			for (int selectedColumnIndex : selectedVariable2ColumnIndices.get(variablePrefixedName))
 				this.sqwrlResult.addOrderByColumn(selectedColumnIndex, false);
 		} else
-			throw new SQWRLException("variable ?" + variablePrefixedName + " must be selected before it can be ordered");
+			throw new SQWRLException("variable ?" + variableName + " must be selected before it can be ordered");
 	}
 
 	private void processColumnNamesArgument(SWRLBuiltInArgument argument) throws SQWRLException

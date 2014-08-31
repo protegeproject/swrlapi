@@ -11,6 +11,8 @@ public interface SWRLVariableBuiltInArgument extends SWRLBuiltInArgument, SWRLVa
 {
 	String getVariablePrefixedName();
 
+	String getVariableName();
+
 	@Override
 	boolean isVariable();
 

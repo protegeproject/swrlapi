@@ -1310,10 +1310,10 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, 
 		for (SWRLBuiltInArgument argument : arguments) {
 			if (argument.isVariable() && argument.asVariable().isUnbound())
 				throw new SWRLBuiltInException("built-in " + builtInName + " in rule " + ruleName + " "
-						+ "returned with unbound argument ?" + argument.asVariable().getVariablePrefixedName());
+						+ "returned with unbound argument ?" + argument.asVariable().getVariableName());
 			else if (argument.isMultiValueVariable() && argument.asMultiValueVariable().hasNoArguments())
 				throw new SWRLBuiltInException("built-in " + builtInName + " in rule " + ruleName + " "
-						+ "returned with empty multi-argument ?" + argument.asVariable().getVariablePrefixedName());
+						+ "returned with empty multi-argument ?" + argument.asVariable().getVariableName());
 		}
 	}
 

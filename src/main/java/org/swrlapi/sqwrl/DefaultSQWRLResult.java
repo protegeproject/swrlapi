@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.swrlapi.exceptions.SWRLAPIInternalException;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.exceptions.SQWRLInvalidAggregateFunctionNameException;
 import org.swrlapi.sqwrl.exceptions.SQWRLInvalidColumnIndexException;
@@ -22,7 +21,6 @@ import org.swrlapi.sqwrl.exceptions.SQWRLResultStateException;
 import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
 import org.swrlapi.sqwrl.values.SQWRLIndividualResultValue;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
-import org.swrlapi.sqwrl.values.SQWRLPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLResultValue;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
