@@ -7,6 +7,8 @@ import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
+import org.swrlapi.core.SWRLAPIOWLOntology;
+import org.swrlapi.core.impl.DefaultOWLLiteralFactory;
 import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.core.OWLLiteralFactory;
 import org.swrlapi.core.xsd.XSDDate;
@@ -18,13 +20,13 @@ import org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue;
 
 public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
 {
-	private final OWLLiteralFactory owlLiteralFactory;
 	private final IRIResolver iriResolver;
+	private final OWLLiteralFactory owlLiteralFactory;
 
-	public DefaultSQWRLResultValueFactory(IRIResolver iriResolver, OWLLiteralFactory owlLiteralFactory)
+	public DefaultSQWRLResultValueFactory(IRIResolver iriResolver)
 	{
-		this.owlLiteralFactory = owlLiteralFactory;
 		this.iriResolver = iriResolver;
+		this.owlLiteralFactory = new DefaultOWLLiteralFactory();
 	}
 
 	@Override
@@ -105,67 +107,67 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
 	}
 
 	@Override
-	public SQWRLLiteralResultValue getLiteral(OWLLiteral literal)
+	public SQWRLLiteralResultValue getLiteralValue(OWLLiteral literal)
 	{
 		return new SQWRLLiteralResultValueImpl(literal);
 	}
 
 	@Override
-	public SQWRLLiteralResultValue getLiteral(String s)
+	public SQWRLLiteralResultValue getLiteralValue(String s)
 	{
 		return new SQWRLLiteralResultValueImpl(getOWLLiteralFactory().getOWLLiteral(s));
 	}
 
 	@Override
-	public SQWRLLiteralResultValue getLiteral(boolean b)
+	public SQWRLLiteralResultValue getLiteralValue(boolean b)
 	{
 		return new SQWRLLiteralResultValueImpl(getOWLLiteralFactory().getOWLLiteral(b));
 	}
 
 	@Override
-	public SQWRLLiteralResultValue getLiteral(int i)
+	public SQWRLLiteralResultValue getLiteralValue(int i)
 	{
 		return new SQWRLLiteralResultValueImpl(getOWLLiteralFactory().getOWLLiteral(i));
 	}
 
 	@Override
-	public SQWRLLiteralResultValue getLiteral(long l)
+	public SQWRLLiteralResultValue getLiteralValue(long l)
 	{
 		return new SQWRLLiteralResultValueImpl(getOWLLiteralFactory().getOWLLiteral(l));
 	}
 
 	@Override
-	public SQWRLLiteralResultValue getLiteral(float f)
+	public SQWRLLiteralResultValue getLiteralValue(float f)
 	{
 		return new SQWRLLiteralResultValueImpl(getOWLLiteralFactory().getOWLLiteral(f));
 	}
 
 	@Override
-	public SQWRLLiteralResultValue getLiteral(double d)
+	public SQWRLLiteralResultValue getLiteralValue(double d)
 	{
 		return new SQWRLLiteralResultValueImpl(getOWLLiteralFactory().getOWLLiteral(d));
 	}
 
 	@Override
-	public SQWRLLiteralResultValue getLiteral(short s)
+	public SQWRLLiteralResultValue getLiteralValue(short s)
 	{
 		return new SQWRLLiteralResultValueImpl(getOWLLiteralFactory().getOWLLiteral(s));
 	}
 
 	@Override
-	public SQWRLLiteralResultValue getLiteral(XSDTime time)
+	public SQWRLLiteralResultValue getLiteralValue(XSDTime time)
 	{
 		return new SQWRLLiteralResultValueImpl(getOWLLiteralFactory().getOWLLiteral(time));
 	}
 
 	@Override
-	public SQWRLLiteralResultValue getLiteral(XSDDate date)
+	public SQWRLLiteralResultValue getLiteralValue(XSDDate date)
 	{
 		return new SQWRLLiteralResultValueImpl(getOWLLiteralFactory().getOWLLiteral(date));
 	}
 
 	@Override
-	public SQWRLLiteralResultValue getLiteral(XSDDateTime dateTime)
+	public SQWRLLiteralResultValue getLiteralValue(XSDDateTime dateTime)
 	{
 		return new SQWRLLiteralResultValueImpl(getOWLLiteralFactory().getOWLLiteral(dateTime));
 	}

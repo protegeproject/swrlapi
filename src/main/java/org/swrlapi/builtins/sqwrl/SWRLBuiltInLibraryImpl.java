@@ -85,7 +85,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		for (SWRLBuiltInArgument argument : arguments) {
 			if (argument instanceof SWRLLiteralBuiltInArgument) {
 				SWRLLiteralBuiltInArgument literalArgument = (SWRLLiteralBuiltInArgument)argument;
-				SQWRLLiteralResultValue literal = getSQWRLResultValueFactory().getLiteral(literalArgument.getLiteral());
+				SQWRLLiteralResultValue literal = getSQWRLResultValueFactory().getLiteralValue(literalArgument.getLiteral());
 				resultGenerator.addRowData(literal);
 			} else if (argument instanceof SWRLNamedIndividualBuiltInArgument) {
 				SWRLNamedIndividualBuiltInArgument individualArgument = (SWRLNamedIndividualBuiltInArgument)argument;
@@ -145,7 +145,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 		if (argument instanceof SWRLLiteralBuiltInArgument) {
 			SWRLLiteralBuiltInArgument literalArgument = (SWRLLiteralBuiltInArgument)argument;
-			SQWRLLiteralResultValue literal = getSQWRLResultValueFactory().getLiteral(literalArgument.getLiteral());
+			SQWRLLiteralResultValue literal = getSQWRLResultValueFactory().getLiteralValue(literalArgument.getLiteral());
 			resultGenerator.addRowData(literal);
 		} else if (argument instanceof SWRLNamedIndividualBuiltInArgument) {
 			SWRLNamedIndividualBuiltInArgument individualArgument = (SWRLNamedIndividualBuiltInArgument)argument;
@@ -362,7 +362,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 			if (argument instanceof SWRLLiteralBuiltInArgument) {
 				SWRLLiteralBuiltInArgument literalArgument = (SWRLLiteralBuiltInArgument)argument;
-				SQWRLLiteralResultValue literal = getSQWRLResultValueFactory().getLiteral(literalArgument.getLiteral());
+				SQWRLLiteralResultValue literal = getSQWRLResultValueFactory().getLiteralValue(literalArgument.getLiteral());
 				if (literal.isNumeric()) {
 					resultGenerator.addRowData(literal);
 				} else
@@ -391,7 +391,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 			if (argument instanceof SWRLLiteralBuiltInArgument) {
 				SWRLLiteralBuiltInArgument literalArgument = (SWRLLiteralBuiltInArgument)argument;
-				SQWRLLiteralResultValue literal = getSQWRLResultValueFactory().getLiteral(literalArgument.getLiteral());
+				SQWRLLiteralResultValue literal = getSQWRLResultValueFactory().getLiteralValue(literalArgument.getLiteral());
 				if (literal.isNumeric()) {
 					resultGenerator.addRowData(literal);
 				} else
@@ -421,7 +421,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 			if (argument instanceof SWRLLiteralBuiltInArgument) {
 				SWRLLiteralBuiltInArgument literalArgument = (SWRLLiteralBuiltInArgument)argument;
-				SQWRLLiteralResultValue literal = getSQWRLResultValueFactory().getLiteral(literalArgument.getLiteral());
+				SQWRLLiteralResultValue literal = getSQWRLResultValueFactory().getLiteralValue(literalArgument.getLiteral());
 				if (literal.isNumeric())
 					resultGenerator.addRowData(literal);
 				else
@@ -466,7 +466,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 			if (argument instanceof SWRLLiteralBuiltInArgument) {
 				SWRLLiteralBuiltInArgument literalArgument = (SWRLLiteralBuiltInArgument)argument;
-				SQWRLLiteralResultValue literal = getSQWRLResultValueFactory().getLiteral(literalArgument.getLiteral());
+				SQWRLLiteralResultValue literal = getSQWRLResultValueFactory().getLiteralValue(literalArgument.getLiteral());
 				if (literal.isNumeric())
 					resultGenerator.addRowData(literal);
 				else
@@ -1363,7 +1363,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	{
 		if (argument instanceof SWRLLiteralBuiltInArgument) {
 			SWRLLiteralBuiltInArgument literalArgument = (SWRLLiteralBuiltInArgument)argument;
-			SQWRLLiteralResultValue literal = getSQWRLResultValueFactory().getLiteral(literalArgument.getLiteral());
+			SQWRLLiteralResultValue literal = getSQWRLResultValueFactory().getLiteralValue(literalArgument.getLiteral());
 			if (!literal.isComparable())
 				throw new SWRLBuiltInException("may only be applied to collections with comparable elements");
 		} else

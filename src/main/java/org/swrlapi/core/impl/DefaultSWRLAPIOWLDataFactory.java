@@ -15,6 +15,7 @@ import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.core.OWLLiteralFactory;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
 import org.swrlapi.core.SWRLAPIFactory;
+import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.core.SWRLAPILiteralFactory;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
@@ -40,12 +41,10 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
 	{
 		this.iriResolver = iriResolver;
 		this.swrlapiOWLDatatypeFactory = SWRLAPIFactory.createSWRLAPIOWLDatatypeFactory();
-		this.owlLiteralFactory = SWRLAPIFactory.createOWLLiteralFactory(this.swrlapiOWLDatatypeFactory);
-		this.swrlapiLiteralFactory = SWRLAPIFactory.createSWRLAPILiteralFactory(this.owlLiteralFactory);
-		this.swrlBuiltInArgumentFactory = SWRLAPIFactory.createSWRLBuiltInArgumentFactory(this.iriResolver,
-				this.owlLiteralFactory);
-		this.sqwrlResultValueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(this.iriResolver,
-				this.owlLiteralFactory);
+		this.owlLiteralFactory = SWRLAPIFactory.createOWLLiteralFactory();
+		this.swrlapiLiteralFactory = SWRLAPIFactory.createSWRLAPILiteralFactory();
+		this.swrlBuiltInArgumentFactory = SWRLAPIFactory.createSWRLBuiltInArgumentFactory(iriResolver);
+		this.sqwrlResultValueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(iriResolver);
 	}
 
 	@Override
@@ -64,7 +63,7 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
 	@Override
 	public SWRLAPIRule getSWRLRule(String ruleName, String ruleText)
 	{
-		throw new SWRLAPIException("SWRL parser not implemented"); // TODO
+		throw new SWRLAPIException("SWRL parser not implemented"); // TODO - yes it is!
 	}
 
 	@Override

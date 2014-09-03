@@ -156,26 +156,24 @@ public class SWRLAPIFactory
 		return new DefaultSWRLAPIOWLDatatypeFactory();
 	}
 
-	public static OWLLiteralFactory createOWLLiteralFactory(SWRLAPIOWLDatatypeFactory owlDatatypeFactory)
+	public static OWLLiteralFactory createOWLLiteralFactory()
 	{
-		return new DefaultOWLLiteralFactory(owlDatatypeFactory);
+		return new DefaultOWLLiteralFactory();
 	}
 
-	public static SWRLAPILiteralFactory createSWRLAPILiteralFactory(OWLLiteralFactory owlLiteralFactory)
+	public static SWRLAPILiteralFactory createSWRLAPILiteralFactory()
 	{
-		return new DefaultSWRLAPILiteralFactory(owlLiteralFactory);
+		return new DefaultSWRLAPILiteralFactory();
 	}
 
-	public static SWRLBuiltInArgumentFactory createSWRLBuiltInArgumentFactory(IRIResolver iriResolver,
-			OWLLiteralFactory owlLiteralFactory)
+	public static SWRLBuiltInArgumentFactory createSWRLBuiltInArgumentFactory(IRIResolver iriResolver)
 	{
-		return new DefaultSWRLBuiltInArgumentFactory(iriResolver, owlLiteralFactory);
+		return new DefaultSWRLBuiltInArgumentFactory(iriResolver);
 	}
 
-	public static SQWRLResultValueFactory createSQWRLResultValueFactory(IRIResolver iriResolver,
-			OWLLiteralFactory owlLiteralFactory)
+	public static SQWRLResultValueFactory createSQWRLResultValueFactory(IRIResolver iriResolver)
 	{
-		return new DefaultSQWRLResultValueFactory(iriResolver, owlLiteralFactory);
+		return new DefaultSQWRLResultValueFactory(iriResolver);
 	}
 
 	public static SWRLRuleEngine createQueryEngine(SWRLAPIOWLOntology swrlapiOWLOntology,
@@ -207,7 +205,7 @@ public class SWRLAPIFactory
 			throw new SWRLAPIException("No SQWRL icon found!");
 	}
 
-	public static SWRLAPIRuleRenderer getSWRLRuleRenderer(SWRLAPIOWLOntology swrlapiowlOntology)
+	public static SWRLAPIRuleRenderer getSWRLAPIRuleRenderer(SWRLAPIOWLOntology swrlapiowlOntology)
 	{
 		return new DefaultSWRLAPIRuleRenderer(swrlapiowlOntology.getPrefixManager());
 	}

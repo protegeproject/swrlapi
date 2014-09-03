@@ -10,12 +10,15 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
 /**
  * Represents a SQWRL query in the SWRLAPI. A {@link org.swrlapi.core.SWRLAPIOntologyProcessor} can be used to
- * extract SQWRL queries - which are stored as SWRL rules - from an OWL ontology.
+ * extract SQWRL queries - which are stored as {@link org.swrlapi.core.SWRLAPIRule}s - from an OWL ontology.
+ *
+ *  * A {@link org.swrlapi.core.SWRLAPIRuleRenderer} can be used to print a query.
  * 
  * @see org.swrlapi.core.SWRLAPIOntologyProcessor
  * @see org.swrlapi.core.SWRLAPIRule
  * @see org.swrlapi.sqwrl.SQWRLResult
  * @see org.swrlapi.sqwrl.SQWRLResultGenerator
+ * @see org.swrlapi.core.SWRLAPIRuleRenderer
  */
 public interface SQWRLQuery
 {
@@ -23,15 +26,17 @@ public interface SQWRLQuery
 
 	boolean isActive();
 
+	void setActive(boolean isActive);
+
 	String getComment();
 
 	List<SWRLAtom> getHeadAtoms();
 
 	List<SWRLAtom> getBodyAtoms();
 
-	String getQueryText();
-
 	SQWRLResult getSQWRLResult() throws SQWRLException;
+
+	SQWRLResultGenerator getSQWRLResultGenerator();
 
 	List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromBody(Set<String> builtInNames);
 
@@ -40,8 +45,4 @@ public interface SQWRLQuery
 	List<SWRLAtom> getSQWRLPhase1BodyAtoms();
 
 	List<SWRLAtom> getSQWRLPhase2BodyAtoms();
-
-	void setActive(boolean isActive);
-
-	SQWRLResultGenerator getSQWRLResultGenerator();
 }

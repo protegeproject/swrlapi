@@ -26,8 +26,9 @@ import org.swrlapi.sqwrl.values.SQWRLResultValue;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 
 /**
- * This class implements the interfaces {@link SQWRLResult} and {@link SQWRLResultGenerator}. It can be used to generate
- * a result structure and populate it with data; it can also be used to retrieve those data from the result.
+ * This class implements the interfaces {@link org.swrlapi.sqwrl.SQWRLResult} and
+ * {@link org.swrlapi.sqwrl.SQWRLResultGenerator}. It can be used to generate a result structure and populate it
+ * with data; it can also be used to retrieve those data from the result.
  * <p/>
  * This class operates in three phases:
  * <p/>
@@ -45,40 +46,40 @@ import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
  * method automatically does a row open and close. It is expecting the exact same number of list elements as there are
  * columns in the result.
  * <p/>
- * The interface {@link SQWRLResultGenerator} defines the calls used in these two phases.
+ * The interface {@link org.swrlapi.sqwrl.SQWRLResultGenerator} defines the calls used in these two phases.
  * <p/>
  * (3) Processing Phase: In this phase data may be retrieved from the result.
  * <p/>
- * The interface {@link SQWRLResult} defines the calls used in the processing phase.
+ * The interface {@link org.swrlapi.sqwrl.SQWRLResult} defines the calls used in the processing phase.
  * <p/>
  * An example configuration, data generation, and result retrieval is:
  * <p/>
- * <p/>
  * <pre>
- * DefaultSQWRLResult result = new DefaultSQWRLResult(&quot;TestResult&quot;);
+ * DefaultSQWRLResult result = new DefaultSQWRLResult(swrlapiOWLOntology);
+ * SQWRLResultValueFactory valueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(swrlapiOWLOntology);
  *
  * result.addColumn(&quot;name&quot;);
  * result.addAggregateColumn(&quot;average&quot;, SQWRLResultNames.AvgAggregateFunction);
  * result.configured();
  *
  * result.openRow();
- * result.addRowData(new SQWRLIndividualResultValue(&quot;Fred&quot;));
- * result.addRowData(new SQWRLLiteralResultValue(27));
+ * result.addRowData(valueFactory.getIndividualValue(&quot;Fred&quot;));
+ * result.addRowData(valueFactory.getLiteralValue(27));
  * result.closeRow();
  * result.openRow();
- * result.addRowData(new SQWRLIndividualResultValue(&quot;Joe&quot;));
- * result.addRowData(new SQWRLLiteralResultValue(34));
+ * result.addRowData(valueFactory.getIndividualValue(&quot;Joe&quot;));
+ * result.addRowData(valueFactory.getLiteralValue(34));
  * result.closeRow();
  * result.openRow();
- * result.addRowData(new SQWRLIndividualResultValue(&quot;Joe&quot;));
- * result.addRowData(new SQWRLLiteralResultValue(21));
+ * result.addRowData(valueFactory.getIndividualValue(&quot;Joe&quot;));
+ * result.addRowData(valueFactory.getSQWRLLiteralValue(21));
  * result.closeRow();
  * result.prepared();
  * </pre>
  * <p/>
- * The result is now available for reading. The interface {@link SQWRLResult} defines the assessor methods. A row
- * consists of a list of objects defined by the interface {@link SQWRLResultValue}. There are four possible types of
- * values (1) {@link SQWRLLiteralResultValue}, representing literals;
+ * The result is now available for reading. The interface {@link org.swrlapi.sqwrl.SQWRLResult} defines the assessor
+ * methods. A row consists of a list of objects defined by the interface {@link org.swrlapi.sqwrl.values.SQWRLResultValue}.
+ * There are four possible types of values (1) {@link org.swrlapi.sqwrl.values.SQWRLLiteralResultValue}, representing literals;
  * (2) {@link org.swrlapi.sqwrl.values.SQWRLIndividualResultValue}, representing OWL individuals;
  * (3) {@link org.swrlapi.sqwrl.values.SQWRLClassResultValue}, representing OWL classes; and
  * (4) {@link org.swrlapi.sqwrl.values.SQWRLPropertyResultValue}, representing OWL properties (object, data, and annotation).
@@ -87,7 +88,7 @@ import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
  * while (result.hasNext()) {
  * 	SQWRLIndividualResultValue nameValue = result.getIndividualValue(&quot;name&quot;);
  * 	SQWRLLiteralResultValue averageValue = result.getLiteralValue(&quot;average&quot;);
- * 	System.out.println(&quot;Name: &quot; + nameValue.getURI());
+ * 	System.out.println(&quot;Name: &quot; + nameValue.getPrefixedName());
  * 	System.out.println(&quot;Average: &quot; + averageValue.getInt());
  * }
  * </pre>
@@ -1193,7 +1194,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 			rowIndex++;
 		}
 
-		return getSQWRLResultValueFactory().getLiteral(sum);
+		return getSQWRLResultValueFactory().getLiteralValue(sum);
 	}
 
 	private SQWRLLiteralResultValue avg(List<SQWRLLiteralResultValue> columnValues, int columnIndex)
@@ -1219,19 +1220,19 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 			sum = sum + d;
 			rowIndex++;
 		}
-		return getSQWRLResultValueFactory().getLiteral(sum / count);
+		return getSQWRLResultValueFactory().getLiteralValue(sum / count);
 	}
 
 	private SQWRLLiteralResultValue count(List<SQWRLResultValue> columnValues) throws SQWRLException
 	{
-		return getSQWRLResultValueFactory().getLiteral(columnValues.size());
+		return getSQWRLResultValueFactory().getLiteralValue(columnValues.size());
 	}
 
 	private SQWRLLiteralResultValue countDistinct(List<SQWRLResultValue> columnValues) throws SQWRLException
 	{
 		Set<SQWRLResultValue> distinctValues = new HashSet<SQWRLResultValue>(columnValues);
 
-		return getSQWRLResultValueFactory().getLiteral(distinctValues.size());
+		return getSQWRLResultValueFactory().getLiteralValue(distinctValues.size());
 	}
 
 	// TODO: linear search is not very efficient.

@@ -61,7 +61,7 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 	}
 
 	@Override
-	public String comment()
+	public String getComment()
 	{
 		return comment;
 	}

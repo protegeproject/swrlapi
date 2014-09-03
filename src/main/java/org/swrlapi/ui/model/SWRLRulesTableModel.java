@@ -49,7 +49,7 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 		for (SWRLAPIRule swrlapiRule : swrlRuleEngine.getSWRLRules()) {
 			String ruleName = swrlapiRule.getRuleName();
 			String ruleText = swrlRuleRenderer.render(swrlapiRule);
-			String comment = swrlapiRule.comment();
+			String comment = swrlapiRule.getComment();
 			SWRLRuleModel swrlRuleModel = new SWRLRuleModel(ruleName, ruleText, comment);
 			this.swrlRuleModels.put(ruleName, swrlRuleModel);
 		}
@@ -120,7 +120,7 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 	{
 		String ruleName = swrlRule.getRuleName();
 		String ruleText = swrlRule.accept(swrlRuleRenderer);
-		String comment = swrlRule.comment();
+		String comment = swrlRule.getComment();
 
 		addSWRLRule(ruleName, ruleText, comment);
 	}

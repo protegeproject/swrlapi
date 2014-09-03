@@ -56,6 +56,7 @@ import org.semanticweb.owlapi.model.OWLSubObjectPropertyOfAxiom;
 import org.semanticweb.owlapi.model.OWLSubPropertyChainOfAxiom;
 import org.semanticweb.owlapi.model.OWLSymmetricObjectPropertyAxiom;
 import org.semanticweb.owlapi.model.OWLTransitiveObjectPropertyAxiom;
+import org.swrlapi.core.SWRLAPILiteralFactory;
 import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
@@ -69,6 +70,7 @@ import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.exceptions.SQWRLInvalidQueryNameException;
+import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 
 public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 {
@@ -304,9 +306,9 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 		if (isSQWRLQuery(ruleOrQuery)) {
 			String ruleName = ruleOrQuery.getRuleName();
 			boolean active = ruleOrQuery.isActive();
-			String comment = ruleOrQuery.comment();
+			String comment = ruleOrQuery.getComment();
 			SQWRLQuery query = new DefaultSQWRLQuery(ruleName, ruleOrQuery.getBodyAtoms(), ruleOrQuery.getHeadAtoms(),
-					active, comment, getSWRLAPIOWLDataFactory());
+					active, comment, getSWRLAPILiteralFactory(), getSQWRLResultValueFactory());
 			this.sqwrlQueries.put(ruleOrQuery.getRuleName(), query);
 			this.swrlRules.put(ruleOrQuery.getRuleName(), ruleOrQuery);
 		} else {
@@ -967,4 +969,15 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 	{
 		return getSWRLAPIOWLOntology().getSWRLAPIOWLDataFactory();
 	}
+
+	private SWRLAPILiteralFactory getSWRLAPILiteralFactory()
+	{
+		return getSWRLAPIOWLDataFactory().getSWRLAPILiteralFactory();
+	}
+
+	private SQWRLResultValueFactory getSQWRLResultValueFactory()
+	{
+		return getSWRLAPIOWLDataFactory().getSQWRLResultValueFactory();
+	}
+
 }

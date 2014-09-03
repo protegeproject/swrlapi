@@ -16,8 +16,8 @@ import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
 import org.swrlapi.core.SWRLAPILiteral;
 import org.swrlapi.core.SWRLAPILiteralFactory;
-import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
+import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 
 public class DefaultSQWRLQuery implements SQWRLQuery
 {
@@ -27,22 +27,23 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	private final DefaultSQWRLResult sqwrlResult;
 	// Map of collection name to group  arguments; applies only to grouped collections
 	private final Map<String, List<SWRLBuiltInArgument>> collectionGroupArgumentsMap;
-	private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
+	private final SWRLAPILiteralFactory swrlapiLiteralFactory;
 
-	private boolean active; // Like a SWRLRule, a SQWRL query can also be inactive.
+	private boolean active; // Like a SWRLRule, a SQWRL query can also be active or inactive.
 	private final String comment;
 
 	public DefaultSQWRLQuery(String queryName, List<SWRLAtom> bodyAtoms, List<SWRLAtom> headAtoms, boolean active,
-			String comment, SWRLAPIOWLDataFactory swrlapiOWLDataFactory) throws SQWRLException
+			String comment, SWRLAPILiteralFactory swrlapiLiteralFactory, SQWRLResultValueFactory sqwrlResultValueFactory)
+			throws SQWRLException
 	{
 		this.queryName = queryName;
-		this.bodyAtoms = bodyAtoms;
-		this.headAtoms = headAtoms;
+		this.bodyAtoms = new ArrayList<SWRLAtom>(bodyAtoms);
+		this.headAtoms = new ArrayList<SWRLAtom>(headAtoms);
 		this.active = active;
 		this.comment = comment;
-		this.sqwrlResult = new DefaultSQWRLResult(swrlapiOWLDataFactory.getSQWRLResultValueFactory());
+		this.sqwrlResult = new DefaultSQWRLResult(sqwrlResultValueFactory);
 		this.collectionGroupArgumentsMap = new HashMap<String, List<SWRLBuiltInArgument>>();
-		this.swrlapiOWLDataFactory = swrlapiOWLDataFactory;
+		this.swrlapiLiteralFactory = swrlapiLiteralFactory;
 
 		processSQWRLBuiltIns();
 		generateBuiltInAtomVariableDependencies();
@@ -145,38 +146,6 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		return result;
 	}
 
-	@Override
-	public String toString()
-	{
-		return this.queryName + ": " + getQueryText();
-	}
-
-	@Override
-	public String getQueryText()
-	{
-		String result = "";
-		boolean isFirst = true;
-
-		for (SWRLAtom atom : getBodyAtoms()) {
-			if (!isFirst)
-				result += " ^ ";
-			result += "" + atom;
-			isFirst = false;
-		}
-
-		result += " -> ";
-
-		isFirst = true;
-		for (SWRLAtom atom : getHeadAtoms()) {
-			if (!isFirst)
-				result += " ^ ";
-			result += "" + atom;
-			isFirst = false;
-		}
-
-		return result;
-	}
-
 	private boolean isSQWRLMakeCollection(SWRLAPIBuiltInAtom builtInAtom)
 	{
 		return SQWRLNames.isSQWRLCollectionMakeBuiltIn(builtInAtom.getBuiltInPrefixedName());
@@ -235,8 +204,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		processSQWRLHeadBuiltIns();
 		processSQWRLCollectionMakeBuiltIns(collectionNames); // Find all make collection built-ins
 		processSQWRLCollectionGroupByBuiltIns(collectionNames); // Find the group arguments for each collection
-		processSQWRLCollectionMakeGroupArguments(collectionNames); // Add the group arguments to the make built-ins for its
-		// collection
+		processSQWRLCollectionMakeGroupArguments(collectionNames); // Add group arguments to the make built-ins collections
 		processSQWRLCollectionOperationBuiltIns(collectionNames, cascadedUnboundVariableNames);
 		processBuiltInsThatUseSQWRLCollectionOperationResults(cascadedUnboundVariableNames);
 
@@ -295,7 +263,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 
 			if (nArgument instanceof SWRLLiteralBuiltInArgument) {
 				SWRLLiteralBuiltInArgument sliceNArgument = (SWRLLiteralBuiltInArgument)nArgument;
-				SWRLAPILiteral literal = getSWRLAPILiteralFactory().getSWRLAPILiteral(sliceNArgument.getLiteral());
+				SWRLAPILiteral literal = this.swrlapiLiteralFactory.getSWRLAPILiteral(sliceNArgument.getLiteral());
 
 				if (literal.isInteger() || literal.isInt()) {
 					sliceN = literal.getInteger();
@@ -324,7 +292,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 
 		if (sliceSizeArgument instanceof SWRLLiteralBuiltInArgument) {
 			SWRLLiteralBuiltInArgument literalArgument = (SWRLLiteralBuiltInArgument)sliceSizeArgument;
-			SWRLAPILiteral literal = getSWRLAPILiteralFactory().getSWRLAPILiteral(literalArgument.getLiteral());
+			SWRLAPILiteral literal = this.swrlapiLiteralFactory.getSWRLAPILiteral(literalArgument.getLiteral());
 			if (literal.isInteger() || literal.isInt()) {
 				sliceSize = literal.getInteger();
 				if (sliceSize < 1)
@@ -548,7 +516,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	{
 		if (argument instanceof SWRLLiteralBuiltInArgument) {
 			SWRLLiteralBuiltInArgument literalArgument = (SWRLLiteralBuiltInArgument)argument;
-			SWRLAPILiteral literal = getSWRLAPILiteralFactory().getSWRLAPILiteral(literalArgument.getLiteral());
+			SWRLAPILiteral literal = this.swrlapiLiteralFactory.getSWRLAPILiteral(literalArgument.getLiteral());
 			if (literal.isString())
 				this.sqwrlResult.addColumnDisplayName(literal.getString());
 			else
@@ -807,8 +775,8 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 								paths.add(Collections.unmodifiableSet(newPath)); // Add the updated path
 							}
 						}
-					} else { // Did not find an existing path for this root that uses these variables - add dependent variables as
-						// new path
+					} else {
+						// Did not find existing path for this root using these variables - add dependent variables as new path
 						Set<Set<String>> paths = pathMap.get(rootVariableName);
 						paths.add(Collections.unmodifiableSet(dependentVariables));
 					}
@@ -898,10 +866,5 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	private boolean hasReferencedVariables(SWRLAtom atom)
 	{
 		return !getReferencedVariablePrefixedNames(atom).isEmpty();
-	}
-
-	private SWRLAPILiteralFactory getSWRLAPILiteralFactory()
-	{
-		return this.swrlapiOWLDataFactory.getSWRLAPILiteralFactory();
 	}
 }

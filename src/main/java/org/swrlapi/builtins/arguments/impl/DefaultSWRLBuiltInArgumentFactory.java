@@ -23,6 +23,8 @@ import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
+import org.swrlapi.core.SWRLAPIOWLOntology;
+import org.swrlapi.core.impl.DefaultOWLLiteralFactory;
 import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.core.OWLLiteralFactory;
 import org.swrlapi.core.xsd.XSDDate;
@@ -35,10 +37,10 @@ public class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFac
 	private final IRIResolver iriResolver;
 	private final OWLLiteralFactory owlLiteralFactory;
 
-	public DefaultSWRLBuiltInArgumentFactory(IRIResolver iriResolver, OWLLiteralFactory owlLiteralFactory)
+	public DefaultSWRLBuiltInArgumentFactory(IRIResolver iriResolver)
 	{
 		this.iriResolver = iriResolver;
-		this.owlLiteralFactory = owlLiteralFactory;
+		this.owlLiteralFactory = new DefaultOWLLiteralFactory();
 	}
 
 	@Override

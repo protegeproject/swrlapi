@@ -16,9 +16,9 @@ public class DefaultSWRLAPILiteralFactory implements SWRLAPILiteralFactory
 {
 	private final OWLLiteralFactory owlLiteralFactory;
 
-	public DefaultSWRLAPILiteralFactory(OWLLiteralFactory owlLiteralFactory)
+	public DefaultSWRLAPILiteralFactory()
 	{
-		this.owlLiteralFactory = owlLiteralFactory;
+		this.owlLiteralFactory = new DefaultOWLLiteralFactory();
 	}
 
 	@Override

@@ -39,27 +39,27 @@ public interface SQWRLResultValueFactory
 
 	SQWRLAnnotationPropertyResultValue getAnnotationPropertyValue(IRI propertyIRI);
 
-	SQWRLLiteralResultValue getLiteral(OWLLiteral literal);
+	SQWRLLiteralResultValue getLiteralValue(OWLLiteral literal);
 
-	SQWRLLiteralResultValue getLiteral(String s);
+	SQWRLLiteralResultValue getLiteralValue(String s);
 
-	SQWRLLiteralResultValue getLiteral(boolean b);
+	SQWRLLiteralResultValue getLiteralValue(boolean b);
 
-	SQWRLLiteralResultValue getLiteral(int i);
+	SQWRLLiteralResultValue getLiteralValue(int i);
 
-	SQWRLLiteralResultValue getLiteral(long l);
+	SQWRLLiteralResultValue getLiteralValue(long l);
 
-	SQWRLLiteralResultValue getLiteral(float f);
+	SQWRLLiteralResultValue getLiteralValue(float f);
 
-	SQWRLLiteralResultValue getLiteral(double d);
+	SQWRLLiteralResultValue getLiteralValue(double d);
 
-	SQWRLLiteralResultValue getLiteral(short s);
+	SQWRLLiteralResultValue getLiteralValue(short s);
 
-	SQWRLLiteralResultValue getLiteral(XSDTime time);
+	SQWRLLiteralResultValue getLiteralValue(XSDTime time);
 
-	SQWRLLiteralResultValue getLiteral(XSDDate date);
+	SQWRLLiteralResultValue getLiteralValue(XSDDate date);
 
-	SQWRLLiteralResultValue getLiteral(XSDDateTime dateTime);
+	SQWRLLiteralResultValue getLiteralValue(XSDDateTime dateTime);
 
 	SQWRLLiteralResultValue getLiteralValue(XSDDuration duration);
 }

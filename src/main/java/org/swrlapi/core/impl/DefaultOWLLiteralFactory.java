@@ -17,9 +17,9 @@ public class DefaultOWLLiteralFactory implements OWLLiteralFactory
 {
 	private final SWRLAPIOWLDatatypeFactory datatypeFactory;
 
-	public DefaultOWLLiteralFactory(SWRLAPIOWLDatatypeFactory datatypeFactory)
+	public DefaultOWLLiteralFactory()
 	{
-		this.datatypeFactory = datatypeFactory;
+		this.datatypeFactory = new DefaultSWRLAPIOWLDatatypeFactory();
 	}
 
 	@Override

@@ -48,6 +48,12 @@ import org.swrlapi.core.visitors.SWRLAPIEntityVisitorEx;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Default implementation of a renderer for {@link org.swrlapi.core.SWRLAPIRule} and
+ * {@link org.swrlapi.sqwrl.SQWRLQuery} objects.
+ *
+ * @see org.swrlapi.core.SWRLAPIFactory
+ */
 public class DefaultSWRLAPIRuleRenderer implements SWRLAPIRuleRenderer
 {
 	private final DefaultPrefixManager prefixManager;

@@ -58,7 +58,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		this.ontology = ontology;
 		this.prefixManager = prefixManager;
 		this.iriResolver = new IRIResolver(this.prefixManager);
-		this.swrlapiOWLDataFactory = SWRLAPIFactory.createSWRLAPIOWLDataFactory(iriResolver);
+		this.swrlapiOWLDataFactory = SWRLAPIFactory.createSWRLAPIOWLDataFactory(this.iriResolver);
 		this.swrlapiOntologyProcessor = SWRLAPIFactory.createOntologyProcessor(this);
 		this.swrlBuiltInIRIs = new HashSet<IRI>();
 

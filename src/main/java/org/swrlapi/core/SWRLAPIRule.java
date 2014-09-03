@@ -21,14 +21,21 @@ import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
  * <p>
  * These SWRLAPI rules are extracted from an OWL ontology by the
  * {@link org.swrlapi.core.SWRLAPIOWLOntology#getSWRLAPIRules()} method.
+ *
+ * A {@link org.swrlapi.core.SWRLAPIRuleRenderer} can be used to print a rule.
  * 
  * @see org.swrlapi.core.SWRLAPIBuiltInAtom
  * @see org.swrlapi.builtins.arguments.SWRLBuiltInArgument
  * @see org.swrlapi.core.SWRLAPIOWLOntology
+ * @see org.swrlapi.core.SWRLAPIRuleRenderer
  */
 public interface SWRLAPIRule extends SWRLRule
 {
 	String getRuleName();
+
+	String getComment();
+
+	boolean isActive();
 
 	List<SWRLAtom> getHeadAtoms();
 
@@ -37,8 +44,4 @@ public interface SWRLAPIRule extends SWRLRule
 	List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromHead(Set<String> builtInNames);
 
 	List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromBody(Set<String> builtInNames);
-
-	boolean isActive();
-
-	String comment();
 }
