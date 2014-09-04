@@ -40,6 +40,7 @@ import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIOntologyProcessor;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.exceptions.SWRLAPIException;
+import org.swrlapi.exceptions.SWRLAPIInternalException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 
 public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
@@ -315,7 +316,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 			SWRLVariable swrlVariable = (SWRLVariable)swrlDArgument;
 			return convertSWRLVariable2SWRLBuiltInArgument(swrlVariable);
 		} else
-			throw new SWRLBuiltInException("Unknown " + SWRLDArgument.class.getName() + " class "
+			throw new SWRLAPIInternalException("Unknown " + SWRLDArgument.class.getName() + " class "
 					+ swrlDArgument.getClass().getName());
 	}
 

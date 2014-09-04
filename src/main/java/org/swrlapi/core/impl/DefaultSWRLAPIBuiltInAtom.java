@@ -12,6 +12,7 @@ import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
 
+import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 import uk.ac.manchester.cs.owl.owlapi.SWRLBuiltInAtomImpl;
 
@@ -161,7 +162,7 @@ class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SWRLAPIBu
 		checkArgumentNumber(argumentNumber);
 
 		if (!this.arguments.get(argumentNumber).isVariable())
-			throw new SWRLBuiltInException("expecting a variable for (0-offset) argument #" + argumentNumber);
+			throw new SWRLAPIException("expecting a variable for (0-offset) argument #" + argumentNumber);
 
 		return this.arguments.get(argumentNumber).asVariable().getVariablePrefixedName();
 	}
@@ -218,6 +219,6 @@ class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SWRLAPIBu
 	private void checkArgumentNumber(int argumentNumber)
 	{
 		if (argumentNumber < 0 || argumentNumber > this.arguments.size())
-			throw new SWRLBuiltInException("invalid (0-offset) argument #" + argumentNumber);
+			throw new SWRLAPIException("invalid (0-offset) argument #" + argumentNumber);
 	}
 }

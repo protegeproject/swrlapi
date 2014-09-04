@@ -14,6 +14,7 @@ import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
+import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 
@@ -38,13 +39,13 @@ abstract class SWRLBuiltInArgumentImpl implements SWRLBuiltInArgument
 	@Override
 	public SWRLVariableBuiltInArgument asVariable()
 	{
-		throw new SWRLBuiltInException("Not a SWRLVariableBuiltInArgument");
+		throw new SWRLAPIException("Not a SWRLVariableBuiltInArgument");
 	}
 
 	@Override
 	public SWRLMultiValueVariableBuiltInArgument asMultiValueVariable()
 	{
-		throw new SWRLBuiltInBridgeException("Not a SWRLMultiVariableBuiltInArgument");
+		throw new SWRLAPIException("Not a SWRLMultiVariableBuiltInArgument");
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package org.swrlapi.core;
 import java.util.Set;
 
 import org.semanticweb.owlapi.model.OWLAxiom;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLRuleException;
 import org.swrlapi.sqwrl.SQWRLQuery;
 import org.swrlapi.sqwrl.SQWRLResult;
@@ -33,7 +34,7 @@ public interface SWRLAPIOntologyProcessor
 {
 	void reset();
 
-	void processOntology() throws SQWRLException;
+	void processOntology() throws SQWRLException, SWRLBuiltInException;
 
 	int getNumberOfSWRLRules();
 

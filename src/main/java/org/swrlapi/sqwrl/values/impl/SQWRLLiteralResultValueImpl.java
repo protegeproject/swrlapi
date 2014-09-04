@@ -5,6 +5,7 @@ import java.util.Comparator;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.swrlapi.core.OWLLiteralComparator;
 import org.swrlapi.core.impl.DefaultSWRLAPILiteral;
+import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLNamedResultValue;
@@ -42,7 +43,7 @@ class SQWRLLiteralResultValueImpl extends DefaultSWRLAPILiteral implements SQWRL
 	@Override
 	public SQWRLNamedResultValue asNamedResult()
 	{
-		throw new SQWRLException(getClass().getName() + " is not a " + SQWRLNamedResultValue.class.getName());
+		throw new SWRLAPIException(getClass().getName() + " is not a " + SQWRLNamedResultValue.class.getName());
 	}
 
 	@Override

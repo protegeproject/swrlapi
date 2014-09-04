@@ -1,6 +1,7 @@
 package org.swrlapi.builtins.arguments;
 
 import org.semanticweb.owlapi.model.SWRLVariable;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 
 /**
  * Represents a variable argument to a SWRL built-in atom.
@@ -20,7 +21,7 @@ public interface SWRLVariableBuiltInArgument extends SWRLBuiltInArgument, SWRLVa
 
 	SWRLBuiltInArgument getBuiltInResult();
 
-	void setBuiltInResult(SWRLBuiltInArgument builtInResult);
+	void setBuiltInResult(SWRLBuiltInArgument builtInResult) throws SWRLBuiltInException;
 
 	boolean isUnbound();
 

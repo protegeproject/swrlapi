@@ -10,6 +10,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.swrlapi.exceptions.SWRLAPIException;
+import org.swrlapi.exceptions.SWRLAPIInternalException;
+import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.exceptions.SQWRLInvalidAggregateFunctionNameException;
 import org.swrlapi.sqwrl.exceptions.SQWRLInvalidColumnIndexException;
@@ -1286,7 +1290,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 				else if (value1.isNamed() && value2.isNamed())
 					diff = value1.asNamedResult().compareTo(value2.asNamedResult());
 				else
-					throw new SQWRLException("attempt to compare a " + value1.getClass().getName() + " with a "
+					throw new SWRLAPIInternalException("attempt to compare a " + value1.getClass().getName() + " with a "
 							+ value2.getClass().getName());
 
 				if (diff != 0) {

@@ -10,6 +10,7 @@ import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import org.swrlapi.bridge.SWRLRuleEngineBridgeController;
 import org.swrlapi.bridge.TargetSWRLRuleEngine;
+import org.swrlapi.builtins.SWRLBuiltInBridge;
 import org.swrlapi.builtins.SWRLBuiltInBridgeController;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
@@ -90,13 +91,20 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 	@Override
 	public void reset()
 	{
-		getSWRLAPIOntologyProcessor().reset();
-		getTargetSWRLRuleEngine().resetRuleEngine(); // Reset the target rule engine
-		getBuiltInBridgeController().reset();
-		this.exportedOWLAxioms.clear();
-		getOWL2RLEngine().resetRuleSelectionChanged();
-		getSWRLAPIOWLOntology().resetOntologyChanged();
-		getSWRLAPIOntologyProcessor().processOntology();
+		try {
+			getSWRLAPIOntologyProcessor().reset();
+			getTargetSWRLRuleEngine().resetRuleEngine(); // Reset the target rule engine
+			getBuiltInBridgeController().reset();
+			this.exportedOWLAxioms.clear();
+			getOWL2RLEngine().resetRuleSelectionChanged();
+			getSWRLAPIOWLOntology().resetOntologyChanged();
+			getSWRLAPIOntologyProcessor().processOntology();
+		} catch (SQWRLException e) {
+			throw new SWRLRuleEngineException("error running rule engine: " + e.getMessage(), e);
+		} catch (SWRLBuiltInException e) {
+			throw new SWRLRuleEngineException("error running rule engine: " + e.getMessage(), e);
+		}
+
 	}
 
 	/**
@@ -109,6 +117,8 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 			getSWRLAPIOntologyProcessor().processOntology();
 			getTargetSWRLRuleEngine().runRuleEngine();
 		} catch (SQWRLException e) {
+			throw new SWRLRuleEngineException("error running rule engine: " + e.getMessage(), e);
+		} catch (SWRLBuiltInException e) {
 			throw new SWRLRuleEngineException("error running rule engine: " + e.getMessage(), e);
 		} catch (TargetSWRLRuleEngineException e) {
 			throw new SWRLRuleEngineException("error running rule engine: " + e.getMessage(), e);

@@ -62,6 +62,7 @@ import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIOntologyProcessor;
 import org.swrlapi.core.SWRLAPIRule;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLRuleException;
 import org.swrlapi.sqwrl.DefaultSQWRLQuery;
 import org.swrlapi.sqwrl.SQWRLNames;
@@ -121,7 +122,7 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 	}
 
 	@Override
-	public void processOntology() throws SQWRLException
+	public void processOntology() throws SQWRLException, SWRLBuiltInException
 	{
 		reset();
 
@@ -295,13 +296,13 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 		processOWLDisjointDataPropertiesAxioms();
 	}
 
-	private void processSWRLRulesAndSQWRLQueries() throws SQWRLException
+	private void processSWRLRulesAndSQWRLQueries() throws SQWRLException, SWRLBuiltInException
 	{
 		for (SWRLAPIRule ruleOrQuery : getSWRLAPIOWLOntology().getSWRLAPIRules())
 			processSWRLRuleOrSQWRLQuery(ruleOrQuery);
 	}
 
-	private void processSWRLRuleOrSQWRLQuery(SWRLAPIRule ruleOrQuery) throws SQWRLException
+	private void processSWRLRuleOrSQWRLQuery(SWRLAPIRule ruleOrQuery) throws SQWRLException, SWRLBuiltInException
 	{
 		if (isSQWRLQuery(ruleOrQuery)) {
 			String ruleName = ruleOrQuery.getRuleName();

@@ -1,6 +1,6 @@
 package org.swrlapi.exceptions;
 
-public class SWRLBuiltInException extends SWRLAPIException
+public class SWRLBuiltInException extends Exception
 {
 	private static final long serialVersionUID = 1L;
 

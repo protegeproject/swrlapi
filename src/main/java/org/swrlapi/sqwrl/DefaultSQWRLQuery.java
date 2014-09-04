@@ -16,6 +16,7 @@ import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
 import org.swrlapi.core.SWRLAPILiteral;
 import org.swrlapi.core.SWRLAPILiteralFactory;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 
@@ -34,7 +35,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 
 	public DefaultSQWRLQuery(String queryName, List<SWRLAtom> bodyAtoms, List<SWRLAtom> headAtoms, boolean active,
 			String comment, SWRLAPILiteralFactory swrlapiLiteralFactory, SQWRLResultValueFactory sqwrlResultValueFactory)
-			throws SQWRLException
+			throws SQWRLException, SWRLBuiltInException
 	{
 		this.queryName = queryName;
 		this.bodyAtoms = new ArrayList<SWRLAtom>(bodyAtoms);
@@ -196,7 +197,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		return result;
 	}
 
-	private void processSQWRLBuiltIns() throws SQWRLException
+	private void processSQWRLBuiltIns() throws SWRLBuiltInException
 	{
 		Set<String> collectionNames = new HashSet<String>();
 		Set<String> cascadedUnboundVariableNames = new HashSet<String>();
@@ -215,7 +216,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 			this.sqwrlResult.setIsDistinct();
 	}
 
-	private void processSQWRLHeadBuiltIns() throws SQWRLException
+	private void processSQWRLHeadBuiltIns() throws SWRLBuiltInException
 	{
 		// A variable can be selected multiple times. We record its positions in case of an orderBy clause.
 		Map<String, List<Integer>> selectedVariable2ColumnIndices = new HashMap<String, List<Integer>>();
@@ -338,7 +339,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	}
 
 	private void processBuiltInArguments(SWRLAPIBuiltInAtom builtInAtom,
-			Map<String, List<Integer>> selectedVariable2ColumnIndices) throws SQWRLException
+			Map<String, List<Integer>> selectedVariable2ColumnIndices) throws SQWRLException, SWRLBuiltInException
 	{
 		String builtInName = builtInAtom.getBuiltInPrefixedName();
 
@@ -394,7 +395,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		}
 	}
 
-	private void processMedianArgument(SWRLBuiltInArgument argument) throws SQWRLException
+	private void processMedianArgument(SWRLBuiltInArgument argument) throws SWRLBuiltInException
 	{
 		String columnName;
 		if (argument.isVariable())
@@ -405,7 +406,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		this.sqwrlResult.addAggregateColumn(columnName, SQWRLNames.MedianAggregateFunction);
 	}
 
-	private void processSumArgument(SWRLBuiltInArgument argument) throws SQWRLException
+	private void processSumArgument(SWRLBuiltInArgument argument) throws SWRLBuiltInException
 	{
 		String columnName;
 		if (argument.isVariable())
@@ -416,7 +417,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		this.sqwrlResult.addAggregateColumn(columnName, SQWRLNames.SumAggregateFunction);
 	}
 
-	private void processMaxArgument(SWRLBuiltInArgument argument) throws SQWRLException
+	private void processMaxArgument(SWRLBuiltInArgument argument) throws SWRLBuiltInException
 	{
 		String columnName;
 		if (argument.isVariable())
@@ -427,7 +428,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		this.sqwrlResult.addAggregateColumn(columnName, SQWRLNames.MaxAggregateFunction);
 	}
 
-	private void processMinArgument(SWRLBuiltInArgument argument) throws SQWRLException
+	private void processMinArgument(SWRLBuiltInArgument argument) throws SWRLBuiltInException
 	{
 		String columnName;
 		if (argument.isVariable())
@@ -438,7 +439,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		this.sqwrlResult.addAggregateColumn(columnName, SQWRLNames.MinAggregateFunction);
 	}
 
-	private void processCountDistinctArgument(SWRLBuiltInArgument argument) throws SQWRLException
+	private void processCountDistinctArgument(SWRLBuiltInArgument argument) throws SWRLBuiltInException
 	{
 		String columnName;
 		if (argument.isVariable())
@@ -449,7 +450,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		this.sqwrlResult.addAggregateColumn(columnName, SQWRLNames.CountDistinctAggregateFunction);
 	}
 
-	private void processCountArgument(SWRLBuiltInArgument argument) throws SQWRLException
+	private void processCountArgument(SWRLBuiltInArgument argument) throws SWRLBuiltInException
 	{
 		String columnName;
 		if (argument.isVariable())
@@ -460,13 +461,13 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		this.sqwrlResult.addAggregateColumn(columnName, SQWRLNames.CountAggregateFunction);
 	}
 
-	private void processSelectDistinctArgument(SWRLBuiltInArgument argument) throws SQWRLException
+	private void processSelectDistinctArgument(SWRLBuiltInArgument argument) throws SWRLBuiltInException
 	{
 		processSelectArgument(argument);
 		this.sqwrlResult.setIsDistinct();
 	}
 
-	private void processSelectArgument(SWRLBuiltInArgument argument) throws SQWRLException
+	private void processSelectArgument(SWRLBuiltInArgument argument) throws SWRLBuiltInException
 	{
 		String columnName;
 		if (argument.isVariable()) {
@@ -476,7 +477,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		this.sqwrlResult.addColumn(columnName);
 	}
 
-	private void processAverageArgument(SWRLBuiltInArgument argument) throws SQWRLException
+	private void processAverageArgument(SWRLBuiltInArgument argument) throws SWRLBuiltInException
 	{
 		String columnName;
 		if (argument.isVariable())
@@ -539,7 +540,8 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	// We store the group arguments for each collection specified in the make operation; these arguments are later
 	// appended to the collection
 	// operation built-ins.
-	private void processSQWRLCollectionGroupByBuiltIns(Set<String> collectionNames) throws SQWRLException
+	private void processSQWRLCollectionGroupByBuiltIns(Set<String> collectionNames)
+			throws SQWRLException, SWRLBuiltInException
 	{
 		for (SWRLAPIBuiltInAtom builtInAtom : getBuiltInAtomsFromBody(SQWRLNames.getCollectionGroupByBuiltInNames())) {
 			String collectionName = builtInAtom.getArgumentVariablePrefixedName(0); // The first argument is the collection
@@ -659,7 +661,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		return SQWRLNames.isSQWRLBuiltIn(builtInAtom.getBuiltInPrefixedName());
 	}
 
-	private boolean hasUnboundArgument(List<SWRLBuiltInArgument> arguments)
+	private boolean hasUnboundArgument(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{
 		for (SWRLBuiltInArgument argument : arguments)
 			if (argument.isVariable() && argument.asVariable().isUnbound())
@@ -824,7 +826,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 
 	@SuppressWarnings("unused")
 	// Used by commented-out group argument checking in processBuiltInArgumentDependencies
-	private Set<String> getVariableNames(List<SWRLBuiltInArgument> arguments)
+	private Set<String> getVariableNames(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{
 		Set<String> variablePrefixedNames = new HashSet<String>();
 
