@@ -238,7 +238,7 @@ public class SWRLParserSupport
 
 	public IRI getSWRLBuiltIn(String builtInShortName) throws SWRLParseException
 	{
-		if (isSWRLBuiltIn(builtInShortName))
+		if (!isSWRLBuiltIn(builtInShortName))
 			throw new SWRLParseException(builtInShortName + " is not a SWRL built-in");
 		else
 			return getPrefixManager().getIRI(builtInShortName);

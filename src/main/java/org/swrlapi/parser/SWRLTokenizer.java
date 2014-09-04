@@ -26,11 +26,11 @@ public class SWRLTokenizer
 	private final StreamTokenizer tokenizer;
 
 	private final Set<String> swrlVariables;
-	private final boolean parseOnly;
+	private final boolean interactiveParseOnly;
 	private final List<SWRLToken> tokens;
 	private int tokenPosition;
 
-	public SWRLTokenizer(String input, boolean parseOnly) throws SWRLParseException
+	public SWRLTokenizer(String input, boolean interactiveParseOnly) throws SWRLParseException
 	{
 		this.tokenizer = new StreamTokenizer(new StringReader(input));
 		this.tokenizer.parseNumbers();
@@ -62,7 +62,7 @@ public class SWRLTokenizer
 		// this.tokenizer.ordinaryChars('{', '~');
 
 		this.swrlVariables = new HashSet<String>();
-		this.parseOnly = parseOnly;
+		this.interactiveParseOnly = interactiveParseOnly;
 
 		this.tokens = generateTokens();
 		this.tokenPosition = 0;
@@ -124,9 +124,9 @@ public class SWRLTokenizer
 			throw generateEndOfRuleException("End of rule reached unexpectedly!");
 	}
 
-	public boolean isParseOnly()
+	public boolean isInteractiveParseOnly()
 	{
-		return this.parseOnly;
+		return this.interactiveParseOnly;
 	}
 
 	public boolean hasVariable(String variableName)
@@ -259,7 +259,7 @@ public class SWRLTokenizer
 
 	private SWRLParseException generateEndOfRuleException(String message)
 	{
-		if (!this.isParseOnly())
+		if (!this.isInteractiveParseOnly())
 			return new SWRLParseException(message);
 		else
 			return new SWRLIncompleteRuleException(message);
