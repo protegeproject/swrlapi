@@ -12,17 +12,13 @@ import java.util.Set;
  * Tokenizer generates a {@link org.swrlapi.parser.SWRLParseException} for invalid input and
  * a {@link org.swrlapi.parser.SWRLIncompleteRuleException} (which is a subclass of
  * {@link org.swrlapi.parser.SWRLParseException}) for valid but incomplete input.
- * 
+ *
  * @see org.swrlapi.parser.SWRLParser
  * @see org.swrlapi.parser.SWRLParseException
  * @see org.swrlapi.parser.SWRLIncompleteRuleException
  */
 public class SWRLTokenizer
 {
-	public final static char AND_CHAR = '\u2227'; // ^
-	public final static char IMP_CHAR = '\u2192'; // >
-	public final static char RING_CHAR = '\u02da'; // .
-
 	private final StreamTokenizer tokenizer;
 
 	private final Set<String> swrlVariables;
@@ -38,9 +34,6 @@ public class SWRLTokenizer
 		this.tokenizer.wordChars('_', '_');
 		this.tokenizer.wordChars('/', '/');
 		this.tokenizer.wordChars('#', '#');
-		this.tokenizer.ordinaryChar(AND_CHAR);
-		this.tokenizer.ordinaryChar(IMP_CHAR);
-		this.tokenizer.ordinaryChar(RING_CHAR);
 		this.tokenizer.ordinaryChar('-');
 		this.tokenizer.ordinaryChar('.');
 		this.tokenizer.ordinaryChar('^');
@@ -213,12 +206,10 @@ public class SWRLTokenizer
 		case ')':
 			return new SWRLToken(SWRLToken.SWRLTokenType.RPAREN, ")");
 		case '.':
-		case RING_CHAR:
 			return new SWRLToken(SWRLToken.SWRLTokenType.RING, ".");
-		case '^':
-		case AND_CHAR: {
+		case '^': {
 			int nextTokenType = tokenizer.nextToken();
-			if (nextTokenType == '^' || nextTokenType == AND_CHAR) {
+			if (nextTokenType == '^') {
 				return new SWRLToken(SWRLToken.SWRLTokenType.TYPE_QUAL, "^^");
 			} else { // Not ^^
 				this.tokenizer.pushBack();
@@ -241,8 +232,6 @@ public class SWRLTokenizer
 			else
 				throw new SWRLParseException("Expecting IRI after '<'"); // Some other token
 		}
-		case IMP_CHAR:
-			return new SWRLToken(SWRLToken.SWRLTokenType.IMP, "->");
 		case '-': {
 			int nextTokenType = this.tokenizer.nextToken();
 			if (nextTokenType == '>')
@@ -255,6 +244,7 @@ public class SWRLTokenizer
 		default:
 			throw new SWRLParseException("Unexpected character '" + String.valueOf(Character.toChars(tokenType)) + "'");
 		}
+
 	}
 
 	private SWRLParseException generateEndOfRuleException(String message)

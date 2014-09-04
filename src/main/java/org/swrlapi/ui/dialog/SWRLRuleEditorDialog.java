@@ -270,8 +270,7 @@ public class SWRLRuleEditorDialog extends JDialog
 
 	private void updateStatus()
 	{
-		String ruleName = this.ruleNameTextField.getText().trim();
-		String ruleText = this.ruleTextTextArea.getText().trim();
+		String ruleText = getRuleText();
 
 		if (ruleText.equals("")) {
 			setStatusText(STATUS_MISSING_RULE);
@@ -321,7 +320,9 @@ public class SWRLRuleEditorDialog extends JDialog
 
 	private String getRuleText()
 	{
-		return this.ruleTextTextArea.getText().trim();
+		return this.ruleTextTextArea.getText().trim().replaceAll(Character.toString(SWRLParser.AND_CHAR), "^")
+				.replaceAll(Character.toString(SWRLParser.IMP_CHAR), "->").replaceAll(Character.toString(SWRLParser.RING_CHAR),
+						".");
 	}
 
 	private SWRLParser getSWRLParser()

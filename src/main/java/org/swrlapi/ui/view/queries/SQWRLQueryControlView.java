@@ -174,7 +174,12 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
 					}
 				} catch (SQWRLInvalidQueryNameException e) {
 					appendToConsole(queryName + " is not a valid SQWRL query or is not enabled.\n");
-				} catch (SQWRLException e) {
+				} catch (SQWRLException  e) {
+					if (queryName.length() == 0)
+						appendToConsole("Exception running SQWRL queries: " + e.getMessage() + "\n");
+					else
+						appendToConsole("Exception when running SQWRL query " + queryName + ": " + e.getMessage() + "\n");
+				} catch (RuntimeException  e) {
 					if (queryName.length() == 0)
 						appendToConsole("Exception running SQWRL queries: " + e.getMessage() + "\n");
 					else
@@ -190,7 +195,7 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
 			if (SQWRLQueryControlView.this.sqwrlResultViews.containsKey(queryName)) {
 				SQWRLResultView queryResultsView = SQWRLQueryControlView.this.sqwrlResultViews.get(queryName);
 				SQWRLQueryControlView.this.sqwrlResultViews.remove(queryResultsView);
-				((JTabbedPane)getParent()).remove(queryResultsView);
+				getParent().remove(queryResultsView);
 			}
 		}
 

@@ -43,10 +43,7 @@ import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLAPIRuleRenderer;
-import org.swrlapi.core.visitors.SWRLAPIEntityVisitorEx;
 import org.swrlapi.parser.SWRLParser;
-import org.swrlapi.parser.SWRLToken;
-import org.swrlapi.parser.SWRLTokenizer;
 import org.swrlapi.sqwrl.SQWRLNames;
 
 import java.util.ArrayList;
@@ -78,32 +75,32 @@ public class DefaultSWRLAPIRuleRenderer implements SWRLAPIRuleRenderer
 		for (SWRLAtom atom : swrlapiRule.getBodyAtoms()) {
 			if (isSQWRLCollectionMakeBuiltInAtom(atom)) {
 				if (collectionMakeEncountered)
-					sb.append(" " + SWRLTokenizer.AND_CHAR + " ");
+					sb.append(" " + SWRLParser.AND_CHAR + " ");
 				else {
-					sb.append(SWRLTokenizer.RING_CHAR);
+					sb.append(SWRLParser.RING_CHAR);
 					collectionMakeEncountered = true;
 				}
 			} else if (isSQWRLCollectionOperateBuiltInAtom(atom)) {
 				if (collectionOperationEncountered)
-					sb.append(" " + SWRLTokenizer.AND_CHAR + " ");
+					sb.append(" " + SWRLParser.AND_CHAR + " ");
 				else {
-					sb.append(SWRLTokenizer.RING_CHAR);
+					sb.append(SWRLParser.RING_CHAR);
 					collectionOperationEncountered = true;
 				}
 			} else {
 				if (!isFirst)
-					sb.append(SWRLTokenizer.AND_CHAR);
+					sb.append(" " + SWRLParser.AND_CHAR + " ");
 			}
 			sb.append(atom.accept(this));
 			isFirst = false;
 		}
 
-		sb.append(" " + SWRLTokenizer.IMP_CHAR + " ");
+		sb.append(" " + SWRLParser.IMP_CHAR + " ");
 
 		isFirst = true;
 		for (SWRLAtom atom : swrlapiRule.getHeadAtoms()) {
 			if (!isFirst)
-				sb.append(" " + SWRLTokenizer.AND_CHAR + " ");
+				sb.append(" " + SWRLParser.AND_CHAR + " ");
 			sb.append(atom.accept(this));
 			isFirst = false;
 		}
