@@ -41,7 +41,7 @@ abstract class SQWRLNamedResultValueImpl implements SQWRLNamedResultValue
 	}
 
 	@Override
-	public SQWRLLiteralResultValue asLiteralResult()
+	public SQWRLLiteralResultValue asLiteralResult() throws SQWRLException
 	{
 		throw new SQWRLException(getClass().getName() + " is not a " + SQWRLLiteralResultValue.class.getName());
 	}

@@ -20,18 +20,23 @@ import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.parser.SWRLToken.SWRLTokenType;
 
 /**
- * A basic SWRL and SQWRL parser that allows both complete and incomplete rules and queries to be parsed.
- * <p>
- * This parser will throw a {@link SWRLParseException} if it finds an error in the supplied rule. If the rule is correct
- * but incomplete, a {@link SWRLIncompleteRuleException} (which is a subclass of {@link SWRLParseException}) will be
- * thrown.
- * <p>
- * The {@link #parseSWRLRule(String, boolean)} method parses a rule. If <code>parseOnly</code> argument to this method is
- * true, only checking is performed - no SWRL rules are created; if it is false, a {@link SWRLAPIRule} object is
- * created.
- * 
+ * A basic SWRL and SQWRL parser. It provides in interactive parsing mode for incomplete rules and queries and
+ * provides feedback on the next construct that it is expecting.
+ * <p/>
+ * This parser will throw a {@link org.swrlapi.parser.SWRLParseException} if there is an error in the rule or query.
+ * In interactive model, if the rule or query is correct but incomplete a {@link org.swrlapi.parser.SWRLIncompleteRuleException}
+ * (which is a subclass of {@link org.swrlapi.parser.SWRLParseException}) will be thrown.
+ * <p/>
+ * The {@link #parseSWRLRule(String, boolean)} method parses a rule or query. If <code>parseOnly</code> argument is
+ * true, only checking is performed - no SWRL rules are created; if it is false, a {@link org.swrlapi.core.SWRLAPIRule}
+ * object is created.
+ * <p/>
+ * The parser does not yet parse OWL class expressions or data ranges.
+ *
  * @see org.swrlapi.parser.SWRLTokenizer
  * @see org.swrlapi.parser.SWRLParserSupport
+ * @see org.swrlapi.parser.SWRLParseException
+ * @see org.swrlapi.parser.SWRLIncompleteRuleException
  */
 public class SWRLParser
 {
@@ -72,7 +77,7 @@ public class SWRLParser
 		String message;
 
 		if (!tokenizer.isParseOnly() && !tokenizer.hasMoreTokens())
-			throw new SWRLParseException("Empty rule");
+			throw new SWRLParseException("Empty!");
 
 		do {
 			if (justProcessedAtom)
@@ -299,7 +304,7 @@ public class SWRLParser
 
 	private List<SWRLDArgument> parseBuiltInArgumentList(SWRLTokenizer tokenizer, boolean isInHead)
 			throws SWRLParseException
-	{ // Parse a list of variables, OWL named properties, and literals
+	{ // Parse an argument list that can contain variables, OWL named entities, and literals
 		List<SWRLDArgument> dArguments = !tokenizer.isParseOnly() ? new ArrayList<SWRLDArgument>() : null;
 
 		SWRLDArgument dArgument = parseDArgument(tokenizer, isInHead, true);
@@ -314,7 +319,8 @@ public class SWRLParser
 			if (!tokenizer.isParseOnly())
 				dArguments.add(dArgument);
 			token = tokenizer.getToken("Expecting ',' or ')'");
-			if (!(token.getTokenType() == SWRLToken.SWRLTokenType.COMMA || token.getTokenType() == SWRLToken.SWRLTokenType.RPAREN))
+			if (!(token.getTokenType() == SWRLToken.SWRLTokenType.COMMA
+					|| token.getTokenType() == SWRLToken.SWRLTokenType.RPAREN))
 				throw new SWRLParseException("Expecting ',' or ')', got '" + token.getValue() + "'");
 		}
 		return dArguments;

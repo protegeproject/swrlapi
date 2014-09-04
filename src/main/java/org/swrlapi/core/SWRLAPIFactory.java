@@ -59,21 +59,45 @@ public class SWRLAPIFactory
 		return new DefaultSWRLAPIOWLOntology(ontology, prefixManager);
 	}
 
+	/**
+	 * Create a {@link org.swrlapi.core.SWRLAPIOWLOntology} from an OWLAPI-based
+	 * {@link org.semanticweb.owlapi.model.OWLOntology}.
+	 */
 	public static SWRLAPIOWLOntology createOntology(OWLOntology ontology, DefaultPrefixManager prefixManager)
 	{
+		if (ontology == null)
+			throw new SWRLAPIException("supplied OWL ontology is null");
+
+		if (prefixManager == null)
+			throw new SWRLAPIException("suppliedprefix manager is null");
+
 		return new DefaultSWRLAPIOWLOntology(ontology, prefixManager);
 	}
 
-	public static SWRLAPIOWLOntology createOntology(File owlFile) throws SWRLAPIException
+	/**
+	 * Create a {@link org.swrlapi.core.SWRLAPIOWLOntology} from a file.
+	 */
+	public static SWRLAPIOWLOntology createOntology(File owlFile)
 	{
 		OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
+
+		if (owlFile == null)
+			throw new SWRLAPIException("supplied OWL file is null");
+
 		OWLOntology ontology = createOWLOntology(ontologyManager, owlFile);
+
+		if (ontology == null)
+			throw new SWRLAPIException("failed to create ontology from file " + owlFile.getAbsolutePath());
+
 		DefaultPrefixManager prefixManager = createPrefixManager(ontology);
 
 		return SWRLAPIFactory.createOntology(ontology, prefixManager);
 	}
 
-	public static SWRLAPIOWLOntology createOntology() throws SWRLAPIException
+	/**
+	 * Create an empty {@link org.swrlapi.core.SWRLAPIOWLOntology}.
+	 */
+	public static SWRLAPIOWLOntology createOntology()
 	{
 		try {
 			OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
@@ -88,6 +112,9 @@ public class SWRLAPIFactory
 
 	public static DefaultPrefixManager createPrefixManager(OWLOntology ontology)
 	{
+		if (ontology == null)
+			throw new SWRLAPIException("supplied OWL ontology is null");
+
 		DefaultPrefixManager prefixManager = new DefaultPrefixManager();
 		OWLOntologyManager owlOntologyManager = ontology.getOWLOntologyManager();
 		OWLOntologyFormat ontologyFormat = owlOntologyManager.getOntologyFormat(ontology);

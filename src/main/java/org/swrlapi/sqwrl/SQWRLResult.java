@@ -6,12 +6,14 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.values.*;
 
 /**
- * Interface that defines methods to process results from a query. See the {@link DefaultSQWRLResult} class for detailed
- * comments.
+ * Interface that defines methods to process results from a SQWRL query.
+ * <p/>
+ * See the {@link org.swrlapi.sqwrl.DefaultSQWRLResult} class for detailed comments.
  *
  * @see org.swrlapi.sqwrl.SQWRLQuery
  * @see org.swrlapi.sqwrl.values.SQWRLResultValue
  * @see org.swrlapi.sqwrl.SQWRLResultGenerator
+ * @see org.swrlapi.sqwrl.DefaultSQWRLResult
  */
 public interface SQWRLResult
 {

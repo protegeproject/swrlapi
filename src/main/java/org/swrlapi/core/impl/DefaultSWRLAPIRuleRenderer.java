@@ -44,6 +44,10 @@ import org.swrlapi.core.SWRLAPIBuiltInAtom;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLAPIRuleRenderer;
 import org.swrlapi.core.visitors.SWRLAPIEntityVisitorEx;
+import org.swrlapi.parser.SWRLParser;
+import org.swrlapi.parser.SWRLToken;
+import org.swrlapi.parser.SWRLTokenizer;
+import org.swrlapi.sqwrl.SQWRLNames;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,22 +71,39 @@ public class DefaultSWRLAPIRuleRenderer implements SWRLAPIRuleRenderer
 	public String render(SWRLAPIRule swrlapiRule)
 	{
 		StringBuilder sb = new StringBuilder();
-
 		boolean isFirst = true;
+		boolean collectionMakeEncountered = false;
+		boolean collectionOperationEncountered = false;
 
 		for (SWRLAtom atom : swrlapiRule.getBodyAtoms()) {
-			if (!isFirst)
-				sb.append(" ^ ");
+			if (isSQWRLCollectionMakeBuiltInAtom(atom)) {
+				if (collectionMakeEncountered)
+					sb.append(" " + SWRLTokenizer.AND_CHAR + " ");
+				else {
+					sb.append(SWRLTokenizer.RING_CHAR);
+					collectionMakeEncountered = true;
+				}
+			} else if (isSQWRLCollectionOperateBuiltInAtom(atom)) {
+				if (collectionOperationEncountered)
+					sb.append(" " + SWRLTokenizer.AND_CHAR + " ");
+				else {
+					sb.append(SWRLTokenizer.RING_CHAR);
+					collectionOperationEncountered = true;
+				}
+			} else {
+				if (!isFirst)
+					sb.append(SWRLTokenizer.AND_CHAR);
+			}
 			sb.append(atom.accept(this));
 			isFirst = false;
 		}
 
-		sb.append(" -> ");
+		sb.append(" " + SWRLTokenizer.IMP_CHAR + " ");
 
 		isFirst = true;
 		for (SWRLAtom atom : swrlapiRule.getHeadAtoms()) {
 			if (!isFirst)
-				sb.append(" ^ ");
+				sb.append(" " + SWRLTokenizer.AND_CHAR + " ");
 			sb.append(atom.accept(this));
 			isFirst = false;
 		}
@@ -448,5 +469,17 @@ public class DefaultSWRLAPIRuleRenderer implements SWRLAPIRuleRenderer
 			return "?" + variablePrefixedName.substring(1);
 		else
 			return "?" + variablePrefixedName;
+	}
+
+	private boolean isSQWRLCollectionMakeBuiltInAtom(SWRLAtom atom)
+	{
+		return atom instanceof SWRLAPIBuiltInAtom &&
+				SQWRLNames.isSQWRLCollectionMakeBuiltIn(((SWRLAPIBuiltInAtom)atom).getBuiltInPrefixedName());
+	}
+
+	private boolean isSQWRLCollectionOperateBuiltInAtom(SWRLAtom atom)
+	{
+		return atom instanceof SWRLAPIBuiltInAtom &&
+				SQWRLNames.isSQWRLCollectionOperationBuiltIn(((SWRLAPIBuiltInAtom)atom).getBuiltInPrefixedName());
 	}
 }
