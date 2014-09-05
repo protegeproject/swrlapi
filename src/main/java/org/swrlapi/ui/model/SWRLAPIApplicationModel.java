@@ -18,6 +18,7 @@ import org.swrlapi.sqwrl.SQWRLQueryEngine;
  */
 public class SWRLAPIApplicationModel implements SWRLAPIModel
 {
+	private final SWRLAPIOWLOntology swrlapiowlOntology;
 	private final SWRLRulesTableModel swrlRulesTableModel;
 	private final SQWRLQueryEngine queryEngine;
 	private final SWRLRuleEngine ruleEngine;
@@ -27,6 +28,7 @@ public class SWRLAPIApplicationModel implements SWRLAPIModel
 
 	public SWRLAPIApplicationModel(SWRLAPIOWLOntology swrlapiOWLOntology, SWRLRuleEngine ruleEngine)
 	{
+		this.swrlapiowlOntology = swrlapiOWLOntology;
 		this.ruleEngine = ruleEngine;
 		this.queryEngine = ruleEngine;
 		this.prefixManager = swrlapiOWLOntology.getPrefixManager();
@@ -34,6 +36,8 @@ public class SWRLAPIApplicationModel implements SWRLAPIModel
 		this.swrlRulesTableModel = SWRLAPIFactory.createSWRLRulesTableModel(ruleEngine, swrlRulePrinter);
 		this.swrlParser = SWRLAPIFactory.createSWRLParser(swrlapiOWLOntology);
 	}
+
+	public SWRLAPIOWLOntology getSWRLAPIOWLOntology() { return this.swrlapiowlOntology; }
 
 	public SWRLRuleEngine getSWRLRuleEngine()
 	{

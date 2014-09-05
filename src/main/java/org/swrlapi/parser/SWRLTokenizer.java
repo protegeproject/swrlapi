@@ -19,6 +19,9 @@ import java.util.Set;
  */
 public class SWRLTokenizer
 {
+	private static final char wordChars[] = { ':', '_', '/', '#' };
+	private static final char ordinaryChars[] = { '-', '.', '^', '<', '>', '(', ')', '?' };
+
 	private final StreamTokenizer tokenizer;
 
 	private final Set<String> swrlVariables;
@@ -30,36 +33,31 @@ public class SWRLTokenizer
 	{
 		this.tokenizer = new StreamTokenizer(new StringReader(input));
 		this.tokenizer.parseNumbers();
-		this.tokenizer.wordChars(':', ':');
-		this.tokenizer.wordChars('_', '_');
-		this.tokenizer.wordChars('/', '/');
-		this.tokenizer.wordChars('#', '#');
-		this.tokenizer.ordinaryChar('-');
-		this.tokenizer.ordinaryChar('.');
-		this.tokenizer.ordinaryChar('^');
-		this.tokenizer.ordinaryChar('<');
-		this.tokenizer.ordinaryChar('>');
-		this.tokenizer.ordinaryChar('(');
-		this.tokenizer.ordinaryChar(')');
-		this.tokenizer.ordinaryChar('?');
-
-		// If we want to list:
-		// this.tokenizer.ordinaryChar('!');
-		// // Skip double quote
-		// this.tokenizer.ordinaryChars('$', '/');
-		// // Skip colon
-		// this.tokenizer.ordinaryChars(';', '@');
-		// this.tokenizer.ordinaryChars('[', '^');
-		// // Skip underscore
-		// this.tokenizer.ordinaryChar('`');
-		// this.tokenizer.ordinaryChars('{', '~');
 
 		this.swrlVariables = new HashSet<String>();
 		this.interactiveParseOnly = interactiveParseOnly;
 
+		for (int i = 0; i < wordChars.length; i++)
+			this.tokenizer.wordChars(wordChars[i], wordChars[i]);
+
+		for (int i = 0; i < ordinaryChars.length; i++)
+			this.tokenizer.ordinaryChar(ordinaryChars[i]);
+
 		this.tokens = generateTokens();
 		this.tokenPosition = 0;
 	}
+
+	// If we want to list:
+	// this.tokenizer.ordinaryChar('!');
+	// // Skip double quote
+	// this.tokenizer.ordinaryChars('$', '/');
+	// // Skip colon
+	// this.tokenizer.ordinaryChars(';', '@');
+	// this.tokenizer.ordinaryChars('[', '^');
+	// // Skip underscore
+	// this.tokenizer.ordinaryChar('`');
+	// this.tokenizer.ordinaryChars('{', '~');
+
 
 	public void reset()
 	{
@@ -157,6 +155,14 @@ public class SWRLTokenizer
 	public void checkAndSkipComma(String unexpectedTokenMessage) throws SWRLParseException
 	{
 		checkAndSkipToken(SWRLToken.SWRLTokenType.COMMA, unexpectedTokenMessage);
+	}
+
+	public static boolean isOrdinaryChar(char c)
+	{
+		for (int i = 0; i < ordinaryChars.length; i++)
+			if (ordinaryChars[i] == c)
+				return true;
+		return false;
 	}
 
 	private List<SWRLToken> generateTokens() throws SWRLParseException

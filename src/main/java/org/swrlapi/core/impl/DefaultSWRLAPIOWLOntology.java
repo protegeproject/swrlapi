@@ -165,6 +165,11 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		this.swrlBuiltInIRIs.add(iri);
 	}
 
+	public Set<IRI> getSWRLBuiltInIRIs()
+	{
+		return new HashSet<IRI>(this.swrlBuiltInIRIs);
+	}
+
 	// TODO Do not want here. They are convenience methods only and are used only by the temporal built-in library.
 	@Override
 	public boolean isOWLIndividualOfType(IRI individualIRI, IRI classIRI)

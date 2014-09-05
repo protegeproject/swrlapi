@@ -139,9 +139,9 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 		JPanel buttonPanel = new JPanel(new BorderLayout());
 		headingPanel.add(buttonPanel, BorderLayout.EAST);
 
-		JButton addButton = new JButton("Add");
-		addButton.addActionListener(new AddSWRLRuleActionListener(this, applicationDialogManager));
-		buttonPanel.add(addButton, BorderLayout.WEST);
+		JButton newButton = new JButton("New");
+		newButton.addActionListener(new NewSWRLRuleActionListener(this, applicationDialogManager));
+		buttonPanel.add(newButton, BorderLayout.WEST);
 
 		JButton editButton = new JButton("Edit");
 		editButton.addActionListener(new EditSWRLRuleActionListener(this, applicationDialogManager));
@@ -169,9 +169,9 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 		}
 	}
 
-	private class AddSWRLRuleActionListener extends ActionListenerBase
+	private class NewSWRLRuleActionListener extends ActionListenerBase
 	{
-		public AddSWRLRuleActionListener(Component parent, SWRLAPIApplicationDialogManager applicationDialogManager)
+		public NewSWRLRuleActionListener(Component parent, SWRLAPIApplicationDialogManager applicationDialogManager)
 		{
 			super(parent, applicationDialogManager);
 		}

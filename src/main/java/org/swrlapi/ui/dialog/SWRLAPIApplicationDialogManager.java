@@ -36,7 +36,7 @@ public class SWRLAPIApplicationDialogManager
 	public JDialog getSWRLRuleEditorDialog(Component parent, String ruleName, String ruleText, String comment)
 	{
 		this.swrlRuleEditorDialog.setLocationRelativeTo(parent);
-		this.swrlRuleEditorDialog.setEditData(ruleName, ruleText, comment);
+		this.swrlRuleEditorDialog.enableEditMode(ruleName, ruleText, comment);
 
 		return this.swrlRuleEditorDialog;
 	}

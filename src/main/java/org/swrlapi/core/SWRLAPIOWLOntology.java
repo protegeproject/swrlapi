@@ -61,6 +61,8 @@ public interface SWRLAPIOWLOntology
 
 	void addSWRLBuiltIn(IRI iri);
 
+	Set<IRI> getSWRLBuiltInIRIs();
+
 	OWLOntologyManager getOWLOntologyManager();
 
 	DefaultPrefixManager getPrefixManager();

@@ -40,7 +40,7 @@ import org.swrlapi.core.SWRLAPIOWLOntology;
 
 /**
  * Provides support methods used by the {@link SWRLParser}.
- * 
+ *
  * @see org.swrlapi.parser.SWRLParser
  */
 public class SWRLParserSupport
@@ -302,7 +302,8 @@ public class SWRLParserSupport
 		return getOWLDataFactory().getSWRLSameIndividualAtom(iArgument1, iArgument2);
 	}
 
-	public SWRLDifferentIndividualsAtom getSWRLDifferentIndividualsAtom(SWRLIArgument iArgument1, SWRLIArgument iArgument2)
+	public SWRLDifferentIndividualsAtom getSWRLDifferentIndividualsAtom(SWRLIArgument iArgument1,
+			SWRLIArgument iArgument2)
 	{
 		return getOWLDataFactory().getSWRLDifferentIndividualsAtom(iArgument1, iArgument2);
 	}
@@ -351,6 +352,17 @@ public class SWRLParserSupport
 	{
 		OWLDatatype datatype = getOWLDatatype(datatypeShortName);
 		return getSWRLBuiltInArgumentFactory().getDatatypeBuiltInArgument(datatype);
+	}
+
+	public static int findSplittingPoint(String ruleText)
+	{
+		int i = ruleText.length() - 1;
+
+		while (i >= 0 &&
+				!(SWRLTokenizer.isOrdinaryChar(ruleText.charAt(i)) || ruleText.charAt(i) == '"' || ruleText.charAt(i) == ' '))
+			i--;
+
+		return i + 1;
 	}
 
 	private SWRLAPIOWLOntology getSWRLAPIOWLOntology()

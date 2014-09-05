@@ -12,6 +12,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -20,10 +22,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.text.BadLocationException;
 
 import org.swrlapi.parser.SWRLIncompleteRuleException;
 import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.parser.SWRLParser;
+import org.swrlapi.parser.SWRLParserSupport;
 import org.swrlapi.ui.model.SWRLAPIApplicationModel;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
 
@@ -44,14 +48,13 @@ public class SWRLRuleEditorDialog extends JDialog
 	private static final String OK_BUTTON_TITLE = "Ok";
 	private static final String CANCEL_BUTTON_TITLE = "Cancel";
 	private static final String STATUS_OK = "Ok";
-	private static final String STATUS_MISSING_RULE = "Empty";
+	private static final String STATUS_NO_RULE_TEXT = "Use Tab key for autocomplete; to cancel autocomplete, use Escape key";
 	private static final String INVALID_RULE_TITLE = "Invalid";
-	private static final String MISSING_RULE_TITLE = "Empty";
 	private static final String MISSING_RULE = "Nothing to save!";
 	private static final String MISSING_RULE_NAME_TITLE = "Empty Name";
 	private static final String MISSING_RULE_NAME = "A name must be supplied!";
 	private static final String QUIT_CONFIRM_TITLE = "Unsaved Changes";
-	private static final String QUIT_CONFIRM_MESSAGE = "Are you sure you want discard your edits?";
+	private static final String QUIT_CONFIRM_MESSAGE = "Are you sure you want discard your changes?";
 
 	private static final int BUTTON_PREFERRED_WIDTH = 100;
 	private static final int BUTTON_PREFERRED_HEIGHT = 30;
@@ -61,24 +64,29 @@ public class SWRLRuleEditorDialog extends JDialog
 	private final SWRLAPIApplicationModel applicationModel;
 	private final SWRLAPIApplicationDialogManager applicationDialogManager;
 
-	private JButton okButton;
+	private final SWRLRuleEditorInitialDialogState initialDialogState = new SWRLRuleEditorInitialDialogState();
+
+	private JButton saveButton;
 	private JTextField ruleNameTextField, commentTextField, statusTextField;
 	private JTextArea ruleTextTextArea;
 
-	private final InitialFieldState initialFieldState = new InitialFieldState();
-
 	private boolean editMode = false;
+
+	private final SWRLAutocompleter autocompleter;
+	private SWRLRuleEditorAutocompleteState autocompleteState = null; // Non null if in autocomplete mode
 
 	public SWRLRuleEditorDialog(SWRLAPIApplicationModel applicationModel,
 			SWRLAPIApplicationDialogManager applicationDialogManager)
 	{
 		this.applicationModel = applicationModel;
 		this.applicationDialogManager = applicationDialogManager;
+		this.autocompleter = new SWRLAutocompleter(this.applicationModel.getSWRLAPIOWLOntology());
 
 		setTitle(TITLE);
 		setModal(true);
 
 		createComponents();
+
 		this.ruleTextTextArea.addKeyListener(new SWRLRuleEditorKeyAdapter());
 
 		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
@@ -96,20 +104,16 @@ public class SWRLRuleEditorDialog extends JDialog
 	public void setVisible(boolean b)
 	{
 		if (b) {
+			setInitialDialogState();
+			disableAutocompleteModeIfNecessary();
 			updateStatus();
-			initialFieldState.updateFieldState(getRuleName(), getComment(), getRuleText());
 		}
 		super.setVisible(b);
 	}
 
-	public void reset()
+	public void enableEditMode(String ruleName, String ruleText, String comment)
 	{
-		clearEntryFields();
-	}
-
-	public void setEditData(String ruleName, String ruleText, String comment)
-	{
-		clearEntryFields();
+		cancelEditMode();
 
 		this.ruleNameTextField.setText(ruleName);
 		this.ruleTextTextArea.setText(ruleText);
@@ -119,7 +123,7 @@ public class SWRLRuleEditorDialog extends JDialog
 		this.editMode = true;
 	}
 
-	private void clearEntryFields()
+	private void cancelEditMode()
 	{
 		this.ruleNameTextField.setText("");
 		this.ruleNameTextField.setEnabled(true);
@@ -155,9 +159,9 @@ public class SWRLRuleEditorDialog extends JDialog
 		cancelButton.setPreferredSize(new Dimension(BUTTON_PREFERRED_WIDTH, BUTTON_PREFERRED_HEIGHT));
 		cancelButton.addActionListener(new CancelSWRLRuleEditActionListener(contentPane));
 
-		okButton = new JButton(OK_BUTTON_TITLE);
-		okButton.setPreferredSize(new Dimension(BUTTON_PREFERRED_WIDTH, BUTTON_PREFERRED_HEIGHT));
-		okButton.addActionListener(new OkSWRLRuleEditActionListener(contentPane));
+		saveButton = new JButton(OK_BUTTON_TITLE);
+		saveButton.setPreferredSize(new Dimension(BUTTON_PREFERRED_WIDTH, BUTTON_PREFERRED_HEIGHT));
+		saveButton.addActionListener(new SaveSWRLRuleActionListener(contentPane));
 
 		contentPane.setLayout(new BorderLayout());
 
@@ -175,7 +179,7 @@ public class SWRLRuleEditorDialog extends JDialog
 
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		buttonPanel.add(cancelButton);
-		buttonPanel.add(okButton);
+		buttonPanel.add(saveButton);
 
 		JPanel surroundPanel = new JPanel(new BorderLayout());
 		surroundPanel.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
@@ -190,10 +194,122 @@ public class SWRLRuleEditorDialog extends JDialog
 	private class SWRLRuleEditorKeyAdapter extends KeyAdapter
 	{
 		@Override
+		public void keyPressed(KeyEvent event)
+		{
+			int code = event.getKeyCode();
+			if (code == KeyEvent.VK_TAB) {
+				autocomplete();
+				event.consume();
+				updateStatus();
+			} else if (code == KeyEvent.VK_ESCAPE) {
+				cancelAutocompleteIfNecessary();
+				event.consume();
+			} else { // Any other key will disable autocomplete mode
+				disableAutocompleteModeIfNecessary();
+				super.keyPressed(event);
+			}
+		}
+
+		@Override
 		public void keyReleased(KeyEvent event)
 		{
 			updateStatus();
 		}
+	}
+
+	private void autocomplete()
+	{
+		if (!isInAutocompleteMode()) {
+			String ruleText = getRuleText();
+			int textPosition = this.ruleTextTextArea.getCaretPosition();
+			int i = SWRLParserSupport.findSplittingPoint(ruleText.substring(0, textPosition));
+			String prefix = ruleText.substring(i, textPosition);
+			if (!prefix.equals("")) {
+				List<String> expansions = getExpansions(prefix); // All expansions will start with the empty string.
+
+				if (expansions.size() > 1) { // More than the empty string expansion; if not, do not enter autocomplete mode
+					SWRLRuleEditorAutocompleteState state = new SWRLRuleEditorAutocompleteState(textPosition, prefix, expansions);
+					insertExpansion(textPosition, prefix, state.getNextExpansion()); // Skip the empty string
+					enableAutocompleteMode(state);
+				}
+			}
+		} else { // Already in autocomplete mode
+			int textPosition = this.autocompleteState.getTextPosition();
+			String prefix = this.autocompleteState.getPrefix();
+			String currentExpansion = this.autocompleteState.getCurrentExpansion();
+			String nextExpansion = this.autocompleteState.getNextExpansion();
+
+			replaceExpansion(textPosition, prefix, currentExpansion, nextExpansion);
+		}
+	}
+
+	private boolean isInAutocompleteMode()
+	{
+		return this.autocompleteState != null;
+	}
+
+	private void enableAutocompleteMode(SWRLRuleEditorAutocompleteState autocompleteState)
+	{
+		this.autocompleteState = autocompleteState;
+	}
+
+	private void disableAutocompleteModeIfNecessary()
+	{
+		if (this.autocompleteState != null)
+			disableAutocompleteMode();
+	}
+
+	private void disableAutocompleteMode()
+	{
+		this.autocompleteState = null;
+	}
+
+	private void cancelAutocompleteIfNecessary()
+	{
+		if (isInAutocompleteMode()) {
+			int textPosition = this.autocompleteState.getTextPosition();
+			String prefix = this.autocompleteState.getPrefix();
+			String currentExpansion = this.autocompleteState.getCurrentExpansion();
+
+			replaceExpansion(textPosition, prefix, currentExpansion, "");
+			disableAutocompleteMode();
+		}
+	}
+
+	private void insertExpansion(int textPosition, String prefix, String expansion)
+	{
+		String expansionTail = expansion.substring(prefix.length());
+
+		try {
+			this.ruleTextTextArea.getDocument().insertString(textPosition, expansionTail, null);
+		} catch (BadLocationException e) {
+			disableAutocompleteMode();
+		}
+	}
+
+	private void replaceExpansion(int textPosition, String prefix, String currentExpansion, String nextExpansion)
+	{
+		String currentExpansionTail = currentExpansion.isEmpty() ? "" : currentExpansion.substring(prefix.length());
+		String nextExpansionTail = nextExpansion.isEmpty() ? "" : nextExpansion.substring(prefix.length());
+
+		try {
+			if (!currentExpansionTail.isEmpty())
+				this.ruleTextTextArea.getDocument().remove(textPosition, currentExpansionTail.length());
+
+			if (!nextExpansionTail.isEmpty())
+				this.ruleTextTextArea.getDocument().insertString(textPosition, nextExpansionTail, null);
+		} catch (BadLocationException e) {
+			disableAutocompleteMode();
+		}
+	}
+
+	private List<String> getExpansions(String prefix)
+	{
+		List<String> expansions = new ArrayList<String>();
+		expansions.add("");
+		expansions.addAll(this.autocompleter.getCompletions(prefix));
+
+		return expansions;
 	}
 
 	private class CancelSWRLRuleEditActionListener implements ActionListener
@@ -210,23 +326,23 @@ public class SWRLRuleEditorDialog extends JDialog
 		{
 			boolean okToQuit = false;
 
-			if (haveFieldsChanged()) {
+			if (hasDialogStateChanged()) {
 				okToQuit = getApplicationDialogManager().showConfirmDialog(parent, QUIT_CONFIRM_MESSAGE, QUIT_CONFIRM_TITLE);
 			} else
 				okToQuit = true;
 
 			if (okToQuit) {
-				clearEntryFields();
+				cancelEditMode();
 				setVisible(false);
 			}
 		}
 	}
 
-	private class OkSWRLRuleEditActionListener implements ActionListener
+	private class SaveSWRLRuleActionListener implements ActionListener
 	{
 		private final Component parent;
 
-		public OkSWRLRuleEditActionListener(Component parent)
+		public SaveSWRLRuleActionListener(Component parent)
 		{
 			this.parent = parent;
 		}
@@ -262,7 +378,7 @@ public class SWRLRuleEditorDialog extends JDialog
 					getSWRLRulesModel().addSWRLRule(ruleName, ruleText, comment);
 				}
 				setVisible(false);
-				clearEntryFields();
+				cancelEditMode();
 			} else
 				updateStatus();
 		}
@@ -273,7 +389,7 @@ public class SWRLRuleEditorDialog extends JDialog
 		String ruleText = getRuleText();
 
 		if (ruleText.equals("")) {
-			setStatusText(STATUS_MISSING_RULE);
+			setStatusText(STATUS_NO_RULE_TEXT);
 			disableSave();
 		} else {
 			try {
@@ -295,12 +411,12 @@ public class SWRLRuleEditorDialog extends JDialog
 
 	private void disableSave()
 	{
-		this.okButton.setEnabled(false);
+		this.saveButton.setEnabled(false);
 	}
 
 	private void enableSave()
 	{
-		this.okButton.setEnabled(true);
+		this.saveButton.setEnabled(true);
 	}
 
 	private void setStatusText(String status)
@@ -319,7 +435,7 @@ public class SWRLRuleEditorDialog extends JDialog
 	}
 
 	private String getRuleText()
-	{
+	{ // We replace the Unicode characters when parsing
 		return this.ruleTextTextArea.getText().trim().replaceAll(Character.toString(SWRLParser.AND_CHAR), "^")
 				.replaceAll(Character.toString(SWRLParser.IMP_CHAR), "->").replaceAll(Character.toString(SWRLParser.RING_CHAR),
 						".");
@@ -340,27 +456,13 @@ public class SWRLRuleEditorDialog extends JDialog
 		return this.applicationDialogManager;
 	}
 
-	private boolean haveFieldsChanged()
+	private void setInitialDialogState()
 	{
-		return this.initialFieldState.haveFieldsChanged(getRuleName(), getComment(), getRuleText());
+		this.initialDialogState.setState(getRuleName(), getComment(), getRuleText());
 	}
 
-	private class InitialFieldState
+	private boolean hasDialogStateChanged()
 	{
-		private String ruleName = "", comment = "", ruleText = "";
-
-		public void updateFieldState(String ruleName, String comment, String ruleText)
-		{
-			this.ruleName = ruleName.trim();
-			this.comment = comment.trim();
-			this.ruleText = ruleText.trim();
-		}
-
-		public boolean haveFieldsChanged(String currentRuleName, String currentComment, String currentRuleText)
-		{
-			return !this.ruleName.equals(currentRuleName.trim()) ||
-					!this.comment.equals(currentComment.trim()) ||
-					!this.ruleText.equals(currentRuleText.trim());
-		}
+		return this.initialDialogState.hasStateChanged(getRuleName(), getComment(), getRuleText());
 	}
 }
