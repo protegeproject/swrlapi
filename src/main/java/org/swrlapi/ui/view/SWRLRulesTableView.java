@@ -5,12 +5,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.EventListener;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JViewport;
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumnModel;
 
 import org.swrlapi.ui.dialog.SWRLAPIApplicationDialogManager;
@@ -26,12 +25,14 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 	private static final int RULE_NAME_COLUMN_MAX_WIDTH = 200;
 	private static final int RULE_TEXT_COLUMN_PREFERRED_WIDTH = 500;
 	private static final int RULE_TEXT_COLUMN_MAX_WIDTH = 1400;
-	private static final int RULE_COMMENT_COLUMN_PREFERRED_WIDTH = 200;
-	private static final int RULE_COMMENT_COLUMN_MAX_WIDTH = 300;
+	private static final int COMMENT_COLUMN_PREFERRED_WIDTH = 200;
+	private static final int COMMENT_COLUMN_MAX_WIDTH = 300;
 
 	private final SWRLAPIApplicationDialogManager applicationDialogManager;
 	private final SWRLRulesTableModel swrlRulesTableModel;
 	private final JTable swrlRulesTable;
+
+	private JButton editButton, deleteButton;
 
 	public SWRLRulesTableView(SWRLRulesTableModel swrlRulesTableModel,
 			SWRLAPIApplicationDialogManager applicationDialogManager)
@@ -39,6 +40,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 		this.applicationDialogManager = applicationDialogManager;
 		this.swrlRulesTableModel = swrlRulesTableModel;
 		this.swrlRulesTable = new JTable(this.swrlRulesTableModel);
+		this.swrlRulesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		addTableListeners();
 		setPreferredColumnWidths();
@@ -93,9 +95,8 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 		columnModel.getColumn(SWRLRulesTableModel.RULE_NAME_COLUMN).setMaxWidth(RULE_NAME_COLUMN_MAX_WIDTH);
 		columnModel.getColumn(SWRLRulesTableModel.RULE_TEXT_COLUMN).setPreferredWidth(RULE_TEXT_COLUMN_PREFERRED_WIDTH);
 		columnModel.getColumn(SWRLRulesTableModel.RULE_TEXT_COLUMN).setMaxWidth(RULE_TEXT_COLUMN_MAX_WIDTH);
-		columnModel.getColumn(SWRLRulesTableModel.RULE_COMMENT_COLUMN).setPreferredWidth(
-				RULE_COMMENT_COLUMN_PREFERRED_WIDTH);
-		columnModel.getColumn(SWRLRulesTableModel.RULE_COMMENT_COLUMN).setMaxWidth(RULE_COMMENT_COLUMN_MAX_WIDTH);
+		columnModel.getColumn(SWRLRulesTableModel.RULE_COMMENT_COLUMN).setPreferredWidth(COMMENT_COLUMN_PREFERRED_WIDTH);
+		columnModel.getColumn(SWRLRulesTableModel.RULE_COMMENT_COLUMN).setMaxWidth(COMMENT_COLUMN_MAX_WIDTH);
 	}
 
 	private void addTableListeners()
@@ -112,16 +113,28 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 				}
 			}
 		});
+
+		this.swrlRulesTable.getSelectionModel().addListSelectionListener(new ListSelectionListener()
+		{
+			public void valueChanged(ListSelectionEvent e)
+			{
+				if (hasSelectedRule())
+					enableEditAndDelete();
+				else
+					disableEditAndDelete();
+			}
+		});
 	}
 
 	private void editSelectedSWRLRule()
 	{
-		String ruleName = getSelectedSWRLRuleName();
-		String ruleText = getSelectedSWRLRuleText();
-		String ruleComment = getSelectedSWRLRuleComment();
+		if (this.swrlRulesTable.getSelectedRow() != -1) {
+			String ruleName = getSelectedSWRLRuleName();
+			String ruleText = getSelectedSWRLRuleText();
+			String ruleComment = getSelectedSWRLRuleComment();
 
-		if (ruleName.length() != 0)
 			this.applicationDialogManager.getSWRLRuleEditorDialog(this, ruleName, ruleText, ruleComment).setVisible(true);
+		}
 	}
 
 	private void createComponents(SWRLAPIApplicationDialogManager applicationDialogManager)
@@ -143,18 +156,34 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 		newButton.addActionListener(new NewSWRLRuleActionListener(this, applicationDialogManager));
 		buttonPanel.add(newButton, BorderLayout.WEST);
 
-		JButton editButton = new JButton("Edit");
-		editButton.addActionListener(new EditSWRLRuleActionListener(this, applicationDialogManager));
-		buttonPanel.add(editButton, BorderLayout.CENTER);
+		this.editButton = new JButton("Edit");
+		this.editButton.addActionListener(new EditSWRLRuleActionListener(this, applicationDialogManager));
+		buttonPanel.add(this.editButton, BorderLayout.CENTER);
 
-		JButton deleteButton = new JButton("Delete");
-		deleteButton.addActionListener(new DeleteSWRLRuleActionListener(this, applicationDialogManager));
-		buttonPanel.add(deleteButton, BorderLayout.EAST);
+		this.deleteButton = new JButton("Delete");
+		this.deleteButton.addActionListener(new DeleteSWRLRuleActionListener(this, applicationDialogManager));
+		buttonPanel.add(this.deleteButton, BorderLayout.EAST);
+
+		disableEditAndDelete(); // Will get enabled by listener on rule table if a rule is selected
 
 		add(scrollPane, BorderLayout.CENTER);
 
 		validate();
 	}
+
+	private void enableEditAndDelete()
+	{
+		this.editButton.setEnabled(true);
+		this.deleteButton.setEnabled(true);
+	}
+
+	private void disableEditAndDelete()
+	{
+		this.editButton.setEnabled(false);
+		this.deleteButton.setEnabled(false);
+	}
+
+	private boolean hasSelectedRule() { return this.swrlRulesTable.getSelectedRow() != -1; }
 
 	private abstract class ActionListenerBase implements ActionListener
 	{
@@ -214,8 +243,8 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 		{
 			String selectedRuleName = getSelectedSWRLRuleName();
 
-			if (SWRLRulesTableView.this.swrlRulesTableModel.hasSWRLRule(selectedRuleName)
-					&& this.applicationDialogManager.showConfirmDialog(parent, "Do you really want to delete the rule?", "Delete Rule")) {
+			if (SWRLRulesTableView.this.swrlRulesTableModel.hasSWRLRule(selectedRuleName) && this.applicationDialogManager
+					.showConfirmDialog(parent, "Do you really want to delete the rule?", "Delete Rule")) {
 				SWRLRulesTableView.this.swrlRulesTableModel.removeSWRLRule(selectedRuleName);
 			}
 		}

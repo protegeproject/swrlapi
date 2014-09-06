@@ -48,7 +48,7 @@ public class SWRLRuleEditorDialog extends JDialog
 	private static final String OK_BUTTON_TITLE = "Ok";
 	private static final String CANCEL_BUTTON_TITLE = "Cancel";
 	private static final String STATUS_OK = "Ok";
-	private static final String STATUS_NO_RULE_TEXT = "Use Tab key for autocomplete; to cancel autocomplete, use Escape key";
+	private static final String STATUS_NO_RULE_TEXT = "Use Tab key for autocomplete; to remove autocomplete expansion, use Escape key";
 	private static final String INVALID_RULE_TITLE = "Invalid";
 	private static final String MISSING_RULE = "Nothing to save!";
 	private static final String MISSING_RULE_NAME_TITLE = "Empty Name";
@@ -200,21 +200,17 @@ public class SWRLRuleEditorDialog extends JDialog
 			if (code == KeyEvent.VK_TAB) {
 				autocomplete();
 				event.consume();
-				updateStatus();
 			} else if (code == KeyEvent.VK_ESCAPE) {
 				cancelAutocompleteIfNecessary();
 				event.consume();
-			} else { // Any other key will disable autocomplete mode
+			} else { // Any other key will disable autocomplete mode if it is active
 				disableAutocompleteModeIfNecessary();
 				super.keyPressed(event);
 			}
 		}
 
 		@Override
-		public void keyReleased(KeyEvent event)
-		{
-			updateStatus();
-		}
+		public void keyReleased(KeyEvent event) { updateStatus(); }
 	}
 
 	private void autocomplete()
@@ -255,8 +251,7 @@ public class SWRLRuleEditorDialog extends JDialog
 
 	private void disableAutocompleteModeIfNecessary()
 	{
-		if (this.autocompleteState != null)
-			disableAutocompleteMode();
+		if (this.autocompleteState != null) disableAutocompleteMode();
 	}
 
 	private void disableAutocompleteMode()
@@ -328,8 +323,7 @@ public class SWRLRuleEditorDialog extends JDialog
 
 			if (hasDialogStateChanged()) {
 				okToQuit = getApplicationDialogManager().showConfirmDialog(parent, QUIT_CONFIRM_MESSAGE, QUIT_CONFIRM_TITLE);
-			} else
-				okToQuit = true;
+			} else okToQuit = true;
 
 			if (okToQuit) {
 				cancelEditMode();
@@ -379,8 +373,7 @@ public class SWRLRuleEditorDialog extends JDialog
 				}
 				setVisible(false);
 				cancelEditMode();
-			} else
-				updateStatus();
+			} else updateStatus();
 		}
 	}
 
@@ -437,8 +430,8 @@ public class SWRLRuleEditorDialog extends JDialog
 	private String getRuleText()
 	{ // We replace the Unicode characters when parsing
 		return this.ruleTextTextArea.getText().trim().replaceAll(Character.toString(SWRLParser.AND_CHAR), "^")
-				.replaceAll(Character.toString(SWRLParser.IMP_CHAR), "->").replaceAll(Character.toString(SWRLParser.RING_CHAR),
-						".");
+				.replaceAll(Character.toString(SWRLParser.IMP_CHAR), "->")
+				.replaceAll(Character.toString(SWRLParser.RING_CHAR), ".");
 	}
 
 	private SWRLParser getSWRLParser()

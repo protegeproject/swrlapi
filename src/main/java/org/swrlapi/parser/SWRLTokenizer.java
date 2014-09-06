@@ -99,12 +99,12 @@ public class SWRLTokenizer
 		return this.tokenPosition < this.tokens.size();
 	}
 
-	public SWRLToken peekToken() throws SWRLParseException
+	public SWRLToken peekToken(String message) throws SWRLParseException
 	{
 		if (this.tokenPosition < this.tokens.size())
 			return this.tokens.get(tokenPosition);
 		else
-			throw generateEndOfRuleException("End of rule reached!");
+			throw generateEndOfRuleException(message);
 	}
 
 	public void skipToken() throws SWRLParseException
@@ -228,7 +228,7 @@ public class SWRLTokenizer
 				String iri = this.tokenizer.sval;
 				nextTokenType = this.tokenizer.nextToken();
 				if (nextTokenType == '>')
-					return new SWRLToken(SWRLToken.SWRLTokenType.SHORTNAME, iri);
+					return new SWRLToken(SWRLToken.SWRLTokenType.IRI, iri);
 				else if (nextTokenType == StreamTokenizer.TT_EOF)
 					throw generateEndOfRuleException("Expecting '>' after IRI");
 				else

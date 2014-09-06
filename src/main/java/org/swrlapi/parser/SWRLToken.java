@@ -38,6 +38,8 @@ public class SWRLToken
 
 	public boolean isShortName() { return this.tokenType == SWRLTokenType.SHORTNAME; }
 
+	public boolean isIRI() { return this.tokenType == SWRLTokenType.IRI; }
+
 	public boolean isDouble() { return this.tokenType == SWRLTokenType.DOUBLE; }
 
 	public boolean isLong() { return this.tokenType == SWRLTokenType.LONG; }
