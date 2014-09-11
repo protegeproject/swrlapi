@@ -181,13 +181,13 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	@Override
 	public Set<OWLObjectPropertyAssertionAxiom> getOWLObjectPropertyAssertionAxioms(IRI individualIRI, IRI propertyIRI)
 	{
-		throw new SWRLAPIException("Not implemented");
+		throw new SWRLAPIException("Not implemented"); // TODO
 	}
 
 	@Override
 	public Set<OWLDataPropertyAssertionAxiom> getOWLDataPropertyAssertionAxioms(IRI individualIRI, IRI propertyIRI)
 	{
-		throw new SWRLAPIException("Not implemented");
+		throw new SWRLAPIException("Not implemented"); // TODO
 	}
 
 	private String getSWRLRuleName(SWRLRule owlapiRule)
@@ -205,10 +205,10 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 
 	private boolean getIsActive(SWRLRule owlapiRule)
 	{
-		OWLAnnotationProperty enabledAnnotation = getOWLDataFactory().getOWLAnnotationProperty(
+		OWLAnnotationProperty enabledAnnotationProperty = getOWLDataFactory().getOWLAnnotationProperty(
 				IRI.create("http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"));
 
-		for (OWLAnnotation annotation : owlapiRule.getAnnotations(enabledAnnotation)) {
+		for (OWLAnnotation annotation : owlapiRule.getAnnotations(enabledAnnotationProperty)) {
 			if (annotation.getValue() instanceof OWLLiteral) {
 				OWLLiteral literal = (OWLLiteral)annotation.getValue();
 				if (literal.isBoolean())
@@ -220,11 +220,11 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 
 	private String getComment(SWRLRule owlapiRule)
 	{
-		OWLAnnotationProperty commentAnnotation = getOWLDataFactory().getOWLAnnotationProperty(
+		OWLAnnotationProperty commentAnnotationProperty = getOWLDataFactory().getOWLAnnotationProperty(
 				OWLRDFVocabulary.RDFS_COMMENT.getIRI());
 
-		for (OWLAnnotation annotation : owlapiRule.getAnnotations(commentAnnotation)) {
-			if (annotation.getValue() instanceof OWLLiteral) {
+		for (OWLAnnotation annotation : owlapiRule.getAnnotations(commentAnnotationProperty)) {
+			if (annotation.getValue() instanceof OWLLiteral) { // TODO Use OWLAnnotationValueVisitorEx to get rid of instanceof
 				OWLLiteral literal = (OWLLiteral)annotation.getValue();
 				return literal.getLiteral(); // TODO We just pick one for the moment
 			}
