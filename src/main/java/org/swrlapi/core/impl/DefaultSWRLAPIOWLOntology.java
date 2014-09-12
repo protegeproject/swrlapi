@@ -41,7 +41,6 @@ import org.swrlapi.core.SWRLAPIOntologyProcessor;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.exceptions.SWRLAPIInternalException;
-import org.swrlapi.exceptions.SWRLBuiltInException;
 
 public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 {
