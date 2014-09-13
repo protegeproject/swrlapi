@@ -31,7 +31,7 @@ public class SWRLAPITestUtil
 
 	public static OWLOntologyManager createOWLOntologyManager()
 	{
-		return OWLManager.createOWLOntologyManager();
+		return SWRLAPIFactory.createOWLOntologyManager();
 	}
 
 	public static OWLOntology createOWLOntology() throws OWLOntologyCreationException

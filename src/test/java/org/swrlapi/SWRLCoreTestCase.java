@@ -61,7 +61,7 @@ public class SWRLCoreTestCase
 
 		prefixManager.setDefaultPrefix(Namespace);
 
-		//SWRLAPIRule rule = swrlapiowlOntology.getSWRLRule("Fred", "Male(p1) -> sqwrl:select(p1)");
+		SWRLAPIRule rule = swrlapiowlOntology.getSWRLRule("Fred", "Male(p1) -> sqwrl:select(p1)");
 
 		// test-class-atom-in-consequent-with-named-individual-query
 		// Male(p1) → sqwrl:select(p1)
