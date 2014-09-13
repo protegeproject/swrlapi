@@ -15,6 +15,8 @@ import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.SWRLAPIFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
+import org.swrlapi.core.SWRLAPIRule;
+import org.swrlapi.parser.SWRLParseException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +32,7 @@ import static org.swrlapi.SWRLAPITestUtil.getOWLDeclarationAxiom;
 
 public class SWRLCoreTestCase
 {
-	String Namespace = "http://protege.org/ontologies/SWRLCoreTests.owl";
+	String Namespace = "http://protege.org/ontologies/SWRLCoreTests.owl#";
 
 	@Before
 	public void setUp()
@@ -39,23 +41,27 @@ public class SWRLCoreTestCase
 	}
 
 	@Test
-	public void Test1() throws OWLOntologyCreationException
+	public void Test1() throws OWLOntologyCreationException, SWRLParseException
 	{
 		OWLOntologyManager manager = createOWLOntologyManager();
 		OWLOntology ontology = createOWLOntology();
 		DefaultPrefixManager prefixManager = createPrefixManager(ontology);
 		SWRLAPIOWLOntology swrlapiowlOntology = createSWRLAPIOWLOntology(ontology, prefixManager);
 
-		OWLClass male = getOWLClass(getIRI(Namespace + "#Male"));
+		OWLClass male = getOWLClass(getIRI(Namespace + "Male"));
 		OWLDeclarationAxiom a1 = getOWLDeclarationAxiom(male);
 
-		OWLNamedIndividual p1 = getOWLNamedIndividual(getIRI(Namespace + "#p1"));
+		OWLNamedIndividual p1 = getOWLNamedIndividual(getIRI(Namespace + "p1"));
 		OWLDeclarationAxiom a2 = getOWLDeclarationAxiom(p1);
 
 		List<OWLOntologyChange> changes = new ArrayList<OWLOntologyChange>();
 		changes.add(new AddAxiom(ontology, a1));
 		changes.add(new AddAxiom(ontology, a2));
 		manager.applyChanges(changes);
+
+		prefixManager.setDefaultPrefix(Namespace);
+
+		//SWRLAPIRule rule = swrlapiowlOntology.getSWRLRule("Fred", "Male(p1) -> sqwrl:select(p1)");
 
 		// test-class-atom-in-consequent-with-named-individual-query
 		// Male(p1) → sqwrl:select(p1)

@@ -41,6 +41,8 @@ import org.swrlapi.core.SWRLAPIOntologyProcessor;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.exceptions.SWRLAPIInternalException;
+import org.swrlapi.parser.SWRLParseException;
+import org.swrlapi.parser.SWRLParser;
 
 public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 {
@@ -50,6 +52,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	private final IRIResolver iriResolver;
 	private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
 	private final SWRLAPIOntologyProcessor swrlapiOntologyProcessor;
+	private final SWRLParser parser;
 	private final Set<IRI> swrlBuiltInIRIs;
 
 	public DefaultSWRLAPIOWLOntology(OWLOntology ontology, DefaultPrefixManager prefixManager)
@@ -60,6 +63,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		this.iriResolver = new IRIResolver(this.prefixManager);
 		this.swrlapiOWLDataFactory = SWRLAPIFactory.createSWRLAPIOWLDataFactory(this.iriResolver);
 		this.swrlapiOntologyProcessor = SWRLAPIFactory.createOntologyProcessor(this);
+		this.parser = new SWRLParser(this);
 		this.swrlBuiltInIRIs = new HashSet<IRI>();
 
 		addDefaultSWRLBuiltIns();
@@ -86,13 +90,30 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	@Override
 	public Set<SWRLAPIRule> getSWRLAPIRules()
 	{
-		Set<SWRLAPIRule> swrlapiRules = new HashSet<SWRLAPIRule>();
+		Set<SWRLAPIRule> swrlapiRules = new HashSet<>();
 
 		for (SWRLRule owlapiRule : getOWLOntology().getAxioms(AxiomType.SWRL_RULE, true)) {
 			SWRLAPIRule swrlapiRule = convertOWLAPIRule2SWRLAPIRule(owlapiRule);
 			swrlapiRules.add(swrlapiRule);
 		}
 		return swrlapiRules;
+	}
+
+	public SWRLAPIRule getSWRLRule(String ruleName, String rule) throws SWRLParseException
+	{
+		SWRLRule owlapiSWRLRule = this.parser.parseSWRLRule(rule, false);
+
+		return new DefaultSWRLAPIRule(ruleName, new ArrayList<>(owlapiSWRLRule.getBody()),
+				new ArrayList<>(owlapiSWRLRule.getHead()), "", true);
+	}
+
+	public SWRLAPIRule getSWRLRule(String ruleName, String rule, String comment, boolean isActive)
+			throws SWRLParseException
+	{
+		SWRLRule owlapiSWRLRule = this.parser.parseSWRLRule(rule, false);
+
+		return new DefaultSWRLAPIRule(ruleName, new ArrayList<>(owlapiSWRLRule.getBody()),
+				new ArrayList<>(owlapiSWRLRule.getHead()), comment, isActive);
 	}
 
 	@Override
@@ -193,8 +214,8 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	{
 		String ruleName = "XX" + owlapiRule.hashCode(); // TODO Get rule name from annotation property if there.
 
-		OWLAnnotationProperty labelAnnotation = getOWLDataFactory().getOWLAnnotationProperty(
-				OWLRDFVocabulary.RDFS_LABEL.getIRI());
+		OWLAnnotationProperty labelAnnotation = getOWLDataFactory()
+				.getOWLAnnotationProperty(OWLRDFVocabulary.RDFS_LABEL.getIRI());
 
 		for (OWLAnnotation annotation : owlapiRule.getAnnotations(labelAnnotation)) {
 			System.err.println("ann: " + annotation);
@@ -204,8 +225,8 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 
 	private boolean getIsActive(SWRLRule owlapiRule)
 	{
-		OWLAnnotationProperty enabledAnnotationProperty = getOWLDataFactory().getOWLAnnotationProperty(
-				IRI.create("http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"));
+		OWLAnnotationProperty enabledAnnotationProperty = getOWLDataFactory()
+				.getOWLAnnotationProperty(IRI.create("http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"));
 
 		for (OWLAnnotation annotation : owlapiRule.getAnnotations(enabledAnnotationProperty)) {
 			if (annotation.getValue() instanceof OWLLiteral) {
@@ -219,11 +240,12 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 
 	private String getComment(SWRLRule owlapiRule)
 	{
-		OWLAnnotationProperty commentAnnotationProperty = getOWLDataFactory().getOWLAnnotationProperty(
-				OWLRDFVocabulary.RDFS_COMMENT.getIRI());
+		OWLAnnotationProperty commentAnnotationProperty = getOWLDataFactory()
+				.getOWLAnnotationProperty(OWLRDFVocabulary.RDFS_COMMENT.getIRI());
 
 		for (OWLAnnotation annotation : owlapiRule.getAnnotations(commentAnnotationProperty)) {
-			if (annotation.getValue() instanceof OWLLiteral) { // TODO Use OWLAnnotationValueVisitorEx to get rid of instanceof
+			if (annotation
+					.getValue() instanceof OWLLiteral) { // TODO Use OWLAnnotationValueVisitorEx to get rid of instanceof
 				OWLLiteral literal = (OWLLiteral)annotation.getValue();
 				return literal.getLiteral(); // TODO We just pick one for the moment
 			}
@@ -256,9 +278,9 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 				String builtInPrefixedName = getIRIResolver().iri2PrefixedName(builtInIRI);
 				List<SWRLDArgument> swrlDArguments = builtInAtom.getArguments();
 				List<SWRLBuiltInArgument> swrlBuiltInArguments = convertSWRLDArguments2SWRLBuiltInArguments(swrlDArguments);
-				SWRLBuiltInAtom swrlapiAtom = getSWRLAPIOWLDataFactory().getSWRLAPIBuiltInAtom(ruleName, builtInIRI,
-						builtInPrefixedName, swrlBuiltInArguments);
-				swrlapiBodyAtoms.add(swrlapiAtom);
+				SWRLBuiltInAtom swrlapiBuiltInAtom = getSWRLAPIOWLDataFactory()
+						.getSWRLAPIBuiltInAtom(ruleName, builtInIRI, builtInPrefixedName, swrlBuiltInArguments);
+				swrlapiBodyAtoms.add(swrlapiBuiltInAtom);
 			} else
 				swrlapiBodyAtoms.add(atom); // Only built-in atoms are converted; other atoms remain the same
 		}
@@ -270,13 +292,13 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 				String builtInPrefixedName = getIRIResolver().iri2PrefixedName(builtInIRI);
 				List<SWRLDArgument> swrlDArguments = builtInAtom.getArguments();
 				List<SWRLBuiltInArgument> swrlBuiltInArguments = convertSWRLDArguments2SWRLBuiltInArguments(swrlDArguments);
-				SWRLBuiltInAtom swrlapiAtom = getSWRLAPIOWLDataFactory().getSWRLAPIBuiltInAtom(ruleName, builtInIRI,
-						builtInPrefixedName, swrlBuiltInArguments);
-				swrlapiHeadAtoms.add(swrlapiAtom);
+				SWRLBuiltInAtom swrlapiBuiltInAtom = getSWRLAPIOWLDataFactory()
+						.getSWRLAPIBuiltInAtom(ruleName, builtInIRI, builtInPrefixedName, swrlBuiltInArguments);
+				swrlapiHeadAtoms.add(swrlapiBuiltInAtom);
 			} else
 				swrlapiHeadAtoms.add(atom); // Only built-in atoms are converted; other atoms remain the same
 		}
-		return new DefaultSWRLAPIRule(ruleName, swrlapiBodyAtoms, swrlapiHeadAtoms, getIRIResolver(), isActive, comment);
+		return new DefaultSWRLAPIRule(ruleName, swrlapiBodyAtoms, swrlapiHeadAtoms, comment, isActive);
 	}
 
 	/**
@@ -320,8 +342,8 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 			SWRLVariable swrlVariable = (SWRLVariable)swrlDArgument;
 			return convertSWRLVariable2SWRLBuiltInArgument(swrlVariable);
 		} else
-			throw new SWRLAPIInternalException("Unknown " + SWRLDArgument.class.getName() + " class "
-					+ swrlDArgument.getClass().getName());
+			throw new SWRLAPIInternalException(
+					"Unknown " + SWRLDArgument.class.getName() + " class " + swrlDArgument.getClass().getName());
 	}
 
 	private boolean hackIRI(IRI iri) // TODO

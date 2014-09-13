@@ -8,8 +8,10 @@ import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.SWRLRule;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.resolvers.IRIResolver;
+import org.swrlapi.parser.SWRLParseException;
 
 /**
  * Wraps the OWLAPI's {@link org.semanticweb.owlapi.model.OWLOntology} class with additional functionality used by
@@ -18,22 +20,22 @@ import org.swrlapi.core.resolvers.IRIResolver;
  * class, provide the richer representation of a SWRL rule required by the SWRLAPI. In particular, the SWRLAPI has a
  * range of types extending the OWLAPI's {@link org.semanticweb.owlapi.model.SWRLDArgument} interface to define
  * arguments to built-in atoms.
- * <p>
+ * <p/>
  * This extension point is defined by the {@link org.swrlapi.builtins.arguments.SWRLBuiltInArgument} interface,
  * which extends the OWLAPI's {@link org.semanticweb.owlapi.model.SWRLDArgument}. A
  * {@link org.swrlapi.core.SWRLAPIOWLOntology} will construct SWRLAPI rules from the SWRL rules in an
  * OWLAPI-based ontology to contain these additional built-in argument types.
- * <p>
+ * <p/>
  * The {@link #startBulkConversion()}, {@link #completeBulkConversion()}, {@link #hasOntologyChanged()}, and
  * {@link #resetOntologyChanged()} methods can be used for optimization purposes. For example, in the Protege-OWL API the
  * {@link #startBulkConversion()} method turns off listener notification so that bulk transfer of OWL axioms can be
  * performed more efficiently. The {@link #hasOntologyChanged()} method can be used by rule engines to avoid unnecessary
  * regeneration of knowledge.
- * <p>
+ * <p/>
  * A SWRLAPI ontology does not directly deal with SQWRL queries. Instead, a
  * {@link org.swrlapi.core.SWRLAPIOntologyProcessor} is used to extract SQWRL queries - which are stored as SWRL
  * rules - from a {@link org.swrlapi.core.SWRLAPIOWLOntology}.
- * 
+ *
  * @see org.swrlapi.core.SWRLAPIRule
  * @see org.swrlapi.builtins.arguments.SWRLBuiltInArgument
  * @see org.swrlapi.core.SWRLAPIOntologyProcessor
@@ -42,6 +44,10 @@ import org.swrlapi.core.resolvers.IRIResolver;
 public interface SWRLAPIOWLOntology
 {
 	Set<SWRLAPIRule> getSWRLAPIRules();
+
+	SWRLAPIRule getSWRLRule(String ruleName, String rule) throws SWRLParseException;
+
+	SWRLAPIRule getSWRLRule(String ruleName, String rule, String comment, boolean isActive) throws SWRLParseException;
 
 	SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory();
 
