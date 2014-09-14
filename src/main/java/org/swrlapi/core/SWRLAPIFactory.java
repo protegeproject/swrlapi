@@ -165,9 +165,9 @@ public class SWRLAPIFactory
 		return new SWRLParser(swrlapiOWLOntology);
 	}
 
-	public static DefaultSWRLAPIRuleRenderer createSWRLRuleRenderer(DefaultPrefixManager prefixManager)
+	public static DefaultSWRLAPIRuleRenderer createSWRLRuleRenderer(SWRLAPIOWLOntology swrlapiowlOntology)
 	{
-		return new DefaultSWRLAPIRuleRenderer(prefixManager);
+		return new DefaultSWRLAPIRuleRenderer(swrlapiowlOntology.getPrefixManager());
 	}
 
 	public static SWRLRulesTableModel createSWRLRulesTableModel(SWRLRuleEngine swrlRuleEngine,

@@ -1,12 +1,8 @@
 package org.swrlapi.test;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.StringTokenizer;
-
 import org.semanticweb.owlapi.model.OWLDatatype;
-import org.swrlapi.exceptions.SWRLRuleEngineException;
+import org.semanticweb.owlapi.util.DefaultPrefixManager;
+import org.swrlapi.core.SWRLAPIFactory;
 import org.swrlapi.sqwrl.SQWRLQuery;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.SQWRLResult;
@@ -14,6 +10,11 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLNamedResultValue;
 import org.swrlapi.sqwrl.values.SQWRLResultValue;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.StringTokenizer;
 
 /**
  * Individually execute all SQWRL queries in an ontology and compare the generated result with the expected result
@@ -114,8 +115,7 @@ public class SWRLAPIRegressionTester
 				} else if (resultValue instanceof SQWRLLiteralResultValue) {
 					SQWRLLiteralResultValue literalResultValue = (SQWRLLiteralResultValue)resultValue;
 					String actualRawLiteral = literalResultValue.getLiteral();
-					@SuppressWarnings("unused")
-					OWLDatatype datatype = literalResultValue.getOWLDatatype();
+					@SuppressWarnings("unused") OWLDatatype datatype = literalResultValue.getOWLDatatype();
 					String actualDatatypePrefixedName = "XXX"; // TODO
 					String testRawLiteral = testValueString.substring(1, testValueString.indexOf("^^") - 1);
 					String testDatatypePrefixedName = testValueString.substring(testValueString.indexOf("^^") + 2);

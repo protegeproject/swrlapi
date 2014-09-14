@@ -79,6 +79,11 @@ public class SWRLAPITestUtil
 		return dataFactory.getOWLDataProperty(iri);
 	}
 
+	public static OWLDatatype getOWLDatatype(IRI iri)
+	{
+		return dataFactory.getOWLDatatype(iri);
+	}
+
 	public static OWLAnnotationProperty getOWLAnnotationProperty(IRI iri)
 	{
 		return dataFactory.getOWLAnnotationProperty(iri);
@@ -143,6 +148,36 @@ public class SWRLAPITestUtil
 	{
 		OWLNamedIndividual i = getOWLNamedIndividual(getIRI(iri));
 		OWLDeclarationAxiom axiom = getOWLDeclarationAxiom(i);
+
+		List<OWLOntologyChange> changes = new ArrayList<>();
+		changes.add(new AddAxiom(ontology, axiom));
+		manager.applyChanges(changes);
+	}
+
+	public static void declareOWLObjectProperty(OWLOntologyManager manager, OWLOntology ontology, String iri)
+	{
+		OWLObjectProperty p = getOWLObjectProperty(getIRI(iri));
+		OWLDeclarationAxiom axiom = getOWLDeclarationAxiom(p);
+
+		List<OWLOntologyChange> changes = new ArrayList<>();
+		changes.add(new AddAxiom(ontology, axiom));
+		manager.applyChanges(changes);
+	}
+
+	public static void declareOWLDataProperty(OWLOntologyManager manager, OWLOntology ontology, String iri)
+	{
+		OWLDataProperty p = getOWLDataProperty(getIRI(iri));
+		OWLDeclarationAxiom axiom = getOWLDeclarationAxiom(p);
+
+		List<OWLOntologyChange> changes = new ArrayList<>();
+		changes.add(new AddAxiom(ontology, axiom));
+		manager.applyChanges(changes);
+	}
+
+	public static void declareOWLDatatype(OWLOntologyManager manager, OWLOntology ontology, String name)
+	{
+		OWLDatatype d = getOWLDatatype(getIRI(name));
+		OWLDeclarationAxiom axiom = getOWLDeclarationAxiom(d);
 
 		List<OWLOntologyChange> changes = new ArrayList<>();
 		changes.add(new AddAxiom(ontology, axiom));
