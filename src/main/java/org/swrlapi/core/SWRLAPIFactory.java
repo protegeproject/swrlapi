@@ -30,6 +30,7 @@ import org.swrlapi.core.impl.DefaultSWRLRuleEngineFactory;
 import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.parser.SWRLParser;
+import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 import org.swrlapi.sqwrl.values.impl.DefaultSQWRLResultValueFactory;
 import org.swrlapi.ui.controller.SWRLAPIApplicationController;
@@ -164,15 +165,15 @@ public class SWRLAPIFactory
 		return new SWRLParser(swrlapiOWLOntology);
 	}
 
-	public static DefaultSWRLAPIRuleRenderer createRulePrinter(DefaultPrefixManager prefixManager)
+	public static DefaultSWRLAPIRuleRenderer createSWRLRuleRenderer(DefaultPrefixManager prefixManager)
 	{
 		return new DefaultSWRLAPIRuleRenderer(prefixManager);
 	}
 
 	public static SWRLRulesTableModel createSWRLRulesTableModel(SWRLRuleEngine swrlRuleEngine,
-			DefaultSWRLAPIRuleRenderer swrlRulePrinter)
+			DefaultSWRLAPIRuleRenderer swrlRuleRenderer)
 	{
-		return new SWRLRulesTableModel(swrlRuleEngine, swrlRulePrinter);
+		return new SWRLRulesTableModel(swrlRuleEngine, swrlRuleRenderer);
 	}
 
 	public static SWRLAPIOWLDataFactory createSWRLAPIOWLDataFactory(IRIResolver iriResolver)
@@ -205,7 +206,16 @@ public class SWRLAPIFactory
 		return new DefaultSQWRLResultValueFactory(iriResolver);
 	}
 
-	public static SWRLRuleEngine createQueryEngine(SWRLAPIOWLOntology swrlapiOWLOntology,
+	public static SQWRLQueryEngine createSQWRLQueryEngine(SWRLAPIOWLOntology swrlapiOWLOntology,
+			SWRLRuleEngineManager.TargetSWRLRuleEngineCreator swrlRuleEngineCreator)
+	{
+		SWRLRuleEngineFactory swrlRuleEngineFactory = SWRLAPIFactory.createSWRLRuleEngineFactory();
+		swrlRuleEngineFactory.registerRuleEngine(swrlRuleEngineCreator);
+
+		return swrlRuleEngineFactory.createSWRLRuleEngine(swrlapiOWLOntology);
+	}
+
+	public static SWRLRuleEngine createSWRLRuleEngine(SWRLAPIOWLOntology swrlapiOWLOntology,
 			SWRLRuleEngineManager.TargetSWRLRuleEngineCreator swrlRuleEngineCreator)
 	{
 		SWRLRuleEngineFactory swrlRuleEngineFactory = SWRLAPIFactory.createSWRLRuleEngineFactory();

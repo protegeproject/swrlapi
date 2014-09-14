@@ -46,6 +46,8 @@ public class SWRLCoreTestCase
 		SWRLAPIRule rule = swrlapiowlOntology.getSWRLRule("r1", "-> Male(p1)");
 		SQWRLQuery query = swrlapiowlOntology.getSQWRLQuery("q1", "Male(p1) -> sqwrl:select(p1)");
 
+		//SQWRLQueryEngine queryEngine = SWRLAPIFactory.createSQWRLQueryEngine(swrlapiowlOntology);
+
 		// Male(p1) →  sqwrl:select(p1)
 	}
 
