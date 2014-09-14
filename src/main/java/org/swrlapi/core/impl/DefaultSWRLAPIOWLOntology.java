@@ -9,6 +9,7 @@ import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
+import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLDataProperty;
@@ -41,8 +42,13 @@ import org.swrlapi.core.SWRLAPIOntologyProcessor;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.exceptions.SWRLAPIInternalException;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.parser.SWRLParser;
+import org.swrlapi.sqwrl.SQWRLQuery;
+import org.swrlapi.sqwrl.SQWRLResult;
+import org.swrlapi.sqwrl.SQWRLResultGenerator;
+import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
 public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 {
@@ -88,7 +94,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	}
 
 	@Override
-	public Set<SWRLAPIRule> getSWRLAPIRules()
+	public Set<SWRLAPIRule> getSWRLRules()
 	{
 		Set<SWRLAPIRule> swrlapiRules = new HashSet<>();
 
@@ -126,12 +132,6 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	public OWLDataFactory getOWLDataFactory()
 	{
 		return ontologyManager.getOWLDataFactory();
-	}
-
-	@Override
-	public SWRLAPIOntologyProcessor getSWRLAPIOntologyProcessor()
-	{
-		return this.swrlapiOntologyProcessor;
 	}
 
 	@Override
@@ -190,6 +190,86 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		return new HashSet<IRI>(this.swrlBuiltInIRIs);
 	}
 
+	public int getNumberOfSQWRLQueries()
+	{
+		return this.swrlapiOntologyProcessor.getNumberOfSQWRLQueries();
+	}
+
+	public Set<String> getSQWRLQueryNames()
+	{
+		return this.swrlapiOntologyProcessor.getSQWRLQueryNames();
+	}
+
+	public SQWRLQuery getSQWRLQuery(String queryName) throws SQWRLException
+	{
+		return this.swrlapiOntologyProcessor.getSQWRLQuery(queryName);
+	}
+
+	public Set<SQWRLQuery> getSQWRLQueries()
+	{
+		return this.swrlapiOntologyProcessor.getSQWRLQueries();
+	}
+
+	public SQWRLResult getSQWRLResult(String queryName) throws SQWRLException
+	{
+		return this.swrlapiOntologyProcessor.getSQWRLResult(queryName);
+	}
+
+	public SQWRLResultGenerator getSQWRLResultGenerator(String queryName) throws SQWRLException
+	{
+		return this.swrlapiOntologyProcessor.getSQWRLResultGenerator(queryName);
+	}
+
+	public void reset()
+	{
+		this.swrlapiOntologyProcessor.reset();
+	}
+
+	public void processOntology() throws SQWRLException, SWRLBuiltInException
+	{
+		this.swrlapiOntologyProcessor.processOntology();
+	}
+
+	public boolean hasAssertedOWLAxiom(OWLAxiom axiom)
+	{
+		return this.swrlapiOntologyProcessor.hasAssertedOWLAxiom(axiom);
+	}
+
+	public 	Set<OWLAxiom> getOWLAxioms()
+	{
+		return this.swrlapiOntologyProcessor.getOWLAxioms();
+	}
+
+
+	public int getNumberOfSWRLRules()
+	{
+		return this.swrlapiOntologyProcessor.getNumberOfSWRLRules();
+	}
+
+	public int getNumberOfOWLAxioms()
+	{
+		return this.swrlapiOntologyProcessor.getNumberOfOWLAxioms();
+	}
+
+	public int getNumberOfOWLClassDeclarationAxioms()
+	{
+		return this.swrlapiOntologyProcessor.getNumberOfOWLClassDeclarationAxioms();
+	}
+
+	public int getNumberOfOWLIndividualDeclarationAxioms()
+	{
+		return this.swrlapiOntologyProcessor.getNumberOfOWLIndividualDeclarationAxioms();
+	}
+
+	public int getNumberOfOWLObjectPropertyDeclarationAxioms()
+	{
+		return this.swrlapiOntologyProcessor.getNumberOfOWLObjectPropertyDeclarationAxioms();
+	}
+
+	public int getNumberOfOWLDataPropertyDeclarationAxioms()
+	{
+		return this.swrlapiOntologyProcessor.getNumberOfOWLDataPropertyDeclarationAxioms();
+	}
 	// TODO Do not want here. They are convenience methods only and are used only by the temporal built-in library.
 	@Override
 	public boolean isOWLIndividualOfType(IRI individualIRI, IRI classIRI)

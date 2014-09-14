@@ -32,10 +32,6 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
  */
 public interface SWRLAPIOntologyProcessor
 {
-	void reset();
-
-	void processOntology() throws SQWRLException, SWRLBuiltInException;
-
 	int getNumberOfSWRLRules();
 
 	Set<String> getSWRLRuleNames();
@@ -44,11 +40,11 @@ public interface SWRLAPIOntologyProcessor
 
 	SWRLAPIRule getSWRLRule(String ruleName) throws SWRLRuleException;
 
-	SQWRLQuery getSQWRLQuery(String queryName) throws SQWRLException;
-
 	int getNumberOfSQWRLQueries();
 
 	Set<String> getSQWRLQueryNames();
+
+	SQWRLQuery getSQWRLQuery(String queryName) throws SQWRLException;
 
 	Set<SQWRLQuery> getSQWRLQueries();
 
@@ -69,4 +65,8 @@ public interface SWRLAPIOntologyProcessor
 	int getNumberOfOWLObjectPropertyDeclarationAxioms();
 
 	int getNumberOfOWLDataPropertyDeclarationAxioms();
+
+	void reset();
+
+	void processOntology() throws SQWRLException, SWRLBuiltInException;
 }

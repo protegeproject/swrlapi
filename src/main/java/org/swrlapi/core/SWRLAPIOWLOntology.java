@@ -3,19 +3,24 @@ package org.swrlapi.core;
 import java.util.Set;
 
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
-import org.semanticweb.owlapi.model.SWRLRule;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.resolvers.IRIResolver;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.parser.SWRLParseException;
+import org.swrlapi.sqwrl.SQWRLQuery;
+import org.swrlapi.sqwrl.SQWRLResult;
+import org.swrlapi.sqwrl.SQWRLResultGenerator;
+import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
 /**
  * Wraps the OWLAPI's {@link org.semanticweb.owlapi.model.OWLOntology} class with additional functionality used by
- * the SWRLAPI. Primarily the {@link #getSWRLAPIRules()} method extracts {@link org.swrlapi.core.SWRLAPIRule} objects
+ * the SWRLAPI. Primarily the {@link #getSWRLRules()} method extracts {@link org.swrlapi.core.SWRLAPIRule} objects
  * from an OWL ontology. This class, which extends the standard OWLAPI {@link org.semanticweb.owlapi.model.SWRLRule}
  * class, provide the richer representation of a SWRL rule required by the SWRLAPI. In particular, the SWRLAPI has a
  * range of types extending the OWLAPI's {@link org.semanticweb.owlapi.model.SWRLDArgument} interface to define
@@ -43,15 +48,13 @@ import org.swrlapi.parser.SWRLParseException;
  */
 public interface SWRLAPIOWLOntology
 {
-	Set<SWRLAPIRule> getSWRLAPIRules();
+	Set<SWRLAPIRule> getSWRLRules();
 
 	SWRLAPIRule getSWRLRule(String ruleName, String rule) throws SWRLParseException;
 
 	SWRLAPIRule getSWRLRule(String ruleName, String rule, String comment, boolean isActive) throws SWRLParseException;
 
 	SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory();
-
-	SWRLAPIOntologyProcessor getSWRLAPIOntologyProcessor();
 
 	IRIResolver getIRIResolver();
 
@@ -68,6 +71,38 @@ public interface SWRLAPIOWLOntology
 	void addSWRLBuiltIn(IRI iri);
 
 	Set<IRI> getSWRLBuiltInIRIs();
+
+	int getNumberOfSQWRLQueries();
+
+	Set<String> getSQWRLQueryNames();
+
+	SQWRLQuery getSQWRLQuery(String queryName) throws SQWRLException;
+
+	Set<SQWRLQuery> getSQWRLQueries();
+
+	SQWRLResult getSQWRLResult(String queryName) throws SQWRLException;
+
+	SQWRLResultGenerator getSQWRLResultGenerator(String queryName) throws SQWRLException;
+
+	void reset();
+
+	void processOntology() throws SQWRLException, SWRLBuiltInException;
+
+	boolean hasAssertedOWLAxiom(OWLAxiom axiom);
+
+	Set<OWLAxiom> getOWLAxioms();
+
+	int getNumberOfSWRLRules();
+
+	int getNumberOfOWLAxioms();
+
+	int getNumberOfOWLClassDeclarationAxioms();
+
+	int getNumberOfOWLIndividualDeclarationAxioms();
+
+	int getNumberOfOWLObjectPropertyDeclarationAxioms();
+
+	int getNumberOfOWLDataPropertyDeclarationAxioms();
 
 	OWLOntologyManager getOWLOntologyManager();
 

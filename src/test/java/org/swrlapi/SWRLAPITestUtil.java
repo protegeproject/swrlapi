@@ -36,7 +36,7 @@ public class SWRLAPITestUtil
 
 	public static OWLOntology createOWLOntology() throws OWLOntologyCreationException
 	{
-		OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
+		OWLOntologyManager ontologyManager = createOWLOntologyManager();
 		return ontologyManager.createOntology();
 	}
 

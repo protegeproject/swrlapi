@@ -11,7 +11,6 @@ import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.SWRLArgument;
 import org.semanticweb.owlapi.model.SWRLAtom;
 import org.semanticweb.owlapi.model.SWRLClassAtom;
-import org.semanticweb.owlapi.model.SWRLRule;
 import org.semanticweb.owlapi.model.SWRLVariable;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
@@ -34,7 +33,6 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 	public DefaultSWRLAPIRule(String ruleName, List<? extends SWRLAtom> bodyAtoms, List<? extends SWRLAtom> headAtoms,
 			String comment, boolean isActive)
 	{
-		// TODO Rule name
 		super(new LinkedHashSet<>(bodyAtoms), new LinkedHashSet<>(headAtoms), new HashSet<OWLAnnotation>());
 		this.ruleName = ruleName;
 		this.active = isActive;
@@ -42,7 +40,7 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 		this.bodyAtoms = new ArrayList<>(bodyAtoms);
 		this.headAtoms = new ArrayList<>(headAtoms);
 
-		processUnboundBuiltInArguments();
+		processBuiltInArguments();
 	}
 
 	@Override
@@ -90,7 +88,7 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 	/**
 	 * Find all built-in atoms with unbound arguments and tell them which of their arguments are unbound.
 	 */
-	private void processUnboundBuiltInArguments()
+	private void processBuiltInArguments()
 	{
 		List<SWRLAPIBuiltInAtom> bodyBuiltInAtoms = new ArrayList<>();
 		List<SWRLAtom> bodyNonBuiltInAtoms = new ArrayList<>();

@@ -4,10 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.semanticweb.owlapi.model.SWRLAtom;
-import org.semanticweb.owlapi.model.SWRLBuiltInAtom;
-import org.semanticweb.owlapi.model.SWRLDArgument;
 import org.semanticweb.owlapi.model.SWRLRule;
-import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 
 /**
  * SWRLAPI representation of a SWRL rule. It specializes the OWLAPI's {@link org.semanticweb.owlapi.model.SWRLRule}
@@ -20,7 +17,7 @@ import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
  * SWRLAPI SWRL rules also have rule names, which are stored in an annotation property associated with a rule.
  * <p>
  * These SWRLAPI rules are extracted from an OWL ontology by the
- * {@link org.swrlapi.core.SWRLAPIOWLOntology#getSWRLAPIRules()} method.
+ * {@link org.swrlapi.core.SWRLAPIOWLOntology#getSWRLRules()} method.
  *
  * A {@link org.swrlapi.core.SWRLAPIRuleRenderer} can be used to print a rule.
  * 

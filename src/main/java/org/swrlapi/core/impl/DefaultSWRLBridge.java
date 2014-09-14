@@ -192,7 +192,7 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 	public void inferOWLAxiom(OWLAxiom axiom) throws SWRLRuleEngineBridgeException
 	{
 		// Exclude already asserted axioms
-		if (!this.inferredOWLAxioms.contains(axiom) && !getSWRLAPIOntologyProcessor().hasAssertedOWLAxiom(axiom))
+		if (!this.inferredOWLAxioms.contains(axiom) && !this.swrlapiOWLOntology.hasAssertedOWLAxiom(axiom))
 			this.inferredOWLAxioms.add(axiom);
 	}
 
@@ -227,13 +227,13 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 
 	public SQWRLResult getSQWRLResult(String queryName) throws SQWRLException
 	{
-		return this.getSWRLAPIOntologyProcessor().getSQWRLResult(queryName);
+		return this.swrlapiOWLOntology.getSQWRLResult(queryName);
 	}
 
 	@Override
 	public SQWRLResultGenerator getSQWRLResultGenerator(String queryName) throws SQWRLException
 	{
-		return this.getSWRLAPIOntologyProcessor().getSQWRLResultGenerator(queryName);
+		return this.swrlapiOWLOntology.getSQWRLResultGenerator(queryName);
 	}
 
 	private void exportOWLAxiom(OWLAxiom axiom) throws SWRLBuiltInBridgeException
@@ -279,10 +279,5 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
 	private OWLOntology getOWLOntology()
 	{
 		return getSWRLAPIOWLOntology().getOWLOntology();
-	}
-
-	private SWRLAPIOntologyProcessor getSWRLAPIOntologyProcessor()
-	{
-		return getSWRLAPIOWLOntology().getSWRLAPIOntologyProcessor();
 	}
 }

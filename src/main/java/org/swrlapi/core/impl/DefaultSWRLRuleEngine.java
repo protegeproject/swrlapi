@@ -60,7 +60,7 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 		reset();
 
 		try {
-			exportOWLAxioms2TargetRuleEngine(getSWRLAPIOntologyProcessor().getOWLAxioms()); // OWL axioms include SWRL rules
+			exportOWLAxioms2TargetRuleEngine(this.swrlapiOWLOntology.getOWLAxioms()); // OWL axioms include SWRL rules
 		} catch (TargetSWRLRuleEngineException e) {
 			throw new SWRLRuleEngineException("error exporting knowledge to rule engine: " + e.getMessage(), e);
 		}
@@ -76,7 +76,7 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 		reset();
 
 		try {
-			exportOWLAxioms2TargetRuleEngine(getSWRLAPIOntologyProcessor().getOWLAxioms()); // OWL axioms include SWRL rules
+			exportOWLAxioms2TargetRuleEngine(this.swrlapiOWLOntology.getOWLAxioms()); // OWL axioms include SWRL rules
 			exportSQWRLQueries2TargetRuleEngine(queryName);
 		} catch (SWRLBuiltInException e) {
 			throw new SWRLRuleEngineException("error exporting SQWRL query to rule engine: " + e.getMessage(), e);
@@ -92,13 +92,13 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 	public void reset()
 	{
 		try {
-			getSWRLAPIOntologyProcessor().reset();
+			this.swrlapiOWLOntology.reset();
 			getTargetSWRLRuleEngine().resetRuleEngine(); // Reset the target rule engine
 			getBuiltInBridgeController().reset();
 			this.exportedOWLAxioms.clear();
 			getOWL2RLEngine().resetRuleSelectionChanged();
 			getSWRLAPIOWLOntology().resetOntologyChanged();
-			getSWRLAPIOntologyProcessor().processOntology();
+			this.swrlapiOWLOntology.processOntology();
 		} catch (SQWRLException e) {
 			throw new SWRLRuleEngineException("error running rule engine: " + e.getMessage(), e);
 		} catch (SWRLBuiltInException e) {
@@ -114,7 +114,7 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 	public void run() throws SWRLRuleEngineException
 	{
 		try {
-			getSWRLAPIOntologyProcessor().processOntology();
+			this.swrlapiOWLOntology.processOntology();
 			getTargetSWRLRuleEngine().runRuleEngine();
 		} catch (SQWRLException e) {
 			throw new SWRLRuleEngineException("error running rule engine: " + e.getMessage(), e);
@@ -225,7 +225,7 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 	@Override
 	public SQWRLResult getSQWRLResult(String queryName) throws SQWRLException
 	{
-		return getSWRLAPIOntologyProcessor().getSQWRLResult(queryName);
+		return this.swrlapiOWLOntology.getSQWRLResult(queryName);
 	}
 
 	/**
@@ -234,7 +234,7 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 	@Override
 	public Set<SQWRLQuery> getSQWRLQueries() throws SQWRLException
 	{
-		return getSWRLAPIOntologyProcessor().getSQWRLQueries();
+		return this.swrlapiOWLOntology.getSQWRLQueries();
 	}
 
 	/**
@@ -243,7 +243,7 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 	@Override
 	public Set<String> getSQWRLQueryNames()
 	{
-		return getSWRLAPIOntologyProcessor().getSQWRLQueryNames();
+		return this.swrlapiOWLOntology.getSQWRLQueryNames();
 	}
 
 	@Override
@@ -257,37 +257,37 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 	@Override
 	public int getNumberOfImportedSWRLRules()
 	{
-		return getSWRLAPIOntologyProcessor().getNumberOfSWRLRules();
+		return this.swrlapiOWLOntology.getNumberOfSWRLRules();
 	}
 
 	@Override
 	public int getNumberOfAssertedOWLClassDeclarationAxioms()
 	{
-		return getSWRLAPIOntologyProcessor().getNumberOfOWLClassDeclarationAxioms();
+		return this.swrlapiOWLOntology.getNumberOfOWLClassDeclarationAxioms();
 	}
 
 	@Override
 	public int getNumberOfAssertedOWLIndividualDeclarationsAxioms()
 	{
-		return getSWRLAPIOntologyProcessor().getNumberOfOWLIndividualDeclarationAxioms();
+		return this.swrlapiOWLOntology.getNumberOfOWLIndividualDeclarationAxioms();
 	}
 
 	@Override
 	public int getNumberOfAssertedOWLObjectPropertyDeclarationAxioms()
 	{
-		return getSWRLAPIOntologyProcessor().getNumberOfOWLObjectPropertyDeclarationAxioms();
+		return this.swrlapiOWLOntology.getNumberOfOWLObjectPropertyDeclarationAxioms();
 	}
 
 	@Override
 	public int getNumberOfAssertedOWLDataPropertyDeclarationAxioms()
 	{
-		return getSWRLAPIOntologyProcessor().getNumberOfOWLDataPropertyDeclarationAxioms();
+		return this.swrlapiOWLOntology.getNumberOfOWLDataPropertyDeclarationAxioms();
 	}
 
 	@Override
 	public int getNumberOfAssertedOWLAxioms()
 	{
-		return getSWRLAPIOntologyProcessor().getNumberOfOWLAxioms();
+		return this.swrlapiOWLOntology.getNumberOfOWLAxioms();
 	}
 
 	@Override
@@ -312,13 +312,13 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 	@Override
 	public Set<SWRLAPIRule> getSWRLRules()
 	{
-		return getSWRLAPIOntologyProcessor().getSWRLRules();
+		return this.swrlapiOWLOntology.getSWRLRules();
 	}
 
 	@Override
 	public Set<OWLAxiom> getAssertedOWLAxioms()
 	{
-		return getSWRLAPIOntologyProcessor().getOWLAxioms();
+		return this.swrlapiOWLOntology.getOWLAxioms();
 	}
 
 	@Override
@@ -353,7 +353,7 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 	private void exportSQWRLQueries2TargetRuleEngine(String activeQueryName) throws SWRLRuleEngineException,
 			TargetSWRLRuleEngineException, SWRLBuiltInException
 	{
-		for (SQWRLQuery query : getSWRLAPIOntologyProcessor().getSQWRLQueries()) {
+		for (SQWRLQuery query : this.swrlapiOWLOntology.getSQWRLQueries()) {
 			query.setActive(query.getQueryName().equalsIgnoreCase(activeQueryName));
 			exportSQWRLQuery2TargetRuleEngine(query);
 		}
@@ -362,7 +362,7 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 	private void exportSQWRLQueries2TargetRuleEngine() throws SWRLRuleEngineException, TargetSWRLRuleEngineException,
 			SWRLBuiltInException
 	{
-		for (SQWRLQuery query : getSWRLAPIOntologyProcessor().getSQWRLQueries()) {
+		for (SQWRLQuery query : this.swrlapiOWLOntology.getSQWRLQueries()) {
 			query.setActive(true);
 			exportSQWRLQuery2TargetRuleEngine(query);
 		}
@@ -427,11 +427,6 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 	private SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory()
 	{
 		return getSWRLAPIOWLOntology().getSWRLAPIOWLDataFactory();
-	}
-
-	private SWRLAPIOntologyProcessor getSWRLAPIOntologyProcessor()
-	{
-		return getSWRLAPIOWLOntology().getSWRLAPIOntologyProcessor();
 	}
 
 	private SWRLBuiltInBridgeController getBuiltInBridgeController()
