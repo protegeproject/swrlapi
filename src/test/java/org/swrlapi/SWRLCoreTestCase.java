@@ -2,30 +2,22 @@ package org.swrlapi;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.semanticweb.owlapi.model.AddAxiom;
-import org.semanticweb.owlapi.model.OWLClass;
-import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
-import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLOntology;
-import org.semanticweb.owlapi.model.OWLOntologyChange;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.parser.SWRLParseException;
+import org.swrlapi.sqwrl.SQWRLQuery;
+import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.swrlapi.SWRLAPITestUtil.createOWLOntologyManager;
+import static org.swrlapi.SWRLAPITestUtil.createDefaultPrefixManager;
 import static org.swrlapi.SWRLAPITestUtil.createOWLOntology;
-import static org.swrlapi.SWRLAPITestUtil.createPrefixManager;
+import static org.swrlapi.SWRLAPITestUtil.createOWLOntologyManager;
 import static org.swrlapi.SWRLAPITestUtil.createSWRLAPIOWLOntology;
-import static org.swrlapi.SWRLAPITestUtil.getIRI;
-import static org.swrlapi.SWRLAPITestUtil.getOWLClass;
-import static org.swrlapi.SWRLAPITestUtil.getOWLNamedIndividual;
-import static org.swrlapi.SWRLAPITestUtil.getOWLDeclarationAxiom;
+import static org.swrlapi.SWRLAPITestUtil.declareOWLClass;
+import static org.swrlapi.SWRLAPITestUtil.declareOWLNamedIndividual;
 
 public class SWRLCoreTestCase
 {
@@ -38,27 +30,21 @@ public class SWRLCoreTestCase
 	}
 
 	@Test
-	public void TestClassAtomInConsequentWithNamedIndividual() throws OWLOntologyCreationException, SWRLParseException
+	public void TestClassAtomInConsequentWithNamedIndividual()
+			throws OWLOntologyCreationException, SWRLParseException, SQWRLException
 	{
 		OWLOntologyManager manager = createOWLOntologyManager();
 		OWLOntology ontology = createOWLOntology();
-		DefaultPrefixManager prefixManager = createPrefixManager(ontology);
+		DefaultPrefixManager prefixManager = createDefaultPrefixManager(ontology);
 		SWRLAPIOWLOntology swrlapiowlOntology = createSWRLAPIOWLOntology(ontology, prefixManager);
-
-		OWLClass male = getOWLClass(getIRI(Namespace + "Male"));
-		OWLDeclarationAxiom a1 = getOWLDeclarationAxiom(male);
-
-		OWLNamedIndividual p1 = getOWLNamedIndividual(getIRI(Namespace + "p1"));
-		OWLDeclarationAxiom a2 = getOWLDeclarationAxiom(p1);
-
-		List<OWLOntologyChange> changes = new ArrayList<>();
-		changes.add(new AddAxiom(ontology, a1));
-		changes.add(new AddAxiom(ontology, a2));
-		manager.applyChanges(changes);
 
 		prefixManager.setDefaultPrefix(Namespace);
 
+		declareOWLClass(manager, ontology, Namespace + "Male");
+		declareOWLNamedIndividual(manager, ontology, Namespace + "p1");
+
 		SWRLAPIRule rule = swrlapiowlOntology.getSWRLRule("r1", "-> Male(p1)");
+		SQWRLQuery query = swrlapiowlOntology.getSQWRLQuery("q1", "Male(p1) -> sqwrl:select(p1)");
 
 		// Male(p1) →  sqwrl:select(p1)
 	}

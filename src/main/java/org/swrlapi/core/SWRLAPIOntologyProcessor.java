@@ -40,6 +40,12 @@ public interface SWRLAPIOntologyProcessor
 
 	SWRLAPIRule getSWRLRule(String ruleName) throws SWRLRuleException;
 
+	boolean isSQWRLQuery(String queryName);
+
+	boolean isSQWRLQuery(SWRLAPIRule ruleOrQuery);
+
+	SQWRLQuery createSWRLQueryFromSWRLRule(SWRLAPIRule rule) throws SQWRLException;
+
 	int getNumberOfSQWRLQueries();
 
 	Set<String> getSQWRLQueryNames();

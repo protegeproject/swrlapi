@@ -54,6 +54,11 @@ public interface SWRLAPIOWLOntology
 
 	SWRLAPIRule getSWRLRule(String ruleName, String rule, String comment, boolean isActive) throws SWRLParseException;
 
+	SQWRLQuery getSQWRLQuery(String queryName, String query) throws SWRLParseException, SQWRLException;
+
+	SQWRLQuery getSQWRLQuery(String queryName, String query, String comment, boolean isActive) throws SWRLParseException,
+			SQWRLException;
+
 	SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory();
 
 	IRIResolver getIRIResolver();

@@ -56,6 +56,7 @@ import org.semanticweb.owlapi.model.OWLSubObjectPropertyOfAxiom;
 import org.semanticweb.owlapi.model.OWLSubPropertyChainOfAxiom;
 import org.semanticweb.owlapi.model.OWLSymmetricObjectPropertyAxiom;
 import org.semanticweb.owlapi.model.OWLTransitiveObjectPropertyAxiom;
+import org.semanticweb.owlapi.model.SWRLRule;
 import org.swrlapi.core.SWRLAPILiteralFactory;
 import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
@@ -122,7 +123,7 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 	}
 
 	@Override
-	public void processOntology() throws SQWRLException, SWRLBuiltInException
+	public void processOntology() throws SQWRLException
 	{
 		reset();
 
@@ -226,9 +227,28 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 		return this.assertedOWLAxioms.contains(axiom);
 	}
 
+	public SQWRLQuery createSWRLQueryFromSWRLRule(SWRLAPIRule rule) throws SQWRLException
+	{
+		String ruleName = rule.getRuleName();
+		boolean active = rule.isActive();
+		String comment = rule.getComment();
+		SQWRLQuery query = new DefaultSQWRLQuery(ruleName, rule.getBodyAtoms(), rule.getHeadAtoms(),
+				active, comment, getSWRLAPILiteralFactory(), getSQWRLResultValueFactory());
+
+		return query;
+	}
+
+	@Override
 	public boolean isSQWRLQuery(String queryName)
 	{
 		return this.sqwrlQueries.containsKey(queryName);
+	}
+
+	@Override
+	public boolean isSQWRLQuery(SWRLAPIRule ruleOrQuery)
+	{
+		return !ruleOrQuery.getBuiltInAtomsFromHead(SQWRLNames.getSQWRLBuiltInNames()).isEmpty()
+				|| !ruleOrQuery.getBuiltInAtomsFromBody(SQWRLNames.getSQWRLBuiltInNames()).isEmpty();
 	}
 
 	/**
@@ -296,32 +316,22 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 		processOWLDisjointDataPropertiesAxioms();
 	}
 
-	private void processSWRLRulesAndSQWRLQueries() throws SQWRLException, SWRLBuiltInException
+	private void processSWRLRulesAndSQWRLQueries() throws SQWRLException
 	{
 		for (SWRLAPIRule ruleOrQuery : getSWRLAPIOWLOntology().getSWRLRules())
 			processSWRLRuleOrSQWRLQuery(ruleOrQuery);
 	}
 
-	private void processSWRLRuleOrSQWRLQuery(SWRLAPIRule ruleOrQuery) throws SQWRLException, SWRLBuiltInException
+	private void processSWRLRuleOrSQWRLQuery(SWRLAPIRule ruleOrQuery) throws SQWRLException
 	{
 		if (isSQWRLQuery(ruleOrQuery)) {
-			String ruleName = ruleOrQuery.getRuleName();
-			boolean active = ruleOrQuery.isActive();
-			String comment = ruleOrQuery.getComment();
-			SQWRLQuery query = new DefaultSQWRLQuery(ruleName, ruleOrQuery.getBodyAtoms(), ruleOrQuery.getHeadAtoms(),
-					active, comment, getSWRLAPILiteralFactory(), getSQWRLResultValueFactory());
-			this.sqwrlQueries.put(ruleOrQuery.getRuleName(), query);
+			SQWRLQuery query = createSWRLQueryFromSWRLRule(ruleOrQuery);
+			this.sqwrlQueries.put(query.getQueryName(), query);
 			this.swrlRules.put(ruleOrQuery.getRuleName(), ruleOrQuery);
 		} else {
 			this.swrlRules.put(ruleOrQuery.getRuleName(), ruleOrQuery);
 			this.assertedOWLAxioms.add(ruleOrQuery); // A SWRL rule is a type of OWL axiom; a SQWRL query is not.
 		}
-	}
-
-	private boolean isSQWRLQuery(SWRLAPIRule ruleOrQuery)
-	{
-		return !ruleOrQuery.getBuiltInAtomsFromHead(SQWRLNames.getSQWRLBuiltInNames()).isEmpty()
-				|| !ruleOrQuery.getBuiltInAtomsFromBody(SQWRLNames.getSQWRLBuiltInNames()).isEmpty();
 	}
 
 	private void processOWLClassAssertionAxioms()

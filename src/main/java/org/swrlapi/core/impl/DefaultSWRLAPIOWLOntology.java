@@ -105,21 +105,44 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		return swrlapiRules;
 	}
 
+	@Override
 	public SWRLAPIRule getSWRLRule(String ruleName, String rule) throws SWRLParseException
 	{
-		SWRLRule owlapiSWRLRule = this.parser.parseSWRLRule(rule, false);
+		SWRLRule owlapiRule = this.parser.parseSWRLRule(rule, false);
 
-		return new DefaultSWRLAPIRule(ruleName, new ArrayList<>(owlapiSWRLRule.getBody()),
-				new ArrayList<>(owlapiSWRLRule.getHead()), "", true);
+		return new DefaultSWRLAPIRule(ruleName, new ArrayList<>(owlapiRule.getBody()),
+				new ArrayList<>(owlapiRule.getHead()), "", true);
 	}
 
+	@Override
 	public SWRLAPIRule getSWRLRule(String ruleName, String rule, String comment, boolean isActive)
 			throws SWRLParseException
 	{
-		SWRLRule owlapiSWRLRule = this.parser.parseSWRLRule(rule, false);
+		SWRLRule owlapiRule = this.parser.parseSWRLRule(rule, false);
 
-		return new DefaultSWRLAPIRule(ruleName, new ArrayList<>(owlapiSWRLRule.getBody()),
-				new ArrayList<>(owlapiSWRLRule.getHead()), comment, isActive);
+		return new DefaultSWRLAPIRule(ruleName, new ArrayList<>(owlapiRule.getBody()),
+				new ArrayList<>(owlapiRule.getHead()), comment, isActive);
+	}
+
+	@Override
+	public SQWRLQuery getSQWRLQuery(String queryName, String query)
+			throws SWRLParseException, SQWRLException
+	{
+		return getSQWRLQuery(queryName, query, "", true);
+	}
+
+	@Override
+	public SQWRLQuery getSQWRLQuery(String queryName, String query, String comment, boolean isActive)
+			throws SWRLParseException, SQWRLException
+	{
+		SWRLRule owlapiRule = this.parser.parseSWRLRule(query, false);
+		SWRLAPIRule swrlapiRule = convertOWLAPIRule2SWRLAPIRule(owlapiRule);
+
+		if (this.swrlapiOntologyProcessor.isSQWRLQuery(swrlapiRule)) {
+			return this.swrlapiOntologyProcessor.createSWRLQueryFromSWRLRule(swrlapiRule);
+
+		} else
+			throw new SWRLParseException(queryName + " is not a SWWRL query");
 	}
 
 	@Override
@@ -235,11 +258,10 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		return this.swrlapiOntologyProcessor.hasAssertedOWLAxiom(axiom);
 	}
 
-	public 	Set<OWLAxiom> getOWLAxioms()
+	public Set<OWLAxiom> getOWLAxioms()
 	{
 		return this.swrlapiOntologyProcessor.getOWLAxioms();
 	}
-
 
 	public int getNumberOfSWRLRules()
 	{
@@ -270,6 +292,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	{
 		return this.swrlapiOntologyProcessor.getNumberOfOWLDataPropertyDeclarationAxioms();
 	}
+
 	// TODO Do not want here. They are convenience methods only and are used only by the temporal built-in library.
 	@Override
 	public boolean isOWLIndividualOfType(IRI individualIRI, IRI classIRI)

@@ -1,6 +1,7 @@
 package org.swrlapi;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.model.AddAxiom;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
@@ -16,6 +17,7 @@ import org.semanticweb.owlapi.model.OWLObjectInverseOf;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyChange;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.PrefixManager;
@@ -23,6 +25,8 @@ import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.SWRLAPIFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public class SWRLAPITestUtil
@@ -45,7 +49,7 @@ public class SWRLAPITestUtil
 		return IRI.create(iri);
 	}
 
-	public static DefaultPrefixManager createPrefixManager(OWLOntology ontology)
+	public static DefaultPrefixManager createDefaultPrefixManager(OWLOntology ontology)
 	{
 		return SWRLAPIFactory.createPrefixManager(ontology);
 	}
@@ -123,5 +127,37 @@ public class SWRLAPITestUtil
 	public static OWLDeclarationAxiom getOWLDeclarationAxiom(OWLEntity entity)
 	{
 		return dataFactory.getOWLDeclarationAxiom(entity);
+	}
+
+	public static void declareOWLClass(OWLOntologyManager manager, OWLOntology ontology, String iri)
+	{
+		OWLClass cls = getOWLClass(getIRI(iri));
+		OWLDeclarationAxiom axiom = getOWLDeclarationAxiom(cls);
+
+		List<OWLOntologyChange> changes = new ArrayList<>();
+		changes.add(new AddAxiom(ontology, axiom));
+		manager.applyChanges(changes);
+	}
+
+	public static void declareOWLNamedIndividual(OWLOntologyManager manager, OWLOntology ontology, String iri)
+	{
+		OWLNamedIndividual i = getOWLNamedIndividual(getIRI(iri));
+		OWLDeclarationAxiom axiom = getOWLDeclarationAxiom(i);
+
+		List<OWLOntologyChange> changes = new ArrayList<>();
+		changes.add(new AddAxiom(ontology, axiom));
+		manager.applyChanges(changes);
+	}
+
+	public static void declareOWLClass(OWLOntologyManager manager, OWLOntology ontology, Set<String> iris)
+	{
+		for (String iri : iris)
+			declareOWLClass(manager, ontology, iri);
+	}
+
+	public static void declareOWLNamedIndividuals(OWLOntologyManager manager, OWLOntology ontology, Set<String> iris)
+	{
+		for (String iri : iris)
+			declareOWLNamedIndividual(manager, ontology, iri);
 	}
 }
