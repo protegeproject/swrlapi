@@ -9,11 +9,12 @@ import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
+import org.swrlapi.test.SWRLAPITestUtil;
 
-import static org.swrlapi.SWRLAPITestUtil.createDefaultPrefixManager;
-import static org.swrlapi.SWRLAPITestUtil.createOWLOntology;
-import static org.swrlapi.SWRLAPITestUtil.createOWLOntologyManager;
-import static org.swrlapi.SWRLAPITestUtil.createSWRLAPIOWLOntology;
+import static org.swrlapi.test.SWRLAPITestUtil.createDefaultPrefixManager;
+import static org.swrlapi.test.SWRLAPITestUtil.createOWLOntology;
+import static org.swrlapi.test.SWRLAPITestUtil.createOWLOntologyManager;
+import static org.swrlapi.test.SWRLAPITestUtil.createSWRLAPIOWLOntology;
 
 public class SWRLParserSQWRLTestCase
 {
