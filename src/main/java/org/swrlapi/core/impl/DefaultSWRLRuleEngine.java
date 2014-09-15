@@ -10,15 +10,12 @@ import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import org.swrlapi.bridge.SWRLRuleEngineBridgeController;
 import org.swrlapi.bridge.TargetSWRLRuleEngine;
-import org.swrlapi.builtins.SWRLBuiltInBridge;
 import org.swrlapi.builtins.SWRLBuiltInBridgeController;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
-import org.swrlapi.core.SWRLAPIOntologyProcessor;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.exceptions.SWRLBuiltInException;
-import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
 import org.swrlapi.exceptions.SWRLRuleEngineException;
 import org.swrlapi.exceptions.TargetSWRLRuleEngineException;
 import org.swrlapi.owl2rl.OWL2RLEngine;
@@ -77,7 +74,7 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 
 		try {
 			exportOWLAxioms2TargetRuleEngine(this.swrlapiOWLOntology.getOWLAxioms()); // OWL axioms include SWRL rules
-			exportSQWRLQueries2TargetRuleEngine(queryName);
+			exportSQWRLQuery2TargetRuleEngine(queryName);
 		} catch (SWRLBuiltInException e) {
 			throw new SWRLRuleEngineException("error exporting SQWRL query to rule engine: " + e.getMessage(), e);
 		} catch (TargetSWRLRuleEngineException e) {
@@ -350,7 +347,7 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 		return this.targetSWRLRuleEngine.getOWLReasoner();
 	}
 
-	private void exportSQWRLQueries2TargetRuleEngine(String activeQueryName) throws SWRLRuleEngineException,
+	private void exportSQWRLQuery2TargetRuleEngine(String activeQueryName) throws SWRLRuleEngineException,
 			TargetSWRLRuleEngineException, SWRLBuiltInException
 	{
 		for (SQWRLQuery query : this.swrlapiOWLOntology.getSQWRLQueries()) {

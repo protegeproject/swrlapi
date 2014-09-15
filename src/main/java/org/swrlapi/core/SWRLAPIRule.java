@@ -30,6 +30,8 @@ public interface SWRLAPIRule extends SWRLRule
 {
 	String getRuleName();
 
+	void setRuleName(String ruleName); // TODO Temp
+
 	String getComment();
 
 	boolean isActive();

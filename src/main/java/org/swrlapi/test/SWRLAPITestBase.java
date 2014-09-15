@@ -21,7 +21,7 @@ public class SWRLAPITestBase
 	DefaultPrefixManager prefixManager;
 	SWRLAPIOWLOntology swrlapiowlOntology;
 
-	protected void createEmptyOntology(String namespace) throws OWLOntologyCreationException
+	protected SWRLAPIOWLOntology createEmptyOntology(String namespace) throws OWLOntologyCreationException
 	{
 		this.namespace = namespace;
 		manager = createOWLOntologyManager();
@@ -39,6 +39,8 @@ public class SWRLAPITestBase
 		declareOWLDatatype("http://www.w3.org/2001/XMLSchema#float");
 		declareOWLDatatype("http://www.w3.org/2001/XMLSchema#double");
 		declareOWLDatatype("http://www.w3.org/2001/XMLSchema#boolean");
+
+		return swrlapiowlOntology;
 	}
 
 	protected void declareOWLClass(String name)

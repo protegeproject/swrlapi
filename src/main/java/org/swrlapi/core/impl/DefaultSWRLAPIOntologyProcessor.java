@@ -235,6 +235,9 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 		SQWRLQuery query = new DefaultSQWRLQuery(ruleName, rule.getBodyAtoms(), rule.getHeadAtoms(),
 				active, comment, getSWRLAPILiteralFactory(), getSQWRLResultValueFactory());
 
+		this.swrlRules.put(rule.getRuleName(), rule);
+		this.sqwrlQueries.put(query.getQueryName(), query);
+
 		return query;
 	}
 

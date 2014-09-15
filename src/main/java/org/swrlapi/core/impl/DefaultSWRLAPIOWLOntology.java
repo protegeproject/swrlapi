@@ -108,10 +108,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	@Override
 	public SWRLAPIRule getSWRLRule(String ruleName, String rule) throws SWRLParseException
 	{
-		SWRLRule owlapiRule = this.parser.parseSWRLRule(rule, false);
-
-		return new DefaultSWRLAPIRule(ruleName, new ArrayList<>(owlapiRule.getBody()),
-				new ArrayList<>(owlapiRule.getHead()), "", true);
+		return getSWRLRule(ruleName, rule, "", true);
 	}
 
 	@Override
@@ -120,8 +117,13 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	{
 		SWRLRule owlapiRule = this.parser.parseSWRLRule(rule, false);
 
-		return new DefaultSWRLAPIRule(ruleName, new ArrayList<>(owlapiRule.getBody()),
+		SWRLAPIRule swrlapiRule = new DefaultSWRLAPIRule(ruleName, new ArrayList<>(owlapiRule.getBody()),
 				new ArrayList<>(owlapiRule.getHead()), comment, isActive);
+
+		// TODO set name, comment and isEnabled annotations here
+		// TODO Add this rule axiom to the ontology
+
+		return swrlapiRule;
 	}
 
 	@Override
@@ -139,10 +141,11 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		SWRLAPIRule swrlapiRule = convertOWLAPIRule2SWRLAPIRule(owlapiRule);
 
 		if (this.swrlapiOntologyProcessor.isSQWRLQuery(swrlapiRule)) {
+			// TODO set name, comment and isEnabled annotations here
+			// TODO Add this rule axiom to the ontology
 			return this.swrlapiOntologyProcessor.createSWRLQueryFromSWRLRule(swrlapiRule);
-
 		} else
-			throw new SWRLParseException(queryName + " is not a SWWRL query");
+			throw new SWRLParseException(queryName + " is not a SQWRL query");
 	}
 
 	@Override

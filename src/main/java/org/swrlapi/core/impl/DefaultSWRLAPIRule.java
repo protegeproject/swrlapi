@@ -23,7 +23,7 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 {
 	private static final long serialVersionUID = 1L;
 
-	private final String ruleName;
+	private String ruleName;
 	private final boolean active;
 	private final String comment;
 
@@ -48,6 +48,9 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 	{
 		return this.ruleName;
 	}
+
+	@Override
+	public void setRuleName(String ruleName) { this.ruleName = ruleName; }
 
 	@Override
 	public boolean isActive()
