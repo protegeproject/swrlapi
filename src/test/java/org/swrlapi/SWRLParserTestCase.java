@@ -2,46 +2,18 @@ package org.swrlapi;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
-import org.semanticweb.owlapi.model.OWLOntologyManager;
-import org.semanticweb.owlapi.util.DefaultPrefixManager;
-import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.parser.SWRLParseException;
-import org.swrlapi.test.SWRLAPITestUtil;
+import org.swrlapi.test.SWRLAPITestBase;
 
-import static org.swrlapi.test.SWRLAPITestUtil.createDefaultPrefixManager;
-import static org.swrlapi.test.SWRLAPITestUtil.createOWLOntology;
-import static org.swrlapi.test.SWRLAPITestUtil.createOWLOntologyManager;
-import static org.swrlapi.test.SWRLAPITestUtil.createSWRLAPIOWLOntology;
-
-public class SWRLParserTestCase
+public class SWRLParserTestCase extends SWRLAPITestBase
 {
 	String Namespace = "http://protege.org/ontologies/SWRLParserTests.owl#";
-
-	OWLOntologyManager manager;
-	OWLOntology ontology;
-	DefaultPrefixManager prefixManager;
-	SWRLAPIOWLOntology swrlapiowlOntology;
 
 	@Before
 	public void setUp() throws OWLOntologyCreationException
 	{
-		manager = createOWLOntologyManager();
-		ontology = createOWLOntology();
-		prefixManager = createDefaultPrefixManager(ontology);
-		swrlapiowlOntology = createSWRLAPIOWLOntology(ontology, prefixManager);
-
-		prefixManager.setDefaultPrefix(Namespace);
-
-		declareOWLDatatype("http://www.w3.org/2001/XMLSchema#dateTime");
-		declareOWLDatatype("http://www.w3.org/2001/XMLSchema#date");
-		declareOWLDatatype("http://www.w3.org/2001/XMLSchema#string");
-		declareOWLDatatype("http://www.w3.org/2001/XMLSchema#int");
-		declareOWLDatatype("http://www.w3.org/2001/XMLSchema#long");
-		declareOWLDatatype("http://www.w3.org/2001/XMLSchema#float");
-		declareOWLDatatype("http://www.w3.org/2001/XMLSchema#double");
-		declareOWLDatatype("http://www.w3.org/2001/XMLSchema#boolean");
+		createEmptyOntology(Namespace);
 	}
 
 	@Test
@@ -315,35 +287,5 @@ public class SWRLParserTestCase
 		declareOWLNamedIndividual("s12");
 
 		createSWRLRule("r1", "Person(?p) ^ hasID(?p, \"p7ID\") -> hasFirstName(?p, \"Angela\")");
-	}
-
-	private void declareOWLClass(String name)
-	{
-		SWRLAPITestUtil.declareOWLClass(manager, ontology, Namespace + name);
-	}
-
-	private void declareOWLNamedIndividual(String name)
-	{
-		SWRLAPITestUtil.declareOWLNamedIndividual(manager, ontology, Namespace + name);
-	}
-
-	private void declareOWLObjectProperty(String name)
-	{
-		SWRLAPITestUtil.declareOWLObjectProperty(manager, ontology, Namespace + name);
-	}
-
-	private void declareOWLDataProperty(String name)
-	{
-		SWRLAPITestUtil.declareOWLDataProperty(manager, ontology, Namespace + name);
-	}
-
-	private void declareOWLDatatype(String shortName)
-	{
-		SWRLAPITestUtil.declareOWLDatatype(manager, ontology, shortName);
-	}
-
-	private void createSWRLRule(String ruleName, String rule) throws SWRLParseException
-	{
-		swrlapiowlOntology.getSWRLRule(ruleName, rule);
 	}
 }
