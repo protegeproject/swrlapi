@@ -8,7 +8,6 @@ import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.parser.SWRLParseException;
-import org.swrlapi.sqwrl.SQWRLQuery;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
 import static org.swrlapi.SWRLAPITestUtil.createDefaultPrefixManager;
@@ -70,21 +69,33 @@ public class SWRLParserSQWRLTestCase
 	}
 
 	@Test
-	public void Test1() throws SWRLParseException, SQWRLException
+	public void TestBooleanQualifiedLiteral() throws SWRLParseException, SQWRLException
 	{
 		createSQWRLQuery("q1",
 				"swrlb:booleanNot(?x, \"false\"^^\"xsd:boolean\") ^ swrlb:booleanNot(?y, ?x) -> sqwrl:select(?y)");
 	}
 
 	@Test
-	public void Test2() throws SWRLParseException, SQWRLException
+	public void TestBooleanTrueRawLiteral() throws SWRLParseException, SQWRLException
+	{
+		createSQWRLQuery("q1", "swrlb:booleanNot(?x, true) ^ swrlb:booleanNot(?y, ?x) -> sqwrl:select(?y)");
+	}
+
+	@Test
+	public void TestBooleanFalseRawLiteral() throws SWRLParseException, SQWRLException
+	{
+		createSQWRLQuery("q1", "swrlb:booleanNot(?x, false) ^ swrlb:booleanNot(?y, ?x) -> sqwrl:select(?y)");
+	}
+
+	@Test
+	public void TestUnboundVariableQuery() throws SWRLParseException, SQWRLException
 	{
 		createSQWRLQuery("q1", "swrlb:add(?x, \"2.0\"^^\"xsd:double\", \"2.0\"^^\"xsd:double\") ^ "
 				+ "swrlb:multiply(?y, ?x, \"2.0\"^^\"xsd:double\") -> sqwrl:select(?y)");
 	}
 
 	@Test
-	public void Test3() throws SWRLParseException, SQWRLException
+	public void TestBasicDatatypeSelectionQuery() throws SWRLParseException, SQWRLException
 	{
 		declareOWLClass("Person");
 		declareOWLDataProperty("hasSurname");
@@ -93,7 +104,7 @@ public class SWRLParserSQWRLTestCase
 	}
 
 	@Test
-	public void Test4() throws SWRLParseException, SQWRLException
+	public void TestOrderBy() throws SWRLParseException, SQWRLException
 	{
 		declareOWLClass("PersonNamedFred");
 
@@ -101,39 +112,13 @@ public class SWRLParserSQWRLTestCase
 	}
 
 	@Test
-	public void Test5() throws SWRLParseException, SQWRLException
+	public void TestSelectDistinct() throws SWRLParseException, SQWRLException
 	{
 		declareOWLClass("Person");
 		declareOWLNamedIndividual("s4");
 		declareOWLDataProperty("hasID");
 
 		createSQWRLQuery("q1", "Person(?i1) ^ hasID(?i1, \"s3ID\") ^ sameAs(?i1, s4) -> sqwrl:selectDistinct(\"Yes!\")");
-	}
-
-	@Test
-	public void Test6() throws SWRLParseException, SQWRLException
-	{
-		declareOWLNamedIndividual("p1");
-		declareOWLDataProperty("hasFirstName");
-
-		createSQWRLQuery("q1", "hasFirstName(p1, \"Fred\") -> sqwrl:select(p1)");
-	}
-
-	@Test
-	public void Test7() throws SWRLParseException, SQWRLException
-	{
-		createSQWRLQuery("q1", "temporal:add(?x, \"1999-11-01T10:00\", 4, \"Years\") ^ "
-				+ " temporal:equals(?x, \"2003-11-01T10:00:00.0\"^^\"xsd:dateTime\") -> sqwrl:select(\"Yes!\")");
-	}
-
-	@Test
-	public void Test8() throws SWRLParseException, SQWRLException
-	{
-		declareOWLNamedIndividual("p1");
-		declareOWLDataProperty("hasDOB");
-
-		createSQWRLQuery("q1",
-				"hasDOB(p1, ?dob) ^ temporal:equals(?dob, \"2000-01-05\"^^\"xsd:date\") -> sqwrl:select(p1)");
 	}
 
 	private void declareOWLClass(String name)
