@@ -6,7 +6,10 @@ import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.parser.SWRLParseException;
+import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
+
+import java.util.Set;
 
 import static org.swrlapi.test.SWRLAPITestUtil.createDefaultPrefixManager;
 import static org.swrlapi.test.SWRLAPITestUtil.createOWLOntology;
@@ -66,6 +69,23 @@ public class SWRLAPITestBase
 	protected void declareOWLDatatype(String shortName)
 	{
 		SWRLAPITestUtil.declareOWLDatatype(manager, ontology, shortName);
+	}
+
+	protected void declareOWLClasses(Set<String> names)
+	{
+		for (String name : names)
+			SWRLAPITestUtil.declareOWLClass(manager, ontology, namespace + name);
+	}
+
+	protected void declareOWLNamedIndividuals(Set<String> names)
+	{
+		for (String name : names)
+			SWRLAPITestUtil.declareOWLNamedIndividual(manager, ontology, namespace + name);
+	}
+
+	protected void declareOWLClassAssertion(String className, String individualName)
+	{
+		SWRLAPITestUtil.declareOWLClassAssertionAxiom(manager, ontology, namespace + className, namespace + individualName);
 	}
 
 	protected void createSQWRLQuery(String queryName, String query) throws SQWRLException, SWRLParseException

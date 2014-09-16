@@ -357,7 +357,7 @@ public class SWRLRuleEditorDialog extends JDialog
 				errorOccurred = true;
 			} else {
 				try {
-					getSWRLParser().parseSWRLRule(ruleText, false);
+					getSWRLParser().parseSWRLRule(ruleText, false, getRuleName(), getComment());
 				} catch (SWRLParseException pe) {
 					getApplicationDialogManager().showErrorMessageDialog(parent, pe.getMessage(), INVALID_RULE_TITLE);
 					errorOccurred = true;
@@ -386,7 +386,7 @@ public class SWRLRuleEditorDialog extends JDialog
 			disableSave();
 		} else {
 			try {
-				getSWRLParser().parseSWRLRule(ruleText, true);
+				getSWRLParser().parseSWRLRule(ruleText, true, getRuleName(), getComment());
 				setStatusText(STATUS_OK);
 				enableSave();
 			} catch (SWRLIncompleteRuleException e) {

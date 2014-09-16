@@ -93,16 +93,16 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 	{
 		this.swrlapiOWLOntology = swrlapiOWLOntology;
 
-		this.swrlRules = new HashMap<String, SWRLAPIRule>();
-		this.sqwrlQueries = new HashMap<String, SQWRLQuery>();
+		this.swrlRules = new HashMap<>();
+		this.sqwrlQueries = new HashMap<>();
 
-		this.assertedOWLAxioms = new HashSet<OWLAxiom>();
+		this.assertedOWLAxioms = new HashSet<>();
 
-		this.owlClassDeclarationAxioms = new HashMap<IRI, OWLDeclarationAxiom>();
-		this.owlIndividualDeclarationAxioms = new HashMap<IRI, OWLDeclarationAxiom>();
-		this.owlObjectPropertyDeclarationAxioms = new HashMap<IRI, OWLDeclarationAxiom>();
-		this.owlDataPropertyDeclarationAxioms = new HashMap<IRI, OWLDeclarationAxiom>();
-		this.owlAnnotationPropertyDeclarationAxioms = new HashMap<IRI, OWLDeclarationAxiom>();
+		this.owlClassDeclarationAxioms = new HashMap<>();
+		this.owlIndividualDeclarationAxioms = new HashMap<>();
+		this.owlObjectPropertyDeclarationAxioms = new HashMap<>();
+		this.owlDataPropertyDeclarationAxioms = new HashMap<>();
+		this.owlAnnotationPropertyDeclarationAxioms = new HashMap<>();
 	}
 
 	@Override
@@ -164,13 +164,13 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 	@Override
 	public Set<String> getSWRLRuleNames()
 	{
-		return new HashSet<String>(this.swrlRules.keySet());
+		return new HashSet<>(this.swrlRules.keySet());
 	}
 
 	@Override
 	public Set<String> getSQWRLQueryNames()
 	{
-		return new HashSet<String>(this.sqwrlQueries.keySet());
+		return new HashSet<>(this.sqwrlQueries.keySet());
 	}
 
 	@Override
@@ -206,13 +206,13 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 	@Override
 	public Set<SWRLAPIRule> getSWRLRules()
 	{
-		return new HashSet<SWRLAPIRule>(this.swrlRules.values());
+		return new HashSet<>(this.swrlRules.values());
 	}
 
 	@Override
 	public Set<SQWRLQuery> getSQWRLQueries()
 	{
-		return new HashSet<SQWRLQuery>(this.sqwrlQueries.values());
+		return new HashSet<>(this.sqwrlQueries.values());
 	}
 
 	@Override
@@ -874,7 +874,7 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 
 	private Set<OWLDeclarationAxiom> getOWLClassDeclarationAxioms()
 	{
-		Set<OWLDeclarationAxiom> owlClassDeclarationAxioms = new HashSet<OWLDeclarationAxiom>();
+		Set<OWLDeclarationAxiom> owlClassDeclarationAxioms = new HashSet<>();
 
 		for (OWLDeclarationAxiom owlDeclarationAxiom : getOWLOntology().getAxioms(AxiomType.DECLARATION, true)) {
 			if (owlDeclarationAxiom.getEntity().isOWLClass())
@@ -885,7 +885,7 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 
 	private Set<OWLDeclarationAxiom> getOWLIndividualDeclarationAxioms()
 	{
-		Set<OWLDeclarationAxiom> owlIndividualDeclarationAxioms = new HashSet<OWLDeclarationAxiom>();
+		Set<OWLDeclarationAxiom> owlIndividualDeclarationAxioms = new HashSet<>();
 
 		for (OWLDeclarationAxiom owlDeclarationAxiom : getOWLOntology().getAxioms(AxiomType.DECLARATION, true)) {
 			if (owlDeclarationAxiom.getEntity().isOWLNamedIndividual())

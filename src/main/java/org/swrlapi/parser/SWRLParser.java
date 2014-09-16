@@ -44,17 +44,18 @@ public class SWRLParser
 	public final static char IMP_CHAR = '\u2192'; // >
 	public final static char RING_CHAR = '\u02da'; // .
 
-	private final SWRLParserSupport swrlParserSupport;
-
 	private static final String SAME_AS_PREDICATE = "sameAs";
 	private static final String DIFFERENT_FROM_PREDICATE = "differentFrom";
+
+	private final SWRLParserSupport swrlParserSupport;
 
 	public SWRLParser(SWRLAPIOWLOntology swrlapiOWLOntology)
 	{
 		this.swrlParserSupport = new SWRLParserSupport(swrlapiOWLOntology);
 	}
 
-	public SWRLRule parseSWRLRule(String ruleText, boolean interactiveParseOnly) throws SWRLParseException
+	public SWRLRule parseSWRLRule(String ruleText, boolean interactiveParseOnly, String ruleName, String comment)
+			throws SWRLParseException
 	{
 		SWRLTokenizer tokenizer = new SWRLTokenizer(ruleText.trim(), interactiveParseOnly);
 		Set<SWRLAtom> head = !tokenizer.isInteractiveParseOnly() ? swrlParserSupport.getSWRLHeadAtomList() : null;
@@ -112,7 +113,7 @@ public class SWRLParser
 		if (!tokenizer.isInteractiveParseOnly()) {
 			if (!atLeastOneAtom)
 				throw new SWRLParseException("Incomplete SWRL rule - no antecedent or consequent");
-			return swrlParserSupport.getSWRLRule(head, body);
+			return swrlParserSupport.getSWRLRule(ruleName, head, body, comment);
 		} else
 			return null;
 	}
@@ -124,7 +125,7 @@ public class SWRLParser
 	public boolean isSWRLRuleCorrectButPossiblyIncomplete(String ruleText)
 	{
 		try {
-			parseSWRLRule(ruleText, true);
+			parseSWRLRule(ruleText, true, "", "");
 			return true;
 		} catch (SWRLIncompleteRuleException e) {
 			return true;
@@ -140,7 +141,7 @@ public class SWRLParser
 	public boolean isSWRLRuleCorrectAndComplete(String ruleText)
 	{
 		try {
-			parseSWRLRule(ruleText, false);
+			parseSWRLRule(ruleText, false, "", "");
 			return true;
 		} catch (SWRLParseException e) {
 			return false;

@@ -7,11 +7,13 @@ import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLAnonymousIndividual;
 import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLClassAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
 import org.semanticweb.owlapi.model.OWLEntity;
+import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectInverseOf;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
@@ -134,14 +136,17 @@ public class SWRLAPITestUtil
 		return dataFactory.getOWLDeclarationAxiom(entity);
 	}
 
+	public static OWLClassAssertionAxiom getOWLClassAssertionAxiom(OWLClass cls, OWLIndividual individual)
+	{
+		return dataFactory.getOWLClassAssertionAxiom(cls, individual);
+	}
+
 	public static void declareOWLClass(OWLOntologyManager manager, OWLOntology ontology, String iri)
 	{
 		OWLClass cls = getOWLClass(getIRI(iri));
 		OWLDeclarationAxiom axiom = getOWLDeclarationAxiom(cls);
 
-		List<OWLOntologyChange> changes = new ArrayList<>();
-		changes.add(new AddAxiom(ontology, axiom));
-		manager.applyChanges(changes);
+		manager.addAxiom(ontology, axiom);
 	}
 
 	public static void declareOWLNamedIndividual(OWLOntologyManager manager, OWLOntology ontology, String iri)
@@ -149,9 +154,7 @@ public class SWRLAPITestUtil
 		OWLNamedIndividual i = getOWLNamedIndividual(getIRI(iri));
 		OWLDeclarationAxiom axiom = getOWLDeclarationAxiom(i);
 
-		List<OWLOntologyChange> changes = new ArrayList<>();
-		changes.add(new AddAxiom(ontology, axiom));
-		manager.applyChanges(changes);
+		manager.addAxiom(ontology, axiom);
 	}
 
 	public static void declareOWLObjectProperty(OWLOntologyManager manager, OWLOntology ontology, String iri)
@@ -159,9 +162,7 @@ public class SWRLAPITestUtil
 		OWLObjectProperty p = getOWLObjectProperty(getIRI(iri));
 		OWLDeclarationAxiom axiom = getOWLDeclarationAxiom(p);
 
-		List<OWLOntologyChange> changes = new ArrayList<>();
-		changes.add(new AddAxiom(ontology, axiom));
-		manager.applyChanges(changes);
+		manager.addAxiom(ontology, axiom);
 	}
 
 	public static void declareOWLDataProperty(OWLOntologyManager manager, OWLOntology ontology, String iri)
@@ -169,9 +170,7 @@ public class SWRLAPITestUtil
 		OWLDataProperty p = getOWLDataProperty(getIRI(iri));
 		OWLDeclarationAxiom axiom = getOWLDeclarationAxiom(p);
 
-		List<OWLOntologyChange> changes = new ArrayList<>();
-		changes.add(new AddAxiom(ontology, axiom));
-		manager.applyChanges(changes);
+		manager.addAxiom(ontology, axiom);
 	}
 
 	public static void declareOWLDatatype(OWLOntologyManager manager, OWLOntology ontology, String name)
@@ -179,20 +178,21 @@ public class SWRLAPITestUtil
 		OWLDatatype d = getOWLDatatype(getIRI(name));
 		OWLDeclarationAxiom axiom = getOWLDeclarationAxiom(d);
 
-		List<OWLOntologyChange> changes = new ArrayList<>();
-		changes.add(new AddAxiom(ontology, axiom));
-		manager.applyChanges(changes);
+		manager.addAxiom(ontology, axiom);
+
+		//		List<OWLOntologyChange> changes = new ArrayList<>();
+		//		changes.add(new AddAxiom(ontology, axiom));
+		//		manager.applyChanges(changes);
 	}
 
-	public static void declareOWLClass(OWLOntologyManager manager, OWLOntology ontology, Set<String> iris)
+	public static void declareOWLClassAssertionAxiom(OWLOntologyManager manager, OWLOntology ontology, String classIRI,
+			String individualIRI)
 	{
-		for (String iri : iris)
-			declareOWLClass(manager, ontology, iri);
+		OWLClass cls = getOWLClass(getIRI(classIRI));
+		OWLNamedIndividual i = getOWLNamedIndividual(getIRI(individualIRI));
+		OWLClassAssertionAxiom axiom = getOWLClassAssertionAxiom(cls, i);
+
+		manager.addAxiom(ontology, axiom);
 	}
 
-	public static void declareOWLNamedIndividuals(OWLOntologyManager manager, OWLOntology ontology, Set<String> iris)
-	{
-		for (String iri : iris)
-			declareOWLNamedIndividual(manager, ontology, iri);
-	}
 }

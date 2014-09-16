@@ -1,10 +1,12 @@
 package org.swrlapi.parser;
 
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataFactory;
@@ -237,9 +239,19 @@ public class SWRLParserSupport
 		return getOWLDataFactory().getSWRLLiteralArgument(literal);
 	}
 
-	public SWRLRule getSWRLRule(Set<SWRLAtom> head, Set<SWRLAtom> body)
+	public SWRLRule getSWRLRule(String ruleName, Set<SWRLAtom> head, Set<SWRLAtom> body, String comment)
 	{
-		return getOWLDataFactory().getSWRLRule(body, head);
+		OWLAnnotation labelAnnotation = getOWLDataFactory()
+				.getOWLAnnotation(getOWLDataFactory().getRDFSLabel(), getOWLDataFactory().getOWLLiteral(ruleName));
+		OWLAnnotation commentAnnotation = getOWLDataFactory()
+				.getOWLAnnotation(getOWLDataFactory().getRDFSComment(), getOWLDataFactory().getOWLLiteral(comment));
+		// TODO isEnabled
+		Set<OWLAnnotation> annotations = new HashSet<>();
+
+		annotations.add(labelAnnotation);
+		annotations.add(commentAnnotation);
+
+		return getOWLDataFactory().getSWRLRule(body, head, annotations);
 	}
 
 	public Set<SWRLAtom> getSWRLBodyAtomList()

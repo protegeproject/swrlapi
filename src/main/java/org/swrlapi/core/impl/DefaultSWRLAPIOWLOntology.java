@@ -115,20 +115,18 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	public SWRLAPIRule getSWRLRule(String ruleName, String rule, String comment, boolean isActive)
 			throws SWRLParseException
 	{
-		SWRLRule owlapiRule = this.parser.parseSWRLRule(rule, false);
+		SWRLRule owlapiRule = this.parser.parseSWRLRule(rule, false, ruleName, comment);
 
 		SWRLAPIRule swrlapiRule = new DefaultSWRLAPIRule(ruleName, new ArrayList<>(owlapiRule.getBody()),
 				new ArrayList<>(owlapiRule.getHead()), comment, isActive);
 
-		// TODO set name, comment and isEnabled annotations here
-		// TODO Add this rule axiom to the ontology
+		ontologyManager.addAxiom(ontology, owlapiRule);
 
 		return swrlapiRule;
 	}
 
 	@Override
-	public SQWRLQuery getSQWRLQuery(String queryName, String query)
-			throws SWRLParseException, SQWRLException
+	public SQWRLQuery getSQWRLQuery(String queryName, String query) throws SWRLParseException, SQWRLException
 	{
 		return getSQWRLQuery(queryName, query, "", true);
 	}
@@ -137,12 +135,12 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	public SQWRLQuery getSQWRLQuery(String queryName, String query, String comment, boolean isActive)
 			throws SWRLParseException, SQWRLException
 	{
-		SWRLRule owlapiRule = this.parser.parseSWRLRule(query, false);
+		SWRLRule owlapiRule = this.parser.parseSWRLRule(query, false, queryName, comment);
 		SWRLAPIRule swrlapiRule = convertOWLAPIRule2SWRLAPIRule(owlapiRule);
 
 		if (this.swrlapiOntologyProcessor.isSQWRLQuery(swrlapiRule)) {
-			// TODO set name, comment and isEnabled annotations here
-			// TODO Add this rule axiom to the ontology
+			ontologyManager.addAxiom(ontology, owlapiRule);
+
 			return this.swrlapiOntologyProcessor.createSWRLQueryFromSWRLRule(swrlapiRule);
 		} else
 			throw new SWRLParseException(queryName + " is not a SQWRL query");
@@ -318,15 +316,16 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 
 	private String getSWRLRuleName(SWRLRule owlapiRule)
 	{
-		String ruleName = "XX" + owlapiRule.hashCode(); // TODO Get rule name from annotation property if there.
-
 		OWLAnnotationProperty labelAnnotation = getOWLDataFactory()
 				.getOWLAnnotationProperty(OWLRDFVocabulary.RDFS_LABEL.getIRI());
 
 		for (OWLAnnotation annotation : owlapiRule.getAnnotations(labelAnnotation)) {
-			System.err.println("ann: " + annotation);
+			if (annotation.getValue() instanceof OWLLiteral) { // TODO Use OWLAnnotationValueVisitorEx?
+				OWLLiteral literal = (OWLLiteral)annotation.getValue();
+				return literal.getLiteral(); // TODO We just pick one for the moment
+			}
 		}
-		return ruleName;
+		return "XX" + owlapiRule.hashCode();
 	}
 
 	private boolean getIsActive(SWRLRule owlapiRule)
@@ -350,8 +349,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 				.getOWLAnnotationProperty(OWLRDFVocabulary.RDFS_COMMENT.getIRI());
 
 		for (OWLAnnotation annotation : owlapiRule.getAnnotations(commentAnnotationProperty)) {
-			if (annotation
-					.getValue() instanceof OWLLiteral) { // TODO Use OWLAnnotationValueVisitorEx to get rid of instanceof
+			if (annotation.getValue() instanceof OWLLiteral) { // TODO Use OWLAnnotationValueVisitorEx?
 				OWLLiteral literal = (OWLLiteral)annotation.getValue();
 				return literal.getLiteral(); // TODO We just pick one for the moment
 			}
