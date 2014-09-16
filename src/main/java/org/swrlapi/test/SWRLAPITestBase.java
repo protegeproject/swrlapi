@@ -56,6 +56,19 @@ public class SWRLAPITestBase
 		SWRLAPITestUtil.declareOWLNamedIndividual(manager, ontology, namespace + name);
 	}
 
+	protected void declareOWLNamedIndividuals(String... names)
+	{
+		for (String name : names)
+			SWRLAPITestUtil.declareOWLNamedIndividual(manager, ontology, namespace + name);
+	}
+
+
+	protected void declareOWLObjectProperties(String... names)
+	{
+		for (String name : names)
+			SWRLAPITestUtil.declareOWLObjectProperty(manager, ontology, namespace + name);
+	}
+
 	protected void declareOWLObjectProperty(String name)
 	{
 		SWRLAPITestUtil.declareOWLObjectProperty(manager, ontology, namespace + name);
