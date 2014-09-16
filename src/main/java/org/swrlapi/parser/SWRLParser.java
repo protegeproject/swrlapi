@@ -27,12 +27,13 @@ import org.swrlapi.core.SWRLAPIRule;
  * {@link org.swrlapi.parser.SWRLIncompleteRuleException} (which is a subclass of {@link org.swrlapi.parser.SWRLParseException})
  * will be thrown.
  * <p/>
- * The {@link #parseSWRLRule(String, boolean)} method parses a rule or query. If <code>interactiveParseOnly</code>
- * argument is <code>true</code>, only checking is performed - no SWRL rules are created; if it is false, a
- * {@link org.swrlapi.core.SWRLAPIRule} object is created.
+ * The {@link #parseSWRLRule(String, boolean, String, String)} method parses a rule or query.
+ * If <code>interactiveParseOnly</code> argument is <code>true</code>, only checking is performed - no SWRL rules are
+ * created; if it is false, a {@link org.semanticweb.owlapi.model.SWRLRule} object is created.
  * <p/>
  * The parser does not yet parse OWL class expressions or data ranges.
  *
+ * @see org.semanticweb.owlapi.model.SWRLRule
  * @see org.swrlapi.parser.SWRLTokenizer
  * @see org.swrlapi.parser.SWRLParserSupport
  * @see org.swrlapi.parser.SWRLParseException

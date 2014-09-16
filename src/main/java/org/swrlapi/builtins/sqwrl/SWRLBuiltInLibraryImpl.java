@@ -324,7 +324,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		Collection<SWRLBuiltInArgument> collection = getCollectionInSingleCollectionOperation(arguments,
 				sourceCollectionArgumentNumber, numberOfCoreArguments);
 
-		return processResultArgument(arguments, resultArgumentNumber, collection.size());
+		return processResultArgument(arguments, resultArgumentNumber, (long)collection.size());
 	}
 
 	public boolean element(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
