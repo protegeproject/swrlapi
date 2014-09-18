@@ -12,11 +12,11 @@ import java.util.List;
 /**
  * @see org.swrlapi.ui.dialog.SWRLRuleEditorDialog
  */
-public class SWRLAutocompleter
+public class SWRLAutoCompleter
 {
 	private final List<String> entityShortForms;
 
-	public SWRLAutocompleter(SWRLAPIOWLOntology swrlapiowlOntology)
+	public SWRLAutoCompleter(SWRLAPIOWLOntology swrlapiowlOntology)
 	{
 		DefaultPrefixManager prefixManager = swrlapiowlOntology.getPrefixManager();
 		this.entityShortForms = new ArrayList<String>();

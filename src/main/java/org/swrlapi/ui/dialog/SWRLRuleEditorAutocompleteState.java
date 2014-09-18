@@ -3,14 +3,14 @@ package org.swrlapi.ui.dialog;
 import java.util.ArrayList;
 import java.util.List;
 
-class SWRLRuleEditorAutocompleteState
+class SWRLRuleEditorAutoCompleteState
 {
 	private final int textPosition;
 	private final String prefix;
 	private final List<String> expansions;
 	private int expansionIndex;
 
-	public SWRLRuleEditorAutocompleteState(int textPosition, String prefix, List<String> expansions)
+	public SWRLRuleEditorAutoCompleteState(int textPosition, String prefix, List<String> expansions)
 	{
 		this.textPosition = textPosition;
 		this.prefix = prefix;

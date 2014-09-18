@@ -358,7 +358,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	}
 
 	/**
-	 * We basically take an OWLAPI {@link org.semanticweb.owlapi.model.SWRLRule} object and for every
+	 * We take an OWLAPI {@link org.semanticweb.owlapi.model.SWRLRule} object and for every
 	 * OWLAPI {@link org.semanticweb.owlapi.model.SWRLBuiltInAtom} in it we create a
 	 * SWRLAPI {@link org.swrlapi.core.SWRLAPIBuiltInAtom}; all other atoms remain the same.
 	 *
@@ -454,7 +454,8 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	{
 		String prefixedName = prefixManager.getPrefixIRI(iri);
 
-		return !prefixedName.equals(":name");
+		//return !prefixedName.equals(":name");
+		return true;
 	}
 
 	/**

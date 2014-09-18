@@ -1,11 +1,5 @@
 package org.swrlapi.core.impl;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationAssertionAxiom;
@@ -56,14 +50,12 @@ import org.semanticweb.owlapi.model.OWLSubObjectPropertyOfAxiom;
 import org.semanticweb.owlapi.model.OWLSubPropertyChainOfAxiom;
 import org.semanticweb.owlapi.model.OWLSymmetricObjectPropertyAxiom;
 import org.semanticweb.owlapi.model.OWLTransitiveObjectPropertyAxiom;
-import org.semanticweb.owlapi.model.SWRLRule;
 import org.swrlapi.core.SWRLAPILiteralFactory;
-import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIOntologyProcessor;
 import org.swrlapi.core.SWRLAPIRule;
-import org.swrlapi.exceptions.SWRLBuiltInException;
+import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.exceptions.SWRLRuleException;
 import org.swrlapi.sqwrl.DefaultSQWRLQuery;
 import org.swrlapi.sqwrl.SQWRLNames;
@@ -73,6 +65,12 @@ import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.exceptions.SQWRLInvalidQueryNameException;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 {
@@ -232,8 +230,8 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 		String ruleName = rule.getRuleName();
 		boolean active = rule.isActive();
 		String comment = rule.getComment();
-		SQWRLQuery query = new DefaultSQWRLQuery(ruleName, rule.getBodyAtoms(), rule.getHeadAtoms(),
-				active, comment, getSWRLAPILiteralFactory(), getSQWRLResultValueFactory());
+		SQWRLQuery query = new DefaultSQWRLQuery(ruleName, rule.getBodyAtoms(), rule.getHeadAtoms(), active, comment,
+				getSWRLAPILiteralFactory(), getSQWRLResultValueFactory());
 
 		this.swrlRules.put(rule.getRuleName(), rule);
 		this.sqwrlQueries.put(query.getQueryName(), query);
@@ -250,8 +248,8 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 	@Override
 	public boolean isSQWRLQuery(SWRLAPIRule ruleOrQuery)
 	{
-		return !ruleOrQuery.getBuiltInAtomsFromHead(SQWRLNames.getSQWRLBuiltInNames()).isEmpty()
-				|| !ruleOrQuery.getBuiltInAtomsFromBody(SQWRLNames.getSQWRLBuiltInNames()).isEmpty();
+		return !ruleOrQuery.getBuiltInAtomsFromHead(SQWRLNames.getSQWRLBuiltInNames()).isEmpty() || !ruleOrQuery
+				.getBuiltInAtomsFromBody(SQWRLNames.getSQWRLBuiltInNames()).isEmpty();
 	}
 
 	/**
@@ -639,10 +637,10 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 
 	private void generateOWLIndividualDeclarationAxiomIfNecessary(OWLIndividual individual)
 	{
-		if (individual.isNamed()
-				&& !this.owlIndividualDeclarationAxioms.containsKey(individual.asOWLNamedIndividual().getIRI())) {
-			OWLDeclarationAxiom axiom = getSWRLAPIOWLDataFactory().getOWLIndividualDeclarationAxiom(
-					individual.asOWLNamedIndividual());
+		if (individual.isNamed() && !this.owlIndividualDeclarationAxioms
+				.containsKey(individual.asOWLNamedIndividual().getIRI())) {
+			OWLDeclarationAxiom axiom = getSWRLAPIOWLDataFactory()
+					.getOWLIndividualDeclarationAxiom(individual.asOWLNamedIndividual());
 			this.owlIndividualDeclarationAxioms.put(individual.asOWLNamedIndividual().getIRI(), axiom);
 			this.assertedOWLAxioms.add(axiom);
 			recordOWLNamedIndividual(individual.asOWLNamedIndividual());
@@ -896,7 +894,7 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 
 	private Set<OWLDeclarationAxiom> getOWLObjectPropertyDeclarationAxioms()
 	{
-		Set<OWLDeclarationAxiom> owlObjectPropertyDeclarationAxioms = new HashSet<OWLDeclarationAxiom>();
+		Set<OWLDeclarationAxiom> owlObjectPropertyDeclarationAxioms = new HashSet<>();
 
 		for (OWLDeclarationAxiom owlDeclarationAxiom : getOWLOntology().getAxioms(AxiomType.DECLARATION, true)) {
 			if (owlDeclarationAxiom.getEntity().isOWLObjectProperty())
@@ -907,7 +905,7 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 
 	private Set<OWLDeclarationAxiom> getOWLDataPropertyDeclarationAxioms()
 	{
-		Set<OWLDeclarationAxiom> owlDataPropertyDeclarationAxioms = new HashSet<OWLDeclarationAxiom>();
+		Set<OWLDeclarationAxiom> owlDataPropertyDeclarationAxioms = new HashSet<>();
 
 		for (OWLDeclarationAxiom owlDeclarationAxiom : getOWLOntology().getAxioms(AxiomType.DECLARATION, true)) {
 			if (owlDeclarationAxiom.getEntity().isOWLDataProperty())
@@ -918,7 +916,7 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 
 	private Set<OWLDeclarationAxiom> getOWLAnnotationPropertyDeclarationAxioms()
 	{
-		Set<OWLDeclarationAxiom> owlAnnotationPropertyDeclarationAxioms = new HashSet<OWLDeclarationAxiom>();
+		Set<OWLDeclarationAxiom> owlAnnotationPropertyDeclarationAxioms = new HashSet<>();
 
 		for (OWLDeclarationAxiom owlDeclarationAxiom : getOWLOntology().getAxioms(AxiomType.DECLARATION, true)) {
 			if (owlDeclarationAxiom.getEntity().isOWLAnnotationProperty())
@@ -930,7 +928,7 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 	@SuppressWarnings("unused")
 	private Set<OWLDeclarationAxiom> getOWLDatatypeDeclarationAxioms()
 	{
-		Set<OWLDeclarationAxiom> owlDatatypeDeclarationAxioms = new HashSet<OWLDeclarationAxiom>();
+		Set<OWLDeclarationAxiom> owlDatatypeDeclarationAxioms = new HashSet<>();
 
 		for (OWLDeclarationAxiom owlDeclarationAxiom : getOWLOntology().getAxioms(AxiomType.DECLARATION, true)) {
 			if (owlDeclarationAxiom.getEntity().isOWLDatatype())
