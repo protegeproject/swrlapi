@@ -57,6 +57,8 @@ public class SWRLAPIFactory
 	{
 		DefaultPrefixManager prefixManager = createPrefixManager(ontology);
 
+		addSWRLAPIBuiltInOntologies(ontology.getOWLOntologyManager());
+
 		return new DefaultSWRLAPIOWLOntology(ontology, prefixManager);
 	}
 
@@ -80,7 +82,7 @@ public class SWRLAPIFactory
 	 */
 	public static SWRLAPIOWLOntology createOntology(File owlFile)
 	{
-		OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
+		OWLOntologyManager ontologyManager = createOWLOntologyManager();
 
 		if (owlFile == null)
 			throw new SWRLAPIException("supplied OWL file is null");
@@ -131,6 +133,7 @@ public class SWRLAPIFactory
 		}
 
 		addSWRLAPIPrefixes(prefixManager);
+
 		return prefixManager;
 	}
 
@@ -252,18 +255,8 @@ public class SWRLAPIFactory
 	public static OWLOntologyManager createOWLOntologyManager()
 	{
 		OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
-		Map<String, String> map = new HashMap<>();
 
-		map.put("http://www.w3.org/2003/11/swrl#", resourceName2File("owl/swrl.owl"));
-		map.put("http://www.w3.org/2003/11/swrlb#", resourceName2File("owl/swrlb.owl"));
-		map.put("http://swrl.stanford.edu/ontologies/3.3/swrla.owl", resourceName2File("owl/swrla.owl"));
-		map.put("http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlm.owl", resourceName2File("owl/swrlm.owl"));
-		map.put("http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl", resourceName2File("owl/swrlx.owl"));
-		map.put("http://swrl.stanford.edu/ontologies/built-ins/3.3/temporal.owl", resourceName2File("owl/temporal.owl"));
-		map.put("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl", resourceName2File("owl/sqwrl.owl"));
-
-		for (String key : map.keySet())
-			ontologyManager.addIRIMapper(new SimpleIRIMapper(IRI.create(key), IRI.create(map.get(key))));
+		addSWRLAPIBuiltInOntologies(ontologyManager);
 
 		return ontologyManager;
 	}
@@ -277,6 +270,22 @@ public class SWRLAPIFactory
 		prefixManager.setPrefix("temporal:", "http://swrl.stanford.edu/ontologies/built-ins/3.3/temporal.owl#");
 		prefixManager.setPrefix("swrlx:", "http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#");
 		prefixManager.setPrefix("swrla:", "http://swrl.stanford.edu/ontologies/3.3/swrla.owl#");
+	}
+
+	private static void addSWRLAPIBuiltInOntologies(OWLOntologyManager ontologyManager)
+	{
+		Map<String, String> map = new HashMap<>();
+
+		map.put("http://www.w3.org/2003/11/swrl#", resourceName2File("owl/swrl.owl"));
+		map.put("http://www.w3.org/2003/11/swrlb#", resourceName2File("owl/swrlb.owl"));
+		map.put("http://swrl.stanford.edu/ontologies/3.3/swrla.owl", resourceName2File("owl/swrla.owl"));
+		map.put("http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlm.owl", resourceName2File("owl/swrlm.owl"));
+		map.put("http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl", resourceName2File("owl/swrlx.owl"));
+		map.put("http://swrl.stanford.edu/ontologies/built-ins/3.3/temporal.owl", resourceName2File("owl/temporal.owl"));
+		map.put("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl", resourceName2File("owl/sqwrl.owl"));
+
+		for (String key : map.keySet())
+			ontologyManager.addIRIMapper(new SimpleIRIMapper(IRI.create(key), IRI.create(map.get(key))));
 	}
 
 	private static OWLOntology createOWLOntology(OWLOntologyManager ontologyManager, File file) throws SWRLAPIException
