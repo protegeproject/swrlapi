@@ -34,15 +34,6 @@ public class SWRLAPITestBase
 
 		prefixManager.setDefaultPrefix(namespace);
 
-		declareOWLDatatype("http://www.w3.org/2001/XMLSchema#dateTime");
-		declareOWLDatatype("http://www.w3.org/2001/XMLSchema#date");
-		declareOWLDatatype("http://www.w3.org/2001/XMLSchema#string");
-		declareOWLDatatype("http://www.w3.org/2001/XMLSchema#int");
-		declareOWLDatatype("http://www.w3.org/2001/XMLSchema#long");
-		declareOWLDatatype("http://www.w3.org/2001/XMLSchema#float");
-		declareOWLDatatype("http://www.w3.org/2001/XMLSchema#double");
-		declareOWLDatatype("http://www.w3.org/2001/XMLSchema#boolean");
-
 		return swrlapiowlOntology;
 	}
 

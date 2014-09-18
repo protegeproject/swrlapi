@@ -28,6 +28,7 @@ import org.semanticweb.owlapi.model.SWRLRule;
 import org.semanticweb.owlapi.model.SWRLSameIndividualAtom;
 import org.semanticweb.owlapi.model.SWRLVariable;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
+import org.semanticweb.owlapi.vocab.XSDVocabulary;
 import org.swrlapi.builtins.arguments.SQWRLCollectionVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
@@ -46,13 +47,12 @@ import org.swrlapi.core.SWRLAPIRuleRenderer;
 import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.sqwrl.SQWRLNames;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Default implementation of a renderer for {@link org.swrlapi.core.SWRLAPIRule} and
  * {@link org.swrlapi.sqwrl.SQWRLQuery} objects.
  *
+ * @see org.swrlapi.core.SWRLAPIRule
+ * @see org.swrlapi.sqwrl.SQWRLQuery
  * @see org.swrlapi.core.SWRLAPIFactory
  */
 public class DefaultSWRLAPIRuleRenderer implements SWRLAPIRuleRenderer
@@ -68,9 +68,9 @@ public class DefaultSWRLAPIRuleRenderer implements SWRLAPIRuleRenderer
 	public String render(SWRLAPIRule swrlapiRule)
 	{
 		StringBuilder sb = new StringBuilder();
-		boolean isFirst = true;
 		boolean collectionMakeEncountered = false;
 		boolean collectionOperationEncountered = false;
+		boolean isFirst = true;
 
 		for (SWRLAtom atom : swrlapiRule.getBodyAtoms()) {
 			if (isSQWRLCollectionMakeBuiltInAtom(atom)) {
@@ -392,7 +392,8 @@ public class DefaultSWRLAPIRuleRenderer implements SWRLAPIRuleRenderer
 		String objectPropertyNameShortForm = this.prefixManager.getShortForm(property.getIRI());
 
 		return objectPropertyNameShortForm.startsWith(":") ?
-				objectPropertyNameShortForm.substring(1) : objectPropertyNameShortForm;
+				objectPropertyNameShortForm.substring(1) :
+				objectPropertyNameShortForm;
 	}
 
 	@Override
@@ -402,7 +403,8 @@ public class DefaultSWRLAPIRuleRenderer implements SWRLAPIRuleRenderer
 		String dataPropertyNameShortForm = this.prefixManager.getShortForm(property.getIRI());
 
 		return dataPropertyNameShortForm.startsWith(":") ?
-				dataPropertyNameShortForm.substring(1) : dataPropertyNameShortForm;
+				dataPropertyNameShortForm.substring(1) :
+				dataPropertyNameShortForm;
 	}
 
 	@Override
@@ -412,7 +414,8 @@ public class DefaultSWRLAPIRuleRenderer implements SWRLAPIRuleRenderer
 		String annotationPropertyNameShortForm = this.prefixManager.getShortForm(property.getIRI());
 
 		return annotationPropertyNameShortForm.startsWith(":") ?
-				annotationPropertyNameShortForm.substring(1) : annotationPropertyNameShortForm;
+				annotationPropertyNameShortForm.substring(1) :
+				annotationPropertyNameShortForm;
 	}
 
 	@Override
@@ -457,7 +460,14 @@ public class DefaultSWRLAPIRuleRenderer implements SWRLAPIRuleRenderer
 		OWLDatatype datatype = literal.getDatatype();
 		String value = literal.getLiteral();
 
-		return "\"" + value + "\"^^\"" + visit(datatype) + "\"";
+		if (datatype.isString())
+			return "\"" + value + "\"";
+		else if (datatype.isDouble())
+			return value;
+		else if (datatype.getIRI().equals(XSDVocabulary.LONG.getIRI()))
+			return value;
+		else
+			return "\"" + value + "\"^^\"" + visit(datatype) + "\"";
 	}
 
 	private String variablePrefixedName2VariableName(String variablePrefixedName)
@@ -470,13 +480,13 @@ public class DefaultSWRLAPIRuleRenderer implements SWRLAPIRuleRenderer
 
 	private boolean isSQWRLCollectionMakeBuiltInAtom(SWRLAtom atom)
 	{
-		return atom instanceof SWRLAPIBuiltInAtom &&
-				SQWRLNames.isSQWRLCollectionMakeBuiltIn(((SWRLAPIBuiltInAtom)atom).getBuiltInPrefixedName());
+		return atom instanceof SWRLAPIBuiltInAtom && SQWRLNames
+				.isSQWRLCollectionMakeBuiltIn(((SWRLAPIBuiltInAtom)atom).getBuiltInPrefixedName());
 	}
 
 	private boolean isSQWRLCollectionOperateBuiltInAtom(SWRLAtom atom)
 	{
-		return atom instanceof SWRLAPIBuiltInAtom &&
-				SQWRLNames.isSQWRLCollectionOperationBuiltIn(((SWRLAPIBuiltInAtom)atom).getBuiltInPrefixedName());
+		return atom instanceof SWRLAPIBuiltInAtom && SQWRLNames
+				.isSQWRLCollectionOperationBuiltIn(((SWRLAPIBuiltInAtom)atom).getBuiltInPrefixedName());
 	}
 }

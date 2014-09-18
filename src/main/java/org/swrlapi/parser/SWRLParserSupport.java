@@ -30,6 +30,7 @@ import org.semanticweb.owlapi.model.SWRLRule;
 import org.semanticweb.owlapi.model.SWRLSameIndividualAtom;
 import org.semanticweb.owlapi.model.SWRLVariable;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
+import org.semanticweb.owlapi.vocab.XSDVocabulary;
 import org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
@@ -96,13 +97,17 @@ public class SWRLParserSupport
 
 	public boolean isOWLDatatype(String datatypeShortName)
 	{
-		IRI datatypeIRI = getPrefixManager().getIRI(datatypeShortName);
-		return getOWLOntology().containsDatatypeInSignature(datatypeIRI, true);
+		try {
+			XSDVocabulary.parseShortName(datatypeShortName);
+			return true;
+		} catch (IllegalArgumentException e) {
+			return false;
+	  }
 	}
 
-	public boolean isSWRLBuiltIn(String builtInShortName)
+	public boolean isSWRLBuiltIn(String builtInPrefixedName)
 	{
-		IRI builtInIRI = getPrefixManager().getIRI(builtInShortName);
+		IRI builtInIRI = getPrefixManager().getIRI(builtInPrefixedName);
 		return getSWRLAPIOWLOntology().isSWRLBuiltIn(builtInIRI);
 	}
 
@@ -184,7 +189,7 @@ public class SWRLParserSupport
 			IRI datatypeIRI = getPrefixManager().getIRI(datatypeShortName);
 			return getOWLDataFactory().getOWLDatatype(datatypeIRI);
 		} else
-			throw new SWRLParseException(datatypeShortName + " is not an OWL datatype");
+			throw new SWRLParseException(datatypeShortName + " is not a valid datatype");
 	}
 
 	public SWRLLiteralArgument getXSDStringSWRLLiteralArgument(String lexicalValue)
@@ -236,12 +241,12 @@ public class SWRLParserSupport
 		return getOWLDataFactory().getSWRLVariable(iri);
 	}
 
-	public IRI getSWRLBuiltIn(String builtInShortName) throws SWRLParseException
+	public IRI getSWRLBuiltInIRI(String builtInPrefixedName) throws SWRLParseException
 	{
-		if (!isSWRLBuiltIn(builtInShortName))
-			throw new SWRLParseException(builtInShortName + " is not a SWRL built-in");
+		if (!isSWRLBuiltIn(builtInPrefixedName))
+			throw new SWRLParseException(builtInPrefixedName + " is not a SWRL built-in");
 		else
-			return getPrefixManager().getIRI(builtInShortName);
+			return getPrefixManager().getIRI(builtInPrefixedName);
 	}
 
 	public SWRLLiteralArgument getSWRLLiteralArgument(String lexicalValue, String datatypeShortName)
@@ -300,10 +305,10 @@ public class SWRLParserSupport
 		return getOWLDataFactory().getSWRLDataPropertyAtom(dataProperty, iArgument, dArgument);
 	}
 
-	public SWRLBuiltInAtom getSWRLBuiltInAtom(String builtInShortName, List<SWRLDArgument> arguments)
+	public SWRLBuiltInAtom getSWRLBuiltInAtom(String builtInPrefixedName, List<SWRLDArgument> arguments)
 			throws SWRLParseException
 	{
-		IRI builtInIRI = getSWRLBuiltIn(builtInShortName);
+		IRI builtInIRI = getSWRLBuiltInIRI(builtInPrefixedName);
 		return getOWLDataFactory().getSWRLBuiltInAtom(builtInIRI, arguments);
 	}
 

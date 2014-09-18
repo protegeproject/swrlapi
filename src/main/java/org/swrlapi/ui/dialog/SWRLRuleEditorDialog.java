@@ -49,7 +49,7 @@ public class SWRLRuleEditorDialog extends JDialog
 	private static final String OK_BUTTON_TITLE = "Ok";
 	private static final String CANCEL_BUTTON_TITLE = "Cancel";
 	private static final String STATUS_OK = "Ok";
-	private static final String STATUS_NO_RULE_TEXT = "Use Tab key for auto-complete; to remove auto-complete expansion, use Escape key";
+	private static final String STATUS_NO_RULE_TEXT = "Use Tab key to cycle through auto-completions; to remove auto-complete expansion, use Escape key";
 	private static final String INVALID_RULE_TITLE = "Invalid";
 	private static final String MISSING_RULE = "Nothing to save!";
 	private static final String MISSING_RULE_NAME_TITLE = "Empty Name";
@@ -302,8 +302,9 @@ public class SWRLRuleEditorDialog extends JDialog
 
 	private List<String> getExpansions(String prefix)
 	{
-		List<String> expansions = new ArrayList<String>();
-		expansions.add("");
+		List<String> expansions = new ArrayList<>();
+
+		expansions.add(""); // Add empty expansion that we can cycle back to
 		expansions.addAll(this.autoCompleter.getCompletions(prefix));
 
 		return expansions;
@@ -385,7 +386,7 @@ public class SWRLRuleEditorDialog extends JDialog
 	{
 		String ruleText = getRuleText();
 
-		if (ruleText.equals("")) {
+		if (ruleText.isEmpty()) {
 			setStatusText(STATUS_NO_RULE_TEXT);
 			disableSave();
 		} else {

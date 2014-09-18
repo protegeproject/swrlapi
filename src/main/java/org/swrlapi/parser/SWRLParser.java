@@ -211,13 +211,13 @@ public class SWRLParser
 				null;
 	}
 
-	private SWRLBuiltInAtom parseSWRLBuiltinAtomArguments(String builtInShortName, SWRLTokenizer tokenizer,
+	private SWRLBuiltInAtom parseSWRLBuiltinAtomArguments(String builtInPrefixedName, SWRLTokenizer tokenizer,
 			boolean isInHead) throws SWRLParseException
 	{
 		List<SWRLDArgument> dArgumentList = parseSWRLDArgumentList(tokenizer, isInHead); // Swallows ')'
 
 		return !tokenizer.isInteractiveParseOnly() ?
-				swrlParserSupport.getSWRLBuiltInAtom(builtInShortName, dArgumentList) :
+				swrlParserSupport.getSWRLBuiltInAtom(builtInPrefixedName, dArgumentList) :
 				null;
 	}
 
