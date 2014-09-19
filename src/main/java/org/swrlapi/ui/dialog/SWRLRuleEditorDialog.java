@@ -204,7 +204,9 @@ public class SWRLRuleEditorDialog extends JDialog
 			} else if (code == KeyEvent.VK_ESCAPE) {
 				cancelAutoCompleteIfNecessary();
 				event.consume();
-			} else { // Any other key will disable autoComplete mode if it is active
+			} else if (code == KeyEvent.VK_DELETE) {
+				cancelAutoCompleteIfNecessary();
+			} else { // Any other key will disable auto-complete mode if it is active
 				disableAutoCompleteModeIfNecessary();
 				super.keyPressed(event);
 			}

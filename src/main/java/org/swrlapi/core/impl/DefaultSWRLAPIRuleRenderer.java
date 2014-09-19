@@ -221,7 +221,8 @@ public class DefaultSWRLAPIRuleRenderer implements SWRLAPIRuleRenderer
 		IRI variableIRI = variable.getIRI();
 
 		if (this.ontology.containsEntityInSignature(variableIRI, true)) {
-			return this.prefixManager.getShortForm(variableIRI);
+			String shortForm =  this.prefixManager.getShortForm(variableIRI);
+			return shortForm.startsWith(":") ? shortForm.substring(1) : shortForm;
 		} else {
 			String variablePrefixedName = prefixManager.getPrefixIRI(variableIRI);
 			return variablePrefixedName2VariableName(variablePrefixedName);
@@ -446,7 +447,8 @@ public class DefaultSWRLAPIRuleRenderer implements SWRLAPIRuleRenderer
 		IRI variableIRI = argument.getIRI();
 
 		if (this.ontology.containsEntityInSignature(variableIRI, true)) {
-			return this.prefixManager.getShortForm(variableIRI);
+			String shortForm =  this.prefixManager.getShortForm(variableIRI);
+			return shortForm.startsWith(":") ? shortForm.substring(1) : shortForm;
 		} else {
 			String variablePrefixedName = prefixManager.getPrefixIRI(variableIRI);
 			return variablePrefixedName2VariableName(variablePrefixedName);
@@ -477,6 +479,8 @@ public class DefaultSWRLAPIRuleRenderer implements SWRLAPIRuleRenderer
 		if (datatype.isString())
 			return "\"" + value + "\"";
 		else if (datatype.isFloat())
+			return value;
+		else if (datatype.isBoolean())
 			return value;
 		else if (datatype.getIRI().equals(XSDVocabulary.INT.getIRI()))
 			return value;

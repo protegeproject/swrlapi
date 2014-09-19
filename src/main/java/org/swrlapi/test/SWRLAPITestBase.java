@@ -53,7 +53,6 @@ public class SWRLAPITestBase
 			SWRLAPITestUtil.declareOWLNamedIndividual(manager, ontology, namespace + name);
 	}
 
-
 	protected void declareOWLObjectProperties(String... names)
 	{
 		for (String name : names)
@@ -90,6 +89,21 @@ public class SWRLAPITestBase
 	protected void declareOWLClassAssertion(String className, String individualName)
 	{
 		SWRLAPITestUtil.declareOWLClassAssertionAxiom(manager, ontology, namespace + className, namespace + individualName);
+	}
+
+	protected void declareOWLObjectPropertyAssertion(String subjectName, String propertyName, String objectName)
+	{
+		SWRLAPITestUtil
+				.declareOWLObjectPropertyAssertionAxiom(manager, ontology, namespace + subjectName, namespace + propertyName,
+						namespace + objectName);
+	}
+
+	protected void declareOWLDataPropertyAssertion(String subjectName, String propertyName, String value,
+			String datatypeShortName)
+	{
+		SWRLAPITestUtil
+				.declareOWLDataPropertyAssertionAxiom(manager, ontology, namespace + subjectName, namespace + propertyName,
+						value, datatypeShortName, prefixManager);
 	}
 
 	protected void createSQWRLQuery(String queryName, String query) throws SQWRLException, SWRLParseException

@@ -10,13 +10,16 @@ import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLDataProperty;
+import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLIndividual;
+import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectInverseOf;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyChange;
@@ -195,4 +198,27 @@ public class SWRLAPITestUtil
 		manager.addAxiom(ontology, axiom);
 	}
 
+	public static void declareOWLObjectPropertyAssertionAxiom(OWLOntologyManager manager, OWLOntology ontology, String subjectIRI,
+			String propertyIRI, String objectIRI)
+	{
+		OWLObjectProperty property = getOWLObjectProperty(getIRI(propertyIRI));
+		OWLNamedIndividual subject = getOWLNamedIndividual(getIRI(subjectIRI));
+		OWLNamedIndividual object = getOWLNamedIndividual(getIRI(objectIRI));
+		OWLObjectPropertyAssertionAxiom axiom = dataFactory.getOWLObjectPropertyAssertionAxiom(property, subject, object);
+
+		manager.addAxiom(ontology, axiom);
+	}
+
+	public static void declareOWLDataPropertyAssertionAxiom(OWLOntologyManager manager, OWLOntology ontology, String subjectIRI,
+			String propertyIRI, String value, String datatypeShortName, PrefixManager prefixManager)
+	{
+		OWLDataProperty property = getOWLDataProperty(getIRI(propertyIRI));
+		OWLNamedIndividual subject = getOWLNamedIndividual(getIRI(subjectIRI));
+		OWLDatatype datatype = dataFactory.getOWLDatatype(datatypeShortName, prefixManager);
+		OWLLiteral literal = dataFactory.getOWLLiteral(value, datatype);
+
+		OWLDataPropertyAssertionAxiom axiom = dataFactory.getOWLDataPropertyAssertionAxiom(property, subject, literal);
+
+		manager.addAxiom(ontology, axiom);
+	}
 }

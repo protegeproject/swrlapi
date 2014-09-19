@@ -43,7 +43,15 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	}
 
 	@Test
-	public void TestRawBooleanTrueLiteral() throws SWRLParseException
+	public void TestStringLiteral() throws SWRLParseException
+	{
+		declareOWLDataProperty("hasName");
+
+		createSWRLRule("r1", "hasName(?p, \"Fred\") ->");
+	}
+
+	@Test
+	public void TestRawBooleanTrueLowerCaseLiteral() throws SWRLParseException
 	{
 		declareOWLDataProperty("isFrench");
 
@@ -51,11 +59,27 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	}
 
 	@Test
-	public void TestStringLiteral() throws SWRLParseException
+	public void TestRawBooleanFalseLowerCaseLiteral() throws SWRLParseException
 	{
-		declareOWLDataProperty("hasName");
+		declareOWLDataProperty("isFrench");
 
-		createSWRLRule("r1", "hasName(?p, \"Fred\") ->");
+		createSWRLRule("r1", "isFrench(?f, false) ->");
+	}
+
+	@Test
+	public void TestRawBooleanTrueUpperCaseLiteral() throws SWRLParseException
+	{
+		declareOWLDataProperty("isFrench");
+
+		createSWRLRule("r1", "isFrench(?f, True) ->");
+	}
+
+	@Test
+	public void TestRawBooleanFalseUpperCaseLiteral() throws SWRLParseException
+	{
+		declareOWLDataProperty("isFrench");
+
+		createSWRLRule("r1", "isFrench(?f, False) ->");
 	}
 
 	@Test
@@ -67,15 +91,7 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	}
 
 	@Test
-	public void TestRawBooleanFalseLiteral() throws SWRLParseException
-	{
-		declareOWLDataProperty("isFrench");
-
-		createSWRLRule("r1", "isFrench(?f, false) ->");
-	}
-
-	@Test
-	public void TestRawLongLiteral() throws SWRLParseException
+	public void TestRawIntLiteral() throws SWRLParseException
 	{
 		declareOWLDataProperty("hasAge");
 
@@ -115,7 +131,7 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	}
 
 	@Test
-	public void TestDoubleRawLiteral() throws SWRLParseException
+	public void TestFloatRawLiteral() throws SWRLParseException
 	{
 		declareOWLDataProperty("hasHeight");
 
