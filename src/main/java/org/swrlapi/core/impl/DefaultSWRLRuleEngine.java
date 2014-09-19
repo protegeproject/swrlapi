@@ -15,6 +15,7 @@ import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLRuleEngine;
+import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLRuleEngineException;
 import org.swrlapi.exceptions.TargetSWRLRuleEngineException;
@@ -60,6 +61,8 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 			exportOWLAxioms2TargetRuleEngine(this.swrlapiOWLOntology.getOWLAxioms()); // OWL axioms include SWRL rules
 		} catch (TargetSWRLRuleEngineException e) {
 			throw new SWRLRuleEngineException("error exporting knowledge to rule engine: " + e.getMessage(), e);
+		} catch (SWRLAPIException e) {
+			throw new SWRLRuleEngineException("error exporting knowledge to rule engine: " + e.getMessage(), e);
 		}
 	}
 
@@ -78,6 +81,8 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 		} catch (SWRLBuiltInException e) {
 			throw new SWRLRuleEngineException("error exporting SQWRL query to rule engine: " + e.getMessage(), e);
 		} catch (TargetSWRLRuleEngineException e) {
+			throw new SWRLRuleEngineException("error exporting SQWRL query rule engine: " + e.getMessage(), e);
+		} catch (SWRLAPIException e) {
 			throw new SWRLRuleEngineException("error exporting SQWRL query rule engine: " + e.getMessage(), e);
 		}
 	}
@@ -119,6 +124,8 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 			throw new SWRLRuleEngineException("error running rule engine: " + e.getMessage(), e);
 		} catch (TargetSWRLRuleEngineException e) {
 			throw new SWRLRuleEngineException("error running rule engine: " + e.getMessage(), e);
+		} catch (SWRLAPIException e) {
+			throw new SWRLRuleEngineException("error running rule engine: " + e.getMessage(), e);
 		}
 	}
 
@@ -158,6 +165,8 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 			return getSQWRLResult(queryName);
 		} catch (SWRLRuleEngineException e) {
 			throw new SQWRLException("error running SQWRL queries: " + e.getMessage(), e);
+		} catch (SWRLAPIException e) {
+			throw new SQWRLException("error running SQWRL queries: " + e.getMessage(), e);
 		}
 	}
 
@@ -181,6 +190,8 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 		try {
 			run();
 		} catch (SWRLRuleEngineException e) {
+			throw new SQWRLException("error running SQWRL queries: " + e.getMessage(), e);
+		} catch (SWRLAPIException e) {
 			throw new SQWRLException("error running SQWRL queries: " + e.getMessage(), e);
 		}
 	}

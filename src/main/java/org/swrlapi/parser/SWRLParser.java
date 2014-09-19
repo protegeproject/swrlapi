@@ -296,13 +296,13 @@ public class SWRLParser
 		} else if (token.isString()) {
 			String literalValue = token.getValue();
 			return parseLiteralSWRLDArgument(tokenizer, literalValue);
-		} else if (token.isLong()) { // StreamTokenizer returns a raw value appended with ".0" for longs
+		} else if (token.isInt()) { // StreamTokenizer returns a raw value appended with ".0" for longs
 			String tokenValue = token.getValue();
-			String longValue = tokenValue.endsWith(".0") ? tokenValue.substring(0, tokenValue.length() - 2) : tokenValue;
-			return !tokenizer.isInteractiveParseOnly() ? swrlParserSupport.getXSDLongSWRLLiteralArgument(longValue) : null;
-		} else if (token.isDouble()) {
+			String intValue = tokenValue.endsWith(".0") ? tokenValue.substring(0, tokenValue.length() - 2) : tokenValue;
+			return !tokenizer.isInteractiveParseOnly() ? swrlParserSupport.getXSDIntSWRLLiteralArgument(intValue) : null;
+		} else if (token.isFloat()) {
 			return !tokenizer.isInteractiveParseOnly() ?
-					swrlParserSupport.getXSDDoubleSWRLLiteralArgument(token.getValue()) :
+					swrlParserSupport.getXSDFloatSWRLLiteralArgument(token.getValue()) :
 					null;
 		} else
 			throw new SWRLParseException("Expecting variable or OWL literal, got '" + token.getValue() + "'");

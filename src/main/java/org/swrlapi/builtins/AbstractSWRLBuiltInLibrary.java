@@ -718,7 +718,7 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, 
 	@Override
 	public int getArgumentAsAnInteger(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{
-		return getArgumentAsASWRLAPILiteral(argumentNumber, arguments).getInteger(); // Will throw
+		return getArgumentAsASWRLAPILiteral(argumentNumber, arguments).getInt(); // Will throw
 		// DatatypeConversionException if
 		// invalid.
 	}
@@ -727,9 +727,7 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, 
 	public int getArgumentAsAPositiveInteger(int argumentNumber, List<SWRLBuiltInArgument> arguments)
 			throws SWRLBuiltInException
 	{
-		int i = getArgumentAsASWRLAPILiteral(argumentNumber, arguments).getInteger(); // Will throw
-		// DatatypeConversionException if
-		// invalid.
+		int i = getArgumentAsASWRLAPILiteral(argumentNumber, arguments).getInt(); // Will throw SQWRLLiteralException
 
 		if (i < 0)
 			throw new InvalidSWRLBuiltInArgumentException(argumentNumber, makeInvalidArgumentTypeMessage(
@@ -1284,10 +1282,8 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, 
 				return literal.getByte();
 			else if (literal.isShort())
 				return literal.getShort();
-			else if (literal.isInteger())
-				return literal.getInteger();
 			else if (literal.isInt())
-				return literal.getInteger();
+				return literal.getInt();
 			else if (literal.isLong())
 				return literal.getLong();
 			else if (literal.isFloat())

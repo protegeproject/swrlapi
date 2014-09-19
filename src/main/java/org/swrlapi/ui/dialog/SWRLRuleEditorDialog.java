@@ -230,7 +230,7 @@ public class SWRLRuleEditorDialog extends JDialog
 					enableAutoCompleteMode(state);
 				}
 			}
-		} else { // Already in autoComplete mode
+		} else { // Already in auto-complete mode
 			int textPosition = this.autoCompleteState.getTextPosition();
 			String prefix = this.autoCompleteState.getPrefix();
 			String currentExpansion = this.autoCompleteState.getCurrentExpansion();

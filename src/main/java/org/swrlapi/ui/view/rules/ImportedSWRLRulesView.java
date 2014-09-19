@@ -9,7 +9,9 @@ import javax.swing.JTable;
 import javax.swing.JViewport;
 import javax.swing.table.AbstractTableModel;
 
+import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
+import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.core.impl.DefaultSWRLAPIRuleRenderer;
@@ -24,12 +26,12 @@ public class ImportedSWRLRulesView extends JPanel implements SWRLAPIView
 	private final SWRLRulesTableModel swrlRulesTableModel;
 	private final JTable swrlRulesTable;
 
-	public ImportedSWRLRulesView(SWRLRuleEngine ruleEngine, DefaultPrefixManager prefixManager)
+	public ImportedSWRLRulesView(SWRLRuleEngine ruleEngine, SWRLAPIOWLOntology swrlapiowlOntology)
 	{
 		this.swrlRuleEngine = ruleEngine;
 		this.swrlRulesTableModel = new SWRLRulesTableModel();
 		this.swrlRulesTable = new JTable(this.swrlRulesTableModel);
-		this.swrlRulePrinter = new DefaultSWRLAPIRuleRenderer(prefixManager);
+		this.swrlRulePrinter = new DefaultSWRLAPIRuleRenderer(swrlapiowlOntology);
 
 		JScrollPane scrollPane = new JScrollPane(this.swrlRulesTable);
 		JViewport viewPort = scrollPane.getViewport();

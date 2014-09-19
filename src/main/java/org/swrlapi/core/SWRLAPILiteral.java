@@ -55,7 +55,7 @@ public interface SWRLAPILiteral
 
 	boolean getBoolean() throws SQWRLLiteralException;
 
-	int getInteger() throws SQWRLLiteralException;
+	int getInt() throws SQWRLLiteralException;
 
 	long getLong() throws SQWRLLiteralException;
 

@@ -209,25 +209,25 @@ public class SWRLParserSupport
 		}
 	}
 
-	public SWRLLiteralArgument getXSDLongSWRLLiteralArgument(String lexicalValue) throws SWRLParseException
+	public SWRLLiteralArgument getXSDIntSWRLLiteralArgument(String lexicalValue) throws SWRLParseException
 	{
 		try {
-			long value = Long.parseLong(lexicalValue);
+			int value = Integer.parseInt(lexicalValue);
 			OWLLiteral owlLiteral = getOWLLiteralFactory().getOWLLiteral(value);
 			return getOWLDataFactory().getSWRLLiteralArgument(owlLiteral);
 		} catch (NumberFormatException e) {
-			throw new SWRLParseException(lexicalValue + " is not a valid xsd:long");
+			throw new SWRLParseException(lexicalValue + " is not a valid xsd:int");
 		}
 	}
 
-	public SWRLLiteralArgument getXSDDoubleSWRLLiteralArgument(String lexicalValue) throws SWRLParseException
+	public SWRLLiteralArgument getXSDFloatSWRLLiteralArgument(String lexicalValue) throws SWRLParseException
 	{
 		try {
-			double value = Double.parseDouble(lexicalValue);
+			float value = Float.parseFloat(lexicalValue);
 			OWLLiteral owlLiteral = getOWLLiteralFactory().getOWLLiteral(value);
 			return getOWLDataFactory().getSWRLLiteralArgument(owlLiteral);
 		} catch (NumberFormatException e) {
-			throw new SWRLParseException(lexicalValue + " is not a valid xsd:double");
+			throw new SWRLParseException(lexicalValue + " is not a valid xsd:float");
 		}
 	}
 

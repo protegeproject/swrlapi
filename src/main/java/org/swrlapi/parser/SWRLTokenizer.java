@@ -194,10 +194,15 @@ public class SWRLTokenizer
 			return new SWRLToken(SWRLToken.SWRLTokenType.END_OF_INPUT, "");
 		case StreamTokenizer.TT_NUMBER: {
 			double value = this.tokenizer.nval;
-			if (value % 1 == 0.0) // Appears to be no way of determining whether double/float used originally
-				return new SWRLToken(SWRLToken.SWRLTokenType.LONG, "" + this.tokenizer.nval);
-			else
-				return new SWRLToken(SWRLToken.SWRLTokenType.DOUBLE, "" + this.tokenizer.nval);
+			if (value % 1 == 0.0) {// Appears to be no way of determining whether double/float used originally
+				if (value < Integer.MIN_VALUE || value > Integer.MAX_VALUE)
+					throw new SWRLParseException(this.tokenizer.sval + " is outside the range of xsd:int");
+				return new SWRLToken(SWRLToken.SWRLTokenType.INT, "" + this.tokenizer.nval);
+			} else {
+				if (value < Float.MIN_VALUE || value > Float.MAX_VALUE)
+					throw new SWRLParseException(this.tokenizer.sval + " is outside the range of xsd:float");
+				return new SWRLToken(SWRLToken.SWRLTokenType.FLOAT, "" + this.tokenizer.nval);
+			}
 		}
 		case StreamTokenizer.TT_WORD:
 			return new SWRLToken(SWRLToken.SWRLTokenType.SHORTNAME, this.tokenizer.sval);

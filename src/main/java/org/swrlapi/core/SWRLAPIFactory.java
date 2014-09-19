@@ -168,9 +168,9 @@ public class SWRLAPIFactory
 		return new SWRLParser(swrlapiOWLOntology);
 	}
 
-	public static DefaultSWRLAPIRuleRenderer createSWRLRuleRenderer(SWRLAPIOWLOntology swrlapiowlOntology)
+	public static DefaultSWRLAPIRuleRenderer createSWRLRuleRenderer(SWRLAPIOWLOntology swrlapiOWLOntology)
 	{
-		return new DefaultSWRLAPIRuleRenderer(swrlapiowlOntology.getPrefixManager());
+		return new DefaultSWRLAPIRuleRenderer(swrlapiOWLOntology);
 	}
 
 	public static SWRLRulesTableModel createSWRLRulesTableModel(SWRLRuleEngine swrlRuleEngine,
@@ -245,11 +245,6 @@ public class SWRLAPIFactory
 			return new ImageIcon(url);
 		else
 			throw new SWRLAPIException("No SQWRL icon found!");
-	}
-
-	public static SWRLAPIRuleRenderer getSWRLAPIRuleRenderer(SWRLAPIOWLOntology swrlapiowlOntology)
-	{
-		return new DefaultSWRLAPIRuleRenderer(swrlapiowlOntology.getPrefixManager());
 	}
 
 	public static OWLOntologyManager createOWLOntologyManager()

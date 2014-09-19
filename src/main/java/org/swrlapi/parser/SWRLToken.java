@@ -40,9 +40,9 @@ public class SWRLToken
 
 	public boolean isIRI() { return this.tokenType == SWRLTokenType.IRI; }
 
-	public boolean isDouble() { return this.tokenType == SWRLTokenType.DOUBLE; }
+	public boolean isInt() { return this.tokenType == SWRLTokenType.INT; }
 
-	public boolean isLong() { return this.tokenType == SWRLTokenType.LONG; }
+	public boolean isFloat() { return this.tokenType == SWRLTokenType.FLOAT; }
 
 	public boolean isTypeQualifier() { return this.tokenType == SWRLTokenType.TYPE_QUAL; }
 
@@ -64,7 +64,7 @@ public class SWRLToken
 
 	public static enum SWRLTokenType
 	{
-		SHORTNAME("short name"), IRI("IRI"), STRING("quoted string"), DOUBLE("double"), LONG("long"), TYPE_QUAL("^^"),
+		SHORTNAME("short name"), IRI("IRI"), STRING("quoted string"), FLOAT("float"), INT("int"), TYPE_QUAL("^^"),
 		AND("^"), IMP("->"), RING("."),
 		LPAREN("("), RPAREN(")"), COMMA(","), QUESTION("?"), END_OF_INPUT("end");
 

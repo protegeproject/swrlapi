@@ -13,6 +13,7 @@ import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
+import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.SWRLAtom;
 import org.semanticweb.owlapi.model.SWRLBuiltInAtom;
 import org.semanticweb.owlapi.model.SWRLClassAtom;
@@ -42,6 +43,7 @@ import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
+import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLAPIRuleRenderer;
 import org.swrlapi.parser.SWRLParser;
@@ -57,11 +59,13 @@ import org.swrlapi.sqwrl.SQWRLNames;
  */
 public class DefaultSWRLAPIRuleRenderer implements SWRLAPIRuleRenderer
 {
+	private final OWLOntology ontology;
 	private final DefaultPrefixManager prefixManager;
 
-	public DefaultSWRLAPIRuleRenderer(DefaultPrefixManager prefixManager)
+	public DefaultSWRLAPIRuleRenderer(SWRLAPIOWLOntology swrlapiowlOntology)
 	{
-		this.prefixManager = prefixManager;
+		this.ontology = swrlapiowlOntology.getOWLOntology();
+		this.prefixManager = swrlapiowlOntology.getPrefixManager();
 	}
 
 	@Override
@@ -214,9 +218,14 @@ public class DefaultSWRLAPIRuleRenderer implements SWRLAPIRuleRenderer
 	@Override
 	public String visit(SWRLVariable variable)
 	{
-		String variablePrefixedName = prefixManager.getPrefixIRI(variable.getIRI());
+		IRI variableIRI = variable.getIRI();
 
-		return variablePrefixedName2VariableName(variablePrefixedName);
+		if (this.ontology.containsEntityInSignature(variableIRI, true)) {
+			return this.prefixManager.getShortForm(variableIRI);
+		} else {
+			String variablePrefixedName = prefixManager.getPrefixIRI(variableIRI);
+			return variablePrefixedName2VariableName(variablePrefixedName);
+		}
 	}
 
 	@Override
@@ -434,9 +443,14 @@ public class DefaultSWRLAPIRuleRenderer implements SWRLAPIRuleRenderer
 	@Override
 	public String visit(SWRLVariableBuiltInArgument argument)
 	{
-		String variablePrefixedName = argument.getVariablePrefixedName();
+		IRI variableIRI = argument.getIRI();
 
-		return variablePrefixedName2VariableName(variablePrefixedName);
+		if (this.ontology.containsEntityInSignature(variableIRI, true)) {
+			return this.prefixManager.getShortForm(variableIRI);
+		} else {
+			String variablePrefixedName = prefixManager.getPrefixIRI(variableIRI);
+			return variablePrefixedName2VariableName(variablePrefixedName);
+		}
 	}
 
 	@Override
@@ -462,9 +476,9 @@ public class DefaultSWRLAPIRuleRenderer implements SWRLAPIRuleRenderer
 
 		if (datatype.isString())
 			return "\"" + value + "\"";
-		else if (datatype.isDouble())
+		else if (datatype.isFloat())
 			return value;
-		else if (datatype.getIRI().equals(XSDVocabulary.LONG.getIRI()))
+		else if (datatype.getIRI().equals(XSDVocabulary.INT.getIRI()))
 			return value;
 		else
 			return "\"" + value + "\"^^\"" + visit(datatype) + "\"";

@@ -12,7 +12,7 @@ import org.swrlapi.sqwrl.SQWRLQueryEngine;
  * Provides an application model that can be used to build a MVC-based GUI that uses the SWRLAPI. Used in conjunction
  * with a {@link org.swrlapi.ui.model.SWRLAPIApplicationModel} and
  * a {@link org.swrlapi.ui.controller.SWRLAPIApplicationController}.
- * 
+ *
  * @see org.swrlapi.ui.view.SWRLAPIApplicationView
  * @see org.swrlapi.ui.controller.SWRLAPIApplicationController
  */

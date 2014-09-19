@@ -158,7 +158,7 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 	}
 
 	@Override
-	public int getInteger() throws SQWRLLiteralException
+	public int getInt() throws SQWRLLiteralException
 	{
 		try {
 			if (isInteger())
