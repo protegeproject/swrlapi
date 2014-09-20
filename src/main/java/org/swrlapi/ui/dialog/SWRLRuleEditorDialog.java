@@ -39,7 +39,8 @@ public class SWRLRuleEditorDialog extends JDialog
 	private static final String OK_BUTTON_TITLE = "Ok";
 	private static final String CANCEL_BUTTON_TITLE = "Cancel";
 	private static final String STATUS_OK = "Ok";
-	private static final String STATUS_NO_RULE_TEXT = "Use Tab key to cycle through auto-completions; to remove auto-complete expansion, use Escape key";
+	private static final String STATUS_NO_RULE_TEXT =
+			"Use Tab key to cycle through auto-completions;" + " to remove auto-complete expansion, use Escape key";
 	private static final String INVALID_RULE_TITLE = "Invalid";
 	private static final String MISSING_RULE = "Nothing to save!";
 	private static final String MISSING_RULE_NAME_TITLE = "Empty Name";
@@ -48,6 +49,7 @@ public class SWRLRuleEditorDialog extends JDialog
 	private static final String QUIT_CONFIRM_MESSAGE = "Are you sure you want discard your changes?";
 	private static final String DUPLICATE_RULE_TEXT = "A rule exists with this name - please pick another name.";
 	private static final String DUPLICATE_RULE_TITLE = "Duplicate Rule Name";
+	private static final String INTERNAL_ERROR_TITLE = "Internal Error";
 
 	private static final int BUTTON_PREFERRED_WIDTH = 100;
 	private static final int BUTTON_PREFERRED_HEIGHT = 30;
@@ -376,6 +378,9 @@ public class SWRLRuleEditorDialog extends JDialog
 					errorOccurred = true;
 				} catch (SQWRLException pe) {
 					getApplicationDialogManager().showErrorMessageDialog(parent, pe.getMessage(), INVALID_RULE_TITLE);
+					errorOccurred = true;
+				} catch (RuntimeException pe) {
+					getApplicationDialogManager().showErrorMessageDialog(parent, pe.getMessage(), INTERNAL_ERROR_TITLE);
 					errorOccurred = true;
 				}
 			}

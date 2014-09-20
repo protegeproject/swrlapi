@@ -1,5 +1,6 @@
 package org.swrlapi.core;
 
+import org.apache.log4j.Logger;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLOntology;
@@ -50,6 +51,8 @@ public class SWRLAPIFactory
 {
 	private static final String SQWRL_ICON_NAME = "SQWRL.gif";
 	private static final String OWL2RL_ICON_NAME = "OWL2RL.gif";
+
+	private static final Logger log = Logger.getLogger(SWRLAPIFactory.class);
 
 	public static SWRLAPIOWLOntology createOntology(OWLOntology ontology)
 	{
@@ -117,22 +120,33 @@ public class SWRLAPIFactory
 			throw new SWRLAPIException("supplied OWL ontology is null");
 
 		DefaultPrefixManager prefixManager = new DefaultPrefixManager();
+
+		updatePrefixManager(ontology, prefixManager);
+
+		return prefixManager;
+	}
+
+	public static void updatePrefixManager(OWLOntology ontology, DefaultPrefixManager prefixManager)
+	{
 		OWLOntologyManager owlOntologyManager = ontology.getOWLOntologyManager();
 		OWLOntologyFormat ontologyFormat = owlOntologyManager.getOntologyFormat(ontology);
 
 		if (ontologyFormat.isPrefixOWLOntologyFormat()) {
 			PrefixOWLOntologyFormat prefixOntologyFormat = ontologyFormat.asPrefixOWLOntologyFormat();
 			String defaultPrefix = prefixOntologyFormat.getDefaultPrefix();
+
 			Map<String, String> map = prefixOntologyFormat.getPrefixName2PrefixMap();
 			for (String prefix : map.keySet())
 				prefixManager.setPrefix(prefix, map.get(prefix));
+
+			// TODO Look at this. Seems dodgy.
 			if (defaultPrefix != null)
 				prefixManager.setDefaultPrefix(defaultPrefix);
+			else
+				prefixManager.setDefaultPrefix(":");
+
 		}
-
 		addSWRLAPIPrefixes(prefixManager);
-
-		return prefixManager;
 	}
 
 	public static SWRLAPIApplicationModel createApplicationModel(SWRLAPIOWLOntology swrlapiOWLOntology,
