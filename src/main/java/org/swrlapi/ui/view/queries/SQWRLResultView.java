@@ -1,30 +1,21 @@
 package org.swrlapi.ui.view.queries;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileWriter;
-
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JViewport;
-import javax.swing.table.AbstractTableModel;
-
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.exceptions.SQWRLInvalidQueryNameException;
-import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLEntityResultValue;
+import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLResultValue;
 import org.swrlapi.ui.view.SWRLAPIView;
+
+import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
 
 /**
  * A view holding the result for a single SQWRL query.
@@ -100,17 +91,17 @@ public class SQWRLResultView extends JPanel implements SWRLAPIView
 						.runSQWRLQuery(SQWRLResultView.this.queryName);
 
 				if (SQWRLResultView.this.sqwrlResult == null || SQWRLResultView.this.sqwrlResult.getNumberOfRows() == 0) {
-					SQWRLResultView.this.sqwrlQueryControlView.appendToConsole("No result returned for SQWRL query '"
-							+ SQWRLResultView.this.queryName + "' - closing tab.\n");
+					SQWRLResultView.this.sqwrlQueryControlView.appendToConsole(
+							"No result returned for SQWRL query '" + SQWRLResultView.this.queryName + "' - closing tab.\n");
 					SQWRLResultView.this.sqwrlQueryControlView.removeSQWRLResultView(SQWRLResultView.this.queryName);
 				} else
 					validate();
 			} catch (SQWRLInvalidQueryNameException e) {
-				SQWRLResultView.this.sqwrlQueryControlView.appendToConsole("Invalid query name "
-						+ SQWRLResultView.this.queryName + ".\n");
+				SQWRLResultView.this.sqwrlQueryControlView
+						.appendToConsole("Invalid query name " + SQWRLResultView.this.queryName + ".\n");
 			} catch (SQWRLException e) {
-				SQWRLResultView.this.sqwrlQueryControlView.appendToConsole("Exception running SQWRL query '"
-						+ SQWRLResultView.this.queryName + "': " + e.getMessage() + "\n");
+				SQWRLResultView.this.sqwrlQueryControlView.appendToConsole(
+						"Exception running SQWRL query '" + SQWRLResultView.this.queryName + "': " + e.getMessage() + "\n");
 			}
 
 			/*
@@ -126,8 +117,8 @@ public class SQWRLResultView extends JPanel implements SWRLAPIView
 		public void actionPerformed(ActionEvent event)
 		{
 			SQWRLResultView.this.sqwrlQueryControlView.removeSQWRLResultView(SQWRLResultView.this.queryName);
-			SQWRLResultView.this.sqwrlQueryControlView.appendToConsole("'" + SQWRLResultView.this.queryName
-					+ "' tab closed.\n");
+			SQWRLResultView.this.sqwrlQueryControlView
+					.appendToConsole("'" + SQWRLResultView.this.queryName + "' tab closed.\n");
 		}
 	}
 
@@ -182,8 +173,9 @@ public class SQWRLResultView extends JPanel implements SWRLAPIView
 						}
 						SQWRLResultView.this.sqwrlResult.reset();
 						writer.close();
-						SQWRLResultView.this.sqwrlQueryControlView.appendToConsole("Sucessfully saved results of query "
-								+ SQWRLResultView.this.queryName + " to CSV file " + selectedFile.getPath() + ".\n");
+						SQWRLResultView.this.sqwrlQueryControlView.appendToConsole(
+								"Sucessfully saved results of query " + SQWRLResultView.this.queryName + " to CSV file " + selectedFile
+										.getPath() + ".\n");
 					}
 				}
 			} catch (Throwable e) {
@@ -232,8 +224,9 @@ public class SQWRLResultView extends JPanel implements SWRLAPIView
 		public String getColumnName(int columnIndex)
 		{
 			try {
-				return (SQWRLResultView.this.sqwrlResult == null) ? "" : SQWRLResultView.this.sqwrlResult
-						.getColumnName(columnIndex);
+				return (SQWRLResultView.this.sqwrlResult == null) ?
+						"" :
+						SQWRLResultView.this.sqwrlResult.getColumnName(columnIndex);
 			} catch (SQWRLException e) {
 				return "INVALID";
 			}
@@ -243,15 +236,16 @@ public class SQWRLResultView extends JPanel implements SWRLAPIView
 		public Object getValueAt(int row, int column)
 		{
 			try {
-				SQWRLResultValue sqwrlResultValue = (SQWRLResultView.this.sqwrlResult == null) ? null
-						: SQWRLResultView.this.sqwrlResult.getValue(column, row);
+				SQWRLResultValue sqwrlResultValue = (SQWRLResultView.this.sqwrlResult == null) ?
+						null :
+						SQWRLResultView.this.sqwrlResult.getValue(column, row);
 
 				if (sqwrlResultValue.isEntity()) {
 					SQWRLEntityResultValue sqwrlEntityResultValue = sqwrlResultValue.asEntityResult();
-					return sqwrlEntityResultValue.getPrefixedName();
+					return sqwrlEntityResultValue.getShortName();
 				} else if (sqwrlResultValue.isLiteral()) {
 					SQWRLLiteralResultValue sqwrLiteralResultValue = sqwrlResultValue.asLiteralResult();
-					return sqwrLiteralResultValue.getValue();
+					return sqwrLiteralResultValue.getValue(); // TODO Selectively qualify
 				} else
 					return "INVALID";
 

@@ -168,7 +168,7 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
 				} catch (SQWRLInvalidQueryNameException e) {
 					appendToConsole(queryName + " is not a valid SQWRL query or is not enabled.\n");
 				} catch (SQWRLException | RuntimeException e) {
-					if (queryName.isEmpty())
+					if (queryName == null || queryName.isEmpty())
 						appendToConsole("Exception running SQWRL queries: " + e.getMessage() + "\n");
 					else
 						appendToConsole("Exception when running SQWRL query " + queryName + ": " + e.getMessage() + "\n");
@@ -196,17 +196,17 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
 			else
 				appendToConsole("" + sqwrlResult.getNumberOfRows() + " rows were returned.\n");
 
-			SQWRLResultView sqwrlQueryResultView;
+			SQWRLResultView sqwrlResultView;
 			if (SQWRLQueryControlView.this.sqwrlResultViews.containsKey(queryName)) // Existing result tab found
-				sqwrlQueryResultView = SQWRLQueryControlView.this.sqwrlResultViews.get(queryName);
+				sqwrlResultView = SQWRLQueryControlView.this.sqwrlResultViews.get(queryName);
 			else { // Create new result tab
-				sqwrlQueryResultView = new SQWRLResultView(SQWRLQueryControlView.this.sqwrlQueryEngine, queryName, sqwrlResult,
+				sqwrlResultView = new SQWRLResultView(SQWRLQueryControlView.this.sqwrlQueryEngine, queryName, sqwrlResult,
 						this.sqwrlQueryControlView);
-				SQWRLQueryControlView.this.sqwrlResultViews.put(queryName, sqwrlQueryResultView);
-				((JTabbedPane)getParent()).addTab(queryName, SQWRLQueryControlView.this.queryEngineIcon, sqwrlQueryResultView,
+				SQWRLQueryControlView.this.sqwrlResultViews.put(queryName, sqwrlResultView);
+				((JTabbedPane)getParent()).addTab(queryName, SQWRLQueryControlView.this.queryEngineIcon, sqwrlResultView,
 						"SQWRL Result for query '" + queryName + "'");
 			}
-			sqwrlQueryResultView.validate();
+			sqwrlResultView.validate();
 			this.sqwrlQueryControlView.getParent().validate();
 		}
 
