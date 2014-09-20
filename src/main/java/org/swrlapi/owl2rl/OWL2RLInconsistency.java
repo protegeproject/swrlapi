@@ -8,7 +8,7 @@ public class OWL2RLInconsistency
 	private static Map<String, OWL2RLRuleArguments> argumentsDescriptionMap;
 
 	static {
-		argumentsDescriptionMap = new HashMap<String, OWL2RLRuleArguments>();
+		argumentsDescriptionMap = new HashMap<>();
 
 		createArgumentDescription(OWL2RLNames.Rule.EQ_DIFF1.toString(), 0, 2, 0, 0);
 		createArgumentDescription(OWL2RLNames.Rule.PRP_PDW.toString(), 0, 2, 2, 0);
@@ -29,8 +29,9 @@ public class OWL2RLInconsistency
 	private static void createArgumentDescription(String owl2RLRuleName, int numberOfClassArguments,
 			int numberOfIndividualArguments, int numberOfObjectPropertyArguments, int numberOfDataPropertyArguments)
 	{
-		argumentsDescriptionMap.put(owl2RLRuleName, new OWL2RLRuleArguments(numberOfClassArguments,
-				numberOfIndividualArguments, numberOfObjectPropertyArguments, numberOfDataPropertyArguments));
+		argumentsDescriptionMap.put(owl2RLRuleName,
+				new OWL2RLRuleArguments(numberOfClassArguments, numberOfIndividualArguments, numberOfObjectPropertyArguments,
+						numberOfDataPropertyArguments));
 	}
 
 	public static class OWL2RLRuleArguments

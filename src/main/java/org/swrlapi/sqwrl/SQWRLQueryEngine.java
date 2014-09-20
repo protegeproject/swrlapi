@@ -1,14 +1,13 @@
 package org.swrlapi.sqwrl;
 
-import java.util.Set;
-
-import org.swrlapi.exceptions.SWRLRuleEngineException;
 import org.swrlapi.owl2rl.OWL2RLEngine;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
+import java.util.Set;
+
 /**
  * This interface defines the methods that must be provided by a SQWRL query engine.
- * 
+ *
  * @see org.swrlapi.sqwrl.SQWRLQuery
  * @see org.swrlapi.sqwrl.SQWRLResult
  */

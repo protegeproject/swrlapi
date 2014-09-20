@@ -1,13 +1,12 @@
 package org.swrlapi.ui.view.owl2rl;
 
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JCheckBox;
-
 import org.swrlapi.owl2rl.OWL2RLNames;
 import org.swrlapi.ui.model.OWL2RLModel;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * @see org.swrlapi.ui.model.OWL2RLModel

@@ -14,7 +14,7 @@ class SWRLRuleEditorAutoCompleteState
 	{
 		this.textPosition = textPosition;
 		this.prefix = prefix;
-		this.expansions = new ArrayList<String>(expansions);
+		this.expansions = new ArrayList<>(expansions);
 		this.expansionIndex = 0;
 	}
 
@@ -26,16 +26,6 @@ class SWRLRuleEditorAutoCompleteState
 	public String getPrefix()
 	{
 		return this.prefix;
-	}
-
-	public List<String> getExpansions()
-	{
-		return new ArrayList<String>(this.expansions);
-	}
-
-	public int getExpansionIndex()
-	{
-		return this.expansionIndex;
 	}
 
 	public String getCurrentExpansion()

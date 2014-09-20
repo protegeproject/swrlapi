@@ -1,8 +1,6 @@
 package org.swrlapi.test;
 
 import org.semanticweb.owlapi.model.OWLDatatype;
-import org.semanticweb.owlapi.util.DefaultPrefixManager;
-import org.swrlapi.core.SWRLAPIFactory;
 import org.swrlapi.sqwrl.SQWRLQuery;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.SQWRLResult;
@@ -31,7 +29,7 @@ public class SWRLAPIRegressionTester
 
 	public void run()
 	{
-		Set<String> failedTests = new HashSet<String>();
+		Set<String> failedTests = new HashSet<>();
 		int numberOfTests = 0;
 		int passedTests = 0;
 

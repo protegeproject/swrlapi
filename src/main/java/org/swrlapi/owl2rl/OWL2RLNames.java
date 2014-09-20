@@ -14,8 +14,6 @@ public interface OWL2RLNames
 		RuleTable4, RuleTable5, RuleTable6, RuleTable7, RuleTable8, RuleTable9
 	}
 
-	;
-
 	enum Rule
 	{
 		EQ_REF, EQ_SYM, EQ_TRANS, EQ_REP_S, EQ_REP_P, EQ_REP_O, EQ_DIFF1, EQ_DIFF2, EQ_DIFF3, PRP_AP, PRP_DOM, PRP_RNG,
@@ -28,8 +26,6 @@ public interface OWL2RLNames
 		SCM_AVF1, SCM_AVF2, SCM_INT, SCM_UNI
 	}
 
-	;
-
 	Rule[] Table4Rules = { Rule.EQ_REF, Rule.EQ_SYM, Rule.EQ_TRANS, Rule.EQ_REP_S, Rule.EQ_REP_P, Rule.EQ_REP_O,
 			Rule.EQ_DIFF1, Rule.EQ_DIFF2, Rule.EQ_DIFF3 };
 
@@ -38,9 +34,8 @@ public interface OWL2RLNames
 			Rule.PRP_PDW, Rule.PRP_ADP, Rule.PRP_INV1, Rule.PRP_INV2, Rule.PRP_KEY, Rule.PRP_NPA1, Rule.PRP_NPA2 };
 
 	Rule[] Table6Rules = { Rule.CLS_THING, Rule.CLS_NOTHING1, Rule.CLS_NOTHING2, Rule.CLS_INT1, Rule.CLS_INT2,
-			Rule.CLS_UNI, Rule.CLS_COM, Rule.CLS_SFV1, Rule.CLS_SFV2, Rule.CLS_AVF, Rule.CLS_HV1,
-			Rule.CLS_HV2, Rule.CLS_MAXC1, Rule.CLS_MAXC2, Rule.CLS_MAXQC1, Rule.CLS_MAXQC2, Rule.CLS_MAXQC3, Rule.CLS_MAXQC4,
-			Rule.CLS_OO };
+			Rule.CLS_UNI, Rule.CLS_COM, Rule.CLS_SFV1, Rule.CLS_SFV2, Rule.CLS_AVF, Rule.CLS_HV1, Rule.CLS_HV2,
+			Rule.CLS_MAXC1, Rule.CLS_MAXC2, Rule.CLS_MAXQC1, Rule.CLS_MAXQC2, Rule.CLS_MAXQC3, Rule.CLS_MAXQC4, Rule.CLS_OO };
 
 	Rule[] Table7Rules = { Rule.CAX_SCO, Rule.CAX_EQC1, Rule.CAX_EQC2, Rule.CAX_DW, Rule.CAX_ADC };
 

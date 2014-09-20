@@ -44,7 +44,6 @@ import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
 import org.swrlapi.core.SWRLAPIOWLOntology;
-import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLAPIRuleRenderer;
 import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.sqwrl.SQWRLNames;
@@ -221,7 +220,7 @@ public class DefaultSWRLAPIRuleRenderer implements SWRLAPIRuleRenderer
 		IRI variableIRI = variable.getIRI();
 
 		if (this.ontology.containsEntityInSignature(variableIRI, true)) {
-			String shortForm =  this.prefixManager.getShortForm(variableIRI);
+			String shortForm = this.prefixManager.getShortForm(variableIRI);
 			return shortForm.startsWith(":") ? shortForm.substring(1) : shortForm;
 		} else {
 			String variablePrefixedName = prefixManager.getPrefixIRI(variableIRI);
@@ -447,7 +446,7 @@ public class DefaultSWRLAPIRuleRenderer implements SWRLAPIRuleRenderer
 		IRI variableIRI = argument.getIRI();
 
 		if (this.ontology.containsEntityInSignature(variableIRI, true)) {
-			String shortForm =  this.prefixManager.getShortForm(variableIRI);
+			String shortForm = this.prefixManager.getShortForm(variableIRI);
 			return shortForm.startsWith(":") ? shortForm.substring(1) : shortForm;
 		} else {
 			String variablePrefixedName = prefixManager.getPrefixIRI(variableIRI);

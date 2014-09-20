@@ -1,15 +1,11 @@
 package org.swrlapi.ui.view.rules;
 
-import java.awt.BorderLayout;
-
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JViewport;
-import javax.swing.table.AbstractTableModel;
-
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.ui.view.SWRLAPIView;
+
+import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
+import java.awt.*;
 
 public class AssertedOWLAxiomsView extends JPanel implements SWRLAPIView
 {
@@ -17,19 +13,18 @@ public class AssertedOWLAxiomsView extends JPanel implements SWRLAPIView
 
 	private final SWRLRuleEngine ruleEngine;
 	private final AssertedAxiomsTableModel assertedAxiomsTableModel;
-	private final JTable table;
 
 	public AssertedOWLAxiomsView(SWRLRuleEngine ruleEngine)
 	{
 		this.ruleEngine = ruleEngine;
 		this.assertedAxiomsTableModel = new AssertedAxiomsTableModel();
-		this.table = new JTable(this.assertedAxiomsTableModel);
+		JTable table = new JTable(this.assertedAxiomsTableModel);
 
 		setLayout(new BorderLayout());
 
-		JScrollPane scrollPane = new JScrollPane(this.table);
+		JScrollPane scrollPane = new JScrollPane(table);
 		JViewport viewPort = scrollPane.getViewport();
-		viewPort.setBackground(this.table.getBackground());
+		viewPort.setBackground(table.getBackground());
 
 		add(BorderLayout.CENTER, scrollPane);
 	}
@@ -67,7 +62,7 @@ public class AssertedOWLAxiomsView extends JPanel implements SWRLAPIView
 		public Object getValueAt(int row, int column)
 		{
 			if (row < 0 || row >= getRowCount())
-				return new String("OUT OF BOUNDS");
+				return "OUT OF BOUNDS";
 			else
 				return AssertedOWLAxiomsView.this.ruleEngine.getAssertedOWLAxioms().toArray()[row];
 		}

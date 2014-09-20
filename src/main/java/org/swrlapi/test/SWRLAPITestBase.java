@@ -110,8 +110,7 @@ public class SWRLAPITestBase
 		swrlapiowlOntology.createSQWRLQuery(queryName, query);
 	}
 
-	protected void createSWRLRule(String ruleName, String rule)
-			throws SWRLParseException
+	protected void createSWRLRule(String ruleName, String rule) throws SWRLParseException
 	{
 		swrlapiowlOntology.createSWRLRule(ruleName, rule);
 	}

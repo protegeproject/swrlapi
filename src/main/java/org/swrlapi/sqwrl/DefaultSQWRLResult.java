@@ -123,18 +123,18 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 		this.isRowOpen = false;
 
 		// The following variables will not be externally valid until configured() is called.
-		this.allColumnNames = new ArrayList<String>();
-		this.aggregateColumnIndexes = new HashMap<Integer, String>();
-		this.selectedColumnIndexes = new ArrayList<Integer>();
-		this.orderByColumnIndexes = new ArrayList<Integer>();
-		this.columnDisplayNames = new ArrayList<String>();
+		this.allColumnNames = new ArrayList<>();
+		this.aggregateColumnIndexes = new HashMap<>();
+		this.selectedColumnIndexes = new ArrayList<>();
+		this.orderByColumnIndexes = new ArrayList<>();
+		this.columnDisplayNames = new ArrayList<>();
 
 		this.numberOfColumns = 0;
 		this.isOrdered = this.isAscending = this.isDistinct = false;
 
 		// The following variables will not be externally valid until prepared() is called.
 		this.currentRowIndex = -1; // If there are no rows in the final result, it will remain at -1.
-		this.rows = new ArrayList<List<SQWRLResultValue>>();
+		this.rows = new ArrayList<>();
 	}
 
 	// Configuration phase methods
@@ -149,11 +149,6 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 	public boolean isRowOpen()
 	{
 		return this.isRowOpen;
-	}
-
-	public boolean isDistinct()
-	{
-		return this.isDistinct;
 	}
 
 	@Override
@@ -269,7 +264,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 	@Override
 	public List<String> getColumnNames() throws SQWRLException
 	{
-		List<String> result = new ArrayList<String>();
+		List<String> result = new ArrayList<>();
 
 		throwExceptionIfNotConfigured();
 
@@ -316,7 +311,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 		throwExceptionIfRowOpen();
 
 		this.currentRowDataColumnIndex = 0;
-		this.rowData = new ArrayList<SQWRLResultValue>();
+		this.rowData = new ArrayList<>();
 		this.isRowOpen = true;
 	}
 
@@ -616,7 +611,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 	private List<List<SQWRLResultValue>> processSelectionOperators(List<List<SQWRLResultValue>> sourceRows)
 			throws SQWRLException
 	{
-		List<List<SQWRLResultValue>> processedRows = new ArrayList<List<SQWRLResultValue>>();
+		List<List<SQWRLResultValue>> processedRows = new ArrayList<>();
 		boolean hasSelection = false;
 
 		if (hasLimit()) {
@@ -638,7 +633,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 				if (this.nth < 1)
 					this.nth = 1;
 				if (this.nth <= sourceRows.size()) {
-					List<List<SQWRLResultValue>> localRows = new ArrayList<List<SQWRLResultValue>>(sourceRows);
+					List<List<SQWRLResultValue>> localRows = new ArrayList<>(sourceRows);
 					localRows.remove(this.nth - 1);
 					processedRows.addAll(localRows);
 				} else
@@ -893,10 +888,10 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 
 	private void prepareColumnVectors() throws SQWRLException
 	{
-		this.columnValuesMap = new HashMap<String, List<SQWRLResultValue>>();
+		this.columnValuesMap = new HashMap<>();
 
 		if (getNumberOfColumns() > 0) {
-			List<List<SQWRLResultValue>> columns = new ArrayList<List<SQWRLResultValue>>(getNumberOfColumns());
+			List<List<SQWRLResultValue>> columns = new ArrayList<>(getNumberOfColumns());
 
 			for (int c = 0; c < getNumberOfColumns(); c++)
 				columns.add(new ArrayList<SQWRLResultValue>(getNumberOfRows()));
@@ -1014,8 +1009,8 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 	// TODO: fix - very inefficient
 	private List<List<SQWRLResultValue>> distinct(List<List<SQWRLResultValue>> sourceRows) throws SQWRLException
 	{
-		List<List<SQWRLResultValue>> localRows = new ArrayList<List<SQWRLResultValue>>(sourceRows);
-		List<List<SQWRLResultValue>> processedRows = new ArrayList<List<SQWRLResultValue>>();
+		List<List<SQWRLResultValue>> localRows = new ArrayList<>(sourceRows);
+		List<List<SQWRLResultValue>> processedRows = new ArrayList<>();
 		SQWRLResultRowComparator rowComparator = new SQWRLResultRowComparator(this.allColumnNames, true); // Look at the
 		// entire row.
 
@@ -1033,11 +1028,11 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 
 	private List<List<SQWRLResultValue>> aggregate(List<List<SQWRLResultValue>> sourceRows) throws SQWRLException
 	{
-		List<List<SQWRLResultValue>> result = new ArrayList<List<SQWRLResultValue>>();
+		List<List<SQWRLResultValue>> result = new ArrayList<>();
 		SQWRLResultRowComparator rowComparator = new SQWRLResultRowComparator(this.allColumnNames,
 				this.selectedColumnIndexes, true);
 		// Key is index of aggregated row in result, value is hash map of aggregate column index to list of original values.
-		HashMap<Integer, HashMap<Integer, List<SQWRLResultValue>>> aggregatesMap = new HashMap<Integer, HashMap<Integer, List<SQWRLResultValue>>>();
+		HashMap<Integer, HashMap<Integer, List<SQWRLResultValue>>> aggregatesMap = new HashMap<>();
 		HashMap<Integer, List<SQWRLResultValue>> aggregateRowMap; // Map of column indexes to value lists; used to
 		// accumulate
 		// values for aggregation.
@@ -1050,10 +1045,10 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 			// columns.
 
 			if (rowIndex < 0) { // Row with same values for non aggregated columns not yet present in result.
-				aggregateRowMap = new HashMap<Integer, List<SQWRLResultValue>>();
+				aggregateRowMap = new HashMap<>();
 				// Find value for each aggregated column in row and add each to map indexed by result row
 				for (Integer aggregateColumnIndex : this.aggregateColumnIndexes.keySet()) {
-					values = new ArrayList<SQWRLResultValue>();
+					values = new ArrayList<>();
 					value = row.get(aggregateColumnIndex);
 					values.add(value);
 					aggregateRowMap.put(aggregateColumnIndex, values);
@@ -1112,7 +1107,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 	private List<List<SQWRLResultValue>> orderBy(List<List<SQWRLResultValue>> sourceRows, boolean ascending)
 			throws SQWRLException
 	{
-		List<List<SQWRLResultValue>> result = new ArrayList<List<SQWRLResultValue>>(sourceRows);
+		List<List<SQWRLResultValue>> result = new ArrayList<>(sourceRows);
 		SQWRLResultRowComparator rowComparator = new SQWRLResultRowComparator(this.allColumnNames,
 				this.orderByColumnIndexes, ascending);
 
@@ -1233,7 +1228,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 
 	private SQWRLLiteralResultValue countDistinct(List<SQWRLResultValue> columnValues) throws SQWRLException
 	{
-		Set<SQWRLResultValue> distinctValues = new HashSet<SQWRLResultValue>(columnValues);
+		Set<SQWRLResultValue> distinctValues = new HashSet<>(columnValues);
 
 		return getSQWRLResultValueFactory().getLiteralValue(distinctValues.size());
 	}
@@ -1270,7 +1265,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 		public SQWRLResultRowComparator(List<String> allColumnNames, boolean ascending)
 		{
 			this.ascending = ascending;
-			this.orderByColumnIndexes = new ArrayList<Integer>();
+			this.orderByColumnIndexes = new ArrayList<>();
 
 			for (String columnName : allColumnNames)
 				this.orderByColumnIndexes.add(allColumnNames.indexOf(columnName));
@@ -1306,7 +1301,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 	private List<SQWRLLiteralResultValue> convert2LiteralResultValues(List<SQWRLResultValue> columnValues,
 			int columnIndex) throws SQWRLException
 	{
-		List<SQWRLLiteralResultValue> literalValues = new ArrayList<SQWRLLiteralResultValue>();
+		List<SQWRLLiteralResultValue> literalValues = new ArrayList<>();
 
 		int rowIndex = 0;
 		for (SQWRLResultValue value : columnValues) {

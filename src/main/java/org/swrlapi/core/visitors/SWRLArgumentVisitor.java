@@ -14,5 +14,4 @@ public interface SWRLArgumentVisitor
 	void visit(SWRLIndividualArgument swrlIndividualArgument);
 
 	void visit(SWRLLiteralArgument swrlLiteralArgument);
-
 }

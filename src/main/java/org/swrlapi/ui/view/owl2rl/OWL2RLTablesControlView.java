@@ -1,14 +1,13 @@
 package org.swrlapi.ui.view.owl2rl;
 
-import java.awt.GridLayout;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JPanel;
-
 import org.swrlapi.owl2rl.OWL2RLNames;
 import org.swrlapi.ui.model.OWL2RLModel;
 import org.swrlapi.ui.view.SWRLAPIView;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @see org.swrlapi.ui.model.OWL2RLModel
@@ -23,7 +22,7 @@ public class OWL2RLTablesControlView extends JPanel implements SWRLAPIView
 	public OWL2RLTablesControlView(OWL2RLModel owl2RLModel)
 	{
 		this.owl2RLModel = owl2RLModel;
-		this.ruleTableActivationButtons = new ArrayList<OWL2RLRuleTableActivationButton>();
+		this.ruleTableActivationButtons = new ArrayList<>();
 
 		initialize();
 	}

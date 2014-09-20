@@ -1,12 +1,10 @@
-
 package org.swrlapi.core.resolvers;
+
+import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
+import org.swrlapi.exceptions.SWRLAPIInternalException;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
-import org.swrlapi.exceptions.SWRLAPIException;
-import org.swrlapi.exceptions.SWRLAPIInternalException;
 
 /**
  * This class is used to keep track of OWL object property expressions, typically by a rule engine implementation. OWL 2 RL-based
@@ -25,8 +23,8 @@ public class OWLObjectPropertyExpressionResolver
 
 	public OWLObjectPropertyExpressionResolver()
 	{
-		this.id2OWLPropertyExpression = new HashMap<String, OWLObjectPropertyExpression>();
-		this.owlPropertyExpression2ID = new HashMap<OWLObjectPropertyExpression, String>();
+		this.id2OWLPropertyExpression = new HashMap<>();
+		this.owlPropertyExpression2ID = new HashMap<>();
 	}
 
 	public void reset()

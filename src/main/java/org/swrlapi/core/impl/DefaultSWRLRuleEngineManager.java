@@ -1,9 +1,9 @@
 package org.swrlapi.core.impl;
 
+import org.swrlapi.core.SWRLRuleEngineManager;
+
 import java.util.HashMap;
 import java.util.Set;
-
-import org.swrlapi.core.SWRLRuleEngineManager;
 
 public class DefaultSWRLRuleEngineManager implements SWRLRuleEngineManager
 {
@@ -11,7 +11,7 @@ public class DefaultSWRLRuleEngineManager implements SWRLRuleEngineManager
 
 	public DefaultSWRLRuleEngineManager()
 	{
-		this.registeredSWRLRuleEngines = new HashMap<String, TargetSWRLRuleEngineCreator>();
+		this.registeredSWRLRuleEngines = new HashMap<>();
 	}
 
 	@Override

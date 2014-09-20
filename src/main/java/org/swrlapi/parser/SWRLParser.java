@@ -1,9 +1,5 @@
 package org.swrlapi.parser;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 import org.semanticweb.owlapi.model.SWRLAtom;
 import org.semanticweb.owlapi.model.SWRLBuiltInAtom;
 import org.semanticweb.owlapi.model.SWRLClassAtom;
@@ -16,7 +12,10 @@ import org.semanticweb.owlapi.model.SWRLRule;
 import org.semanticweb.owlapi.model.SWRLSameIndividualAtom;
 import org.semanticweb.owlapi.model.SWRLVariable;
 import org.swrlapi.core.SWRLAPIOWLOntology;
-import org.swrlapi.core.SWRLAPIRule;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * A basic SWRL and SQWRL parser. It provides in interactive parsing mode for incomplete rules and queries and

@@ -1,10 +1,9 @@
-
 package org.swrlapi.sqwrl;
+
+import org.swrlapi.sqwrl.exceptions.SQWRLInvalidAggregateFunctionNameException;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import org.swrlapi.sqwrl.exceptions.SQWRLInvalidAggregateFunctionNameException;
 
 /**
  * @see org.swrlapi.sqwrl.SQWRLQuery
@@ -106,42 +105,40 @@ public class SQWRLNames
 	private static final String headAggregationBuiltInNamesArray[] = { Count, CountDistinct, Avg, Min, Max, Sum };
 
 	private static final String headSlicingBuiltInNamesArray[] = { Limit, Nth, NthGreatest, NthLast, NthSlice,
-			NthLastSlice, NthGreatestSlice,
-			NotNthGreatestSlice, NotNthLastSlice, NotNthSlice, NotNth, NotNthLast, NotNthGreatest, NotFirst, NotFirstN,
-			NotLast, NotLastN, NotGreatestN, NotGreatest,
-			NotLeastN, NotLeast, LastN, FirstN, LeastN, GreatestN };
+			NthLastSlice, NthGreatestSlice, NotNthGreatestSlice, NotNthLastSlice, NotNthSlice, NotNth, NotNthLast,
+			NotNthGreatest, NotFirst, NotFirstN, NotLast, NotLastN, NotGreatestN, NotGreatest, NotLeastN, NotLeast, LastN,
+			FirstN, LeastN, GreatestN };
 
 	private static final String collectionMakeBuiltInNamesArray[] = { MakeSet, MakeBag };
 	private static final String collectionGroupByBuiltInNamesArray[] = { GroupBy };
 
 	private static final String singleCollectionOperationWithoutCollectionCreateBuiltInNamesArray[] = { Size, IsEmpty,
-			NotIsEmpty, Element, NotElement, First,
-			Last, Least, Greatest, Min, Max, Sum, Avg, Median, Nth, NthGreatest, NthLast };
+			NotIsEmpty, Element, NotElement, First, Last, Least, Greatest, Min, Max, Sum, Avg, Median, Nth, NthGreatest,
+			NthLast };
 
 	private static final String singleCollectionOperationWithCollectionCreateBuiltInNamesArray[] = { NthSlice,
-			NthLastSlice, NthGreatestSlice,
-			NotNthGreatestSlice, NotNthLastSlice, NotNthSlice, NotNth, NotNthLast, NotNthGreatest, NotFirst, NotFirstN,
-			NotLast, NotLastN, NotGreatestN, NotGreatest,
-			NotLeastN, NotLeast, LastN, FirstN, LeastN, GreatestN };
+			NthLastSlice, NthGreatestSlice, NotNthGreatestSlice, NotNthLastSlice, NotNthSlice, NotNth, NotNthLast,
+			NotNthGreatest, NotFirst, NotFirstN, NotLast, NotLastN, NotGreatestN, NotGreatest, NotLeastN, NotLeast, LastN,
+			FirstN, LeastN, GreatestN };
 
 	private static final String multiCollectionOperationWithoutCollectionCreateBuiltInNamesArray[] = { Intersects,
-			NotIntersects, Equal, NotEqual, Contains,
-			NotContains };
+			NotIntersects, Equal, NotEqual, Contains, NotContains };
 
 	private static final String multiCollectionOperationWithCollectionCreateBuiltInNamesArray[] = { Intersection, Union,
 			Difference, Append };
 
 	public static final String aggregateFunctionNames[] = { MinAggregateFunction, MaxAggregateFunction,
-			SumAggregateFunction, AvgAggregateFunction,
-			MedianAggregateFunction, CountAggregateFunction, CountDistinctAggregateFunction };
+			SumAggregateFunction, AvgAggregateFunction, MedianAggregateFunction, CountAggregateFunction,
+			CountDistinctAggregateFunction };
 
 	private static Set<String> sqwrlBuiltInNames;
 	private static Set<String> headBuiltInNames, headSelectionBuiltInNames, headAggregationBuiltInNames, headSlicingBuiltInNames;
 	private static Set<String> collectionMakeBuiltInNames, collectionGroupByBuiltInNames;
-
-	private static Set<String> collectionCreateOperationBuiltInNames, collectionOperationBuiltInNames, singleCollectionOperationWithCollectionCreateBuiltInNames,
-			singleCollectionOperationWithoutCollectionCreateBuiltInNames, multiCollectionOperationWithCollectionCreateBuiltInNames,
-			multiCollectionOperationWithoutCollectionCreateBuiltInNames;
+	private static Set<String> collectionCreateOperationBuiltInNames, collectionOperationBuiltInNames;
+	private static Set<String> singleCollectionOperationWithCollectionCreateBuiltInNames;
+	private static Set<String> singleCollectionOperationWithoutCollectionCreateBuiltInNames;
+	private static Set<String> multiCollectionOperationWithCollectionCreateBuiltInNames;
+	private static Set<String> multiCollectionOperationWithoutCollectionCreateBuiltInNames;
 
 	static {
 		sqwrlBuiltInNames = new HashSet<String>();
@@ -301,5 +298,4 @@ public class SQWRLNames
 		if (!found)
 			throw new SQWRLInvalidAggregateFunctionNameException("invalid aggregate function " + aggregateFunctionName);
 	}
-
 }

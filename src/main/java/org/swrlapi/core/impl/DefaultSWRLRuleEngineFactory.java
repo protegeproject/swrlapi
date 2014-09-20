@@ -26,8 +26,8 @@ public class DefaultSWRLRuleEngineFactory implements SWRLRuleEngineFactory
 
 	/**
 	 * Register a rule engine. The {@link SWRLRuleEngineManager.TargetSWRLRuleEngineCreator} interface specifies a
-	 * {@link SWRLRuleEngineManager.TargetSWRLRuleEngineCreator#create(org.swrlapi.bridge.SWRLRuleEngineBridge)} method that
-	 * returns an implementation of a {@link org.swrlapi.bridge.TargetSWRLRuleEngine}.
+	 * {@link SWRLRuleEngineManager.TargetSWRLRuleEngineCreator#create(org.swrlapi.bridge.SWRLRuleEngineBridge)} method
+	 * that returns an implementation of a {@link org.swrlapi.bridge.TargetSWRLRuleEngine}.
 	 */
 	@Override
 	public void registerRuleEngine(SWRLRuleEngineManager.TargetSWRLRuleEngineCreator ruleEngineCreator)
@@ -50,8 +50,8 @@ public class DefaultSWRLRuleEngineFactory implements SWRLRuleEngineFactory
 	}
 
 	/**
-	 * Create an instance of a rule engine. If no engine is registered, a {@link org.swrlapi.exceptions.NoRegisteredSWRLRuleEnginesException} is
-	 * generated.
+	 * Create an instance of a rule engine. If no engine is registered, a
+	 * {@link org.swrlapi.exceptions.NoRegisteredSWRLRuleEnginesException} is generated.
 	 */
 	@Override
 	public SWRLRuleEngine createSWRLRuleEngine(SWRLAPIOWLOntology swrlapiOWLOntology)
@@ -74,15 +74,15 @@ public class DefaultSWRLRuleEngineFactory implements SWRLRuleEngineFactory
 				OWL2RLPersistenceLayer owl2RLPersistenceLayer = new DefaultOWL2RLPersistenceLayer(swrlapiOWLOntology);
 				DefaultSWRLBridge bridge = new DefaultSWRLBridge(swrlapiOWLOntology, owl2RLPersistenceLayer);
 				TargetSWRLRuleEngine targetSWRLRuleEngine = ruleEngineManager.getRegisteredRuleEngineCreator(ruleEngineName)
-						.create(
-								bridge);
+						.create(bridge);
 
 				bridge.setTargetSWRLRuleEngine(targetSWRLRuleEngine);
 
 				return new DefaultSWRLRuleEngine(swrlapiOWLOntology, targetSWRLRuleEngine, bridge, bridge);
 			} catch (Throwable e) {
-				throw new SWRLRuleEngineException("Error creating rule engine " + ruleEngineName + ". Exception: "
-						+ e.getClass().getCanonicalName() + ". Message: " + e.getMessage(), e);
+				throw new SWRLRuleEngineException(
+						"Error creating rule engine " + ruleEngineName + ". Exception: " + e.getClass().getCanonicalName()
+								+ ". Message: " + e.getMessage(), e);
 			}
 		} else
 			throw new InvalidSWRLRuleEngineNameException(ruleEngineName);

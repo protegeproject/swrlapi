@@ -1,17 +1,16 @@
 package org.swrlapi.ui.dialog;
 
+import javax.swing.filechooser.FileFilter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.swing.filechooser.FileFilter;
-
 /**
  * A file filter the works on a particular extension.
- * <p>
+ * <p/>
  * Taken from Protege.
- * 
+ *
  * @author Ray Fergerson <fergerson@smi.stanford.edu>
  */
 public class ExtensionFilter extends FileFilter

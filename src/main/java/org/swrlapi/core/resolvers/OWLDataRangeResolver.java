@@ -24,7 +24,7 @@ public class OWLDataRangeResolver
 
 	public OWLDataRangeResolver(OWLDataFactory owlDataFactory)
 	{
-		this.dataRangeMap = new HashMap<String, OWLDataRange>();
+		this.dataRangeMap = new HashMap<>();
 		this.owlDataFactory = owlDataFactory;
 		reset();
 	}

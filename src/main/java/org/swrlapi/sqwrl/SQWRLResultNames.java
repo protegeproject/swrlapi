@@ -8,13 +8,11 @@ import org.swrlapi.sqwrl.exceptions.SQWRLInvalidAggregateFunctionNameException;
  */
 public class SQWRLResultNames
 {
-	// Aggregation
 	public static final String MinAggregateFunction = "min";
 	public static final String MaxAggregateFunction = "max";
 	public static final String SumAggregateFunction = "sum";
 	public static final String AvgAggregateFunction = "avg";
 	public static final String MedianAggregateFunction = "median";
-
 	public static final String CountAggregateFunction = "count";
 	public static final String CountDistinctAggregateFunction = "countDistinct";
 
@@ -27,9 +25,11 @@ public class SQWRLResultNames
 	{
 		boolean found = false;
 
-		for (int i = 0; i < aggregateFunctionNames.length; i++)
-			if (aggregateFunctionNames[i].equalsIgnoreCase(aggregateFunctionName))
+		for (String candidateAggregateFunctionName : aggregateFunctionNames) {
+			if (candidateAggregateFunctionName.equalsIgnoreCase(aggregateFunctionName)) {
 				found = true;
+			}
+		}
 
 		if (!found)
 			throw new SQWRLInvalidAggregateFunctionNameException("invalid aggregate function " + aggregateFunctionName);

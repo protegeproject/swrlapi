@@ -2,7 +2,6 @@ package org.swrlapi.core.impl;
 
 import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.IRI;
-import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLClass;
@@ -55,7 +54,6 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	private final OWLOntologyManager ontologyManager;
 	private final OWLOntology ontology;
 	private final DefaultPrefixManager prefixManager;
-	private final IRIResolver iriResolver;
 	private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
 	private final SWRLAPIOntologyProcessor swrlapiOntologyProcessor;
 	private final SWRLParser swrlParser;
@@ -66,11 +64,10 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		this.ontologyManager = ontology.getOWLOntologyManager();
 		this.ontology = ontology;
 		this.prefixManager = prefixManager;
-		this.iriResolver = new IRIResolver(this.prefixManager);
-		this.swrlapiOWLDataFactory = SWRLAPIFactory.createSWRLAPIOWLDataFactory(this.iriResolver);
+		this.swrlapiOWLDataFactory = SWRLAPIFactory.createSWRLAPIOWLDataFactory(new IRIResolver(this.prefixManager));
 		this.swrlapiOntologyProcessor = SWRLAPIFactory.createOntologyProcessor(this);
 		this.swrlParser = new SWRLParser(this);
-		this.swrlBuiltInIRIs = new HashSet<IRI>();
+		this.swrlBuiltInIRIs = new HashSet<>();
 
 		addDefaultSWRLBuiltIns();
 	}
@@ -220,7 +217,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 
 	public Set<IRI> getSWRLBuiltInIRIs()
 	{
-		return new HashSet<IRI>(this.swrlBuiltInIRIs);
+		return new HashSet<>(this.swrlBuiltInIRIs);
 	}
 
 	public int getNumberOfSQWRLQueries()
@@ -322,7 +319,6 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	{
 		throw new SWRLAPIException("Not implemented"); // TODO
 	}
-
 
 	/**
 	 * We take an OWLAPI {@link org.semanticweb.owlapi.model.SWRLRule} object and for every
@@ -426,7 +422,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 
 	private boolean hackIRI(IRI iri) // TODO
 	{
-		String prefixedName = prefixManager.getPrefixIRI(iri);
+		//String prefixedName = prefixManager.getPrefixIRI(iri);
 
 		//return !prefixedName.equals(":name");
 		return true;

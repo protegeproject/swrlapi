@@ -1,13 +1,5 @@
 package org.swrlapi.core;
 
-import java.io.File;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLOntology;
@@ -37,6 +29,12 @@ import org.swrlapi.ui.controller.SWRLAPIApplicationController;
 import org.swrlapi.ui.dialog.SWRLAPIApplicationDialogManager;
 import org.swrlapi.ui.model.SWRLAPIApplicationModel;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
+
+import javax.swing.*;
+import java.io.File;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Factory for generating some of the core entities defined by the SWRLAPI.
@@ -288,8 +286,8 @@ public class SWRLAPIFactory
 		try {
 			return ontologyManager.loadOntologyFromOntologyDocument(file);
 		} catch (OWLOntologyCreationException e) {
-			throw new SWRLAPIException("Error create OWL ontology from file " + file.getAbsolutePath() + ": "
-					+ e.getMessage());
+			throw new SWRLAPIException(
+					"Error create OWL ontology from file " + file.getAbsolutePath() + ": " + e.getMessage());
 		}
 	}
 

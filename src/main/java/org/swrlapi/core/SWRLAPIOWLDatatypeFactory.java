@@ -20,8 +20,6 @@ public interface SWRLAPIOWLDatatypeFactory
 
 	OWLDatatype getOWLFloatDatatype();
 
-	OWLDatatype getOWLIntegerDatatype();
-
 	OWLDatatype getOWLIntDatatype();
 
 	OWLDatatype getOWLLongDatatype();

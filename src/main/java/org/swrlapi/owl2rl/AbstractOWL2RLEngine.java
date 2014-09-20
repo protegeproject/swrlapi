@@ -34,27 +34,27 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 		this.persistenceLayer = persistenceLayer;
 
 		this.rules = EnumSet.allOf(Rule.class);
-		this.ruleTables = new ArrayList<RuleTable>(Arrays.asList(RuleTable.values()));
+		this.ruleTables = new ArrayList<>(Arrays.asList(RuleTable.values()));
 
-		this.table2RulesMap = new HashMap<RuleTable, List<Rule>>();
-		this.table2RulesMap.put(RuleTable.RuleTable4, new ArrayList<Rule>(Arrays.asList(Table4Rules)));
-		this.table2RulesMap.put(RuleTable.RuleTable5, new ArrayList<Rule>(Arrays.asList(Table5Rules)));
-		this.table2RulesMap.put(RuleTable.RuleTable6, new ArrayList<Rule>(Arrays.asList(Table6Rules)));
-		this.table2RulesMap.put(RuleTable.RuleTable7, new ArrayList<Rule>(Arrays.asList(Table7Rules)));
-		this.table2RulesMap.put(RuleTable.RuleTable8, new ArrayList<Rule>(Arrays.asList(Table8Rules)));
-		this.table2RulesMap.put(RuleTable.RuleTable9, new ArrayList<Rule>(Arrays.asList(Table9Rules)));
+		this.table2RulesMap = new HashMap<>();
+		this.table2RulesMap.put(RuleTable.RuleTable4, new ArrayList<>(Arrays.asList(Table4Rules)));
+		this.table2RulesMap.put(RuleTable.RuleTable5, new ArrayList<>(Arrays.asList(Table5Rules)));
+		this.table2RulesMap.put(RuleTable.RuleTable6, new ArrayList<>(Arrays.asList(Table6Rules)));
+		this.table2RulesMap.put(RuleTable.RuleTable7, new ArrayList<>(Arrays.asList(Table7Rules)));
+		this.table2RulesMap.put(RuleTable.RuleTable8, new ArrayList<>(Arrays.asList(Table8Rules)));
+		this.table2RulesMap.put(RuleTable.RuleTable9, new ArrayList<>(Arrays.asList(Table9Rules)));
 
 		this.unsupportedRules = unsupportedRules;
 		this.permanentlyOnRules = permanentlyOnRules;
 		this.groupedRuleSets = groupedRuleSets;
 
 		// Switchable rules are the subset of rules that are not permanently and are not unsupported.
-		this.switchableRules = new HashSet<Rule>(this.rules);
+		this.switchableRules = new HashSet<>(this.rules);
 		this.switchableRules.removeAll(this.permanentlyOnRules);
 		this.switchableRules.removeAll(this.unsupportedRules);
 
 		// Enabled all switchable rules plus permanently on rules
-		this.enabledRules = new HashSet<Rule>(this.switchableRules);
+		this.enabledRules = new HashSet<>(this.switchableRules);
 		this.enabledRules.addAll(this.permanentlyOnRules);
 
 		// Persistence layer can indicate rule is disabled.
@@ -102,7 +102,7 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 	@Override
 	public List<Rule> getRules()
 	{
-		return new ArrayList<Rule>(this.rules);
+		return new ArrayList<>(this.rules);
 	}
 
 	@Override
@@ -167,7 +167,7 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 	@Override
 	public void disableTables(RuleTable... disabledTables)
 	{
-		Set<Rule> disabledRules = new HashSet<Rule>();
+		Set<Rule> disabledRules = new HashSet<>();
 
 		for (RuleTable table : disabledTables)
 			for (Rule rule : this.table2RulesMap.get(table))
@@ -268,7 +268,7 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 	 */
 	private Set<Rule> getGroup(Rule rule)
 	{
-		Set<Rule> result = new HashSet<Rule>();
+		Set<Rule> result = new HashSet<>();
 
 		result.add(rule);
 

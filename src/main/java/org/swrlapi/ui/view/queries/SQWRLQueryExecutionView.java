@@ -1,14 +1,13 @@
 package org.swrlapi.ui.view.queries;
 
-import javax.swing.Icon;
-import javax.swing.JTabbedPane;
-
 import org.swrlapi.core.SWRLAPIFactory;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.ui.model.SWRLAPIApplicationModel;
 import org.swrlapi.ui.view.SWRLAPIView;
 import org.swrlapi.ui.view.owl2rl.OWL2RLRuleTablesView;
+
+import javax.swing.*;
 
 /**
  *

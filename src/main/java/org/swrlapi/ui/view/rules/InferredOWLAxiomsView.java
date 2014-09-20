@@ -64,7 +64,7 @@ public class InferredOWLAxiomsView extends JPanel implements SWRLAPIView
 		public Object getValueAt(int row, int column)
 		{
 			if (row < 0 || row >= getRowCount())
-				return new String("OUT OF BOUNDS");
+				return "OUT OF BOUNDS";
 			else {
 				return InferredOWLAxiomsView.this.ruleEngine.getInferredOWLAxioms().toArray()[row];
 			}

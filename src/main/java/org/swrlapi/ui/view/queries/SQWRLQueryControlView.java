@@ -31,7 +31,7 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
 	private final SQWRLQuerySelector sqwrlQuerySelector;
 	private final JTextArea console;
 	private final Icon queryEngineIcon;
-	private final HashMap<String, SQWRLResultView> sqwrlResultViews = new HashMap<String, SQWRLResultView>();
+	private final HashMap<String, SQWRLResultView> sqwrlResultViews = new HashMap<>();
 
 	public SQWRLQueryControlView(SQWRLQueryEngine sqwrlQueryEngine, SQWRLQuerySelector sqwrlQuerySelector,
 			Icon queryEngineIcon)
@@ -79,7 +79,7 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
 		if (this.sqwrlResultViews.containsKey(queryName)) {
 			SQWRLResultView sqwrlResultView = this.sqwrlResultViews.get(queryName);
 			this.sqwrlResultViews.remove(queryName);
-			((JTabbedPane)getParent()).remove(sqwrlResultView);
+			getParent().remove(sqwrlResultView);
 			((JTabbedPane)getParent()).setSelectedIndex(0);
 		}
 	}
@@ -87,7 +87,7 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
 	public void removeAllSQWRLResultViews()
 	{
 		for (SQWRLResultView sqwrlResultView : this.sqwrlResultViews.values())
-			((JTabbedPane)getParent()).remove(sqwrlResultView);
+			getParent().remove(sqwrlResultView);
 		this.sqwrlResultViews.clear();
 	}
 
@@ -167,13 +167,8 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
 					}
 				} catch (SQWRLInvalidQueryNameException e) {
 					appendToConsole(queryName + " is not a valid SQWRL query or is not enabled.\n");
-				} catch (SQWRLException e) {
-					if (queryName.length() == 0)
-						appendToConsole("Exception running SQWRL queries: " + e.getMessage() + "\n");
-					else
-						appendToConsole("Exception when running SQWRL query " + queryName + ": " + e.getMessage() + "\n");
-				} catch (RuntimeException e) {
-					if (queryName.length() == 0)
+				} catch (SQWRLException | RuntimeException e) {
+					if (queryName.isEmpty())
 						appendToConsole("Exception running SQWRL queries: " + e.getMessage() + "\n");
 					else
 						appendToConsole("Exception when running SQWRL query " + queryName + ": " + e.getMessage() + "\n");

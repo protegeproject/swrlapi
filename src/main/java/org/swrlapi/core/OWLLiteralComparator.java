@@ -94,9 +94,6 @@ public final class OWLLiteralComparator implements Comparator<OWLLiteral>
 			} else
 				// The OWLAPI seems to do a rather odd comparison so we use a natural order comparison
 				return naturalOrderComparator.compare(l1.getLiteral(), l2.getLiteral());
-		} catch (NumberFormatException e) {
-			throw new SWRLAPIException("Literal " + l1.getLiteral() + " or " + l2.getLiteral() + " not valid "
-					+ l1.getDatatype().getIRI());
 		} catch (IllegalArgumentException e) {
 			throw new SWRLAPIException("Literal " + l1.getLiteral() + " or " + l2.getLiteral() + " not valid "
 					+ l1.getDatatype().getIRI());

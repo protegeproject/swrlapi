@@ -41,15 +41,15 @@ public class IRIResolver
 	{
 		this.prefixManager = prefixManager;
 
-		this.prefixedName2IRI = new HashMap<String, IRI>();
-		this.iri2PrefixedNameCache = new HashMap<IRI, String>();
-		this.variablePrefixedNames = new HashSet<String>();
-		this.classPrefixedNames = new HashSet<String>();
-		this.namedIndividualPrefixedNames = new HashSet<String>();
-		this.objectPropertyPrefixedNames = new HashSet<String>();
-		this.dataPropertyPrefixedNames = new HashSet<String>();
-		this.annotationPropertyPrefixedNames = new HashSet<String>();
-		this.datatypePrefixedNames = new HashSet<String>();
+		this.prefixedName2IRI = new HashMap<>();
+		this.iri2PrefixedNameCache = new HashMap<>();
+		this.variablePrefixedNames = new HashSet<>();
+		this.classPrefixedNames = new HashSet<>();
+		this.namedIndividualPrefixedNames = new HashSet<>();
+		this.objectPropertyPrefixedNames = new HashSet<>();
+		this.dataPropertyPrefixedNames = new HashSet<>();
+		this.annotationPropertyPrefixedNames = new HashSet<>();
+		this.datatypePrefixedNames = new HashSet<>();
 	}
 
 	public void reset()

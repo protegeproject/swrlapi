@@ -1,17 +1,16 @@
 package org.swrlapi.ui.model;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
-import javax.swing.table.AbstractTableModel;
-
 import org.apache.log4j.Logger;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.core.impl.DefaultSWRLAPIRuleRenderer;
 import org.swrlapi.ui.view.SWRLAPIView;
+
+import javax.swing.table.AbstractTableModel;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * This class models a list of SWRL rules or SQWRL queries in an ontology for tabular display.
@@ -67,7 +66,7 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 
 	public Set<SWRLRuleModel> getSWRLRuleModels(boolean isActiveFlag)
 	{
-		Set<SWRLRuleModel> result = new HashSet<SWRLRuleModel>();
+		Set<SWRLRuleModel> result = new HashSet<>();
 		for (SWRLRuleModel swrlRuleModel : swrlRuleModels.values()) {
 			if (swrlRuleModel.isActive() == isActiveFlag) {
 				result.add(swrlRuleModel);
@@ -176,13 +175,13 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 	public String getColumnName(int column)
 	{
 		if (column == RULE_NAME_COLUMN)
-			return new String("Name");
+			return "Name";
 		else if (column == RULE_TEXT_COLUMN)
-			return new String("Rule");
+			return "Rule";
 		else if (column == RULE_COMMENT_COLUMN)
-			return new String("Comment");
+			return "Comment";
 		else if (column == ACTIVE_COLUMN)
-			return new String("");
+			return "";
 		else
 			return null;
 	}
@@ -193,7 +192,7 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 		Object result = null;
 
 		if ((row < 0 || row >= getRowCount()) || ((column < 0 || column >= getColumnCount())))
-			result = new String("OUT OF BOUNDS");
+			result = "OUT OF BOUNDS";
 		else {
 			if (column == RULE_TEXT_COLUMN)
 				result = ((SWRLRuleModel)swrlRuleModels.values().toArray()[row]).getRuleText();

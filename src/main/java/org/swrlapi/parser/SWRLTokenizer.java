@@ -34,14 +34,14 @@ public class SWRLTokenizer
 		this.tokenizer = new StreamTokenizer(new StringReader(input));
 		this.tokenizer.parseNumbers();
 
-		this.swrlVariables = new HashSet<String>();
+		this.swrlVariables = new HashSet<>();
 		this.interactiveParseOnly = interactiveParseOnly;
 
-		for (int i = 0; i < wordChars.length; i++)
-			this.tokenizer.wordChars(wordChars[i], wordChars[i]);
+		for (char wordChar : wordChars)
+			this.tokenizer.wordChars(wordChar, wordChar);
 
-		for (int i = 0; i < ordinaryChars.length; i++)
-			this.tokenizer.ordinaryChar(ordinaryChars[i]);
+		for (char ordinaryChar : ordinaryChars)
+			this.tokenizer.ordinaryChar(ordinaryChar);
 
 		this.tokens = generateTokens();
 		this.tokenPosition = 0;
@@ -57,7 +57,6 @@ public class SWRLTokenizer
 	// // Skip underscore
 	// this.tokenizer.ordinaryChar('`');
 	// this.tokenizer.ordinaryChars('{', '~');
-
 
 	public void reset()
 	{
@@ -159,15 +158,16 @@ public class SWRLTokenizer
 
 	public static boolean isOrdinaryChar(char c)
 	{
-		for (int i = 0; i < ordinaryChars.length; i++)
-			if (ordinaryChars[i] == c)
+		for (char ordinaryChar : ordinaryChars) {
+			if (ordinaryChar == c)
 				return true;
+		}
 		return false;
 	}
 
 	private List<SWRLToken> generateTokens() throws SWRLParseException
 	{
-		List<SWRLToken> tokens = new ArrayList<SWRLToken>();
+		List<SWRLToken> tokens = new ArrayList<>();
 		SWRLToken token = generateToken();
 		while (token.getTokenType() != SWRLToken.SWRLTokenType.END_OF_INPUT) {
 			tokens.add(token);

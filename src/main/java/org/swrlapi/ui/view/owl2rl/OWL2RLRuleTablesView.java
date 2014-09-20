@@ -1,14 +1,13 @@
 package org.swrlapi.ui.view.owl2rl;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JTabbedPane;
-
 import org.swrlapi.owl2rl.OWL2RLEngine;
 import org.swrlapi.owl2rl.OWL2RLNames;
 import org.swrlapi.ui.model.OWL2RLModel;
 import org.swrlapi.ui.view.SWRLAPIView;
+
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OWL2RLRuleTablesView extends JTabbedPane implements SWRLAPIView
 {
@@ -21,7 +20,7 @@ public class OWL2RLRuleTablesView extends JTabbedPane implements SWRLAPIView
 	public OWL2RLRuleTablesView(OWL2RLEngine owl2RLEngine)
 	{
 		this.owl2RLModel = new OWL2RLModel(this, owl2RLEngine);
-		this.owl2RLTableViews = new ArrayList<OWL2RLRuleTableView>();
+		this.owl2RLTableViews = new ArrayList<>();
 		this.owl2RLControlView = new OWL2RLControlView(this.owl2RLModel);
 
 		initialize();

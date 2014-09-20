@@ -29,7 +29,7 @@ public class SWRLAutoCompleter
 			this.entityShortForms.add(shortForm);
 		}
 
-		for (IRI swrlBuiltInIRI: swrlapiowlOntology.getSWRLBuiltInIRIs()) {
+		for (IRI swrlBuiltInIRI : swrlapiowlOntology.getSWRLBuiltInIRIs()) {
 			String shortForm = prefixManager.getShortForm(swrlBuiltInIRI);
 			if (shortForm.startsWith(":"))
 				this.entityShortForms.add(shortForm.substring(1));
@@ -46,7 +46,7 @@ public class SWRLAutoCompleter
 
 	public List<String> getCompletions(String prefix)
 	{ // TODO Look at - not very efficient
-		List<String> completions = new ArrayList<String>();
+		List<String> completions = new ArrayList<>();
 
 		for (String shortForm : entityShortForms) {
 			if (shortForm.startsWith(prefix))

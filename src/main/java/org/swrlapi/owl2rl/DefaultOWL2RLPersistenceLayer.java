@@ -1,10 +1,10 @@
 package org.swrlapi.owl2rl;
 
+import org.swrlapi.core.SWRLAPIOWLOntology;
+
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
-
-import org.swrlapi.core.SWRLAPIOWLOntology;
 
 // TODO Implement this
 public class DefaultOWL2RLPersistenceLayer implements OWL2RLPersistenceLayer
@@ -20,7 +20,7 @@ public class DefaultOWL2RLPersistenceLayer implements OWL2RLPersistenceLayer
 	@Override
 	public Set<OWL2RLNames.Rule> getEnabledRules()
 	{
-		Set<OWL2RLNames.Rule> enabledRules = new HashSet<OWL2RLNames.Rule>();
+		Set<OWL2RLNames.Rule> enabledRules = new HashSet<>();
 
 		for (OWL2RLNames.Rule rule : EnumSet.allOf(OWL2RLNames.Rule.class))
 			if (!isOWL2RLRuleDisabled(rule)) // If not explicitly disabled, assume enabled

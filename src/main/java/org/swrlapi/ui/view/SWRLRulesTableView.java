@@ -1,19 +1,18 @@
 package org.swrlapi.ui.view;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.EventListener;
+import org.swrlapi.ui.dialog.SWRLAPIApplicationDialogManager;
+import org.swrlapi.ui.model.SWRLAPIApplicationModel;
+import org.swrlapi.ui.model.SWRLRulesTableModel;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumnModel;
-
-import org.swrlapi.ui.dialog.SWRLAPIApplicationDialogManager;
-import org.swrlapi.ui.model.SWRLRulesTableModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 {
@@ -28,24 +27,25 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 	private static final int COMMENT_COLUMN_PREFERRED_WIDTH = 200;
 	private static final int COMMENT_COLUMN_MAX_WIDTH = 300;
 
+	private final SWRLAPIApplicationModel applicationModel;
 	private final SWRLAPIApplicationDialogManager applicationDialogManager;
 	private final SWRLRulesTableModel swrlRulesTableModel;
 	private final JTable swrlRulesTable;
 
 	private JButton editButton, deleteButton;
 
-	public SWRLRulesTableView(SWRLRulesTableModel swrlRulesTableModel,
-			SWRLAPIApplicationDialogManager applicationDialogManager)
+	public SWRLRulesTableView(SWRLAPIApplicationModel applicationModel, SWRLAPIApplicationDialogManager dialogManager)
 	{
-		this.applicationDialogManager = applicationDialogManager;
-		this.swrlRulesTableModel = swrlRulesTableModel;
+		this.applicationModel = applicationModel;
+		this.applicationDialogManager = dialogManager;
+		this.swrlRulesTableModel = applicationModel.getSWRLRulesTableModel();
 		this.swrlRulesTable = new JTable(this.swrlRulesTableModel);
 		this.swrlRulesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		addTableListeners();
 		setPreferredColumnWidths();
 		swrlRulesTableModel.setView(this);
-		createComponents(applicationDialogManager);
+		createComponents(dialogManager);
 	}
 
 	@Override
@@ -185,6 +185,8 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 
 	private boolean hasSelectedRule() { return this.swrlRulesTable.getSelectedRow() != -1; }
 
+	private SWRLAPIApplicationModel getSWRLAPIApplicationModel() { return this.applicationModel; }
+
 	private abstract class ActionListenerBase implements ActionListener
 	{
 		protected final SWRLAPIApplicationDialogManager applicationDialogManager;
@@ -246,6 +248,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 			if (SWRLRulesTableView.this.swrlRulesTableModel.hasSWRLRule(selectedRuleName) && this.applicationDialogManager
 					.showConfirmDialog(parent, "Do you really want to delete the rule?", "Delete Rule")) {
 				SWRLRulesTableView.this.swrlRulesTableModel.removeSWRLRule(selectedRuleName);
+				getSWRLAPIApplicationModel().getSWRLAPIOWLOntology().deleteSWRLRule(selectedRuleName);
 			}
 		}
 	}

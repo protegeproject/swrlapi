@@ -1,7 +1,5 @@
 package org.swrlapi.core;
 
-import java.net.URI;
-
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.swrlapi.core.xsd.XSDDate;
@@ -9,6 +7,8 @@ import org.swrlapi.core.xsd.XSDDateTime;
 import org.swrlapi.core.xsd.XSDDuration;
 import org.swrlapi.core.xsd.XSDTime;
 import org.swrlapi.exceptions.SQWRLLiteralException;
+
+import java.net.URI;
 
 /**
  * The SWRLAPI's literal wraps an OWLAPI literal to provide additional convenience methods used by the SWRLAPI.
@@ -83,8 +83,7 @@ public interface SWRLAPILiteral
 
 	boolean isQuotableType();
 
-	@Override
-	String toString();
+	@Override String toString();
 
 	String toQuotedString();
 }

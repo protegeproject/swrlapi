@@ -1,12 +1,12 @@
 package org.swrlapi.core.resolvers;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 import org.swrlapi.exceptions.SWRLAPIInternalException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class is used to keep track of class expressions, typically by a rule engine implementation. OWL 2 RL-based
@@ -26,8 +26,8 @@ public class OWLClassExpressionResolver
 
 	public OWLClassExpressionResolver(OWLDataFactory owlDataFactory)
 	{
-		this.id2OWLClassExpression = new HashMap<String, OWLClassExpression>();
-		this.owlClassExpression2ID = new HashMap<OWLClassExpression, String>();
+		this.id2OWLClassExpression = new HashMap<>();
+		this.owlClassExpression2ID = new HashMap<>();
 		this.owlDataFactory = owlDataFactory;
 		reset();
 	}

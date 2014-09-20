@@ -1,16 +1,16 @@
 package org.swrlapi.core;
 
-import java.util.List;
-import java.util.Set;
-
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.SWRLBuiltInAtom;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 
+import java.util.List;
+import java.util.Set;
+
 /**
  * The SWRLAPI's built-in atom extends the OWLAPI's built-in atom with additional functionality. In addition to the
  * {@link SWRLBuiltInArgument} class, this interface is the SWRLAPI's primary OWLAPI extension point.
- * 
+ *
  * @see org.swrlapi.builtins.arguments.SWRLBuiltInArgument
  */
 public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtom

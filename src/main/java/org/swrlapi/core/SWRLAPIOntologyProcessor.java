@@ -1,15 +1,14 @@
 package org.swrlapi.core;
 
-import java.util.Set;
-
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.SWRLRule;
-import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLRuleException;
 import org.swrlapi.sqwrl.SQWRLQuery;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
+
+import java.util.Set;
 
 /**
  * This interface defines a processor processes an SWRLAPI-based OWL ontology (represented by the interface

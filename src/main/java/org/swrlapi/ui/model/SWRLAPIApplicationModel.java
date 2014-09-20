@@ -23,7 +23,6 @@ public class SWRLAPIApplicationModel implements SWRLAPIModel
 	private final SQWRLQueryEngine queryEngine;
 	private final SWRLRuleEngine ruleEngine;
 	private final SWRLParser swrlParser;
-	private final DefaultPrefixManager prefixManager;
 	private final DefaultSWRLAPIRuleRenderer swrlRuleRenderer;
 
 	public SWRLAPIApplicationModel(SWRLAPIOWLOntology swrlapiOWLOntology, SWRLRuleEngine ruleEngine)
@@ -31,7 +30,6 @@ public class SWRLAPIApplicationModel implements SWRLAPIModel
 		this.swrlapiowlOntology = swrlapiOWLOntology;
 		this.ruleEngine = ruleEngine;
 		this.queryEngine = ruleEngine;
-		this.prefixManager = swrlapiOWLOntology.getPrefixManager();
 		this.swrlRuleRenderer = SWRLAPIFactory.createSWRLRuleRenderer(swrlapiowlOntology);
 		this.swrlRulesTableModel = SWRLAPIFactory.createSWRLRulesTableModel(ruleEngine, swrlRuleRenderer);
 		this.swrlParser = SWRLAPIFactory.createSWRLParser(swrlapiOWLOntology);
@@ -54,17 +52,10 @@ public class SWRLAPIApplicationModel implements SWRLAPIModel
 		return this.swrlParser;
 	}
 
-	public DefaultPrefixManager getPrefixManager()
-	{
-		return this.prefixManager;
-	}
-
 	public SWRLRulesTableModel getSWRLRulesTableModel()
 	{
 		return this.swrlRulesTableModel;
 	}
-
-	public void saveSWRLRules() {} // TODO
 
 	public boolean areSWRLRulesModified() { return swrlRulesTableModel.hasBeenModified(); }
 

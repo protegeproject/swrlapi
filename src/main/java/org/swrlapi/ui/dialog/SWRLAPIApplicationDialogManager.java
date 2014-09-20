@@ -1,18 +1,15 @@
 package org.swrlapi.ui.dialog;
 
-import java.awt.Component;
-import java.io.File;
-
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-
 import org.swrlapi.ui.model.SWRLAPIApplicationModel;
+
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
 
 /**
  * Provides a set of dialogs that can be used to build a MVC-based GUI that uses the SWRLAPI. Used in
  * conjunction with a {@link org.swrlapi.ui.controller.SWRLAPIApplicationController}.
- * 
+ *
  * @see org.swrlapi.ui.controller.SWRLAPIApplicationController
  * @see org.swrlapi.ui.model.SWRLAPIApplicationModel
  * @see org.swrlapi.ui.view.SWRLAPIApplicationView
@@ -71,7 +68,8 @@ public class SWRLAPIApplicationDialogManager
 
 	public JFileChooser createFileChooser(String title, String fileDescription, String fileExtension)
 	{
-		JFileChooser chooser = new JFileChooser(this.lastDirectory) {
+		JFileChooser chooser = new JFileChooser(this.lastDirectory)
+		{
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -96,7 +94,8 @@ public class SWRLAPIApplicationDialogManager
 	public JFileChooser createSaveFileChooser(String title, String fileDescription, String fileExtension,
 			final boolean overwrite)
 	{
-		JFileChooser chooser = new JFileChooser(this.lastDirectory) {
+		JFileChooser chooser = new JFileChooser(this.lastDirectory)
+		{
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -121,8 +120,8 @@ public class SWRLAPIApplicationDialogManager
 				if (f.exists()) {
 					String msg = "The file '" + f.getName() + "' already exists!\nDo you want to replace it?";
 					String title = getDialogTitle();
-					int option = JOptionPane.showConfirmDialog(this, msg, title, JOptionPane.YES_NO_OPTION,
-							JOptionPane.WARNING_MESSAGE);
+					int option = JOptionPane
+							.showConfirmDialog(this, msg, title, JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 					if (option == JOptionPane.NO_OPTION) {
 						return;
 					}

@@ -1,21 +1,15 @@
 package org.swrlapi.ui.view.rules;
 
-import java.awt.BorderLayout;
-import java.util.Set;
-
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JViewport;
-import javax.swing.table.AbstractTableModel;
-
-import org.semanticweb.owlapi.model.OWLOntology;
-import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.core.impl.DefaultSWRLAPIRuleRenderer;
 import org.swrlapi.ui.view.SWRLAPIView;
+
+import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
+import java.awt.*;
+import java.util.Set;
 
 public class ImportedSWRLRulesView extends JPanel implements SWRLAPIView
 {
@@ -24,19 +18,18 @@ public class ImportedSWRLRulesView extends JPanel implements SWRLAPIView
 	private final SWRLRuleEngine swrlRuleEngine;
 	private final DefaultSWRLAPIRuleRenderer swrlRulePrinter;
 	private final SWRLRulesTableModel swrlRulesTableModel;
-	private final JTable swrlRulesTable;
 
 	public ImportedSWRLRulesView(SWRLRuleEngine ruleEngine, SWRLAPIOWLOntology swrlapiowlOntology)
 	{
 		this.swrlRuleEngine = ruleEngine;
 		this.swrlRulesTableModel = new SWRLRulesTableModel();
-		this.swrlRulesTable = new JTable(this.swrlRulesTableModel);
+		JTable swrlRulesTable = new JTable(this.swrlRulesTableModel);
 		this.swrlRulePrinter = new DefaultSWRLAPIRuleRenderer(swrlapiowlOntology);
 
-		JScrollPane scrollPane = new JScrollPane(this.swrlRulesTable);
+		JScrollPane scrollPane = new JScrollPane(swrlRulesTable);
 		JViewport viewPort = scrollPane.getViewport();
 		setLayout(new BorderLayout());
-		viewPort.setBackground(this.swrlRulesTable.getBackground());
+		viewPort.setBackground(swrlRulesTable.getBackground());
 		add(BorderLayout.CENTER, scrollPane);
 	}
 
@@ -73,7 +66,7 @@ public class ImportedSWRLRulesView extends JPanel implements SWRLAPIView
 		public Object getValueAt(int row, int column)
 		{
 			if (row < 0 || row >= getRowCount())
-				return new String("OUT OF BOUNDS!");
+				return "OUT OF BOUNDS!";
 			else {
 				Set<SWRLAPIRule> swrlRules = ImportedSWRLRulesView.this.swrlRuleEngine.getSWRLRules();
 				SWRLAPIRule[] swrlRuleArray = swrlRules.toArray(new SWRLAPIRule[swrlRules.size()]);
