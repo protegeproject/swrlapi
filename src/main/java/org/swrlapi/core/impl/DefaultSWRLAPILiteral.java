@@ -313,7 +313,7 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 	}
 
 	@Override
-	public String getLiteralValue()
+	public String getValue()
 	{
 		return this.literal.getLiteral();
 	}

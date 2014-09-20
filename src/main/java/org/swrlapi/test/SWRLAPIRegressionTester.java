@@ -112,7 +112,7 @@ public class SWRLAPIRegressionTester
 					}
 				} else if (resultValue instanceof SQWRLLiteralResultValue) {
 					SQWRLLiteralResultValue literalResultValue = (SQWRLLiteralResultValue)resultValue;
-					String actualRawLiteral = literalResultValue.getLiteralValue();
+					String actualRawLiteral = literalResultValue.getValue();
 					@SuppressWarnings("unused") OWLDatatype datatype = literalResultValue.getOWLDatatype();
 					String actualDatatypePrefixedName = "XXX"; // TODO
 					String testRawLiteral = testValueString.substring(1, testValueString.indexOf("^^") - 1);

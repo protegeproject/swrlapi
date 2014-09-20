@@ -251,7 +251,7 @@ public class SQWRLResultView extends JPanel implements SWRLAPIView
 					return sqwrlEntityResultValue.getPrefixedName();
 				} else if (sqwrlResultValue.isLiteral()) {
 					SQWRLLiteralResultValue sqwrLiteralResultValue = sqwrlResultValue.asLiteralResult();
-					return sqwrLiteralResultValue.getLiteralValue();
+					return sqwrLiteralResultValue.getValue();
 				} else
 					return "INVALID";
 

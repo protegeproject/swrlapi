@@ -73,7 +73,7 @@ public interface SWRLAPILiteral
 
 	XSDDuration getDuration() throws SQWRLLiteralException;
 
-	String getLiteralValue();
+	String getValue();
 
 	boolean isComparable();
 
