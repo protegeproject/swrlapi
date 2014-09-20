@@ -1,6 +1,6 @@
 
 package org.swrlapi.sqwrl.values;
 
-public interface SQWRLClassResultValue extends SQWRLNamedResultValue
+public interface SQWRLClassResultValue extends SQWRLEntityResultValue
 {
 }

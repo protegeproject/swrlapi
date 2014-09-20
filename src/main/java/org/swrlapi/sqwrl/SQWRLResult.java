@@ -1,9 +1,15 @@
 package org.swrlapi.sqwrl;
 
-import java.util.List;
-
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
-import org.swrlapi.sqwrl.values.*;
+import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue;
+import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
+import org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue;
+import org.swrlapi.sqwrl.values.SQWRLIndividualResultValue;
+import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
+import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
+import org.swrlapi.sqwrl.values.SQWRLResultValue;
+
+import java.util.List;
 
 /**
  * Interface that defines methods to process results from a SQWRL query.
@@ -17,9 +23,9 @@ import org.swrlapi.sqwrl.values.*;
  */
 public interface SQWRLResult
 {
-	List<String> getColumnNames() throws SQWRLException;
-
 	int getNumberOfColumns() throws SQWRLException;
+
+	List<String> getColumnNames() throws SQWRLException;
 
 	String getColumnName(int columnIndex) throws SQWRLException;
 
@@ -29,25 +35,55 @@ public interface SQWRLResult
 
 	void reset() throws SQWRLException;
 
-	void next() throws SQWRLException;
+	boolean next() throws SQWRLException;
 
-	boolean hasNext() throws SQWRLException;
+	SQWRLClassResultValue getClass(String columnName) throws SQWRLException;
 
-	boolean hasObjectValue(String columnName) throws SQWRLException;
+	SQWRLClassResultValue getClass(int columnIndex) throws SQWRLException;
 
-	boolean hasObjectValue(int columnIndex) throws SQWRLException;
+	SQWRLIndividualResultValue getIndividual(String columnName) throws SQWRLException;
 
-	boolean hasLiteralValue(String columnName) throws SQWRLException;
+	SQWRLIndividualResultValue getIndividual(int columnIndex) throws SQWRLException;
 
-	boolean hasLiteralValue(int columnIndex) throws SQWRLException;
+	SQWRLObjectPropertyResultValue getObjectProperty(String columnName) throws SQWRLException;
+
+	SQWRLObjectPropertyResultValue getObjectProperty(int columnIndex) throws SQWRLException;
+
+	SQWRLDataPropertyResultValue getDataProperty(String columnName) throws SQWRLException;
+
+	SQWRLDataPropertyResultValue getDataProperty(int columnIndex) throws SQWRLException;
+
+	SQWRLAnnotationPropertyResultValue getAnnotationProperty(String columnName) throws SQWRLException;
+
+	SQWRLAnnotationPropertyResultValue getAnnotationProperty(int columnIndex) throws SQWRLException;
+
+	SQWRLLiteralResultValue getLiteral(String columnName) throws SQWRLException;
+
+	SQWRLLiteralResultValue getLiteral(int columnIndex) throws SQWRLException;
 
 	boolean hasClassValue(String columnName) throws SQWRLException;
 
 	boolean hasClassValue(int columnIndex) throws SQWRLException;
 
-	boolean hasPropertyValue(String columnName) throws SQWRLException;
+	boolean hasIndividualValue(String columnName) throws SQWRLException;
 
-	boolean hasPropertyValue(int columnIndex) throws SQWRLException;
+	boolean hasIndividualValue(int columnIndex) throws SQWRLException;
+
+	boolean hasObjectPropertyValue(String columnName) throws SQWRLException;
+
+	boolean hasObjectPropertyValue(int columnIndex) throws SQWRLException;
+
+	boolean hasDataPropertyValue(String columnName) throws SQWRLException;
+
+	boolean hasDataPropertyValue(int columnIndex) throws SQWRLException;
+
+	boolean hasAnnotationPropertyValue(String columnName) throws SQWRLException;
+
+	boolean hasAnnotationPropertyValue(int columnIndex) throws SQWRLException;
+
+	boolean hasLiteralValue(String columnName) throws SQWRLException;
+
+	boolean hasLiteralValue(int columnIndex) throws SQWRLException;
 
 	List<SQWRLResultValue> getRow() throws SQWRLException;
 
@@ -61,19 +97,4 @@ public interface SQWRLResult
 
 	List<SQWRLResultValue> getColumn(int columnIndex) throws SQWRLException;
 
-	SQWRLClassResultValue getClassValue(String columnName) throws SQWRLException;
-
-	SQWRLClassResultValue getClassValue(int columnIndex) throws SQWRLException;
-
-	SQWRLIndividualResultValue getObjectValue(String columnName) throws SQWRLException;
-
-	SQWRLIndividualResultValue getObjectValue(int columnIndex) throws SQWRLException;
-
-	SQWRLPropertyResultValue getPropertyValue(String columnName) throws SQWRLException;
-
-	SQWRLPropertyResultValue getPropertyValue(int columnIndex) throws SQWRLException;
-
-	SQWRLLiteralResultValue getLiteralValue(String columnName) throws SQWRLException;
-
-	SQWRLLiteralResultValue getLiteralValue(int columnIndex) throws SQWRLException;
 }

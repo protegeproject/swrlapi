@@ -9,9 +9,12 @@ import org.swrlapi.sqwrl.exceptions.SQWRLInvalidColumnTypeException;
 import org.swrlapi.sqwrl.exceptions.SQWRLInvalidQueryException;
 import org.swrlapi.sqwrl.exceptions.SQWRLInvalidRowIndexException;
 import org.swrlapi.sqwrl.exceptions.SQWRLResultStateException;
+import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
+import org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLIndividualResultValue;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
+import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLResultValue;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
@@ -64,15 +67,15 @@ import java.util.Set;
  * result.configured();
  *
  * result.openRow();
- * result.addRowData(valueFactory.getIndividualValue(&quot;Fred&quot;));
+ * result.addRowData(valueFactory.getIndividual(&quot;Fred&quot;));
  * result.addRowData(valueFactory.getLiteralValue(27));
  * result.closeRow();
  * result.openRow();
- * result.addRowData(valueFactory.getIndividualValue(&quot;Joe&quot;));
+ * result.addRowData(valueFactory.getIndividual(&quot;Joe&quot;));
  * result.addRowData(valueFactory.getLiteralValue(34));
  * result.closeRow();
  * result.openRow();
- * result.addRowData(valueFactory.getIndividualValue(&quot;Joe&quot;));
+ * result.addRowData(valueFactory.getIndividual(&quot;Joe&quot;));
  * result.addRowData(valueFactory.getSQWRLLiteralValue(21));
  * result.closeRow();
  * result.prepared();
@@ -86,8 +89,8 @@ import java.util.Set;
  * (4) {@link org.swrlapi.sqwrl.values.SQWRLPropertyResultValue}, representing OWL properties (object, data, and annotation).
  * <p/>
  * <pre>
- * while (result.hasNext()) {
- * 	SQWRLIndividualResultValue nameValue = result.getIndividualValue(&quot;name&quot;);
+ * while (result.next()) {
+ * 	SQWRLIndividualResultValue nameValue = result.getIndividual(&quot;name&quot;);
  * 	SQWRLLiteralResultValue averageValue = result.getLiteralValue(&quot;average&quot;);
  * 	System.out.println(&quot;Name: &quot; + nameValue.getPrefixedName());
  * 	System.out.println(&quot;Average: &quot; + averageValue.getInt());
@@ -364,7 +367,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 		this.isRowOpen = false;
 		this.currentRowDataColumnIndex = 0;
 		if (getNumberOfRows() > 0)
-			this.currentRowIndex = 0;
+			this.currentRowIndex = -1;
 		else
 			this.currentRowIndex = -1;
 
@@ -405,27 +408,31 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 		throwExceptionIfNotPrepared();
 
 		if (getNumberOfRows() > 0)
-			this.currentRowIndex = 0;
+			this.currentRowIndex = -1;
 	}
 
+	//	private void next() throws SQWRLException
+	//	{
+	//		throwExceptionIfNotConfigured();
+	//		throwExceptionIfNotPrepared();
+	//		throwExceptionIfAtEndOfResult();
+	//
+	//		if (this.currentRowIndex != -1 && this.currentRowIndex < getNumberOfRows())
+	//			this.currentRowIndex++;
+	//	}
+
 	@Override
-	public void next() throws SQWRLException
+	public boolean next() throws SQWRLException
 	{
 		throwExceptionIfNotConfigured();
 		throwExceptionIfNotPrepared();
-		throwExceptionIfAtEndOfResult();
 
-		if (this.currentRowIndex != -1 && this.currentRowIndex < getNumberOfRows())
-			this.currentRowIndex++;
-	}
+		this.currentRowIndex++;
 
-	@Override
-	public boolean hasNext() throws SQWRLException
-	{
-		throwExceptionIfNotConfigured();
-		throwExceptionIfNotPrepared();
-
-		return (this.currentRowIndex != -1 && this.currentRowIndex < getNumberOfRows());
+		if (this.currentRowIndex != -1 && this.currentRowIndex < getNumberOfRows()) {
+			return true;
+		} else
+			return false;
 	}
 
 	@Override
@@ -487,21 +494,21 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 	}
 
 	@Override
-	public SQWRLIndividualResultValue getObjectValue(String columnName) throws SQWRLException
+	public SQWRLIndividualResultValue getIndividual(String columnName) throws SQWRLException
 	{
-		if (!hasObjectValue(columnName))
+		if (!hasIndividualValue(columnName))
 			throw new SQWRLInvalidColumnTypeException("expecting ObjectValue type for column " + columnName);
 		return (SQWRLIndividualResultValue)getValue(columnName);
 	}
 
 	@Override
-	public SQWRLIndividualResultValue getObjectValue(int columnIndex) throws SQWRLException
+	public SQWRLIndividualResultValue getIndividual(int columnIndex) throws SQWRLException
 	{
-		return getObjectValue(getColumnName(columnIndex));
+		return getIndividual(getColumnName(columnIndex));
 	}
 
 	@Override
-	public SQWRLLiteralResultValue getLiteralValue(String columnName) throws SQWRLException
+	public SQWRLLiteralResultValue getLiteral(String columnName) throws SQWRLException
 	{
 		if (!hasLiteralValue(columnName))
 			throw new SQWRLInvalidColumnTypeException("expecting LiteralValue type for column " + columnName);
@@ -509,7 +516,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 	}
 
 	@Override
-	public SQWRLClassResultValue getClassValue(String columnName) throws SQWRLException
+	public SQWRLClassResultValue getClass(String columnName) throws SQWRLException
 	{
 		if (!hasClassValue(columnName))
 			throw new SQWRLInvalidColumnTypeException("expecting ClassValue type for column " + columnName);
@@ -517,29 +524,57 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 	}
 
 	@Override
-	public SQWRLClassResultValue getClassValue(int columnIndex) throws SQWRLException
+	public SQWRLClassResultValue getClass(int columnIndex) throws SQWRLException
 	{
-		return getClassValue(getColumnName(columnIndex));
+		return getClass(getColumnName(columnIndex));
 	}
 
 	@Override
-	public SQWRLPropertyResultValue getPropertyValue(int columnIndex) throws SQWRLException
+	public SQWRLObjectPropertyResultValue getObjectProperty(int columnIndex) throws SQWRLException
 	{
-		return getPropertyValue(getColumnName(columnIndex));
+		return getObjectProperty(getColumnName(columnIndex));
 	}
 
 	@Override
-	public SQWRLPropertyResultValue getPropertyValue(String columnName) throws SQWRLException
+	public SQWRLObjectPropertyResultValue getObjectProperty(String columnName) throws SQWRLException
 	{
-		if (!hasPropertyValue(columnName))
-			throw new SQWRLInvalidColumnTypeException("expecting PropertyValue type for column " + columnName);
-		return (SQWRLPropertyResultValue)getValue(columnName);
+		if (!hasObjectPropertyValue(columnName))
+			throw new SQWRLInvalidColumnTypeException("expecting OWL object property in column " + columnName);
+		return (SQWRLObjectPropertyResultValue)getValue(columnName);
 	}
 
 	@Override
-	public SQWRLLiteralResultValue getLiteralValue(int columnIndex) throws SQWRLException
+	public SQWRLDataPropertyResultValue getDataProperty(int columnIndex) throws SQWRLException
 	{
-		return getLiteralValue(getColumnName(columnIndex));
+		return getDataProperty(getColumnName(columnIndex));
+	}
+
+	@Override
+	public SQWRLDataPropertyResultValue getDataProperty(String columnName) throws SQWRLException
+	{
+		if (!hasDataPropertyValue(columnName))
+			throw new SQWRLInvalidColumnTypeException("expecting OWL data property in column " + columnName);
+		return (SQWRLDataPropertyResultValue)getValue(columnName);
+	}
+
+	@Override
+	public SQWRLAnnotationPropertyResultValue getAnnotationProperty(int columnIndex) throws SQWRLException
+	{
+		return getAnnotationProperty(getColumnName(columnIndex));
+	}
+
+	@Override
+	public SQWRLAnnotationPropertyResultValue getAnnotationProperty(String columnName) throws SQWRLException
+	{
+		if (!hasAnnotationPropertyValue(columnName))
+			throw new SQWRLInvalidColumnTypeException("expecting OWL data property in column " + columnName);
+		return (SQWRLAnnotationPropertyResultValue)getValue(columnName);
+	}
+
+	@Override
+	public SQWRLLiteralResultValue getLiteral(int columnIndex) throws SQWRLException
+	{
+		return getLiteral(getColumnName(columnIndex));
 	}
 
 	@Override
@@ -560,13 +595,13 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 	}
 
 	@Override
-	public boolean hasObjectValue(String columnName) throws SQWRLException
+	public boolean hasIndividualValue(String columnName) throws SQWRLException
 	{
 		return getValue(columnName) instanceof SQWRLIndividualResultValue;
 	}
 
 	@Override
-	public boolean hasObjectValue(int columnIndex) throws SQWRLException
+	public boolean hasIndividualValue(int columnIndex) throws SQWRLException
 	{
 		return getValue(columnIndex) instanceof SQWRLIndividualResultValue;
 	}
@@ -596,13 +631,37 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 	}
 
 	@Override
-	public boolean hasPropertyValue(String columnName) throws SQWRLException
+	public boolean hasObjectPropertyValue(String columnName) throws SQWRLException
 	{
-		return getValue(columnName) instanceof SQWRLPropertyResultValue;
+		return getValue(columnName) instanceof SQWRLObjectPropertyResultValue;
 	}
 
 	@Override
-	public boolean hasPropertyValue(int columnIndex) throws SQWRLException
+	public boolean hasObjectPropertyValue(int columnIndex) throws SQWRLException
+	{
+		return getValue(columnIndex) instanceof SQWRLObjectPropertyResultValue;
+	}
+
+	@Override
+	public boolean hasDataPropertyValue(String columnName) throws SQWRLException
+	{
+		return getValue(columnName) instanceof SQWRLDataPropertyResultValue;
+	}
+
+	@Override
+	public boolean hasDataPropertyValue(int columnIndex) throws SQWRLException
+	{
+		return getValue(columnIndex) instanceof SQWRLDataPropertyResultValue;
+	}
+
+	@Override
+	public boolean hasAnnotationPropertyValue(String columnName) throws SQWRLException
+	{
+		return getValue(columnName) instanceof SQWRLAnnotationPropertyResultValue;
+	}
+
+	@Override
+	public boolean hasAnnotationPropertyValue(int columnIndex) throws SQWRLException
 	{
 		return getValue(columnIndex) instanceof SQWRLPropertyResultValue;
 	}
@@ -940,7 +999,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 
 	private void throwExceptionIfAtEndOfResult() throws SQWRLException
 	{
-		if (!hasNext())
+		if (this.currentRowIndex >= getNumberOfRows())
 			throw new SQWRLResultStateException("attempt to get data after end of result reached");
 	}
 
@@ -1279,14 +1338,19 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 				SQWRLResultValue value2 = row2.get(columnIndex);
 				int diff;
 
-				if (value1.isLiteral() && value2.isLiteral())
-					diff = value1.asLiteralResult().compareTo(value2.asLiteralResult());
-				else if (value1.isNamed() && value2.isNamed())
-					diff = value1.asNamedResult().compareTo(value2.asNamedResult());
-				else
+				try {
+					if (value1.isLiteral() && value2.isLiteral())
+						diff = value1.asLiteralResult().compareTo(value2.asLiteralResult());
+					else if (value1.isEntity() && value2.isEntity())
+						diff = value1.asEntityResult().compareTo(value2.asEntityResult());
+					else
+						throw new SWRLAPIInternalException(
+								"attempt to compare a " + value1.getClass().getName() + " with a " + value2.getClass().getName());
+				} catch (SQWRLException e) {
 					throw new SWRLAPIInternalException(
-							"attempt to compare a " + value1.getClass().getName() + " with a " + value2.getClass().getName());
-
+							"internal error comparing " + value1.getClass().getName() + " with a " + value2.getClass().getName()
+									+ ": " + e.getMessage());
+				}
 				if (diff != 0) {
 					if (this.ascending)
 						return diff;

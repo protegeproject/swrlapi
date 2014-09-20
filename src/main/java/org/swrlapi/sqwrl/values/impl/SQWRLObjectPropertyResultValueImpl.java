@@ -9,4 +9,7 @@ class SQWRLObjectPropertyResultValueImpl extends SQWRLPropertyResultValueImpl im
 	{
 		super(propertyIRI, prefixedName);
 	}
+
+	@Override
+	public boolean isObjectProperty() { return true; }
 }

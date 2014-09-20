@@ -1,10 +1,6 @@
 package org.swrlapi.sqwrl.values.impl;
 
-import java.util.Comparator;
-
-import org.semanticweb.owlapi.model.OWLLiteral;
-import org.swrlapi.core.OWLLiteralComparator;
-import org.swrlapi.core.impl.DefaultSWRLAPILiteral;
+import org.semanticweb.owlapi.model.IRI;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
@@ -14,20 +10,37 @@ import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLEntityResultValue;
 import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
 
-/**
- * Implementation of a data value object that represents Java and XML Schema primitive data literals.
- */
-class SQWRLLiteralResultValueImpl extends DefaultSWRLAPILiteral implements SQWRLLiteralResultValue
+abstract class SQWRLEntityResultValueImpl implements SQWRLEntityResultValue
 {
-	private static Comparator<OWLLiteral> owlLiteralComparator = OWLLiteralComparator.COMPARATOR;
+	private final IRI iri;
+	private final String prefixedName;
 
-	public SQWRLLiteralResultValueImpl(OWLLiteral literal)
+	protected SQWRLEntityResultValueImpl(IRI iri, String prefixedName)
 	{
-		super(literal);
+		this.iri = iri;
+		this.prefixedName = prefixedName;
 	}
 
 	@Override
-	public boolean isEntity() { return false; }
+	public IRI getIRI()
+	{
+		return iri;
+	}
+
+	@Override
+	public String getPrefixedName()
+	{
+		return this.prefixedName;
+	}
+
+	@Override
+	public String getShortName()
+	{
+		return this.prefixedName.startsWith(":") ? this.prefixedName.substring(1) : this.prefixedName;
+	}
+
+	@Override
+	public boolean isEntity() { return true; }
 
 	@Override
 	public boolean isClass() { return false; }
@@ -47,13 +60,13 @@ class SQWRLLiteralResultValueImpl extends DefaultSWRLAPILiteral implements SQWRL
 	@Override
 	public boolean isLiteral()
 	{
-		return true;
+		return false;
 	}
 
 	@Override
-	public SQWRLClassResultValue asEntityResult() throws SQWRLException
+	public SQWRLEntityResultValue asEntityResult() throws SQWRLException
 	{
-		throw new SQWRLException(getClass().getName() + " is not a " + SQWRLEntityResultValue.class.getName());
+		return this;
 	}
 
 	@Override
@@ -87,9 +100,9 @@ class SQWRLLiteralResultValueImpl extends DefaultSWRLAPILiteral implements SQWRL
 	}
 
 	@Override
-	public SQWRLLiteralResultValue asLiteralResult()
+	public SQWRLLiteralResultValue asLiteralResult() throws SQWRLException
 	{
-		return this;
+		throw new SQWRLException(getClass().getName() + " is not a " + SQWRLLiteralResultValue.class.getName());
 	}
 
 	@Override
@@ -99,22 +112,28 @@ class SQWRLLiteralResultValueImpl extends DefaultSWRLAPILiteral implements SQWRL
 			return true;
 		if ((obj == null) || (obj.getClass() != this.getClass()))
 			return false;
-		SQWRLLiteralResultValueImpl l = (SQWRLLiteralResultValueImpl)obj;
+		SQWRLEntityResultValueImpl n = (SQWRLEntityResultValueImpl)obj;
 
-		return owlLiteralComparator.compare(this.getOWLLiteral(), l.getOWLLiteral()) == 0;
+		return this.iri.equals(n.iri);
 	}
 
 	@Override
 	public int hashCode()
 	{
-		int hash = 98;
-		hash = hash + (null == this.getOWLLiteral() ? 0 : this.getOWLLiteral().hashCode());
+		int hash = 298;
+		hash = hash + (null == this.iri ? 0 : this.iri.hashCode());
 		return hash;
 	}
 
 	@Override
-	public int compareTo(SQWRLLiteralResultValue o)
+	public int compareTo(SQWRLEntityResultValue o)
 	{
-		return owlLiteralComparator.compare(this.getOWLLiteral(), o.getOWLLiteral());
+		return iri.compareTo(o.getIRI());
+	}
+
+	@Override
+	public String toString()
+	{
+		return prefixedName;
 	}
 }

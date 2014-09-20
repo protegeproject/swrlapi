@@ -22,7 +22,7 @@ import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.exceptions.SQWRLInvalidQueryNameException;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
-import org.swrlapi.sqwrl.values.SQWRLNamedResultValue;
+import org.swrlapi.sqwrl.values.SQWRLEntityResultValue;
 import org.swrlapi.sqwrl.values.SQWRLResultValue;
 import org.swrlapi.ui.view.SWRLAPIView;
 
@@ -168,7 +168,7 @@ public class SQWRLResultView extends JPanel implements SWRLAPIView
 						}
 						writer.write("\n");
 
-						while (SQWRLResultView.this.sqwrlResult.hasNext()) {
+						while (SQWRLResultView.this.sqwrlResult.next()) {
 							for (int i = 0; i < numberOfColumns; i++) {
 								SQWRLResultValue value = SQWRLResultView.this.sqwrlResult.getValue(i);
 								if (i != 0)
@@ -179,7 +179,6 @@ public class SQWRLResultView extends JPanel implements SWRLAPIView
 									writer.write("" + value);
 							}
 							writer.write("\n");
-							SQWRLResultView.this.sqwrlResult.next();
 						}
 						SQWRLResultView.this.sqwrlResult.reset();
 						writer.close();
@@ -247,12 +246,12 @@ public class SQWRLResultView extends JPanel implements SWRLAPIView
 				SQWRLResultValue sqwrlResultValue = (SQWRLResultView.this.sqwrlResult == null) ? null
 						: SQWRLResultView.this.sqwrlResult.getValue(column, row);
 
-				if (sqwrlResultValue.isNamed()) {
-					SQWRLNamedResultValue sqwrlNamedResultValue = sqwrlResultValue.asNamedResult();
-					return sqwrlNamedResultValue.getPrefixedName();
+				if (sqwrlResultValue.isEntity()) {
+					SQWRLEntityResultValue sqwrlEntityResultValue = sqwrlResultValue.asEntityResult();
+					return sqwrlEntityResultValue.getPrefixedName();
 				} else if (sqwrlResultValue.isLiteral()) {
 					SQWRLLiteralResultValue sqwrLiteralResultValue = sqwrlResultValue.asLiteralResult();
-					return sqwrLiteralResultValue.getLiteral();
+					return sqwrLiteralResultValue.getLiteralValue();
 				} else
 					return "INVALID";
 

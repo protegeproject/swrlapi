@@ -9,4 +9,8 @@ class SQWRLDataPropertyResultValueImpl extends SQWRLPropertyResultValueImpl impl
 	{
 		super(propertyIRI, prefixedName);
 	}
+
+	@Override
+	public boolean isDataProperty() { return true; }
+
 }

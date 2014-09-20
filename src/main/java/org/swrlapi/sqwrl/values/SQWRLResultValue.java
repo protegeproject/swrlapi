@@ -4,11 +4,31 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
 public interface SQWRLResultValue
 {
-	boolean isNamed();
+	boolean isEntity();
+
+	boolean isClass();
+
+	boolean isIndividual();
+
+	boolean isObjectProperty();
+
+	boolean isDataProperty();
+
+	boolean isAnnotationProperty();
 
 	boolean isLiteral();
 
-	SQWRLLiteralResultValue asLiteralResult();
+	SQWRLEntityResultValue asEntityResult() throws SQWRLException;
 
-	SQWRLNamedResultValue asNamedResult();
+	SQWRLClassResultValue asClassResult() throws SQWRLException;
+
+	SQWRLIndividualResultValue asIndividualResult() throws SQWRLException;
+
+	SQWRLObjectPropertyResultValue asObjectPropertyResult() throws SQWRLException;
+
+	SQWRLDataPropertyResultValue asDataPropertyResult() throws SQWRLException;
+
+	SQWRLAnnotationPropertyResultValue asAnnotationPropertyResult() throws SQWRLException;
+
+	SQWRLLiteralResultValue asLiteralResult() throws SQWRLException;
 }

@@ -6,7 +6,7 @@ import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
-import org.swrlapi.sqwrl.values.SQWRLNamedResultValue;
+import org.swrlapi.sqwrl.values.SQWRLEntityResultValue;
 import org.swrlapi.sqwrl.values.SQWRLResultValue;
 
 import java.util.HashSet;
@@ -93,7 +93,7 @@ public class SWRLAPIRegressionTester
 			return false;
 		}
 
-		while (result.hasNext()) {
+		while (result.next()) {
 			List<SQWRLResultValue> row = result.getRow();
 			String rowString = resultTokenizer.nextToken();
 			StringTokenizer rowTokenizer = new StringTokenizer(rowString, ",");
@@ -103,16 +103,16 @@ public class SWRLAPIRegressionTester
 			}
 			for (SQWRLResultValue resultValue : row) {
 				String testValueString = rowTokenizer.nextToken().trim();
-				if (resultValue instanceof SQWRLNamedResultValue) {
-					SQWRLNamedResultValue namedResultValue = (SQWRLNamedResultValue)resultValue;
-					if (!namedResultValue.getPrefixedName().equals(testValueString)) {
+				if (resultValue instanceof SQWRLEntityResultValue) {
+					SQWRLEntityResultValue entityResultValue = (SQWRLEntityResultValue)resultValue;
+					if (!entityResultValue.getPrefixedName().equals(testValueString)) {
 						System.out
-								.print("Named objects unequal - " + namedResultValue.getPrefixedName() + " != " + testValueString);
+								.print("Named objects unequal - " + entityResultValue.getPrefixedName() + " != " + testValueString);
 						return false;
 					}
 				} else if (resultValue instanceof SQWRLLiteralResultValue) {
 					SQWRLLiteralResultValue literalResultValue = (SQWRLLiteralResultValue)resultValue;
-					String actualRawLiteral = literalResultValue.getLiteral();
+					String actualRawLiteral = literalResultValue.getLiteralValue();
 					@SuppressWarnings("unused") OWLDatatype datatype = literalResultValue.getOWLDatatype();
 					String actualDatatypePrefixedName = "XXX"; // TODO
 					String testRawLiteral = testValueString.substring(1, testValueString.indexOf("^^") - 1);
@@ -129,7 +129,6 @@ public class SWRLAPIRegressionTester
 					}
 				}
 			}
-			result.next();
 		}
 		return true;
 	}

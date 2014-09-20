@@ -17,10 +17,6 @@ import java.net.URI;
  */
 public interface SWRLAPILiteral
 {
-	OWLLiteral getOWLLiteral();
-
-	OWLDatatype getOWLDatatype();
-
 	boolean isNumeric();
 
 	boolean isBoolean();
@@ -77,7 +73,7 @@ public interface SWRLAPILiteral
 
 	XSDDuration getDuration() throws SQWRLLiteralException;
 
-	String getLiteral();
+	String getLiteralValue();
 
 	boolean isComparable();
 
@@ -86,4 +82,8 @@ public interface SWRLAPILiteral
 	@Override String toString();
 
 	String toQuotedString();
+
+	OWLLiteral getOWLLiteral();
+
+	OWLDatatype getOWLDatatype();
 }

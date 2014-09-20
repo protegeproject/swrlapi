@@ -10,4 +10,7 @@ class SQWRLAnnotationPropertyResultValueImpl extends SQWRLPropertyResultValueImp
 	{
 		super(propertyIRI, prefixedName);
 	}
+
+	@Override
+	public boolean isAnnotationProperty() { return true; }
 }

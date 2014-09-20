@@ -474,7 +474,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	{
 		String columnName;
 		if (argument.isVariable()) {
-			columnName = "?" + argument.asVariable().getVariableName();
+			columnName = argument.asVariable().getVariableName();
 		} else
 			columnName = "[" + argument + "]";
 		this.sqwrlResult.addColumn(columnName);
@@ -554,11 +554,11 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 			if (builtInAtom.getArguments().size() < 2)
 				throw new SQWRLException("groupBy must have at least two arguments");
 			if (!collectionNames.contains(collectionName))
-				throw new SQWRLException("groupBy applied to undefined collection ?" + collectionName);
+				throw new SQWRLException("groupBy applied to undefined collection " + collectionName);
 			if (this.collectionGroupArgumentsMap.containsKey(collectionName))
-				throw new SQWRLException("groupBy specified more than once for same collection ?" + collectionName);
+				throw new SQWRLException("groupBy specified more than once for same collection " + collectionName);
 			if (hasUnboundArgument(groupArguments))
-				throw new SQWRLException("unbound group argument passed to groupBy for collection ?" + collectionName);
+				throw new SQWRLException("unbound group argument passed to groupBy for collection " + collectionName);
 
 			this.collectionGroupArgumentsMap.put(collectionName, groupArguments); // Store group arguments.
 		}
@@ -570,7 +570,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 			String collectionName = builtInAtom.getArgumentVariablePrefixedName(0); // First argument is the collection name
 
 			if (!collectionNames.contains(collectionName))
-				throw new SQWRLException("groupBy applied to undefined collection ?" + collectionName);
+				throw new SQWRLException("groupBy applied to undefined collection " + collectionName);
 
 			if (this.collectionGroupArgumentsMap.containsKey(collectionName))
 				// Append each collections's group arguments to make built-in.
