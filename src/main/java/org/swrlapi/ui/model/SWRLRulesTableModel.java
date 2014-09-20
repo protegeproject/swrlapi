@@ -43,8 +43,6 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 		this.swrlRuleRenderer = swrlRuleRenderer;
 		this.swrlRuleModels = new HashMap<>();
 
-		log.info("#Rules " + swrlRuleEngine.getNumberOfImportedSWRLRules()); // TODO Kill
-
 		for (SWRLAPIRule swrlapiRule : swrlRuleEngine.getSWRLRules()) {
 			String ruleName = swrlapiRule.getRuleName();
 			String ruleText = swrlRuleRenderer.render(swrlapiRule);
