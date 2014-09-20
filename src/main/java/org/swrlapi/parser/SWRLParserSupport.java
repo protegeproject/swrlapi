@@ -102,7 +102,7 @@ public class SWRLParserSupport
 			return true;
 		} catch (IllegalArgumentException e) {
 			return false;
-	  }
+		}
 	}
 
 	public boolean isSWRLBuiltIn(String builtInPrefixedName)
@@ -257,7 +257,8 @@ public class SWRLParserSupport
 		return getOWLDataFactory().getSWRLLiteralArgument(literal);
 	}
 
-	public SWRLRule getSWRLRule(String ruleName, Set<SWRLAtom> head, Set<SWRLAtom> body, String comment)
+	public SWRLRule getSWRLRule(String ruleName, Set<SWRLAtom> head, Set<SWRLAtom> body, String comment,
+			boolean isEnabled)
 	{
 		OWLAnnotation labelAnnotation = getOWLDataFactory()
 				.getOWLAnnotation(getOWLDataFactory().getRDFSLabel(), getOWLLiteralFactory().getOWLLiteral(ruleName));
@@ -274,12 +275,12 @@ public class SWRLParserSupport
 
 	public Set<SWRLAtom> getSWRLBodyAtomList()
 	{
-		return new LinkedHashSet<SWRLAtom>();
+		return new LinkedHashSet<>();
 	}
 
 	public Set<SWRLAtom> getSWRLHeadAtomList()
 	{
-		return new LinkedHashSet<SWRLAtom>();
+		return new LinkedHashSet<>();
 	}
 
 	public SWRLClassAtom getSWRLClassAtom(String classShortName, SWRLIArgument iArgument) throws SWRLParseException

@@ -69,14 +69,14 @@ public class DefaultSWRLAPIRuleRenderer implements SWRLAPIRuleRenderer
 	}
 
 	@Override
-	public String render(SWRLAPIRule swrlapiRule)
+	public String render(SWRLRule swrlapiRule)
 	{
 		StringBuilder sb = new StringBuilder();
 		boolean collectionMakeEncountered = false;
 		boolean collectionOperationEncountered = false;
 		boolean isFirst = true;
 
-		for (SWRLAtom atom : swrlapiRule.getBodyAtoms()) {
+		for (SWRLAtom atom : swrlapiRule.getBody()) {
 			if (isSQWRLCollectionMakeBuiltInAtom(atom)) {
 				if (collectionMakeEncountered)
 					sb.append(" " + SWRLParser.AND_CHAR + " ");
@@ -102,7 +102,7 @@ public class DefaultSWRLAPIRuleRenderer implements SWRLAPIRuleRenderer
 		sb.append(" " + SWRLParser.IMP_CHAR + " ");
 
 		isFirst = true;
-		for (SWRLAtom atom : swrlapiRule.getHeadAtoms()) {
+		for (SWRLAtom atom : swrlapiRule.getHead()) {
 			if (!isFirst)
 				sb.append(" " + SWRLParser.AND_CHAR + " ");
 			sb.append(atom.accept(this));
@@ -114,7 +114,7 @@ public class DefaultSWRLAPIRuleRenderer implements SWRLAPIRuleRenderer
 	@Override
 	public String visit(SWRLRule swrlRule)
 	{
-		return swrlRule.accept(this);
+		return render(swrlRule);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package org.swrlapi.core;
 
+import org.semanticweb.owlapi.model.SWRLRule;
 import org.swrlapi.core.visitors.SWRLAPIEntityVisitorEx;
 
 /**
@@ -13,5 +14,5 @@ import org.swrlapi.core.visitors.SWRLAPIEntityVisitorEx;
  */
 public interface SWRLAPIRuleRenderer extends SWRLAPIEntityVisitorEx<String>
 {
-	String render(SWRLAPIRule swrlapiRule);
+	String render(SWRLRule swrlapiRule);
 }

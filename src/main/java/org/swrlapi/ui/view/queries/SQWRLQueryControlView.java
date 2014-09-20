@@ -1,25 +1,16 @@
 package org.swrlapi.ui.view.queries;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.HashMap;
-
-import javax.swing.Icon;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
-
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.exceptions.SQWRLInvalidQueryNameException;
 import org.swrlapi.ui.view.SWRLAPIView;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 /**
  * @see org.swrlapi.sqwrl.SQWRLQueryEngine
@@ -56,18 +47,20 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
 		add(BorderLayout.CENTER, scrollPane);
 
 		JPanel panel = new JPanel(new FlowLayout());
-		JButton runButton = createButton("Run", "Run all SWRL rules and SQWRL queries", new RunActionListener(this.console,
-				this));
+		JButton runButton = createButton("Run", "Run all SWRL rules and SQWRL queries",
+				new RunActionListener(this.console, this));
 		panel.add(runButton);
 		add(BorderLayout.SOUTH, panel);
 
 		appendToConsole("Select a SQWRL query from the list above and press the 'Run' button.\n");
 		appendToConsole("If the selected query generates a result, the result will appear in a new sub tab.\n\n");
-		appendToConsole("The SWRLAPI supports an OWL profile called OWL 2 RL and uses an OWL 2 RL-based reasoner to perform querying.\n");
+		appendToConsole(
+				"The SWRLAPI supports an OWL profile called OWL 2 RL and uses an OWL 2 RL-based reasoner to perform querying.\n");
 		appendToConsole("See the 'OWL 2 RL' subtab for more information on this reasoner.\n\n");
 		appendToConsole("Executing queries in this tab does not modify the ontology.\n\n");
-		appendToConsole("Using " + sqwrlQueryEngine.getTargetRuleEngineName() + ", "
-				+ sqwrlQueryEngine.getTargetRuleEngineVersion() + " for query execution.\n\n");
+		appendToConsole(
+				"Using " + sqwrlQueryEngine.getTargetRuleEngineName() + ", " + sqwrlQueryEngine.getTargetRuleEngineVersion()
+						+ " for query execution.\n\n");
 	}
 
 	@Override
@@ -148,8 +141,8 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
 			String queryName = "";
 
 			if (SQWRLQueryControlView.this.sqwrlResultViews.size() == SQWRLQueryControlView.MAXIMUM_OPEN_RESULT_VIEWS) {
-				appendToConsole("A maximum of " + SQWRLQueryControlView.MAXIMUM_OPEN_RESULT_VIEWS
-						+ " result tabs may be open at once. ");
+				appendToConsole(
+						"A maximum of " + SQWRLQueryControlView.MAXIMUM_OPEN_RESULT_VIEWS + " result tabs may be open at once. ");
 				appendToConsole("Please close an existing tab to display results for the selected query.\n");
 			} else {
 				try {
@@ -174,12 +167,12 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
 					}
 				} catch (SQWRLInvalidQueryNameException e) {
 					appendToConsole(queryName + " is not a valid SQWRL query or is not enabled.\n");
-				} catch (SQWRLException  e) {
+				} catch (SQWRLException e) {
 					if (queryName.length() == 0)
 						appendToConsole("Exception running SQWRL queries: " + e.getMessage() + "\n");
 					else
 						appendToConsole("Exception when running SQWRL query " + queryName + ": " + e.getMessage() + "\n");
-				} catch (RuntimeException  e) {
+				} catch (RuntimeException e) {
 					if (queryName.length() == 0)
 						appendToConsole("Exception running SQWRL queries: " + e.getMessage() + "\n");
 					else

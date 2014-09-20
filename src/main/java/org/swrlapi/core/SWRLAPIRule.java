@@ -36,6 +36,8 @@ public interface SWRLAPIRule extends SWRLRule
 
 	boolean isActive();
 
+	boolean isSQWRLQuery();
+
 	List<SWRLAtom> getHeadAtoms();
 
 	List<SWRLAtom> getBodyAtoms();

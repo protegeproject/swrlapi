@@ -1,10 +1,5 @@
 package org.swrlapi.core.impl;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotation;
@@ -35,20 +30,25 @@ import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.core.SWRLAPIFactory;
-import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIOntologyProcessor;
 import org.swrlapi.core.SWRLAPIRule;
+import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.exceptions.SWRLAPIInternalException;
-import org.swrlapi.exceptions.SWRLBuiltInException;
+import org.swrlapi.exceptions.SWRLRuleException;
 import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.sqwrl.SQWRLQuery;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 {
@@ -58,7 +58,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	private final IRIResolver iriResolver;
 	private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
 	private final SWRLAPIOntologyProcessor swrlapiOntologyProcessor;
-	private final SWRLParser parser;
+	private final SWRLParser swrlParser;
 	private final Set<IRI> swrlBuiltInIRIs;
 
 	public DefaultSWRLAPIOWLOntology(OWLOntology ontology, DefaultPrefixManager prefixManager)
@@ -69,7 +69,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		this.iriResolver = new IRIResolver(this.prefixManager);
 		this.swrlapiOWLDataFactory = SWRLAPIFactory.createSWRLAPIOWLDataFactory(this.iriResolver);
 		this.swrlapiOntologyProcessor = SWRLAPIFactory.createOntologyProcessor(this);
-		this.parser = new SWRLParser(this);
+		this.swrlParser = new SWRLParser(this);
 		this.swrlBuiltInIRIs = new HashSet<IRI>();
 
 		addDefaultSWRLBuiltIns();
@@ -94,6 +94,17 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	}
 
 	@Override
+	public SWRLAPIRule getSWRLRule(String ruleName) throws SWRLRuleException
+	{
+		return this.swrlapiOntologyProcessor.getSWRLRule(ruleName);
+	}
+
+	public void deleteSWRLRule(String ruleName)
+	{
+		this.swrlapiOntologyProcessor.deleteSWRLRule(ruleName);
+	}
+
+	@Override
 	public Set<SWRLAPIRule> getSWRLRules()
 	{
 		Set<SWRLAPIRule> swrlapiRules = new HashSet<>();
@@ -106,41 +117,39 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	}
 
 	@Override
-	public SWRLAPIRule getSWRLRule(String ruleName, String rule) throws SWRLParseException
+	public SWRLAPIRule createSWRLRule(String ruleName, String rule) throws SWRLParseException
 	{
-		return getSWRLRule(ruleName, rule, "", true);
+		return createSWRLRule(ruleName, rule, "", true);
 	}
 
 	@Override
-	public SWRLAPIRule getSWRLRule(String ruleName, String rule, String comment, boolean isActive)
+	public SWRLAPIRule createSWRLRule(String ruleName, String rule, String comment, boolean isActive)
 			throws SWRLParseException
 	{
-		SWRLRule owlapiRule = this.parser.parseSWRLRule(rule, false, ruleName, comment);
+		SWRLRule owlapiRule = this.swrlParser.parseSWRLRule(rule, false, ruleName, comment);
+		SWRLAPIRule swrlapiRule = convertOWLAPIRule2SWRLAPIRule(owlapiRule, ruleName, comment, isActive);
 
-		SWRLAPIRule swrlapiRule = new DefaultSWRLAPIRule(ruleName, new ArrayList<>(owlapiRule.getBody()),
-				new ArrayList<>(owlapiRule.getHead()), comment, isActive);
-
-		ontologyManager.addAxiom(ontology, owlapiRule);
+		swrlapiOntologyProcessor.addSWRLRule(swrlapiRule, owlapiRule); // Adds rule to the underlying ontology
 
 		return swrlapiRule;
 	}
 
 	@Override
-	public SQWRLQuery getSQWRLQuery(String queryName, String query) throws SWRLParseException, SQWRLException
+	public SQWRLQuery createSQWRLQuery(String queryName, String query) throws SWRLParseException, SQWRLException
 	{
-		return getSQWRLQuery(queryName, query, "", true);
+		return createSQWRLQuery(queryName, query, "", true);
 	}
 
 	@Override
-	public SQWRLQuery getSQWRLQuery(String queryName, String query, String comment, boolean isActive)
+	public SQWRLQuery createSQWRLQuery(String queryName, String query, String comment, boolean isActive)
 			throws SWRLParseException, SQWRLException
 	{
-		SWRLRule owlapiRule = this.parser.parseSWRLRule(query, false, queryName, comment);
-		SWRLAPIRule swrlapiRule = convertOWLAPIRule2SWRLAPIRule(owlapiRule);
+		SWRLRule owlapiRule = this.swrlParser.parseSWRLRule(query, false, queryName, comment);
+		SWRLAPIRule swrlapiRule = convertOWLAPIRule2SWRLAPIRule(owlapiRule, queryName, comment, isActive);
 
-		if (this.swrlapiOntologyProcessor.isSQWRLQuery(swrlapiRule)) {
-			ontologyManager.addAxiom(ontology, owlapiRule);
+		swrlapiOntologyProcessor.addSWRLRule(swrlapiRule, owlapiRule); // Adds rule to the underlying ontology
 
+		if (swrlapiRule.isSQWRLQuery()) {
 			return this.swrlapiOntologyProcessor.createSWRLQueryFromSWRLRule(swrlapiRule);
 		} else
 			throw new SWRLParseException(queryName + " is not a SQWRL query");
@@ -179,7 +188,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	@Override
 	public boolean hasOntologyChanged()
 	{
-		return false; // TODO
+		return true; // TODO
 	}
 
 	@Override
@@ -249,7 +258,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		this.swrlapiOntologyProcessor.reset();
 	}
 
-	public void processOntology() throws SQWRLException, SWRLBuiltInException
+	public void processOntology() throws SQWRLException
 	{
 		this.swrlapiOntologyProcessor.processOntology();
 	}
@@ -314,48 +323,6 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		throw new SWRLAPIException("Not implemented"); // TODO
 	}
 
-	private String getSWRLRuleName(SWRLRule owlapiRule)
-	{
-		OWLAnnotationProperty labelAnnotation = getOWLDataFactory()
-				.getOWLAnnotationProperty(OWLRDFVocabulary.RDFS_LABEL.getIRI());
-
-		for (OWLAnnotation annotation : owlapiRule.getAnnotations(labelAnnotation)) {
-			if (annotation.getValue() instanceof OWLLiteral) { // TODO Use OWLAnnotationValueVisitorEx?
-				OWLLiteral literal = (OWLLiteral)annotation.getValue();
-				return literal.getLiteral(); // TODO We just pick one for the moment
-			}
-		}
-		return "XX" + owlapiRule.hashCode();
-	}
-
-	private boolean getIsActive(SWRLRule owlapiRule)
-	{
-		OWLAnnotationProperty enabledAnnotationProperty = getOWLDataFactory()
-				.getOWLAnnotationProperty(IRI.create("http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"));
-
-		for (OWLAnnotation annotation : owlapiRule.getAnnotations(enabledAnnotationProperty)) {
-			if (annotation.getValue() instanceof OWLLiteral) {
-				OWLLiteral literal = (OWLLiteral)annotation.getValue();
-				if (literal.isBoolean())
-					return literal.parseBoolean();
-			}
-		}
-		return true;
-	}
-
-	private String getComment(SWRLRule owlapiRule)
-	{
-		OWLAnnotationProperty commentAnnotationProperty = getOWLDataFactory()
-				.getOWLAnnotationProperty(OWLRDFVocabulary.RDFS_COMMENT.getIRI());
-
-		for (OWLAnnotation annotation : owlapiRule.getAnnotations(commentAnnotationProperty)) {
-			if (annotation.getValue() instanceof OWLLiteral) { // TODO Use OWLAnnotationValueVisitorEx?
-				OWLLiteral literal = (OWLLiteral)annotation.getValue();
-				return literal.getLiteral(); // TODO We just pick one for the moment
-			}
-		}
-		return "";
-	}
 
 	/**
 	 * We take an OWLAPI {@link org.semanticweb.owlapi.model.SWRLRule} object and for every
@@ -365,15 +332,13 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	 * @see org.semanticweb.owlapi.model.SWRLRule
 	 * @see org.swrlapi.core.SWRLAPIRule
 	 */
-	private SWRLAPIRule convertOWLAPIRule2SWRLAPIRule(SWRLRule owlapiRule)
+	private SWRLAPIRule convertOWLAPIRule2SWRLAPIRule(SWRLRule owlapiRule, String ruleName, String comment,
+			boolean isActive)
 	{
-		List<SWRLAtom> owlapiBodyAtoms = new ArrayList<SWRLAtom>(owlapiRule.getBody());
-		List<SWRLAtom> owlapiHeadAtoms = new ArrayList<SWRLAtom>(owlapiRule.getHead());
-		List<SWRLAtom> swrlapiBodyAtoms = new ArrayList<SWRLAtom>();
-		List<SWRLAtom> swrlapiHeadAtoms = new ArrayList<SWRLAtom>();
-		String ruleName = getSWRLRuleName(owlapiRule);
-		boolean isActive = getIsActive(owlapiRule);
-		String comment = getComment(owlapiRule);
+		List<SWRLAtom> owlapiBodyAtoms = new ArrayList<>(owlapiRule.getBody());
+		List<SWRLAtom> owlapiHeadAtoms = new ArrayList<>(owlapiRule.getHead());
+		List<SWRLAtom> swrlapiBodyAtoms = new ArrayList<>();
+		List<SWRLAtom> swrlapiHeadAtoms = new ArrayList<>();
 
 		for (SWRLAtom atom : owlapiBodyAtoms) {
 			if (isSWRLBuiltInAtom(atom)) {
@@ -405,6 +370,15 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		return new DefaultSWRLAPIRule(ruleName, swrlapiBodyAtoms, swrlapiHeadAtoms, comment, isActive);
 	}
 
+	private SWRLAPIRule convertOWLAPIRule2SWRLAPIRule(SWRLRule owlapiRule)
+	{
+		String ruleName = this.swrlapiOntologyProcessor.getRuleName(owlapiRule);
+		boolean isActive = this.swrlapiOntologyProcessor.getIsActive(owlapiRule);
+		String comment = this.swrlapiOntologyProcessor.getComment(owlapiRule);
+
+		return convertOWLAPIRule2SWRLAPIRule(owlapiRule, ruleName, comment, isActive);
+	}
+
 	/**
 	 * Both the OWLAPI and the SWRLAPI use the {@link org.semanticweb.owlapi.model.SWRLBuiltInAtom} class to represent
 	 * built-in atoms. However, the SWRLAPI has a richer range of possible argument types. The OWLAPI allows
@@ -415,7 +389,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	 */
 	private List<SWRLBuiltInArgument> convertSWRLDArguments2SWRLBuiltInArguments(List<SWRLDArgument> swrlDArguments)
 	{
-		List<SWRLBuiltInArgument> swrlBuiltInArguments = new ArrayList<SWRLBuiltInArgument>();
+		List<SWRLBuiltInArgument> swrlBuiltInArguments = new ArrayList<>();
 
 		for (SWRLDArgument swrlDArgument : swrlDArguments) {
 			SWRLBuiltInArgument swrlBuiltInArgument = convertSWRLDArgument2SWRLBuiltInArgument(swrlDArgument);

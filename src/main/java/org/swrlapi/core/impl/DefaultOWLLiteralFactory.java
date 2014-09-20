@@ -49,7 +49,7 @@ public class DefaultOWLLiteralFactory implements OWLLiteralFactory
 	@Override
 	public OWLLiteral getOWLLiteral(int i)
 	{
-		return new OWLLiteralImpl("" + i, "", getOWLDatatypeFactory().getOWLIntegerDatatype());
+		return new OWLLiteralImpl("" + i, "", getOWLDatatypeFactory().getOWLIntDatatype());
 	}
 
 	@Override

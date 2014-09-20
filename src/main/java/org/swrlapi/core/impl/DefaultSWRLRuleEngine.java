@@ -43,7 +43,7 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 		this.targetSWRLRuleEngine = targetSWRLRuleEngine;
 		this.builtInBridgeController = builtInBridgeController;
 		this.ruleEngineBridgeController = ruleEngineBridgeController;
-		this.exportedOWLAxioms = new HashSet<OWLAxiom>();
+		this.exportedOWLAxioms = new HashSet<>();
 
 		importSWRLRulesAndOWLKnowledge();
 	}
@@ -103,10 +103,7 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 			this.swrlapiOWLOntology.processOntology();
 		} catch (SQWRLException e) {
 			throw new SWRLRuleEngineException("error running rule engine: " + e.getMessage(), e);
-		} catch (SWRLBuiltInException e) {
-			throw new SWRLRuleEngineException("error running rule engine: " + e.getMessage(), e);
 		}
-
 	}
 
 	/**
@@ -118,8 +115,6 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 		try {
 			this.swrlapiOWLOntology.processOntology();
 			getTargetSWRLRuleEngine().runRuleEngine();
-		} catch (SQWRLException e) {
-			throw new SWRLRuleEngineException("error running rule engine: " + e.getMessage(), e);
 		} catch (SWRLBuiltInException e) {
 			throw new SWRLRuleEngineException("error running rule engine: " + e.getMessage(), e);
 		} catch (TargetSWRLRuleEngineException e) {

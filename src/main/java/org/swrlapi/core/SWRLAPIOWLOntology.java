@@ -12,6 +12,8 @@ import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.exceptions.SWRLBuiltInException;
+import org.swrlapi.exceptions.SWRLRuleEngineBridgeException;
+import org.swrlapi.exceptions.SWRLRuleException;
 import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.sqwrl.SQWRLQuery;
 import org.swrlapi.sqwrl.SQWRLResult;
@@ -48,34 +50,25 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
  */
 public interface SWRLAPIOWLOntology
 {
+	void reset();
+
+	void processOntology() throws SQWRLException;
+
 	Set<SWRLAPIRule> getSWRLRules();
 
-	SWRLAPIRule getSWRLRule(String ruleName, String rule) throws SWRLParseException;
+	SWRLAPIRule getSWRLRule(String ruleName) throws SWRLRuleException;
 
-	SWRLAPIRule getSWRLRule(String ruleName, String rule, String comment, boolean isActive) throws SWRLParseException;
+	void deleteSWRLRule(String ruleName);
 
-	SQWRLQuery getSQWRLQuery(String queryName, String query) throws SWRLParseException, SQWRLException;
+	SWRLAPIRule createSWRLRule(String ruleName, String rule) throws SWRLParseException;
 
-	SQWRLQuery getSQWRLQuery(String queryName, String query, String comment, boolean isActive) throws SWRLParseException,
-			SQWRLException;
+	SWRLAPIRule createSWRLRule(String ruleName, String rule, String comment, boolean isActive)
+			throws SWRLParseException;
 
-	SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory();
+	SQWRLQuery createSQWRLQuery(String queryName, String query) throws SWRLParseException, SQWRLException;
 
-	IRIResolver getIRIResolver();
-
-	void startBulkConversion(); // Can be used, for example, to switch off notification during bulk conversion.
-
-	void completeBulkConversion();
-
-	boolean hasOntologyChanged();
-
-	void resetOntologyChanged();
-
-	boolean isSWRLBuiltIn(IRI iri); // The SWRLAPI provides built-ins beyond the core set defined in the SWRL submission.
-
-	void addSWRLBuiltIn(IRI iri);
-
-	Set<IRI> getSWRLBuiltInIRIs();
+	SQWRLQuery createSQWRLQuery(String queryName, String query, String comment, boolean isActive)
+			throws SWRLParseException, SQWRLException;
 
 	int getNumberOfSQWRLQueries();
 
@@ -89,9 +82,13 @@ public interface SWRLAPIOWLOntology
 
 	SQWRLResultGenerator getSQWRLResultGenerator(String queryName) throws SQWRLException;
 
-	void reset();
+	SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory();
 
-	void processOntology() throws SQWRLException, SWRLBuiltInException;
+	boolean isSWRLBuiltIn(IRI iri); // The SWRLAPI provides built-ins beyond the core set defined in the SWRL submission.
+
+	void addSWRLBuiltIn(IRI iri);
+
+	Set<IRI> getSWRLBuiltInIRIs();
 
 	boolean hasAssertedOWLAxiom(OWLAxiom axiom);
 
@@ -116,6 +113,16 @@ public interface SWRLAPIOWLOntology
 	OWLOntology getOWLOntology();
 
 	OWLDataFactory getOWLDataFactory();
+
+	IRIResolver getIRIResolver();
+
+	void startBulkConversion(); // Can be used, for example, to switch off notification during bulk conversion.
+
+	void completeBulkConversion();
+
+	boolean hasOntologyChanged();
+
+	void resetOntologyChanged();
 
 	// TODO We don't want this method here. It is a convenience method and used only by the temporal built-in library.
 	boolean isOWLIndividualOfType(IRI individualIRI, IRI classIRI);

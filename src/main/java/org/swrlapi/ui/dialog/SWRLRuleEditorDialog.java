@@ -1,11 +1,18 @@
 package org.swrlapi.ui.dialog;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
+import org.swrlapi.core.SWRLAPIOWLOntology;
+import org.swrlapi.core.SWRLAPIRule;
+import org.swrlapi.parser.SWRLIncompleteRuleException;
+import org.swrlapi.parser.SWRLParseException;
+import org.swrlapi.parser.SWRLParser;
+import org.swrlapi.parser.SWRLParserSupport;
+import org.swrlapi.sqwrl.exceptions.SQWRLException;
+import org.swrlapi.ui.model.SWRLAPIApplicationModel;
+import org.swrlapi.ui.model.SWRLRulesTableModel;
+
+import javax.swing.*;
+import javax.swing.text.BadLocationException;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -14,23 +21,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.text.BadLocationException;
-
-import org.semanticweb.owlapi.model.SWRLRule;
-import org.swrlapi.parser.SWRLIncompleteRuleException;
-import org.swrlapi.parser.SWRLParseException;
-import org.swrlapi.parser.SWRLParser;
-import org.swrlapi.parser.SWRLParserSupport;
-import org.swrlapi.ui.model.SWRLAPIApplicationModel;
-import org.swrlapi.ui.model.SWRLRulesTableModel;
 
 /**
  * Modal dialog providing a SWRL rule and SQWRL query editor.
@@ -56,6 +46,8 @@ public class SWRLRuleEditorDialog extends JDialog
 	private static final String MISSING_RULE_NAME = "A name must be supplied!";
 	private static final String QUIT_CONFIRM_TITLE = "Unsaved Changes";
 	private static final String QUIT_CONFIRM_MESSAGE = "Are you sure you want discard your changes?";
+	private static final String DUPLICATE_RULE_TEXT = "A rule exists with this name - please pick another name.";
+	private static final String DUPLICATE_RULE_TITLE = "Duplicate Rule Name";
 
 	private static final int BUTTON_PREFERRED_WIDTH = 100;
 	private static final int BUTTON_PREFERRED_HEIGHT = 30;
@@ -361,16 +353,28 @@ public class SWRLRuleEditorDialog extends JDialog
 			} else if (ruleText.trim().equals("")) {
 				getApplicationDialogManager().showErrorMessageDialog(parent, MISSING_RULE, MISSING_RULE);
 				errorOccurred = true;
+			} else if (getSWRLRulesTableModel().hasSWRLRule(ruleName) && !editMode) {
+				getApplicationDialogManager().showErrorMessageDialog(parent, DUPLICATE_RULE_TEXT, DUPLICATE_RULE_TITLE);
+				errorOccurred = true;
 			} else {
 				try {
-					SWRLRule rule = getSWRLRule(getRuleName(), ruleText, getComment(), true);
-					errorOccurred = false;
-					if (editMode)
-						getSWRLRulesModel().removeSWRLRule(ruleName); // Remove original
-
-					getSWRLRulesModel().addSWRLRule(ruleName, ruleText, comment);
-
+					if (editMode) {
+						deleteSWRLRule(initialDialogState.getRuleName());
+						createSWRLRule(ruleName, ruleText, comment, true);
+						errorOccurred = false;
+					} else {
+						if (getSWRLRulesTableModel().hasSWRLRule(ruleName)) {
+							getApplicationDialogManager().showErrorMessageDialog(parent, DUPLICATE_RULE_TEXT, DUPLICATE_RULE_TITLE);
+							errorOccurred = true;
+						} else {
+							createSWRLRule(ruleName, ruleText, comment, true);
+							errorOccurred = false;
+						}
+					}
 				} catch (SWRLParseException pe) {
+					getApplicationDialogManager().showErrorMessageDialog(parent, pe.getMessage(), INVALID_RULE_TITLE);
+					errorOccurred = true;
+				} catch (SQWRLException pe) {
 					getApplicationDialogManager().showErrorMessageDialog(parent, pe.getMessage(), INVALID_RULE_TITLE);
 					errorOccurred = true;
 				}
@@ -441,9 +445,21 @@ public class SWRLRuleEditorDialog extends JDialog
 				.replaceAll(Character.toString(SWRLParser.RING_CHAR), ".");
 	}
 
-	private SWRLRule getSWRLRule(String ruleName, String rule, String comment, boolean isActive) throws SWRLParseException
+	private void createSWRLRule(String ruleName, String rule, String comment, boolean isActive)
+			throws SWRLParseException, SQWRLException
 	{
-		return this.applicationModel.getSWRLAPIOWLOntology().getSWRLRule(ruleName, rule, comment, isActive);
+		SWRLAPIRule swrlapiRule = getSWRLAPIOWLOntology().createSWRLRule(ruleName, rule, comment, isActive);
+
+		if (swrlapiRule.isSQWRLQuery())
+			getSWRLAPIOWLOntology().createSQWRLQuery(ruleName, rule, comment, isActive);
+
+		getSWRLRulesTableModel().addSWRLRule(swrlapiRule);
+	}
+
+	private void deleteSWRLRule(String ruleName)
+	{
+		getSWRLRulesTableModel().removeSWRLRule(ruleName);
+		this.applicationModel.getSWRLAPIOWLOntology().deleteSWRLRule(ruleName);
 	}
 
 	private SWRLParser getSWRLParser()
@@ -451,7 +467,7 @@ public class SWRLRuleEditorDialog extends JDialog
 		return this.applicationModel.getSWRLParser();
 	}
 
-	private SWRLRulesTableModel getSWRLRulesModel()
+	private SWRLRulesTableModel getSWRLRulesTableModel()
 	{
 		return this.applicationModel.getSWRLRulesTableModel();
 	}
@@ -460,6 +476,8 @@ public class SWRLRuleEditorDialog extends JDialog
 	{
 		return this.applicationDialogManager;
 	}
+
+	private SWRLAPIOWLOntology getSWRLAPIOWLOntology() { return this.applicationModel.getSWRLAPIOWLOntology(); }
 
 	private void setInitialDialogState()
 	{

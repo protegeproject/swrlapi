@@ -42,7 +42,7 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 	public SWRLRulesTableModel(SWRLRuleEngine swrlRuleEngine, DefaultSWRLAPIRuleRenderer swrlRuleRenderer)
 	{
 		this.swrlRuleRenderer = swrlRuleRenderer;
-		this.swrlRuleModels = new HashMap<String, SWRLRuleModel>();
+		this.swrlRuleModels = new HashMap<>();
 
 		log.info("#Rules " + swrlRuleEngine.getNumberOfImportedSWRLRules()); // TODO Kill
 
@@ -62,7 +62,7 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 
 	public Set<SWRLRuleModel> getSWRLRuleModels()
 	{
-		return new HashSet<SWRLRuleModel>(swrlRuleModels.values());
+		return new HashSet<>(swrlRuleModels.values());
 	}
 
 	public Set<SWRLRuleModel> getSWRLRuleModels(boolean isActiveFlag)

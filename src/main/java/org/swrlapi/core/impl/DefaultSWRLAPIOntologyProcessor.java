@@ -2,7 +2,9 @@ package org.swrlapi.core.impl;
 
 import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLAnnotationAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLAnnotationPropertyDomainAxiom;
 import org.semanticweb.owlapi.model.OWLAnnotationPropertyRangeAxiom;
 import org.semanticweb.owlapi.model.OWLAsymmetricObjectPropertyAxiom;
@@ -10,6 +12,7 @@ import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLClassExpression;
+import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLDataPropertyDomainAxiom;
@@ -33,6 +36,7 @@ import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLInverseFunctionalObjectPropertyAxiom;
 import org.semanticweb.owlapi.model.OWLInverseObjectPropertiesAxiom;
 import org.semanticweb.owlapi.model.OWLIrreflexiveObjectPropertyAxiom;
+import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNegativeDataPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLNegativeObjectPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
@@ -50,6 +54,8 @@ import org.semanticweb.owlapi.model.OWLSubObjectPropertyOfAxiom;
 import org.semanticweb.owlapi.model.OWLSubPropertyChainOfAxiom;
 import org.semanticweb.owlapi.model.OWLSymmetricObjectPropertyAxiom;
 import org.semanticweb.owlapi.model.OWLTransitiveObjectPropertyAxiom;
+import org.semanticweb.owlapi.model.SWRLRule;
+import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 import org.swrlapi.core.SWRLAPILiteralFactory;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
@@ -58,7 +64,6 @@ import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.exceptions.SWRLRuleException;
 import org.swrlapi.sqwrl.DefaultSQWRLQuery;
-import org.swrlapi.sqwrl.SQWRLNames;
 import org.swrlapi.sqwrl.SQWRLQuery;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
@@ -76,7 +81,7 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 {
 	private final SWRLAPIOWLOntology swrlapiOWLOntology;
 
-	private final Map<String, SWRLAPIRule> swrlRules; // SWRL rules include SQWRL queries
+	private final Map<String, SWRLAPIRule> swrlapiRules; // SWRL rules include SQWRL queries
 	private final Map<String, SQWRLQuery> sqwrlQueries;
 
 	private final Set<OWLAxiom> assertedOWLAxioms; // All asserted OWL axioms extracted from the supplied ontology
@@ -91,7 +96,7 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 	{
 		this.swrlapiOWLOntology = swrlapiOWLOntology;
 
-		this.swrlRules = new HashMap<>();
+		this.swrlapiRules = new HashMap<>();
 		this.sqwrlQueries = new HashMap<>();
 
 		this.assertedOWLAxioms = new HashSet<>();
@@ -106,7 +111,7 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 	@Override
 	public void reset()
 	{
-		this.swrlRules.clear();
+		this.swrlapiRules.clear();
 		this.sqwrlQueries.clear();
 
 		getIRIResolver().reset();
@@ -141,28 +146,49 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 	@Override
 	public SWRLAPIRule getSWRLRule(String ruleName) throws SWRLRuleException
 	{
-		if (!this.swrlRules.containsKey(ruleName))
+		if (!this.swrlapiRules.containsKey(ruleName))
 			throw new SWRLRuleException("invalid rule name " + ruleName);
 
-		return this.swrlRules.get(ruleName);
+		return this.swrlapiRules.get(ruleName);
+	}
+
+	public void deleteSWRLRule(String ruleName)
+	{
+		if (swrlapiRules.containsKey(ruleName)) {
+			SWRLAPIRule rule = swrlapiRules.get(ruleName);
+
+			if (rule.isSQWRLQuery())
+				this.sqwrlQueries.remove(ruleName);
+
+			this.swrlapiRules.remove(ruleName);
+		}
+
+		SWRLRule owlapiRule = findRuleNamed(ruleName);
+
+		if (owlapiRule != null)
+			this.swrlapiOWLOntology.getOWLOntologyManager().removeAxiom(swrlapiOWLOntology.getOWLOntology(), owlapiRule);
+	}
+
+	@Override
+	public void addSWRLRule(SWRLAPIRule swrlapiRule, SWRLRule owlapiRule)
+	{
+		String ruleName = swrlapiRule.getRuleName();
+
+		this.swrlapiRules.put(ruleName, swrlapiRule);
+
+		this.swrlapiOWLOntology.getOWLOntologyManager().addAxiom(swrlapiOWLOntology.getOWLOntology(), owlapiRule);
 	}
 
 	@Override
 	public int getNumberOfSWRLRules()
 	{
-		return this.swrlRules.values().size();
+		return this.swrlapiRules.values().size();
 	}
 
 	@Override
 	public int getNumberOfSQWRLQueries()
 	{
 		return this.sqwrlQueries.values().size();
-	}
-
-	@Override
-	public Set<String> getSWRLRuleNames()
-	{
-		return new HashSet<>(this.swrlRules.keySet());
 	}
 
 	@Override
@@ -202,12 +228,6 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 	}
 
 	@Override
-	public Set<SWRLAPIRule> getSWRLRules()
-	{
-		return new HashSet<>(this.swrlRules.values());
-	}
-
-	@Override
 	public Set<SQWRLQuery> getSQWRLQueries()
 	{
 		return new HashSet<>(this.sqwrlQueries.values());
@@ -227,29 +247,14 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 
 	public SQWRLQuery createSWRLQueryFromSWRLRule(SWRLAPIRule rule) throws SQWRLException
 	{
-		String ruleName = rule.getRuleName();
+		String queryName = rule.getRuleName();
 		boolean active = rule.isActive();
 		String comment = rule.getComment();
-		SQWRLQuery query = new DefaultSQWRLQuery(ruleName, rule.getBodyAtoms(), rule.getHeadAtoms(), active, comment,
+		SQWRLQuery query = new DefaultSQWRLQuery(queryName, rule.getBodyAtoms(), rule.getHeadAtoms(), active, comment,
 				getSWRLAPILiteralFactory(), getSQWRLResultValueFactory());
-
-		this.swrlRules.put(rule.getRuleName(), rule);
-		this.sqwrlQueries.put(query.getQueryName(), query);
+		this.sqwrlQueries.put(queryName, query);
 
 		return query;
-	}
-
-	@Override
-	public boolean isSQWRLQuery(String queryName)
-	{
-		return this.sqwrlQueries.containsKey(queryName);
-	}
-
-	@Override
-	public boolean isSQWRLQuery(SWRLAPIRule ruleOrQuery)
-	{
-		return !ruleOrQuery.getBuiltInAtomsFromHead(SQWRLNames.getSQWRLBuiltInNames()).isEmpty() || !ruleOrQuery
-				.getBuiltInAtomsFromBody(SQWRLNames.getSQWRLBuiltInNames()).isEmpty();
 	}
 
 	/**
@@ -274,6 +279,71 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 			throw new SQWRLInvalidQueryNameException(queryName);
 
 		return this.sqwrlQueries.get(queryName).getSQWRLResultGenerator();
+	}
+
+	@Override
+	public String getRuleName(SWRLRule owlapiRule)
+	{
+		OWLAnnotationProperty labelAnnotation = getOWLDataFactory()
+				.getOWLAnnotationProperty(OWLRDFVocabulary.RDFS_LABEL.getIRI());
+
+		for (OWLAnnotation annotation : owlapiRule.getAnnotations(labelAnnotation)) {
+			if (annotation.getValue() instanceof OWLLiteral) { // TODO Use OWLAnnotationValueVisitorEx?
+				OWLLiteral literal = (OWLLiteral)annotation.getValue();
+				return literal.getLiteral(); // TODO We just pick one for the moment
+			}
+		}
+		return "XX" + owlapiRule.hashCode(); // TODO
+	}
+
+	@Override
+	public boolean getIsActive(SWRLRule owlapiRule)
+	{
+		OWLAnnotationProperty enabledAnnotationProperty = getOWLDataFactory()
+				.getOWLAnnotationProperty(IRI.create("http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"));
+
+		for (OWLAnnotation annotation : owlapiRule.getAnnotations(enabledAnnotationProperty)) {
+			if (annotation.getValue() instanceof OWLLiteral) {
+				OWLLiteral literal = (OWLLiteral)annotation.getValue();
+				if (literal.isBoolean())
+					return literal.parseBoolean();
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public String getComment(SWRLRule owlapiRule)
+	{
+		OWLAnnotationProperty commentAnnotationProperty = getOWLDataFactory()
+				.getOWLAnnotationProperty(OWLRDFVocabulary.RDFS_COMMENT.getIRI());
+
+		for (OWLAnnotation annotation : owlapiRule.getAnnotations(commentAnnotationProperty)) {
+			if (annotation.getValue() instanceof OWLLiteral) { // TODO Use OWLAnnotationValueVisitorEx?
+				OWLLiteral literal = (OWLLiteral)annotation.getValue();
+				return literal.getLiteral(); // TODO We just pick one for the moment
+			}
+		}
+		return "";
+	}
+
+	private SWRLRule findRuleNamed(String ruleName)
+	{ // TODO Not efficient - probably a better way
+		for (SWRLRule owlapiRule : getOWLOntology().getAxioms(AxiomType.SWRL_RULE, true)) {
+			if (ruleName.equals(getRuleName(owlapiRule)))
+				return owlapiRule;
+		}
+		return null;
+	}
+
+	private Set<String> getSWRLRuleNames()
+	{
+		return new HashSet<>(this.swrlapiRules.keySet());
+	}
+
+	private Set<SWRLAPIRule> getSWRLRules()
+	{
+		return new HashSet<>(this.swrlapiRules.values());
 	}
 
 	/**
@@ -325,12 +395,11 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 
 	private void processSWRLRuleOrSQWRLQuery(SWRLAPIRule ruleOrQuery) throws SQWRLException
 	{
-		if (isSQWRLQuery(ruleOrQuery)) {
-			SQWRLQuery query = createSWRLQueryFromSWRLRule(ruleOrQuery);
-			this.sqwrlQueries.put(query.getQueryName(), query);
-			this.swrlRules.put(ruleOrQuery.getRuleName(), ruleOrQuery);
+		if (ruleOrQuery.isSQWRLQuery()) {
+			createSWRLQueryFromSWRLRule(ruleOrQuery);
+			this.swrlapiRules.put(ruleOrQuery.getRuleName(), ruleOrQuery);
 		} else {
-			this.swrlRules.put(ruleOrQuery.getRuleName(), ruleOrQuery);
+			this.swrlapiRules.put(ruleOrQuery.getRuleName(), ruleOrQuery);
 			this.assertedOWLAxioms.add(ruleOrQuery); // A SWRL rule is a type of OWL axiom; a SQWRL query is not.
 		}
 	}
@@ -980,6 +1049,11 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 	private SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory()
 	{
 		return getSWRLAPIOWLOntology().getSWRLAPIOWLDataFactory();
+	}
+
+	private OWLDataFactory getOWLDataFactory()
+	{
+		return getSWRLAPIOWLOntology().getOWLDataFactory();
 	}
 
 	private SWRLAPILiteralFactory getSWRLAPILiteralFactory()

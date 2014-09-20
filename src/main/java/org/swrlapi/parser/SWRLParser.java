@@ -114,7 +114,7 @@ public class SWRLParser
 		if (!tokenizer.isInteractiveParseOnly()) {
 			if (!atLeastOneAtom)
 				throw new SWRLParseException("Incomplete SWRL rule - no antecedent or consequent");
-			return swrlParserSupport.getSWRLRule(ruleName, head, body, comment);
+			return swrlParserSupport.getSWRLRule(ruleName, head, body, comment, true);
 		} else
 			return null;
 	}

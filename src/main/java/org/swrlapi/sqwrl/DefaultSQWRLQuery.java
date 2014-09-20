@@ -147,6 +147,11 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		return result;
 	}
 
+	private List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromBody()
+	{
+		return getBuiltInAtoms(getBodyAtoms());
+	}
+
 	private boolean isSQWRLMakeCollection(SWRLAPIBuiltInAtom builtInAtom)
 	{
 		return SQWRLNames.isSQWRLCollectionMakeBuiltIn(builtInAtom.getBuiltInPrefixedName());
@@ -165,11 +170,6 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	private List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromHead(Set<String> builtInNames)
 	{
 		return getBuiltInAtoms(getHeadAtoms(), builtInNames);
-	}
-
-	private List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromBody()
-	{
-		return getBuiltInAtoms(getBodyAtoms());
 	}
 
 	private List<SWRLAPIBuiltInAtom> getBuiltInAtoms(List<SWRLAtom> atoms)

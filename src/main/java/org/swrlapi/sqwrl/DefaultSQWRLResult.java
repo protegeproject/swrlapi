@@ -110,7 +110,9 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 	private int numberOfColumns, currentRowIndex, currentRowDataColumnIndex;
 	private boolean isConfigured, isPrepared, isRowOpen, isOrdered, isAscending, isDistinct, hasAggregates;
 	private int limit = -1, nth = -1, firstN = -1, lastN = -1, sliceSize = -1;
-	private boolean notNthSelection = false, firstSelection = false, lastSelection = false, notFirstSelection = false, notLastSelection = false, nthSliceSelection = false, notNthSliceSelection = false, nthLastSliceSelection = false, notNthLastSliceSelection = false;
+	private boolean notNthSelection = false, firstSelection = false, lastSelection = false, notFirstSelection = false;
+	private boolean notLastSelection = false, nthSliceSelection = false, notNthSliceSelection = false;
+	private boolean nthLastSliceSelection = false, notNthLastSliceSelection = false;
 
 	public DefaultSQWRLResult(SQWRLResultValueFactory sqwrlResultValueFactory)
 	{
