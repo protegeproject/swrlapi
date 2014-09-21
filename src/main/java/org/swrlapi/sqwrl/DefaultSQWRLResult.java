@@ -83,11 +83,11 @@ import java.util.Set;
  * <p/>
  * The result is now available for reading. The interface {@link org.swrlapi.sqwrl.SQWRLResult} defines the assessor
  * methods. A row consists of a list of objects defined by the interface {@link org.swrlapi.sqwrl.values.SQWRLResultValue}.
- * There are possible types of values are (1) {@link org.swrlapi.sqwrl.values.SQWRLLiteralResultValue}, representing literals;
+ * There possible types of values are (1) {@link org.swrlapi.sqwrl.values.SQWRLLiteralResultValue}, representing literals;
  * (2) {@link org.swrlapi.sqwrl.values.SQWRLIndividualResultValue}, representing OWL individuals;
  * (3) {@link org.swrlapi.sqwrl.values.SQWRLClassResultValue}, representing OWL classes; and
  * (4) {@link org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue}, representing OWL object properties,
- * (5) {@link org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue}, representing OWL data properties,
+ * (5) {@link org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue}, representing OWL data properties, and
  * (6) {@link org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue}, representing OWL annotation.
  * <p/>
  * <pre>
@@ -262,6 +262,15 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 	public int getNumberOfColumns() throws SQWRLException
 	{
 		throwExceptionIfNotConfigured();
+
+		return this.numberOfColumns;
+	}
+
+
+	@Override
+	public int getCurrentNumberOfColumns() throws SQWRLException
+	{
+		throwExceptionIfConfigured();
 
 		return this.numberOfColumns;
 	}
@@ -992,6 +1001,12 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 	}
 
 	// Phase verification exception throwing methods
+
+	private void throwExceptionIfConfigured() throws SQWRLException
+	{
+		if (isConfigured())
+			throw new SQWRLResultStateException("attempt to get pre-configuration data after configuration");
+	}
 
 	private void throwExceptionIfNotConfigured() throws SQWRLException
 	{

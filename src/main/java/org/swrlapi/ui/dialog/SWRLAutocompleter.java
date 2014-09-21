@@ -15,40 +15,43 @@ import java.util.List;
  */
 public class SWRLAutoCompleter
 {
-	private final List<String> entityShortForms;
+	private final List<String> shortForms;
 
 	public SWRLAutoCompleter(SWRLAPIOWLOntology swrlapiowlOntology)
 	{
 		DefaultPrefixManager prefixManager = swrlapiowlOntology.getPrefixManager();
-		this.entityShortForms = new ArrayList<>();
+		this.shortForms = new ArrayList<>();
 
 		for (OWLEntity owlEntity : swrlapiowlOntology.getOWLOntology().getSignature(true)) {
 			String shortForm = prefixManager.getShortForm(owlEntity.getIRI());
 			if (shortForm.startsWith(":"))
-				this.entityShortForms.add(shortForm.substring(1));
-			this.entityShortForms.add(shortForm);
+				this.shortForms.add(shortForm.substring(1));
+			this.shortForms.add(shortForm);
 		}
 
 		for (IRI swrlBuiltInIRI : swrlapiowlOntology.getSWRLBuiltInIRIs()) {
 			String shortForm = prefixManager.getShortForm(swrlBuiltInIRI);
 			if (shortForm.startsWith(":"))
-				this.entityShortForms.add(shortForm.substring(1));
-			this.entityShortForms.add(shortForm);
+				this.shortForms.add(shortForm.substring(1));
+			this.shortForms.add(shortForm);
 		}
 
 		for (OWLRDFVocabulary v : OWLRDFVocabulary.values()) {
 			String shortForm = v.getPrefixedName();
-			this.entityShortForms.add(shortForm);
+			this.shortForms.add(shortForm);
 		}
 
-		Collections.sort(this.entityShortForms);
+		this.shortForms.add("sameAs");
+		this.shortForms.add("differentFrom");
+
+		Collections.sort(this.shortForms);
 	}
 
 	public List<String> getCompletions(String prefix)
 	{ // TODO Look at - not very efficient
 		List<String> completions = new ArrayList<>();
 
-		for (String shortForm : entityShortForms) {
+		for (String shortForm : shortForms) {
 			if (shortForm.startsWith(prefix))
 				completions.add(shortForm);
 		}

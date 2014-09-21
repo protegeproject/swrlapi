@@ -6,11 +6,12 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.values.SQWRLResultValue;
 
 /**
- * Interface to configure a query result and add data to it. See the {@link DefaultSQWRLResult} class for detailed
- * comments.
+ * Interface to configure a query result and add data to it. See the {@link org.swrlapi.sqwrl.DefaultSQWRLResult}
+ * class for detailed comments.
  *
  * @see org.swrlapi.sqwrl.SQWRLQuery
  * @see org.swrlapi.sqwrl.SQWRLQueryEngine
+ * @see org.swrlapi.sqwrl.DefaultSQWRLResult
  */
 public interface SQWRLResultGenerator
 {
@@ -47,4 +48,6 @@ public interface SQWRLResultGenerator
 	boolean isPrepared();
 
 	void prepared() throws SQWRLException;
+
+	int getCurrentNumberOfColumns() throws SQWRLException;
 }

@@ -179,16 +179,14 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		return false;
 	}
 
-	// This built-in is preprocessed by SWRLProcessor so there is nothing to do here
 	public boolean countDistinct(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
-	{
+	{ // This built-in is preprocessed by SWRLProcessor so there is nothing to do here
 		checkThatInConsequent();
 		return count(arguments);
 	}
 
-	// These built-in is preprocessed by SWRLProcessor so there is nothing to do here
 	public boolean columnNames(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
-	{
+	{ // These built-in is preprocessed by SWRLProcessor so there is nothing to do here
 		checkThatInConsequent();
 		return true;
 	}
@@ -213,9 +211,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 	/**
 	 * ******************************************************************************************************************
-	 * <p/>
 	 * SQWRL collection operators
-	 * <p/>
 	 * *******************************************************************************************************************
 	 */
 

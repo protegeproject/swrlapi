@@ -52,8 +52,6 @@ public class SWRLAPIFactory
 	private static final String SQWRL_ICON_NAME = "SQWRL.gif";
 	private static final String OWL2RL_ICON_NAME = "OWL2RL.gif";
 
-	private static final Logger log = Logger.getLogger(SWRLAPIFactory.class);
-
 	public static SWRLAPIOWLOntology createOntology(OWLOntology ontology)
 	{
 		DefaultPrefixManager prefixManager = createPrefixManager(ontology);

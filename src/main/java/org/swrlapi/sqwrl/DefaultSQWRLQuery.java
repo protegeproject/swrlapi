@@ -26,12 +26,12 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	private final List<SWRLAtom> bodyAtoms;
 	private final List<SWRLAtom> headAtoms;
 	private final DefaultSQWRLResult sqwrlResult;
-	// Map of collection name to group  arguments; applies only to grouped collections
+	// Map of collection name to group  arguments. Applies only to grouped collections.
 	private final Map<String, List<SWRLBuiltInArgument>> collectionGroupArgumentsMap;
 	private final SWRLAPILiteralFactory swrlapiLiteralFactory;
+	private final String comment;
 
 	private boolean active; // Like a SWRLRule, a SQWRL query can also be active or inactive.
-	private final String comment;
 
 	public DefaultSQWRLQuery(String queryName, List<SWRLAtom> bodyAtoms, List<SWRLAtom> headAtoms, boolean active,
 			String comment, SWRLAPILiteralFactory swrlapiLiteralFactory, SQWRLResultValueFactory sqwrlResultValueFactory)
@@ -404,7 +404,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		if (argument.isVariable())
 			columnName = "median(?" + argument.asVariable().getVariablePrefixedName() + ")";
 		else
-			columnName = "median[" + argument + "]";
+			columnName = "C" + this.sqwrlResult.getCurrentNumberOfColumns();
 
 		this.sqwrlResult.addAggregateColumn(columnName, SQWRLNames.MedianAggregateFunction);
 	}
@@ -415,7 +415,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		if (argument.isVariable())
 			columnName = "sum(?" + argument.asVariable().getVariableName() + ")";
 		else
-			columnName = "sum[" + argument + "]";
+			columnName = "C" + this.sqwrlResult.getCurrentNumberOfColumns();
 
 		this.sqwrlResult.addAggregateColumn(columnName, SQWRLNames.SumAggregateFunction);
 	}
@@ -426,7 +426,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		if (argument.isVariable())
 			columnName = "max(?" + argument.asVariable().getVariableName() + ")";
 		else
-			columnName = "max[" + argument + "]";
+			columnName = "C" + this.sqwrlResult.getCurrentNumberOfColumns();
 
 		this.sqwrlResult.addAggregateColumn(columnName, SQWRLNames.MaxAggregateFunction);
 	}
@@ -437,20 +437,9 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		if (argument.isVariable())
 			columnName = "min(?" + argument.asVariable().getVariableName() + ")";
 		else
-			columnName = "min[" + argument + "]";
+			columnName = "C" + this.sqwrlResult.getCurrentNumberOfColumns();
 
 		this.sqwrlResult.addAggregateColumn(columnName, SQWRLNames.MinAggregateFunction);
-	}
-
-	private void processCountDistinctArgument(SWRLBuiltInArgument argument) throws SQWRLException
-	{
-		String columnName;
-		if (argument.isVariable())
-			columnName = "countDistinct(?" + argument.asVariable().getVariableName() + ")";
-		else
-			columnName = "[" + argument + "]";
-
-		this.sqwrlResult.addAggregateColumn(columnName, SQWRLNames.CountDistinctAggregateFunction);
 	}
 
 	private void processCountArgument(SWRLBuiltInArgument argument) throws SQWRLException
@@ -459,9 +448,19 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		if (argument.isVariable())
 			columnName = "count(?" + argument.asVariable().getVariableName() + ")";
 		else
-			columnName = "[" + argument + "]";
+			columnName = "C" + this.sqwrlResult.getCurrentNumberOfColumns();
 
 		this.sqwrlResult.addAggregateColumn(columnName, SQWRLNames.CountAggregateFunction);
+	}
+	private void processCountDistinctArgument(SWRLBuiltInArgument argument) throws SQWRLException
+	{
+		String columnName;
+		if (argument.isVariable())
+			columnName = "countDistinct(?" + argument.asVariable().getVariableName() + ")";
+		else
+			columnName = "C" + this.sqwrlResult.getCurrentNumberOfColumns();
+
+		this.sqwrlResult.addAggregateColumn(columnName, SQWRLNames.CountDistinctAggregateFunction);
 	}
 
 	private void processSelectDistinctArgument(SWRLBuiltInArgument argument) throws SQWRLException
@@ -476,7 +475,8 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		if (argument.isVariable()) {
 			columnName = argument.asVariable().getVariableName();
 		} else
-			columnName = "[" + argument + "]";
+			columnName = "C" + this.sqwrlResult.getCurrentNumberOfColumns();
+
 		this.sqwrlResult.addColumn(columnName);
 	}
 
@@ -486,7 +486,8 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		if (argument.isVariable())
 			columnName = "avg(?" + argument.asVariable().getVariableName() + ")";
 		else
-			columnName = "avg[" + argument + "]";
+			columnName = "avg";
+
 		this.sqwrlResult.addAggregateColumn(columnName, SQWRLNames.AvgAggregateFunction);
 	}
 
