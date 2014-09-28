@@ -299,7 +299,7 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 	@Override
 	public Set<SWRLAPIRule> getSWRLRules()
 	{
-		return this.swrlapiOWLOntology.getSWRLRules();
+		return this.swrlapiOWLOntology.getSWRLAPIRules();
 	}
 
 	@Override

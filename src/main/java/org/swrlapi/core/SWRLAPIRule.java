@@ -17,7 +17,7 @@ import org.semanticweb.owlapi.model.SWRLRule;
  * SWRLAPI SWRL rules also have rule names, which are stored in an annotation property associated with a rule.
  * <p>
  * These SWRLAPI rules are extracted from an OWL ontology by the
- * {@link org.swrlapi.core.SWRLAPIOWLOntology#getSWRLRules()} method.
+ * {@link org.swrlapi.core.SWRLAPIOWLOntology#getSWRLAPIRules()} method.
  *
  * A {@link org.swrlapi.core.SWRLAPIRuleRenderer} can be used to print a rule.
  * 

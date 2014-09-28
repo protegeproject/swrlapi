@@ -2,6 +2,7 @@ package org.swrlapi.core.impl;
 
 import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLClass;
@@ -91,29 +92,6 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	}
 
 	@Override
-	public SWRLAPIRule getSWRLRule(String ruleName) throws SWRLRuleException
-	{
-		return this.swrlapiOntologyProcessor.getSWRLRule(ruleName);
-	}
-
-	public void deleteSWRLRule(String ruleName)
-	{
-		this.swrlapiOntologyProcessor.deleteSWRLRule(ruleName);
-	}
-
-	@Override
-	public Set<SWRLAPIRule> getSWRLRules()
-	{
-		Set<SWRLAPIRule> swrlapiRules = new HashSet<>();
-
-		for (SWRLRule owlapiRule : getOWLOntology().getAxioms(AxiomType.SWRL_RULE, true)) {
-			SWRLAPIRule swrlapiRule = convertOWLAPIRule2SWRLAPIRule(owlapiRule);
-			swrlapiRules.add(swrlapiRule);
-		}
-		return swrlapiRules;
-	}
-
-	@Override
 	public SWRLAPIRule createSWRLRule(String ruleName, String rule) throws SWRLParseException
 	{
 		return createSWRLRule(ruleName, rule, "", true);
@@ -150,6 +128,83 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 			return this.swrlapiOntologyProcessor.createSWRLQueryFromSWRLRule(swrlapiRule);
 		} else
 			throw new SWRLParseException(queryName + " is not a SQWRL query");
+	}
+
+	@Override
+	public SWRLAPIRule getSWRLRule(String ruleName) throws SWRLRuleException
+	{
+		return this.swrlapiOntologyProcessor.getSWRLRule(ruleName);
+	}
+
+	@Override
+	public Set<SWRLAPIRule> getSWRLAPIRules()
+	{
+		Set<SWRLAPIRule> swrlapiRules = new HashSet<>();
+		Set<SWRLRule> unannotatedOWLAPIRules = new HashSet<>();
+		Set<String> ruleNames = new HashSet<>();
+
+		for (SWRLRule owlapiRule : getOWLOntology().getAxioms(AxiomType.SWRL_RULE, true)) {
+			String ruleName = this.swrlapiOntologyProcessor.getRuleName(owlapiRule);
+			boolean isActive = this.swrlapiOntologyProcessor.getIsActive(owlapiRule);
+			String comment = this.swrlapiOntologyProcessor.getComment(owlapiRule);
+
+			if (ruleName.isEmpty()) {
+				unannotatedOWLAPIRules.add(owlapiRule);
+			} else {
+				SWRLAPIRule swrlapiRule = convertOWLAPIRule2SWRLAPIRule(owlapiRule, ruleName, comment, isActive);
+				swrlapiRules.add(swrlapiRule);
+				ruleNames.add(ruleName);
+			}
+		}
+
+		for (SWRLRule owlapiRule : unannotatedOWLAPIRules) {
+			String ruleName = generateRuleName(ruleNames);
+			String comment = "";
+			boolean isEnabled = true;
+			SWRLRule annotatedOWLAPIRule = getOWLDataFactory().getSWRLRule(owlapiRule.getBody(), owlapiRule.getHead(),
+					generateRuleAnnotations(ruleName, comment, isEnabled));
+
+			SWRLAPIRule swrlapiRule = convertOWLAPIRule2SWRLAPIRule(annotatedOWLAPIRule, ruleName, "", true);
+			swrlapiRules.add(swrlapiRule);
+			ruleNames.add(ruleName);
+
+//			ontologyManager.removeAxiom(ontology, owlapiRule); // Remove the original annotated rule
+//			ontologyManager.addAxiom(ontology, annotatedOWLAPIRule); // Replace with annotated rule
+		}
+
+		return swrlapiRules;
+	}
+
+	private String generateRuleName(Set<String> ruleNames)
+	{
+		String ruleNamePrefix = "R";
+		int ruleNumber = 1;
+		String candidateRuleName = ruleNamePrefix + ruleNumber;
+
+		while (ruleNames.contains(candidateRuleName)) {
+			ruleNumber++;
+			candidateRuleName = ruleNamePrefix + ruleNumber;
+		}
+		return candidateRuleName;
+	}
+
+	private Set<OWLAnnotation> generateRuleAnnotations(String ruleName, String comment, boolean isEnabled)
+	{
+		OWLAnnotation labelAnnotation = getOWLDataFactory()
+				.getOWLAnnotation(getOWLDataFactory().getRDFSLabel(), getOWLDataFactory().getOWLLiteral(ruleName));
+		OWLAnnotation commentAnnotation = getOWLDataFactory()
+				.getOWLAnnotation(getOWLDataFactory().getRDFSComment(), getOWLDataFactory().getOWLLiteral(""));
+		// TODO isEnabled annotation
+		Set<OWLAnnotation> annotations = new HashSet<>();
+		annotations.add(labelAnnotation);
+		annotations.add(commentAnnotation);
+
+		return annotations;
+	}
+
+	public void deleteSWRLRule(String ruleName)
+	{
+		this.swrlapiOntologyProcessor.deleteSWRLRule(ruleName);
 	}
 
 	@Override
@@ -364,15 +419,6 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 				swrlapiHeadAtoms.add(atom); // Only built-in atoms are converted; other atoms remain the same
 		}
 		return new DefaultSWRLAPIRule(ruleName, swrlapiBodyAtoms, swrlapiHeadAtoms, comment, isActive);
-	}
-
-	private SWRLAPIRule convertOWLAPIRule2SWRLAPIRule(SWRLRule owlapiRule)
-	{
-		String ruleName = this.swrlapiOntologyProcessor.getRuleName(owlapiRule);
-		boolean isActive = this.swrlapiOntologyProcessor.getIsActive(owlapiRule);
-		String comment = this.swrlapiOntologyProcessor.getComment(owlapiRule);
-
-		return convertOWLAPIRule2SWRLAPIRule(owlapiRule, ruleName, comment, isActive);
 	}
 
 	/**

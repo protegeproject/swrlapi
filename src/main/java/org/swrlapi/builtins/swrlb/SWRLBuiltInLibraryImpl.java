@@ -372,10 +372,10 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		checkNumberOfArgumentsAtMost(4, arguments.size());
 
 		argument2 = getArgumentAsAString(1, arguments);
-		startIndex = getArgumentAsAnInteger(2, arguments);
+		startIndex = getArgumentAsAnInt(2, arguments);
 
 		if (arguments.size() == 4) {
-			length = getArgumentAsAnInteger(3, arguments);
+			length = getArgumentAsAnInt(3, arguments);
 			operationResult = argument2.substring(startIndex, length);
 		} else
 			operationResult = argument2.substring(startIndex);
@@ -560,8 +560,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	public boolean yearMonthDuration(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{
 		checkNumberOfArgumentsEqualTo(3, arguments.size());
-		int year = getArgumentAsAnInteger(1, arguments);
-		int month = getArgumentAsAnInteger(2, arguments);
+		int year = getArgumentAsAnInt(1, arguments);
+		int month = getArgumentAsAnInt(2, arguments);
 		org.apache.axis.types.Duration duration = new org.apache.axis.types.Duration();
 
 		duration.setYears(year);
@@ -574,10 +574,10 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	public boolean dayTimeDuration(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{
 		checkNumberOfArgumentsEqualTo(5, arguments.size());
-		int days = getArgumentAsAnInteger(1, arguments);
-		int hours = getArgumentAsAnInteger(2, arguments);
-		int minutes = getArgumentAsAnInteger(3, arguments);
-		int seconds = getArgumentAsAnInteger(4, arguments);
+		int days = getArgumentAsAnInt(1, arguments);
+		int hours = getArgumentAsAnInt(2, arguments);
+		int minutes = getArgumentAsAnInt(3, arguments);
+		int seconds = getArgumentAsAnInt(4, arguments);
 		org.apache.axis.types.Duration duration = new org.apache.axis.types.Duration();
 
 		duration.setDays(days);
@@ -592,12 +592,12 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	{
 		checkNumberOfArgumentsEqualTo(8, arguments.size());
 
-		int year = getArgumentAsAnInteger(1, arguments);
-		int month = getArgumentAsAnInteger(2, arguments);
-		int days = getArgumentAsAnInteger(3, arguments);
-		int hours = getArgumentAsAnInteger(4, arguments);
-		int minutes = getArgumentAsAnInteger(5, arguments);
-		int seconds = getArgumentAsAnInteger(6, arguments);
+		int year = getArgumentAsAnInt(1, arguments);
+		int month = getArgumentAsAnInt(2, arguments);
+		int days = getArgumentAsAnInt(3, arguments);
+		int hours = getArgumentAsAnInt(4, arguments);
+		int minutes = getArgumentAsAnInt(5, arguments);
+		int seconds = getArgumentAsAnInt(6, arguments);
 		String timeZone = getArgumentAsAString(7, arguments);
 		Calendar calendar = new GregorianCalendar();
 
@@ -615,9 +615,9 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	{
 		checkNumberOfArgumentsEqualTo(5, arguments.size());
 
-		int year = getArgumentAsAnInteger(1, arguments);
-		int month = getArgumentAsAnInteger(2, arguments);
-		int days = getArgumentAsAnInteger(3, arguments);
+		int year = getArgumentAsAnInt(1, arguments);
+		int month = getArgumentAsAnInt(2, arguments);
+		int days = getArgumentAsAnInt(3, arguments);
 		String timeZone = getArgumentAsAString(4, arguments);
 		Calendar calendar = new GregorianCalendar();
 
@@ -634,9 +634,9 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	{
 		checkNumberOfArgumentsEqualTo(5, arguments.size());
 
-		int hours = getArgumentAsAnInteger(1, arguments);
-		int minutes = getArgumentAsAnInteger(2, arguments);
-		int seconds = getArgumentAsAnInteger(3, arguments);
+		int hours = getArgumentAsAnInt(1, arguments);
+		int minutes = getArgumentAsAnInt(2, arguments);
+		int seconds = getArgumentAsAnInt(3, arguments);
 		String timeZone = getArgumentAsAString(4, arguments);
 		String operationResult = "" + hours + ":" + minutes + ":" + seconds + timeZone;
 
@@ -967,9 +967,9 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 				result = 1;
 			else
 				result = 0;
-		} else if (isIntegerMostPreciseArgument(arguments)) {
-			int i1 = getArgumentAsAnInteger(0, arguments);
-			int i2 = getArgumentAsAnInteger(1, arguments);
+		} else if (isIntMostPreciseArgument(arguments)) {
+			int i1 = getArgumentAsAnInt(0, arguments);
+			int i2 = getArgumentAsAnInt(1, arguments);
 			if (i1 < i2)
 				result = -1;
 			else if (i1 > i2)
@@ -1084,7 +1084,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 				arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument(operationResult));
 			else if (isShortMostPreciseArgument(boundArguments))
 				arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument((short)operationResult));
-			else if (isIntegerMostPreciseArgument(boundArguments))
+			else if (isIntMostPreciseArgument(boundArguments))
 				arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument((int)operationResult));
 			else if (isLongMostPreciseArgument(boundArguments))
 				arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument((long)operationResult));

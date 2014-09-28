@@ -293,7 +293,8 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 				return literal.getLiteral(); // TODO We just pick one for the moment
 			}
 		}
-		return "XX" + owlapiRule.hashCode(); // TODO
+		// TODO Also look for swrla#ruleName annotation
+		return "";
 	}
 
 	@Override
@@ -389,7 +390,7 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 
 	private void processSWRLRulesAndSQWRLQueries() throws SQWRLException
 	{
-		for (SWRLAPIRule ruleOrQuery : getSWRLAPIOWLOntology().getSWRLRules())
+		for (SWRLAPIRule ruleOrQuery : getSWRLAPIOWLOntology().getSWRLAPIRules())
 			processSWRLRuleOrSQWRLQuery(ruleOrQuery);
 	}
 

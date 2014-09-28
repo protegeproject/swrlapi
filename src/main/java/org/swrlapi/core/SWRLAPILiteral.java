@@ -23,8 +23,6 @@ public interface SWRLAPILiteral
 
 	boolean isShort();
 
-	boolean isInteger();
-
 	boolean isInt();
 
 	boolean isLong();

@@ -11,8 +11,6 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.resolvers.IRIResolver;
-import org.swrlapi.exceptions.SWRLBuiltInException;
-import org.swrlapi.exceptions.SWRLRuleEngineBridgeException;
 import org.swrlapi.exceptions.SWRLRuleException;
 import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.sqwrl.SQWRLQuery;
@@ -22,7 +20,7 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
 /**
  * Wraps the OWLAPI's {@link org.semanticweb.owlapi.model.OWLOntology} class with additional functionality used by
- * the SWRLAPI. Primarily the {@link #getSWRLRules()} method extracts {@link org.swrlapi.core.SWRLAPIRule} objects
+ * the SWRLAPI. Primarily the {@link #getSWRLAPIRules()} method extracts {@link org.swrlapi.core.SWRLAPIRule} objects
  * from an OWL ontology. This class, which extends the standard OWLAPI {@link org.semanticweb.owlapi.model.SWRLRule}
  * class, provide the richer representation of a SWRL rule required by the SWRLAPI. In particular, the SWRLAPI has a
  * range of types extending the OWLAPI's {@link org.semanticweb.owlapi.model.SWRLDArgument} interface to define
@@ -54,7 +52,7 @@ public interface SWRLAPIOWLOntology
 
 	void processOntology() throws SQWRLException;
 
-	Set<SWRLAPIRule> getSWRLRules();
+	Set<SWRLAPIRule> getSWRLAPIRules();
 
 	SWRLAPIRule getSWRLRule(String ruleName) throws SWRLRuleException;
 

@@ -186,7 +186,7 @@ public interface SWRLBuiltInInputArgumentHandler
 	void checkThatArgumentIsALong(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	// Integers
-	boolean isIntegerMostPreciseArgument(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+	boolean isIntMostPreciseArgument(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	void checkThatAllArgumentsAreIntegers(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
@@ -195,14 +195,14 @@ public interface SWRLBuiltInInputArgumentHandler
 	boolean isArgumentConvertableToInteger(int argumentNumber, List<SWRLBuiltInArgument> arguments)
 			throws SWRLBuiltInException;
 
-	void checkThatArgumentIsAnInteger(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws
+	void checkThatArgumentIsAnInt(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws
 			SWRLBuiltInException;
 
-	boolean isArgumentAnInteger(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+	boolean isArgumentAnInt(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	int getArgumentAsAnInteger(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+	int getArgumentAsAnInt(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	int getArgumentAsAPositiveInteger(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws
+	int getArgumentAsAPositiveInt(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws
 			SWRLBuiltInException;
 
 	// Longs

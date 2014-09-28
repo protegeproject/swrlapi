@@ -28,12 +28,6 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 	}
 
 	@Override
-	public boolean isInteger()
-	{
-		return this.literal.getDatatype().isInteger();
-	}
-
-	@Override
 	public boolean isInt()
 	{
 		return this.literal.getDatatype().getIRI().equals(XSDVocabulary.INT.getIRI());
@@ -114,7 +108,7 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 	@Override
 	public boolean isNumeric()
 	{
-		return isByte() || isShort() || isInteger() || isInt() || isLong() || isFloat() || isDouble();
+		return isByte() || isShort() || isInt() || isLong() || isFloat() || isDouble();
 	}
 
 	@Override
@@ -161,7 +155,7 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 	public int getInt() throws SQWRLLiteralException
 	{
 		try {
-			if (isInteger())
+			if (isInt())
 				return Integer.parseInt(literal.getLiteral());
 			if (isInt())
 				return Integer.parseInt(literal.getLiteral());
@@ -183,7 +177,7 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 				return Long.parseLong(literal.getLiteral());
 			else if (isInt())
 				return Integer.parseInt(literal.getLiteral());
-			else if (isInteger())
+			else if (isInt())
 				return Integer.parseInt(literal.getLiteral());
 			else if (isShort())
 				return Short.parseShort(literal.getLiteral());
@@ -205,7 +199,7 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 				return Float.parseFloat(literal.getLiteral());
 			else if (isDouble())
 				return Float.parseFloat(literal.getLiteral());
-			else if (isInteger())
+			else if (isInt())
 				return Integer.parseInt(literal.getLiteral());
 			else if (isInt())
 				return Integer.parseInt(literal.getLiteral());
@@ -231,8 +225,6 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 				return Double.parseDouble(literal.getLiteral());
 			else if (isFloat())
 				return Float.parseFloat(literal.getLiteral());
-			else if (isInteger())
-				return Integer.parseInt(literal.getLiteral());
 			else if (isInt())
 				return Integer.parseInt(literal.getLiteral());
 			else if (isLong())

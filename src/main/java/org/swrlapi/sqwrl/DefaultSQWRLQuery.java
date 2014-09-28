@@ -269,7 +269,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 				SWRLLiteralBuiltInArgument sliceNArgument = (SWRLLiteralBuiltInArgument)nArgument;
 				SWRLAPILiteral literal = this.swrlapiLiteralFactory.getSWRLAPILiteral(sliceNArgument.getLiteral());
 
-				if (literal.isInteger()) {
+				if (literal.isInt()) {
 					sliceN = literal.getInt();
 					if (sliceN < 1)
 						throw new SQWRLException(
@@ -297,7 +297,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 		if (sliceSizeArgument instanceof SWRLLiteralBuiltInArgument) {
 			SWRLLiteralBuiltInArgument literalArgument = (SWRLLiteralBuiltInArgument)sliceSizeArgument;
 			SWRLAPILiteral literal = this.swrlapiLiteralFactory.getSWRLAPILiteral(literalArgument.getLiteral());
-			if (literal.isInteger() || literal.isInt()) {
+			if (literal.isInt()) {
 				sliceSize = literal.getInt();
 				if (sliceSize < 1)
 					throw new SQWRLException(

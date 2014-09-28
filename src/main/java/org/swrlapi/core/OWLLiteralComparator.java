@@ -43,7 +43,7 @@ public final class OWLLiteralComparator implements Comparator<OWLLiteral>
 			return -1;
 
 		try {
-			if (l1.getDatatype().isInteger() || l1.getDatatype().getIRI().equals(XSDVocabulary.INT.getIRI())) {
+			if (l1.getDatatype().isInteger() || l1.getDatatype().getIRI().equals(XSDVocabulary.INT.getIRI())) { // xsd:int
 				Integer i1 = Integer.parseInt(l1.getLiteral());
 				Integer i2 = Integer.parseInt(l2.getLiteral());
 				return i1.compareTo(i2);
