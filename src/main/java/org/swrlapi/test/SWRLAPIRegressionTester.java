@@ -1,6 +1,9 @@
 package org.swrlapi.test;
 
 import org.semanticweb.owlapi.model.OWLDatatype;
+import org.swrlapi.core.SWRLAPIFactory;
+import org.swrlapi.core.SWRLAPIOWLOntology;
+import org.swrlapi.core.SWRLAPIRenderer;
 import org.swrlapi.sqwrl.SQWRLQuery;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.SQWRLResult;
@@ -20,10 +23,12 @@ import java.util.StringTokenizer;
  */
 public class SWRLAPIRegressionTester
 {
+	private final SWRLAPIOWLOntology swrlapiOWLOntology;
 	private final SQWRLQueryEngine sqwrlQueryEngine;
 
-	public SWRLAPIRegressionTester(SQWRLQueryEngine sqwrlQueryEngine)
+	public SWRLAPIRegressionTester(SWRLAPIOWLOntology swrlapiOWLOntology, SQWRLQueryEngine sqwrlQueryEngine)
 	{
+		this.swrlapiOWLOntology = swrlapiOWLOntology;
 		this.sqwrlQueryEngine = sqwrlQueryEngine;
 	}
 
@@ -33,6 +38,8 @@ public class SWRLAPIRegressionTester
 		int numberOfTests = 0;
 		int passedTests = 0;
 
+		SWRLAPIRenderer renderer = SWRLAPIFactory.createSWRLAPIRenderer(this.swrlapiOWLOntology);
+
 		try {
 			sqwrlQueryEngine.getOWL2RLEngine().enableAll();
 			sqwrlQueryEngine.reset();
@@ -41,7 +48,8 @@ public class SWRLAPIRegressionTester
 
 			for (SQWRLQuery query : sqwrlQueryEngine.getSQWRLQueries()) {
 				String queryName = query.getQueryName();
-				System.out.print("\n*****Running test " + queryName + "...");
+				System.out.print("\n*****Running test " + queryName + "...\n");
+				System.out.print(renderer.renderSQWRLQuery(query) + "\n");
 				numberOfTests++;
 				try {
 					SQWRLResult result = sqwrlQueryEngine.runSQWRLQuery(queryName);
@@ -69,7 +77,6 @@ public class SWRLAPIRegressionTester
 					failedTests.add(queryName);
 				}
 			}
-
 			System.out.println("Number of tests: " + numberOfTests);
 
 			if (!failedTests.isEmpty()) {

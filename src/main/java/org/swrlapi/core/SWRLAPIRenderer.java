@@ -2,6 +2,7 @@ package org.swrlapi.core;
 
 import org.semanticweb.owlapi.model.SWRLRule;
 import org.swrlapi.core.visitors.SWRLAPIEntityVisitorEx;
+import org.swrlapi.sqwrl.SQWRLQuery;
 
 /**
  * A renderer for {@link org.swrlapi.core.SWRLAPIRule} and {@link org.swrlapi.sqwrl.SQWRLQuery} objects.
@@ -12,7 +13,9 @@ import org.swrlapi.core.visitors.SWRLAPIEntityVisitorEx;
  * @see org.swrlapi.sqwrl.SQWRLQuery
  * @see org.swrlapi.core.SWRLAPIFactory
  */
-public interface SWRLAPIRuleRenderer extends SWRLAPIEntityVisitorEx<String>
+public interface SWRLAPIRenderer extends SWRLAPIEntityVisitorEx<String>
 {
-	String render(SWRLRule swrlapiRule);
+	String renderSWRLRule(SWRLRule rule);
+
+	String renderSQWRLQuery(SQWRLQuery query);
 }

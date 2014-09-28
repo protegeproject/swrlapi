@@ -11,13 +11,13 @@ import java.util.Set;
  * Represents a SQWRL query in the SWRLAPI. A {@link org.swrlapi.core.SWRLAPIOntologyProcessor} can be used to
  * extract SQWRL queries - which are stored as {@link org.swrlapi.core.SWRLAPIRule}s - from an OWL ontology.
  * <p/>
- * A {@link org.swrlapi.core.SWRLAPIRuleRenderer} can be used to display a query.
+ * A {@link org.swrlapi.core.SWRLAPIRenderer} can be used to display a query.
  *
  * @see org.swrlapi.core.SWRLAPIOntologyProcessor
  * @see org.swrlapi.core.SWRLAPIRule
  * @see org.swrlapi.sqwrl.SQWRLResult
  * @see org.swrlapi.sqwrl.SQWRLResultGenerator
- * @see org.swrlapi.core.SWRLAPIRuleRenderer
+ * @see org.swrlapi.core.SWRLAPIRenderer
  */
 public interface SQWRLQuery
 {

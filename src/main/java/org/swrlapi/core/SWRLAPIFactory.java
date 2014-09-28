@@ -1,6 +1,5 @@
 package org.swrlapi.core;
 
-import org.apache.log4j.Logger;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLOntology;
@@ -18,7 +17,7 @@ import org.swrlapi.core.impl.DefaultSWRLAPIOWLDataFactory;
 import org.swrlapi.core.impl.DefaultSWRLAPIOWLDatatypeFactory;
 import org.swrlapi.core.impl.DefaultSWRLAPIOWLOntology;
 import org.swrlapi.core.impl.DefaultSWRLAPIOntologyProcessor;
-import org.swrlapi.core.impl.DefaultSWRLAPIRuleRenderer;
+import org.swrlapi.core.impl.DefaultSWRLAPIRenderer;
 import org.swrlapi.core.impl.DefaultSWRLRuleEngineFactory;
 import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.exceptions.SWRLAPIException;
@@ -178,13 +177,13 @@ public class SWRLAPIFactory
 		return new SWRLParser(swrlapiOWLOntology);
 	}
 
-	public static DefaultSWRLAPIRuleRenderer createSWRLRuleRenderer(SWRLAPIOWLOntology swrlapiOWLOntology)
+	public static DefaultSWRLAPIRenderer createSWRLAPIRenderer(SWRLAPIOWLOntology swrlapiOWLOntology)
 	{
-		return new DefaultSWRLAPIRuleRenderer(swrlapiOWLOntology);
+		return new DefaultSWRLAPIRenderer(swrlapiOWLOntology);
 	}
 
 	public static SWRLRulesTableModel createSWRLRulesTableModel(SWRLRuleEngine swrlRuleEngine,
-			DefaultSWRLAPIRuleRenderer swrlRuleRenderer)
+			DefaultSWRLAPIRenderer swrlRuleRenderer)
 	{
 		return new SWRLRulesTableModel(swrlRuleEngine, swrlRuleRenderer);
 	}

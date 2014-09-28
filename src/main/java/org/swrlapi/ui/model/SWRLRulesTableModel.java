@@ -3,7 +3,7 @@ package org.swrlapi.ui.model;
 import org.apache.log4j.Logger;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLRuleEngine;
-import org.swrlapi.core.impl.DefaultSWRLAPIRuleRenderer;
+import org.swrlapi.core.impl.DefaultSWRLAPIRenderer;
 import org.swrlapi.ui.view.SWRLAPIView;
 
 import javax.swing.table.AbstractTableModel;
@@ -32,20 +32,20 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 
 	public static int NUMBER_OF_COLUMNS = 4;
 
-	private final DefaultSWRLAPIRuleRenderer swrlRuleRenderer;
+	private final DefaultSWRLAPIRenderer swrlRuleRenderer;
 	private final Map<String, SWRLRuleModel> swrlRuleModels; // rule name -> SWRLRuleModel
 
 	private SWRLAPIView swrlapiView = null;
 	private boolean isModified = false;
 
-	public SWRLRulesTableModel(SWRLRuleEngine swrlRuleEngine, DefaultSWRLAPIRuleRenderer swrlRuleRenderer)
+	public SWRLRulesTableModel(SWRLRuleEngine swrlRuleEngine, DefaultSWRLAPIRenderer swrlRuleRenderer)
 	{
 		this.swrlRuleRenderer = swrlRuleRenderer;
 		this.swrlRuleModels = new HashMap<>();
 
 		for (SWRLAPIRule swrlapiRule : swrlRuleEngine.getSWRLRules()) {
 			String ruleName = swrlapiRule.getRuleName();
-			String ruleText = swrlRuleRenderer.render(swrlapiRule);
+			String ruleText = swrlRuleRenderer.renderSWRLRule(swrlapiRule);
 			String comment = swrlapiRule.getComment();
 			SWRLRuleModel swrlRuleModel = new SWRLRuleModel(ruleName, ruleText, comment);
 			this.swrlRuleModels.put(ruleName, swrlRuleModel);

@@ -1,10 +1,9 @@
 package org.swrlapi.ui.model;
 
-import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.SWRLAPIFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLRuleEngine;
-import org.swrlapi.core.impl.DefaultSWRLAPIRuleRenderer;
+import org.swrlapi.core.impl.DefaultSWRLAPIRenderer;
 import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 
@@ -23,14 +22,14 @@ public class SWRLAPIApplicationModel implements SWRLAPIModel
 	private final SQWRLQueryEngine queryEngine;
 	private final SWRLRuleEngine ruleEngine;
 	private final SWRLParser swrlParser;
-	private final DefaultSWRLAPIRuleRenderer swrlRuleRenderer;
+	private final DefaultSWRLAPIRenderer swrlRuleRenderer;
 
 	public SWRLAPIApplicationModel(SWRLAPIOWLOntology swrlapiOWLOntology, SWRLRuleEngine ruleEngine)
 	{
 		this.swrlapiowlOntology = swrlapiOWLOntology;
 		this.ruleEngine = ruleEngine;
 		this.queryEngine = ruleEngine;
-		this.swrlRuleRenderer = SWRLAPIFactory.createSWRLRuleRenderer(swrlapiowlOntology);
+		this.swrlRuleRenderer = SWRLAPIFactory.createSWRLAPIRenderer(swrlapiowlOntology);
 		this.swrlRulesTableModel = SWRLAPIFactory.createSWRLRulesTableModel(ruleEngine, swrlRuleRenderer);
 		this.swrlParser = SWRLAPIFactory.createSWRLParser(swrlapiOWLOntology);
 	}

@@ -44,9 +44,12 @@ import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
 import org.swrlapi.core.SWRLAPIOWLOntology;
-import org.swrlapi.core.SWRLAPIRuleRenderer;
+import org.swrlapi.core.SWRLAPIRenderer;
 import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.sqwrl.SQWRLNames;
+import org.swrlapi.sqwrl.SQWRLQuery;
+
+import java.util.Iterator;
 
 /**
  * Default implementation of a renderer for {@link org.swrlapi.core.SWRLAPIRule} and
@@ -56,26 +59,54 @@ import org.swrlapi.sqwrl.SQWRLNames;
  * @see org.swrlapi.sqwrl.SQWRLQuery
  * @see org.swrlapi.core.SWRLAPIFactory
  */
-public class DefaultSWRLAPIRuleRenderer implements SWRLAPIRuleRenderer
+public class DefaultSWRLAPIRenderer implements SWRLAPIRenderer
 {
 	private final OWLOntology ontology;
 	private final DefaultPrefixManager prefixManager;
 
-	public DefaultSWRLAPIRuleRenderer(SWRLAPIOWLOntology swrlapiowlOntology)
+	public DefaultSWRLAPIRenderer(SWRLAPIOWLOntology swrlapiowlOntology)
 	{
 		this.ontology = swrlapiowlOntology.getOWLOntology();
 		this.prefixManager = swrlapiowlOntology.getPrefixManager();
 	}
 
 	@Override
-	public String render(SWRLRule swrlapiRule)
+	public String renderSWRLRule(SWRLRule rule)
+	{
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(renderBodyAtoms(rule.getBody().iterator()));
+
+		sb.append(" " + SWRLParser.IMP_CHAR + " ");
+
+		sb.append(renderHeadAtoms(rule.getHead().iterator()));
+
+		return sb.toString();
+	}
+
+	@Override
+	public String renderSQWRLQuery(SQWRLQuery query)
+	{
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(renderBodyAtoms(query.getBodyAtoms().iterator()));
+
+		sb.append(" " + SWRLParser.IMP_CHAR + " ");
+
+		sb.append(renderHeadAtoms(query.getHeadAtoms().iterator()));
+
+		return sb.toString();
+	}
+
+	private StringBuilder renderBodyAtoms(Iterator<SWRLAtom> bodyAtomIterator)
 	{
 		StringBuilder sb = new StringBuilder();
 		boolean collectionMakeEncountered = false;
 		boolean collectionOperationEncountered = false;
 		boolean isFirst = true;
 
-		for (SWRLAtom atom : swrlapiRule.getBody()) {
+		while (bodyAtomIterator.hasNext()) {
+			SWRLAtom atom = bodyAtomIterator.next();
 			if (isSQWRLCollectionMakeBuiltInAtom(atom)) {
 				if (collectionMakeEncountered)
 					sb.append(" " + SWRLParser.AND_CHAR + " ");
@@ -97,23 +128,29 @@ public class DefaultSWRLAPIRuleRenderer implements SWRLAPIRuleRenderer
 			sb.append(atom.accept(this));
 			isFirst = false;
 		}
+		return sb;
+	}
 
-		sb.append(" " + SWRLParser.IMP_CHAR + " ");
-
+	private StringBuilder renderHeadAtoms(Iterator<SWRLAtom> headAtomIterator)
+	{
+		StringBuilder sb = new StringBuilder();
+		boolean isFirst = true;
 		isFirst = true;
-		for (SWRLAtom atom : swrlapiRule.getHead()) {
+
+		while (headAtomIterator.hasNext()) {
+			SWRLAtom atom = headAtomIterator.next();
 			if (!isFirst)
 				sb.append(" " + SWRLParser.AND_CHAR + " ");
 			sb.append(atom.accept(this));
 			isFirst = false;
 		}
-		return sb.toString();
+		return sb;
 	}
 
 	@Override
 	public String visit(SWRLRule swrlRule)
 	{
-		return render(swrlRule);
+		return renderSWRLRule(swrlRule);
 	}
 
 	@Override
