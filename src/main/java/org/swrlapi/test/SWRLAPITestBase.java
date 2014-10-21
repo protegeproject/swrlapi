@@ -5,6 +5,7 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.SWRLAPIOWLOntology;
+import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
@@ -110,8 +111,8 @@ public class SWRLAPITestBase
 		swrlapiowlOntology.createSQWRLQuery(queryName, query);
 	}
 
-	protected void createSWRLRule(String ruleName, String rule) throws SWRLParseException
+	protected SWRLAPIRule createSWRLRule(String ruleName, String rule) throws SWRLParseException
 	{
-		swrlapiowlOntology.createSWRLRule(ruleName, rule);
+		return swrlapiowlOntology.createSWRLRule(ruleName, rule);
 	}
 }

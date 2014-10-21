@@ -3,12 +3,24 @@ package org.swrlapi;
 import org.junit.Before;
 import org.junit.Test;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.SWRLBuiltInAtom;
+import org.semanticweb.owlapi.model.SWRLClassAtom;
+import org.semanticweb.owlapi.model.SWRLDataPropertyAtom;
+import org.semanticweb.owlapi.model.SWRLObjectPropertyAtom;
+import org.semanticweb.owlapi.model.SWRLSameIndividualAtom;
+import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.parser.SWRLParseException;
+import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.test.SWRLAPITestBase;
+
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class SWRLParserTestCase extends SWRLAPITestBase
 {
-	String Namespace = "http://protege.org/ontologies/SWRLParserTests.owl#";
+	String Namespace = "http://protege.org/ontologies/SWRLParserTestCase.owl#";
 
 	@Before
 	public void setUp() throws OWLOntologyCreationException
@@ -22,7 +34,11 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 		declareOWLClass("Male");
 		declareOWLNamedIndividual("p1");
 
-		createSWRLRule("r1", "-> Male(p1)");
+		SWRLAPIRule rule = createSWRLRule("r1", "-> Male(p1)");
+
+		assertEquals(rule.getBodyAtoms().size(), 0);
+		assertEquals(rule.getHeadAtoms().size(), 1);
+		assertThat(rule.getHeadAtoms().get(0), instanceOf(SWRLClassAtom.class));
 	}
 
 	@Test
@@ -30,7 +46,10 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	{
 		declareOWLClass("Male");
 
-		createSWRLRule("r1", "Male(?m) -> ");
+		SWRLAPIRule rule = createSWRLRule("r1", "Male(?m) -> ");
+		assertEquals(rule.getBodyAtoms().size(), 1);
+		assertEquals(rule.getHeadAtoms().size(), 0);
+		assertThat(rule.getBodyAtoms().get(0), instanceOf(SWRLClassAtom.class));
 	}
 
 	@Test
@@ -39,7 +58,10 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 		declareOWLClass("Male");
 		declareOWLNamedIndividual("p1");
 
-		createSWRLRule("r1", "Male(p1) -> ");
+		SWRLAPIRule rule = createSWRLRule("r1", "Male(p1) -> ");
+		assertEquals(rule.getBodyAtoms().size(), 1);
+		assertEquals(rule.getHeadAtoms().size(), 0);
+		assertThat(rule.getBodyAtoms().get(0), instanceOf(SWRLClassAtom.class));
 	}
 
 	@Test
@@ -47,7 +69,10 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	{
 		declareOWLDataProperty("hasName");
 
-		createSWRLRule("r1", "hasName(?p, \"Fred\") ->");
+		SWRLAPIRule rule = createSWRLRule("r1", "hasName(?p, \"Fred\") ->");
+		assertEquals(rule.getBodyAtoms().size(), 1);
+		assertEquals(rule.getHeadAtoms().size(), 0);
+		assertThat(rule.getBodyAtoms().get(0), instanceOf(SWRLDataPropertyAtom.class));
 	}
 
 	@Test
@@ -55,7 +80,10 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	{
 		declareOWLDataProperty("isFrench");
 
-		createSWRLRule("r1", "isFrench(?f, true) ->");
+		SWRLAPIRule rule = createSWRLRule("r1", "isFrench(?f, true) ->");
+		assertEquals(rule.getBodyAtoms().size(), 1);
+		assertEquals(rule.getHeadAtoms().size(), 0);
+		assertThat(rule.getBodyAtoms().get(0), instanceOf(SWRLDataPropertyAtom.class));
 	}
 
 	@Test
@@ -63,7 +91,10 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	{
 		declareOWLDataProperty("isFrench");
 
-		createSWRLRule("r1", "isFrench(?f, false) ->");
+		SWRLAPIRule rule = createSWRLRule("r1", "isFrench(?f, false) ->");
+		assertEquals(rule.getBodyAtoms().size(), 1);
+		assertEquals(rule.getHeadAtoms().size(), 0);
+		assertThat(rule.getBodyAtoms().get(0), instanceOf(SWRLDataPropertyAtom.class));
 	}
 
 	@Test
@@ -167,17 +198,24 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	{
 		declareOWLObjectProperty("hasUncle");
 
-		createSWRLRule("r1", "hasUncle(?p, ?u) -> ");
+		SWRLAPIRule rule = createSWRLRule("r1", "hasUncle(?p, ?u) -> ");
+
+		assertEquals(rule.getBodyAtoms().size(), 1);
+		assertEquals(rule.getHeadAtoms().size(), 0);
+		assertThat(rule.getBodyAtoms().get(0), instanceOf(SWRLObjectPropertyAtom.class));
 	}
 
 	@Test
-	public void TestObjectPropertyInAntecedentWithNamedIndivudals() throws SWRLParseException
+	public void TestObjectPropertyInAntecedentWithNamedIndividuals() throws SWRLParseException
 	{
 		declareOWLObjectProperty("hasUncle");
 		declareOWLNamedIndividual("p1");
 		declareOWLNamedIndividual("p2");
 
-		createSWRLRule("r1", "hasUncle(p1, p2) -> ");
+		SWRLAPIRule rule = createSWRLRule("r1", "hasUncle(p1, p2) -> ");
+		assertEquals(rule.getBodyAtoms().size(), 1);
+		assertEquals(rule.getHeadAtoms().size(), 0);
+		assertThat(rule.getBodyAtoms().get(0), instanceOf(SWRLObjectPropertyAtom.class));
 	}
 
 	@Test
@@ -232,18 +270,29 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 		declareOWLNamedIndividual("p13");
 		declareOWLDataProperty("hasLastAccessTime");
 
-		createSWRLRule("r1",
+		SWRLAPIRule rule = createSWRLRule("r1",
 				"swrlb:addDayTimeDurationToDateTime(?dt, \"1999-01-01T12:12:12\", \"P1Y\") -> hasLastAccessTime(p13, ?dt)");
+
+		assertEquals(rule.getBodyAtoms().size(), 1);
+		assertEquals(rule.getHeadAtoms().size(), 1);
+		assertThat(rule.getBodyAtoms().get(0), instanceOf(SWRLBuiltInAtom.class));
+		assertThat(rule.getHeadAtoms().get(0), instanceOf(SWRLDataPropertyAtom.class));
 	}
 
 	@Test
-	public void TestSameAsInConsequentWithNamedIndiviualAndVariable() throws SWRLParseException
+	public void TestSameAsInConsequentWithNamedIndividualAndVariable() throws SWRLParseException
 	{
 		declareOWLClass("Person");
 		declareOWLDataProperty("hasID");
 		declareOWLNamedIndividual("s12");
 
-		createSWRLRule("r1", "Person(?i2) ^ hasID(?i2, \"s13ID\") -> sameAs(s12, ?i2)");
+		SWRLAPIRule rule = createSWRLRule("r1", "Person(?i2) ^ hasID(?i2, \"s13ID\") -> sameAs(s12, ?i2)");
+
+		assertEquals(rule.getBodyAtoms().size(), 2);
+		assertEquals(rule.getHeadAtoms().size(), 1);
+		assertThat(rule.getBodyAtoms().get(0), instanceOf(SWRLClassAtom.class));
+		assertThat(rule.getBodyAtoms().get(1), instanceOf(SWRLDataPropertyAtom.class));
+		assertThat(rule.getHeadAtoms().get(0), instanceOf(SWRLSameIndividualAtom.class));
 	}
 
 	@Test
