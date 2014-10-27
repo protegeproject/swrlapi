@@ -23,6 +23,7 @@ import org.semanticweb.owlapi.model.SWRLLiteralArgument;
 import org.semanticweb.owlapi.model.SWRLPredicate;
 import org.semanticweb.owlapi.model.SWRLRule;
 import org.semanticweb.owlapi.model.SWRLVariable;
+import org.semanticweb.owlapi.model.parameters.Imports;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.semanticweb.owlapi.vocab.OWL2Datatype;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
@@ -143,7 +144,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		Set<SWRLRule> unannotatedOWLAPIRules = new HashSet<>();
 		Set<String> ruleNames = new HashSet<>();
 
-		for (SWRLRule owlapiRule : getOWLOntology().getAxioms(AxiomType.SWRL_RULE, true)) {
+		for (SWRLRule owlapiRule : getOWLOntology().getAxioms(AxiomType.SWRL_RULE, Imports.INCLUDED)) {
 			String ruleName = this.swrlapiOntologyProcessor.getRuleName(owlapiRule);
 			boolean isActive = this.swrlapiOntologyProcessor.getIsActive(owlapiRule);
 			String comment = this.swrlapiOntologyProcessor.getComment(owlapiRule);
@@ -168,8 +169,8 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 			swrlapiRules.add(swrlapiRule);
 			ruleNames.add(ruleName);
 
-//			ontologyManager.removeAxiom(ontology, owlapiRule); // Remove the original annotated rule
-//			ontologyManager.addAxiom(ontology, annotatedOWLAPIRule); // Replace with annotated rule
+			//			ontologyManager.removeAxiom(ontology, owlapiRule); // Remove the original annotated rule
+			//			ontologyManager.addAxiom(ontology, annotatedOWLAPIRule); // Replace with annotated rule
 		}
 
 		return swrlapiRules;
@@ -495,23 +496,23 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 			OWLClass cls = getOWLDataFactory().getOWLClass(iri);
 
 			return getSWRLBuiltInArgumentFactory().getClassBuiltInArgument(cls);
-		} else if (getOWLOntology().containsIndividualInSignature(iri, true) && hackIRI(iri)) {
+		} else if (getOWLOntology().containsIndividualInSignature(iri, Imports.INCLUDED) && hackIRI(iri)) {
 			OWLNamedIndividual individual = getOWLDataFactory().getOWLNamedIndividual(iri);
 
 			return getSWRLBuiltInArgumentFactory().getNamedIndividualBuiltInArgument(individual);
-		} else if (getOWLOntology().containsObjectPropertyInSignature(iri, true)) {
+		} else if (getOWLOntology().containsObjectPropertyInSignature(iri, Imports.INCLUDED)) {
 			OWLObjectProperty property = getOWLDataFactory().getOWLObjectProperty(iri);
 
 			return getSWRLBuiltInArgumentFactory().getObjectPropertyBuiltInArgument(property);
-		} else if (getOWLOntology().containsDataPropertyInSignature(iri, true)) {
+		} else if (getOWLOntology().containsDataPropertyInSignature(iri, Imports.INCLUDED)) {
 			OWLDataProperty property = getOWLDataFactory().getOWLDataProperty(iri);
 
 			return getSWRLBuiltInArgumentFactory().getDataPropertyBuiltInArgument(property);
-		} else if (getOWLOntology().containsAnnotationPropertyInSignature(iri, true)) {
+		} else if (getOWLOntology().containsAnnotationPropertyInSignature(iri, Imports.INCLUDED)) {
 			OWLAnnotationProperty property = getOWLDataFactory().getOWLAnnotationProperty(iri);
 
 			return getSWRLBuiltInArgumentFactory().getAnnotationPropertyBuiltInArgument(property);
-		} else if (getOWLOntology().containsDatatypeInSignature(iri, true)) {
+		} else if (getOWLOntology().containsDatatypeInSignature(iri, Imports.INCLUDED)) {
 			OWLDatatype datatype = getOWLDataFactory().getOWLDatatype(iri);
 
 			return getSWRLBuiltInArgumentFactory().getDatatypeBuiltInArgument(datatype);
@@ -526,8 +527,8 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 
 	private boolean isOWLClass(IRI iri)
 	{
-		return getOWLOntology().containsClassInSignature(iri, true) || iri.equals(OWLRDFVocabulary.OWL_THING.getIRI())
-				|| iri.equals(OWLRDFVocabulary.OWL_NOTHING.getIRI());
+		return getOWLOntology().containsClassInSignature(iri, Imports.INCLUDED) || iri
+				.equals(OWLRDFVocabulary.OWL_THING.getIRI()) || iri.equals(OWLRDFVocabulary.OWL_NOTHING.getIRI());
 	}
 
 	/**

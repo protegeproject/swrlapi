@@ -28,6 +28,7 @@ import org.semanticweb.owlapi.model.SWRLObjectPropertyAtom;
 import org.semanticweb.owlapi.model.SWRLRule;
 import org.semanticweb.owlapi.model.SWRLSameIndividualAtom;
 import org.semanticweb.owlapi.model.SWRLVariable;
+import org.semanticweb.owlapi.model.parameters.Imports;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
 import org.swrlapi.builtins.arguments.SQWRLCollectionVariableBuiltInArgument;
@@ -256,7 +257,7 @@ public class DefaultSWRLAPIRenderer implements SWRLAPIRenderer
 	{
 		IRI variableIRI = variable.getIRI();
 
-		if (this.ontology.containsEntityInSignature(variableIRI, true)) {
+		if (this.ontology.containsEntityInSignature(variableIRI, Imports.INCLUDED)) {
 			String shortForm = this.prefixManager.getShortForm(variableIRI);
 			return shortForm.startsWith(":") ? shortForm.substring(1) : shortForm;
 		} else {
@@ -482,7 +483,7 @@ public class DefaultSWRLAPIRenderer implements SWRLAPIRenderer
 	{
 		IRI variableIRI = argument.getIRI();
 
-		if (this.ontology.containsEntityInSignature(variableIRI, true)) {
+		if (this.ontology.containsEntityInSignature(variableIRI, Imports.INCLUDED)) {
 			String shortForm = this.prefixManager.getShortForm(variableIRI);
 			return shortForm.startsWith(":") ? shortForm.substring(1) : shortForm;
 		} else {

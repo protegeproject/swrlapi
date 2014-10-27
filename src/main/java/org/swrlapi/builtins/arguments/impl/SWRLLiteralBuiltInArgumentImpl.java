@@ -1,7 +1,9 @@
 package org.swrlapi.builtins.arguments.impl;
 
 import java.util.Comparator;
+import java.util.Set;
 
+import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.model.OWLObjectVisitor;
@@ -12,6 +14,8 @@ import org.swrlapi.builtins.arguments.*;
 import org.swrlapi.core.OWLLiteralComparator;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
+
+import javax.annotation.Nonnull;
 
 class SWRLLiteralBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements SWRLLiteralBuiltInArgument
 {
@@ -131,5 +135,10 @@ class SWRLLiteralBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements 
 	@Override public String toString()
 	{
 		return this.literal.getLiteral();
+	}
+
+	@Nonnull @Override public Set<OWLAnnotationProperty> getAnnotationPropertiesInSignature()
+	{
+		return null; // TODO OWLAPI V4.0.0 update
 	}
 }

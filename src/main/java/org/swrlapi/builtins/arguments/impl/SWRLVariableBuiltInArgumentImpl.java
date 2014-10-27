@@ -1,6 +1,7 @@
 package org.swrlapi.builtins.arguments.impl;
 
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.model.OWLObjectVisitor;
 import org.semanticweb.owlapi.model.OWLObjectVisitorEx;
@@ -9,6 +10,9 @@ import org.semanticweb.owlapi.model.SWRLObjectVisitorEx;
 import org.swrlapi.builtins.arguments.*;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
+
+import javax.annotation.Nonnull;
+import java.util.Set;
 
 class SWRLVariableBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements SWRLVariableBuiltInArgument
 {
@@ -191,5 +195,10 @@ class SWRLVariableBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements
 		hash = hash + (null == this.builtInResult ? 0 : this.builtInResult.hashCode());
 		hash = hash + (this.isBound ? 1 : 0);
 		return hash;
+	}
+
+	@Nonnull @Override public Set<OWLAnnotationProperty> getAnnotationPropertiesInSignature()
+	{
+		return null; // TODO OWLAPI V4.0.0 update
 	}
 }

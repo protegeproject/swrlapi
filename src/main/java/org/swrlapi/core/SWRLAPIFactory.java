@@ -1,14 +1,14 @@
 package org.swrlapi.core;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.formats.PrefixDocumentFormat;
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLDocumentFormat;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
-import org.semanticweb.owlapi.model.OWLOntologyFormat;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.semanticweb.owlapi.util.SimpleIRIMapper;
-import org.semanticweb.owlapi.vocab.PrefixOWLOntologyFormat;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.builtins.arguments.impl.DefaultSWRLBuiltInArgumentFactory;
 import org.swrlapi.core.impl.DefaultOWLLiteralFactory;
@@ -126,10 +126,10 @@ public class SWRLAPIFactory
 	public static void updatePrefixManager(OWLOntology ontology, DefaultPrefixManager prefixManager)
 	{
 		OWLOntologyManager owlOntologyManager = ontology.getOWLOntologyManager();
-		OWLOntologyFormat ontologyFormat = owlOntologyManager.getOntologyFormat(ontology);
+		OWLDocumentFormat ontologyFormat = owlOntologyManager.getOntologyFormat(ontology);
 
 		if (ontologyFormat.isPrefixOWLOntologyFormat()) {
-			PrefixOWLOntologyFormat prefixOntologyFormat = ontologyFormat.asPrefixOWLOntologyFormat();
+			PrefixDocumentFormat prefixOntologyFormat = ontologyFormat.asPrefixOWLOntologyFormat();
 			String defaultPrefix = prefixOntologyFormat.getDefaultPrefix();
 
 			Map<String, String> map = prefixOntologyFormat.getPrefixName2PrefixMap();
@@ -289,7 +289,7 @@ public class SWRLAPIFactory
 		map.put("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl", resourceName2File("owl/sqwrl.owl"));
 
 		for (String key : map.keySet())
-			ontologyManager.addIRIMapper(new SimpleIRIMapper(IRI.create(key), IRI.create(map.get(key))));
+			ontologyManager.getIRIMappers().add(new SimpleIRIMapper(IRI.create(key), IRI.create(map.get(key))));
 	}
 
 	private static OWLOntology createOWLOntology(OWLOntologyManager ontologyManager, File file) throws SWRLAPIException

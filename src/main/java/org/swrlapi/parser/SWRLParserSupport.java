@@ -24,6 +24,7 @@ import org.semanticweb.owlapi.model.SWRLObjectPropertyAtom;
 import org.semanticweb.owlapi.model.SWRLRule;
 import org.semanticweb.owlapi.model.SWRLSameIndividualAtom;
 import org.semanticweb.owlapi.model.SWRLVariable;
+import org.semanticweb.owlapi.model.parameters.Imports;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
 import org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument;
@@ -68,31 +69,31 @@ public class SWRLParserSupport
 	public boolean isOWLClass(String classShortName)
 	{
 		IRI classIRI = getPrefixManager().getIRI(classShortName);
-		return getOWLOntology().containsClassInSignature(classIRI, true);
+		return getOWLOntology().containsClassInSignature(classIRI, Imports.INCLUDED);
 	}
 
 	public boolean isOWLNamedIndividual(String individualShortName)
 	{
 		IRI individualIRI = getPrefixManager().getIRI(individualShortName);
-		return getOWLOntology().containsIndividualInSignature(individualIRI, true);
+		return getOWLOntology().containsIndividualInSignature(individualIRI, Imports.INCLUDED);
 	}
 
 	public boolean isOWLObjectProperty(String objectPropertyShortName)
 	{
 		IRI propertyIRI = getPrefixManager().getIRI(objectPropertyShortName);
-		return getOWLOntology().containsObjectPropertyInSignature(propertyIRI, true);
+		return getOWLOntology().containsObjectPropertyInSignature(propertyIRI, Imports.INCLUDED);
 	}
 
 	public boolean isOWLDataProperty(String dataPropertyShortName)
 	{
 		IRI propertyIRI = getPrefixManager().getIRI(dataPropertyShortName);
-		return getOWLOntology().containsDataPropertyInSignature(propertyIRI, true);
+		return getOWLOntology().containsDataPropertyInSignature(propertyIRI, Imports.INCLUDED);
 	}
 
 	public boolean isOWLAnnotationProperty(String annotationPropertyShortName)
 	{
 		IRI propertyIRI = getPrefixManager().getIRI(annotationPropertyShortName);
-		return getOWLOntology().containsAnnotationPropertyInSignature(propertyIRI, true);
+		return getOWLOntology().containsAnnotationPropertyInSignature(propertyIRI, Imports.INCLUDED);
 	}
 
 	public boolean isOWLDatatype(String datatypeShortName)

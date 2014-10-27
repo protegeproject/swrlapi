@@ -1,9 +1,13 @@
 package org.swrlapi.builtins.arguments.impl;
 
+import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
 import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
+
+import javax.annotation.Nonnull;
+import java.util.Set;
 
 class SWRLClassBuiltInArgumentImpl extends SWRLNamedBuiltInArgumentImpl implements SWRLClassBuiltInArgument
 {
@@ -30,5 +34,10 @@ class SWRLClassBuiltInArgumentImpl extends SWRLNamedBuiltInArgumentImpl implemen
 	public void accept(SWRLBuiltInArgumentVisitor visitor)
 	{
 		visitor.visit(this);
+	}
+
+	@Nonnull @Override public Set<OWLAnnotationProperty> getAnnotationPropertiesInSignature()
+	{
+		return null; // TODO OWLAPI V4.0.0 update
 	}
 }

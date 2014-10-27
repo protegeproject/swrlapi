@@ -2,6 +2,7 @@ package org.swrlapi.ui.dialog;
 
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
+import org.semanticweb.owlapi.model.parameters.Imports;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 import org.swrlapi.core.SWRLAPIOWLOntology;
@@ -22,7 +23,7 @@ public class SWRLAutoCompleter
 		DefaultPrefixManager prefixManager = swrlapiowlOntology.getPrefixManager();
 		this.shortForms = new ArrayList<>();
 
-		for (OWLEntity owlEntity : swrlapiowlOntology.getOWLOntology().getSignature(true)) {
+		for (OWLEntity owlEntity : swrlapiowlOntology.getOWLOntology().getSignature(Imports.INCLUDED)) {
 			String shortForm = prefixManager.getShortForm(owlEntity.getIRI());
 			if (shortForm.startsWith(":"))
 				this.shortForms.add(shortForm.substring(1));

@@ -6,15 +6,17 @@
   <artifactId>swrlapi</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
-  <name>OWLAPI-based implementation of SWRLAPI</name>
+  <name>OWLAPI-based implementation of the SWRLAPI</name>
 
   <properties>
 
-    <owlapi.version>3.5.1</owlapi.version>
+     <!-- <owlapi.version>3.5.1</owlapi.version> -->
+     <owlapi.version>4.0.0</owlapi.version> 
     <jep.version>2.4.0</jep.version>
     <axis.version>1.4</axis.version>
     <junit.version>4.11</junit.version>
     <log4j.version>1.2.17</log4j.version>
+    <slf4j.version>1.6.1</slf4j.version>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
@@ -22,10 +24,9 @@
 
 	<repositories>
 
-    <!-- Use repository in ${project.basedir}/lib for JARs that can not be found in public Maven repositories. -->
-    <!-- Each project ./lib directory should contain dependencies that may be used by that project. -->
+    <!-- JARs that can not be found in public Maven repositories are put in local repository in ${project.basedir}/lib. -->
+    <!-- Each project ./lib directory can contain a repository of this type. -->
     <!-- See: http://blog.dub.podval.org/2010/01/maven-in-project-repository.html -->
-    <!-- May ultimately use a local Nexus server or the like for some of these dependencies. -->
     <repository>
       <id>lib</id>
       <name>lib</name>
@@ -67,6 +68,18 @@
 			<artifactId>log4j</artifactId>
       <version>${log4j.version}</version>
     </dependency>    
+
+    <dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+    
+    <dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
 
     <dependency>
       <groupId>junit</groupId>

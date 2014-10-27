@@ -3,6 +3,7 @@ package org.swrlapi.core.impl;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.parameters.Imports;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 import org.swrlapi.bridge.SWRLRuleEngineBridge;
 import org.swrlapi.bridge.SWRLRuleEngineBridgeController;
@@ -216,23 +217,23 @@ public class DefaultSWRLBridge
 
 	public boolean isOWLClass(IRI iri)
 	{
-		return getOWLOntology().containsClassInSignature(iri, true) || iri.equals(OWLRDFVocabulary.OWL_THING.getIRI())
-				|| iri.equals(OWLRDFVocabulary.OWL_NOTHING.getIRI());
+		return getOWLOntology().containsClassInSignature(iri, Imports.INCLUDED) || iri
+				.equals(OWLRDFVocabulary.OWL_THING.getIRI()) || iri.equals(OWLRDFVocabulary.OWL_NOTHING.getIRI());
 	}
 
 	public boolean isOWLObjectProperty(IRI propertyIRI)
 	{
-		return getOWLOntology().containsObjectPropertyInSignature(propertyIRI, true);
+		return getOWLOntology().containsObjectPropertyInSignature(propertyIRI, Imports.INCLUDED);
 	}
 
 	public boolean isOWLDataProperty(IRI propertyIRI)
 	{
-		return getOWLOntology().containsDataPropertyInSignature(propertyIRI, true);
+		return getOWLOntology().containsDataPropertyInSignature(propertyIRI, Imports.INCLUDED);
 	}
 
 	public boolean isOWLNamedIndividual(IRI individualIRI)
 	{
-		return getOWLOntology().containsIndividualInSignature(individualIRI, true);
+		return getOWLOntology().containsIndividualInSignature(individualIRI, Imports.INCLUDED);
 	}
 
 	public SQWRLResult getSQWRLResult(String queryName) throws SQWRLException
