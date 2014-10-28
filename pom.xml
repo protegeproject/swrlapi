@@ -74,12 +74,14 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
       <version>${slf4j.version}</version>
+      <scope>runtime</scope>
     </dependency>
     
     <dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
       <version>${slf4j.version}</version>
+      <scope>runtime</scope>
     </dependency>
 
     <dependency>
@@ -93,6 +95,7 @@
 	    <groupId>org.hamcrest</groupId>
 	    <artifactId>hamcrest-core</artifactId>
 	    <version>${hamcrest.version}</version>
+      <scope>test</scope>
     </dependency>
 
 	</dependencies>
@@ -131,8 +134,8 @@
 						  org.apache.axis.types;version="1.4",
               org.nfunk.jep;version="2.4.0"
             </Export-Package>
-            <Embed-Dependency>jep</Embed-Dependency>
             <Embed-Transitive>true</Embed-Transitive>
+            <Embed-Dependency>jep</Embed-Dependency>
 				  </instructions>
 				</configuration>
 
