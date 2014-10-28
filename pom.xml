@@ -110,23 +110,6 @@
         </configuration>
       </plugin>
 
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-				<version>2.4</version>
-        <configuration>
-					<archive>
-            <manifest>
-              <mainClass>org.swrlapi.todo</mainClass>
-              <packageName>org.swrlapi</packageName>
-            </manifest>
-            <manifestEntries>
-              <mode>development</mode>
-              <url>${project.url}</url>
-            </manifestEntries>
-					</archive>
-        </configuration>
-      </plugin>
       <plugin>   
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
