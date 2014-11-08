@@ -4,8 +4,8 @@
 
   <groupId>org.swrlapi</groupId>
   <artifactId>swrlapi</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
+  <version>1.0.5</version>
+  <packaging>bundle</packaging>
   <name>OWLAPI-based implementation of the SWRLAPI</name>
 
   <properties>
@@ -122,21 +122,17 @@
 				<configuration>
 
           <instructions>
-					  <Bundle-SymbolicName>${project.artifactId};singleton:=true</Bundle-SymbolicName>
+					  <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
 					  <Include-Resource>{maven-resources}</Include-Resource>
-					  <Import-Package>
-						  org.apache.axis.types;version="1.4",
-						  org.apache.log4j.*;version="[1.2,2)",
-						  *
-					  </Import-Package>
             <Export-Package>
-              org.swrlapi.*,
-						  org.apache.axis.types;version="1.4",
-              org.nfunk.jep;version="2.4.0"
+              org.swrlapi.*;version="1.0.5",
+						  org.apache.axis.*;version="1.4_1",
+              org.nfunk.jep.*;version="2.4.0"
             </Export-Package>
             <Embed-Transitive>true</Embed-Transitive>
-            <Embed-Dependency>jep</Embed-Dependency>
+            <Embed-Dependency>jep;version="2.4.0"</Embed-Dependency>
 				  </instructions>
+
 				</configuration>
 
         <executions>
@@ -149,17 +145,6 @@
           </execution>
         </executions>
 
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-				<version>2.4</version>
-        <configuration>
-					<archive>
-            <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
-					</archive>
-        </configuration>
       </plugin>
 
     </plugins>
