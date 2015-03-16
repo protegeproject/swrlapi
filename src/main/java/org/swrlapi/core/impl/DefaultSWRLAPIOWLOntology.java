@@ -467,14 +467,6 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 					"Unknown " + SWRLDArgument.class.getName() + " class " + swrlDArgument.getClass().getName());
 	}
 
-	private boolean hackIRI(IRI iri) // TODO
-	{
-		//String prefixedName = prefixManager.getPrefixIRI(iri);
-
-		//return !prefixedName.equals(":name");
-		return true;
-	}
-
 	/**
 	 * The OWLAPI follows the OWL Specification and does not explicitly allow named OWL properties as arguments to
 	 * built-ins. However, if OWLAPI parsers encounter OWL properties as parameters they appear to represent them as SWRL
@@ -496,7 +488,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 			OWLClass cls = getOWLDataFactory().getOWLClass(iri);
 
 			return getSWRLBuiltInArgumentFactory().getClassBuiltInArgument(cls);
-		} else if (getOWLOntology().containsIndividualInSignature(iri, Imports.INCLUDED) && hackIRI(iri)) {
+		} else if (getOWLOntology().containsIndividualInSignature(iri, Imports.INCLUDED)) {
 			OWLNamedIndividual individual = getOWLDataFactory().getOWLNamedIndividual(iri);
 
 			return getSWRLBuiltInArgumentFactory().getNamedIndividualBuiltInArgument(individual);
