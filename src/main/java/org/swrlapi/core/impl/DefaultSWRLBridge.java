@@ -82,7 +82,7 @@ public class DefaultSWRLBridge
 		this.owl2RLPersistenceLayer = owl2RLPersistenceLayer;
 		this.targetSWRLRuleEngine = null;
 		this.owlClassExpressionResolver = new OWLClassExpressionResolver(swrlapiOWLOntology.getOWLDataFactory());
-		this.owlDataRangeResolver = new OWLDataRangeResolver(swrlapiOWLOntology.getOWLDataFactory());
+		this.owlDataRangeResolver = new OWLDataRangeResolver();
 		this.owlObjectPropertyExpressionResolver = new OWLObjectPropertyExpressionResolver();
 		this.owlDataPropertyExpressionResolver = new OWLDataPropertyExpressionResolver();
 		this.owlIndividualResolver = new OWLIndividualResolver();

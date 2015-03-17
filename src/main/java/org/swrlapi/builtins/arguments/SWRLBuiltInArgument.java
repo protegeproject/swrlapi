@@ -1,12 +1,9 @@
 package org.swrlapi.builtins.arguments;
 
-import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.SWRLDArgument;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
-import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIRule;
-import org.swrlapi.exceptions.SWRLBuiltInException;
 
 /**
  * Interface representing an argument to a SWRL built-in. It extends the OWLAPI's {@link org.semanticweb.owlapi.model.SWRLDArgument}

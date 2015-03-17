@@ -7,7 +7,6 @@ import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
-import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.impl.DefaultOWLLiteralFactory;
 import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.core.OWLLiteralFactory;

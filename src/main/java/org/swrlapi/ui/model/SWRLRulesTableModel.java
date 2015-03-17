@@ -1,16 +1,16 @@
 package org.swrlapi.ui.model;
 
-import org.apache.log4j.Logger;
-import org.swrlapi.core.SWRLAPIRule;
-import org.swrlapi.core.SWRLRuleEngine;
-import org.swrlapi.core.impl.DefaultSWRLAPIRenderer;
-import org.swrlapi.ui.view.SWRLAPIView;
-
-import javax.swing.table.AbstractTableModel;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import javax.swing.table.AbstractTableModel;
+
+import org.swrlapi.core.SWRLAPIRule;
+import org.swrlapi.core.SWRLRuleEngine;
+import org.swrlapi.core.impl.DefaultSWRLAPIRenderer;
+import org.swrlapi.ui.view.SWRLAPIView;
 
 /**
  * This class models a list of SWRL rules or SQWRL queries in an ontology for tabular display.
@@ -22,8 +22,6 @@ import java.util.Set;
 public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIModel
 {
 	private static final long serialVersionUID = 1L;
-
-	private static final Logger log = Logger.getLogger(SWRLRulesTableModel.class);
 
 	public static int ACTIVE_COLUMN = 0;
 	public static int RULE_NAME_COLUMN = 1;

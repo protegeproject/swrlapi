@@ -10,13 +10,11 @@ import org.semanticweb.owlapi.model.SWRLObjectPropertyAtom;
 import org.semanticweb.owlapi.model.SWRLSameIndividualAtom;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.parser.SWRLParseException;
-import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.test.SWRLAPITestBase;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class SWRLParserTestCase extends SWRLAPITestBase
 {

@@ -11,9 +11,8 @@ import org.semanticweb.owlapi.model.SWRLDArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
-
 import org.swrlapi.exceptions.SWRLAPIException;
-import org.swrlapi.exceptions.SWRLBuiltInException;
+
 import uk.ac.manchester.cs.owl.owlapi.SWRLBuiltInAtomImpl;
 
 class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SWRLAPIBuiltInAtom

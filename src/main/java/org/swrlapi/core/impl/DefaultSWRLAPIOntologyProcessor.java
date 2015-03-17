@@ -338,11 +338,13 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 		return null;
 	}
 
+	@SuppressWarnings("unused")
 	private Set<String> getSWRLRuleNames()
 	{
 		return new HashSet<>(this.swrlapiRules.keySet());
 	}
 
+	@SuppressWarnings("unused")
 	private Set<SWRLAPIRule> getSWRLRules()
 	{
 		return new HashSet<>(this.swrlapiRules.values());

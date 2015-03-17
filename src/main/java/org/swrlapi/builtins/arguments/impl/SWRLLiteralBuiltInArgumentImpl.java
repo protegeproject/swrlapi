@@ -3,6 +3,8 @@ package org.swrlapi.builtins.arguments.impl;
 import java.util.Comparator;
 import java.util.Set;
 
+import javax.annotation.Nonnull;
+
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLObject;
@@ -10,12 +12,13 @@ import org.semanticweb.owlapi.model.OWLObjectVisitor;
 import org.semanticweb.owlapi.model.OWLObjectVisitorEx;
 import org.semanticweb.owlapi.model.SWRLObjectVisitor;
 import org.semanticweb.owlapi.model.SWRLObjectVisitorEx;
-import org.swrlapi.builtins.arguments.*;
+import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor;
+import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
+import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.core.OWLLiteralComparator;
 import org.swrlapi.exceptions.SWRLAPIException;
-import org.swrlapi.exceptions.SWRLBuiltInException;
-
-import javax.annotation.Nonnull;
 
 class SWRLLiteralBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements SWRLLiteralBuiltInArgument
 {

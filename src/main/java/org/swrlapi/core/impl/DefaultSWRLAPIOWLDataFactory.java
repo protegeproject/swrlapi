@@ -15,12 +15,11 @@ import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.core.OWLLiteralFactory;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
 import org.swrlapi.core.SWRLAPIFactory;
-import org.swrlapi.core.SWRLAPIOWLOntology;
-import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.core.SWRLAPILiteralFactory;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLDatatypeFactory;
 import org.swrlapi.core.SWRLAPIRule;
+import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 

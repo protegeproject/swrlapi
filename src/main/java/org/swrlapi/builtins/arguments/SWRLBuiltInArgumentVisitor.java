@@ -1,8 +1,5 @@
 package org.swrlapi.builtins.arguments;
 
-import org.semanticweb.owlapi.model.SWRLIndividualArgument;
-import org.semanticweb.owlapi.model.SWRLLiteralArgument;
-
 /**
  * @see org.swrlapi.builtins.arguments.SWRLBuiltInArgument
  */

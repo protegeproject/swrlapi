@@ -15,8 +15,6 @@ import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.exceptions.SWRLAPIException;
-import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
-import org.swrlapi.exceptions.SWRLBuiltInException;
 
 abstract class SWRLBuiltInArgumentImpl implements SWRLBuiltInArgument
 {
