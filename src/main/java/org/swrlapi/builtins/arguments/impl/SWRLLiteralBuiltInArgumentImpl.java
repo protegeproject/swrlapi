@@ -1,5 +1,6 @@
 package org.swrlapi.builtins.arguments.impl;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Set;
 
@@ -142,6 +143,6 @@ class SWRLLiteralBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements 
 
 	@Nonnull @Override public Set<OWLAnnotationProperty> getAnnotationPropertiesInSignature()
 	{
-		return null; // TODO OWLAPI V4.0.0 update
+		return Collections.emptySet(); // TODO OWLAPI V4.0.0 update
 	}
 }

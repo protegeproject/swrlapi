@@ -240,10 +240,10 @@ public class SQWRLResultView extends JPanel implements SWRLAPIView
 						null :
 						SQWRLResultView.this.sqwrlResult.getValue(column, row);
 
-				if (sqwrlResultValue.isEntity()) {
+				if (sqwrlResultValue != null && sqwrlResultValue.isEntity()) {
 					SQWRLEntityResultValue sqwrlEntityResultValue = sqwrlResultValue.asEntityResult();
 					return sqwrlEntityResultValue.getShortName();
-				} else if (sqwrlResultValue.isLiteral()) {
+				} else if (sqwrlResultValue != null && sqwrlResultValue.isLiteral()) {
 					SQWRLLiteralResultValue sqwrLiteralResultValue = sqwrlResultValue.asLiteralResult();
 					return sqwrLiteralResultValue.getValue(); // TODO Selectively qualify
 				} else

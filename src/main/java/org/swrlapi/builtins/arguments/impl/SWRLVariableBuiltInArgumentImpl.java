@@ -1,5 +1,10 @@
 package org.swrlapi.builtins.arguments.impl;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.annotation.Nonnull;
+
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLObject;
@@ -7,12 +12,13 @@ import org.semanticweb.owlapi.model.OWLObjectVisitor;
 import org.semanticweb.owlapi.model.OWLObjectVisitorEx;
 import org.semanticweb.owlapi.model.SWRLObjectVisitor;
 import org.semanticweb.owlapi.model.SWRLObjectVisitorEx;
-import org.swrlapi.builtins.arguments.*;
+import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor;
+import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
+import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
-
-import javax.annotation.Nonnull;
-import java.util.Set;
 
 class SWRLVariableBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements SWRLVariableBuiltInArgument
 {
@@ -199,6 +205,6 @@ class SWRLVariableBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements
 
 	@Nonnull @Override public Set<OWLAnnotationProperty> getAnnotationPropertiesInSignature()
 	{
-		return null; // TODO OWLAPI V4.0.0 update
+		return new HashSet<>(); // TODO OWLAPI V4.0.0 update
 	}
 }

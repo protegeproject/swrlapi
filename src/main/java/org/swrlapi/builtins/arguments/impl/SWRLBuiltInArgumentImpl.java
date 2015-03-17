@@ -73,7 +73,7 @@ abstract class SWRLBuiltInArgumentImpl implements SWRLBuiltInArgument
 	@Override
 	public Set<OWLEntity> getSignature()
 	{
-		return null; // TODO
+		return Collections.emptySet(); // TODO
 	}
 
 	@Override

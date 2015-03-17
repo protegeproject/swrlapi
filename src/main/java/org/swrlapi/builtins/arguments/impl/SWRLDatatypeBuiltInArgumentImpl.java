@@ -7,6 +7,8 @@ import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
 import org.swrlapi.builtins.arguments.SWRLDatatypeBuiltInArgument;
 
 import javax.annotation.Nonnull;
+
+import java.util.Collections;
 import java.util.Set;
 
 class SWRLDatatypeBuiltInArgumentImpl extends SWRLNamedBuiltInArgumentImpl implements SWRLDatatypeBuiltInArgument
@@ -38,6 +40,6 @@ class SWRLDatatypeBuiltInArgumentImpl extends SWRLNamedBuiltInArgumentImpl imple
 
 	@Nonnull @Override public Set<OWLAnnotationProperty> getAnnotationPropertiesInSignature()
 	{
-		return null; // TODO OWLAPI V4.0.0 update
+		return Collections.emptySet(); // TODO OWLAPI V4.0.0 update
 	}
 }
