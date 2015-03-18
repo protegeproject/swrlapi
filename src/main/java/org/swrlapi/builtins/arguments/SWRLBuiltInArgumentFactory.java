@@ -45,6 +45,8 @@ public interface SWRLBuiltInArgumentFactory
 
 	SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(boolean b);
 
+	SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(short s);
+
 	SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(int i);
 
 	SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(long l);

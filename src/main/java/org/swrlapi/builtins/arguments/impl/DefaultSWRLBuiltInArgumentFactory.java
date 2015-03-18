@@ -113,6 +113,12 @@ public class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFac
 	}
 
 	@Override
+	public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(short s)
+	{
+		return new SWRLLiteralBuiltInArgumentImpl(getOWLLiteralFactory().getOWLLiteral(s));
+	}
+
+	@Override
 	public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(int i)
 	{
 		return new SWRLLiteralBuiltInArgumentImpl(getOWLLiteralFactory().getOWLLiteral(i));
