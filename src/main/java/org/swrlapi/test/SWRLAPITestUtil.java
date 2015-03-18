@@ -8,17 +8,21 @@ import org.semanticweb.owlapi.model.OWLClassAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLDataPropertyDomainAxiom;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
+import org.semanticweb.owlapi.model.OWLDifferentIndividualsAxiom;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLObjectPropertyDomainAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.OWLSameIndividualAxiom;
 import org.semanticweb.owlapi.model.PrefixManager;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.SWRLAPIFactory;
@@ -173,9 +177,9 @@ public class SWRLAPITestUtil
 
 		manager.addAxiom(ontology, axiom);
 
-		//		List<OWLOntologyChange> changes = new ArrayList<>();
-		//		changes.add(new AddAxiom(ontology, axiom));
-		//		manager.applyChanges(changes);
+		// List<OWLOntologyChange> changes = new ArrayList<>();
+		// changes.add(new AddAxiom(ontology, axiom));
+		// manager.applyChanges(changes);
 	}
 
 	public static void declareOWLClassAssertionAxiom(OWLOntologyManager manager, OWLOntology ontology, String classIRI,
@@ -211,4 +215,45 @@ public class SWRLAPITestUtil
 
 		manager.addAxiom(ontology, axiom);
 	}
+
+	public static void declareOWLSameIndividualAxiom(OWLOntologyManager manager, OWLOntology ontology,
+			String individual1IRI, String individual2IRI)
+	{
+		OWLNamedIndividual individual1 = getOWLNamedIndividual(getIRI(individual1IRI));
+		OWLNamedIndividual individual2 = getOWLNamedIndividual(getIRI(individual2IRI));
+		OWLSameIndividualAxiom axiom = dataFactory.getOWLSameIndividualAxiom(individual1, individual2);
+
+		manager.addAxiom(ontology, axiom);
+	}
+
+	public static void declareOWLDifferentIndividualsAxiom(OWLOntologyManager manager, OWLOntology ontology,
+			String individual1IRI, String individual2IRI)
+	{
+		OWLNamedIndividual individual1 = getOWLNamedIndividual(getIRI(individual1IRI));
+		OWLNamedIndividual individual2 = getOWLNamedIndividual(getIRI(individual2IRI));
+		OWLDifferentIndividualsAxiom axiom = dataFactory.getOWLDifferentIndividualsAxiom(individual1, individual2);
+
+		manager.addAxiom(ontology, axiom);
+	}
+
+	public static void declareOWLObjectPropertyDomainAxiom(OWLOntologyManager manager, OWLOntology ontology,
+			String propertyIRI, String classIRI)
+	{
+		OWLObjectProperty property = getOWLObjectProperty(getIRI(propertyIRI));
+		OWLClass cls = getOWLClass(getIRI(classIRI));
+		OWLObjectPropertyDomainAxiom axiom = dataFactory.getOWLObjectPropertyDomainAxiom(property, cls);
+
+		manager.addAxiom(ontology, axiom);
+	}
+
+	public static void declareOWLDataPropertyDomainAxiom(OWLOntologyManager manager, OWLOntology ontology,
+			String propertyIRI, String classIRI)
+	{
+		OWLDataProperty property = getOWLDataProperty(getIRI(propertyIRI));
+		OWLClass cls = getOWLClass(getIRI(classIRI));
+		OWLDataPropertyDomainAxiom axiom = dataFactory.getOWLDataPropertyDomainAxiom(property, cls);
+
+		manager.addAxiom(ontology, axiom);
+	}
+
 }

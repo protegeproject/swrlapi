@@ -1,5 +1,12 @@
 package org.swrlapi.test;
 
+import static org.swrlapi.test.SWRLAPITestUtil.createDefaultPrefixManager;
+import static org.swrlapi.test.SWRLAPITestUtil.createOWLOntology;
+import static org.swrlapi.test.SWRLAPITestUtil.createOWLOntologyManager;
+import static org.swrlapi.test.SWRLAPITestUtil.createSWRLAPIOWLOntology;
+
+import java.util.Set;
+
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
@@ -8,13 +15,6 @@ import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
-
-import java.util.Set;
-
-import static org.swrlapi.test.SWRLAPITestUtil.createDefaultPrefixManager;
-import static org.swrlapi.test.SWRLAPITestUtil.createOWLOntology;
-import static org.swrlapi.test.SWRLAPITestUtil.createOWLOntologyManager;
-import static org.swrlapi.test.SWRLAPITestUtil.createSWRLAPIOWLOntology;
 
 public class SWRLAPITestBase
 {
@@ -93,17 +93,39 @@ public class SWRLAPITestBase
 
 	protected void declareOWLObjectPropertyAssertion(String subjectName, String propertyName, String objectName)
 	{
-		SWRLAPITestUtil
-				.declareOWLObjectPropertyAssertionAxiom(manager, ontology, namespace + subjectName, namespace + propertyName,
-						namespace + objectName);
+		SWRLAPITestUtil.declareOWLObjectPropertyAssertionAxiom(manager, ontology, namespace + subjectName, namespace
+				+ propertyName, namespace + objectName);
 	}
 
 	protected void declareOWLDataPropertyAssertion(String subjectName, String propertyName, String value,
 			String datatypeShortName)
 	{
-		SWRLAPITestUtil
-				.declareOWLDataPropertyAssertionAxiom(manager, ontology, namespace + subjectName, namespace + propertyName,
-						value, datatypeShortName, prefixManager);
+		SWRLAPITestUtil.declareOWLDataPropertyAssertionAxiom(manager, ontology, namespace + subjectName, namespace
+				+ propertyName, value, datatypeShortName, prefixManager);
+	}
+
+	protected void declareOWLSameAsAssertion(String individualName1, String individualName2)
+	{
+		SWRLAPITestUtil.declareOWLSameIndividualAxiom(manager, ontology, namespace + individualName1, namespace
+				+ individualName2);
+	}
+
+	protected void declareOWLDifferentFrom(String individualName1, String individualName2)
+	{
+		SWRLAPITestUtil.declareOWLDifferentIndividualsAxiom(manager, ontology, namespace + individualName1, namespace
+				+ individualName2);
+	}
+
+	protected void declareOWLObjectPropertyDomainAxiom(String propertyName, String className)
+	{
+		SWRLAPITestUtil.declareOWLObjectPropertyDomainAxiom(manager, ontology, namespace + propertyName, namespace
+				+ className);
+	}
+
+	protected void declareOWLDataPropertyDomainAxiom(String propertyName, String className)
+	{
+		SWRLAPITestUtil.declareOWLDataPropertyDomainAxiom(manager, ontology, namespace + propertyName, namespace
+				+ className);
 	}
 
 	protected void createSQWRLQuery(String queryName, String query) throws SQWRLException, SWRLParseException
