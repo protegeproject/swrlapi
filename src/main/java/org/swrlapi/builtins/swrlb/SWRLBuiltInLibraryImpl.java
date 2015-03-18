@@ -169,8 +169,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 				throw new InvalidSWRLBuiltInArgumentException(1, "expecting numeric argument for comparison, got "
 						+ getArgumentAsAString(1, arguments));
 		} else
-			throw new InvalidSWRLBuiltInArgumentException(0, "expecting string, numeric or boolean argument for comparison, got "
-					+ getArgumentAsAString(0, arguments));
+			throw new InvalidSWRLBuiltInArgumentException(0,
+					"expecting string, numeric or boolean argument for comparison, got " + getArgumentAsAString(0, arguments));
 	}
 
 	public boolean notEqual(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
@@ -453,6 +453,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		return argument1.endsWith(argument2);
 	}
 
+	// TODO This is not correct. See http://www.w3.org/TR/xpath-functions/#func-translate
 	public boolean translate(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{
 		checkNumberOfArgumentsEqualTo(4, arguments.size());
@@ -497,8 +498,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		try {
 			return Pattern.matches(argument2, argument1);
 		} catch (PatternSyntaxException e) {
-			throw new InvalidSWRLBuiltInArgumentException(1, "invalid regular expression '" + argument2 + "': " + e.getMessage(),
-					e);
+			throw new InvalidSWRLBuiltInArgumentException(1, "invalid regular expression '" + argument2 + "': "
+					+ e.getMessage(), e);
 		}
 	}
 
@@ -543,8 +544,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		StringTokenizer tokenizer = new StringTokenizer(inputString.trim(), delimeters);
 
 		IRI variableIRI = arguments.get(0).asVariable().getIRI();
-		SWRLMultiValueVariableBuiltInArgument multiValueBuiltInArgument = createSWRLMultiValueVariableBuiltInArgument(
-				variableIRI);
+		SWRLMultiValueVariableBuiltInArgument multiValueBuiltInArgument = createSWRLMultiValueVariableBuiltInArgument(variableIRI);
 		while (tokenizer.hasMoreTokens()) {
 			String token = tokenizer.nextToken();
 			multiValueBuiltInArgument.addArgument(createLiteralBuiltInArgument(token));
@@ -880,8 +880,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		return processResultArgument(arguments, 0, axisDuration2XSDDuration(operationDuration));
 	}
 
-	public boolean subtractDateTimesYieldingDayTimeDuration(List<SWRLBuiltInArgument> arguments) throws
-			SWRLBuiltInException
+	public boolean subtractDateTimesYieldingDayTimeDuration(List<SWRLBuiltInArgument> arguments)
+			throws SWRLBuiltInException
 	{
 		java.util.Date date1 = getXSDDateTimeArgumentAsAUtilDate(1, arguments);
 		java.util.Date date2 = getXSDDateTimeArgumentAsAUtilDate(2, arguments);
