@@ -1,5 +1,9 @@
 package org.swrlapi;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
@@ -11,10 +15,6 @@ import org.semanticweb.owlapi.model.SWRLSameIndividualAtom;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.test.SWRLAPITestBase;
-
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
 
 public class SWRLParserTestCase extends SWRLAPITestBase
 {
@@ -128,11 +128,11 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	}
 
 	@Test
-	public void TestLongQualifiedLiteral() throws SWRLParseException
+	public void TestShortLiteral() throws SWRLParseException
 	{
 		declareOWLDataProperty("hasAge");
 
-		createSWRLRule("r1", "hasAge(?p, \"34\"^^\"xsd:long\") ->");
+		createSWRLRule("r1", "hasAge(?p, \"34\"^^\"xsd:short\") ->");
 	}
 
 	@Test
@@ -141,6 +141,14 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 		declareOWLDataProperty("hasAge");
 
 		createSWRLRule("r1", "hasAge(?p, \"34\"^^\"xsd:int\") ->");
+	}
+
+	@Test
+	public void TestLongQualifiedLiteral() throws SWRLParseException
+	{
+		declareOWLDataProperty("hasAge");
+
+		createSWRLRule("r1", "hasAge(?p, \"34\"^^\"xsd:long\") ->");
 	}
 
 	@Test
@@ -168,7 +176,7 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	}
 
 	@Test
-	public void TestDateQualifiedLiteral() throws SWRLParseException
+	public void TestDateLiteral() throws SWRLParseException
 	{
 		declareOWLDataProperty("hasDOB");
 
@@ -176,7 +184,15 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	}
 
 	@Test
-	public void TestDateTimeQualifiedLiteral() throws SWRLParseException
+	public void TestTimeLiteral() throws SWRLParseException
+	{
+		declareOWLDataProperty("hasTOB");
+
+		createSWRLRule("r1", "hasTOB(?p, \"10:10:10.23\"^^\"xsd:date\") ->");
+	}
+
+	@Test
+	public void TestDateTimeLiteral() throws SWRLParseException
 	{
 		declareOWLDataProperty("hasTOB");
 
@@ -184,11 +200,18 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	}
 
 	@Test
+	public void TestDurationLiteral() throws SWRLParseException
+	{
+		declareOWLDataProperty("hasAge");
+
+		createSWRLRule("r1", "hasAge(?p, \"P43Y\"^^\"xsd:date\") ->");
+	}
+
+	@Test
 	public void TestAddAndEqualsTemporalBuiltIns() throws SWRLParseException
 	{
-		createSWRLRule("r1", "temporal:add(?x, \"1999-11-01T10:00\"^^\"xsd:dateTime\", 4, \"Years\") ^ " +
-				"temporal:equals(?x, \"2003-11-01T10:00:00.0\"^^\"xsd:dateTime\") " +
-				"-> sqwrl:select(\"Yes!\")");
+		createSWRLRule("r1", "temporal:add(?x, \"1999-11-01T10:00\"^^\"xsd:dateTime\", 4, \"Years\") ^ "
+				+ "temporal:equals(?x, \"2003-11-01T10:00:00.0\"^^\"xsd:dateTime\") " + "-> sqwrl:select(\"Yes!\")");
 	}
 
 	@Test

@@ -9,7 +9,7 @@ import org.swrlapi.test.SWRLAPITestBase;
 
 public class SWRLParserSQWRLTestCase extends SWRLAPITestBase
 {
-	String Namespace = "http://protege.org/ontologies/SWRLParserSQWRLTests.owl#";
+	final String Namespace = "http://protege.org/ontologies/SWRLParserSQWRLTests.owl#";
 
 	@Before
 	public void setUp() throws OWLOntologyCreationException
@@ -43,13 +43,6 @@ public class SWRLParserSQWRLTestCase extends SWRLAPITestBase
 	}
 
 	@Test
-	public void TestBooleanQualifiedLiteral() throws SWRLParseException, SQWRLException
-	{
-		createSQWRLQuery("q1",
-				"swrlb:booleanNot(?x, \"false\"^^\"xsd:boolean\") ^ swrlb:booleanNot(?y, ?x) -> sqwrl:select(?y)");
-	}
-
-	@Test
 	public void TestBooleanTrueRawLiteral() throws SWRLParseException, SQWRLException
 	{
 		createSQWRLQuery("q1", "swrlb:booleanNot(?x, true) ^ swrlb:booleanNot(?y, ?x) -> sqwrl:select(?y)");
@@ -59,6 +52,13 @@ public class SWRLParserSQWRLTestCase extends SWRLAPITestBase
 	public void TestBooleanFalseRawLiteral() throws SWRLParseException, SQWRLException
 	{
 		createSQWRLQuery("q1", "swrlb:booleanNot(?x, false) ^ swrlb:booleanNot(?y, ?x) -> sqwrl:select(?y)");
+	}
+
+	@Test
+	public void TestBooleanQualifiedLiteral() throws SWRLParseException, SQWRLException
+	{
+		createSQWRLQuery("q1",
+				"swrlb:booleanNot(?x, \"false\"^^\"xsd:boolean\") ^ swrlb:booleanNot(?y, ?x) -> sqwrl:select(?y)");
 	}
 
 	@Test
