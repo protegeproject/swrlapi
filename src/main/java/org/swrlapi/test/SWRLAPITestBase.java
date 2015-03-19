@@ -37,95 +37,95 @@ public class SWRLAPITestBase
 		return swrlapiowlOntology;
 	}
 
-	protected void declareOWLClass(String name)
+	protected void declareOWLClass(String localName)
 	{
-		SWRLAPITestUtil.declareOWLClass(manager, ontology, namespace + name);
+		SWRLAPITestUtil.declareOWLClass(manager, ontology, namespace + localName);
 	}
 
-	protected void declareOWLNamedIndividual(String name)
+	protected void declareOWLNamedIndividual(String localName)
 	{
-		SWRLAPITestUtil.declareOWLNamedIndividual(manager, ontology, namespace + name);
+		SWRLAPITestUtil.declareOWLNamedIndividual(manager, ontology, namespace + localName);
 	}
 
-	protected void declareOWLNamedIndividuals(String... names)
+	protected void declareOWLNamedIndividuals(String... localNames)
 	{
-		for (String name : names)
-			SWRLAPITestUtil.declareOWLNamedIndividual(manager, ontology, namespace + name);
+		for (String localName : localNames)
+			SWRLAPITestUtil.declareOWLNamedIndividual(manager, ontology, namespace + localName);
 	}
 
-	protected void declareOWLObjectProperties(String... names)
+	protected void declareOWLObjectProperties(String... localNames)
 	{
-		for (String name : names)
-			SWRLAPITestUtil.declareOWLObjectProperty(manager, ontology, namespace + name);
+		for (String localName : localNames)
+			SWRLAPITestUtil.declareOWLObjectProperty(manager, ontology, namespace + localName);
 	}
 
-	protected void declareOWLObjectProperty(String name)
+	protected void declareOWLObjectProperty(String localName)
 	{
-		SWRLAPITestUtil.declareOWLObjectProperty(manager, ontology, namespace + name);
+		SWRLAPITestUtil.declareOWLObjectProperty(manager, ontology, namespace + localName);
 	}
 
-	protected void declareOWLDataProperty(String name)
+	protected void declareOWLDataProperty(String localName)
 	{
-		SWRLAPITestUtil.declareOWLDataProperty(manager, ontology, namespace + name);
+		SWRLAPITestUtil.declareOWLDataProperty(manager, ontology, namespace + localName);
 	}
 
-	protected void declareOWLDatatype(String shortName)
+	protected void declareOWLDatatype(String prefixedName)
 	{
-		SWRLAPITestUtil.declareOWLDatatype(manager, ontology, shortName);
+		SWRLAPITestUtil.declareOWLDatatype(manager, ontology, prefixedName);
 	}
 
-	protected void declareOWLClasses(Set<String> names)
+	protected void declareOWLClasses(Set<String> localNames)
 	{
-		for (String name : names)
-			SWRLAPITestUtil.declareOWLClass(manager, ontology, namespace + name);
+		for (String localName : localNames)
+			SWRLAPITestUtil.declareOWLClass(manager, ontology, namespace + localName);
 	}
 
-	protected void declareOWLNamedIndividuals(Set<String> names)
+	protected void declareOWLNamedIndividuals(Set<String> localNames)
 	{
-		for (String name : names)
-			SWRLAPITestUtil.declareOWLNamedIndividual(manager, ontology, namespace + name);
+		for (String localName : localNames)
+			SWRLAPITestUtil.declareOWLNamedIndividual(manager, ontology, namespace + localName);
 	}
 
-	protected void declareOWLClassAssertion(String className, String individualName)
+	protected void declareOWLClassAssertion(String classLocalName, String individualLocalName)
 	{
-		SWRLAPITestUtil.declareOWLClassAssertionAxiom(manager, ontology, namespace + className, namespace + individualName);
+		SWRLAPITestUtil.declareOWLClassAssertionAxiom(manager, ontology, namespace + classLocalName, namespace + individualLocalName);
 	}
 
-	protected void declareOWLObjectPropertyAssertion(String subjectName, String propertyName, String objectName)
+	protected void declareOWLObjectPropertyAssertion(String subjectLocalName, String propertyLocalName, String objectLocalName)
 	{
-		SWRLAPITestUtil.declareOWLObjectPropertyAssertionAxiom(manager, ontology, namespace + subjectName, namespace
-				+ propertyName, namespace + objectName);
+		SWRLAPITestUtil.declareOWLObjectPropertyAssertionAxiom(manager, ontology, namespace + subjectLocalName, namespace
+				+ propertyLocalName, namespace + objectLocalName);
 	}
 
-	protected void declareOWLDataPropertyAssertion(String subjectName, String propertyName, String value,
-			String datatypeShortName)
+	protected void declareOWLDataPropertyAssertion(String subjectLocalName, String propertyLocalName, String value,
+			String datatypePrefixedName)
 	{
-		SWRLAPITestUtil.declareOWLDataPropertyAssertionAxiom(manager, ontology, namespace + subjectName, namespace
-				+ propertyName, value, datatypeShortName, prefixManager);
+		SWRLAPITestUtil.declareOWLDataPropertyAssertionAxiom(manager, ontology, namespace + subjectLocalName, namespace
+				+ propertyLocalName, value, datatypePrefixedName, prefixManager);
 	}
 
-	protected void declareOWLSameAsAssertion(String individualName1, String individualName2)
+	protected void declareOWLSameAsAssertion(String individualLocalName1, String individualLocalName2)
 	{
-		SWRLAPITestUtil.declareOWLSameIndividualAxiom(manager, ontology, namespace + individualName1, namespace
-				+ individualName2);
+		SWRLAPITestUtil.declareOWLSameIndividualAxiom(manager, ontology, namespace + individualLocalName1, namespace
+				+ individualLocalName2);
 	}
 
-	protected void declareOWLDifferentFrom(String individualName1, String individualName2)
+	protected void declareOWLDifferentFrom(String individualLocalName1, String individualLocalName2)
 	{
-		SWRLAPITestUtil.declareOWLDifferentIndividualsAxiom(manager, ontology, namespace + individualName1, namespace
-				+ individualName2);
+		SWRLAPITestUtil.declareOWLDifferentIndividualsAxiom(manager, ontology, namespace + individualLocalName1, namespace
+				+ individualLocalName2);
 	}
 
-	protected void declareOWLObjectPropertyDomainAxiom(String propertyName, String className)
+	protected void declareOWLObjectPropertyDomainAxiom(String propertyLocalName, String classLocalName)
 	{
-		SWRLAPITestUtil.declareOWLObjectPropertyDomainAxiom(manager, ontology, namespace + propertyName, namespace
-				+ className);
+		SWRLAPITestUtil.declareOWLObjectPropertyDomainAxiom(manager, ontology, namespace + propertyLocalName, namespace
+				+ classLocalName);
 	}
 
-	protected void declareOWLDataPropertyDomainAxiom(String propertyName, String className)
+	protected void declareOWLDataPropertyDomainAxiom(String propertyLocalName, String classLocalName)
 	{
-		SWRLAPITestUtil.declareOWLDataPropertyDomainAxiom(manager, ontology, namespace + propertyName, namespace
-				+ className);
+		SWRLAPITestUtil.declareOWLDataPropertyDomainAxiom(manager, ontology, namespace + propertyLocalName, namespace
+				+ classLocalName);
 	}
 
 	protected void createSQWRLQuery(String queryName, String query) throws SQWRLException, SWRLParseException

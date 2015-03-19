@@ -170,9 +170,9 @@ public class SWRLAPITestUtil
 		manager.addAxiom(ontology, axiom);
 	}
 
-	public static void declareOWLDatatype(OWLOntologyManager manager, OWLOntology ontology, String name)
+	public static void declareOWLDatatype(OWLOntologyManager manager, OWLOntology ontology, String datatypePrefixedName)
 	{
-		OWLDatatype d = getOWLDatatype(getIRI(name));
+		OWLDatatype d = getOWLDatatype(getIRI(datatypePrefixedName));
 		OWLDeclarationAxiom axiom = getOWLDeclarationAxiom(d);
 
 		manager.addAxiom(ontology, axiom);
@@ -204,11 +204,11 @@ public class SWRLAPITestUtil
 	}
 
 	public static void declareOWLDataPropertyAssertionAxiom(OWLOntologyManager manager, OWLOntology ontology,
-			String subjectIRI, String propertyIRI, String value, String datatypeShortName, PrefixManager prefixManager)
+			String subjectIRI, String propertyIRI, String value, String datatypePrefixedName, PrefixManager prefixManager)
 	{
 		OWLDataProperty property = getOWLDataProperty(getIRI(propertyIRI));
 		OWLNamedIndividual subject = getOWLNamedIndividual(getIRI(subjectIRI));
-		OWLDatatype datatype = dataFactory.getOWLDatatype(datatypeShortName, prefixManager);
+		OWLDatatype datatype = dataFactory.getOWLDatatype(datatypePrefixedName, prefixManager);
 		OWLLiteral literal = dataFactory.getOWLLiteral(value, datatype);
 
 		OWLDataPropertyAssertionAxiom axiom = dataFactory.getOWLDataPropertyAssertionAxiom(property, subject, literal);
