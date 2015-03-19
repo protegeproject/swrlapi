@@ -1,6 +1,7 @@
 package org.swrlapi.parser;
 
 import java.io.IOException;
+import java.io.Reader;
 import java.io.StreamTokenizer;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -9,8 +10,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Tokenizer generates a {@link org.swrlapi.parser.SWRLParseException} for invalid input and
- * a {@link org.swrlapi.parser.SWRLIncompleteRuleException} (which is a subclass of
+ * Tokenizer generates a {@link org.swrlapi.parser.SWRLParseException} for invalid input and a
+ * {@link org.swrlapi.parser.SWRLIncompleteRuleException} (which is a subclass of
  * {@link org.swrlapi.parser.SWRLParseException}) for valid but incomplete input.
  *
  * @see org.swrlapi.parser.SWRLParser
@@ -22,7 +23,7 @@ public class SWRLTokenizer
 	private static final char wordChars[] = { ':', '_', '/', '#' };
 	private static final char ordinaryChars[] = { '-', '.', '^', '<', '>', '(', ')', '?' };
 
-	private final StreamTokenizer tokenizer;
+	private final MyStreamTokenizer tokenizer;
 
 	private final Set<String> swrlVariables;
 	private final boolean interactiveParseOnly;
@@ -31,14 +32,15 @@ public class SWRLTokenizer
 
 	public SWRLTokenizer(String input, boolean interactiveParseOnly) throws SWRLParseException
 	{
-		this.tokenizer = new StreamTokenizer(new StringReader(input));
-		this.tokenizer.parseNumbers();
+		this.tokenizer = new MyStreamTokenizer(new StringReader(input));
 
 		this.swrlVariables = new HashSet<>();
 		this.interactiveParseOnly = interactiveParseOnly;
 
 		for (char wordChar : wordChars)
 			this.tokenizer.wordChars(wordChar, wordChar);
+
+		this.tokenizer.wordChars('0', '9');
 
 		for (char ordinaryChar : ordinaryChars)
 			this.tokenizer.ordinaryChar(ordinaryChar);
@@ -187,25 +189,54 @@ public class SWRLTokenizer
 
 	private SWRLToken convertToken2SWRLToken(int tokenType) throws SWRLParseException, IOException
 	{
+		boolean negativeNumeric = false;
+
 		switch (tokenType) {
 		case StreamTokenizer.TT_EOF:
 			return new SWRLToken(SWRLToken.SWRLTokenType.END_OF_INPUT, "");
 		case StreamTokenizer.TT_EOL:
 			return new SWRLToken(SWRLToken.SWRLTokenType.END_OF_INPUT, "");
-		case StreamTokenizer.TT_NUMBER: {
-			double value = this.tokenizer.nval;
-			if (value % 1 == 0.0) {// Appears to be no way of determining whether double/float used originally
-				if (value < Integer.MIN_VALUE || value > Integer.MAX_VALUE)
-					throw new SWRLParseException(this.tokenizer.sval + " is outside the range of xsd:int");
-				return new SWRLToken(SWRLToken.SWRLTokenType.INT, "" + this.tokenizer.nval);
-			} else {
-				if (value < Float.MIN_VALUE || value > Float.MAX_VALUE)
-					throw new SWRLParseException(this.tokenizer.sval + " is outside the range of xsd:float");
-				return new SWRLToken(SWRLToken.SWRLTokenType.FLOAT, "" + this.tokenizer.nval);
+		case StreamTokenizer.TT_NUMBER:
+			throw new SWRLParseException("internal error - not expecting a StreamTokenizer.TT_NUMBER");
+		case '-': {
+			int nextTokenType = this.tokenizer.nextToken();
+			if (nextTokenType == '>')
+				return new SWRLToken(SWRLToken.SWRLTokenType.IMP, "->");
+			else if (nextTokenType == StreamTokenizer.TT_EOF)
+				throw generateEndOfRuleException("Expecting '>' or integer or float after '-'");
+			else if (nextTokenType != StreamTokenizer.TT_WORD)
+				throw new SWRLParseException("Expecting '>' or integer or float after '-'");
+			else
+				negativeNumeric = true;
+			// Fall through to look for integer or float
+		}
+		case StreamTokenizer.TT_WORD: {
+			String value = this.tokenizer.sval;
+			if (isInt(value)) {
+				// See if it is followed by a '.', in which case it should be a float
+				if (this.tokenizer.nextToken() == '.') { // Found a . so expecting rest of float
+					int trailingTokenType = this.tokenizer.nextToken();
+					String trailingValue = this.tokenizer.sval;
+					if (trailingTokenType == StreamTokenizer.TT_WORD && isInt(trailingValue)) {
+						String floatValue = value + "." + trailingValue;
+						floatValue = negativeNumeric ? "-" + floatValue : floatValue;
+						return new SWRLToken(SWRLToken.SWRLTokenType.FLOAT, floatValue);
+					} else if (trailingTokenType == StreamTokenizer.TT_EOF)
+						throw generateEndOfRuleException("Expecting float fraction part after '.'");
+					else
+						throw new SWRLParseException("Expecting float fraction part after '.'");
+				} else { // No following '.' so it is an integer
+					this.tokenizer.pushBack();
+					String intValue = negativeNumeric ? "-" + value : value;
+					return new SWRLToken(SWRLToken.SWRLTokenType.INT, intValue);
+				}
+			} else { // Value is not an integer
+				if (negativeNumeric) // If negative, value should be an integer
+					throw new SWRLParseException("Expecting integer or float");
+				else
+					return new SWRLToken(SWRLToken.SWRLTokenType.SHORTNAME, value);
 			}
 		}
-		case StreamTokenizer.TT_WORD:
-			return new SWRLToken(SWRLToken.SWRLTokenType.SHORTNAME, this.tokenizer.sval);
 		case '"':
 			return new SWRLToken(SWRLToken.SWRLTokenType.STRING, this.tokenizer.sval);
 		case ',':
@@ -243,15 +274,6 @@ public class SWRLTokenizer
 			else
 				throw new SWRLParseException("Expecting IRI after '<'"); // Some other token
 		}
-		case '-': {
-			int nextTokenType = this.tokenizer.nextToken();
-			if (nextTokenType == '>')
-				return new SWRLToken(SWRLToken.SWRLTokenType.IMP, "->");
-			else if (nextTokenType == StreamTokenizer.TT_EOF)
-				throw generateEndOfRuleException("Expecting '>' after '-'");
-			else
-				throw new SWRLParseException("Expecting '>' after '-' for implication");
-		}
 		default:
 			throw new SWRLParseException("Unexpected character '" + String.valueOf(Character.toChars(tokenType)) + "'");
 		}
@@ -264,5 +286,28 @@ public class SWRLTokenizer
 			return new SWRLParseException(message);
 		else
 			return new SWRLIncompleteRuleException(message);
+	}
+
+	private boolean isInt(String s)
+	{
+		try {
+			Integer.parseInt(s);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+
+	private class MyStreamTokenizer extends StreamTokenizer
+	{
+		public MyStreamTokenizer(Reader r)
+		{
+			super(r);
+		}
+
+		@Override
+		public void parseNumbers()
+		{
+		}
 	}
 }

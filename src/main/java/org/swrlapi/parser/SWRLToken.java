@@ -28,33 +28,75 @@ public class SWRLToken
 		return this.value;
 	}
 
-	public boolean isImp() { return this.tokenType == SWRLTokenType.IMP; }
+	public boolean isImp()
+	{
+		return this.tokenType == SWRLTokenType.IMP;
+	}
 
-	public boolean isRing() { return this.tokenType == SWRLTokenType.RING; }
+	public boolean isRing()
+	{
+		return this.tokenType == SWRLTokenType.RING;
+	}
 
-	public boolean isAnd() { return this.tokenType == SWRLTokenType.AND; }
+	public boolean isAnd()
+	{
+		return this.tokenType == SWRLTokenType.AND;
+	}
 
-	public boolean isString() { return this.tokenType == SWRLTokenType.STRING; }
+	public boolean isString()
+	{
+		return this.tokenType == SWRLTokenType.STRING;
+	}
 
-	public boolean isShortName() { return this.tokenType == SWRLTokenType.SHORTNAME; }
+	public boolean isShortName()
+	{
+		return this.tokenType == SWRLTokenType.SHORTNAME;
+	}
 
-	public boolean isIRI() { return this.tokenType == SWRLTokenType.IRI; }
+	public boolean isIRI()
+	{
+		return this.tokenType == SWRLTokenType.IRI;
+	}
 
-	public boolean isInt() { return this.tokenType == SWRLTokenType.INT; }
+	public boolean isInt()
+	{
+		return this.tokenType == SWRLTokenType.INT;
+	}
 
-	public boolean isFloat() { return this.tokenType == SWRLTokenType.FLOAT; }
+	public boolean isFloat()
+	{
+		return this.tokenType == SWRLTokenType.FLOAT;
+	}
 
-	public boolean isTypeQualifier() { return this.tokenType == SWRLTokenType.TYPE_QUAL; }
+	public boolean isTypeQualifier()
+	{
+		return this.tokenType == SWRLTokenType.TYPE_QUAL;
+	}
 
-	public boolean isLParen() { return this.tokenType == SWRLTokenType.LPAREN; }
+	public boolean isLParen()
+	{
+		return this.tokenType == SWRLTokenType.LPAREN;
+	}
 
-	public boolean isRParen() { return this.tokenType == SWRLTokenType.RPAREN; }
+	public boolean isRParen()
+	{
+		return this.tokenType == SWRLTokenType.RPAREN;
+	}
 
-	public boolean isComma() { return this.tokenType == SWRLTokenType.COMMA; }
+	public boolean isComma()
+	{
+		return this.tokenType == SWRLTokenType.COMMA;
+	}
 
-	public boolean isQuestion() { return this.tokenType == SWRLTokenType.QUESTION; }
+	public boolean isQuestion()
+	{
+		return this.tokenType == SWRLTokenType.QUESTION;
+	}
 
-	public boolean isEndOfInput() { return this.tokenType == SWRLTokenType.END_OF_INPUT; }
+	public boolean isEndOfInput()
+	{
+		return this.tokenType == SWRLTokenType.END_OF_INPUT;
+	}
 
 	@Override
 	public String toString()
@@ -62,11 +104,10 @@ public class SWRLToken
 		return "[" + tokenType.getName() + " with value '" + value + "']";
 	}
 
-	public static enum SWRLTokenType
-	{
-		SHORTNAME("short name"), IRI("IRI"), STRING("quoted string"), FLOAT("float"), INT("int"), TYPE_QUAL("^^"),
-		AND("^"), IMP("->"), RING("."),
-		LPAREN("("), RPAREN(")"), COMMA(","), QUESTION("?"), END_OF_INPUT("end");
+	public static enum SWRLTokenType {
+		SHORTNAME("short name"), // A short name is a user-friendly name. Note: it can be a prefixed name or a full IRI.
+		IRI("IRI"), STRING("quoted string"), FLOAT("float"), INT("int"), TYPE_QUAL("^^"), AND("^"), IMP("->"), RING("."), LPAREN(
+				"("), RPAREN(")"), COMMA(","), QUESTION("?"), END_OF_INPUT("end");
 
 		private final String name;
 

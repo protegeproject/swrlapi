@@ -59,56 +59,56 @@ public class SWRLParserSupport
 		this.prefixManager = swrlapiOWLOntology.getPrefixManager();
 	}
 
-	public boolean isOWLEntity(String entityShortName)
+	public boolean isOWLEntity(String shortName)
 	{
-		return isOWLClass(entityShortName) || isOWLNamedIndividual(entityShortName) || isOWLObjectProperty(entityShortName)
-				|| isOWLDataProperty(entityShortName) || isOWLAnnotationProperty(entityShortName) || isOWLDatatype(
-				entityShortName);
+		return isOWLClass(shortName) || isOWLNamedIndividual(shortName) || isOWLObjectProperty(shortName)
+				|| isOWLDataProperty(shortName) || isOWLAnnotationProperty(shortName) || isOWLDatatype(
+				shortName);
 	}
 
-	public boolean isOWLClass(String classShortName)
+	public boolean isOWLClass(String shortName)
 	{
-		IRI classIRI = getPrefixManager().getIRI(classShortName);
+		IRI classIRI = getPrefixManager().getIRI(shortName);
 		return getOWLOntology().containsClassInSignature(classIRI, Imports.INCLUDED);
 	}
 
-	public boolean isOWLNamedIndividual(String individualShortName)
+	public boolean isOWLNamedIndividual(String shortName)
 	{
-		IRI individualIRI = getPrefixManager().getIRI(individualShortName);
+		IRI individualIRI = getPrefixManager().getIRI(shortName);
 		return getOWLOntology().containsIndividualInSignature(individualIRI, Imports.INCLUDED);
 	}
 
-	public boolean isOWLObjectProperty(String objectPropertyShortName)
+	public boolean isOWLObjectProperty(String shortName)
 	{
-		IRI propertyIRI = getPrefixManager().getIRI(objectPropertyShortName);
+		IRI propertyIRI = getPrefixManager().getIRI(shortName);
 		return getOWLOntology().containsObjectPropertyInSignature(propertyIRI, Imports.INCLUDED);
 	}
 
-	public boolean isOWLDataProperty(String dataPropertyShortName)
+	public boolean isOWLDataProperty(String shortName)
 	{
-		IRI propertyIRI = getPrefixManager().getIRI(dataPropertyShortName);
+		IRI propertyIRI = getPrefixManager().getIRI(shortName);
 		return getOWLOntology().containsDataPropertyInSignature(propertyIRI, Imports.INCLUDED);
 	}
 
-	public boolean isOWLAnnotationProperty(String annotationPropertyShortName)
+	public boolean isOWLAnnotationProperty(String shortName)
 	{
-		IRI propertyIRI = getPrefixManager().getIRI(annotationPropertyShortName);
+		IRI propertyIRI = getPrefixManager().getIRI(shortName);
 		return getOWLOntology().containsAnnotationPropertyInSignature(propertyIRI, Imports.INCLUDED);
 	}
 
-	public boolean isOWLDatatype(String datatypeShortName)
+	public boolean isOWLDatatype(String shortName)
 	{
 		try {
-			XSDVocabulary.parseShortName(datatypeShortName);
+			XSDVocabulary.parseShortName(shortName);
 			return true;
 		} catch (IllegalArgumentException e) {
 			return false;
 		}
 	}
 
-	public boolean isSWRLBuiltIn(String builtInPrefixedName)
+	public boolean isSWRLBuiltIn(String shortName)
 	{
-		IRI builtInIRI = getPrefixManager().getIRI(builtInPrefixedName);
+		IRI builtInIRI = getPrefixManager().getIRI(shortName);
 		return getSWRLAPIOWLOntology().isSWRLBuiltIn(builtInIRI);
 	}
 

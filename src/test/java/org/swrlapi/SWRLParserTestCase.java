@@ -27,7 +27,7 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	}
 
 	@Test
-	public void TestClassAtomInConsequentWithNamedIndividual() throws SWRLParseException
+	public void TestClassAtomInConsequentWithShortNamedIndividual() throws SWRLParseException
 	{
 		declareOWLClass("Male");
 		declareOWLNamedIndividual("p1");
@@ -40,7 +40,31 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	}
 
 	@Test
+	public void TestClassAtomInConsequentWithPrefixedNamedIndividual() throws SWRLParseException
+	{
+		declareOWLClass("Male");
+		declareOWLNamedIndividual("p1");
+
+		SWRLAPIRule rule = createSWRLRule("r1", "-> Male(:p1)");
+
+		assertEquals(rule.getBodyAtoms().size(), 0);
+		assertEquals(rule.getHeadAtoms().size(), 1);
+		assertThat(rule.getHeadAtoms().get(0), instanceOf(SWRLClassAtom.class));
+	}
+
+	@Test
 	public void TestClassAtomInAntecedentWithVariable() throws SWRLParseException
+	{
+		declareOWLClass("Male");
+
+		SWRLAPIRule rule = createSWRLRule("r1", "Male(?m) -> ");
+		assertEquals(rule.getBodyAtoms().size(), 1);
+		assertEquals(rule.getHeadAtoms().size(), 0);
+		assertThat(rule.getBodyAtoms().get(0), instanceOf(SWRLClassAtom.class));
+	}
+
+	@Test
+	public void TestClassAtomInAntecedentWithPrefixedVariable() throws SWRLParseException
 	{
 		declareOWLClass("Male");
 
@@ -120,6 +144,22 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	}
 
 	@Test
+	public void TestShortLiteral() throws SWRLParseException
+	{
+		declareOWLDataProperty("hasAge");
+
+		createSWRLRule("r1", "hasAge(?p, \"34\"^^\"xsd:short\") ->");
+	}
+
+	@Test
+	public void TestNegativeShortLiteral() throws SWRLParseException
+	{
+		declareOWLDataProperty("hasAge");
+
+		createSWRLRule("r1", "hasAge(?p, \"-34\"^^\"xsd:short\") ->");
+	}
+
+	@Test
 	public void TestRawIntLiteral() throws SWRLParseException
 	{
 		declareOWLDataProperty("hasAge");
@@ -128,11 +168,11 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	}
 
 	@Test
-	public void TestShortLiteral() throws SWRLParseException
+	public void TestRawNegativeIntLiteral() throws SWRLParseException
 	{
 		declareOWLDataProperty("hasAge");
 
-		createSWRLRule("r1", "hasAge(?p, \"34\"^^\"xsd:short\") ->");
+		createSWRLRule("r1", "hasAge(?p, -34) ->");
 	}
 
 	@Test
@@ -144,11 +184,43 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	}
 
 	@Test
-	public void TestLongQualifiedLiteral() throws SWRLParseException
+	public void TestNegativeIntQualifiedLiteral() throws SWRLParseException
+	{
+		declareOWLDataProperty("hasAge");
+
+		createSWRLRule("r1", "hasAge(?p, \"-34\"^^\"xsd:int\") ->");
+	}
+
+	@Test
+	public void TestLongLiteral() throws SWRLParseException
 	{
 		declareOWLDataProperty("hasAge");
 
 		createSWRLRule("r1", "hasAge(?p, \"34\"^^\"xsd:long\") ->");
+	}
+
+	@Test
+	public void TestNegativeLongLiteral() throws SWRLParseException
+	{
+		declareOWLDataProperty("hasAge");
+
+		createSWRLRule("r1", "hasAge(?p, \"-34\"^^\"xsd:long\") ->");
+	}
+
+	@Test
+	public void TestFloatRawLiteral() throws SWRLParseException
+	{
+		declareOWLDataProperty("hasHeight");
+
+		createSWRLRule("r1", "hasHeight(?p, 34.5) ->");
+	}
+
+	@Test
+	public void TestNegativeFloatRawLiteral() throws SWRLParseException
+	{
+		declareOWLDataProperty("hasHeight");
+
+		createSWRLRule("r1", "hasHeight(?p, -34.5) ->");
 	}
 
 	@Test
@@ -160,6 +232,14 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	}
 
 	@Test
+	public void TestNegativeFloatQualifiedLiteral() throws SWRLParseException
+	{
+		declareOWLDataProperty("hasHeight");
+
+		createSWRLRule("r1", "hasHeight(?p, \"-34.0\"^^\"xsd:float\") ->");
+	}
+
+	@Test
 	public void TestDoubleQualifiedLiteral() throws SWRLParseException
 	{
 		declareOWLDataProperty("hasHeight");
@@ -168,11 +248,11 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	}
 
 	@Test
-	public void TestFloatRawLiteral() throws SWRLParseException
+	public void TestNegativeDoubleQualifiedLiteral() throws SWRLParseException
 	{
 		declareOWLDataProperty("hasHeight");
 
-		createSWRLRule("r1", "hasHeight(?p, 34.5) ->");
+		createSWRLRule("r1", "hasHeight(?p, \"-34.0\"^^\"xsd:double\") ->");
 	}
 
 	@Test
