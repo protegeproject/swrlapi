@@ -88,10 +88,12 @@ public class SWRLAPITestBase
 
 	protected void declareOWLClassAssertion(String classLocalName, String individualLocalName)
 	{
-		SWRLAPITestUtil.declareOWLClassAssertionAxiom(manager, ontology, namespace + classLocalName, namespace + individualLocalName);
+		SWRLAPITestUtil.declareOWLClassAssertionAxiom(manager, ontology, namespace + classLocalName, namespace
+				+ individualLocalName);
 	}
 
-	protected void declareOWLObjectPropertyAssertion(String subjectLocalName, String propertyLocalName, String objectLocalName)
+	protected void declareOWLObjectPropertyAssertion(String subjectLocalName, String propertyLocalName,
+			String objectLocalName)
 	{
 		SWRLAPITestUtil.declareOWLObjectPropertyAssertionAxiom(manager, ontology, namespace + subjectLocalName, namespace
 				+ propertyLocalName, namespace + objectLocalName);
@@ -110,7 +112,7 @@ public class SWRLAPITestBase
 				+ individualLocalName2);
 	}
 
-	protected void declareOWLDifferentFrom(String individualLocalName1, String individualLocalName2)
+	protected void declareOWLDifferentFromAssertion(String individualLocalName1, String individualLocalName2)
 	{
 		SWRLAPITestUtil.declareOWLDifferentIndividualsAxiom(manager, ontology, namespace + individualLocalName1, namespace
 				+ individualLocalName2);
