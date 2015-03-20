@@ -1,5 +1,10 @@
 package org.swrlapi.parser;
 
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
@@ -38,11 +43,6 @@ import org.swrlapi.core.OWLLiteralFactory;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
-
 /**
  * Provides support methods used by the {@link org.swrlapi.parser.SWRLParser}.
  *
@@ -62,8 +62,7 @@ public class SWRLParserSupport
 	public boolean isOWLEntity(String shortName)
 	{
 		return isOWLClass(shortName) || isOWLNamedIndividual(shortName) || isOWLObjectProperty(shortName)
-				|| isOWLDataProperty(shortName) || isOWLAnnotationProperty(shortName) || isOWLDatatype(
-				shortName);
+				|| isOWLDataProperty(shortName) || isOWLAnnotationProperty(shortName) || isOWLDatatype(shortName);
 	}
 
 	public boolean isOWLClass(String shortName)
@@ -237,8 +236,8 @@ public class SWRLParserSupport
 		IRI iri = getPrefixManager().getIRI(variableName);
 
 		if (isOWLEntity(variableName))
-			throw new SWRLParseException(
-					variableName + " cannot be used as a SWRL variable name because it refers to an existing OWL entity");
+			throw new SWRLParseException(variableName
+					+ " cannot be used as a SWRL variable name because it refers to an existing OWL entity");
 		return getOWLDataFactory().getSWRLVariable(iri);
 	}
 
@@ -258,14 +257,13 @@ public class SWRLParserSupport
 		return getOWLDataFactory().getSWRLLiteralArgument(literal);
 	}
 
-	public SWRLRule getSWRLRule(String ruleName, Set<SWRLAtom> head, Set<SWRLAtom> body, String comment,
-			boolean isEnabled)
+	public SWRLRule getSWRLRule(String ruleName, Set<SWRLAtom> head, Set<SWRLAtom> body, String comment, boolean isEnabled)
 	{
-		OWLAnnotation labelAnnotation = getOWLDataFactory()
-				.getOWLAnnotation(getOWLDataFactory().getRDFSLabel(), getOWLLiteralFactory().getOWLLiteral(ruleName));
-		OWLAnnotation commentAnnotation = getOWLDataFactory()
-				.getOWLAnnotation(getOWLDataFactory().getRDFSComment(), getOWLLiteralFactory().getOWLLiteral(comment));
-		// TODO isEnabled
+		OWLAnnotation labelAnnotation = getOWLDataFactory().getOWLAnnotation(getOWLDataFactory().getRDFSLabel(),
+				getOWLLiteralFactory().getOWLLiteral(ruleName));
+		OWLAnnotation commentAnnotation = getOWLDataFactory().getOWLAnnotation(getOWLDataFactory().getRDFSComment(),
+				getOWLLiteralFactory().getOWLLiteral(comment));
+		// TODO Pull isEnabled from rule annotation
 		Set<OWLAnnotation> annotations = new HashSet<>();
 
 		annotations.add(labelAnnotation);
@@ -319,8 +317,7 @@ public class SWRLParserSupport
 		return getOWLDataFactory().getSWRLSameIndividualAtom(iArgument1, iArgument2);
 	}
 
-	public SWRLDifferentIndividualsAtom getSWRLDifferentIndividualsAtom(SWRLIArgument iArgument1,
-			SWRLIArgument iArgument2)
+	public SWRLDifferentIndividualsAtom getSWRLDifferentIndividualsAtom(SWRLIArgument iArgument1, SWRLIArgument iArgument2)
 	{
 		return getOWLDataFactory().getSWRLDifferentIndividualsAtom(iArgument1, iArgument2);
 	}
@@ -389,8 +386,8 @@ public class SWRLParserSupport
 	{
 		int i = ruleText.length() - 1;
 
-		while (i >= 0 && !(SWRLTokenizer.isOrdinaryChar(ruleText.charAt(i)) || ruleText.charAt(i) == '"'
-				|| ruleText.charAt(i) == ' '))
+		while (i >= 0
+				&& !(SWRLTokenizer.isOrdinaryChar(ruleText.charAt(i)) || ruleText.charAt(i) == '"' || ruleText.charAt(i) == ' '))
 			i--;
 
 		return i + 1;

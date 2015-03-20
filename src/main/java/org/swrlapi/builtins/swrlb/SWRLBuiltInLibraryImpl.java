@@ -1,5 +1,3 @@
-// TODO Built-ins for URIs, and lists are not implemented.
-
 package org.swrlapi.builtins.swrlb;
 
 import java.util.Calendar;

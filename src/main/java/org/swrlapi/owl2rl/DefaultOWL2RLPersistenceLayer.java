@@ -1,12 +1,12 @@
 package org.swrlapi.owl2rl;
 
-import org.swrlapi.core.SWRLAPIOWLOntology;
-
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
 
-// TODO Implement this
+import org.swrlapi.core.SWRLAPIOWLOntology;
+
+// TODO Implement OWL 2 RL persistence layer
 public class DefaultOWL2RLPersistenceLayer implements OWL2RLPersistenceLayer
 {
 	@SuppressWarnings("unused")

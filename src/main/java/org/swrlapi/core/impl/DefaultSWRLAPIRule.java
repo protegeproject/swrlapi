@@ -16,15 +16,15 @@ import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
 import org.swrlapi.core.SWRLAPIRule;
-
 import org.swrlapi.sqwrl.SQWRLNames;
+
 import uk.ac.manchester.cs.owl.owlapi.SWRLRuleImpl;
 
 class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 {
 	private static final long serialVersionUID = 1L;
 
-	private String ruleName;
+	private final String ruleName;
 	private final boolean active;
 	private final String comment;
 
@@ -51,9 +51,6 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 	}
 
 	@Override
-	public void setRuleName(String ruleName) { this.ruleName = ruleName; }
-
-	@Override
 	public boolean isActive()
 	{
 		return active;
@@ -62,8 +59,8 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 	@Override
 	public boolean isSQWRLQuery()
 	{
-		return !getBuiltInAtomsFromHead(SQWRLNames.getSQWRLBuiltInNames()).isEmpty() || !getBuiltInAtomsFromBody(
-				SQWRLNames.getSQWRLBuiltInNames()).isEmpty();
+		return !getBuiltInAtomsFromHead(SQWRLNames.getSQWRLBuiltInNames()).isEmpty()
+				|| !getBuiltInAtomsFromBody(SQWRLNames.getSQWRLBuiltInNames()).isEmpty();
 	}
 
 	@Override
@@ -128,8 +125,8 @@ class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 					// atom it will therefore be unbound when this built-in is called. We thus set this built-in argument to
 					// unbound. If a built-in binds an argument, all later built-ins (proceeding from left to right) will be
 					// passed the bound value of this variable during rule execution.
-					if (!variablesUsedByNonBuiltInBodyAtoms.contains(argumentVariableIRI) && !variablesBoundByBuiltIns
-							.contains(argumentVariableIRI)) {
+					if (!variablesUsedByNonBuiltInBodyAtoms.contains(argumentVariableIRI)
+							&& !variablesBoundByBuiltIns.contains(argumentVariableIRI)) {
 						argument.asVariable().setUnbound(); // Tell the built-in that it is expected to bind this argument
 						variablesBoundByBuiltIns.add(argumentVariableIRI); // Flag as a bound variable for later built-ins
 					}

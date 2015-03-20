@@ -1,5 +1,10 @@
 package org.swrlapi.core.impl;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotation;
@@ -45,11 +50,6 @@ import org.swrlapi.sqwrl.SQWRLQuery;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 {
@@ -169,8 +169,8 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 			swrlapiRules.add(swrlapiRule);
 			ruleNames.add(ruleName);
 
-			//			ontologyManager.removeAxiom(ontology, owlapiRule); // Remove the original annotated rule
-			//			ontologyManager.addAxiom(ontology, annotatedOWLAPIRule); // Replace with annotated rule
+			// ontologyManager.removeAxiom(ontology, owlapiRule); // Remove the original annotated rule
+			// ontologyManager.addAxiom(ontology, annotatedOWLAPIRule); // Replace with annotated rule
 		}
 
 		return swrlapiRules;
@@ -191,11 +191,11 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 
 	private Set<OWLAnnotation> generateRuleAnnotations(String ruleName, String comment, boolean isEnabled)
 	{
-		OWLAnnotation labelAnnotation = getOWLDataFactory()
-				.getOWLAnnotation(getOWLDataFactory().getRDFSLabel(), getOWLDataFactory().getOWLLiteral(ruleName));
-		OWLAnnotation commentAnnotation = getOWLDataFactory()
-				.getOWLAnnotation(getOWLDataFactory().getRDFSComment(), getOWLDataFactory().getOWLLiteral(""));
-		// TODO isEnabled annotation
+		OWLAnnotation labelAnnotation = getOWLDataFactory().getOWLAnnotation(getOWLDataFactory().getRDFSLabel(),
+				getOWLDataFactory().getOWLLiteral(ruleName));
+		OWLAnnotation commentAnnotation = getOWLDataFactory().getOWLAnnotation(getOWLDataFactory().getRDFSComment(),
+				getOWLDataFactory().getOWLLiteral(""));
+		// TODO Add isEnabled annotation to rule
 		Set<OWLAnnotation> annotations = new HashSet<>();
 		annotations.add(labelAnnotation);
 		annotations.add(commentAnnotation);
@@ -203,6 +203,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		return annotations;
 	}
 
+	@Override
 	public void deleteSWRLRule(String ruleName)
 	{
 		this.swrlapiOntologyProcessor.deleteSWRLRule(ruleName);
@@ -229,25 +230,25 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	@Override
 	public void startBulkConversion()
 	{
-		// TODO
+		// TODO implement startBulkConversion
 	}
 
 	@Override
 	public void completeBulkConversion()
 	{
-		// TODO
+		// TODO implement completeBulkConversion
 	}
 
 	@Override
 	public boolean hasOntologyChanged()
 	{
-		return true; // TODO
+		return true; // TODO implement hasOntologyChanged
 	}
 
 	@Override
 	public void resetOntologyChanged()
 	{
-		// TODO
+		// TODO implement resetOntologyChanged
 	}
 
 	// void addRuleNameAnnotation(SWRLRule rule, String ruleName)
@@ -266,120 +267,140 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		return this.swrlBuiltInIRIs.contains(iri);
 	}
 
-	@Override public void addSWRLBuiltIn(IRI iri)
+	@Override
+	public void addSWRLBuiltIn(IRI iri)
 	{
 		this.swrlBuiltInIRIs.add(iri);
 	}
 
+	@Override
 	public Set<IRI> getSWRLBuiltInIRIs()
 	{
 		return new HashSet<>(this.swrlBuiltInIRIs);
 	}
 
+	@Override
 	public int getNumberOfSQWRLQueries()
 	{
 		return this.swrlapiOntologyProcessor.getNumberOfSQWRLQueries();
 	}
 
+	@Override
 	public Set<String> getSQWRLQueryNames()
 	{
 		return this.swrlapiOntologyProcessor.getSQWRLQueryNames();
 	}
 
+	@Override
 	public SQWRLQuery getSQWRLQuery(String queryName) throws SQWRLException
 	{
 		return this.swrlapiOntologyProcessor.getSQWRLQuery(queryName);
 	}
 
+	@Override
 	public Set<SQWRLQuery> getSQWRLQueries()
 	{
 		return this.swrlapiOntologyProcessor.getSQWRLQueries();
 	}
 
+	@Override
 	public SQWRLResult getSQWRLResult(String queryName) throws SQWRLException
 	{
 		return this.swrlapiOntologyProcessor.getSQWRLResult(queryName);
 	}
 
+	@Override
 	public SQWRLResultGenerator getSQWRLResultGenerator(String queryName) throws SQWRLException
 	{
 		return this.swrlapiOntologyProcessor.getSQWRLResultGenerator(queryName);
 	}
 
+	@Override
 	public void reset()
 	{
 		this.swrlapiOntologyProcessor.reset();
 	}
 
+	@Override
 	public void processOntology() throws SQWRLException
 	{
 		this.swrlapiOntologyProcessor.processOntology();
 	}
 
+	@Override
 	public boolean hasAssertedOWLAxiom(OWLAxiom axiom)
 	{
 		return this.swrlapiOntologyProcessor.hasAssertedOWLAxiom(axiom);
 	}
 
+	@Override
 	public Set<OWLAxiom> getOWLAxioms()
 	{
 		return this.swrlapiOntologyProcessor.getOWLAxioms();
 	}
 
+	@Override
 	public int getNumberOfSWRLRules()
 	{
 		return this.swrlapiOntologyProcessor.getNumberOfSWRLRules();
 	}
 
+	@Override
 	public int getNumberOfOWLAxioms()
 	{
 		return this.swrlapiOntologyProcessor.getNumberOfOWLAxioms();
 	}
 
+	@Override
 	public int getNumberOfOWLClassDeclarationAxioms()
 	{
 		return this.swrlapiOntologyProcessor.getNumberOfOWLClassDeclarationAxioms();
 	}
 
+	@Override
 	public int getNumberOfOWLIndividualDeclarationAxioms()
 	{
 		return this.swrlapiOntologyProcessor.getNumberOfOWLIndividualDeclarationAxioms();
 	}
 
+	@Override
 	public int getNumberOfOWLObjectPropertyDeclarationAxioms()
 	{
 		return this.swrlapiOntologyProcessor.getNumberOfOWLObjectPropertyDeclarationAxioms();
 	}
 
+	@Override
 	public int getNumberOfOWLDataPropertyDeclarationAxioms()
 	{
 		return this.swrlapiOntologyProcessor.getNumberOfOWLDataPropertyDeclarationAxioms();
 	}
 
-	// TODO Do not want here. They are convenience methods only and are used only by the temporal built-in library.
+	// TODO Do not want here. This is a convenience methods only and is used only by the temporal built-in library.
 	@Override
 	public boolean isOWLIndividualOfType(IRI individualIRI, IRI classIRI)
 	{
-		return true; // TODO
+		return true;
 		// throw new SWRLAPIException("Not implemented");
 	}
 
+	// TODO Do not want here. This is a convenience methods only and is used only by the temporal built-in library.
 	@Override
 	public Set<OWLObjectPropertyAssertionAxiom> getOWLObjectPropertyAssertionAxioms(IRI individualIRI, IRI propertyIRI)
 	{
-		throw new SWRLAPIException("Not implemented"); // TODO
+		throw new SWRLAPIException("Not implemented");
 	}
 
+	// TODO Do not want here. This is a convenience methods only and is used only by the temporal built-in library.
 	@Override
 	public Set<OWLDataPropertyAssertionAxiom> getOWLDataPropertyAssertionAxioms(IRI individualIRI, IRI propertyIRI)
 	{
-		throw new SWRLAPIException("Not implemented"); // TODO
+		throw new SWRLAPIException("Not implemented");
 	}
 
 	/**
-	 * We take an OWLAPI {@link org.semanticweb.owlapi.model.SWRLRule} object and for every
-	 * OWLAPI {@link org.semanticweb.owlapi.model.SWRLBuiltInAtom} in it we create a
-	 * SWRLAPI {@link org.swrlapi.core.SWRLAPIBuiltInAtom}; all other atoms remain the same.
+	 * We take an OWLAPI {@link org.semanticweb.owlapi.model.SWRLRule} object and for every OWLAPI
+	 * {@link org.semanticweb.owlapi.model.SWRLBuiltInAtom} in it we create a SWRLAPI
+	 * {@link org.swrlapi.core.SWRLAPIBuiltInAtom}; all other atoms remain the same.
 	 *
 	 * @see org.semanticweb.owlapi.model.SWRLRule
 	 * @see org.swrlapi.core.SWRLAPIRule
@@ -399,8 +420,8 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 				String builtInPrefixedName = getIRIResolver().iri2PrefixedName(builtInIRI);
 				List<SWRLDArgument> swrlDArguments = builtInAtom.getArguments();
 				List<SWRLBuiltInArgument> swrlBuiltInArguments = convertSWRLDArguments2SWRLBuiltInArguments(swrlDArguments);
-				SWRLBuiltInAtom swrlapiBuiltInAtom = getSWRLAPIOWLDataFactory()
-						.getSWRLAPIBuiltInAtom(ruleName, builtInIRI, builtInPrefixedName, swrlBuiltInArguments);
+				SWRLBuiltInAtom swrlapiBuiltInAtom = getSWRLAPIOWLDataFactory().getSWRLAPIBuiltInAtom(ruleName, builtInIRI,
+						builtInPrefixedName, swrlBuiltInArguments);
 				swrlapiBodyAtoms.add(swrlapiBuiltInAtom);
 			} else
 				swrlapiBodyAtoms.add(atom); // Only built-in atoms are converted; other atoms remain the same
@@ -413,8 +434,8 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 				String builtInPrefixedName = getIRIResolver().iri2PrefixedName(builtInIRI);
 				List<SWRLDArgument> swrlDArguments = builtInAtom.getArguments();
 				List<SWRLBuiltInArgument> swrlBuiltInArguments = convertSWRLDArguments2SWRLBuiltInArguments(swrlDArguments);
-				SWRLBuiltInAtom swrlapiBuiltInAtom = getSWRLAPIOWLDataFactory()
-						.getSWRLAPIBuiltInAtom(ruleName, builtInIRI, builtInPrefixedName, swrlBuiltInArguments);
+				SWRLBuiltInAtom swrlapiBuiltInAtom = getSWRLAPIOWLDataFactory().getSWRLAPIBuiltInAtom(ruleName, builtInIRI,
+						builtInPrefixedName, swrlBuiltInArguments);
 				swrlapiHeadAtoms.add(swrlapiBuiltInAtom);
 			} else
 				swrlapiHeadAtoms.add(atom); // Only built-in atoms are converted; other atoms remain the same
@@ -463,8 +484,8 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 			SWRLVariable swrlVariable = (SWRLVariable)swrlDArgument;
 			return convertSWRLVariable2SWRLBuiltInArgument(swrlVariable);
 		} else
-			throw new SWRLAPIInternalException(
-					"Unknown " + SWRLDArgument.class.getName() + " class " + swrlDArgument.getClass().getName());
+			throw new SWRLAPIInternalException("Unknown " + SWRLDArgument.class.getName() + " class "
+					+ swrlDArgument.getClass().getName());
 	}
 
 	/**
@@ -472,8 +493,8 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	 * built-ins. However, if OWLAPI parsers encounter OWL properties as parameters they appear to represent them as SWRL
 	 * variables - with the variable IRI set to the IRI of the entity ({@link org.semanticweb.owlapi.model.OWLEntity}
 	 * classes represent named OWL concepts so have an IRI). So if we are processing built-in parameters and encounter
-	 * variables with an IRI referring to named OWL properties in the active ontology we can transform them to
-	 * the appropriate SWRLAPI built-in argument for the named entity.
+	 * variables with an IRI referring to named OWL properties in the active ontology we can transform them to the
+	 * appropriate SWRLAPI built-in argument for the named entity.
 	 * <p/>
 	 * Note: An important restriction here is that variable names do not intersect with named properties in their OWL
 	 * ontology. A SWRL parser should check for this on inpit and report an error.
@@ -519,8 +540,8 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 
 	private boolean isOWLClass(IRI iri)
 	{
-		return getOWLOntology().containsClassInSignature(iri, Imports.INCLUDED) || iri
-				.equals(OWLRDFVocabulary.OWL_THING.getIRI()) || iri.equals(OWLRDFVocabulary.OWL_NOTHING.getIRI());
+		return getOWLOntology().containsClassInSignature(iri, Imports.INCLUDED)
+				|| iri.equals(OWLRDFVocabulary.OWL_THING.getIRI()) || iri.equals(OWLRDFVocabulary.OWL_NOTHING.getIRI());
 	}
 
 	/**
@@ -532,9 +553,9 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	 * <p/>
 	 * The SWRLAPI allows SQWRL collection built-in arguments (represented by a
 	 * {@link org.swrlapi.builtins.arguments.SQWRLCollectionVariableBuiltInArgument}) and multi-value variables
-	 * (represented by a {@link org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument}).
-	 * These two argument types are not instantiated directly as built-in argument types. They are created at runtime
-	 * during rule execution and passed as result values in SWRL variable built-in arguments.
+	 * (represented by a {@link org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument}). These two argument
+	 * types are not instantiated directly as built-in argument types. They are created at runtime during rule execution
+	 * and passed as result values in SWRL variable built-in arguments.
 	 *
 	 * @see org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument
 	 * @see org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument
@@ -579,7 +600,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		}
 	}
 
-	private boolean isSWRLBuiltInAtom(SWRLAtom atom) // TODO
+	private boolean isSWRLBuiltInAtom(SWRLAtom atom) // TODO Check implementation of isSWRLBuiltIn atom
 	{
 		if (atom instanceof SWRLBuiltInAtom)
 			return true;
@@ -826,4 +847,3 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		addSWRLBuiltIn(IRI.create(prefix, "log"));
 	}
 }
-

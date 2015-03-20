@@ -18,6 +18,8 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
 public class SWRLAPITestBase
 {
+	final protected double DELTA = 1e-6;
+
 	String namespace;
 	OWLOntologyManager manager;
 	OWLOntology ontology;

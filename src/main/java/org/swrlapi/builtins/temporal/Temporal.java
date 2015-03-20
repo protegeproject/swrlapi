@@ -54,13 +54,13 @@ public class Temporal
 	// separately. Leap years are also handled separately.
 	private static final long conversion_table[][] = {
 	/* year, month, day, hours, minutes, seconds, milliseconds */
-			{ 1, 12, 365, 365 * 24, 365 * 24 * 60, 365 * 24 * 60 * 60, 365 * 24 * 60 * 60 * 1000L }, /* year */
-			{ 0, 1, 0, 0, 0, 0, 0 }, /* month */
-			{ 365, 0, 1, 24, 24 * 60, 24 * 60 * 60, 24 * 60 * 60 * 1000 }, /* day */
-			{ 365 * 24, 0, 24, 1, 60, 60 * 60, 60 * 60 * 1000 }, /* hour */
-			{ 365 * 24 * 60, 0, 24 * 60, 60, 1, 60, 60 * 1000 }, /* minute */
-			{ 365 * 24 * 60 * 60, 0, 24 * 60 * 60, 60 * 60, 60, 1, 1000 }, /* second */
-			{ 365 * 24 * 60 * 60 * 1000L, 0, 24 * 60 * 60 * 1000, 60 * 60 * 1000, 60 * 1000, 1000, 1 } /* mseconds */
+	{ 1, 12, 365, 365 * 24, 365 * 24 * 60, 365 * 24 * 60 * 60, 365 * 24 * 60 * 60 * 1000L }, /* year */
+	{ 0, 1, 0, 0, 0, 0, 0 }, /* month */
+	{ 365, 0, 1, 24, 24 * 60, 24 * 60 * 60, 24 * 60 * 60 * 1000 }, /* day */
+	{ 365 * 24, 0, 24, 1, 60, 60 * 60, 60 * 60 * 1000 }, /* hour */
+	{ 365 * 24 * 60, 0, 24 * 60, 60, 1, 60, 60 * 1000 }, /* minute */
+	{ 365 * 24 * 60 * 60, 0, 24 * 60 * 60, 60 * 60, 60, 1, 1000 }, /* second */
+	{ 365 * 24 * 60 * 60 * 1000L, 0, 24 * 60 * 60 * 1000, 60 * 60 * 1000, 60 * 1000, 1000, 1 } /* mseconds */
 	};
 
 	private static final String[] stringGranularityRepresentation = { "years", "months", "days", "hours", "minutes",
@@ -533,8 +533,8 @@ public class Temporal
 	}
 
 	/**
-	 * * Take a granule count (from the beginning of calendar time, i.e., January 1st 1 C.E) at any granularity and convert
-	 * it to a datetime string.
+	 * * Take a granule count (from the beginning of calendar time, i.e., January 1st 1 C.E) at any granularity and
+	 * convert it to a datetime string.
 	 */
 	public String granuleCount2DatetimeString(long granuleCount, int granularity) throws TemporalException
 	{
@@ -575,8 +575,9 @@ public class Temporal
 		return result;
 	}
 
-	// Calculate the number of extra leap granules at a specific granularity up until the start of a year. Optimize. TODO:
-	// Very inefficient.
+	// Calculate the number of extra leap granules at a specific granularity up until the start of a year.
+	//
+	// TODO: optimize leap granules up to year - very inefficient.
 	private static long leapGranulesUpToYear(long yearCount, int granularity) throws TemporalException
 	{
 		long leapDays = 0;
