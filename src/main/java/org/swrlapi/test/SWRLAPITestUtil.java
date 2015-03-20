@@ -43,9 +43,9 @@ public class SWRLAPITestUtil
 		return ontologyManager.createOntology();
 	}
 
-	public static IRI getIRI(String iri)
+	public static IRI getIRI(String str)
 	{
-		return IRI.create(iri);
+		return IRI.create(str);
 	}
 
 	public static DefaultPrefixManager createDefaultPrefixManager(OWLOntology ontology)
@@ -138,33 +138,33 @@ public class SWRLAPITestUtil
 		return dataFactory.getOWLClassAssertionAxiom(cls, individual);
 	}
 
-	public static void declareOWLClass(OWLOntologyManager manager, OWLOntology ontology, String iri)
+	public static void declareOWLClass(OWLOntologyManager manager, OWLOntology ontology, String name)
 	{
-		OWLClass cls = getOWLClass(getIRI(iri));
+		OWLClass cls = getOWLClass(getIRI(name));
 		OWLDeclarationAxiom axiom = getOWLDeclarationAxiom(cls);
 
 		manager.addAxiom(ontology, axiom);
 	}
 
-	public static void declareOWLNamedIndividual(OWLOntologyManager manager, OWLOntology ontology, String iri)
+	public static void declareOWLNamedIndividual(OWLOntologyManager manager, OWLOntology ontology, String name)
 	{
-		OWLNamedIndividual i = getOWLNamedIndividual(getIRI(iri));
+		OWLNamedIndividual i = getOWLNamedIndividual(getIRI(name));
 		OWLDeclarationAxiom axiom = getOWLDeclarationAxiom(i);
 
 		manager.addAxiom(ontology, axiom);
 	}
 
-	public static void declareOWLObjectProperty(OWLOntologyManager manager, OWLOntology ontology, String iri)
+	public static void declareOWLObjectProperty(OWLOntologyManager manager, OWLOntology ontology, String name)
 	{
-		OWLObjectProperty p = getOWLObjectProperty(getIRI(iri));
+		OWLObjectProperty p = getOWLObjectProperty(getIRI(name));
 		OWLDeclarationAxiom axiom = getOWLDeclarationAxiom(p);
 
 		manager.addAxiom(ontology, axiom);
 	}
 
-	public static void declareOWLDataProperty(OWLOntologyManager manager, OWLOntology ontology, String iri)
+	public static void declareOWLDataProperty(OWLOntologyManager manager, OWLOntology ontology, String name)
 	{
-		OWLDataProperty p = getOWLDataProperty(getIRI(iri));
+		OWLDataProperty p = getOWLDataProperty(getIRI(name));
 		OWLDeclarationAxiom axiom = getOWLDeclarationAxiom(p);
 
 		manager.addAxiom(ontology, axiom);
@@ -182,32 +182,32 @@ public class SWRLAPITestUtil
 		// manager.applyChanges(changes);
 	}
 
-	public static void declareOWLClassAssertionAxiom(OWLOntologyManager manager, OWLOntology ontology, String classIRI,
-			String individualIRI)
+	public static void declareOWLClassAssertionAxiom(OWLOntologyManager manager, OWLOntology ontology, String className,
+			String individualName)
 	{
-		OWLClass cls = getOWLClass(getIRI(classIRI));
-		OWLNamedIndividual i = getOWLNamedIndividual(getIRI(individualIRI));
+		OWLClass cls = getOWLClass(getIRI(className));
+		OWLNamedIndividual i = getOWLNamedIndividual(getIRI(individualName));
 		OWLClassAssertionAxiom axiom = getOWLClassAssertionAxiom(cls, i);
 
 		manager.addAxiom(ontology, axiom);
 	}
 
 	public static void declareOWLObjectPropertyAssertionAxiom(OWLOntologyManager manager, OWLOntology ontology,
-			String subjectIRI, String propertyIRI, String objectIRI)
+			String subjectName, String propertyName, String objectName)
 	{
-		OWLObjectProperty property = getOWLObjectProperty(getIRI(propertyIRI));
-		OWLNamedIndividual subject = getOWLNamedIndividual(getIRI(subjectIRI));
-		OWLNamedIndividual object = getOWLNamedIndividual(getIRI(objectIRI));
+		OWLObjectProperty property = getOWLObjectProperty(getIRI(propertyName));
+		OWLNamedIndividual subject = getOWLNamedIndividual(getIRI(subjectName));
+		OWLNamedIndividual object = getOWLNamedIndividual(getIRI(objectName));
 		OWLObjectPropertyAssertionAxiom axiom = dataFactory.getOWLObjectPropertyAssertionAxiom(property, subject, object);
 
 		manager.addAxiom(ontology, axiom);
 	}
 
 	public static void declareOWLDataPropertyAssertionAxiom(OWLOntologyManager manager, OWLOntology ontology,
-			String subjectIRI, String propertyIRI, String value, String datatypePrefixedName, PrefixManager prefixManager)
+			String subjectName, String propertyName, String value, String datatypePrefixedName, PrefixManager prefixManager)
 	{
-		OWLDataProperty property = getOWLDataProperty(getIRI(propertyIRI));
-		OWLNamedIndividual subject = getOWLNamedIndividual(getIRI(subjectIRI));
+		OWLDataProperty property = getOWLDataProperty(getIRI(propertyName));
+		OWLNamedIndividual subject = getOWLNamedIndividual(getIRI(subjectName));
 		OWLDatatype datatype = dataFactory.getOWLDatatype(datatypePrefixedName, prefixManager);
 		OWLLiteral literal = dataFactory.getOWLLiteral(value, datatype);
 
@@ -217,40 +217,40 @@ public class SWRLAPITestUtil
 	}
 
 	public static void declareOWLSameIndividualAxiom(OWLOntologyManager manager, OWLOntology ontology,
-			String individual1IRI, String individual2IRI)
+			String individual1Name, String individual2Name)
 	{
-		OWLNamedIndividual individual1 = getOWLNamedIndividual(getIRI(individual1IRI));
-		OWLNamedIndividual individual2 = getOWLNamedIndividual(getIRI(individual2IRI));
+		OWLNamedIndividual individual1 = getOWLNamedIndividual(getIRI(individual1Name));
+		OWLNamedIndividual individual2 = getOWLNamedIndividual(getIRI(individual2Name));
 		OWLSameIndividualAxiom axiom = dataFactory.getOWLSameIndividualAxiom(individual1, individual2);
 
 		manager.addAxiom(ontology, axiom);
 	}
 
 	public static void declareOWLDifferentIndividualsAxiom(OWLOntologyManager manager, OWLOntology ontology,
-			String individual1IRI, String individual2IRI)
+			String individual1Name, String individual2Name)
 	{
-		OWLNamedIndividual individual1 = getOWLNamedIndividual(getIRI(individual1IRI));
-		OWLNamedIndividual individual2 = getOWLNamedIndividual(getIRI(individual2IRI));
+		OWLNamedIndividual individual1 = getOWLNamedIndividual(getIRI(individual1Name));
+		OWLNamedIndividual individual2 = getOWLNamedIndividual(getIRI(individual2Name));
 		OWLDifferentIndividualsAxiom axiom = dataFactory.getOWLDifferentIndividualsAxiom(individual1, individual2);
 
 		manager.addAxiom(ontology, axiom);
 	}
 
 	public static void declareOWLObjectPropertyDomainAxiom(OWLOntologyManager manager, OWLOntology ontology,
-			String propertyIRI, String classIRI)
+			String propertyName, String className)
 	{
-		OWLObjectProperty property = getOWLObjectProperty(getIRI(propertyIRI));
-		OWLClass cls = getOWLClass(getIRI(classIRI));
+		OWLObjectProperty property = getOWLObjectProperty(getIRI(propertyName));
+		OWLClass cls = getOWLClass(getIRI(className));
 		OWLObjectPropertyDomainAxiom axiom = dataFactory.getOWLObjectPropertyDomainAxiom(property, cls);
 
 		manager.addAxiom(ontology, axiom);
 	}
 
 	public static void declareOWLDataPropertyDomainAxiom(OWLOntologyManager manager, OWLOntology ontology,
-			String propertyIRI, String classIRI)
+			String propertyName, String className)
 	{
-		OWLDataProperty property = getOWLDataProperty(getIRI(propertyIRI));
-		OWLClass cls = getOWLClass(getIRI(classIRI));
+		OWLDataProperty property = getOWLDataProperty(getIRI(propertyName));
+		OWLClass cls = getOWLClass(getIRI(className));
 		OWLDataPropertyDomainAxiom axiom = dataFactory.getOWLDataPropertyDomainAxiom(property, cls);
 
 		manager.addAxiom(ontology, axiom);
