@@ -14,8 +14,6 @@
     <jep.version>2.4.0</jep.version>
     <axis.osgi.version>1.4_1</axis.osgi.version>
     <junit.version>4.11</junit.version>
-    <hamcrest.version>1.3</hamcrest.version>
-    <log4j.version>1.2.17</log4j.version>
     <slf4j.version>1.6.1</slf4j.version>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -46,7 +44,7 @@
 
     <dependency>
       <groupId>net.sourceforge.owlapi</groupId>
-      <artifactId>owlapi-distribution</artifactId>
+      <artifactId>owlapi-osgidistribution</artifactId>
       <version>${owlapi.version}</version>
     </dependency>
 
@@ -65,25 +63,6 @@
     </dependency>
 
     <dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-      <version>${log4j.version}</version>
-    </dependency>    
-
-    <dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-      <version>${slf4j.version}</version>
-    </dependency>
-    
-    <dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-      <version>${slf4j.version}</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>${junit.version}</version>
@@ -91,9 +70,9 @@
     </dependency>
 
     <dependency>
-	    <groupId>org.hamcrest</groupId>
-	    <artifactId>hamcrest-core</artifactId>
-	    <version>${hamcrest.version}</version>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+      <version>${slf4j.version}</version>
       <scope>test</scope>
     </dependency>
 
@@ -123,13 +102,17 @@
           <instructions>
 					  <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
 					  <Include-Resource>{maven-resources}</Include-Resource>
+            <Import-Package>
+              org.semanticweb.owlapi.*;version="4.0.2.SNAPSHOT",
+              *
+            </Import-Package>
             <Export-Package>
-              org.swrlapi.*;version="1.0.6",
-						  org.apache.axis.*;version="1.4_1",
-              org.nfunk.jep.*;version="2.4.0"
+              org.nfunk.*;version="${jep.version}",
+              org.apache.axis.*;version="1.4",
+              org.swrlapi.*;version="${project.version}"
             </Export-Package>
             <Embed-Transitive>true</Embed-Transitive>
-            <Embed-Dependency>jep;version="2.4.0"</Embed-Dependency>
+            <Embed-Dependency>jep;version="${jep.version}"</Embed-Dependency>
 				  </instructions>
 
 				</configuration>
