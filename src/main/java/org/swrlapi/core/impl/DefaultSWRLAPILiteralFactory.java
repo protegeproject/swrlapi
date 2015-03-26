@@ -2,7 +2,6 @@ package org.swrlapi.core.impl;
 
 import java.net.URI;
 
-import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.swrlapi.core.OWLLiteralFactory;
 import org.swrlapi.core.SWRLAPILiteral;
@@ -19,12 +18,6 @@ public class DefaultSWRLAPILiteralFactory implements SWRLAPILiteralFactory
 	public DefaultSWRLAPILiteralFactory()
 	{
 		this.owlLiteralFactory = new DefaultOWLLiteralFactory();
-	}
-
-	@Override
-	public SWRLAPILiteral getSWRLAPILiteral(OWLLiteral literal)
-	{
-		return new DefaultSWRLAPILiteral(literal);
 	}
 
 	@Override
@@ -100,9 +93,9 @@ public class DefaultSWRLAPILiteralFactory implements SWRLAPILiteralFactory
 	}
 
 	@Override
-	public SWRLAPILiteral getSWRLAPILiteral(String literal, OWLDatatype datatype)
+	public SWRLAPILiteral getSWRLAPILiteral(OWLLiteral literal)
 	{
-		return new DefaultSWRLAPILiteral(getOWLLiteralFactory().getOWLLiteral(literal, datatype));
+		return new DefaultSWRLAPILiteral(literal);
 	}
 
 	private OWLLiteralFactory getOWLLiteralFactory()

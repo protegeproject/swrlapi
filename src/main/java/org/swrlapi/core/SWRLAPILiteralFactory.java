@@ -2,7 +2,6 @@ package org.swrlapi.core;
 
 import java.net.URI;
 
-import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.swrlapi.core.xsd.XSDDate;
 import org.swrlapi.core.xsd.XSDDateTime;
@@ -43,6 +42,4 @@ public interface SWRLAPILiteralFactory
 	SWRLAPILiteral getSWRLAPILiteral(XSDDuration duration);
 
 	SWRLAPILiteral getSWRLAPILiteral(OWLLiteral literal);
-
-	SWRLAPILiteral getSWRLAPILiteral(String literal, OWLDatatype datatype);
 }

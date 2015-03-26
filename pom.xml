@@ -13,6 +13,7 @@
     <owlapi.version>4.0.2-SNAPSHOT</owlapi.version> 
     <jep.version>2.4.0</jep.version>
     <axis.osgi.version>1.4_1</axis.osgi.version>
+    <commons.discovery.osgi.version>0.4_1</commons.discovery.osgi.version>
     <junit.version>4.11</junit.version>
     <slf4j.version>1.6.1</slf4j.version>
 
@@ -52,8 +53,16 @@
     <dependency>
 	    <groupId>org.apache.geronimo.bundles</groupId>
 	    <artifactId>axis</artifactId>
-	    <version>1.4_1</version>
+	    <version>${axis.osgi.version}</version>
     </dependency>
+
+    <!-- OSGi Bundle for Apache Commons Discovery 0.4  -->
+    <dependency>
+	<groupId>org.apache.geronimo.bundles</groupId>
+	<artifactId>commons-discovery</artifactId>
+	    <version>${commons.discovery.osgi.version}</version>
+      <scope>test</scope>
+     </dependency>
 
     <!-- This is in a local project repository (in ./lib) because we could not find a public Maven repository containing it. -->
     <dependency>

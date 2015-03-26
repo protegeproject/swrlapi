@@ -42,6 +42,7 @@ import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.core.OWLLiteralFactory;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
+import org.swrlapi.exceptions.SWRLAPILiteralException;
 
 /**
  * Provides support methods used by the {@link org.swrlapi.parser.SWRLParser}.
@@ -253,8 +254,13 @@ public class SWRLParserSupport
 			throws SWRLParseException
 	{
 		OWLDatatype owlDatatype = getOWLDatatype(datatypeShortName);
-		OWLLiteral literal = getOWLLiteralFactory().getOWLLiteral(lexicalValue, owlDatatype);
-		return getOWLDataFactory().getSWRLLiteralArgument(literal);
+
+		try {
+			OWLLiteral literal = getOWLLiteralFactory().getOWLLiteral(lexicalValue, owlDatatype);
+			return getOWLDataFactory().getSWRLLiteralArgument(literal);
+		} catch (SWRLAPILiteralException e) {
+			throw new SWRLParseException(e.getMessage());
+		}
 	}
 
 	public SWRLRule getSWRLRule(String ruleName, Set<SWRLAtom> head, Set<SWRLAtom> body, String comment, boolean isEnabled)

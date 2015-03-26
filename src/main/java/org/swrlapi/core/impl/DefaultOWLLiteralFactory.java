@@ -5,11 +5,13 @@ import java.net.URI;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.swrlapi.core.OWLLiteralFactory;
+import org.swrlapi.core.OWLLiteralValidator;
 import org.swrlapi.core.SWRLAPIOWLDatatypeFactory;
 import org.swrlapi.core.xsd.XSDDate;
 import org.swrlapi.core.xsd.XSDDateTime;
 import org.swrlapi.core.xsd.XSDDuration;
 import org.swrlapi.core.xsd.XSDTime;
+import org.swrlapi.exceptions.SWRLAPILiteralException;
 
 import uk.ac.manchester.cs.owl.owlapi.OWLLiteralImpl;
 
@@ -103,7 +105,14 @@ public class DefaultOWLLiteralFactory implements OWLLiteralFactory
 	@Override
 	public OWLLiteral getOWLLiteral(String literal, OWLDatatype datatype)
 	{
+		validateOWLLiteral(literal, datatype);
 		return new OWLLiteralImpl(literal, "", datatype);
+	}
+
+	private void validateOWLLiteral(String literal, OWLDatatype datatype)
+	{
+		if (!OWLLiteralValidator.isValid(literal, datatype))
+			throw new SWRLAPILiteralException("literal value " + literal + " is not a valid " + datatype.getIRI());
 	}
 
 	private SWRLAPIOWLDatatypeFactory getOWLDatatypeFactory()
