@@ -19,7 +19,7 @@ public interface SWRLAPILiteral
 {
 	boolean isNumeric();
 
-	boolean isBoolean();
+	boolean isByte();
 
 	boolean isShort();
 
@@ -33,7 +33,7 @@ public interface SWRLAPILiteral
 
 	boolean isString();
 
-	boolean isByte();
+	boolean isBoolean();
 
 	boolean isAnyURI();
 
@@ -44,10 +44,6 @@ public interface SWRLAPILiteral
 	boolean isDateTime();
 
 	boolean isDuration();
-
-	String getString() throws SQWRLLiteralException;
-
-	boolean getBoolean() throws SQWRLLiteralException;
 
 	byte getByte() throws SQWRLLiteralException;
 
@@ -60,6 +56,10 @@ public interface SWRLAPILiteral
 	float getFloat() throws SQWRLLiteralException;
 
 	double getDouble() throws SQWRLLiteralException;
+
+	String getString() throws SQWRLLiteralException;
+
+	boolean getBoolean() throws SQWRLLiteralException;
 
 	URI getAnyURI() throws SQWRLLiteralException;
 

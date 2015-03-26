@@ -36,13 +36,12 @@ import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
  * <p/>
  * This class operates in three phases:
  * <p/>
- * (1) Configuration Phase: In this phase the structure of the result is defined. This phase opened by a call to the
- * {@link #configured()} method (which will also clear any existing data). In this phase the columns are defined;
- * aggregation or ordering is also specified in this phase. This phase is closed by a call to the {@link #configured}
- * method.
+ * (1) Configuration Phase: In this phase the structure of the result is defined. A newly created object will start in
+ * this phase. In this phase the columns are defined; aggregation or ordering is also specified in this phase. This
+ * phase is closed by a call to the {@link #configured()} method.
  * <p/>
  * (2) Preparation Phase: In this phase data are added to the result. This phase is implicitly opened by the call to the
- * {@link #configured} method. It is closed by a call to the {@link #prepared} method.
+ * {@link #configured()} method. It is closed by a call to the {@link #prepared()} method.
  * <p/>
  * A convenience method {@link #addColumns} that takes a list of column names is also supplied.
  * <p/>
@@ -52,7 +51,8 @@ import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
  * <p/>
  * The interface {@link org.swrlapi.sqwrl.SQWRLResultGenerator} defines the calls used in these two phases.
  * <p/>
- * (3) Processing Phase: In this phase data may be retrieved from the result.
+ * (3) Processing Phase: In this phase data may be retrieved from the result. This phase is implicitly opened by the
+ * call to the {@link #prepared()} method.
  * <p/>
  * The interface {@link org.swrlapi.sqwrl.SQWRLResult} defines the calls used in the processing phase.
  * <p/>
@@ -60,8 +60,9 @@ import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
  * <p/>
  * 
  * <pre>
- * DefaultSQWRLResult result = new DefaultSQWRLResult(swrlapiOWLOntology);
- * SQWRLResultValueFactory valueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(swrlapiOWLOntology);
+ * IRIResolver iriResolver = swrlapiOWLOntology.getIRIResolver();
+ * SQWRLResultValueFactory valueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(iriResolver);
+ * DefaultSQWRLResult result = new SWRLAPIFactory.createSQWRLResult(valueFactory);
  * 
  * result.addColumn(&quot;name&quot;);
  * result.addAggregateColumn(&quot;average&quot;, SQWRLResultNames.AvgAggregateFunction);
@@ -1389,7 +1390,6 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 						+ columnIndex + " - expecting literal");
 			rowIndex++;
 		}
-
 		return literalValues;
 	}
 

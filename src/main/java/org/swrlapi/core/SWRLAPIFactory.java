@@ -1,5 +1,13 @@
 package org.swrlapi.core;
 
+import java.io.File;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.formats.PrefixDocumentFormat;
 import org.semanticweb.owlapi.model.IRI;
@@ -22,6 +30,7 @@ import org.swrlapi.core.impl.DefaultSWRLRuleEngineFactory;
 import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.parser.SWRLParser;
+import org.swrlapi.sqwrl.DefaultSQWRLResult;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 import org.swrlapi.sqwrl.values.impl.DefaultSQWRLResultValueFactory;
@@ -29,12 +38,6 @@ import org.swrlapi.ui.controller.SWRLAPIApplicationController;
 import org.swrlapi.ui.dialog.SWRLAPIApplicationDialogManager;
 import org.swrlapi.ui.model.SWRLAPIApplicationModel;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
-
-import javax.swing.*;
-import java.io.File;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Factory for generating some of the core entities defined by the SWRLAPI.
@@ -218,6 +221,11 @@ public class SWRLAPIFactory
 		return new DefaultSQWRLResultValueFactory(iriResolver);
 	}
 
+	public static DefaultSQWRLResult createSQWRLResult(SQWRLResultValueFactory sqwrlResultValueFactory)
+	{
+		return new DefaultSQWRLResult(sqwrlResultValueFactory);
+	}
+
 	public static SQWRLQueryEngine createSQWRLQueryEngine(SWRLAPIOWLOntology swrlapiOWLOntology,
 			SWRLRuleEngineManager.TargetSWRLRuleEngineCreator swrlRuleEngineCreator)
 	{
@@ -297,8 +305,8 @@ public class SWRLAPIFactory
 		try {
 			return ontologyManager.loadOntologyFromOntologyDocument(file);
 		} catch (OWLOntologyCreationException e) {
-			throw new SWRLAPIException(
-					"Error create OWL ontology from file " + file.getAbsolutePath() + ": " + e.getMessage());
+			throw new SWRLAPIException("Error create OWL ontology from file " + file.getAbsolutePath() + ": "
+					+ e.getMessage());
 		}
 	}
 

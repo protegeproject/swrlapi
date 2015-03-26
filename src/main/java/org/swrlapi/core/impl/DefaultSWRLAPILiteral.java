@@ -28,6 +28,24 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 	}
 
 	@Override
+	public boolean isNumeric()
+	{
+		return isByte() || isShort() || isInt() || isLong() || isFloat() || isDouble();
+	}
+
+	@Override
+	public boolean isByte()
+	{
+		return this.literal.getDatatype().getIRI().equals(XSDVocabulary.BYTE.getIRI());
+	}
+
+	@Override
+	public boolean isShort()
+	{
+		return this.literal.getDatatype().getIRI().equals(XSDVocabulary.SHORT.getIRI());
+	}
+
+	@Override
 	public boolean isInt()
 	{
 		return this.literal.getDatatype().getIRI().equals(XSDVocabulary.INT.getIRI());
@@ -52,21 +70,15 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 	}
 
 	@Override
-	public boolean isShort()
+	public boolean isString()
 	{
-		return this.literal.getDatatype().getIRI().equals(XSDVocabulary.SHORT.getIRI());
+		return this.literal.getDatatype().isString();
 	}
 
 	@Override
 	public boolean isBoolean()
 	{
 		return this.literal.getDatatype().isBoolean();
-	}
-
-	@Override
-	public boolean isByte()
-	{
-		return this.literal.getDatatype().getIRI().equals(XSDVocabulary.BYTE.getIRI());
 	}
 
 	@Override
@@ -97,18 +109,6 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 	public boolean isDuration()
 	{
 		return this.literal.getDatatype().getIRI().equals(XSDVocabulary.DURATION.getIRI());
-	}
-
-	@Override
-	public boolean isString()
-	{
-		return this.literal.getDatatype().isString();
-	}
-
-	@Override
-	public boolean isNumeric()
-	{
-		return isByte() || isShort() || isInt() || isLong() || isFloat() || isDouble();
 	}
 
 	@Override

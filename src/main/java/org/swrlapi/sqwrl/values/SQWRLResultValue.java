@@ -2,6 +2,17 @@ package org.swrlapi.sqwrl.values;
 
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
+/**
+ * Base result value provided by a {@link org.swrlapi.sqwrl.SQWRLResult}.
+ *
+ * @see org.swrlapi.sqwrl.values.SQWRLEntityResultValue
+ * @see org.swrlapi.sqwrl.values.SQWRLClassResultValue
+ * @see org.swrlapi.sqwrl.values.SQWRLIndividualResultValue
+ * @see org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue
+ * @see org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue
+ * @see org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue
+ * @see org.swrlapi.sqwrl.values.SQWRLLiteralResultValue
+ */
 public interface SQWRLResultValue
 {
 	boolean isEntity();

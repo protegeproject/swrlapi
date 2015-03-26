@@ -22,33 +22,21 @@ public class DefaultSWRLAPILiteralFactory implements SWRLAPILiteralFactory
 	}
 
 	@Override
-	public SWRLAPILiteral getSWRLAPILiteral(String literal, OWLDatatype datatype)
-	{
-		return new DefaultSWRLAPILiteral(getOWLLiteralFactory().getOWLLiteral(literal, datatype));
-	}
-
-	@Override
 	public SWRLAPILiteral getSWRLAPILiteral(OWLLiteral literal)
 	{
 		return new DefaultSWRLAPILiteral(literal);
 	}
 
 	@Override
-	public SWRLAPILiteral getSWRLAPILiteral(String value)
+	public SWRLAPILiteral getSWRLAPILiteral(byte b)
 	{
-		return new DefaultSWRLAPILiteral(getOWLLiteralFactory().getOWLLiteral(value));
+		return new DefaultSWRLAPILiteral(getOWLLiteralFactory().getOWLLiteral(b));
 	}
 
 	@Override
-	public SWRLAPILiteral getSWRLAPILiteral(boolean value)
+	public SWRLAPILiteral getSWRLAPILiteral(short s)
 	{
-		return new DefaultSWRLAPILiteral(getOWLLiteralFactory().getOWLLiteral(value));
-	}
-
-	@Override
-	public SWRLAPILiteral getSWRLAPILiteral(double value)
-	{
-		return new DefaultSWRLAPILiteral(getOWLLiteralFactory().getOWLLiteral(value));
+		return new DefaultSWRLAPILiteral(getOWLLiteralFactory().getOWLLiteral(s));
 	}
 
 	@Override
@@ -64,15 +52,21 @@ public class DefaultSWRLAPILiteralFactory implements SWRLAPILiteralFactory
 	}
 
 	@Override
-	public SWRLAPILiteral getSWRLAPILiteral(byte b)
+	public SWRLAPILiteral getSWRLAPILiteral(double value)
 	{
-		return new DefaultSWRLAPILiteral(getOWLLiteralFactory().getOWLLiteral(b));
+		return new DefaultSWRLAPILiteral(getOWLLiteralFactory().getOWLLiteral(value));
 	}
 
 	@Override
-	public SWRLAPILiteral getSWRLAPILiteral(short s)
+	public SWRLAPILiteral getSWRLAPILiteral(String value)
 	{
-		return new DefaultSWRLAPILiteral(getOWLLiteralFactory().getOWLLiteral(s));
+		return new DefaultSWRLAPILiteral(getOWLLiteralFactory().getOWLLiteral(value));
+	}
+
+	@Override
+	public SWRLAPILiteral getSWRLAPILiteral(boolean value)
+	{
+		return new DefaultSWRLAPILiteral(getOWLLiteralFactory().getOWLLiteral(value));
 	}
 
 	@Override
@@ -103,6 +97,12 @@ public class DefaultSWRLAPILiteralFactory implements SWRLAPILiteralFactory
 	public SWRLAPILiteral getSWRLAPILiteral(XSDDuration duration)
 	{
 		return new DefaultSWRLAPILiteral(getOWLLiteralFactory().getOWLLiteral(duration));
+	}
+
+	@Override
+	public SWRLAPILiteral getSWRLAPILiteral(String literal, OWLDatatype datatype)
+	{
+		return new DefaultSWRLAPILiteral(getOWLLiteralFactory().getOWLLiteral(literal, datatype));
 	}
 
 	private OWLLiteralFactory getOWLLiteralFactory()

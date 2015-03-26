@@ -10,31 +10,27 @@ import org.swrlapi.core.xsd.XSDDuration;
 import org.swrlapi.core.xsd.XSDTime;
 
 /**
- * Factory for constructing SWRLAPI literals, which wrap {@link org.semanticweb.owlapi.model.OWLLiteral}s
- * to provide additional convenience methods used be the SWRLAPI.
+ * Factory for constructing SWRLAPI literals, which wrap {@link org.semanticweb.owlapi.model.OWLLiteral}s to provide
+ * additional convenience methods used by the SWRLAPI.
  * 
  * @see org.swrlapi.core.SWRLAPILiteral
  * @see org.semanticweb.owlapi.model.OWLLiteral
  */
 public interface SWRLAPILiteralFactory
 {
-	SWRLAPILiteral getSWRLAPILiteral(OWLLiteral literal);
+	SWRLAPILiteral getSWRLAPILiteral(byte b);
 
-	SWRLAPILiteral getSWRLAPILiteral(String literal, OWLDatatype datatype);
+	SWRLAPILiteral getSWRLAPILiteral(short s);
+
+	SWRLAPILiteral getSWRLAPILiteral(int value);
+
+	SWRLAPILiteral getSWRLAPILiteral(float value);
+
+	SWRLAPILiteral getSWRLAPILiteral(double value);
 
 	SWRLAPILiteral getSWRLAPILiteral(String value);
 
 	SWRLAPILiteral getSWRLAPILiteral(boolean value);
-
-	SWRLAPILiteral getSWRLAPILiteral(double value);
-
-	SWRLAPILiteral getSWRLAPILiteral(float value);
-
-	SWRLAPILiteral getSWRLAPILiteral(int value);
-
-	SWRLAPILiteral getSWRLAPILiteral(byte b);
-
-	SWRLAPILiteral getSWRLAPILiteral(short s);
 
 	SWRLAPILiteral getSWRLAPILiteral(URI uri);
 
@@ -45,4 +41,8 @@ public interface SWRLAPILiteralFactory
 	SWRLAPILiteral getSWRLAPILiteral(XSDDateTime datetime);
 
 	SWRLAPILiteral getSWRLAPILiteral(XSDDuration duration);
+
+	SWRLAPILiteral getSWRLAPILiteral(OWLLiteral literal);
+
+	SWRLAPILiteral getSWRLAPILiteral(String literal, OWLDatatype datatype);
 }

@@ -10,10 +10,11 @@ import org.swrlapi.core.xsd.XSDDuration;
 import org.swrlapi.core.xsd.XSDTime;
 
 /**
- * A convenience factory to create OWLAPI OWL literals. The SWRLAPI also has a
- * {@link org.swrlapi.core.SWRLAPILiteralFactory} that can be used to create {@link org.swrlapi.core.SWRLAPILiteral}
- * objects, which wrap {@link org.semanticweb.owlapi.model.OWLLiteral}s to provide additional convenience
- * methods used be the SWRLAPI.
+ * A convenience factory to create OWLAPI OWL literals.
+ * 
+ * The SWRLAPI also has a {@link org.swrlapi.core.SWRLAPILiteralFactory} that can be used to create
+ * {@link org.swrlapi.core.SWRLAPILiteral} objects, which wrap {@link org.semanticweb.owlapi.model.OWLLiteral}s to
+ * provide additional convenience methods used be the SWRLAPI.
  * 
  * @see org.semanticweb.owlapi.model.OWLLiteral
  * @see org.swrlapi.core.SWRLAPILiteralFactory
@@ -24,23 +25,21 @@ import org.swrlapi.core.xsd.XSDTime;
  */
 public interface OWLLiteralFactory
 {
-	OWLLiteral getOWLLiteral(String literal, OWLDatatype datatype);
+	OWLLiteral getOWLLiteral(byte b);
 
-	OWLLiteral getOWLLiteral(String value);
-
-	OWLLiteral getOWLLiteral(boolean value);
-
-	OWLLiteral getOWLLiteral(double value);
-
-	OWLLiteral getOWLLiteral(float value);
+	OWLLiteral getOWLLiteral(short s);
 
 	OWLLiteral getOWLLiteral(int value);
 
 	OWLLiteral getOWLLiteral(long value);
 
-	OWLLiteral getOWLLiteral(byte b);
+	OWLLiteral getOWLLiteral(float value);
 
-	OWLLiteral getOWLLiteral(short s);
+	OWLLiteral getOWLLiteral(double value);
+
+	OWLLiteral getOWLLiteral(String value);
+
+	OWLLiteral getOWLLiteral(boolean value);
 
 	OWLLiteral getOWLLiteral(URI uri);
 
@@ -51,4 +50,6 @@ public interface OWLLiteralFactory
 	OWLLiteral getOWLLiteral(XSDDateTime datetime);
 
 	OWLLiteral getOWLLiteral(XSDDuration duration);
+
+	OWLLiteral getOWLLiteral(String literal, OWLDatatype datatype);
 }
