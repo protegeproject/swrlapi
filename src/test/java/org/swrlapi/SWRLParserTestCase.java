@@ -144,6 +144,22 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	}
 
 	@Test
+	public void TestByteLiteral() throws SWRLParseException
+	{
+		declareOWLDataProperty("hasAge");
+
+		createSWRLRule("r1", "hasAge(?p, \"34\"^^\"xsd:byte\") ->");
+	}
+
+	@Test
+	public void TestNegativeByteLiteral() throws SWRLParseException
+	{
+		declareOWLDataProperty("yearsToBirth");
+
+		createSWRLRule("r1", "yearsToBirth(?p, \"-34\"^^\"xsd:byte\") ->");
+	}
+
+	@Test
 	public void TestShortLiteral() throws SWRLParseException
 	{
 		declareOWLDataProperty("hasAge");

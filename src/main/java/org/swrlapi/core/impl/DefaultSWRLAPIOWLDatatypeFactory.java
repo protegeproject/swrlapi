@@ -4,6 +4,7 @@ import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
 import org.swrlapi.core.SWRLAPIOWLDatatypeFactory;
+
 import uk.ac.manchester.cs.owl.owlapi.OWLDatatypeImpl;
 
 public class DefaultSWRLAPIOWLDatatypeFactory implements SWRLAPIOWLDatatypeFactory
@@ -66,7 +67,7 @@ public class DefaultSWRLAPIOWLDatatypeFactory implements SWRLAPIOWLDatatypeFacto
 	@Override
 	public OWLDatatype getOWLByteDatatype()
 	{
-		IRI iri = XSDVocabulary.FLOAT.getIRI();
+		IRI iri = XSDVocabulary.BYTE.getIRI();
 		return new OWLDatatypeImpl(iri);
 	}
 
