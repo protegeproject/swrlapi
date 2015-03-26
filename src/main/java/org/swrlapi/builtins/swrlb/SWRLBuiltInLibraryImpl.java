@@ -1080,6 +1080,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 			if (builtInName.equalsIgnoreCase(SWRLB_SIN) || builtInName.equalsIgnoreCase(SWRLB_COS)
 					|| builtInName.equalsIgnoreCase(SWRLB_TAN))
 				arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument(operationResult));
+			else if (isByteMostPreciseArgument(boundArguments))
+				arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument((byte)operationResult));
 			else if (isShortMostPreciseArgument(boundArguments))
 				arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument((short)operationResult));
 			else if (isIntMostPreciseArgument(boundArguments))

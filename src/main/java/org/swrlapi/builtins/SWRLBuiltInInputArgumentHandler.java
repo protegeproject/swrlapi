@@ -79,8 +79,8 @@ public interface SWRLBuiltInInputArgumentHandler
 	// Individual argument handling
 	boolean isArgumentAnIndividual(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	void checkThatArgumentIsAnIndividual(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws
-			SWRLBuiltInException;
+	void checkThatArgumentIsAnIndividual(int argumentNumber, List<SWRLBuiltInArgument> arguments)
+			throws SWRLBuiltInException;
 
 	IRI getArgumentAsAnIndividualIRI(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
@@ -90,8 +90,8 @@ public interface SWRLBuiltInInputArgumentHandler
 	// Property argument handling
 	boolean isArgumentAProperty(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	boolean isArgumentAnObjectProperty(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws
-			SWRLBuiltInException;
+	boolean isArgumentAnObjectProperty(int argumentNumber, List<SWRLBuiltInArgument> arguments)
+			throws SWRLBuiltInException;
 
 	boolean isArgumentADataProperty(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
@@ -103,8 +103,8 @@ public interface SWRLBuiltInInputArgumentHandler
 	SWRLDataPropertyBuiltInArgument getArgumentAsADataProperty(int argumentNumber, List<SWRLBuiltInArgument> arguments)
 			throws SWRLBuiltInException;
 
-	void checkThatArgumentIsAProperty(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws
-			SWRLBuiltInException;
+	void checkThatArgumentIsAProperty(int argumentNumber, List<SWRLBuiltInArgument> arguments)
+			throws SWRLBuiltInException;
 
 	void checkThatArgumentIsAnObjectProperty(int argumentNumber, List<SWRLBuiltInArgument> arguments)
 			throws SWRLBuiltInException;
@@ -121,8 +121,8 @@ public interface SWRLBuiltInInputArgumentHandler
 
 	boolean isArgumentALiteral(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	OWLLiteral getArgumentAsAnOWLLiteral(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws
-			SWRLBuiltInException;
+	OWLLiteral getArgumentAsAnOWLLiteral(int argumentNumber, List<SWRLBuiltInArgument> arguments)
+			throws SWRLBuiltInException;
 
 	OWLLiteral getArgumentAsAnOWLLiteral(SWRLBuiltInArgument argument) throws SWRLBuiltInException;
 
@@ -150,8 +150,8 @@ public interface SWRLBuiltInInputArgumentHandler
 	void checkThatArgumentIsOfAnOrderedType(int argumentNumber, List<SWRLBuiltInArgument> arguments)
 			throws SWRLBuiltInException;
 
-	boolean isArgumentOfAnOrderedType(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws
-			SWRLBuiltInException;
+	boolean isArgumentOfAnOrderedType(int argumentNumber, List<SWRLBuiltInArgument> arguments)
+			throws SWRLBuiltInException;
 
 	boolean areAllArgumentsOfAnOrderedType(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
@@ -168,22 +168,36 @@ public interface SWRLBuiltInInputArgumentHandler
 
 	boolean areAllArgumentsNumeric(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	void checkThatArgumentIsNonNumeric(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws
-			SWRLBuiltInException;
+	void checkThatArgumentIsNonNumeric(int argumentNumber, List<SWRLBuiltInArgument> arguments)
+			throws SWRLBuiltInException;
+
+	// Bytes
+	boolean areAllArgumentsBytes(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+
+	boolean isByteMostPreciseArgument(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+
+	boolean isArgumentConvertableToByte(int argumentNumber, List<SWRLBuiltInArgument> arguments)
+			throws SWRLBuiltInException;
+
+	boolean isArgumentAByte(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+
+	short getArgumentAsAByte(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+
+	void checkThatArgumentIsAByte(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	// Shorts
 	boolean areAllArgumentsShorts(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	boolean isShortMostPreciseArgument(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	boolean isArgumentConvertableToShort(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws
-			SWRLBuiltInException;
+	boolean isArgumentConvertableToShort(int argumentNumber, List<SWRLBuiltInArgument> arguments)
+			throws SWRLBuiltInException;
 
 	boolean isArgumentAShort(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	short getArgumentAsAShort(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	void checkThatArgumentIsALong(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+	void checkThatArgumentIsAShort(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	// Integers
 	boolean isIntMostPreciseArgument(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
@@ -195,29 +209,29 @@ public interface SWRLBuiltInInputArgumentHandler
 	boolean isArgumentConvertableToInteger(int argumentNumber, List<SWRLBuiltInArgument> arguments)
 			throws SWRLBuiltInException;
 
-	void checkThatArgumentIsAnInt(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws
-			SWRLBuiltInException;
+	void checkThatArgumentIsAnInt(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	boolean isArgumentAnInt(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	int getArgumentAsAnInt(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	int getArgumentAsAPositiveInt(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws
-			SWRLBuiltInException;
+	int getArgumentAsAPositiveInt(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	// Longs
 	boolean isLongMostPreciseArgument(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	boolean areAllArgumentsLongs(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	boolean isArgumentConvertableToLong(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws
-			SWRLBuiltInException;
+	boolean isArgumentConvertableToLong(int argumentNumber, List<SWRLBuiltInArgument> arguments)
+			throws SWRLBuiltInException;
 
 	boolean isArgumentALong(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	long getArgumentAsALong(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	long getArgumentAsAPositiveLong(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+
+	void checkThatArgumentIsALong(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	// Floats
 	boolean isFloatMostPreciseArgument(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
@@ -226,8 +240,8 @@ public interface SWRLBuiltInInputArgumentHandler
 
 	boolean areAllArgumentsFloats(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	boolean isArgumentConvertableToFloat(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws
-			SWRLBuiltInException;
+	boolean isArgumentConvertableToFloat(int argumentNumber, List<SWRLBuiltInArgument> arguments)
+			throws SWRLBuiltInException;
 
 	void checkThatArgumentIsAFloat(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
@@ -255,8 +269,8 @@ public interface SWRLBuiltInInputArgumentHandler
 
 	List<SWRLBuiltInArgument> cloneArguments(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	Object getArgumentAsAPropertyValue(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws
-			SWRLBuiltInException;
+	Object getArgumentAsAPropertyValue(int argumentNumber, List<SWRLBuiltInArgument> arguments)
+			throws SWRLBuiltInException;
 
 	// Variable name handling
 	String getVariablePrefixedName(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;

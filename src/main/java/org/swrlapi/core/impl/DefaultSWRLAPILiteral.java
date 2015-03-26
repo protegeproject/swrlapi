@@ -141,10 +141,29 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 	}
 
 	@Override
+	public byte getByte() throws SQWRLLiteralException
+	{
+		try {
+			if (!isByte())
+				throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to "
+						+ XSDVocabulary.BYTE);
+			return Byte.parseByte(literal.getLiteral());
+		} catch (NumberFormatException e) {
+			throw new SQWRLLiteralException("cannot convert value " + literal.getLiteral() + " of type "
+					+ this.literal.getDatatype() + " to byte");
+		}
+	}
+
+	@Override
 	public short getShort() throws SQWRLLiteralException
 	{
 		try {
-			return Short.parseShort(literal.getLiteral());
+			if (isShort())
+				return Short.parseShort(literal.getLiteral());
+			else if (isByte())
+				return Byte.parseByte(literal.getLiteral());
+			else
+				throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to short");
 		} catch (NumberFormatException e) {
 			throw new SQWRLLiteralException("cannot convert value " + literal.getLiteral() + " of type "
 					+ this.literal.getDatatype() + " to short");
@@ -157,10 +176,10 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 		try {
 			if (isInt())
 				return Integer.parseInt(literal.getLiteral());
-			if (isInt())
-				return Integer.parseInt(literal.getLiteral());
 			else if (isShort())
 				return Short.parseShort(literal.getLiteral());
+			else if (isByte())
+				return Byte.parseByte(literal.getLiteral());
 			else
 				throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to int");
 		} catch (NumberFormatException e) {
@@ -177,10 +196,10 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 				return Long.parseLong(literal.getLiteral());
 			else if (isInt())
 				return Integer.parseInt(literal.getLiteral());
-			else if (isInt())
-				return Integer.parseInt(literal.getLiteral());
 			else if (isShort())
 				return Short.parseShort(literal.getLiteral());
+			else if (isByte())
+				return Byte.parseByte(literal.getLiteral());
 			else
 				throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to long");
 		} catch (NumberFormatException e) {
@@ -201,12 +220,12 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 				return Float.parseFloat(literal.getLiteral());
 			else if (isInt())
 				return Integer.parseInt(literal.getLiteral());
-			else if (isInt())
-				return Integer.parseInt(literal.getLiteral());
 			else if (isLong())
 				return Long.parseLong(literal.getLiteral());
 			else if (isShort())
 				return Short.parseShort(literal.getLiteral());
+			else if (isByte())
+				return Byte.parseByte(literal.getLiteral());
 			else
 				throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to float");
 		} catch (NumberFormatException e) {
@@ -231,25 +250,13 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
 				return Long.parseLong(literal.getLiteral());
 			else if (isShort())
 				return Short.parseShort(literal.getLiteral());
+			else if (isByte())
+				return Byte.parseByte(literal.getLiteral());
 			else
 				throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to double");
 		} catch (NumberFormatException e) {
 			throw new SQWRLLiteralException("cannot convert value " + literal.getLiteral() + " of type "
 					+ this.literal.getDatatype() + " to double");
-		}
-	}
-
-	@Override
-	public byte getByte() throws SQWRLLiteralException
-	{
-		try {
-			if (!isByte())
-				throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to "
-						+ XSDVocabulary.BYTE);
-			return Byte.parseByte(literal.getLiteral());
-		} catch (NumberFormatException e) {
-			throw new SQWRLLiteralException("cannot convert value " + literal.getLiteral() + " of type "
-					+ this.literal.getDatatype() + " to byte");
 		}
 	}
 

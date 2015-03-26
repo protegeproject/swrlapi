@@ -40,8 +40,8 @@ public interface SWRLBuiltInArgumentCreator
 	SWRLObjectPropertyBuiltInArgument createObjectPropertyBuiltInArgument(OWLObjectProperty property)
 			throws SWRLBuiltInException;
 
-	SWRLDataPropertyBuiltInArgument createDataPropertyBuiltInArgument(OWLDataProperty property) throws
-			SWRLBuiltInException;
+	SWRLDataPropertyBuiltInArgument createDataPropertyBuiltInArgument(OWLDataProperty property)
+			throws SWRLBuiltInException;
 
 	SWRLAnnotationPropertyBuiltInArgument createAnnotationPropertyBuiltInArgument(OWLAnnotationProperty property)
 			throws SWRLBuiltInException;
@@ -52,7 +52,7 @@ public interface SWRLBuiltInArgumentCreator
 
 	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(boolean b) throws SWRLBuiltInException;
 
-	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(Byte b) throws SWRLBuiltInException;
+	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(byte b) throws SWRLBuiltInException;
 
 	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(short s) throws SWRLBuiltInException;
 
