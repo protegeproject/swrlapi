@@ -35,7 +35,7 @@ public class SWRLParserSQWRLTestCase extends SWRLAPITestBase
 	}
 
 	@Test
-	public void TestClassAtomInAntecedentWithSetConstruction() throws SWRLParseException, SQWRLException
+	public void TestSetConstruction() throws SWRLParseException, SQWRLException
 	{
 		declareOWLClass("Male");
 

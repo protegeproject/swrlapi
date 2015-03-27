@@ -368,8 +368,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	/**
 	 * Returns true if the first timestamp argument is equal to the second timestamps argument plus the third count
 	 * argument at the granularity specified by the fourth argument. The timestamps are specified as either a
-	 * ValidInstant, or xsd:dateTime arguments. If the first argument is unbound, it is assigned the result of the
-	 * addition.
+	 * ValidInstant, or xsd:dateTime arguments. Arguments of type xsd:string are automatically converted to xsd:dateTime
+	 * arguments. If the first argument is unbound, it is assigned the result of the addition.
 	 */
 	public boolean add(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{
@@ -549,8 +549,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 				throw new InvalidSWRLBuiltInArgumentException(argumentNumber, "individual " + individualIRI + " is not a "
 						+ GranularityClassName);
 		} else
-			throw new InvalidSWRLBuiltInArgumentException(argumentNumber, "expecting a " + GranularityClassName + " individual"
-					+ ", got " + arguments.get(argumentNumber));
+			throw new InvalidSWRLBuiltInArgumentException(argumentNumber, "expecting a " + GranularityClassName
+					+ " individual" + ", got " + arguments.get(argumentNumber));
 	}
 
 	private boolean isBuiltInArgumentAGranularity(int argumentNumber, List<SWRLBuiltInArgument> arguments)
