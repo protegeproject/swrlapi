@@ -1075,24 +1075,16 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 			throw new InvalidSWRLBuiltInNameException(builtInName);
 
 		if (hasUnbound1stArgument) { // Bind the result to the first argument.
-			List<SWRLBuiltInArgument> boundArguments = arguments.subList(1, arguments.size());
+			List<SWRLBuiltInArgument> boundInputArguments = arguments.subList(1, arguments.size());
 
 			if (builtInName.equalsIgnoreCase(SWRLB_SIN) || builtInName.equalsIgnoreCase(SWRLB_COS)
 					|| builtInName.equalsIgnoreCase(SWRLB_TAN))
 				arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument(operationResult));
-			else if (isByteMostPreciseArgument(boundArguments))
-				arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument((byte)operationResult));
-			else if (isShortMostPreciseArgument(boundArguments))
-				arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument((short)operationResult));
-			else if (isIntMostPreciseArgument(boundArguments))
-				arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument((int)operationResult));
-			else if (isLongMostPreciseArgument(boundArguments))
-				arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument((long)operationResult));
-			else if (isFloatMostPreciseArgument(boundArguments))
-				arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument((float)operationResult));
-			else
-				arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument(operationResult));
-
+			else {
+				SWRLBuiltInArgument resultArgument = createMostPreciseNumericLiteralBuiltInArgument(operationResult,
+						boundInputArguments);
+				arguments.get(0).asVariable().setBuiltInResult(resultArgument);
+			}
 			return true;
 		} else
 			return (argument1 == operationResult);

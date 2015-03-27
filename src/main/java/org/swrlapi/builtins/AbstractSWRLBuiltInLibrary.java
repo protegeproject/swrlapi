@@ -31,6 +31,7 @@ import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLPropertyBuiltInArgument;
+import org.swrlapi.core.OWLLiteralFactory;
 import org.swrlapi.core.SWRLAPILiteral;
 import org.swrlapi.core.SWRLAPILiteralFactory;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
@@ -1435,6 +1436,20 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, 
 
 	@Override
 	public boolean processResultArgument(List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+			OWLLiteral resultArgument) throws SWRLBuiltInException
+	{
+		return processResultArgument(arguments, resultArgumentNumber, createLiteralBuiltInArgument(resultArgument));
+	}
+
+	@Override
+	public boolean processResultArgument(List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+			byte resultArgument) throws SWRLBuiltInException
+	{
+		return processResultArgument(arguments, resultArgumentNumber, createLiteralBuiltInArgument(resultArgument));
+	}
+
+	@Override
+	public boolean processResultArgument(List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
 			short resultArgument) throws SWRLBuiltInException
 	{
 		return processResultArgument(arguments, resultArgumentNumber, createLiteralBuiltInArgument(resultArgument));
@@ -1443,13 +1458,6 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, 
 	@Override
 	public boolean processResultArgument(List<SWRLBuiltInArgument> arguments, int resultArgumentNumber, int resultArgument)
 			throws SWRLBuiltInException
-	{
-		return processResultArgument(arguments, resultArgumentNumber, createLiteralBuiltInArgument(resultArgument));
-	}
-
-	@Override
-	public boolean processResultArgument(List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
-			OWLLiteral resultArgument) throws SWRLBuiltInException
 	{
 		return processResultArgument(arguments, resultArgumentNumber, createLiteralBuiltInArgument(resultArgument));
 	}
@@ -1477,36 +1485,40 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, 
 
 	@Override
 	public boolean processResultArgument(List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
-			byte resultArgument) throws SWRLBuiltInException
+			String resultArgument) throws SWRLBuiltInException
 	{
 		return processResultArgument(arguments, resultArgumentNumber, createLiteralBuiltInArgument(resultArgument));
 	}
 
 	@Override
 	public boolean processResultArgument(List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
-			String resultArgument) throws SWRLBuiltInException
+			boolean resultArgument) throws SWRLBuiltInException
 	{
 		return processResultArgument(arguments, resultArgumentNumber, createLiteralBuiltInArgument(resultArgument));
 	}
 
+	@Override
 	public boolean processResultArgument(List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
 			XSDTime resultArgument) throws SWRLBuiltInException
 	{
 		return processResultArgument(arguments, resultArgumentNumber, createLiteralBuiltInArgument(resultArgument));
 	}
 
+	@Override
 	public boolean processResultArgument(List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
 			XSDDate resultArgument) throws SWRLBuiltInException
 	{
 		return processResultArgument(arguments, resultArgumentNumber, createLiteralBuiltInArgument(resultArgument));
 	}
 
+	@Override
 	public boolean processResultArgument(List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
 			XSDDateTime resultArgument) throws SWRLBuiltInException
 	{
 		return processResultArgument(arguments, resultArgumentNumber, createLiteralBuiltInArgument(resultArgument));
 	}
 
+	@Override
 	public boolean processResultArgument(List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
 			XSDDuration resultArgument) throws SWRLBuiltInException
 	{
@@ -1657,6 +1669,14 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, 
 				collectionName, collectionGroupID);
 	}
 
+	protected SWRLLiteralBuiltInArgument createMostPreciseNumericLiteralBuiltInArgument(double value,
+			List<SWRLBuiltInArgument> boundInputNumericArguments) throws SWRLBuiltInException
+	{
+		OWLLiteral literal = createMostPreciseNumericOWLLiteral(value, boundInputNumericArguments);
+
+		return getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(literal);
+	}
+
 	protected SWRLAPIOWLOntology getSWRLAPIOWLOntology() throws SWRLBuiltInLibraryException
 	{
 		return getBuiltInBridge().getSWRLAPIOWLOntology();
@@ -1675,6 +1695,28 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, 
 	private SWRLAPILiteralFactory getSWRLAPILiteralFactory() throws SWRLBuiltInLibraryException
 	{
 		return getBuiltInBridge().getSWRLAPIOWLDataFactory().getSWRLAPILiteralFactory();
+	}
+
+	private OWLLiteral createMostPreciseNumericOWLLiteral(double value,
+			List<SWRLBuiltInArgument> boundInputNumericArguments) throws SWRLBuiltInException
+	{
+		if (isByteMostPreciseArgument(boundInputNumericArguments))
+			return getOWLLiteralFactory().getOWLLiteral((byte)value);
+		else if (isShortMostPreciseArgument(boundInputNumericArguments))
+			return getOWLLiteralFactory().getOWLLiteral((short)value);
+		else if (isIntMostPreciseArgument(boundInputNumericArguments))
+			return getOWLLiteralFactory().getOWLLiteral((int)value);
+		else if (isLongMostPreciseArgument(boundInputNumericArguments))
+			return getOWLLiteralFactory().getOWLLiteral((long)value);
+		else if (isFloatMostPreciseArgument(boundInputNumericArguments))
+			return getOWLLiteralFactory().getOWLLiteral((float)value);
+		else
+			return getOWLLiteralFactory().getOWLLiteral(value);
+	}
+
+	private OWLLiteralFactory getOWLLiteralFactory() throws SWRLBuiltInLibraryException
+	{
+		return getBuiltInBridge().getSWRLAPIOWLDataFactory().getOWLLiteralFactory();
 	}
 
 	private SWRLAPILiteral getArgumentAsASWRLAPILiteral(int argumentNumber, List<SWRLBuiltInArgument> arguments)
