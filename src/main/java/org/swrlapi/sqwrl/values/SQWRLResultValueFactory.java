@@ -1,5 +1,7 @@
 package org.swrlapi.sqwrl.values;
 
+import java.net.URI;
+
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument;
@@ -35,15 +37,14 @@ public interface SQWRLResultValueFactory
 
 	SQWRLDataPropertyResultValue getDataPropertyValue(IRI propertyIRI);
 
-	SQWRLAnnotationPropertyResultValue getAnnotationPropertyValue(SWRLAnnotationPropertyBuiltInArgument dataPropertyArgument);
+	SQWRLAnnotationPropertyResultValue getAnnotationPropertyValue(
+			SWRLAnnotationPropertyBuiltInArgument dataPropertyArgument);
 
 	SQWRLAnnotationPropertyResultValue getAnnotationPropertyValue(IRI propertyIRI);
 
-	SQWRLLiteralResultValue getLiteralValue(OWLLiteral literal);
+	SQWRLLiteralResultValue getLiteralValue(byte b);
 
-	SQWRLLiteralResultValue getLiteralValue(String s);
-
-	SQWRLLiteralResultValue getLiteralValue(boolean b);
+	SQWRLLiteralResultValue getLiteralValue(short s);
 
 	SQWRLLiteralResultValue getLiteralValue(int i);
 
@@ -53,7 +54,11 @@ public interface SQWRLResultValueFactory
 
 	SQWRLLiteralResultValue getLiteralValue(double d);
 
-	SQWRLLiteralResultValue getLiteralValue(short s);
+	SQWRLLiteralResultValue getLiteralValue(String s);
+
+	SQWRLLiteralResultValue getLiteralValue(boolean b);
+
+	SQWRLLiteralResultValue getLiteralValue(URI uri);
 
 	SQWRLLiteralResultValue getLiteralValue(XSDTime time);
 
@@ -62,4 +67,6 @@ public interface SQWRLResultValueFactory
 	SQWRLLiteralResultValue getLiteralValue(XSDDateTime dateTime);
 
 	SQWRLLiteralResultValue getLiteralValue(XSDDuration duration);
+
+	SQWRLLiteralResultValue getLiteralValue(OWLLiteral literal);
 }

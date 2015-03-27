@@ -9,40 +9,64 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
 import org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue;
+import org.swrlapi.sqwrl.values.SQWRLEntityResultValue;
 import org.swrlapi.sqwrl.values.SQWRLIndividualResultValue;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
-import org.swrlapi.sqwrl.values.SQWRLEntityResultValue;
 import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
 
-/**
- * Implementation of a data value object that represents Java and XML Schema primitive data literals.
- */
 class SQWRLLiteralResultValueImpl extends DefaultSWRLAPILiteral implements SQWRLLiteralResultValue
 {
 	private static Comparator<OWLLiteral> owlLiteralComparator = OWLLiteralComparator.COMPARATOR;
 
-	public SQWRLLiteralResultValueImpl(OWLLiteral literal)
+	private final String datatypePrefixedName;
+
+	public SQWRLLiteralResultValueImpl(OWLLiteral literal, String datatypePrefixedName)
 	{
 		super(literal);
+		this.datatypePrefixedName = datatypePrefixedName;
 	}
 
 	@Override
-	public boolean isEntity() { return false; }
+	public String getDatatypePrefixedName()
+	{
+		return this.datatypePrefixedName;
+	}
 
 	@Override
-	public boolean isClass() { return false; }
+	public boolean isEntity()
+	{
+		return false;
+	}
 
 	@Override
-	public boolean isIndividual() { return false; }
+	public boolean isClass()
+	{
+		return false;
+	}
 
 	@Override
-	public boolean isObjectProperty() { return false; }
+	public boolean isIndividual()
+	{
+		return false;
+	}
 
 	@Override
-	public boolean isDataProperty() { return false; }
+	public boolean isObjectProperty()
+	{
+		return false;
+	}
 
 	@Override
-	public boolean isAnnotationProperty() { return false; }
+	public boolean isDataProperty()
+	{
+		return false;
+	}
+
+	@Override
+	public boolean isAnnotationProperty()
+	{
+		return false;
+	}
 
 	@Override
 	public boolean isLiteral()

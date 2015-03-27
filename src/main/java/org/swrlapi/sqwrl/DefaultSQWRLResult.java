@@ -114,7 +114,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 	private final Map<Integer, String> aggregateColumnIndexes; // Map of (index, function) pairs
 	private List<List<SQWRLResultValue>> rows; // List of List of SQWRLResultValue objects.
 	private List<SQWRLResultValue> rowData; // List of SQWRLResultValue objects used when assembling a row.
-	private Map<String, List<SQWRLResultValue>> columnValuesMap; // Column name -> List<SWRLAPILiteral>
+	private Map<String, List<SQWRLResultValue>> columnValuesMap; // Column name -> List<SQWRLResultValue>
 
 	private int numberOfColumns, currentRowIndex, currentRowDataColumnIndex;
 	private boolean isConfigured, isPrepared, isRowOpen, isOrdered, isAscending, isDistinct, hasAggregates;
@@ -425,16 +425,6 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 			this.currentRowIndex = -1;
 	}
 
-	// private void next() throws SQWRLException
-	// {
-	// throwExceptionIfNotConfigured();
-	// throwExceptionIfNotPrepared();
-	// throwExceptionIfAtEndOfResult();
-	//
-	// if (this.currentRowIndex != -1 && this.currentRowIndex < getNumberOfRows())
-	// this.currentRowIndex++;
-	// }
-
 	@Override
 	public boolean next() throws SQWRLException
 	{
@@ -462,18 +452,13 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 	@Override
 	public SQWRLResultValue getValue(String columnName) throws SQWRLException
 	{
-		List<SQWRLResultValue> row;
-		int columnIndex;
-
 		throwExceptionIfNotConfigured();
 		throwExceptionIfNotPrepared();
 		throwExceptionIfAtEndOfResult();
 
-		checkColumnName(columnName);
+		int columnIndex = getColumnIndex(columnName);
 
-		columnIndex = this.allColumnNames.indexOf(columnName);
-
-		row = this.rows.get(this.currentRowIndex);
+		List<SQWRLResultValue> row = this.rows.get(this.currentRowIndex);
 
 		return row.get(columnIndex);
 	}
@@ -481,15 +466,13 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 	@Override
 	public SQWRLResultValue getValue(int columnIndex) throws SQWRLException
 	{
-		List<SQWRLResultValue> row;
-
 		throwExceptionIfNotConfigured();
 		throwExceptionIfNotPrepared();
 		throwExceptionIfAtEndOfResult();
 
 		checkColumnIndex(columnIndex);
 
-		row = this.rows.get(this.currentRowIndex);
+		List<SQWRLResultValue> row = this.rows.get(this.currentRowIndex);
 
 		return row.get(columnIndex);
 	}
@@ -497,7 +480,6 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 	@Override
 	public SQWRLResultValue getValue(int columnIndex, int rowIndex) throws SQWRLException
 	{
-
 		throwExceptionIfNotConfigured();
 		throwExceptionIfNotPrepared();
 
@@ -678,6 +660,16 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 	public boolean hasAnnotationPropertyValue(int columnIndex) throws SQWRLException
 	{
 		return getValue(columnIndex) instanceof SQWRLPropertyResultValue;
+	}
+
+	private int getColumnIndex(String columnName) throws SQWRLException
+	{
+		checkColumnName(columnName);
+
+		if (this.allColumnNames.contains(columnName))
+			return this.allColumnNames.indexOf(columnName);
+		else
+			return this.columnDisplayNames.indexOf(columnName);
 	}
 
 	// nth, firstN, etc. are 1-indexed
@@ -1036,7 +1028,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 
 	private void checkColumnName(String columnName) throws SQWRLInvalidColumnNameException
 	{
-		if (!this.allColumnNames.contains(columnName))
+		if (!this.allColumnNames.contains(columnName) && !this.columnDisplayNames.contains(columnName))
 			throw new SQWRLInvalidColumnNameException("invalid column name " + columnName);
 	}
 
