@@ -348,7 +348,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	{
 		final int resultArgumentNumber = 0, numberOfConsequentArguments = 1;
 
-		if (getIsInConsequent()) { // Simple SQWRL aggregation operator
+		if (getIsInConsequent()) { // Simple SQWRL aggregation; this is post processed by a SQWRLResult implementation
 			checkForUnboundArguments(arguments);
 			checkNumberOfArgumentsEqualTo(numberOfConsequentArguments, arguments.size());
 
@@ -379,7 +379,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	{
 		final int resultArgumentNumber = 0, numberOfConsequentArguments = 1;
 
-		if (getIsInConsequent()) { // Simple SQWRL aggregation operator
+		if (getIsInConsequent()) { // SQWRL aggregation operator; this is post processed by a SQWRLResult implementation
 			checkForUnboundArguments(arguments);
 			checkNumberOfArgumentsEqualTo(numberOfConsequentArguments, arguments.size());
 
@@ -410,7 +410,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	{
 		final int resultArgumentNumber = 0, sourceCollectionArgumentNumber = 1, numberOfCoreAntecedentArguments = 2, numberOfConsequentArguments = 1;
 
-		if (getIsInConsequent()) { // Simple SQWRL aggregation operator
+		if (getIsInConsequent()) { // SQWRL aggregation operator; this is post processed by a SQWRLResult implementation
 			checkForUnboundArguments(arguments);
 			checkNumberOfArgumentsEqualTo(numberOfConsequentArguments, arguments.size());
 
