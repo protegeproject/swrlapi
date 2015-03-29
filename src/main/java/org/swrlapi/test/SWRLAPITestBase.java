@@ -44,6 +44,12 @@ public class SWRLAPITestBase
 		SWRLAPITestUtil.declareOWLClass(manager, ontology, namespace + localName);
 	}
 
+	protected void declareOWLClasses(String... localNames)
+	{
+		for (String localName : localNames)
+			SWRLAPITestUtil.declareOWLClass(manager, ontology, namespace + localName);
+	}
+
 	protected void declareOWLNamedIndividual(String localName)
 	{
 		SWRLAPITestUtil.declareOWLNamedIndividual(manager, ontology, namespace + localName);
