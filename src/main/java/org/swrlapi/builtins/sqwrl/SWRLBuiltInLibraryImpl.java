@@ -491,8 +491,10 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 					sumValue += value;
 				}
 				double avgValue = sumValue / collection.size();
+				SWRLBuiltInArgument resultArgument = createMostPreciseNumericLiteralBuiltInArgument(avgValue,
+						new ArrayList<SWRLBuiltInArgument>(collection));
 
-				return processResultArgument(arguments, resultArgumentNumber, avgValue);
+				return processResultArgument(arguments, resultArgumentNumber, resultArgument);
 			}
 		}
 	}
@@ -527,7 +529,10 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 				else
 					medianValue = (valueArray[middle - 1] + valueArray[middle]) / 2;
 
-				return processResultArgument(arguments, resultArgumentNumber, medianValue);
+				SWRLBuiltInArgument resultArgument = createMostPreciseNumericLiteralBuiltInArgument(medianValue,
+						new ArrayList<SWRLBuiltInArgument>(collection));
+
+				return processResultArgument(arguments, resultArgumentNumber, resultArgument);
 			}
 		}
 	}
