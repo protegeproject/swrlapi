@@ -140,7 +140,7 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	{
 		declareOWLDataProperty("isFrench");
 
-		createSWRLRule("r1", "isFrench(?f, \"true\"^^\"xsd:boolean\") ->");
+		createSWRLRule("r1", "isFrench(?f, \"true\"^^xsd:boolean) ->");
 	}
 
 	@Test
@@ -148,7 +148,7 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	{
 		declareOWLDataProperty("hasAge");
 
-		createSWRLRule("r1", "hasAge(?p, \"34\"^^\"xsd:byte\") ->");
+		createSWRLRule("r1", "hasAge(?p, \"34\"^^xsd:byte) ->");
 	}
 
 	@Test
@@ -156,7 +156,7 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	{
 		declareOWLDataProperty("yearsToBirth");
 
-		createSWRLRule("r1", "yearsToBirth(?p, \"-34\"^^\"xsd:byte\") ->");
+		createSWRLRule("r1", "yearsToBirth(?p, \"-34\"^^xsd:byte) ->");
 	}
 
 	@Test(expected = SWRLParseException.class)
@@ -164,7 +164,7 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	{
 		declareOWLDataProperty("hasAge");
 
-		createSWRLRule("r1", "hasAge(?p, \"b34\"^^\"xsd:byte\") ->");
+		createSWRLRule("r1", "hasAge(?p, \"b34\"^^xsd:byte) ->");
 	}
 
 	@Test
@@ -172,7 +172,7 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	{
 		declareOWLDataProperty("hasAge");
 
-		createSWRLRule("r1", "hasAge(?p, \"34\"^^\"xsd:short\") ->");
+		createSWRLRule("r1", "hasAge(?p, \"34\"^^xsd:short) ->");
 	}
 
 	@Test
@@ -180,7 +180,7 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	{
 		declareOWLDataProperty("hasAge");
 
-		createSWRLRule("r1", "hasAge(?p, \"-34\"^^\"xsd:short\") ->");
+		createSWRLRule("r1", "hasAge(?p, \"-34\"^^xsd:short) ->");
 	}
 
 	@Test(expected = SWRLParseException.class)
@@ -188,7 +188,7 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	{
 		declareOWLDataProperty("hasAge");
 
-		createSWRLRule("r1", "hasAge(?p, \"b34\"^^\"xsd:short\") ->");
+		createSWRLRule("r1", "hasAge(?p, \"b34\"^^xsd:short) ->");
 	}
 
 	@Test
@@ -212,7 +212,7 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	{
 		declareOWLDataProperty("hasAge");
 
-		createSWRLRule("r1", "hasAge(?p, \"34\"^^\"xsd:int\") ->");
+		createSWRLRule("r1", "hasAge(?p, \"34\"^^xsd:int) ->");
 	}
 
 	@Test
@@ -220,7 +220,7 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	{
 		declareOWLDataProperty("hasAge");
 
-		createSWRLRule("r1", "hasAge(?p, \"-34\"^^\"xsd:int\") ->");
+		createSWRLRule("r1", "hasAge(?p, \"-34\"^^xsd:int) ->");
 	}
 
 	@Test(expected = SWRLParseException.class)
@@ -228,7 +228,7 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	{
 		declareOWLDataProperty("hasAge");
 
-		createSWRLRule("r1", "hasAge(?p, \"b34\"^^\"xsd:int\") ->");
+		createSWRLRule("r1", "hasAge(?p, \"b34\"^^xsd:int) ->");
 	}
 
 	@Test
@@ -236,7 +236,7 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	{
 		declareOWLDataProperty("hasAge");
 
-		createSWRLRule("r1", "hasAge(?p, \"34\"^^\"xsd:long\") ->");
+		createSWRLRule("r1", "hasAge(?p, \"34\"^^xsd:long) ->");
 	}
 
 	@Test
@@ -244,7 +244,7 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	{
 		declareOWLDataProperty("hasAge");
 
-		createSWRLRule("r1", "hasAge(?p, \"-34\"^^\"xsd:long\") ->");
+		createSWRLRule("r1", "hasAge(?p, \"-34\"^^xsd:long) ->");
 	}
 
 	@Test(expected = SWRLParseException.class)
@@ -252,7 +252,7 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	{
 		declareOWLDataProperty("hasAge");
 
-		createSWRLRule("r1", "hasAge(?p, \"b34\"^^\"xsd:long\") ->");
+		createSWRLRule("r1", "hasAge(?p, \"b34\"^^xsd:long) ->");
 	}
 
 	@Test
@@ -276,7 +276,7 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	{
 		declareOWLDataProperty("hasHeight");
 
-		createSWRLRule("r1", "hasHeight(?p, \"34.0\"^^\"xsd:float\") ->");
+		createSWRLRule("r1", "hasHeight(?p, \"34.0\"^^xsd:float) ->");
 	}
 
 	@Test
@@ -284,7 +284,7 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	{
 		declareOWLDataProperty("hasHeight");
 
-		createSWRLRule("r1", "hasHeight(?p, \"-34.0\"^^\"xsd:float\") ->");
+		createSWRLRule("r1", "hasHeight(?p, \"-34.0\"^^xsd:float) ->");
 	}
 
 	@Test(expected = SWRLParseException.class)
@@ -292,7 +292,7 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	{
 		declareOWLDataProperty("hasHeight");
 
-		createSWRLRule("r1", "hasHeight(?p, \"x34.0\"^^\"xsd:float\") ->");
+		createSWRLRule("r1", "hasHeight(?p, \"x34.0\"^^xsd:float) ->");
 	}
 
 	@Test
@@ -300,7 +300,7 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	{
 		declareOWLDataProperty("hasHeight");
 
-		createSWRLRule("r1", "hasHeight(?p, \"34.0\"^^\"xsd:double\") ->");
+		createSWRLRule("r1", "hasHeight(?p, \"34.0\"^^xsd:double) ->");
 	}
 
 	@Test
@@ -308,7 +308,7 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	{
 		declareOWLDataProperty("hasHeight");
 
-		createSWRLRule("r1", "hasHeight(?p, \"-34.0\"^^\"xsd:double\") ->");
+		createSWRLRule("r1", "hasHeight(?p, \"-34.0\"^^xsd:double) ->");
 	}
 
 	@Test(expected = SWRLParseException.class)
@@ -316,7 +316,7 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	{
 		declareOWLDataProperty("hasHeight");
 
-		createSWRLRule("r1", "hasHeight(?p, \"x34.0\"^^\"xsd:double\") ->");
+		createSWRLRule("r1", "hasHeight(?p, \"x34.0\"^^xsd:double) ->");
 	}
 
 	@Test
@@ -324,7 +324,7 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	{
 		declareOWLDataProperty("hasHomePage");
 
-		createSWRLRule("r1", "hasHomePage(?p, \"http://stanford.edu/~fred\"^^\"xsd:anyURI\") ->");
+		createSWRLRule("r1", "hasHomePage(?p, \"http://stanford.edu/~fred\"^^xsd:anyURI) ->");
 	}
 
 	@Test(expected = SWRLParseException.class)
@@ -332,7 +332,7 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	{
 		declareOWLDataProperty("hasHomePage");
 
-		createSWRLRule("r1", "hasHomePage(?p, \":stanford.edu/~fred\"^^\"xsd:anyURI\") ->");
+		createSWRLRule("r1", "hasHomePage(?p, \":stanford.edu/~fred\"^^xsd:anyURI) ->");
 	}
 
 	@Test
@@ -340,7 +340,7 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	{
 		declareOWLDataProperty("hasDOB");
 
-		createSWRLRule("r1", "hasDOB(?p, \"1999-11-22\"^^\"xsd:date\") ->");
+		createSWRLRule("r1", "hasDOB(?p, \"1999-11-22\"^^xsd:date) ->");
 	}
 
 	@Test(expected = SWRLParseException.class)
@@ -348,7 +348,7 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	{
 		declareOWLDataProperty("hasDOB");
 
-		createSWRLRule("r1", "hasDOB(?p, \"x199-11-22\"^^\"xsd:date\") ->");
+		createSWRLRule("r1", "hasDOB(?p, \"x199-11-22\"^^xsd:date) ->");
 	}
 
 	@Test
@@ -356,7 +356,7 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	{
 		declareOWLDataProperty("hasTOB");
 
-		createSWRLRule("r1", "hasTOB(?p, \"10:10:10.23\"^^\"xsd:time\") ->");
+		createSWRLRule("r1", "hasTOB(?p, \"10:10:10.23\"^^xsd:time) ->");
 	}
 
 	@Test(expected = SWRLParseException.class)
@@ -364,7 +364,7 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	{
 		declareOWLDataProperty("hasTOB");
 
-		createSWRLRule("r1", "hasTOB(?p, \"10:0:10.23\"^^\"xsd:time\") ->");
+		createSWRLRule("r1", "hasTOB(?p, \"10:0:10.23\"^^xsd:time) ->");
 	}
 
 	@Test
@@ -372,7 +372,7 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	{
 		declareOWLDataProperty("hasTOB");
 
-		createSWRLRule("r1", "hasTOB(?p, \"1999-11-22T10:10:10.23\"^^\"xsd:dateTime\") ->");
+		createSWRLRule("r1", "hasTOB(?p, \"1999-11-22T10:10:10.23\"^^xsd:dateTime) ->");
 	}
 
 	@Test(expected = SWRLParseException.class)
@@ -380,7 +380,7 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	{
 		declareOWLDataProperty("hasTOB");
 
-		createSWRLRule("r1", "hasTOB(?p, \"x1999-11-22T10:10:10.23\"^^\"xsd:dateTime\") ->");
+		createSWRLRule("r1", "hasTOB(?p, \"x1999-11-22T10:10:10.23\"^^xsd:dateTime) ->");
 	}
 
 	@Test
@@ -388,7 +388,7 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	{
 		declareOWLDataProperty("hasAge");
 
-		createSWRLRule("r1", "hasAge(?p, \"P43Y\"^^\"xsd:duration\") ->");
+		createSWRLRule("r1", "hasAge(?p, \"P43Y\"^^xsd:duration) ->");
 	}
 
 	@Test(expected = SWRLParseException.class)
@@ -396,14 +396,14 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 	{
 		declareOWLDataProperty("hasAge");
 
-		createSWRLRule("r1", "hasAge(?p, \"43Y\"^^\"xsd:duration\") ->");
+		createSWRLRule("r1", "hasAge(?p, \"43Y\"^^xsd:duration) ->");
 	}
 
 	@Test
 	public void TestAddAndEqualsTemporalBuiltIns() throws SWRLParseException
 	{
-		createSWRLRule("r1", "temporal:add(?x, \"1999-11-01T10:00:00\"^^\"xsd:dateTime\", 4, \"Years\") ^ "
-				+ "temporal:equals(?x, \"2003-11-01T10:00:00.0\"^^\"xsd:dateTime\") " + "-> sqwrl:select(\"Yes!\")");
+		createSWRLRule("r1", "temporal:add(?x, \"1999-11-01T10:00:00\"^^xsd:dateTime, 4, \"Years\") ^ "
+				+ "temporal:equals(?x, \"2003-11-01T10:00:00.0\"^^xsd:dateTime) " + "-> sqwrl:select(\"Yes!\")");
 	}
 
 	@Test

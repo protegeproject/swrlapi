@@ -58,14 +58,14 @@ public class SWRLParserSQWRLTestCase extends SWRLAPITestBase
 	public void TestBooleanQualifiedLiteral() throws SWRLParseException, SQWRLException
 	{
 		createSQWRLQuery("q1",
-				"swrlb:booleanNot(?x, \"false\"^^\"xsd:boolean\") ^ swrlb:booleanNot(?y, ?x) -> sqwrl:select(?y)");
+				"swrlb:booleanNot(?x, \"false\"^^xsd:boolean) ^ swrlb:booleanNot(?y, ?x) -> sqwrl:select(?y)");
 	}
 
 	@Test
 	public void TestUnboundVariableQuery() throws SWRLParseException, SQWRLException
 	{
-		createSQWRLQuery("q1", "swrlb:add(?x, \"2.0\"^^\"xsd:double\", \"2.0\"^^\"xsd:double\") ^ "
-				+ "swrlb:multiply(?y, ?x, \"2.0\"^^\"xsd:double\") -> sqwrl:select(?y)");
+		createSQWRLQuery("q1", "swrlb:add(?x, \"2.0\"^^xsd:double, \"2.0\"^^xsd:double) ^ "
+				+ "swrlb:multiply(?y, ?x, \"2.0\"^^xsd:double) -> sqwrl:select(?y)");
 	}
 
 	@Test

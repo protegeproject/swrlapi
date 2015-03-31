@@ -307,7 +307,7 @@ public class SWRLParser
 			throw generateEndOfRuleException("Partial datatype qualifier - add '^' to complete", tokenizer);
 		} else if (tokenizer.peekToken("String may be qualified with datatype").isTypeQualifier()) {
 			tokenizer.skipToken(); // Skip the peeked token
-			SWRLToken datatypeToken = tokenizer.getToken(SWRLToken.SWRLTokenType.STRING,
+			SWRLToken datatypeToken = tokenizer.getToken(SWRLToken.SWRLTokenType.SHORTNAME,
 					"Expecting quotation-enclosed datatype after ^^");
 			String datatype = datatypeToken.getValue();
 			if (datatype.length() == 0)
