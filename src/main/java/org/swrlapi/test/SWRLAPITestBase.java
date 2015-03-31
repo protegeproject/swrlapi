@@ -1,6 +1,5 @@
 package org.swrlapi.test;
 
-import static org.swrlapi.test.SWRLAPITestUtil.createDefaultPrefixManager;
 import static org.swrlapi.test.SWRLAPITestUtil.createOWLOntology;
 import static org.swrlapi.test.SWRLAPITestUtil.createOWLOntologyManager;
 import static org.swrlapi.test.SWRLAPITestUtil.createSWRLAPIOWLOntology;
@@ -10,31 +9,29 @@ import java.util.Set;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
-import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.parser.SWRLParseException;
+import org.swrlapi.sqwrl.SQWRLQuery;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
 public class SWRLAPITestBase
 {
 	final protected double DELTA = 1e-6;
 
-	String namespace;
-	OWLOntologyManager manager;
-	OWLOntology ontology;
-	DefaultPrefixManager prefixManager;
-	SWRLAPIOWLOntology swrlapiowlOntology;
+	private String namespace;
+	private OWLOntology ontology;
+	private OWLOntologyManager manager;
+	private SWRLAPIOWLOntology swrlapiowlOntology;
 
-	protected SWRLAPIOWLOntology createEmptyOntology(String namespace) throws OWLOntologyCreationException
+	protected SWRLAPIOWLOntology createEmptySWRLAPIOWLOntology(String namespace) throws OWLOntologyCreationException
 	{
 		this.namespace = namespace;
-		manager = createOWLOntologyManager();
-		ontology = createOWLOntology();
-		prefixManager = createDefaultPrefixManager(ontology);
-		swrlapiowlOntology = createSWRLAPIOWLOntology(ontology, prefixManager);
+		this.manager = createOWLOntologyManager();
+		this.ontology = createOWLOntology();
+		this.swrlapiowlOntology = createSWRLAPIOWLOntology(ontology);
 
-		prefixManager.setDefaultPrefix(namespace);
+		this.swrlapiowlOntology.getPrefixManager().setDefaultPrefix(namespace);
 
 		return swrlapiowlOntology;
 	}
@@ -111,7 +108,7 @@ public class SWRLAPITestBase
 			String datatypePrefixedName)
 	{
 		SWRLAPITestUtil.declareOWLDataPropertyAssertionAxiom(manager, ontology, namespace + subjectLocalName, namespace
-				+ propertyLocalName, value, datatypePrefixedName, prefixManager);
+				+ propertyLocalName, value, datatypePrefixedName, swrlapiowlOntology.getPrefixManager());
 	}
 
 	protected void declareOWLSameAsAssertion(String individualLocalName1, String individualLocalName2)
@@ -138,9 +135,9 @@ public class SWRLAPITestBase
 				+ classLocalName);
 	}
 
-	protected void createSQWRLQuery(String queryName, String query) throws SQWRLException, SWRLParseException
+	protected SQWRLQuery createSQWRLQuery(String queryName, String query) throws SQWRLException, SWRLParseException
 	{
-		swrlapiowlOntology.createSQWRLQuery(queryName, query);
+		return swrlapiowlOntology.createSQWRLQuery(queryName, query);
 	}
 
 	protected SWRLAPIRule createSWRLRule(String ruleName, String rule) throws SWRLParseException

@@ -18,12 +18,12 @@ import org.swrlapi.test.SWRLAPITestBase;
 
 public class SWRLParserTestCase extends SWRLAPITestBase
 {
-	String Namespace = "http://protege.org/ontologies/SWRLParserTestCase.owl#";
+	private final String Namespace = "http://protege.org/ontologies/SWRLParserTestCase.owl#";
 
 	@Before
 	public void setUp() throws OWLOntologyCreationException
 	{
-		createEmptyOntology(Namespace);
+		createEmptySWRLAPIOWLOntology(Namespace);
 	}
 
 	@Test
@@ -85,6 +85,17 @@ public class SWRLParserTestCase extends SWRLAPITestBase
 		assertEquals(rule.getHeadAtoms().size(), 0);
 		assertThat(rule.getBodyAtoms().get(0), instanceOf(SWRLClassAtom.class));
 	}
+
+	// TODO owl:Thing should be accessible in rules
+	// @Test
+	// public void TestOWLThingClass() throws SWRLParseException
+	// {
+	// SWRLAPIRule rule = createSWRLRule("r1", "owl:Thing(?x) -> ");
+	//
+	// assertEquals(rule.getBodyAtoms().size(), 1);
+	// assertEquals(rule.getHeadAtoms().size(), 0);
+	// assertThat(rule.getHeadAtoms().get(0), instanceOf(SWRLClassAtom.class));
+	// }
 
 	@Test
 	public void TestStringLiteral() throws SWRLParseException

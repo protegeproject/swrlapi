@@ -8,11 +8,9 @@ public class XSDDuration extends XSDType<XSDDuration>
 
 	public XSDDuration(String content)
 	{
-		super(content);
+		super(content, XSDVocabulary.DURATION.getIRI());
 
 		this.duration = XSDTimeUtil.xsdDurationString2AxisDuration(getContent());
-
-		setURI(XSDVocabulary.DURATION.getIRI());
 	}
 
 	@Override
@@ -23,6 +21,12 @@ public class XSDDuration extends XSDType<XSDDuration>
 
 		if (!XSDTimeUtil.isValidXSDDuration(getContent()))
 			throw new IllegalArgumentException("invalid xsd:Duration: " + getContent());
+	}
+
+	@Override
+	public String getContent()
+	{
+		return this.content;
 	}
 
 	@Override

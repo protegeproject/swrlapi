@@ -1,9 +1,9 @@
 package org.swrlapi.sqwrl;
 
+import java.util.Set;
+
 import org.swrlapi.owl2rl.OWL2RLEngine;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
-
-import java.util.Set;
 
 /**
  * This interface defines the methods that must be provided by a SQWRL query engine.
@@ -14,6 +14,16 @@ import java.util.Set;
 public interface SQWRLQueryEngine
 {
 	/**
+	 * Create and run a SQWRL query. The query will be created and added to the associated ontology.
+	 */
+	SQWRLResult runSQWRLQuery(String queryName, String queryText) throws SQWRLException;
+
+	/**
+	 * Create a SQWRL query.
+	 */
+	void createSQWRLQuery(String queryName, String queryText) throws SQWRLException;
+
+	/**
 	 * Run a named SQWRL query. SWRL rules will also be executed and any inferences produced by them will be available in
 	 * the query.
 	 */
@@ -23,16 +33,6 @@ public interface SQWRLQueryEngine
 	 * Run all enabled SQWRL queries.
 	 */
 	void runSQWRLQueries() throws SQWRLException;
-
-	/**
-	 * Create and run a SQWRL query. The query will be created and added to the associated ontology.
-	 */
-	SQWRLResult runSQWRLQuery(String queryName, String queryText) throws SQWRLException;
-
-	/**
-	 * Create a SQWRL query.
-	 */
-	void createSQWRLQuery(String queryName, String queryText) throws SQWRLException;
 
 	/**
 	 * Get the results from a previously executed SQWRL query. Null is returned if there is no result.

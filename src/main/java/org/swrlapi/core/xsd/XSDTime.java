@@ -8,20 +8,16 @@ public class XSDTime extends XSDType<XSDTime>
 
 	public XSDTime(String content)
 	{
-		super(content);
+		super(content, XSDVocabulary.TIME.getIRI());
 
 		this.time = XSDTimeUtil.xsdTimeString2AxisTime(content);
-
-		setURI(XSDVocabulary.TIME.getIRI());
 	}
 
 	public XSDTime(java.util.Date date)
 	{
-		super(XSDTimeUtil.utilDate2XSDTimeString(date));
+		super(XSDTimeUtil.utilDate2XSDTimeString(date), XSDVocabulary.TIME.getIRI());
 
 		this.time = XSDTimeUtil.utilDate2XSDTime(date);
-
-		setURI(XSDVocabulary.TIME.getIRI());
 	}
 
 	@Override
@@ -32,6 +28,12 @@ public class XSDTime extends XSDType<XSDTime>
 
 		if (!XSDTimeUtil.isValidXSDTime(getContent()))
 			throw new IllegalArgumentException("invalid xsd:Time '" + getContent() + "'");
+	}
+
+	@Override
+	public String getContent()
+	{
+		return this.content;
 	}
 
 	@Override

@@ -63,7 +63,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	@Override
 	public void reset() throws SWRLBuiltInLibraryException
 	{
-		XSDDatetimeStringProcessor d = new XSDDatetimeStringProcessor();
+		XSDDateTimeStringProcessor d = new XSDDateTimeStringProcessor();
 
 		try {
 			this.temporal = new Temporal(d);
@@ -641,7 +641,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 			throws SWRLBuiltInException
 	{
 		String datetimeString = getArgumentAsAString(argumentNumber, arguments);
-		XSDDatetimeStringProcessor datetimeProcessor = new XSDDatetimeStringProcessor();
+		XSDDateTimeStringProcessor datetimeProcessor = new XSDDateTimeStringProcessor();
 
 		try {
 			if (datetimeProcessor.getFinestSpecifiedGranularity(datetimeString) < Temporal.HOURS) { // If no finer than hours,

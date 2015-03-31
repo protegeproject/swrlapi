@@ -40,6 +40,9 @@ import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIOntologyProcessor;
 import org.swrlapi.core.SWRLAPIRule;
+import org.swrlapi.core.SWRLRuleEngine;
+import org.swrlapi.core.SWRLRuleEngineFactory;
+import org.swrlapi.core.SWRLRuleEngineManager;
 import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.exceptions.SWRLAPIInternalException;
@@ -47,13 +50,13 @@ import org.swrlapi.exceptions.SWRLRuleException;
 import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.sqwrl.SQWRLQuery;
+import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
 public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 {
-	private final OWLOntologyManager ontologyManager;
 	private final OWLOntology ontology;
 	private final DefaultPrefixManager prefixManager;
 	private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
@@ -63,7 +66,6 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 
 	public DefaultSWRLAPIOWLOntology(OWLOntology ontology, DefaultPrefixManager prefixManager)
 	{
-		this.ontologyManager = ontology.getOWLOntologyManager();
 		this.ontology = ontology;
 		this.prefixManager = prefixManager;
 		this.swrlapiOWLDataFactory = SWRLAPIFactory.createSWRLAPIOWLDataFactory(new IRIResolver(this.prefixManager));
@@ -83,13 +85,24 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	@Override
 	public OWLOntologyManager getOWLOntologyManager()
 	{
-		return this.ontologyManager;
+		return this.ontology.getOWLOntologyManager();
 	}
 
 	@Override
 	public DefaultPrefixManager getPrefixManager()
 	{
 		return this.prefixManager;
+	}
+
+	@Override
+	public SWRLRuleEngine createSWRLRuleEngine(SWRLRuleEngineManager.TargetSWRLRuleEngineCreator ruleEngineCreator)
+	{
+		SWRLRuleEngineFactory swrlRuleEngineFactory = SWRLAPIFactory.createSWRLRuleEngineFactory();
+		swrlRuleEngineFactory.registerRuleEngine(ruleEngineCreator);
+
+		SWRLRuleEngine swrlRuleEngine = swrlRuleEngineFactory.createSWRLRuleEngine(this);
+
+		return swrlRuleEngine;
 	}
 
 	@Override
@@ -108,6 +121,17 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		swrlapiOntologyProcessor.addSWRLRule(swrlapiRule, owlapiRule); // Adds rule to the underlying ontology
 
 		return swrlapiRule;
+	}
+
+	@Override
+	public SQWRLQueryEngine createSQWRLQueryEngine(SWRLRuleEngineManager.TargetSWRLRuleEngineCreator ruleEngineCreator)
+	{
+		SWRLRuleEngineFactory swrlRuleEngineFactory = SWRLAPIFactory.createSWRLRuleEngineFactory();
+		swrlRuleEngineFactory.registerRuleEngine(ruleEngineCreator);
+
+		SQWRLQueryEngine sqwrlQueryEngine = swrlRuleEngineFactory.createSQWRLQueryEngine(this);
+
+		return sqwrlQueryEngine;
 	}
 
 	@Override
@@ -218,7 +242,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	@Override
 	public OWLDataFactory getOWLDataFactory()
 	{
-		return ontologyManager.getOWLDataFactory();
+		return ontology.getOWLOntologyManager().getOWLDataFactory();
 	}
 
 	@Override

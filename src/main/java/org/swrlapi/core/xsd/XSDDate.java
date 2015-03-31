@@ -10,20 +10,16 @@ public class XSDDate extends XSDType<XSDDate>
 
 	public XSDDate(String content)
 	{
-		super(content);
+		super(content, XSDVocabulary.DATE.getIRI());
 
 		this.date = XSDTimeUtil.xsdDateString2Date(content);
-
-		setURI(XSDVocabulary.DATE.getIRI());
 	}
 
 	public XSDDate(java.util.Date date)
 	{
-		super(XSDTimeUtil.utilDate2XSDDateString(date));
+		super(XSDTimeUtil.utilDate2XSDDateString(date), XSDVocabulary.DATE.getIRI());
 
 		this.date = date;
-
-		setURI(XSDVocabulary.DATE.getIRI());
 	}
 
 	@Override
@@ -34,6 +30,12 @@ public class XSDDate extends XSDType<XSDDate>
 
 		if (!XSDTimeUtil.isValidXSDDate(getContent()))
 			throw new IllegalArgumentException("invalid xsd:Date '" + getContent() + "'");
+	}
+
+	@Override
+	public String getContent()
+	{
+		return content;
 	}
 
 	@Override

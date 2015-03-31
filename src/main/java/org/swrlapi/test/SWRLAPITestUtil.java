@@ -24,7 +24,6 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.OWLSameIndividualAxiom;
 import org.semanticweb.owlapi.model.PrefixManager;
-import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.SWRLAPIFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 
@@ -48,14 +47,9 @@ public class SWRLAPITestUtil
 		return IRI.create(str);
 	}
 
-	public static DefaultPrefixManager createDefaultPrefixManager(OWLOntology ontology)
+	public static SWRLAPIOWLOntology createSWRLAPIOWLOntology(OWLOntology ontology)
 	{
-		return SWRLAPIFactory.createPrefixManager(ontology);
-	}
-
-	public static SWRLAPIOWLOntology createSWRLAPIOWLOntology(OWLOntology ontology, DefaultPrefixManager prefixManager)
-	{
-		return SWRLAPIFactory.createOntology(ontology, prefixManager);
+		return SWRLAPIFactory.createSWRLAPIOntology(ontology);
 	}
 
 	public static OWLClass getOWLClass(IRI iri)

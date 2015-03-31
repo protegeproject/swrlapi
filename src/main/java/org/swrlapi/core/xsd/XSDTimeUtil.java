@@ -8,11 +8,15 @@ import java.util.GregorianCalendar;
 
 public class XSDTimeUtil
 {
-	private static String xsdDateTimeFormatString = "yyyy-MM-dd'T'hh:mm:ss";
-	private static String xsdDateFormatString = "yyyy-MM-dd";
+	private static final String xsdDateTimeFormatString = "yyyy-MM-dd'T'hh:mm:ss";
+	private static final String xsdDateFormatString = "yyyy-MM-dd";
+	private static final String jdbcDateTimeFormatString = "y-M-d h:m:s.S";
+	private static final String jdbcDateFormatString = "y-M-d";
 
-	private static String jdbcDateTimeFormatString = "y-M-d h:m:s.S";
-	private static String jdbcDateFormatString = "y-M-d";
+	private static final DateFormat xsdDateTimeFormat = new SimpleDateFormat(xsdDateTimeFormatString);
+	private static final DateFormat xsdDateFormat = new SimpleDateFormat(xsdDateFormatString);
+	private static final DateFormat jdbcDateTimeFormat = new SimpleDateFormat(jdbcDateTimeFormatString);
+	private static final DateFormat jdbcDateFormat = new SimpleDateFormat(jdbcDateFormatString);
 
 	public static org.apache.axis.types.Duration addDurations(org.apache.axis.types.Duration duration1,
 			org.apache.axis.types.Duration duration2)
@@ -442,15 +446,11 @@ public class XSDTimeUtil
 
 	public static String utilDate2XSDDateTimeString(java.util.Date date)
 	{
-		final DateFormat xsdDateTimeFormat = new SimpleDateFormat(xsdDateTimeFormatString);
-
 		return xsdDateTimeFormat.format(date);
 	}
 
 	public static String utilDate2XSDDateString(java.util.Date date)
 	{
-		DateFormat xsdDateFormat = new SimpleDateFormat(xsdDateFormatString);
-
 		return xsdDateFormat.format(date);
 	}
 
@@ -471,8 +471,6 @@ public class XSDTimeUtil
 
 	public static java.util.Date xsdDateTimeString2Date(String content)
 	{
-		final DateFormat xsdDateTimeFormat = new SimpleDateFormat(xsdDateTimeFormatString);
-
 		try {
 			return xsdDateTimeFormat.parse(content);
 		} catch (ParseException e) {
@@ -482,8 +480,6 @@ public class XSDTimeUtil
 
 	public static java.util.Date xsdDateString2Date(String content)
 	{
-		DateFormat xsdDateFormat = new SimpleDateFormat(xsdDateFormatString);
-
 		try {
 			return xsdDateFormat.parse(content);
 		} catch (ParseException e) {
@@ -510,21 +506,16 @@ public class XSDTimeUtil
 
 	public static String date2JDBCDateTimeString(java.util.Date date)
 	{
-		DateFormat jdbcDateTimeFormat = new SimpleDateFormat(jdbcDateTimeFormatString);
-
 		return jdbcDateTimeFormat.format(date);
 	}
 
 	public static String date2JDBCDateString(java.util.Date date)
 	{
-		final DateFormat jdbcDateFormat = new SimpleDateFormat(jdbcDateFormatString);
-
 		return jdbcDateFormat.format(date);
 	}
 
 	public static java.util.Date jdbcDateTimeString2Date(String content)
 	{
-		final DateFormat jdbcDateTimeFormat = new SimpleDateFormat(jdbcDateTimeFormatString);
 		try {
 			return jdbcDateTimeFormat.parse(content);
 		} catch (ParseException e) {
@@ -534,8 +525,6 @@ public class XSDTimeUtil
 
 	public static java.util.Date jdbcDateString2Date(String content)
 	{
-		final DateFormat jdbcDateFormat = new SimpleDateFormat(jdbcDateFormatString);
-
 		try {
 			return jdbcDateFormat.parse(content);
 		} catch (ParseException e) {
@@ -545,7 +534,6 @@ public class XSDTimeUtil
 
 	public static boolean isValidXSDDateTime(String content)
 	{
-		final DateFormat xsdDateTimeFormat = new SimpleDateFormat(xsdDateTimeFormatString);
 		try {
 			xsdDateTimeFormat.parse(content);
 			return true;
@@ -556,8 +544,6 @@ public class XSDTimeUtil
 
 	public static boolean isValidXSDDate(String content)
 	{
-		final DateFormat xsdDateFormat = new SimpleDateFormat(xsdDateFormatString);
-
 		try {
 			xsdDateFormat.parse(content);
 			return true;
@@ -579,8 +565,7 @@ public class XSDTimeUtil
 	public static boolean isValidXSDDuration(String content)
 	{
 		try {
-			@SuppressWarnings("unused")
-			org.apache.axis.types.Duration duration = new org.apache.axis.types.Duration(content);
+			new org.apache.axis.types.Duration(content);
 			return true;
 		} catch (IllegalArgumentException e) {
 			return false;
@@ -589,8 +574,6 @@ public class XSDTimeUtil
 
 	public static boolean isValidJDBCDateTime(String content)
 	{
-		final DateFormat jdbcDateTimeFormat = new SimpleDateFormat(jdbcDateTimeFormatString);
-
 		try {
 			jdbcDateTimeFormat.parse(content);
 			return true;

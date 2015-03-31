@@ -1,5 +1,9 @@
 package org.swrlapi.core.impl;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
@@ -17,7 +21,6 @@ import org.swrlapi.core.OWLLiteralFactory;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLDatatypeFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
-import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.core.resolvers.OWLClassExpressionResolver;
 import org.swrlapi.core.resolvers.OWLDataPropertyExpressionResolver;
@@ -33,20 +36,16 @@ import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 /**
  * Default implementation of a SWRL rule engine bridge, built-in bridge, built-in bridge controller, and rule engine
  * bridge controller.
  * <p/>
- * Asserted OWL axioms are managed by a {@link SWRLRuleEngine}, which passes them to a
+ * Asserted OWL axioms are managed by a {@link org.swrlapi.core.SWRLRuleEngine}, which passes them to a
  * {@link org.swrlapi.bridge.TargetSWRLRuleEngine} using the
  * {@link org.swrlapi.bridge.TargetSWRLRuleEngine#defineOWLAxiom(OWLAxiom)} call.
  */
-public class DefaultSWRLBridge
-		implements SWRLRuleEngineBridge, SWRLBuiltInBridge, SWRLBuiltInBridgeController, SWRLRuleEngineBridgeController
+public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridge, SWRLBuiltInBridgeController,
+		SWRLRuleEngineBridgeController
 {
 	private final SWRLAPIOWLOntology swrlapiOWLOntology;
 	private final OWL2RLPersistenceLayer owl2RLPersistenceLayer;
@@ -64,9 +63,9 @@ public class DefaultSWRLBridge
 	private final Set<OWLAxiom> inferredOWLAxioms;
 
 	/**
-	 * OWL axioms inferred by SWRL built-ins (via the {@link #inferOWLAxiom(org.semanticweb.owlapi.model.OWLAxiom)}).
-	 * A {@link org.swrlapi.core.SWRLRuleEngine} can retrieve these using the {@link #getInjectedOWLAxioms()} call
-	 * after calling {@link org.swrlapi.bridge.TargetSWRLRuleEngine#runRuleEngine()}.
+	 * OWL axioms inferred by SWRL built-ins (via the {@link #inferOWLAxiom(org.semanticweb.owlapi.model.OWLAxiom)}). A
+	 * {@link org.swrlapi.core.SWRLRuleEngine} can retrieve these using the {@link #getInjectedOWLAxioms()} call after
+	 * calling {@link org.swrlapi.bridge.TargetSWRLRuleEngine#runRuleEngine()}.
 	 */
 	private final Set<OWLAxiom> injectedOWLAxioms;
 
@@ -211,14 +210,14 @@ public class DefaultSWRLBridge
 	public List<List<SWRLBuiltInArgument>> invokeSWRLBuiltIn(String ruleName, String builtInName, int builtInIndex,
 			boolean isInConsequent, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{
-		return SWRLBuiltInLibraryManager
-				.invokeSWRLBuiltIn(this, ruleName, builtInName, builtInIndex, isInConsequent, arguments);
+		return SWRLBuiltInLibraryManager.invokeSWRLBuiltIn(this, ruleName, builtInName, builtInIndex, isInConsequent,
+				arguments);
 	}
 
 	public boolean isOWLClass(IRI iri)
 	{
-		return getOWLOntology().containsClassInSignature(iri, Imports.INCLUDED) || iri
-				.equals(OWLRDFVocabulary.OWL_THING.getIRI()) || iri.equals(OWLRDFVocabulary.OWL_NOTHING.getIRI());
+		return getOWLOntology().containsClassInSignature(iri, Imports.INCLUDED)
+				|| iri.equals(OWLRDFVocabulary.OWL_THING.getIRI()) || iri.equals(OWLRDFVocabulary.OWL_NOTHING.getIRI());
 	}
 
 	public boolean isOWLObjectProperty(IRI propertyIRI)
@@ -252,8 +251,8 @@ public class DefaultSWRLBridge
 		try {
 			this.targetSWRLRuleEngine.defineOWLAxiom(axiom);
 		} catch (TargetSWRLRuleEngineException e) {
-			throw new SWRLBuiltInBridgeException(
-					"error exporting OWL axiom " + axiom + " to target rule engine: " + e.getMessage(), e);
+			throw new SWRLBuiltInBridgeException("error exporting OWL axiom " + axiom + " to target rule engine: "
+					+ e.getMessage(), e);
 		}
 	}
 

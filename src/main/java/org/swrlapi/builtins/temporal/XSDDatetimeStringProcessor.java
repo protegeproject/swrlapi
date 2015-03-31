@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
  * <p>
  * TODO Time zone offset specifications are not yet supported.
  */
-public class XSDDatetimeStringProcessor extends DatetimeStringProcessor
+public class XSDDateTimeStringProcessor extends DatetimeStringProcessor
 {
 	private static final SimpleDateFormat _dateFormat = new SimpleDateFormat("y-M-d'T'h:m:s.S");
 	private static final String _delimiters = "-:.TZ";
@@ -25,7 +25,7 @@ public class XSDDatetimeStringProcessor extends DatetimeStringProcessor
 	private static final String _datetimeRoundUpPadding[] = { "-12-31T23:59:59.999", "", "T23:59:59.999", ":59:59.999",
 			":59.999", ".999", "" };
 
-	public XSDDatetimeStringProcessor()
+	public XSDDateTimeStringProcessor()
 	{
 		super(_dateFormat, _delimiters, _gTokenIndex, _datetimeRoundDownPadding, _datetimeRoundUpPadding);
 	}

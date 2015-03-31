@@ -14,7 +14,7 @@ public class SWRLParserSQWRLTestCase extends SWRLAPITestBase
 	@Before
 	public void setUp() throws OWLOntologyCreationException
 	{
-		createEmptyOntology(Namespace);
+		createEmptySWRLAPIOWLOntology(Namespace);
 	}
 
 	@Test
