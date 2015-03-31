@@ -10,6 +10,7 @@ import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.swrlapi.builtins.arguments.SQWRLCollectionVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
@@ -79,4 +80,7 @@ public interface SWRLBuiltInArgumentCreator
 
 	SWRLMultiValueVariableBuiltInArgument createSWRLMultiValueVariableBuiltInArgument(IRI variableIRI,
 			List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+
+	public SQWRLCollectionVariableBuiltInArgument createSQWRLCollectionVariableBuiltInArgument(IRI variableIRI,
+			String queryName, String collectionName, String collectionGroupID) throws SWRLBuiltInException;
 }

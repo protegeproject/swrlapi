@@ -956,7 +956,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 		checkThatAllArgumentsAreNumeric(arguments);
 
-		if (isShortMostPreciseArgument(arguments)) {
+		if (isWidestNumericArgumentAShort(arguments)) {
 			short s1 = getArgumentAsAShort(0, arguments);
 			short s2 = getArgumentAsAShort(1, arguments);
 			if (s1 < s2)
@@ -965,7 +965,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 				result = 1;
 			else
 				result = 0;
-		} else if (isIntMostPreciseArgument(arguments)) {
+		} else if (isWidestNumericArgumentAnInt(arguments)) {
 			int i1 = getArgumentAsAnInt(0, arguments);
 			int i2 = getArgumentAsAnInt(1, arguments);
 			if (i1 < i2)
@@ -974,7 +974,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 				result = 1;
 			else
 				result = 0;
-		} else if (isLongMostPreciseArgument(arguments)) {
+		} else if (isWidestNumericArgumentALong(arguments)) {
 			long l1 = getArgumentAsALong(0, arguments);
 			long l2 = getArgumentAsALong(1, arguments);
 			if (l1 < l2)
@@ -983,7 +983,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 				result = 1;
 			else
 				result = 0;
-		} else if (isFloatMostPreciseArgument(arguments)) {
+		} else if (isWidestNumericArgumentAFloat(arguments)) {
 			float f1 = getArgumentAsAFloat(0, arguments);
 			float f2 = getArgumentAsAFloat(1, arguments);
 			if (f1 < f2)
@@ -1081,7 +1081,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 					|| builtInName.equalsIgnoreCase(SWRLB_TAN))
 				arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument(operationResult));
 			else {
-				SWRLBuiltInArgument resultArgument = createMostPreciseNumericLiteralBuiltInArgument(operationResult,
+				SWRLBuiltInArgument resultArgument = createLeastNarrowNumericLiteralBuiltInArgument(operationResult,
 						boundInputArguments);
 				arguments.get(0).asVariable().setBuiltInResult(resultArgument);
 			}

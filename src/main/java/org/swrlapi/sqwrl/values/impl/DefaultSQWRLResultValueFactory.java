@@ -1,6 +1,8 @@
 package org.swrlapi.sqwrl.values.impl;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLLiteral;
@@ -209,6 +211,18 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
 		IRI datatypeIRI = literal.getDatatype().getIRI();
 
 		return new SQWRLLiteralResultValueImpl(literal, getIRIResolver().iri2PrefixedName(datatypeIRI));
+	}
+
+	@Override
+	public SQWRLLiteralResultValue createLeastNarrowNumericLiteralValue(double value,
+			List<SQWRLLiteralResultValue> inputResultValues)
+	{
+		List<OWLLiteral> numericLiterals = inputResultValues.stream().filter(e -> e.isNumeric())
+				.map(e -> e.getOWLLiteral()).collect(Collectors.toList());
+
+		OWLLiteral literal = getOWLLiteralFactory().createLeastNarrowNumericOWLLiteral(value, numericLiterals);
+
+		return getLiteralValue(literal);
 	}
 
 	private OWLLiteralFactory getOWLLiteralFactory()

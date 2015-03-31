@@ -174,7 +174,7 @@ public interface SWRLBuiltInInputArgumentHandler
 	// Bytes
 	boolean areAllArgumentsBytes(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	boolean isByteMostPreciseArgument(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+	boolean isWidestNumericArgumentAByte(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	boolean isArgumentConvertableToByte(int argumentNumber, List<SWRLBuiltInArgument> arguments)
 			throws SWRLBuiltInException;
@@ -188,7 +188,7 @@ public interface SWRLBuiltInInputArgumentHandler
 	// Shorts
 	boolean areAllArgumentsShorts(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
-	boolean isShortMostPreciseArgument(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+	boolean isWidestNumericArgumentAShort(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	boolean isArgumentConvertableToShort(int argumentNumber, List<SWRLBuiltInArgument> arguments)
 			throws SWRLBuiltInException;
@@ -200,7 +200,7 @@ public interface SWRLBuiltInInputArgumentHandler
 	void checkThatArgumentIsAShort(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	// Integers
-	boolean isIntMostPreciseArgument(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+	boolean isWidestNumericArgumentAnInt(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	void checkThatAllArgumentsAreIntegers(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
@@ -218,7 +218,7 @@ public interface SWRLBuiltInInputArgumentHandler
 	int getArgumentAsAPositiveInt(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	// Longs
-	boolean isLongMostPreciseArgument(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+	boolean isWidestNumericArgumentALong(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	boolean areAllArgumentsLongs(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
@@ -234,7 +234,7 @@ public interface SWRLBuiltInInputArgumentHandler
 	void checkThatArgumentIsALong(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	// Floats
-	boolean isFloatMostPreciseArgument(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+	boolean isWidestNumericArgumentAFloat(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	void checkThatAllArgumentsAreFloats(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 

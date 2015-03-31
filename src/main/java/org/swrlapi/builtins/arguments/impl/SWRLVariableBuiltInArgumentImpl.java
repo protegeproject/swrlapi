@@ -15,7 +15,9 @@ import org.semanticweb.owlapi.model.SWRLObjectVisitorEx;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
+import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLNamedBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
@@ -58,6 +60,18 @@ class SWRLVariableBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements
 	}
 
 	@Override
+	public boolean isLiteral()
+	{
+		return false;
+	}
+
+	@Override
+	public boolean isNamed()
+	{
+		return false;
+	}
+
+	@Override
 	public SWRLVariableBuiltInArgument asVariable()
 	{
 		return this;
@@ -70,16 +84,28 @@ class SWRLVariableBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements
 	}
 
 	@Override
+	public SWRLLiteralBuiltInArgument asSWRLLiteralBuiltInArgument()
+	{
+		throw new SWRLAPIException("Not a SWRLLiteralBuiltInArgument");
+	}
+
+	@Override
+	public SWRLNamedBuiltInArgument asSWRLNamedBuiltInArgument()
+	{
+		throw new SWRLAPIException("Not a SWRLNamedBuiltInArgument");
+	}
+
+	@Override
 	public String getVariablePrefixedName()
 	{
 		return this.variablePrefixedName;
 	}
 
+	@Override
 	public String getVariableName()
 	{
-		return this.variablePrefixedName.startsWith(":") ?
-				this.variablePrefixedName.substring(1) :
-				this.variablePrefixedName;
+		return this.variablePrefixedName.startsWith(":") ? this.variablePrefixedName.substring(1)
+				: this.variablePrefixedName;
 	}
 
 	@Override
@@ -191,7 +217,7 @@ class SWRLVariableBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements
 		SWRLVariableBuiltInArgumentImpl impl = (SWRLVariableBuiltInArgumentImpl)obj;
 		return super.equals(impl)
 				&& ((this.builtInResult == impl.builtInResult) || (this.builtInResult != null && this.builtInResult
-				.equals(impl.builtInResult)) && this.isBound == impl.isBound);
+						.equals(impl.builtInResult)) && this.isBound == impl.isBound);
 	}
 
 	@Override
@@ -203,7 +229,9 @@ class SWRLVariableBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements
 		return hash;
 	}
 
-	@Nonnull @Override public Set<OWLAnnotationProperty> getAnnotationPropertiesInSignature()
+	@Nonnull
+	@Override
+	public Set<OWLAnnotationProperty> getAnnotationPropertiesInSignature()
 	{
 		return new HashSet<>(); // TODO OWLAPI V4.0.0 update
 	}

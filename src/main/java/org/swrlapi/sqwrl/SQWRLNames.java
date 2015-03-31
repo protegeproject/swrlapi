@@ -1,9 +1,9 @@
 package org.swrlapi.sqwrl;
 
-import org.swrlapi.sqwrl.exceptions.SQWRLInvalidAggregateFunctionNameException;
-
 import java.util.HashSet;
 import java.util.Set;
+
+import org.swrlapi.sqwrl.exceptions.SQWRLInvalidAggregateFunctionNameException;
 
 /**
  * @see org.swrlapi.sqwrl.SQWRLQuery
@@ -102,7 +102,7 @@ public class SQWRLNames
 
 	private static final String headSelectionBuiltInNamesArray[] = { Select, SelectDistinct, OrderBy, OrderByDescending,
 			ColumnNames };
-	private static final String headAggregationBuiltInNamesArray[] = { Count, CountDistinct, Avg, Min, Max, Sum };
+	private static final String headAggregationBuiltInNamesArray[] = { Count, CountDistinct, Avg, Median, Min, Max, Sum };
 
 	private static final String headSlicingBuiltInNamesArray[] = { Limit, Nth, NthGreatest, NthLast, NthSlice,
 			NthLastSlice, NthGreatestSlice, NotNthGreatestSlice, NotNthLastSlice, NotNthSlice, NotNth, NotNthLast,
@@ -132,7 +132,8 @@ public class SQWRLNames
 			CountDistinctAggregateFunction };
 
 	private static Set<String> sqwrlBuiltInNames;
-	private static Set<String> headBuiltInNames, headSelectionBuiltInNames, headAggregationBuiltInNames, headSlicingBuiltInNames;
+	private static Set<String> headBuiltInNames, headSelectionBuiltInNames, headAggregationBuiltInNames,
+			headSlicingBuiltInNames;
 	private static Set<String> collectionMakeBuiltInNames, collectionGroupByBuiltInNames;
 	private static Set<String> collectionCreateOperationBuiltInNames, collectionOperationBuiltInNames;
 	private static Set<String> singleCollectionOperationWithCollectionCreateBuiltInNames;

@@ -2,6 +2,7 @@ package org.swrlapi.sqwrl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -1097,16 +1098,14 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 				this.selectedColumnIndexes, true);
 		// Key is index of aggregated row in result, value is hash map of aggregate column index to list of original values.
 		HashMap<Integer, HashMap<Integer, List<SQWRLResultValue>>> aggregatesMap = new HashMap<>();
-		HashMap<Integer, List<SQWRLResultValue>> aggregateRowMap; // Map of column indexes to value lists; used to
-		// accumulate
-		// values for aggregation.
+		// Map of column indexes to value lists; used to accumulate values for aggregation.
+		HashMap<Integer, List<SQWRLResultValue>> aggregateRowMap;
 		List<SQWRLResultValue> values;
 		SQWRLResultValue value;
 		int rowIndex;
 
 		for (List<SQWRLResultValue> row : sourceRows) {
-			rowIndex = findRowIndex(result, row, rowComparator); // Find a row with the same values for non aggregated
-			// columns.
+			rowIndex = findRowIndex(result, row, rowComparator); // Find row with same values for non aggregated columns
 
 			if (rowIndex < 0) { // Row with same values for non aggregated columns not yet present in result.
 				aggregateRowMap = new HashMap<>();
@@ -1154,6 +1153,10 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 					List<SQWRLLiteralResultValue> literalColumnValues = convert2LiteralResultValues(columnValues,
 							aggregateColumnIndex);
 					value = avg(literalColumnValues, aggregateColumnIndex);
+				} else if (aggregateFunctionName.equalsIgnoreCase(SQWRLResultNames.MedianAggregateFunction)) {
+					List<SQWRLLiteralResultValue> literalColumnValues = convert2LiteralResultValues(columnValues,
+							aggregateColumnIndex);
+					value = median(literalColumnValues, aggregateColumnIndex);
 				} else if (aggregateFunctionName.equalsIgnoreCase(SQWRLResultNames.CountAggregateFunction))
 					value = count(columnValues);
 				else if (aggregateFunctionName.equalsIgnoreCase(SQWRLResultNames.CountDistinctAggregateFunction))
@@ -1257,8 +1260,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 			sum = sum + d;
 			rowIndex++;
 		}
-
-		return getSQWRLResultValueFactory().getLiteralValue(sum);
+		return getSQWRLResultValueFactory().createLeastNarrowNumericLiteralValue(sum, columnValues);
 	}
 
 	private SQWRLLiteralResultValue avg(List<SQWRLLiteralResultValue> columnValues, int columnIndex)
@@ -1284,7 +1286,37 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 			sum = sum + d;
 			rowIndex++;
 		}
-		return getSQWRLResultValueFactory().getLiteralValue(sum / count);
+		double avgValue = sum / count;
+
+		return getSQWRLResultValueFactory().createLeastNarrowNumericLiteralValue(avgValue, columnValues);
+	}
+
+	private SQWRLLiteralResultValue median(List<SQWRLLiteralResultValue> columnValues, int columnIndex)
+			throws SQWRLException
+	{
+		double[] valueArray = new double[columnValues.size()];
+		int count = 0, middle = columnValues.size() / 2;
+		double medianValue;
+
+		int rowIndex = 0;
+		for (SQWRLLiteralResultValue value : columnValues) {
+			if (!isNumericValue(value))
+				throw new SQWRLException("attempt to use " + SQWRLResultNames.MedianAggregateFunction
+						+ " aggregate on column with non literal value " + value + " with type " + value.getOWLDatatype()
+						+ " in (0-based) row " + rowIndex + ", column " + columnIndex);
+
+			double d = value.getDouble();
+			valueArray[count++] = d;
+		}
+
+		Arrays.sort(valueArray);
+
+		if (columnValues.size() % 2 == 1)
+			medianValue = valueArray[middle];
+		else
+			medianValue = (valueArray[middle - 1] + valueArray[middle]) / 2;
+
+		return getSQWRLResultValueFactory().createLeastNarrowNumericLiteralValue(medianValue, columnValues);
 	}
 
 	private SQWRLLiteralResultValue count(List<SQWRLResultValue> columnValues) throws SQWRLException

@@ -17,6 +17,7 @@ import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
 import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLNamedBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.core.OWLLiteralComparator;
 import org.swrlapi.exceptions.SWRLAPIException;
@@ -52,6 +53,16 @@ class SWRLLiteralBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements 
 		return false;
 	}
 
+	public @Override boolean isLiteral()
+	{
+		return false;
+	}
+
+	public @Override boolean isNamed()
+	{
+		return true;
+	}
+
 	@Override
 	public SWRLVariableBuiltInArgument asVariable()
 	{
@@ -62,6 +73,18 @@ class SWRLLiteralBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements 
 	public SWRLMultiValueVariableBuiltInArgument asMultiValueVariable()
 	{
 		throw new SWRLAPIException("Not a SWRLMultiVariableBuiltInArgument");
+	}
+
+	@Override
+	public SWRLLiteralBuiltInArgument asSWRLLiteralBuiltInArgument()
+	{
+		return this;
+	}
+
+	@Override
+	public SWRLNamedBuiltInArgument asSWRLNamedBuiltInArgument()
+	{
+		throw new SWRLAPIException("Not a SWRLNamedBuiltInArgument");
 	}
 
 	@Override
@@ -136,12 +159,15 @@ class SWRLLiteralBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements 
 		visitor.visit(this);
 	}
 
-	@Override public String toString()
+	@Override
+	public String toString()
 	{
 		return this.literal.getLiteral();
 	}
 
-	@Nonnull @Override public Set<OWLAnnotationProperty> getAnnotationPropertiesInSignature()
+	@Nonnull
+	@Override
+	public Set<OWLAnnotationProperty> getAnnotationPropertiesInSignature()
 	{
 		return Collections.emptySet(); // TODO OWLAPI V4.0.0 update
 	}

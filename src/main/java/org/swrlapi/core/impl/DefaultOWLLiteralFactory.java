@@ -1,9 +1,11 @@
 package org.swrlapi.core.impl;
 
 import java.net.URI;
+import java.util.List;
 
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
+import org.semanticweb.owlapi.vocab.XSDVocabulary;
 import org.swrlapi.core.OWLLiteralFactory;
 import org.swrlapi.core.OWLLiteralValidator;
 import org.swrlapi.core.SWRLAPIOWLDatatypeFactory;
@@ -107,6 +109,88 @@ public class DefaultOWLLiteralFactory implements OWLLiteralFactory
 	{
 		validateOWLLiteral(literal, datatype);
 		return new OWLLiteralImpl(literal, "", datatype);
+	}
+
+	@Override
+	public OWLLiteral createLeastNarrowNumericOWLLiteral(double value, List<OWLLiteral> inputLiterals)
+	{
+		if (isWidestNumericLiteralAByte(inputLiterals))
+			return getOWLLiteral((byte)value);
+		else if (isWidestNumericLiteralAShort(inputLiterals))
+			return getOWLLiteral((short)value);
+		else if (isWidestNumericLiteralAnInt(inputLiterals))
+			return getOWLLiteral((int)value);
+		else if (isWidestNumericLiteralALong(inputLiterals))
+			return getOWLLiteral((long)value);
+		else if (isWidestNumericLiteralAFloat(inputLiterals))
+			return getOWLLiteral((float)value);
+		else
+			return getOWLLiteral(value);
+	}
+
+	private boolean isWidestNumericLiteralAByte(List<OWLLiteral> literals)
+	{
+		for (OWLLiteral literal : literals)
+			if (isShort(literal) || isInt(literal) || isLong(literal) || isFloat(literal) || isDouble(literal))
+				return false;
+		return true;
+	}
+
+	private boolean isWidestNumericLiteralAShort(List<OWLLiteral> literals)
+	{
+		for (OWLLiteral literal : literals)
+			if (isInt(literal) || isLong(literal) || isFloat(literal) || isDouble(literal))
+				return false;
+		return true;
+	}
+
+	private boolean isWidestNumericLiteralAnInt(List<OWLLiteral> literals)
+	{
+		for (OWLLiteral literal : literals)
+			if (isLong(literal) || isFloat(literal) || isDouble(literal))
+				return false;
+		return true;
+	}
+
+	private boolean isWidestNumericLiteralALong(List<OWLLiteral> literals)
+	{
+		for (OWLLiteral literal : literals)
+			if (isFloat(literal) || isDouble(literal))
+				return false;
+		return true;
+	}
+
+	private boolean isWidestNumericLiteralAFloat(List<OWLLiteral> literals)
+	{
+		for (OWLLiteral literal : literals)
+			if (isDouble(literal))
+				return false;
+		return true;
+	}
+
+	private boolean isShort(OWLLiteral literal)
+	{
+		return literal.getDatatype().getIRI().equals(XSDVocabulary.SHORT.getIRI());
+	}
+
+	private boolean isInt(OWLLiteral literal)
+	{
+		return literal.getDatatype().getIRI().equals(XSDVocabulary.INT.getIRI());
+	}
+
+	private boolean isLong(OWLLiteral literal)
+	{
+		return literal.getDatatype().getIRI().equals(XSDVocabulary.LONG.getIRI());
+	}
+
+	private boolean isFloat(OWLLiteral literal)
+	{
+		return literal.getDatatype().isFloat();
+	}
+
+	private boolean isDouble(OWLLiteral literal)
+	{
+		return literal.getDatatype().isDouble();
 	}
 
 	private void validateOWLLiteral(String literal, OWLDatatype datatype)

@@ -122,7 +122,6 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 						+ argument.getClass().getCanonicalName());
 			argumentIndex++;
 		}
-
 		return false;
 	}
 
@@ -408,7 +407,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 	public boolean sum(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{
-		final int resultArgumentNumber = 0, sourceCollectionArgumentNumber = 1, numberOfCoreAntecedentArguments = 2, numberOfConsequentArguments = 1;
+		final int resultArgumentNumber = 0, sourceCollectionArgumentNumber = 1;
+		final int numberOfCoreAntecedentArguments = 2, numberOfConsequentArguments = 1;
 
 		if (getIsInConsequent()) { // SQWRL aggregation operator; this is post processed by a SQWRLResult implementation
 			checkForUnboundArguments(arguments);
@@ -446,14 +446,18 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 					value = getArgumentAsADouble(element);
 					sumValue += value;
 				}
-				return processResultArgument(arguments, resultArgumentNumber, sumValue);
+				SWRLBuiltInArgument resultArgument = createLeastNarrowNumericLiteralBuiltInArgument(sumValue,
+						new ArrayList<SWRLBuiltInArgument>(collection));
+
+				return processResultArgument(arguments, resultArgumentNumber, resultArgument);
 			}
 		}
 	}
 
 	public boolean avg(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{
-		final int resultArgumentNumber = 0, sourceCollectionArgumentNumber = 1, numberOfCoreAntecedentArguments = 2, numberOfConsequentArguments = 1;
+		final int resultArgumentNumber = 0, sourceCollectionArgumentNumber = 1, numberOfCoreAntecedentArguments = 2;
+		final int numberOfConsequentArguments = 1;
 
 		if (getIsInConsequent()) { // Simple SQWRL aggregation operator
 			checkForUnboundArguments(arguments);
@@ -491,7 +495,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 					sumValue += value;
 				}
 				double avgValue = sumValue / collection.size();
-				SWRLBuiltInArgument resultArgument = createMostPreciseNumericLiteralBuiltInArgument(avgValue,
+				SWRLBuiltInArgument resultArgument = createLeastNarrowNumericLiteralBuiltInArgument(avgValue,
 						new ArrayList<SWRLBuiltInArgument>(collection));
 
 				return processResultArgument(arguments, resultArgumentNumber, resultArgument);
@@ -501,13 +505,34 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 	public boolean median(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{
-		final int resultArgumentNumber = 0, sourceCollectionArgumentNumber = 1, numberOfCoreConsequentArguments = 2;
+		final int resultArgumentNumber = 0, sourceCollectionArgumentNumber = 1;
+		final int numberOfCoreAntecedentArguments = 2, numberOfConsequentArguments = 1;
 
 		if (getIsInConsequent()) { // Simple SQWRL aggregation operator
-			throw new SWRLBuiltInException("not implemented");
+			checkForUnboundArguments(arguments);
+			checkNumberOfArgumentsEqualTo(numberOfConsequentArguments, arguments.size());
+
+			SQWRLResultGenerator resultGenerator = getSQWRLResultGenerator(getInvokingRuleName());
+			SWRLArgument argument = arguments.get(0);
+
+			if (!resultGenerator.isRowOpen())
+				resultGenerator.openRow();
+
+			if (argument instanceof SWRLLiteralBuiltInArgument) {
+				SWRLLiteralBuiltInArgument literalArgument = (SWRLLiteralBuiltInArgument)argument;
+				SQWRLLiteralResultValue literal = getSQWRLResultValueFactory().getLiteralValue(literalArgument.getLiteral());
+				if (literal.isNumeric())
+					resultGenerator.addRowData(literal);
+				else
+					throw new InvalidSWRLBuiltInArgumentException(resultArgumentNumber, "expecting numeric literal, got "
+							+ argument + " with type " + argument.getClass().getCanonicalName());
+				return false;
+			} else
+				throw new InvalidSWRLBuiltInArgumentException(resultArgumentNumber, "expecting numeric literal, got "
+						+ argument + " with type " + argument.getClass().getCanonicalName());
 		} else { // SQWRL collection operator
 			Collection<SWRLBuiltInArgument> collection = getCollectionInSingleCollectionOperation(arguments,
-					sourceCollectionArgumentNumber, numberOfCoreConsequentArguments);
+					sourceCollectionArgumentNumber, numberOfCoreAntecedentArguments);
 
 			if (collection.isEmpty())
 				return false;
@@ -529,7 +554,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 				else
 					medianValue = (valueArray[middle - 1] + valueArray[middle]) / 2;
 
-				SWRLBuiltInArgument resultArgument = createMostPreciseNumericLiteralBuiltInArgument(medianValue,
+				SWRLBuiltInArgument resultArgument = createLeastNarrowNumericLiteralBuiltInArgument(medianValue,
 						new ArrayList<SWRLBuiltInArgument>(collection));
 
 				return processResultArgument(arguments, resultArgumentNumber, resultArgument);
@@ -610,6 +635,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 			if (!sortedList.isEmpty()) {
 				SWRLBuiltInArgument least = sortedList.get(resultArgumentNumber);
+
 				return processResultArgument(arguments, resultArgumentNumber, least);
 			} else
 				return false;
@@ -1402,8 +1428,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 			throws SWRLBuiltInException
 	{
 		Collection<SWRLBuiltInArgument> collection = getCollection(queryName, collectionName, collectionGroupKey);
-		List<SWRLBuiltInArgument> result = new ArrayList<SWRLBuiltInArgument>(collection);
-		Collections.sort(result);
+		List<SWRLBuiltInArgument> result = new ArrayList<>(collection);
+		Collections.sort(result); // TODO See if we can be clever (though types not necessarily comparable)
 
 		return result;
 	}
@@ -1411,7 +1437,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	private List<SWRLBuiltInArgument> createBag(String queryName, String collectionName, String collectionGroupKey)
 			throws SWRLBuiltInException
 	{
-		List<SWRLBuiltInArgument> bag = new ArrayList<SWRLBuiltInArgument>();
+		List<SWRLBuiltInArgument> bag = new ArrayList<>();
 
 		recordCollection(queryName, collectionName, collectionGroupKey, bag);
 
@@ -1421,7 +1447,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	private Set<SWRLBuiltInArgument> createSet(String queryName, String collectionName, String collectionGroupKey)
 			throws SWRLBuiltInException
 	{
-		Set<SWRLBuiltInArgument> set = new HashSet<SWRLBuiltInArgument>();
+		Set<SWRLBuiltInArgument> set = new HashSet<>();
 
 		recordCollection(queryName, collectionName, collectionGroupKey, set);
 

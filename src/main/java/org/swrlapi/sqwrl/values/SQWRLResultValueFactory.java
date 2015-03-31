@@ -1,6 +1,7 @@
 package org.swrlapi.sqwrl.values;
 
 import java.net.URI;
+import java.util.List;
 
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLLiteral;
@@ -69,4 +70,7 @@ public interface SQWRLResultValueFactory
 	SQWRLLiteralResultValue getLiteralValue(XSDDuration duration);
 
 	SQWRLLiteralResultValue getLiteralValue(OWLLiteral literal);
+
+	SQWRLLiteralResultValue createLeastNarrowNumericLiteralValue(double value,
+			List<SQWRLLiteralResultValue> inputResultValues);
 }

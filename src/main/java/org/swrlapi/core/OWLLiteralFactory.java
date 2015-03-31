@@ -1,6 +1,7 @@
 package org.swrlapi.core;
 
 import java.net.URI;
+import java.util.List;
 
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
@@ -52,4 +53,6 @@ public interface OWLLiteralFactory
 	OWLLiteral getOWLLiteral(XSDDuration duration);
 
 	OWLLiteral getOWLLiteral(String literal, OWLDatatype datatype);
+
+	OWLLiteral createLeastNarrowNumericOWLLiteral(double value, List<OWLLiteral> inputLiterals);
 }

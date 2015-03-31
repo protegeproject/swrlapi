@@ -251,18 +251,6 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, 
 		}
 	}
 
-	protected OWLNamedIndividual injectOWLNamedIndividualOfClass(OWLClass cls) throws SWRLBuiltInException
-	{
-		OWLNamedIndividual individual = getSWRLAPIOWLDataFactory().getInjectedOWLNamedIndividual();
-		OWLDeclarationAxiom declarationAxiom = getSWRLAPIOWLDataFactory().getOWLIndividualDeclarationAxiom(individual);
-		OWLClassAssertionAxiom classAssertionAxiom = getSWRLAPIOWLDataFactory().getOWLClassAssertionAxiom(cls, individual);
-		getBuiltInBridge().getIRIResolver().recordOWLNamedIndividual(individual);
-		getBuiltInBridge().injectOWLAxiom(declarationAxiom);
-		getBuiltInBridge().injectOWLAxiom(classAssertionAxiom);
-
-		return individual;
-	}
-
 	// Argument handling methods
 
 	public void checkNumberOfArgumentsAtLeastOne(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
@@ -426,7 +414,7 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, 
 	}
 
 	@Override
-	public boolean isByteMostPreciseArgument(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+	public boolean isWidestNumericArgumentAByte(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{
 		for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
 			if (isArgumentAShort(argumentNumber, arguments) || isArgumentAnInt(argumentNumber, arguments)
@@ -437,7 +425,7 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, 
 	}
 
 	@Override
-	public boolean isShortMostPreciseArgument(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+	public boolean isWidestNumericArgumentAShort(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{
 		for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
 			if (isArgumentAnInt(argumentNumber, arguments) || isArgumentALong(argumentNumber, arguments)
@@ -447,7 +435,7 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, 
 	}
 
 	@Override
-	public boolean isIntMostPreciseArgument(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+	public boolean isWidestNumericArgumentAnInt(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{
 		for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
 			if (isArgumentALong(argumentNumber, arguments) || isArgumentAFloat(argumentNumber, arguments)
@@ -457,16 +445,16 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, 
 	}
 
 	@Override
-	public boolean isLongMostPreciseArgument(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+	public boolean isWidestNumericArgumentALong(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{
 		for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
-			if (isArgumentADouble(argumentNumber, arguments) || isArgumentAFloat(argumentNumber, arguments))
+			if (isArgumentAFloat(argumentNumber, arguments) || isArgumentADouble(argumentNumber, arguments))
 				return false;
 		return true;
 	}
 
 	@Override
-	public boolean isFloatMostPreciseArgument(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+	public boolean isWidestNumericArgumentAFloat(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{
 		for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
 			if (isArgumentADouble(argumentNumber, arguments))
@@ -1662,6 +1650,7 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, 
 		return getSWRLBuiltInArgumentFactory().getMultiValueVariableBuiltInArgument(variableIRI, arguments);
 	}
 
+	@Override
 	public SQWRLCollectionVariableBuiltInArgument createSQWRLCollectionVariableBuiltInArgument(IRI variableIRI,
 			String queryName, String collectionName, String collectionGroupID) throws SWRLBuiltInException
 	{
@@ -1669,10 +1658,10 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, 
 				collectionName, collectionGroupID);
 	}
 
-	protected SWRLLiteralBuiltInArgument createMostPreciseNumericLiteralBuiltInArgument(double value,
+	protected SWRLLiteralBuiltInArgument createLeastNarrowNumericLiteralBuiltInArgument(double value,
 			List<SWRLBuiltInArgument> boundInputNumericArguments) throws SWRLBuiltInException
 	{
-		OWLLiteral literal = createMostPreciseNumericOWLLiteral(value, boundInputNumericArguments);
+		OWLLiteral literal = createLeastNarrowNumericOWLLiteral(value, boundInputNumericArguments);
 
 		return getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(literal);
 	}
@@ -1687,6 +1676,18 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, 
 		return getBuiltInBridge().getSWRLAPIOWLDataFactory();
 	}
 
+	protected OWLNamedIndividual injectOWLNamedIndividualOfClass(OWLClass cls) throws SWRLBuiltInException
+	{
+		OWLNamedIndividual individual = getSWRLAPIOWLDataFactory().getInjectedOWLNamedIndividual();
+		OWLDeclarationAxiom declarationAxiom = getSWRLAPIOWLDataFactory().getOWLIndividualDeclarationAxiom(individual);
+		OWLClassAssertionAxiom classAssertionAxiom = getSWRLAPIOWLDataFactory().getOWLClassAssertionAxiom(cls, individual);
+		getBuiltInBridge().getIRIResolver().recordOWLNamedIndividual(individual);
+		getBuiltInBridge().injectOWLAxiom(declarationAxiom);
+		getBuiltInBridge().injectOWLAxiom(classAssertionAxiom);
+
+		return individual;
+	}
+
 	private SWRLBuiltInArgumentFactory getSWRLBuiltInArgumentFactory() throws SWRLBuiltInLibraryException
 	{
 		return getBuiltInBridge().getSWRLAPIOWLDataFactory().getSWRLBuiltInArgumentFactory();
@@ -1697,18 +1698,18 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, 
 		return getBuiltInBridge().getSWRLAPIOWLDataFactory().getSWRLAPILiteralFactory();
 	}
 
-	private OWLLiteral createMostPreciseNumericOWLLiteral(double value,
+	private OWLLiteral createLeastNarrowNumericOWLLiteral(double value,
 			List<SWRLBuiltInArgument> boundInputNumericArguments) throws SWRLBuiltInException
 	{
-		if (isByteMostPreciseArgument(boundInputNumericArguments))
+		if (isWidestNumericArgumentAByte(boundInputNumericArguments))
 			return getOWLLiteralFactory().getOWLLiteral((byte)value);
-		else if (isShortMostPreciseArgument(boundInputNumericArguments))
+		else if (isWidestNumericArgumentAShort(boundInputNumericArguments))
 			return getOWLLiteralFactory().getOWLLiteral((short)value);
-		else if (isIntMostPreciseArgument(boundInputNumericArguments))
+		else if (isWidestNumericArgumentAnInt(boundInputNumericArguments))
 			return getOWLLiteralFactory().getOWLLiteral((int)value);
-		else if (isLongMostPreciseArgument(boundInputNumericArguments))
+		else if (isWidestNumericArgumentALong(boundInputNumericArguments))
 			return getOWLLiteralFactory().getOWLLiteral((long)value);
-		else if (isFloatMostPreciseArgument(boundInputNumericArguments))
+		else if (isWidestNumericArgumentAFloat(boundInputNumericArguments))
 			return getOWLLiteralFactory().getOWLLiteral((float)value);
 		else
 			return getOWLLiteralFactory().getOWLLiteral(value);
