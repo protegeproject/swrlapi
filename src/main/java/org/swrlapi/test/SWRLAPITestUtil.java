@@ -31,25 +31,20 @@ public class SWRLAPITestUtil
 {
 	private static final OWLDataFactory dataFactory = OWLManager.getOWLDataFactory();
 
-	public static OWLOntologyManager createOWLOntologyManager()
+	public static OWLOntology createEmptyOWLOntology() throws OWLOntologyCreationException
 	{
-		return SWRLAPIFactory.createOWLOntologyManager();
-	}
-
-	public static OWLOntology createOWLOntology() throws OWLOntologyCreationException
-	{
-		OWLOntologyManager ontologyManager = createOWLOntologyManager();
+		OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
 		return ontologyManager.createOntology();
-	}
-
-	public static IRI getIRI(String str)
-	{
-		return IRI.create(str);
 	}
 
 	public static SWRLAPIOWLOntology createSWRLAPIOWLOntology(OWLOntology ontology)
 	{
 		return SWRLAPIFactory.createSWRLAPIOntology(ontology);
+	}
+
+	public static IRI getIRI(String str)
+	{
+		return IRI.create(str);
 	}
 
 	public static OWLClass getOWLClass(IRI iri)
@@ -249,5 +244,4 @@ public class SWRLAPITestUtil
 
 		manager.addAxiom(ontology, axiom);
 	}
-
 }

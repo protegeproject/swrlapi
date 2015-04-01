@@ -55,6 +55,11 @@ import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
+/**
+ * This class does not directly deal with SQWRL queries. Instead, a {@link org.swrlapi.core.SWRLAPIOntologyProcessor} is
+ * used to extract SQWRL queries - which are stored as SWRL rules - from a {@link org.swrlapi.core.SWRLAPIOWLOntology}.
+ * 
+ */
 public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 {
 	private final OWLOntology ontology;
@@ -69,7 +74,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		this.ontology = ontology;
 		this.prefixManager = prefixManager;
 		this.swrlapiOWLDataFactory = SWRLAPIFactory.createSWRLAPIOWLDataFactory(new IRIResolver(this.prefixManager));
-		this.swrlapiOntologyProcessor = SWRLAPIFactory.createOntologyProcessor(this);
+		this.swrlapiOntologyProcessor = SWRLAPIFactory.createSWRLAPIOntologyProcessor(this);
 		this.swrlParser = new SWRLParser(this);
 		this.swrlBuiltInIRIs = new HashSet<>();
 

@@ -1,7 +1,6 @@
 package org.swrlapi.test;
 
-import static org.swrlapi.test.SWRLAPITestUtil.createOWLOntology;
-import static org.swrlapi.test.SWRLAPITestUtil.createOWLOntologyManager;
+import static org.swrlapi.test.SWRLAPITestUtil.createEmptyOWLOntology;
 import static org.swrlapi.test.SWRLAPITestUtil.createSWRLAPIOWLOntology;
 
 import java.util.Set;
@@ -27,8 +26,8 @@ public class SWRLAPITestBase
 	protected SWRLAPIOWLOntology createEmptySWRLAPIOWLOntology(String namespace) throws OWLOntologyCreationException
 	{
 		this.namespace = namespace;
-		this.manager = createOWLOntologyManager();
-		this.ontology = createOWLOntology();
+		this.ontology = createEmptyOWLOntology();
+		this.manager = ontology.getOWLOntologyManager();
 		this.swrlapiowlOntology = createSWRLAPIOWLOntology(ontology);
 
 		this.swrlapiowlOntology.getPrefixManager().setDefaultPrefix(namespace);

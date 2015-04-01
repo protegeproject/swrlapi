@@ -38,8 +38,6 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
  * performed more efficiently. The {@link #hasOntologyChanged()} method can be used by rule engines to avoid unnecessary
  * regeneration of knowledge.
  * <p/>
- * This class does not directly deal with SQWRL queries. Instead, a {@link org.swrlapi.core.SWRLAPIOntologyProcessor} is
- * used to extract SQWRL queries - which are stored as SWRL rules - from a {@link org.swrlapi.core.SWRLAPIOWLOntology}.
  *
  * @see org.swrlapi.core.SWRLAPIRule
  * @see org.swrlapi.core.SWRLAPIOntologyProcessor
@@ -48,11 +46,7 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
  */
 public interface SWRLAPIOWLOntology
 {
-	void reset();
-
-	void processOntology() throws SQWRLException;
-
-	// SWRL
+	// SWRL Rules
 
 	SWRLRuleEngine createSWRLRuleEngine(SWRLRuleEngineManager.TargetSWRLRuleEngineCreator ruleEngineCreator);
 
@@ -66,7 +60,7 @@ public interface SWRLAPIOWLOntology
 
 	void deleteSWRLRule(String ruleName);
 
-	// SQWRL
+	// SQWRL Queries
 
 	SQWRLQueryEngine createSQWRLQueryEngine(SWRLRuleEngineManager.TargetSWRLRuleEngineCreator ruleEngineCreator);
 
@@ -94,6 +88,12 @@ public interface SWRLAPIOWLOntology
 	void addSWRLBuiltIn(IRI iri);
 
 	Set<IRI> getSWRLBuiltInIRIs();
+
+	// Process methods
+
+	void reset();
+
+	void processOntology() throws SQWRLException;
 
 	// Utility methods
 

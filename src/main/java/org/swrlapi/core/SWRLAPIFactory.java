@@ -60,9 +60,12 @@ public class SWRLAPIFactory
 	public static SWRLAPIOWLOntology createSWRLAPIOntology()
 	{
 		try {
-			OWLOntologyManager ontologyManager = createOWLOntologyManager();
+			OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
 			OWLOntology ontology = ontologyManager.createOntology();
-			DefaultPrefixManager prefixManager = createPrefixManager(ontology);
+			DefaultPrefixManager prefixManager = new DefaultPrefixManager();
+
+			addDefaultPrefixes(ontology, prefixManager);
+			addSWRLAPIBuiltInOntologies(ontologyManager);
 
 			return createSWRLAPIOntology(ontology, prefixManager);
 		} catch (OWLOntologyCreationException e) {
@@ -72,8 +75,9 @@ public class SWRLAPIFactory
 
 	public static SWRLAPIOWLOntology createSWRLAPIOntology(OWLOntology ontology)
 	{
-		DefaultPrefixManager prefixManager = createPrefixManager(ontology);
+		DefaultPrefixManager prefixManager = new DefaultPrefixManager();
 
+		addDefaultPrefixes(ontology, prefixManager);
 		addSWRLAPIBuiltInOntologies(ontology.getOWLOntologyManager());
 
 		return new DefaultSWRLAPIOWLOntology(ontology, prefixManager);
@@ -91,6 +95,8 @@ public class SWRLAPIFactory
 		if (prefixManager == null)
 			throw new SWRLAPIException("supplied prefix manager is null");
 
+		addSWRLAPIBuiltInOntologies(ontology.getOWLOntologyManager());
+
 		return new DefaultSWRLAPIOWLOntology(ontology, prefixManager);
 	}
 
@@ -99,17 +105,19 @@ public class SWRLAPIFactory
 	 */
 	public static SWRLAPIOWLOntology createSWRLAPIOntology(File owlFile)
 	{
-		OWLOntologyManager ontologyManager = createOWLOntologyManager();
-
 		if (owlFile == null)
 			throw new SWRLAPIException("supplied OWL file is null");
 
+		OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
 		OWLOntology ontology = createOWLOntology(ontologyManager, owlFile);
 
 		if (ontology == null)
 			throw new SWRLAPIException("failed to create ontology from file " + owlFile.getAbsolutePath());
 
-		DefaultPrefixManager prefixManager = createPrefixManager(ontology);
+		DefaultPrefixManager prefixManager = new DefaultPrefixManager();
+
+		addDefaultPrefixes(ontology, prefixManager);
+		addSWRLAPIBuiltInOntologies(ontologyManager);
 
 		return createSWRLAPIOntology(ontology, prefixManager);
 	}
@@ -119,7 +127,7 @@ public class SWRLAPIFactory
 	{
 		SWRLRuleEngineFactory swrlRuleEngineFactory = SWRLAPIFactory.createSWRLRuleEngineFactory();
 		swrlRuleEngineFactory.registerRuleEngine(swrlRuleEngineCreator);
-	
+
 		return swrlRuleEngineFactory.createSWRLRuleEngine(swrlapiOWLOntology);
 	}
 
@@ -128,7 +136,7 @@ public class SWRLAPIFactory
 	{
 		SWRLRuleEngineFactory swrlRuleEngineFactory = SWRLAPIFactory.createSWRLRuleEngineFactory();
 		swrlRuleEngineFactory.registerRuleEngine(swrlRuleEngineCreator);
-	
+
 		return swrlRuleEngineFactory.createSWRLRuleEngine(swrlapiOWLOntology);
 	}
 
@@ -142,7 +150,7 @@ public class SWRLAPIFactory
 		return new DefaultSWRLAPIRenderer(swrlapiOWLOntology);
 	}
 
-	public static SWRLAPIOntologyProcessor createOntologyProcessor(SWRLAPIOWLOntology swrlapiOWLOntology)
+	public static SWRLAPIOntologyProcessor createSWRLAPIOntologyProcessor(SWRLAPIOWLOntology swrlapiOWLOntology)
 	{
 		return new DefaultSWRLAPIOntologyProcessor(swrlapiOWLOntology);
 	}
@@ -188,32 +196,23 @@ public class SWRLAPIFactory
 		return new DefaultOWLLiteralFactory();
 	}
 
-	public static OWLOntologyManager createOWLOntologyManager()
-	{
-		OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
-
-		addSWRLAPIBuiltInOntologies(ontologyManager);
-
-		return ontologyManager;
-	}
-
 	public static SWRLRuleEngineFactory createSWRLRuleEngineFactory()
 	{
 		return new DefaultSWRLRuleEngineFactory();
 	}
 
-	public static SWRLAPIApplicationModel createApplicationModel(SWRLAPIOWLOntology swrlapiOWLOntology,
+	public static SWRLAPIApplicationModel createSWRLAPIApplicationModel(SWRLAPIOWLOntology swrlapiOWLOntology,
 			SWRLRuleEngine ruleEngine)
 	{
 		return new SWRLAPIApplicationModel(swrlapiOWLOntology, ruleEngine);
 	}
 
-	public static SWRLAPIApplicationController createApplicationController(SWRLAPIApplicationModel applicationModel)
+	public static SWRLAPIApplicationController createSWRLAPIApplicationController(SWRLAPIApplicationModel applicationModel)
 	{
 		return new SWRLAPIApplicationController(applicationModel);
 	}
 
-	public static SWRLAPIApplicationDialogManager createApplicationDialogManager(SWRLAPIApplicationModel applicationModel)
+	public static SWRLAPIApplicationDialogManager createSWRLAPIApplicationDialogManager(SWRLAPIApplicationModel applicationModel)
 	{
 		return new SWRLAPIApplicationDialogManager(applicationModel);
 	}
@@ -221,7 +220,7 @@ public class SWRLAPIFactory
 	public static Icon getSQWRLIcon() throws SWRLAPIException
 	{
 		URL url = SWRLAPIFactory.class.getResource(SQWRL_ICON_NAME);
-	
+
 		if (url != null)
 			return new ImageIcon(url);
 		else
@@ -231,26 +230,14 @@ public class SWRLAPIFactory
 	public static Icon getOWL2RLReasonerIcon() throws SWRLAPIException
 	{
 		URL url = SWRLAPIFactory.class.getResource(OWL2RL_ICON_NAME);
-	
+
 		if (url != null)
 			return new ImageIcon(url);
 		else
 			throw new SWRLAPIException("No OWL 2 RL icon found!");
 	}
 
-	private static DefaultPrefixManager createPrefixManager(OWLOntology ontology)
-	{
-		if (ontology == null)
-			throw new SWRLAPIException("supplied OWL ontology is null");
-
-		DefaultPrefixManager prefixManager = new DefaultPrefixManager();
-
-		initializePrefixManager(ontology, prefixManager);
-
-		return prefixManager;
-	}
-
-	private static void initializePrefixManager(OWLOntology ontology, DefaultPrefixManager prefixManager)
+	private static void addDefaultPrefixes(OWLOntology ontology, DefaultPrefixManager prefixManager)
 	{
 		OWLOntologyManager owlOntologyManager = ontology.getOWLOntologyManager();
 		OWLDocumentFormat ontologyFormat = owlOntologyManager.getOntologyFormat(ontology);
