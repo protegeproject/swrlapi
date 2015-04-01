@@ -1,5 +1,6 @@
 package org.swrlapi.builtins.temporal;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -612,18 +613,21 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 	private IRI getObjectPropertyValueAsIRI(SWRLBuiltInBridge bridge, IRI individualIRI, IRI propertyIRI)
 	{
-		Set<OWLObjectPropertyAssertionAxiom> axioms = bridge.getSWRLAPIOWLOntology().getOWLObjectPropertyAssertionAxioms(
-				individualIRI, propertyIRI);
+		Set<OWLObjectPropertyAssertionAxiom> axioms = new HashSet<>(); // TODO Get assertions for this individual/property
 		OWLObjectPropertyAssertionAxiom axiom = axioms.toArray(new OWLObjectPropertyAssertionAxiom[0])[0];
 		OWLIndividual subject = axiom.getObject();
 
 		return subject.asOWLNamedIndividual().getIRI();
 	}
 
+	private boolean isOWLIndividualOfType(IRI individualIRI, IRI classIRI) throws SWRLBuiltInLibraryException
+	{
+		return true; // TODO Implement isOWLIndividualOfType
+	}
+
 	private String getDataPropertyValueAsAString(SWRLBuiltInBridge bridge, IRI individualIRI, IRI propertyIRI)
 	{
-		Set<OWLDataPropertyAssertionAxiom> axioms = bridge.getSWRLAPIOWLOntology().getOWLDataPropertyAssertionAxioms(
-				individualIRI, propertyIRI);
+		Set<OWLDataPropertyAssertionAxiom> axioms = new HashSet<>(); // TODO Get assertions for this individual/property
 		OWLDataPropertyAssertionAxiom axiom = axioms.toArray(new OWLDataPropertyAssertionAxiom[0])[0];
 		OWLLiteral value = axiom.getObject();
 
@@ -644,8 +648,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		XSDDateTimeStringProcessor datetimeProcessor = new XSDDateTimeStringProcessor();
 
 		try {
-			if (datetimeProcessor.getFinestSpecifiedGranularity(datetimeString) < Temporal.HOURS) { // If no finer than hours,
-																																															// assume it is xsd:date
+			if (datetimeProcessor.getFinestSpecifiedGranularity(datetimeString) < Temporal.HOURS) {
+				// If no finer than hours, assume it is xsd:date
 				XSDDate date = new XSDDate(datetimeProcessor.stripDatetimeString(datetimeString, Temporal.DAYS));
 				arguments.set(argumentNumber, createLiteralBuiltInArgument(date));
 			} else { // xsd:dateTime
@@ -655,10 +659,5 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		} catch (TemporalException e) {
 			throw new SWRLBuiltInException("invalid xsd:date or xsd:dateTime string " + datetimeString);
 		}
-	}
-
-	private boolean isOWLIndividualOfType(IRI individualIRI, IRI classIRI) throws SWRLBuiltInLibraryException
-	{
-		return getBuiltInBridge().getSWRLAPIOWLOntology().isOWLIndividualOfType(individualIRI, classIRI);
 	}
 }

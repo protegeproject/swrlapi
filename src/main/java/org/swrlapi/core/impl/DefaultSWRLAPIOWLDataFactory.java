@@ -18,6 +18,7 @@ import org.swrlapi.core.SWRLAPIFactory;
 import org.swrlapi.core.SWRLAPILiteralFactory;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLDatatypeFactory;
+import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.exceptions.SWRLAPIException;
@@ -36,14 +37,14 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
 	private final SWRLBuiltInArgumentFactory swrlBuiltInArgumentFactory;
 	private final SQWRLResultValueFactory sqwrlResultValueFactory;
 
-	public DefaultSWRLAPIOWLDataFactory(IRIResolver iriResolver)
+	public DefaultSWRLAPIOWLDataFactory(SWRLAPIOWLOntology swrlapiOWLOntology)
 	{
-		this.iriResolver = iriResolver;
+		this.iriResolver = swrlapiOWLOntology.getIRIResolver();
 		this.swrlapiOWLDatatypeFactory = SWRLAPIFactory.createSWRLAPIOWLDatatypeFactory();
 		this.owlLiteralFactory = SWRLAPIFactory.createOWLLiteralFactory();
 		this.swrlapiLiteralFactory = SWRLAPIFactory.createSWRLAPILiteralFactory();
-		this.swrlBuiltInArgumentFactory = SWRLAPIFactory.createSWRLBuiltInArgumentFactory(iriResolver);
-		this.sqwrlResultValueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(iriResolver);
+		this.swrlBuiltInArgumentFactory = SWRLAPIFactory.createSWRLBuiltInArgumentFactory(swrlapiOWLOntology);
+		this.sqwrlResultValueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(swrlapiOWLOntology);
 	}
 
 	@Override
@@ -134,7 +135,7 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
 	@Override
 	public OWLClass getInjectedOWLClass()
 	{
-		// TODO This is incorrect!!
+		// TODO Implement getInjectedOWLClass
 		IRI iri = IRI
 		// .create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + UUID.randomUUID().toString());
 				.create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + "fred");
@@ -145,7 +146,7 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
 	@Override
 	public OWLNamedIndividual getInjectedOWLNamedIndividual()
 	{
-		// TODO This is incorrect!
+		// TODO Implement getInjectedOWLNamedIndividual
 		IRI iri = IRI
 		// .create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + UUID.randomUUID().toString());
 				.create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + "fred");

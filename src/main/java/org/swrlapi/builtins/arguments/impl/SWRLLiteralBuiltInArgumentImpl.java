@@ -169,6 +169,6 @@ class SWRLLiteralBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements 
 	@Override
 	public Set<OWLAnnotationProperty> getAnnotationPropertiesInSignature()
 	{
-		return Collections.emptySet(); // TODO OWLAPI V4.0.0 update
+		return Collections.emptySet(); // TODO Implement getAnnotationPropertiesInSignature
 	}
 }

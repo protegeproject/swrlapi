@@ -5,8 +5,6 @@ import java.util.Set;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLDataFactory;
-import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
-import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
@@ -28,7 +26,7 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
  * built-in atoms.
  * <p/>
  * This extension point is defined by the {@link org.swrlapi.builtins.arguments.SWRLBuiltInArgument} interface, which
- * extends the OWLAPI's {@link org.semanticweb.owlapi.model.SWRLDArgument}. A
+ * extends the OWLAPI's {@link org.semanticweb.owlapi.model.SWRLDArgument} interface. A
  * {@link org.swrlapi.core.SWRLAPIOWLOntology} will construct SWRLAPI rules from the SWRL rules in an OWLAPI-based
  * ontology to contain these additional built-in argument types.
  * <p/>
@@ -60,6 +58,12 @@ public interface SWRLAPIOWLOntology
 
 	void deleteSWRLRule(String ruleName);
 
+	boolean isSWRLBuiltIn(IRI iri); // The SWRLAPI provides built-ins beyond the core set defined in the SWRL submission.
+
+	void addSWRLBuiltIn(IRI iri);
+
+	Set<IRI> getSWRLBuiltInIRIs();
+
 	// SQWRL Queries
 
 	SQWRLQueryEngine createSQWRLQueryEngine(SWRLRuleEngineManager.TargetSWRLRuleEngineCreator ruleEngineCreator);
@@ -81,33 +85,11 @@ public interface SWRLAPIOWLOntology
 
 	SQWRLResultGenerator getSQWRLResultGenerator(String queryName) throws SQWRLException;
 
-	// SWRL Built-ins
-
-	boolean isSWRLBuiltIn(IRI iri); // The SWRLAPI provides built-ins beyond the core set defined in the SWRL submission.
-
-	void addSWRLBuiltIn(IRI iri);
-
-	Set<IRI> getSWRLBuiltInIRIs();
-
 	// Process methods
 
 	void reset();
 
 	void processOntology() throws SQWRLException;
-
-	// Utility methods
-
-	SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory();
-
-	IRIResolver getIRIResolver();
-
-	OWLOntologyManager getOWLOntologyManager();
-
-	DefaultPrefixManager getPrefixManager();
-
-	OWLOntology getOWLOntology();
-
-	OWLDataFactory getOWLDataFactory();
 
 	// Optimization methods
 
@@ -137,12 +119,17 @@ public interface SWRLAPIOWLOntology
 
 	int getNumberOfOWLDataPropertyDeclarationAxioms();
 
-	// TODO We don't want this method here. It is a convenience method and used only by the temporal built-in library.
-	boolean isOWLIndividualOfType(IRI individualIRI, IRI classIRI);
+	// Utility methods
 
-	// TODO We don't want this method here. It is a convenience method and used only by the temporal built-in library.
-	Set<OWLObjectPropertyAssertionAxiom> getOWLObjectPropertyAssertionAxioms(IRI individualIRI, IRI propertyIRI);
+	SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory();
 
-	// TODO We don't want this method here. It is a convenience method and used only by the temporal built-in library.
-	Set<OWLDataPropertyAssertionAxiom> getOWLDataPropertyAssertionAxioms(IRI individualIRI, IRI propertyIRI);
+	IRIResolver getIRIResolver();
+
+	OWLOntologyManager getOWLOntologyManager();
+
+	DefaultPrefixManager getPrefixManager();
+
+	OWLOntology getOWLOntology();
+
+	OWLDataFactory getOWLDataFactory();
 }

@@ -375,7 +375,7 @@ public class SWRLParserSupport
 	}
 
 	public String getShortNameFromIRI(String iriString, boolean interactiveParseOnly) throws SWRLParseException
-	{ // TODO This is incomplete
+	{
 		try {
 			IRI iri = this.prefixManager.getIRI(iriString);
 

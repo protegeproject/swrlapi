@@ -70,29 +70,30 @@ import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
  * result.configured();
  * 
  * result.openRow();
- * result.addRowData(valueFactory.getIndividual(&quot;Fred&quot;));
+ * result.addRowData(valueFactory.getIndividualValue(&quot;Fred&quot;));
  * result.addRowData(valueFactory.getValue(27));
  * result.closeRow();
  * result.openRow();
- * result.addRowData(valueFactory.getIndividual(&quot;Joe&quot;));
- * result.addRowData(valueFactory.getValue(34));
+ * result.addRowData(valueFactory.getIndividualValue(&quot;Joe&quot;));
+ * result.addRowData(valueFactory.getLiteralValue(34));
  * result.closeRow();
  * result.openRow();
- * result.addRowData(valueFactory.getIndividual(&quot;Joe&quot;));
- * result.addRowData(valueFactory.getSQWRLLiteralValue(21));
+ * result.addRowData(valueFactory.getIndividualValue(&quot;Joe&quot;));
+ * result.addRowData(valueFactory.getLiteralValue(21));
  * result.closeRow();
  * result.prepared();
  * </pre>
  * <p/>
  * The result is now available for reading. The interface {@link org.swrlapi.sqwrl.SQWRLResult} defines the assessor
  * methods. A row consists of a list of objects defined by the interface
- * {@link org.swrlapi.sqwrl.values.SQWRLResultValue}. There possible types of values are (1)
- * {@link org.swrlapi.sqwrl.values.SQWRLLiteralResultValue}, representing literals; (2)
- * {@link org.swrlapi.sqwrl.values.SQWRLIndividualResultValue}, representing OWL individuals; (3)
- * {@link org.swrlapi.sqwrl.values.SQWRLClassResultValue}, representing OWL classes; and (4)
+ * {@link org.swrlapi.sqwrl.values.SQWRLResultValue}.
+ * </p>
+ * The possible types of values are (1) {@link org.swrlapi.sqwrl.values.SQWRLLiteralResultValue}, representing literals;
+ * (2) {@link org.swrlapi.sqwrl.values.SQWRLIndividualResultValue}, representing OWL individuals; (3)
+ * {@link org.swrlapi.sqwrl.values.SQWRLClassResultValue}, representing OWL classes; (4)
  * {@link org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue}, representing OWL object properties, (5)
  * {@link org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue}, representing OWL data properties, and (6)
- * {@link org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue}, representing OWL annotation.
+ * {@link org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue}, representing OWL annotation properties.
  * <p/>
  * 
  * <pre>

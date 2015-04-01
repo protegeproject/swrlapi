@@ -13,12 +13,10 @@ import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLDataProperty;
-import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
-import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.SWRLAtom;
@@ -44,7 +42,6 @@ import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.core.SWRLRuleEngineFactory;
 import org.swrlapi.core.SWRLRuleEngineManager;
 import org.swrlapi.core.resolvers.IRIResolver;
-import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.exceptions.SWRLAPIInternalException;
 import org.swrlapi.exceptions.SWRLRuleException;
 import org.swrlapi.parser.SWRLParseException;
@@ -64,19 +61,21 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 {
 	private final OWLOntology ontology;
 	private final DefaultPrefixManager prefixManager;
-	private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
-	private final SWRLAPIOntologyProcessor swrlapiOntologyProcessor;
+	private final IRIResolver iriResolver;
 	private final SWRLParser swrlParser;
 	private final Set<IRI> swrlBuiltInIRIs;
+	private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
+	private final SWRLAPIOntologyProcessor swrlapiOntologyProcessor;
 
 	public DefaultSWRLAPIOWLOntology(OWLOntology ontology, DefaultPrefixManager prefixManager)
 	{
 		this.ontology = ontology;
 		this.prefixManager = prefixManager;
-		this.swrlapiOWLDataFactory = SWRLAPIFactory.createSWRLAPIOWLDataFactory(new IRIResolver(this.prefixManager));
-		this.swrlapiOntologyProcessor = SWRLAPIFactory.createSWRLAPIOntologyProcessor(this);
+		this.iriResolver = new IRIResolver(this.prefixManager);
 		this.swrlParser = new SWRLParser(this);
 		this.swrlBuiltInIRIs = new HashSet<>();
+		this.swrlapiOWLDataFactory = SWRLAPIFactory.createSWRLAPIOWLDataFactory(this);
+		this.swrlapiOntologyProcessor = SWRLAPIFactory.createSWRLAPIOntologyProcessor(this);
 
 		addDefaultSWRLBuiltIns();
 	}
@@ -253,7 +252,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	@Override
 	public IRIResolver getIRIResolver()
 	{
-		return getSWRLAPIOWLDataFactory().getIRIResolver();
+		return this.iriResolver;
 	}
 
 	@Override
@@ -402,28 +401,6 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	public int getNumberOfOWLDataPropertyDeclarationAxioms()
 	{
 		return this.swrlapiOntologyProcessor.getNumberOfOWLDataPropertyDeclarationAxioms();
-	}
-
-	// TODO Do not want here. This is a convenience methods only and is used only by the temporal built-in library.
-	@Override
-	public boolean isOWLIndividualOfType(IRI individualIRI, IRI classIRI)
-	{
-		return true;
-		// throw new SWRLAPIException("Not implemented");
-	}
-
-	// TODO Do not want here. This is a convenience methods only and is used only by the temporal built-in library.
-	@Override
-	public Set<OWLObjectPropertyAssertionAxiom> getOWLObjectPropertyAssertionAxioms(IRI individualIRI, IRI propertyIRI)
-	{
-		throw new SWRLAPIException("Not implemented");
-	}
-
-	// TODO Do not want here. This is a convenience methods only and is used only by the temporal built-in library.
-	@Override
-	public Set<OWLDataPropertyAssertionAxiom> getOWLDataPropertyAssertionAxioms(IRI individualIRI, IRI propertyIRI)
-	{
-		throw new SWRLAPIException("Not implemented");
 	}
 
 	/**

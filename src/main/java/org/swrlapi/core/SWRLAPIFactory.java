@@ -27,7 +27,6 @@ import org.swrlapi.core.impl.DefaultSWRLAPIOWLOntology;
 import org.swrlapi.core.impl.DefaultSWRLAPIOntologyProcessor;
 import org.swrlapi.core.impl.DefaultSWRLAPIRenderer;
 import org.swrlapi.core.impl.DefaultSWRLRuleEngineFactory;
-import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.sqwrl.DefaultSQWRLResult;
@@ -155,19 +154,19 @@ public class SWRLAPIFactory
 		return new DefaultSWRLAPIOntologyProcessor(swrlapiOWLOntology);
 	}
 
-	public static SWRLBuiltInArgumentFactory createSWRLBuiltInArgumentFactory(IRIResolver iriResolver)
+	public static SWRLBuiltInArgumentFactory createSWRLBuiltInArgumentFactory(SWRLAPIOWLOntology swrlapiOWLOntology)
 	{
-		return new DefaultSWRLBuiltInArgumentFactory(iriResolver);
+		return new DefaultSWRLBuiltInArgumentFactory(swrlapiOWLOntology.getIRIResolver());
 	}
 
-	public static SQWRLResultValueFactory createSQWRLResultValueFactory(IRIResolver iriResolver)
+	public static SQWRLResultValueFactory createSQWRLResultValueFactory(SWRLAPIOWLOntology swrlapiOWLOntology)
 	{
-		return new DefaultSQWRLResultValueFactory(iriResolver);
+		return new DefaultSQWRLResultValueFactory(swrlapiOWLOntology.getIRIResolver());
 	}
 
-	public static SWRLAPIOWLDataFactory createSWRLAPIOWLDataFactory(IRIResolver iriResolver)
+	public static SWRLAPIOWLDataFactory createSWRLAPIOWLDataFactory(SWRLAPIOWLOntology swrlapiOWLOntology)
 	{
-		return new DefaultSWRLAPIOWLDataFactory(iriResolver);
+		return new DefaultSWRLAPIOWLDataFactory(swrlapiOWLOntology);
 	}
 
 	public static DefaultSQWRLResult createSQWRLResult(SQWRLResultValueFactory sqwrlResultValueFactory)
@@ -212,7 +211,8 @@ public class SWRLAPIFactory
 		return new SWRLAPIApplicationController(applicationModel);
 	}
 
-	public static SWRLAPIApplicationDialogManager createSWRLAPIApplicationDialogManager(SWRLAPIApplicationModel applicationModel)
+	public static SWRLAPIApplicationDialogManager createSWRLAPIApplicationDialogManager(
+			SWRLAPIApplicationModel applicationModel)
 	{
 		return new SWRLAPIApplicationDialogManager(applicationModel);
 	}

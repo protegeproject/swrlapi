@@ -1,5 +1,11 @@
 package org.swrlapi.core.impl;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotation;
@@ -71,12 +77,6 @@ import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.exceptions.SQWRLInvalidQueryNameException;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 {
@@ -153,6 +153,7 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 		return this.swrlapiRules.get(ruleName);
 	}
 
+	@Override
 	public void deleteSWRLRule(String ruleName)
 	{
 		if (swrlapiRules.containsKey(ruleName)) {
@@ -246,6 +247,7 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 		return this.assertedOWLAxioms.contains(axiom);
 	}
 
+	@Override
 	public SQWRLQuery createSWRLQueryFromSWRLRule(SWRLAPIRule rule) throws SQWRLException
 	{
 		String queryName = rule.getRuleName();
@@ -285,11 +287,11 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 	@Override
 	public String getRuleName(SWRLRule owlapiRule)
 	{
-		OWLAnnotationProperty labelAnnotation = getOWLDataFactory()
-				.getOWLAnnotationProperty(OWLRDFVocabulary.RDFS_LABEL.getIRI());
+		OWLAnnotationProperty labelAnnotation = getOWLDataFactory().getOWLAnnotationProperty(
+				OWLRDFVocabulary.RDFS_LABEL.getIRI());
 
 		for (OWLAnnotation annotation : owlapiRule.getAnnotations(labelAnnotation)) {
-			if (annotation.getValue() instanceof OWLLiteral) { // TODO Use OWLAnnotationValueVisitorEx?
+			if (annotation.getValue() instanceof OWLLiteral) {
 				OWLLiteral literal = (OWLLiteral)annotation.getValue();
 				return literal.getLiteral(); // TODO We just pick one for the moment
 			}
@@ -301,8 +303,8 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 	@Override
 	public boolean getIsActive(SWRLRule owlapiRule)
 	{
-		OWLAnnotationProperty enabledAnnotationProperty = getOWLDataFactory()
-				.getOWLAnnotationProperty(IRI.create("http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"));
+		OWLAnnotationProperty enabledAnnotationProperty = getOWLDataFactory().getOWLAnnotationProperty(
+				IRI.create("http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"));
 
 		for (OWLAnnotation annotation : owlapiRule.getAnnotations(enabledAnnotationProperty)) {
 			if (annotation.getValue() instanceof OWLLiteral) {
@@ -317,11 +319,11 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 	@Override
 	public String getComment(SWRLRule owlapiRule)
 	{
-		OWLAnnotationProperty commentAnnotationProperty = getOWLDataFactory()
-				.getOWLAnnotationProperty(OWLRDFVocabulary.RDFS_COMMENT.getIRI());
+		OWLAnnotationProperty commentAnnotationProperty = getOWLDataFactory().getOWLAnnotationProperty(
+				OWLRDFVocabulary.RDFS_COMMENT.getIRI());
 
 		for (OWLAnnotation annotation : owlapiRule.getAnnotations(commentAnnotationProperty)) {
-			if (annotation.getValue() instanceof OWLLiteral) { // TODO Use OWLAnnotationValueVisitorEx?
+			if (annotation.getValue() instanceof OWLLiteral) {
 				OWLLiteral literal = (OWLLiteral)annotation.getValue();
 				return literal.getLiteral(); // TODO We just pick one for the moment
 			}
@@ -352,7 +354,8 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 
 	/**
 	 * Process currently supported OWL axioms. The processing consists of recording any OWL properties in the processed
-	 * axioms (with an instance of the {@link org.swrlapi.core.resolvers.IRIResolver} class) and generating declaration axioms for these properties.
+	 * axioms (with an instance of the {@link org.swrlapi.core.resolvers.IRIResolver} class) and generating declaration
+	 * axioms for these properties.
 	 * <p/>
 	 * TODO The current approach is clunky. A better approach would be to walk the axioms with a visitor and record the
 	 * properties and generate the declaration axioms.
@@ -710,10 +713,10 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 
 	private void generateOWLIndividualDeclarationAxiomIfNecessary(OWLIndividual individual)
 	{
-		if (individual.isNamed() && !this.owlIndividualDeclarationAxioms
-				.containsKey(individual.asOWLNamedIndividual().getIRI())) {
-			OWLDeclarationAxiom axiom = getSWRLAPIOWLDataFactory()
-					.getOWLIndividualDeclarationAxiom(individual.asOWLNamedIndividual());
+		if (individual.isNamed()
+				&& !this.owlIndividualDeclarationAxioms.containsKey(individual.asOWLNamedIndividual().getIRI())) {
+			OWLDeclarationAxiom axiom = getSWRLAPIOWLDataFactory().getOWLIndividualDeclarationAxiom(
+					individual.asOWLNamedIndividual());
 			this.owlIndividualDeclarationAxioms.put(individual.asOWLNamedIndividual().getIRI(), axiom);
 			this.assertedOWLAxioms.add(axiom);
 			recordOWLNamedIndividual(individual.asOWLNamedIndividual());

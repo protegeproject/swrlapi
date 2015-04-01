@@ -1,15 +1,9 @@
 package org.swrlapi.builtins.arguments.impl;
 
-import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
-
-import javax.annotation.Nonnull;
-
-import java.util.Collections;
-import java.util.Set;
 
 class SWRLObjectPropertyBuiltInArgumentImpl extends SWRLNamedBuiltInArgumentImpl implements
 		SWRLObjectPropertyBuiltInArgument
@@ -37,10 +31,5 @@ class SWRLObjectPropertyBuiltInArgumentImpl extends SWRLNamedBuiltInArgumentImpl
 	public void accept(SWRLBuiltInArgumentVisitor visitor)
 	{
 		visitor.visit(this);
-	}
-
-	@Nonnull @Override public Set<OWLAnnotationProperty> getAnnotationPropertiesInSignature()
-	{
-		return Collections.emptySet(); // TODO OWLAPI V4.0.0 update
 	}
 }

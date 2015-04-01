@@ -233,6 +233,6 @@ class SWRLVariableBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements
 	@Override
 	public Set<OWLAnnotationProperty> getAnnotationPropertiesInSignature()
 	{
-		return new HashSet<>(); // TODO OWLAPI V4.0.0 update
+		return new HashSet<>(); // TODO Implement getAnnotationPropertiesInSignature
 	}
 }

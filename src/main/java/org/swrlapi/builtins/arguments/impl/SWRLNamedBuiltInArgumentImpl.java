@@ -1,6 +1,12 @@
 package org.swrlapi.builtins.arguments.impl;
 
+import java.util.Collections;
+import java.util.Set;
+
+import javax.annotation.Nonnull;
+
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.model.OWLObjectVisitor;
@@ -64,6 +70,13 @@ abstract class SWRLNamedBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl impl
 		SWRLNamedBuiltInArgumentImpl other = (SWRLNamedBuiltInArgumentImpl)o;
 
 		return this.entity.getIRI().compareTo(other.entity.getIRI());
+	}
+
+	@Nonnull
+	@Override
+	public Set<OWLAnnotationProperty> getAnnotationPropertiesInSignature()
+	{
+		return Collections.emptySet(); // TODO Implement getAnnotationPropertiesInSignature
 	}
 
 	@Override
