@@ -33,6 +33,7 @@ import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
+import org.swrlapi.core.SQWRLQueryRenderer;
 import org.swrlapi.core.SWRLAPIFactory;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
@@ -137,7 +138,13 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	@Override
 	public SWRLRuleRenderer createSWRLRuleRenderer()
 	{
-		return new DefaultSWRLRuleRenderer(this);
+		return new DefaultSWRLAPIRenderer(this);
+	}
+
+	@Override
+	public SQWRLQueryRenderer createSQWRLQueryRenderer()
+	{
+		return new DefaultSWRLAPIRenderer(this);
 	}
 
 	@Override

@@ -90,6 +90,8 @@ public interface SWRLAPIOWLOntology
 
 	SQWRLResultGenerator getSQWRLResultGenerator(String queryName) throws SQWRLException;
 
+	SQWRLQueryRenderer createSQWRLQueryRenderer();
+
 	// Process methods
 
 	void reset();
