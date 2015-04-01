@@ -13,7 +13,7 @@ import org.swrlapi.sqwrl.SQWRLQuery;
  * @see org.swrlapi.sqwrl.SQWRLQuery
  * @see org.swrlapi.core.SWRLAPIFactory
  */
-public interface SWRLAPIRenderer extends SWRLAPIEntityVisitorEx<String>
+public interface SWRLRuleRenderer extends SWRLAPIEntityVisitorEx<String>
 {
 	String renderSWRLRule(SWRLRule rule);
 

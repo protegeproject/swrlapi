@@ -41,6 +41,7 @@ import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.core.SWRLRuleEngineFactory;
 import org.swrlapi.core.SWRLRuleEngineManager;
+import org.swrlapi.core.SWRLRuleRenderer;
 import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.exceptions.SWRLAPIInternalException;
 import org.swrlapi.exceptions.SWRLRuleException;
@@ -125,6 +126,18 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		swrlapiOntologyProcessor.addSWRLRule(swrlapiRule, owlapiRule); // Adds rule to the underlying ontology
 
 		return swrlapiRule;
+	}
+
+	@Override
+	public SWRLParser createSWRLParser()
+	{
+		return new SWRLParser(this);
+	}
+
+	@Override
+	public SWRLRuleRenderer createSWRLRuleRenderer()
+	{
+		return new DefaultSWRLRuleRenderer(this);
 	}
 
 	@Override

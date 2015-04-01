@@ -11,6 +11,7 @@ import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.exceptions.SWRLRuleException;
 import org.swrlapi.parser.SWRLParseException;
+import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.sqwrl.SQWRLQuery;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.SQWRLResult;
@@ -63,6 +64,10 @@ public interface SWRLAPIOWLOntology
 	void addSWRLBuiltIn(IRI iri);
 
 	Set<IRI> getSWRLBuiltInIRIs();
+
+	SWRLParser createSWRLParser();
+
+	SWRLRuleRenderer createSWRLRuleRenderer();
 
 	// SQWRL Queries
 

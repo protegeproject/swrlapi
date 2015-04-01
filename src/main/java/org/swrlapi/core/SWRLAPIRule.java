@@ -19,12 +19,12 @@ import org.semanticweb.owlapi.model.SWRLRule;
  * These SWRLAPI rules are extracted from an OWL ontology by the
  * {@link org.swrlapi.core.SWRLAPIOWLOntology#getSWRLAPIRules()} method.
  *
- * A {@link org.swrlapi.core.SWRLAPIRenderer} can be used to print a rule.
+ * A {@link org.swrlapi.core.SWRLRuleRenderer} can be used to print a rule.
  * 
  * @see org.swrlapi.core.SWRLAPIBuiltInAtom
  * @see org.swrlapi.builtins.arguments.SWRLBuiltInArgument
  * @see org.swrlapi.core.SWRLAPIOWLOntology
- * @see org.swrlapi.core.SWRLAPIRenderer
+ * @see org.swrlapi.core.SWRLRuleRenderer
  */
 public interface SWRLAPIRule extends SWRLRule
 {

@@ -45,7 +45,7 @@ import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
 import org.swrlapi.core.SWRLAPIOWLOntology;
-import org.swrlapi.core.SWRLAPIRenderer;
+import org.swrlapi.core.SWRLRuleRenderer;
 import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.sqwrl.SQWRLNames;
 import org.swrlapi.sqwrl.SQWRLQuery;
@@ -60,12 +60,12 @@ import java.util.Iterator;
  * @see org.swrlapi.sqwrl.SQWRLQuery
  * @see org.swrlapi.core.SWRLAPIFactory
  */
-public class DefaultSWRLAPIRenderer implements SWRLAPIRenderer
+public class DefaultSWRLRuleRenderer implements SWRLRuleRenderer
 {
 	private final OWLOntology ontology;
 	private final DefaultPrefixManager prefixManager;
 
-	public DefaultSWRLAPIRenderer(SWRLAPIOWLOntology swrlapiowlOntology)
+	public DefaultSWRLRuleRenderer(SWRLAPIOWLOntology swrlapiowlOntology)
 	{
 		this.ontology = swrlapiowlOntology.getOWLOntology();
 		this.prefixManager = swrlapiowlOntology.getPrefixManager();

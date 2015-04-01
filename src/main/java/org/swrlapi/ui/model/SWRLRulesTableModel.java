@@ -9,7 +9,7 @@ import javax.swing.table.AbstractTableModel;
 
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLRuleEngine;
-import org.swrlapi.core.impl.DefaultSWRLAPIRenderer;
+import org.swrlapi.core.SWRLRuleRenderer;
 import org.swrlapi.ui.view.SWRLAPIView;
 
 /**
@@ -30,13 +30,13 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 
 	public static int NUMBER_OF_COLUMNS = 4;
 
-	private final DefaultSWRLAPIRenderer swrlRuleRenderer;
+	private final SWRLRuleRenderer swrlRuleRenderer;
 	private final Map<String, SWRLRuleModel> swrlRuleModels; // rule name -> SWRLRuleModel
 
 	private SWRLAPIView swrlapiView = null;
 	private boolean isModified = false;
 
-	public SWRLRulesTableModel(SWRLRuleEngine swrlRuleEngine, DefaultSWRLAPIRenderer swrlRuleRenderer)
+	public SWRLRulesTableModel(SWRLRuleEngine swrlRuleEngine, SWRLRuleRenderer swrlRuleRenderer)
 	{
 		this.swrlRuleRenderer = swrlRuleRenderer;
 		this.swrlRuleModels = new HashMap<>();

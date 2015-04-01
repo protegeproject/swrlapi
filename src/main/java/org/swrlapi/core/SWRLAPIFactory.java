@@ -25,12 +25,9 @@ import org.swrlapi.core.impl.DefaultSWRLAPIOWLDataFactory;
 import org.swrlapi.core.impl.DefaultSWRLAPIOWLDatatypeFactory;
 import org.swrlapi.core.impl.DefaultSWRLAPIOWLOntology;
 import org.swrlapi.core.impl.DefaultSWRLAPIOntologyProcessor;
-import org.swrlapi.core.impl.DefaultSWRLAPIRenderer;
 import org.swrlapi.core.impl.DefaultSWRLRuleEngineFactory;
 import org.swrlapi.exceptions.SWRLAPIException;
-import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.sqwrl.DefaultSQWRLResult;
-import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 import org.swrlapi.sqwrl.values.impl.DefaultSQWRLResultValueFactory;
 import org.swrlapi.ui.controller.SWRLAPIApplicationController;
@@ -121,34 +118,6 @@ public class SWRLAPIFactory
 		return createSWRLAPIOntology(ontology, prefixManager);
 	}
 
-	public static SWRLRuleEngine createSWRLRuleEngine(SWRLAPIOWLOntology swrlapiOWLOntology,
-			SWRLRuleEngineManager.TargetSWRLRuleEngineCreator swrlRuleEngineCreator)
-	{
-		SWRLRuleEngineFactory swrlRuleEngineFactory = SWRLAPIFactory.createSWRLRuleEngineFactory();
-		swrlRuleEngineFactory.registerRuleEngine(swrlRuleEngineCreator);
-
-		return swrlRuleEngineFactory.createSWRLRuleEngine(swrlapiOWLOntology);
-	}
-
-	public static SQWRLQueryEngine createSQWRLQueryEngine(SWRLAPIOWLOntology swrlapiOWLOntology,
-			SWRLRuleEngineManager.TargetSWRLRuleEngineCreator swrlRuleEngineCreator)
-	{
-		SWRLRuleEngineFactory swrlRuleEngineFactory = SWRLAPIFactory.createSWRLRuleEngineFactory();
-		swrlRuleEngineFactory.registerRuleEngine(swrlRuleEngineCreator);
-
-		return swrlRuleEngineFactory.createSWRLRuleEngine(swrlapiOWLOntology);
-	}
-
-	public static SWRLParser createSWRLParser(SWRLAPIOWLOntology swrlapiOWLOntology)
-	{
-		return new SWRLParser(swrlapiOWLOntology);
-	}
-
-	public static DefaultSWRLAPIRenderer createSWRLAPIRenderer(SWRLAPIOWLOntology swrlapiOWLOntology)
-	{
-		return new DefaultSWRLAPIRenderer(swrlapiOWLOntology);
-	}
-
 	public static SWRLAPIOntologyProcessor createSWRLAPIOntologyProcessor(SWRLAPIOWLOntology swrlapiOWLOntology)
 	{
 		return new DefaultSWRLAPIOntologyProcessor(swrlapiOWLOntology);
@@ -175,7 +144,7 @@ public class SWRLAPIFactory
 	}
 
 	public static SWRLRulesTableModel createSWRLRulesTableModel(SWRLRuleEngine swrlRuleEngine,
-			DefaultSWRLAPIRenderer swrlRuleRenderer)
+			SWRLRuleRenderer swrlRuleRenderer)
 	{
 		return new SWRLRulesTableModel(swrlRuleEngine, swrlRuleRenderer);
 	}
