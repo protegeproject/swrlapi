@@ -1,19 +1,31 @@
 package org.swrlapi.ui.view;
 
-import org.swrlapi.ui.dialog.SWRLAPIApplicationDialogManager;
-import org.swrlapi.ui.model.SWRLAPIApplicationModel;
-import org.swrlapi.ui.model.SWRLRulesTableModel;
-
-import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.TableColumnModel;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JViewport;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.TableColumnModel;
+
+import org.swrlapi.ui.dialog.SWRLAPIApplicationDialogManager;
+import org.swrlapi.ui.model.SWRLAPIApplicationModel;
+import org.swrlapi.ui.model.SWRLRulesTableModel;
+
+/**
+ * Provides a model for graphical display or SWRL rules or SQWRL queries.
+ *
+ * @see org.swrlapi.ui.model.SWRLRulesTableModel
+ */
 public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 {
 	private static final long serialVersionUID = 1L;
@@ -101,8 +113,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 
 	private void addTableListeners()
 	{
-		this.swrlRulesTable.addMouseListener(new MouseAdapter()
-		{
+		this.swrlRulesTable.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e)
 			{
@@ -114,8 +125,8 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 			}
 		});
 
-		this.swrlRulesTable.getSelectionModel().addListSelectionListener(new ListSelectionListener()
-		{
+		this.swrlRulesTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			@Override
 			public void valueChanged(ListSelectionEvent e)
 			{
 				if (hasSelectedRule())
@@ -183,9 +194,15 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 		this.deleteButton.setEnabled(false);
 	}
 
-	private boolean hasSelectedRule() { return this.swrlRulesTable.getSelectedRow() != -1; }
+	private boolean hasSelectedRule()
+	{
+		return this.swrlRulesTable.getSelectedRow() != -1;
+	}
 
-	private SWRLAPIApplicationModel getSWRLAPIApplicationModel() { return this.applicationModel; }
+	private SWRLAPIApplicationModel getSWRLAPIApplicationModel()
+	{
+		return this.applicationModel;
+	}
 
 	private abstract class ActionListenerBase implements ActionListener
 	{
@@ -245,8 +262,9 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 		{
 			String selectedRuleName = getSelectedSWRLRuleName();
 
-			if (SWRLRulesTableView.this.swrlRulesTableModel.hasSWRLRule(selectedRuleName) && this.applicationDialogManager
-					.showConfirmDialog(parent, "Do you really want to delete the rule?", "Delete Rule")) {
+			if (SWRLRulesTableView.this.swrlRulesTableModel.hasSWRLRule(selectedRuleName)
+					&& this.applicationDialogManager.showConfirmDialog(parent, "Do you really want to delete the rule?",
+							"Delete Rule")) {
 				SWRLRulesTableView.this.swrlRulesTableModel.removeSWRLRule(selectedRuleName);
 				getSWRLAPIApplicationModel().getSWRLAPIOWLOntology().deleteSWRLRule(selectedRuleName);
 			}

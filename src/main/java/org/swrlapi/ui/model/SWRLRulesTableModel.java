@@ -1,9 +1,9 @@
 package org.swrlapi.ui.model;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -31,7 +31,7 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 	public static int NUMBER_OF_COLUMNS = 4;
 
 	private final SWRLRuleRenderer swrlRuleRenderer;
-	private final Map<String, SWRLRuleModel> swrlRuleModels; // rule name -> SWRLRuleModel
+	private final SortedMap<String, SWRLRuleModel> swrlRuleModels; // rule name -> SWRLRuleModel
 
 	private SWRLAPIView swrlapiView = null;
 	private boolean isModified = false;
@@ -39,7 +39,7 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 	public SWRLRulesTableModel(SWRLRuleEngine swrlRuleEngine, SWRLRuleRenderer swrlRuleRenderer)
 	{
 		this.swrlRuleRenderer = swrlRuleRenderer;
-		this.swrlRuleModels = new HashMap<>();
+		this.swrlRuleModels = new TreeMap<>();
 
 		for (SWRLAPIRule swrlapiRule : swrlRuleEngine.getSWRLRules()) {
 			String ruleName = swrlapiRule.getRuleName();
