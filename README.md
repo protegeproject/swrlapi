@@ -6,7 +6,7 @@ It includes graphical tools for editing and executing SWRL rules and provides an
 
 See the [SWRLAPI Wiki](https://github.com/protegeproject/swrlapi/wiki) for documentation.
 
-A [Protege-based](http://protege.stanford.edu/]) [SWRLTab Plugin](https://github.com/protegeproject/swrltab-plugin) is also available. 
+A [Protégé-based](http://protege.stanford.edu/) [SWRLTab Plugin](https://github.com/protegeproject/swrltab-plugin) is also available. 
 
 #### Building Prerequisites
 
