@@ -31,5 +31,3 @@ Build it with Maven:
 
 On build completion, your local Maven repository will contain the generated swrlapi-${version}.jar file.
 
-This JAR is used by the standalone [SWRLTab](https://github.com/protegeproject/swrltab) and
-the [SWRLTab Plugin](https://github.com/protegeproject/swrltab-plugin).
