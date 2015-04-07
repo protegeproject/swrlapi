@@ -10,7 +10,7 @@ A [Protégé-based](http://protege.stanford.edu/) [SWRLTab Plugin](https://githu
 
 #### Building Prerequisites
 
-To build this library, you must have the following items installed:
+To build this library you must have the following items installed:
 
 + Apache's [Maven](http://maven.apache.org/index.html).
 + A tool for checking out a [Git](http://git-scm.com/) repository.
@@ -25,11 +25,11 @@ Change into the swrlapi directory:
 
     cd swrlapi
 
-Build it with Maven:
+Then build it with Maven:
 
     mvn clean install
 
-On build completion, your local Maven repository will contain the generated swrlapi-${version}.jar file.
+On build completion your local Maven repository will contain the generated swrlapi-${version}.jar file.
 
 A [Build Project](https://github.com/protegeproject/swrltab-project) is provided to build various SWRLAPI-related components.
 
