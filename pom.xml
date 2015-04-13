@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-				 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.swrlapi</groupId>
@@ -21,11 +21,11 @@
 
   </properties>
 
-	<repositories>
+  <repositories>
 
-    <!-- JARs that can not be found in public Maven repositories are put in local repository in ${project.basedir}/lib. -->
-    <!-- Each project ./lib directory can contain a repository of this type. -->
-    <!-- See: http://blog.dub.podval.org/2010/01/maven-in-project-repository.html -->
+    <!-- JARs not public Maven repositories are put in local repository in ${project.basedir}/lib. -->
+    <!-- Each project ./lib directory can contain a repository of this type.                       -->
+    <!-- See: http://blog.dub.podval.org/2010/01/maven-in-project-repository.html                  -->
     <repository>
       <id>lib</id>
       <name>lib</name>
@@ -51,20 +51,20 @@
 
     <!-- OSGi Bundle for Axis 1.4 -->
     <dependency>
-	    <groupId>org.apache.geronimo.bundles</groupId>
-	    <artifactId>axis</artifactId>
-	    <version>${axis.osgi.version}</version>
+      <groupId>org.apache.geronimo.bundles</groupId>
+      <artifactId>axis</artifactId>
+      <version>${axis.osgi.version}</version>
     </dependency>
 
     <!-- OSGi Bundle for Apache Commons Discovery 0.4  -->
     <dependency>
-	<groupId>org.apache.geronimo.bundles</groupId>
-	<artifactId>commons-discovery</artifactId>
-	    <version>${commons.discovery.osgi.version}</version>
+      <groupId>org.apache.geronimo.bundles</groupId>
+      <artifactId>commons-discovery</artifactId>
+      <version>${commons.discovery.osgi.version}</version>
       <scope>test</scope>
-     </dependency>
+    </dependency>
 
-    <!-- This is in a local project repository (in ./lib) because we could not find a public Maven repository containing it. -->
+    <!-- In local project repository (./lib) because we could not find a public Maven repository containing it. -->
     <dependency>
       <groupId>org.nfunk</groupId>
       <artifactId>jep</artifactId>
@@ -79,13 +79,13 @@
     </dependency>
 
     <dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
       <version>${slf4j.version}</version>
       <scope>test</scope>
     </dependency>
 
-	</dependencies>
+  </dependencies>
 
   <build>
 
@@ -93,7 +93,7 @@
 
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
+        <version>2.3.2</version>
         <configuration>
           <source>1.8</source>
           <target>1.8</target>
@@ -103,14 +103,14 @@
       <plugin>   
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
-				<version>2.4.0</version>
-				<extensions>true</extensions>
+        <version>2.4.0</version>
+        <extensions>true</extensions>
 
-				<configuration>
+        <configuration>
 
           <instructions>
-					  <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
-					  <Include-Resource>{maven-resources}</Include-Resource>
+            <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+            <Include-Resource>{maven-resources}</Include-Resource>
             <Import-Package>
               org.semanticweb.owlapi.*;version="4.0.2.SNAPSHOT",
               *
@@ -122,9 +122,9 @@
             </Export-Package>
             <Embed-Transitive>true</Embed-Transitive>
             <Embed-Dependency>jep;version="${jep.version}"</Embed-Dependency>
-				  </instructions>
+          </instructions>
 
-				</configuration>
+        </configuration>
 
         <executions>
           <execution>
