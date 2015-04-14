@@ -2,20 +2,28 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.swrlapi</groupId>
+  <groupId>edu.stanford.swrl</groupId>
   <artifactId>swrlapi</artifactId>
-  <version>1.0.6</version>
+  <version>1.0.0-SNAPSHOT</version>
+  <name>SWRLAPI</name>
+  <description>OWLAPI-based implementation of the SWRLAPI</description>
+  <url>https://github.com/protegeproject/swrlapi/wiki</url>
   <packaging>bundle</packaging>
-  <name>OWLAPI-based implementation of the SWRLAPI</name>
 
   <properties>
+
+    <java.version>1.8</java.version> 
 
     <owlapi.version>4.0.2-SNAPSHOT</owlapi.version> 
     <jep.version>2.4.0</jep.version>
     <axis.osgi.version>1.4_1</axis.osgi.version>
     <commons.discovery.osgi.version>0.4_1</commons.discovery.osgi.version>
+
     <junit.version>4.11</junit.version>
     <slf4j.version>1.6.1</slf4j.version>
+
+    <maven.compiler.plugin.version>2.3.2</maven.compiler.plugin.version>
+    <maven.bundle.plugin.version>2.4.0</maven.bundle.plugin.version>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
@@ -23,9 +31,9 @@
 
   <repositories>
 
-    <!-- JARs not public Maven repositories are put in local repository in ${project.basedir}/lib. -->
-    <!-- Each project ./lib directory can contain a repository of this type.                       -->
-    <!-- See: http://blog.dub.podval.org/2010/01/maven-in-project-repository.html                  -->
+    <!-- JARs not in public Maven repositories are put in local repository in ${project.basedir}/lib. -->
+    <!-- Each project ./lib directory can contain a repository of this type.                          -->
+    <!-- See: http://blog.dub.podval.org/2010/01/maven-in-project-repository.html                     -->
     <repository>
       <id>lib</id>
       <name>lib</name>
@@ -93,17 +101,17 @@
 
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.3.2</version>
+        <version>${maven.compiler.plugin.version}</version>
         <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
         </configuration>
       </plugin>
 
       <plugin>   
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
-        <version>2.4.0</version>
+        <version>${maven.bundle.plugin.version}</version>
         <extensions>true</extensions>
 
         <configuration>
