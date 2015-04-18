@@ -2,6 +2,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
+  <parent>
+    <groupId>org.sonatype.oss</groupId>
+    <artifactId>oss-parent</artifactId>
+    <version>7</version>
+  </parent>
+
   <groupId>edu.stanford.swrl</groupId>
   <artifactId>swrlapi</artifactId>
   <version>1.0.0-SNAPSHOT</version>
@@ -14,7 +20,7 @@
 
     <java.version>1.8</java.version> 
 
-    <owlapi.version>4.0.2-SNAPSHOT</owlapi.version> 
+    <owlapi.version>4.0.2</owlapi.version> 
     <jep.version>2.4.0</jep.version>
     <axis.osgi.version>1.4_1</axis.osgi.version>
     <commons.discovery.osgi.version>0.4_1</commons.discovery.osgi.version>
@@ -163,7 +169,7 @@
             <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
             <Include-Resource>{maven-resources}</Include-Resource>
             <Import-Package>
-              org.semanticweb.owlapi.*;version="4.0.2.SNAPSHOT",
+              org.semanticweb.owlapi.*;version="4.0.2",
               *
             </Import-Package>
             <Export-Package>
