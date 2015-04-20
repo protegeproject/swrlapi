@@ -28,7 +28,7 @@ public interface SWRLBuiltInInputArgumentHandler
 	boolean hasUnboundArguments(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	/**
-	 * @param arguments The built-in arguments 
+	 * @param arguments The built-in arguments
 	 * @throws SWRLBuiltInException If not all arguments are bound
 	 */
 	void checkThatAllArgumentsAreBound(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
@@ -59,14 +59,15 @@ public interface SWRLBuiltInInputArgumentHandler
 
 	/**
 	 * Get 0-offset position of first unbound argument; return -1 if no unbound arguments are found.
-	 * @param arguments The built-in arguments  
+	 * 
+	 * @param arguments The built-in arguments
 	 * @return The first unbound argument
 	 * @throws SWRLBuiltInException If an error occurs during processing
 	 */
 	int getFirstUnboundArgument(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	/**
-	 * @param arguments The built-in arguments  
+	 * @param arguments The built-in arguments
 	 * @throws SWRLBuiltInException If at least one argument is unbound
 	 */
 	void checkForUnboundArguments(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
@@ -117,7 +118,7 @@ public interface SWRLBuiltInInputArgumentHandler
 	 * @param expectingAtLeast Minimum number of expected arguments
 	 * @param expectingAtMost Maximum number of expected arguments
 	 * @param actual Actual number of arguments
-	 * @throws InvalidSWRLBuiltInArgumentNumberException  If the condition is not met
+	 * @throws InvalidSWRLBuiltInArgumentNumberException If the condition is not met
 	 */
 	void checkNumberOfArgumentsInRange(int expectingAtLeast, int expectingAtMost, int actual)
 			throws InvalidSWRLBuiltInArgumentNumberException;
@@ -686,8 +687,8 @@ public interface SWRLBuiltInInputArgumentHandler
 
 	/**
 	 * @param arguments The built-in arguments
-	 * @return True if the widest numberic argument is a float
-	 * @throws SWRLBuiltInException
+	 * @return True if the widest numeric argument is a float
+	 * @throws SWRLBuiltInException If an error occurs during processing
 	 */
 	boolean isWidestNumericArgumentAFloat(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
@@ -729,8 +730,8 @@ public interface SWRLBuiltInInputArgumentHandler
 	boolean isArgumentAFloat(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	/**
-	 * @param argumentNumber
-	 * @param arguments
+	 * @param argumentNumber The 0-based index of the argument
+	 * @param arguments The built-in arguments
 	 * @return A float representation of the specified argument
 	 * @throws SWRLBuiltInException If the specified argument cannot be converted to a float
 	 */
@@ -760,8 +761,8 @@ public interface SWRLBuiltInInputArgumentHandler
 			throws SWRLBuiltInException;
 
 	/**
-	 * @param argumentNumber  The 0-based index of the argument
-	 * @param arguments  The built-in arguments
+	 * @param argumentNumber The 0-based index of the argument
+	 * @param arguments The built-in arguments
 	 * @throws SWRLBuiltInException If the specified argument is not a double
 	 */
 	void checkThatArgumentIsADouble(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;

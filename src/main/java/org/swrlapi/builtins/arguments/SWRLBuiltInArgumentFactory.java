@@ -25,7 +25,7 @@ public interface SWRLBuiltInArgumentFactory
 {
 	/**
 	 * @param variableIRI The IRI of a SWRL variable
-	 * @return
+	 * @return A built-in argument
 	 */
 	SWRLVariableBuiltInArgument getVariableBuiltInArgument(IRI variableIRI);
 
@@ -36,49 +36,49 @@ public interface SWRLBuiltInArgumentFactory
 	SWRLVariableBuiltInArgument getUnboundVariableBuiltInArgument(IRI variableIRI);
 
 	/**
-	 * @param cls
-	 * @return
+	 * @param cls An OWL class
+	 * @return A built-in argument
 	 */
 	SWRLClassBuiltInArgument getClassBuiltInArgument(OWLClass cls);
 
 	/**
-	 * @param individual
-	 * @return
+	 * @param individual An OWL individual
+	 * @return A built-in argument
 	 */
 	SWRLNamedIndividualBuiltInArgument getNamedIndividualBuiltInArgument(OWLNamedIndividual individual);
 
 	/**
-	 * @param property
-	 * @return
+	 * @param property An OWL object property
+	 * @return A built-in argument
 	 */
 	SWRLObjectPropertyBuiltInArgument getObjectPropertyBuiltInArgument(OWLObjectProperty property);
 
 	/**
-	 * @param property
-	 * @return
+	 * @param property An OWL data property
+	 * @return A built-in argument
 	 */
 	SWRLDataPropertyBuiltInArgument getDataPropertyBuiltInArgument(OWLDataProperty property);
 
 	/**
-	 * @param property
-	 * @return
+	 * @param property An OWL annotation property
+	 * @return A built-in argument
 	 */
 	SWRLAnnotationPropertyBuiltInArgument getAnnotationPropertyBuiltInArgument(OWLAnnotationProperty property);
 
 	/**
-	 * @param datatype
-	 * @return
+	 * @param datatype An OWL datatype
+	 * @return A built-in argument
 	 */
 	SWRLDatatypeBuiltInArgument getDatatypeBuiltInArgument(OWLDatatype datatype);
 
 	/**
-	 * @param literal
-	 * @return
+	 * @param literal An OWL literal
+	 * @return A built-in argument
 	 */
 	SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(OWLLiteral literal);
 
 	/**
-	 * @param s
+	 * @param s A string
 	 * @return
 	 */
 	SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(String s);

@@ -133,7 +133,7 @@ public class SWRLAPIFactory
 
 	/**
 	 * @param swrlapiOWLOntology
-	 * @return
+	 * @return A SWRLAPI ontology processor
 	 */
 	public static SWRLAPIOntologyProcessor createSWRLAPIOntologyProcessor(SWRLAPIOWLOntology swrlapiOWLOntology)
 	{
@@ -141,8 +141,8 @@ public class SWRLAPIFactory
 	}
 
 	/**
-	 * @param swrlapiOWLOntology
-	 * @return
+	 * @param swrlapiOWLOntology A SWRLAPI-based OWL ontology
+	 * @return A SWRL built-in argument factory
 	 */
 	public static SWRLBuiltInArgumentFactory createSWRLBuiltInArgumentFactory(SWRLAPIOWLOntology swrlapiOWLOntology)
 	{
@@ -168,7 +168,7 @@ public class SWRLAPIFactory
 	}
 
 	/**
-	 * @param sqwrlResultValueFactory
+	 * @param sqwrlResultValueFactory A SQWRL result value factory
 	 * @return A SQWRL result
 	 */
 	public static DefaultSQWRLResult createSQWRLResult(SQWRLResultValueFactory sqwrlResultValueFactory)
@@ -231,8 +231,8 @@ public class SWRLAPIFactory
 	}
 
 	/**
-	 * @param applicationModel
-	 * @return
+	 * @param applicationModel A SWRLAPI-based application model
+	 * @return A SWRLAPI-based application controller
 	 */
 	public static SWRLAPIApplicationController createSWRLAPIApplicationController(SWRLAPIApplicationModel applicationModel)
 	{

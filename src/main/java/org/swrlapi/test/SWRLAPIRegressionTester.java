@@ -83,8 +83,6 @@ public class SWRLAPIRegressionTester
 				System.out.println("Failed test names: " + failedTests);
 			} else
 				System.out.println("Passed " + passedTests + " test(s)!");
-		} catch (SQWRLException e) {
-			System.out.println("SQWRL exception running tests: " + e.getMessage());
 		} catch (RuntimeException e) {
 			System.out.println("Internal error running tests: " + e.getMessage());
 		}

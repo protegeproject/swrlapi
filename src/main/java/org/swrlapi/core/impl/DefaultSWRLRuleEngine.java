@@ -1,5 +1,8 @@
 package org.swrlapi.core.impl;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.semanticweb.owlapi.model.AddAxiom;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
@@ -20,9 +23,6 @@ import org.swrlapi.owl2rl.OWL2RLEngine;
 import org.swrlapi.sqwrl.SQWRLQuery;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * This class provides an implementation of some of the core functionality required by a SWRL rule engine.
@@ -219,7 +219,7 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 	 * Get all the enabled SQWRL queries in the ontology.
 	 */
 	@Override
-	public Set<SQWRLQuery> getSQWRLQueries() throws SQWRLException
+	public Set<SQWRLQuery> getSQWRLQueries()
 	{
 		return this.swrlapiOWLOntology.getSQWRLQueries();
 	}
@@ -332,13 +332,14 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 		return this.targetSWRLRuleEngine.getVersion();
 	}
 
+	@Override
 	public OWLReasoner getOWLReasoner()
 	{
 		return this.targetSWRLRuleEngine.getOWLReasoner();
 	}
 
-	private void exportSQWRLQuery2TargetRuleEngine(String activeQueryName)
-			throws SWRLRuleEngineException, TargetSWRLRuleEngineException, SWRLBuiltInException
+	private void exportSQWRLQuery2TargetRuleEngine(String activeQueryName) throws SWRLRuleEngineException,
+			TargetSWRLRuleEngineException, SWRLBuiltInException
 	{
 		for (SQWRLQuery query : this.swrlapiOWLOntology.getSQWRLQueries()) {
 			query.setActive(query.getQueryName().equalsIgnoreCase(activeQueryName));
@@ -346,8 +347,8 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 		}
 	}
 
-	private void exportSQWRLQueries2TargetRuleEngine()
-			throws SWRLRuleEngineException, TargetSWRLRuleEngineException, SWRLBuiltInException
+	private void exportSQWRLQueries2TargetRuleEngine() throws SWRLRuleEngineException, TargetSWRLRuleEngineException,
+			SWRLBuiltInException
 	{
 		for (SQWRLQuery query : this.swrlapiOWLOntology.getSQWRLQueries()) {
 			query.setActive(true);
@@ -355,8 +356,8 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 		}
 	}
 
-	private void exportSQWRLQuery2TargetRuleEngine(SQWRLQuery query)
-			throws SWRLRuleEngineException, TargetSWRLRuleEngineException, SWRLBuiltInException
+	private void exportSQWRLQuery2TargetRuleEngine(SQWRLQuery query) throws SWRLRuleEngineException,
+			TargetSWRLRuleEngineException, SWRLBuiltInException
 	{
 		getTargetSWRLRuleEngine().defineSQWRLQuery(query);
 	}
@@ -369,8 +370,8 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 		return this.targetSWRLRuleEngine;
 	}
 
-	private void exportOWLAxioms2TargetRuleEngine(Set<OWLAxiom> axioms)
-			throws SWRLRuleEngineException, TargetSWRLRuleEngineException
+	private void exportOWLAxioms2TargetRuleEngine(Set<OWLAxiom> axioms) throws SWRLRuleEngineException,
+			TargetSWRLRuleEngineException
 	{
 		for (OWLAxiom axiom : axioms) {
 			if (!this.exportedOWLAxioms.contains(axiom))

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * The SWRLAPI expects that each implementation of a SWRL rule engine will provide an OWL 2 RL-based reasoner. 
+ * The SWRLAPI expects that each implementation of a SWRL rule engine will provide an OWL 2 RL-based reasoner.
  *
  * @see org.swrlapi.bridge.TargetSWRLRuleEngine
  */
@@ -15,7 +15,7 @@ public interface OWL2RLEngine extends OWL2RLNames
 	};
 
 	/**
-	 * See if the rule selection has changed since last call to {@link OWL2RLEngine#resetRuleSelectionChanged()}.
+	 * @return True if the rule selection has changed since last call to {@link OWL2RLEngine#resetRuleSelectionChanged()}.
 	 */
 	boolean hasRuleSelectionChanged();
 
