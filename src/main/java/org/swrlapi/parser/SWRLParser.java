@@ -20,16 +20,16 @@ import org.swrlapi.core.SWRLAPIOWLOntology;
 /**
  * A basic SWRL and SQWRL parser. It provides in interactive parsing mode for incomplete rules and queries and provides
  * feedback on the next token that it is expecting.
- * <p/>
+ * <p>
  * This parser will throw a {@link org.swrlapi.parser.SWRLParseException} if there is an error in the rule or query. In
  * interactive parse mode, if the rule or query is correct but incomplete a
  * {@link org.swrlapi.parser.SWRLIncompleteRuleException} (which is a subclass of
  * {@link org.swrlapi.parser.SWRLParseException}) will be thrown.
- * <p/>
+ * <p>
  * The {@link #parseSWRLRule(String, boolean, String, String)} method parses a rule or query. If
  * <code>interactiveParseOnly</code> argument is <code>true</code>, only checking is performed - no SWRL rules are
  * created; if it is false, a {@link org.semanticweb.owlapi.model.SWRLRule} object is created.
- * <p/>
+ * <p>
  * The parser does not yet parse OWL class expressions or data ranges.
  *
  * @see org.semanticweb.owlapi.model.SWRLRule
@@ -54,6 +54,14 @@ public class SWRLParser
 		this.swrlParserSupport = new SWRLParserSupport(swrlapiOWLOntology);
 	}
 
+	/**
+	 * @param ruleText The rule text
+	 * @param interactiveParseOnly If True simply parse
+	 * @param ruleName The rule name
+	 * @param comment A comment
+	 * @return The parsed rule
+	 * @throws SWRLParseException If an error occurs during parsing
+	 */
 	public SWRLRule parseSWRLRule(String ruleText, boolean interactiveParseOnly, String ruleName, String comment)
 			throws SWRLParseException
 	{
@@ -121,6 +129,9 @@ public class SWRLParser
 	/**
 	 * If the rule is correct though possibly incomplete return <code>true</code>; if the rule has errors return
 	 * <code>false</code>.
+	 *
+	 * @param ruleText The rule text
+	 * @return True if the rule is valid but possibly incomplete
 	 */
 	public boolean isSWRLRuleCorrectButPossiblyIncomplete(String ruleText)
 	{
@@ -137,6 +148,9 @@ public class SWRLParser
 	/**
 	 * If the rule is correct and complete return <code>true</code>; if the rule has errors or is incomplete return
 	 * <code>false</code>.
+	 *
+	 * @param ruleText The rule text
+	 * @return True is the rule is correct and complete
 	 */
 	public boolean isSWRLRuleCorrectAndComplete(String ruleText)
 	{

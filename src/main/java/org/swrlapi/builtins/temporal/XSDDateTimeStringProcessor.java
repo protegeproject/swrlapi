@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
  * <p>
  * TODO Time zone offset specifications are not yet supported.
  */
-public class XSDDateTimeStringProcessor extends DatetimeStringProcessor
+class XSDDateTimeStringProcessor extends DatetimeStringProcessor
 {
 	private static final SimpleDateFormat _dateFormat = new SimpleDateFormat("y-M-d'T'h:m:s.S");
 	private static final String _delimiters = "-:.TZ";

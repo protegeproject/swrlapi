@@ -36,7 +36,7 @@ import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
 
 /**
  * Implementation library for SQWRL built-ins.
- * <p/>
+ * <p>
  * Unlike other built-in libraries, queries that use built-ins in this library need to be preprocessed by a SQWRL-aware
  * processor. See the {@link DefaultSQWRLQuery} class for an example of this processing.
  */
@@ -289,9 +289,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 	/**
 	 * ******************************************************************************************************************
-	 * <p/>
 	 * SQWRL operators that work with a single collection and return a value or an element or evaluate to true or false
-	 * <p/>
 	 * *******************************************************************************************************************
 	 */
 
@@ -644,9 +642,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 	/**
 	 * ******************************************************************************************************************
-	 * <p/>
 	 * SQWRL operators that work with a single collection and return a collection
-	 * <p/>
 	 * *******************************************************************************************************************
 	 */
 
@@ -921,9 +917,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 	/**
 	 * ******************************************************************************************************************
-	 * <p/>
 	 * SQWRL operators that work with two collections and return an element or evaluate to true or false
-	 * <p/>
 	 * *******************************************************************************************************************
 	 */
 
@@ -1017,9 +1011,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 	/**
 	 * ******************************************************************************************************************
-	 * <p/>
 	 * SQWRL operators that work with two collections and return a collection
-	 * <p/>
 	 * *******************************************************************************************************************
 	 */
 
@@ -1185,9 +1177,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 	/**
 	 * ******************************************************************************************************************
-	 * <p/>
 	 * Alias definitions for SQWRL operators
-	 * <p/>
 	 * *******************************************************************************************************************
 	 */
 
@@ -1253,9 +1243,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
 	/**
 	 * ******************************************************************************************************************
-	 * <p/>
 	 * Internal methods
-	 * <p/>
 	 * *******************************************************************************************************************
 	 */
 

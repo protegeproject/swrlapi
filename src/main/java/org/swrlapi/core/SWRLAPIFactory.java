@@ -52,6 +52,8 @@ public class SWRLAPIFactory
 
 	/**
 	 * Create an empty {@link org.swrlapi.core.SWRLAPIOWLOntology}.
+	 *
+	 * @return A SWRLAPI-based wrapper of an OWL ontology
 	 */
 	public static SWRLAPIOWLOntology createSWRLAPIOntology()
 	{
@@ -69,6 +71,10 @@ public class SWRLAPIFactory
 		}
 	}
 
+	/**
+	 * @param ontology An OWLAPI-based ontology
+	 * @return A SWRLAPI-based wrapper of an OWL ontology
+	 */
 	public static SWRLAPIOWLOntology createSWRLAPIOntology(OWLOntology ontology)
 	{
 		DefaultPrefixManager prefixManager = new DefaultPrefixManager();
@@ -82,6 +88,10 @@ public class SWRLAPIFactory
 	/**
 	 * Create a {@link org.swrlapi.core.SWRLAPIOWLOntology} from an OWLAPI-based
 	 * {@link org.semanticweb.owlapi.model.OWLOntology}.
+	 *
+	 * @param ontology An OWLAPI-based ontology
+	 * @param prefixManager A prefix manager
+	 * @return A SWRLAPI-based wrapper of an OWL ontology
 	 */
 	public static SWRLAPIOWLOntology createSWRLAPIOntology(OWLOntology ontology, DefaultPrefixManager prefixManager)
 	{
@@ -98,6 +108,9 @@ public class SWRLAPIFactory
 
 	/**
 	 * Create a {@link org.swrlapi.core.SWRLAPIOWLOntology} from a file.
+	 *
+	 * @param owlFile A file containing an OWL ontology
+	 * @return A SWRLAPI-based wrapper of an OWL ontology
 	 */
 	public static SWRLAPIOWLOntology createSWRLAPIOntology(File owlFile)
 	{
@@ -118,74 +131,128 @@ public class SWRLAPIFactory
 		return createSWRLAPIOntology(ontology, prefixManager);
 	}
 
+	/**
+	 * @param swrlapiOWLOntology
+	 * @return
+	 */
 	public static SWRLAPIOntologyProcessor createSWRLAPIOntologyProcessor(SWRLAPIOWLOntology swrlapiOWLOntology)
 	{
 		return new DefaultSWRLAPIOntologyProcessor(swrlapiOWLOntology);
 	}
 
+	/**
+	 * @param swrlapiOWLOntology
+	 * @return
+	 */
 	public static SWRLBuiltInArgumentFactory createSWRLBuiltInArgumentFactory(SWRLAPIOWLOntology swrlapiOWLOntology)
 	{
 		return new DefaultSWRLBuiltInArgumentFactory(swrlapiOWLOntology.getIRIResolver());
 	}
 
+	/**
+	 * @param swrlapiOWLOntology A SWRLAPI-based OWL ontology
+	 * @return A SQWRL result value factory
+	 */
 	public static SQWRLResultValueFactory createSQWRLResultValueFactory(SWRLAPIOWLOntology swrlapiOWLOntology)
 	{
 		return new DefaultSQWRLResultValueFactory(swrlapiOWLOntology.getIRIResolver());
 	}
 
+	/**
+	 * @param swrlapiOWLOntology A SWRLAPI-based OWL ontology
+	 * @return A SWRLAPI-based OWL data factory
+	 */
 	public static SWRLAPIOWLDataFactory createSWRLAPIOWLDataFactory(SWRLAPIOWLOntology swrlapiOWLOntology)
 	{
 		return new DefaultSWRLAPIOWLDataFactory(swrlapiOWLOntology);
 	}
 
+	/**
+	 * @param sqwrlResultValueFactory
+	 * @return A SQWRL result
+	 */
 	public static DefaultSQWRLResult createSQWRLResult(SQWRLResultValueFactory sqwrlResultValueFactory)
 	{
 		return new DefaultSQWRLResult(sqwrlResultValueFactory);
 	}
 
+	/**
+	 * @param swrlRuleEngine A SWRL rule engine
+	 * @param swrlRuleRenderer A SWRL renderer
+	 * @return A SWRL rule table model
+	 */
 	public static SWRLRulesTableModel createSWRLRulesTableModel(SWRLRuleEngine swrlRuleEngine,
 			SWRLRuleRenderer swrlRuleRenderer)
 	{
 		return new SWRLRulesTableModel(swrlRuleEngine, swrlRuleRenderer);
 	}
 
+	/**
+	 * @return A SWRLAPI-based literal factory
+	 */
 	public static SWRLAPILiteralFactory createSWRLAPILiteralFactory()
 	{
 		return new DefaultSWRLAPILiteralFactory();
 	}
 
+	/**
+	 * @return A SWRLAPI-based OWL datatype factory
+	 */
 	public static SWRLAPIOWLDatatypeFactory createSWRLAPIOWLDatatypeFactory()
 	{
 		return new DefaultSWRLAPIOWLDatatypeFactory();
 	}
 
+	/**
+	 * @return An OWL literal factory
+	 */
 	public static OWLLiteralFactory createOWLLiteralFactory()
 	{
 		return new DefaultOWLLiteralFactory();
 	}
 
+	/**
+	 * @return A SWRL rule engine factory
+	 */
 	public static SWRLRuleEngineFactory createSWRLRuleEngineFactory()
 	{
 		return new DefaultSWRLRuleEngineFactory();
 	}
 
+	/**
+	 * @param swrlapiOWLOntology A SWRLAPI-based wrapper for an OWL ontology
+	 * @param ruleEngine A SWRL rule engine
+	 * @return A SWRLAPI-based applicaiton model
+	 */
 	public static SWRLAPIApplicationModel createSWRLAPIApplicationModel(SWRLAPIOWLOntology swrlapiOWLOntology,
 			SWRLRuleEngine ruleEngine)
 	{
 		return new SWRLAPIApplicationModel(swrlapiOWLOntology, ruleEngine);
 	}
 
+	/**
+	 * @param applicationModel
+	 * @return
+	 */
 	public static SWRLAPIApplicationController createSWRLAPIApplicationController(SWRLAPIApplicationModel applicationModel)
 	{
 		return new SWRLAPIApplicationController(applicationModel);
 	}
 
+	/**
+	 * @param applicationModel An application model
+	 * @return A SWRLAPI-based application dialog manager
+	 */
 	public static SWRLAPIApplicationDialogManager createSWRLAPIApplicationDialogManager(
 			SWRLAPIApplicationModel applicationModel)
 	{
 		return new SWRLAPIApplicationDialogManager(applicationModel);
 	}
 
+	/**
+	 * @return A SQWRL icon
+	 * @throws SWRLAPIException If an icon cannot be found
+	 */
 	public static Icon getSQWRLIcon() throws SWRLAPIException
 	{
 		URL url = SWRLAPIFactory.class.getResource(SQWRL_ICON_NAME);
@@ -196,6 +263,10 @@ public class SWRLAPIFactory
 			throw new SWRLAPIException("No SQWRL icon found!");
 	}
 
+	/**
+	 * @return An icon for an OWL 2 RL reasoner
+	 * @throws SWRLAPIException If an icon cannot be found
+	 */
 	public static Icon getOWL2RLReasonerIcon() throws SWRLAPIException
 	{
 		URL url = SWRLAPIFactory.class.getResource(OWL2RL_ICON_NAME);

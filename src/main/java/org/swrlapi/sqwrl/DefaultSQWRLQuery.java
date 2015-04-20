@@ -735,7 +735,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 
 	/**
 	 * Incrementally build variable dependency paths up to and including the current atom.
-	 * <p/>
+	 * <p>
 	 * Note: Sets of sets in Java require care because of hash code issues. The enclosed set should not be modified or the
 	 * outer set may return inconsistent results.
 	 */

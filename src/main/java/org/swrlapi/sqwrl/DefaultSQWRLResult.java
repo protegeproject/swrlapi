@@ -34,32 +34,31 @@ import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
  * This class implements the interfaces {@link org.swrlapi.sqwrl.SQWRLResult} and
  * {@link org.swrlapi.sqwrl.SQWRLResultGenerator}. It can be used to generate a result structure and populate it with
  * data; it can also be used to retrieve those data from the result.
- * <p/>
+ * <p>
  * This class operates in three phases:
- * <p/>
+ * <p>
  * (1) Configuration Phase: In this phase the structure of the result is defined. A newly created object will start in
  * this phase. In this phase the columns are defined; aggregation or ordering is also specified in this phase. This
  * phase is closed by a call to the {@link #configured()} method.
- * <p/>
+ * <p>
  * (2) Preparation Phase: In this phase data are added to the result. This phase is implicitly opened by the call to the
  * {@link #configured()} method. It is closed by a call to the {@link #prepared()} method.
- * <p/>
+ * <p>
  * A convenience method {@link #addColumns} that takes a list of column names is also supplied.
- * <p/>
+ * <p>
  * There is also a convenience method {@link #addRow}, which takes a list of {@link SQWRLResultValue} objects. This
  * method automatically does a row open and close. It is expecting the exact same number of list elements as there are
  * columns in the result.
- * <p/>
+ * <p>
  * The interface {@link org.swrlapi.sqwrl.SQWRLResultGenerator} defines the calls used in these two phases.
- * <p/>
+ * <p>
  * (3) Processing Phase: In this phase data may be retrieved from the result. This phase is implicitly opened by the
  * call to the {@link #prepared()} method.
- * <p/>
+ * <p>
  * The interface {@link org.swrlapi.sqwrl.SQWRLResult} defines the calls used in the processing phase.
- * <p/>
+ * <p>
  * An example configuration, data generation, and result retrieval is:
- * <p/>
- * 
+ *
  * <pre>
  * IRIResolver iriResolver = swrlapiOWLOntology.getIRIResolver();
  * SQWRLResultValueFactory valueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(iriResolver);
@@ -83,19 +82,18 @@ import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
  * result.closeRow();
  * result.prepared();
  * </pre>
- * <p/>
+ * <p>
  * The result is now available for reading. The interface {@link org.swrlapi.sqwrl.SQWRLResult} defines the assessor
  * methods. A row consists of a list of objects defined by the interface
  * {@link org.swrlapi.sqwrl.values.SQWRLResultValue}.
- * </p>
+ * <p>
  * The possible types of values are (1) {@link org.swrlapi.sqwrl.values.SQWRLLiteralResultValue}, representing literals;
  * (2) {@link org.swrlapi.sqwrl.values.SQWRLIndividualResultValue}, representing OWL individuals; (3)
  * {@link org.swrlapi.sqwrl.values.SQWRLClassResultValue}, representing OWL classes; (4)
  * {@link org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue}, representing OWL object properties, (5)
  * {@link org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue}, representing OWL data properties, and (6)
  * {@link org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue}, representing OWL annotation properties.
- * <p/>
- * 
+ *
  * <pre>
  * while (result.next()) {
  * 	SQWRLIndividualResultValue nameValue = result.getIndividual(&quot;name&quot;);

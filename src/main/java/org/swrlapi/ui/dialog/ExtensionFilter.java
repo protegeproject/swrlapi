@@ -8,10 +8,10 @@ import java.util.List;
 
 /**
  * A file filter the works on a particular extension.
- * <p/>
+ * <p>
  * Taken from Protege.
  *
- * @author Ray Fergerson <fergerson@smi.stanford.edu>
+ * @author Ray Fergerson fergerson@smi.stanford.edu
  */
 public class ExtensionFilter extends FileFilter
 {

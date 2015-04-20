@@ -10,7 +10,7 @@ import org.swrlapi.sqwrl.SQWRLQueryEngine;
 
 /**
  * This interface defines methods that must be provided by a SWRL rule engine in the SWRLAPI.
- * </p>
+ * <P>
  * A native rule engine implementation must implement the {@link org.swrlapi.bridge.TargetSWRLRuleEngine}
  * interface.
  *

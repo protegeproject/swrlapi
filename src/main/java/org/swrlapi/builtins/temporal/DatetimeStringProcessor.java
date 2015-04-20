@@ -8,7 +8,7 @@ import java.util.StringTokenizer;
  * A class supporting processing of datetime strings. This class will be specialized by subclasses to deal with
  * different datetime formats, e.g., XSD and JDBC datetimes.
  */
-public abstract class DatetimeStringProcessor
+abstract class DatetimeStringProcessor
 {
 	private final SimpleDateFormat dateFormat;
 	private final String delimiters;
@@ -17,6 +17,13 @@ public abstract class DatetimeStringProcessor
 	private final String datetimeRoundDownPadding[], datetimeRoundUpPadding[]; // Strings to pad a partially specified
 	// datetime
 
+	/**
+	 * @param dateFormat A date format
+	 * @param delimiters Delimeters
+	 * @param gTokenIndex
+	 * @param datetimeRoundDownPadding
+	 * @param datetimeRoundUpPadding
+	 */
 	public DatetimeStringProcessor(SimpleDateFormat dateFormat, String delimiters, int gTokenIndex[],
 			String datetimeRoundDownPadding[], String datetimeRoundUpPadding[])
 	{

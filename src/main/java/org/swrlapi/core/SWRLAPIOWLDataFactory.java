@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Factory that extends the OWLAPI's {@link org.semanticweb.owlapi.model.OWLDataFactory} class with additional
  * methods to create entities used by the SWRLAPI.
- * <p/>
+ * <p>
  * It provides a method to create {@link org.swrlapi.core.SWRLAPIRule} objects, which extend an OWLAPI
  * {@link org.semanticweb.owlapi.model.SWRLRule}, and provides access to factories to create other entity types used
  * by the SWRLAPI that have no direct equivalent in the OWLAPI.

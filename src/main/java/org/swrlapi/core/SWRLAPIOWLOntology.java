@@ -25,18 +25,17 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
  * provide the richer representation of a SWRL rule required by the SWRLAPI. In particular, the SWRLAPI has a range of
  * types extending the OWLAPI's {@link org.semanticweb.owlapi.model.SWRLDArgument} interface to define arguments to
  * built-in atoms.
- * <p/>
+ * <p>
  * This extension point is defined by the {@link org.swrlapi.builtins.arguments.SWRLBuiltInArgument} interface, which
  * extends the OWLAPI's {@link org.semanticweb.owlapi.model.SWRLDArgument} interface. A
  * {@link org.swrlapi.core.SWRLAPIOWLOntology} will construct SWRLAPI rules from the SWRL rules in an OWLAPI-based
  * ontology to contain these additional built-in argument types.
- * <p/>
+ * <p>
  * The {@link #startBulkConversion()}, {@link #completeBulkConversion()}, {@link #hasOntologyChanged()}, and
  * {@link #resetOntologyChanged()} methods can be used for optimization purposes. For example, in the Protege-OWL API
  * the {@link #startBulkConversion()} method turns off listener notification so that bulk transfer of OWL axioms can be
  * performed more efficiently. The {@link #hasOntologyChanged()} method can be used by rule engines to avoid unnecessary
  * regeneration of knowledge.
- * <p/>
  *
  * @see org.swrlapi.core.SWRLAPIRule
  * @see org.swrlapi.core.SWRLAPIOntologyProcessor

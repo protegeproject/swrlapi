@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 /**
  * A class supporting processing of datetime strings represented in the standard JDBC format 'y-M-d h:m:s.S'.
  */
-public class JDBCDatetimeStringProcessor extends DatetimeStringProcessor
+class JDBCDatetimeStringProcessor extends DatetimeStringProcessor
 {
 	private static final SimpleDateFormat _dateFormat = new SimpleDateFormat("y-M-d h:m:s.S");
 	private static final String _delimiters = " -:."; // Note the space.

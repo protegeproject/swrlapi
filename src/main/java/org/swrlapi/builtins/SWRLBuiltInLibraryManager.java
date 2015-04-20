@@ -35,8 +35,8 @@ public abstract class SWRLBuiltInLibraryManager
 	private static final Map<String, Method> methods;
 
 	static {
-		builtInLibraries = new HashMap<String, SWRLBuiltInLibrary>();
-		methods = new HashMap<String, Method>();
+		builtInLibraries = new HashMap<>();
+		methods = new HashMap<>();
 	}
 
 	/**
@@ -48,6 +48,15 @@ public abstract class SWRLBuiltInLibraryManager
 	 * combination of arguments that evaluates to true.
 	 * <p>
 	 * If the built-in evaluates to false, it will return an empty argument pattern list.
+	 *
+	 * @param bridge The built-in bridge
+	 * @param ruleName The name of the invoking rule
+	 * @param builtInName The invoked built-in
+	 * @param builtInIndex The 0-based index of the invoked built-in
+	 * @param isInConsequent If the built-in in the consequent?
+	 * @param arguments The built-in arguments
+	 * @return The result of the built-in
+	 * @throws SWRLBuiltInException If an exception occurs during invocation
 	 */
 	public static List<List<SWRLBuiltInArgument>> invokeSWRLBuiltIn(SWRLBuiltInBridge bridge, String ruleName,
 			String builtInName, int builtInIndex, boolean isInConsequent, List<SWRLBuiltInArgument> arguments)

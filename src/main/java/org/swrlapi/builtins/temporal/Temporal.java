@@ -9,7 +9,7 @@ import java.util.GregorianCalendar;
  * granularity constants, users should generally not use this class directly but should instead use the Instant and
  * Period classes in this package.
  */
-public class Temporal
+class Temporal
 {
 	public final static int MILLISECONDS = 6;
 	public final static int SECONDS = 5;
@@ -86,18 +86,28 @@ public class Temporal
 
 	private final GregorianCalendar gc;
 
-	public Temporal(DatetimeStringProcessor _datetimeStringProcessor)
+	/**
+	 * @param datetimeStringProcessor A datetime string processor
+	 */
+	public Temporal(DatetimeStringProcessor datetimeStringProcessor)
 	{
-		this.datetimeStringProcessor = _datetimeStringProcessor;
+		this.datetimeStringProcessor = datetimeStringProcessor;
 
 		this.gc = new GregorianCalendar();
 	}
 
+	/**
+	 * @param nowDatetimeString A string containing an updated 'now' datetime
+	 * @throws TemporalException If an error occurs during processing
+	 */
 	public void setNow(String nowDatetimeString) throws TemporalException
 	{
 		this.nowGranuleCountInMillis = datetimeString2GranuleCount(nowDatetimeString, MILLISECONDS);
 	}
 
+	/**
+	 * @throws TemporalException If an error occurs during processing
+	 */
 	public void setNow() throws TemporalException
 	{
 		long millisecondsFrom1970 = System.currentTimeMillis();
@@ -105,17 +115,30 @@ public class Temporal
 		this.nowGranuleCountInMillis = millisecondsFrom1970 + MillisecondsTo1970;
 	}
 
+	/**
+	 * @param granularity A granularity
+	 * @throws TemporalException If the specified granulity is invalid
+	 */
 	public void checkGranularity(String granularity) throws TemporalException
 	{
 		getIntegerGranularityRepresentation(granularity); // Will throw an exception if it cannot convert the granularity.
 	}
 
+	/**
+	 * @param monthCount A count of months in a year
+	 * @throws TemporalException If the specified month count is invalid
+	 */
 	public static void checkMonthCount(long monthCount) throws TemporalException
 	{
 		if ((monthCount < 1) || (monthCount > 12))
 			throw new TemporalException("invalid month count #" + monthCount);
 	}
 
+	/**
+	 * @param granularity
+	 * @return
+	 * @throws TemporalException
+	 */
 	public static int getIntegerGranularityRepresentation(String granularity) throws TemporalException
 	{
 		if (granularity.length() == 0 || granularity.equalsIgnoreCase("finest"))
@@ -376,7 +399,7 @@ public class Temporal
 	 * Take a granule count (from the beginning of calendar time, e.g., '0000-01-01 00:00:00.000' in JDBC timestamp
 	 * format) at any granularity and convert it to a Timestamp. Java Timestamp record time as milliseconds from January
 	 * 1st 1970.
-	 * <p/>
+	 * <p>
 	 * java.sql.Timestamp will take car of the time zone offset plus daylight savings time.
 	 */
 	public static java.sql.Timestamp granuleCount2Timestamp(long granuleCount, int granularity) throws TemporalException
@@ -395,7 +418,7 @@ public class Temporal
 	 * Take a granule count (from the beginning of calendar time, e.g., '0000-01-01 00:00:00.000' in JDBC timestamp
 	 * format) at any granularity and convert it to a java.util.Date. Date record time as milliseconds from January 1st
 	 * 1970.
-	 * <p/>
+	 * <p>
 	 * java.util.Date will take car of the time zone offset plus daylight savings time.
 	 */
 	public static java.util.Date granuleCount2UtilDate(long granuleCount, int granularity) throws TemporalException
@@ -414,7 +437,7 @@ public class Temporal
 	 * Take a granule count (from the beginning of calendar time, e.g., '0000-01-01 00:00:00.000' in JDBC timestamp
 	 * format) at any granularity and convert it to a java.sql.Date. Date record time as milliseconds from January 1st
 	 * 1970.
-	 * <p/>
+	 * <p>
 	 * java.sql.Date will take car of the time zone offset plus daylight savings time.
 	 */
 	public static java.sql.Date granuleCount2SQLDate(long granuleCount, int granularity) throws TemporalException
@@ -611,8 +634,15 @@ public class Temporal
 		return leapGranules;
 	}
 
-	// Calculate the number of leap years up until a granule count specified at any granularity. TODO: rewrite - very,
-	// very inefficient
+	/**
+	 * Calculate the number of leap years up until a granule count specified at any granularity.
+	 * TODO: rewrite - very,
+	 *
+	 * @param granuleCount
+	 * @param granularity
+	 * @return
+	 * @throws TemporalException
+	 */
 	private static long leapYearsUpToGranuleCount(long granuleCount, int granularity) throws TemporalException
 	{
 		long yearCount, granulesInYearToFeb29th, granulesInYear, granulesInDay, cumulativeGranuleCount, leapYearCount = 0;

@@ -15,7 +15,7 @@ public interface OWL2RLEngine extends OWL2RLNames
 	};
 
 	/**
-	 * See if the rule selection has changed since last call to {@link OWL2RLEngine#resetRuleSelectionChanged()).
+	 * See if the rule selection has changed since last call to {@link OWL2RLEngine#resetRuleSelectionChanged()}.
 	 */
 	boolean hasRuleSelectionChanged();
 
