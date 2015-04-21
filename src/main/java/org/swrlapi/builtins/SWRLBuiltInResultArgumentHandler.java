@@ -13,7 +13,11 @@ import org.swrlapi.core.xsd.XSDTime;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 
 /**
- * Utility methods for dealing with result arguments from SWRL built-ins.
+ * Utility methods for dealing with result arguments from SWRL built-ins.*
+ * <p>
+ * Each method will take a list of built-in arguments, an index of a particular argument, and a result argument of a
+ * particular type. It will determine if arguments are equal, in which case it will evaluate to true; otherwise it will
+ * evaluate to false.
  *
  * @see org.swrlapi.builtins.AbstractSWRLBuiltInLibrary
  */
@@ -66,5 +70,4 @@ public interface SWRLBuiltInResultArgumentHandler
 
 	public boolean processResultArgument(List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
 			OWLLiteral resultArgument) throws SWRLBuiltInException;
-
 }
