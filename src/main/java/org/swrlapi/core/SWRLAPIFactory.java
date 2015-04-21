@@ -132,7 +132,7 @@ public class SWRLAPIFactory
 	}
 
 	/**
-	 * @param swrlapiOWLOntology
+	 * @param swrlapiOWLOntology A SWRLAPI-based OWL ontology
 	 * @return A SWRLAPI ontology processor
 	 */
 	public static SWRLAPIOntologyProcessor createSWRLAPIOntologyProcessor(SWRLAPIOWLOntology swrlapiOWLOntology)

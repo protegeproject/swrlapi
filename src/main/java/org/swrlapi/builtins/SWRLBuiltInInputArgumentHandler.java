@@ -611,7 +611,7 @@ public interface SWRLBuiltInInputArgumentHandler
 	 * @param argumentNumber The 0-based index of the argument
 	 * @param arguments The built-in arguments
 	 * @return True if the specified argument is an int
-	 * @throws SWRLBuiltInException
+	 * @throws SWRLBuiltInException If an error occurs during processing
 	 */
 	boolean isArgumentAnInt(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 

@@ -39,6 +39,10 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	/**
 	 * For every pattern of second and subsequent arguments, create an OWL anonymous class and bind it to the first
 	 * argument. If the first argument is already bound when the built-in is called, this method returns true.
+	 *
+	 * @param arguments The built-in arguments
+	 * @return The result of the built-in
+	 * @throws SWRLBuiltInException If an error occurs during processing
 	 */
 	public boolean makeOWLClass(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{
@@ -68,6 +72,10 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	/**
 	 * For every pattern of second and subsequent arguments, create an OWL individual of type OWL:Thing and bind it to the
 	 * first argument. If the first argument is already bound when the built-in is called, this method returns true.
+	 *
+	 * @param arguments The built-in arguments
+	 * @return The result of the built-in
+	 * @throws SWRLBuiltInException If an error occurs during processing
 	 */
 	public boolean makeOWLIndividual(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{

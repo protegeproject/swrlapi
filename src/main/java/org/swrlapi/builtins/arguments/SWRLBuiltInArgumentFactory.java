@@ -31,7 +31,7 @@ public interface SWRLBuiltInArgumentFactory
 
 	/**
 	 * @param variableIRI The IRI of a SWRL variable
-	 * @return
+	 * @return A variable built-in argument
 	 */
 	SWRLVariableBuiltInArgument getUnboundVariableBuiltInArgument(IRI variableIRI);
 
@@ -79,7 +79,7 @@ public interface SWRLBuiltInArgumentFactory
 
 	/**
 	 * @param s A string
-	 * @return
+	 * @return A literal built-in argument
 	 */
 	SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(String s);
 
@@ -103,7 +103,7 @@ public interface SWRLBuiltInArgumentFactory
 
 	/**
 	 * @param l A long
-	 * @return
+	 * @return A literal built-in argument
 	 */
 	SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(long l);
 

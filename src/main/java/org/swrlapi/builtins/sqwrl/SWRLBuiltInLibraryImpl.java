@@ -210,7 +210,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		return true;
 	}
 
-	/**
+	/*
 	 * ******************************************************************************************************************
 	 * SQWRL collection operators
 	 * *******************************************************************************************************************
@@ -287,7 +287,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		return true;
 	}
 
-	/**
+	/*
 	 * ******************************************************************************************************************
 	 * SQWRL operators that work with a single collection and return a value or an element or evaluate to true or false
 	 * *******************************************************************************************************************
@@ -640,7 +640,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		}
 	}
 
-	/**
+	/*
 	 * ******************************************************************************************************************
 	 * SQWRL operators that work with a single collection and return a collection
 	 * *******************************************************************************************************************
@@ -915,7 +915,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		}
 	}
 
-	/**
+	/*
 	 * ******************************************************************************************************************
 	 * SQWRL operators that work with two collections and return an element or evaluate to true or false
 	 * *******************************************************************************************************************
@@ -1009,7 +1009,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		return !equal(arguments);
 	}
 
-	/**
+	/*
 	 * ******************************************************************************************************************
 	 * SQWRL operators that work with two collections and return a collection
 	 * *******************************************************************************************************************
@@ -1175,7 +1175,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		return true;
 	}
 
-	/**
+	/*
 	 * ******************************************************************************************************************
 	 * Alias definitions for SQWRL operators
 	 * *******************************************************************************************************************
@@ -1241,7 +1241,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		return notLeastN(arguments);
 	}
 
-	/**
+	/*
 	 * ******************************************************************************************************************
 	 * Internal methods
 	 * *******************************************************************************************************************

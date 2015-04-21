@@ -30,6 +30,10 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	/**
 	 * Returns true if the first argument is equal to the square root of the second argument. If the first argument is
 	 * unbound, bind it to the square root of the second argument.
+	 *
+	 * @param arguments The built-in arguments
+	 * @return The result of the built-in
+	 * @throws SWRLBuiltInException If an error occurs during processing
 	 */
 	public boolean sqrt(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{
@@ -49,6 +53,10 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	/**
 	 * Returns true if the first argument is equal to the natural logarithm (base e) of the second argument. If the first
 	 * argument is unbound, bind it to the natural logarithm of the second argument.
+	 *
+	 * @param arguments The built-in arguments
+	 * @return The result of the built-in
+	 * @throws SWRLBuiltInException If an error occurs during processing
 	 */
 	public boolean log(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{
@@ -69,6 +77,10 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	 * Returns true if the first argument is equals to the mathematical expression specified in the second argument, which
 	 * may use the values specified by the variables in the optional subsequent arguments. If the first argument is
 	 * unbound, bind it to the result of the expression.
+	 *
+	 * @param arguments The built-in arguments
+	 * @return The result of the built-in
+	 * @throws SWRLBuiltInException If an error occurs during processing
 	 */
 	public boolean eval(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{

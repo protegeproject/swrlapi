@@ -244,6 +244,10 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	 * between two timestamps at the granularity specified by the final argument. The timestamps are specified as either a
 	 * mixture of two ValidInstant or datetime arguments or in single ValidPeriod argument. If the duration argument is
 	 * unbound, it is assigned to the time difference between the two timestamps.
+	 *
+	 * @param arguments The built-in arguments
+	 * @return The result of the built-in
+	 * @throws SWRLBuiltInException If an error occurs during processing
 	 */
 	public boolean duration(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{
@@ -371,6 +375,10 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	 * argument at the granularity specified by the fourth argument. The timestamps are specified as either a
 	 * ValidInstant, or xsd:dateTime arguments. Arguments of type xsd:string are automatically converted to xsd:dateTime
 	 * arguments. If the first argument is unbound, it is assigned the result of the addition.
+	 *
+	 * @param arguments The built-in arguments
+	 * @return The result of the built-in
+	 * @throws SWRLBuiltInException If an error occurs during processing
 	 */
 	public boolean add(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
 	{
@@ -637,10 +645,11 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	/*
 	 * For convenience, we allow users to supply xsd:date or xsd:dateTimes to built-ins as strings. We automatically
 	 * rewrite those arguments to xsd:date or xsd:dateTimes. We must make sure that the generated date or dateTime
+	 * <p>
+	 * We would like to rewrite but the XSD types require full time specifications - which may not match the partial
+	 * specifications supplied.
 	 */
 	@SuppressWarnings("unused")
-	// We would like to rewrite but the XSD types require full time specifications - which may not match the partial
-	// specifications supplied.
 	private void rewriteStringArgumentAsADateOrDateTime(int argumentNumber, List<SWRLBuiltInArgument> arguments)
 			throws SWRLBuiltInException
 	{

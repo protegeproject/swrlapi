@@ -15,7 +15,7 @@ import org.semanticweb.owlapi.model.SWRLDArgument;
  * {@link org.swrlapi.core.SWRLAPIRule} class represents SWRL rules in the SWRLAPI.
  * <p>
  * Since an OWLAPI ontology (represented by the OWLAPI class {@link org.semanticweb.owlapi.model.OWLOntology}) or an OWL
- * data factory (represented by the OWLAPI class {@link org.semanticweb.owlapi.model.OWLDataFactory), will not be aware
+ * data factory (represented by the OWLAPI class {@link org.semanticweb.owlapi.model.OWLDataFactory}), will not be aware
  * of these types a {@link org.swrlapi.core.SWRLAPIOWLOntology} (in conjunction with an
  * {@link org.swrlapi.core.SWRLAPIOWLDataFactory}) must be used to extract SWRLAPI SWRL rules.
  * <p>
