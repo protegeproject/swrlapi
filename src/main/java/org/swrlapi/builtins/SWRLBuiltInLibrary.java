@@ -10,11 +10,11 @@ import org.swrlapi.exceptions.SWRLBuiltInLibraryException;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 
 /**
- * Defines a base interface for a SWRL built-in library. All built-in library implementation muse implement this
+ * Defines a base interface for a SWRL built-in library. All built-in library implementation must implement this
  * interface.
  * <p>
- * The class {@link org.swrlapi.builtins.AbstractSWRLBuiltInLibrary} provides a default implementation of this
- * interface and provides and array if methods for dealing with built-in arguments.
+ * The class {@link org.swrlapi.builtins.AbstractSWRLBuiltInLibrary} provides a default implementation of this interface
+ * and provides and array of methods for dealing with built-in arguments.
  *
  * @see org.swrlapi.builtins.AbstractSWRLBuiltInLibrary
  * @see org.swrlapi.builtins.SWRLBuiltInContext
@@ -36,6 +36,7 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
 
 	/**
 	 * Method to invoke a built-in in the library. Invoked by {@link SWRLBuiltInLibraryManager}.
+	 * 
 	 * @param method The name of the built-in method
 	 * @param bridge The built-in bridge
 	 * @param ruleName The invoking rule name
@@ -54,6 +55,7 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
 	/**
 	 * Create a string that represents a unique invocation pattern for a built-in for a bridge/rule/built-in/arguments
 	 * combination.
+	 * 
 	 * @param invokingBridge The built-in bridge invoking the built-in
 	 * @param invokingRuleName The name of the rule invoking the built-in
 	 * @param invokingBuiltInIndex The 0-based index of the built-in in the rule
@@ -73,6 +75,7 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
 
 	/**
 	 * Convenience method to create an IRI from a full name
+	 * 
 	 * @param fullName The full name
 	 * @return An IRI generated from the full name
 	 * @throws SWRLBuiltInException If an error occurs during IRI generation

@@ -96,7 +96,7 @@ public interface SWRLBuiltInInputArgumentHandler
 	/**
 	 * @param expecting Number of expected arguments
 	 * @param actual Actual number of arguments
-	 * @throws InvalidSWRLBuiltInArgumentNumberException If the expect and actual number are not equal
+	 * @throws InvalidSWRLBuiltInArgumentNumberException If the expected and actual number are not equal
 	 */
 	void checkNumberOfArgumentsEqualTo(int expecting, int actual) throws InvalidSWRLBuiltInArgumentNumberException;
 

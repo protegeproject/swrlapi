@@ -9,6 +9,9 @@ import org.swrlapi.core.xsd.XSDDateTime;
 import org.swrlapi.core.xsd.XSDDuration;
 import org.swrlapi.core.xsd.XSDTime;
 
+/**
+ * A basic OWL literal validator that deals with a set of core datatypes
+ */
 public class OWLLiteralValidator
 {
 	public static boolean isValid(String literal, OWLDatatype datatype)

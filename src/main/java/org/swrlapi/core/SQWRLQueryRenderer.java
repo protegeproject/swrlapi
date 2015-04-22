@@ -13,5 +13,9 @@ import org.swrlapi.sqwrl.SQWRLQuery;
  */
 public interface SQWRLQueryRenderer extends SWRLAPIEntityVisitorEx<String>
 {
+	/**
+	 * @param query The query to render
+	 * @return A query rendering
+	 */
 	String renderSQWRLQuery(SQWRLQuery query);
 }
