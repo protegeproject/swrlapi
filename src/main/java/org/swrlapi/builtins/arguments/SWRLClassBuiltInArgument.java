@@ -9,5 +9,8 @@ import org.semanticweb.owlapi.model.OWLClass;
  */
 public interface SWRLClassBuiltInArgument extends SWRLNamedBuiltInArgument
 {
+	/**
+	 * @return An OWL class
+	 */
 	OWLClass getOWLClass();
 }

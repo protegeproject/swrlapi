@@ -9,5 +9,8 @@ import org.semanticweb.owlapi.model.OWLAnnotationProperty;
  */
 public interface SWRLAnnotationPropertyBuiltInArgument extends SWRLNamedBuiltInArgument
 {
+	/**
+	 * @return An OWL annotation property
+	 */
 	OWLAnnotationProperty getOWLAnnotationProperty();
 }

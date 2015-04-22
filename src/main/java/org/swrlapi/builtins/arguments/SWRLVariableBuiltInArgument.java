@@ -10,8 +10,14 @@ import org.swrlapi.exceptions.SWRLBuiltInException;
  */
 public interface SWRLVariableBuiltInArgument extends SWRLBuiltInArgument, SWRLVariable
 {
+	/**
+	 * @return The prefixed name of the variable
+	 */
 	String getVariablePrefixedName();
 
+	/**
+	 * @return The name of the variable stripped if a ":" if it is a local prefixed name
+	 */
 	String getVariableName();
 
 	@Override

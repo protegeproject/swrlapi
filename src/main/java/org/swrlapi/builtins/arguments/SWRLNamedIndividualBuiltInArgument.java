@@ -9,5 +9,8 @@ import org.semanticweb.owlapi.model.OWLNamedIndividual;
  */
 public interface SWRLNamedIndividualBuiltInArgument extends SWRLNamedBuiltInArgument
 {
+	/**
+	 * @return An OWL named individual
+	 */
 	OWLNamedIndividual getOWLNamedIndividual();
 }

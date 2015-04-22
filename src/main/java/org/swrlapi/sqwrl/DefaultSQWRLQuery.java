@@ -484,7 +484,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 	{
 		String columnName;
 		if (argument.isVariable())
-			columnName = "median(?" + argument.asVariable().getVariablePrefixedName() + ")";
+			columnName = "median(?" + argument.asVariable().getVariableName() + ")";
 		else
 			columnName = "C" + this.sqwrlResult.getCurrentNumberOfColumns();
 
@@ -598,7 +598,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 			// Append the group arguments to built-ins for each of its collection arguments; also append group arguments
 			// to collections created by operation built-ins.
 			if (isSQWRLCollectionCreateOperation(builtInAtom))
-				variablePrefixedNames = builtInAtom.getArgumentsShortVariableNamesExceptFirst();
+				variablePrefixedNames = builtInAtom.getArgumentsVariableNamesExceptFirst();
 			else
 				variablePrefixedNames = builtInAtom.getArgumentsVariablePrefixedNames();
 
@@ -834,7 +834,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 
 		for (SWRLBuiltInArgument argument : arguments)
 			if (argument.isVariable())
-				variablePrefixedNames.add(argument.asVariable().getVariablePrefixedName());
+				variablePrefixedNames.add(argument.asVariable().getVariableName());
 
 		return variablePrefixedNames;
 	}

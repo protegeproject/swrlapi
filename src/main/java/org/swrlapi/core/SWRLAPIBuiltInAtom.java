@@ -43,7 +43,7 @@ public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtom
 
 	List<String> getArgumentsVariablePrefixedNames();
 
-	List<String> getArgumentsShortVariableNamesExceptFirst();
+	List<String> getArgumentsVariableNamesExceptFirst();
 
 	String getRuleName();
 

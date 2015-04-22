@@ -9,5 +9,8 @@ import org.semanticweb.owlapi.model.OWLDataProperty;
  */
 public interface SWRLDataPropertyBuiltInArgument extends SWRLNamedBuiltInArgument
 {
+	/**
+	 * @return An OWL data property
+	 */
 	OWLDataProperty getOWLDataProperty();
 }

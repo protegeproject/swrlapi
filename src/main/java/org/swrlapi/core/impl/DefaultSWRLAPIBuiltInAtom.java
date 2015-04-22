@@ -179,14 +179,14 @@ class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SWRLAPIBu
 	}
 
 	@Override
-	public List<String> getArgumentsShortVariableNamesExceptFirst()
+	public List<String> getArgumentsVariableNamesExceptFirst()
 	{
 		List<String> result = new ArrayList<String>();
 		int argumentCount = 0;
 
 		for (SWRLBuiltInArgument argument : this.arguments)
 			if (argument.isVariable() && argumentCount++ != 0)
-				result.add(argument.asVariable().getVariablePrefixedName());
+				result.add(argument.asVariable().getVariableName());
 
 		return Collections.unmodifiableList(result);
 	}
