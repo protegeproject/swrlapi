@@ -256,8 +256,8 @@ public interface SQWRLResult
 	SQWRLResultValue getValue(int columnIndex) throws SQWRLException;
 
 	/**
-	 * @param columnIndex A column index
-	 * @param rowIndex
+	 * @param columnIndex The 0-based column index
+	 * @param rowIndex The 0-based row index
 	 * @return The SQWRL result value
 	 * @throws SQWRLException If an error occurs during processing
 	 */

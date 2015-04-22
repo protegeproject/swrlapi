@@ -8,9 +8,9 @@ import org.swrlapi.owl2rl.OWL2RLEngine;
 import org.swrlapi.sqwrl.SQWRLQuery;
 
 /**
- * This interface defines the methods that must be provided by an implementation of a SWRLAPI-based SWRL rule engine.
- * A {@link org.swrlapi.core.SWRLRuleEngine} uses an implementation of this interface to interact with an underlying
- * rule engine.
+ * This interface defines the methods that must be provided by an implementation of a SWRLAPI-based SWRL rule engine. A
+ * {@link org.swrlapi.core.SWRLRuleEngine} uses an implementation of this interface to interact with an underlying rule
+ * engine.
  * <P>
  * A SWRL rule engine must also implement an OWL 2 RL reasoner.
  * <P>
@@ -26,13 +26,15 @@ public interface TargetSWRLRuleEngine
 {
 	/**
 	 * Define a target rule engine representation of an OWL axiom. Note that SWRL rules are a type of OWL axiom.
-	 * @param axiom  The OWL axiom to define
+	 * 
+	 * @param axiom The OWL axiom to define
 	 * @throws TargetSWRLRuleEngineException If an error occurs during definition
 	 */
 	void defineOWLAxiom(OWLAxiom axiom) throws TargetSWRLRuleEngineException;
 
 	/**
 	 * Define a target rule engine representation of a SQWRL query.
+	 * 
 	 * @param query A SQWRL query to define
 	 * @throws TargetSWRLRuleEngineException If an error occurs in the target rule engine
 	 * @throws SWRLBuiltInException If a built-in error occurs
@@ -41,13 +43,15 @@ public interface TargetSWRLRuleEngine
 
 	/**
 	 * Run the rule engine.
+	 * 
 	 * @throws TargetSWRLRuleEngineException If an error occurs in the tagret rule engine
 	 */
 	void runRuleEngine() throws TargetSWRLRuleEngineException;
 
 	/**
 	 * Reset the rule engine.
-	 * @throws TargetSWRLRuleEngineException  If an error occurs in the tagret rule engine
+	 * 
+	 * @throws TargetSWRLRuleEngineException If an error occurs in the tagret rule engine
 	 */
 	void resetRuleEngine() throws TargetSWRLRuleEngineException;
 

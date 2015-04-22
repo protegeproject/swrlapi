@@ -44,7 +44,7 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
  */
 public interface SWRLAPIOWLOntology
 {
-	// SWRL Rules
+	// Methods for handling SWRL Rules
 
 	SWRLRuleEngine createSWRLRuleEngine(SWRLRuleEngineManager.TargetSWRLRuleEngineCreator ruleEngineCreator);
 
@@ -68,7 +68,7 @@ public interface SWRLAPIOWLOntology
 
 	SWRLRuleRenderer createSWRLRuleRenderer();
 
-	// SQWRL Queries
+	// Methods for handling SQWRL Queries
 
 	SQWRLQueryEngine createSQWRLQueryEngine(SWRLRuleEngineManager.TargetSWRLRuleEngineCreator ruleEngineCreator);
 

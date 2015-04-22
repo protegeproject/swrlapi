@@ -25,8 +25,11 @@ public class SWRLAPIApplicationController
 	// return applicationView;
 	// }
 
+	/**
+	 * @return The application model associated with the controller
+	 */
 	public SWRLAPIApplicationModel getApplicationModel()
 	{
-		return applicationModel;
+		return this.applicationModel;
 	}
 }

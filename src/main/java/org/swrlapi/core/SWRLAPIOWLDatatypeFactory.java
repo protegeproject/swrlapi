@@ -4,7 +4,7 @@ import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDatatype;
 
 /**
- * A convenience factory to create OWLAPI OWL datatypes.
+ * A convenience factory to create a core set of OWLAPI OWL datatypes.
  *
  * @see org.semanticweb.owlapi.model.OWLDatatype
  */
@@ -12,29 +12,29 @@ public interface SWRLAPIOWLDatatypeFactory
 {
 	OWLDatatype getOWLDatatype(IRI iri);
 
-	OWLDatatype getOWLBooleanDatatype();
+	OWLDatatype getByteDatatype();
 
-	OWLDatatype getOWLShortDatatype();
+	OWLDatatype getShortDatatype();
 
-	OWLDatatype getOWLDoubleDatatype();
+	OWLDatatype getDoubleDatatype();
 
-	OWLDatatype getOWLFloatDatatype();
+	OWLDatatype getFloatDatatype();
 
-	OWLDatatype getOWLIntDatatype();
+	OWLDatatype getIntDatatype();
 
-	OWLDatatype getOWLLongDatatype();
+	OWLDatatype getLongDatatype();
 
-	OWLDatatype getOWLStringDatatype();
+	OWLDatatype getStringDatatype();
 
-	OWLDatatype getOWLByteDatatype();
+	OWLDatatype getBooleanDatatype();
 
-	OWLDatatype getOWLURIDatatype();
+	OWLDatatype getURIDatatype();
 
-	OWLDatatype getOWLDateDatatype();
+	OWLDatatype getDateDatatype();
 
-	OWLDatatype getOWLTimeDatatype();
+	OWLDatatype getTimeDatatype();
 
-	OWLDatatype getOWLDateTimeDatatype();
+	OWLDatatype getDateTimeDatatype();
 
-	OWLDatatype getOWLDurationDatatype();
+	OWLDatatype getDurationDatatype();
 }

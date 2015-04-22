@@ -13,6 +13,8 @@ import org.swrlapi.core.xsd.XSDTime;
 import org.swrlapi.exceptions.SWRLAPIException;
 
 /**
+ * A very basic literal comparator for core datatypes. Now OWL specification conformant.
+ * 
  * @see org.semanticweb.owlapi.model.OWLLiteral
  */
 public final class OWLLiteralComparator implements Comparator<OWLLiteral>

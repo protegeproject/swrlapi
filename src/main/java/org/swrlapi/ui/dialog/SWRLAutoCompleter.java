@@ -1,15 +1,15 @@
 package org.swrlapi.ui.dialog;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.parameters.Imports;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 import org.swrlapi.core.SWRLAPIOWLOntology;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * @see org.swrlapi.ui.dialog.SWRLRuleEditorDialog
@@ -25,7 +25,7 @@ public class SWRLAutoCompleter
 
 		for (OWLEntity owlEntity : swrlapiowlOntology.getOWLOntology().getSignature(Imports.INCLUDED)) {
 			String shortForm = prefixManager.getShortForm(owlEntity.getIRI());
-			if (shortForm.startsWith(":"))
+			if (shortForm.startsWith(":")) // Strip leading ":"
 				this.shortForms.add(shortForm.substring(1));
 			this.shortForms.add(shortForm);
 		}

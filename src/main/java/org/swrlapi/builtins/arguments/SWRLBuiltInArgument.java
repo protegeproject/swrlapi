@@ -100,6 +100,7 @@ public interface SWRLBuiltInArgument extends SWRLDArgument
 	void accept(SWRLBuiltInArgumentVisitor visitor);
 
 	/**
+	 * @param <T> Type returned by the visitor
 	 * @param visitor A visitor
 	 * @return A result generate by the visitor
 	 */

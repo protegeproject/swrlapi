@@ -95,31 +95,31 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 			if (argument instanceof SWRLLiteralBuiltInArgument) {
 				SWRLLiteralBuiltInArgument literalArgument = (SWRLLiteralBuiltInArgument)argument;
 				SQWRLLiteralResultValue literal = getSQWRLResultValueFactory().getLiteralValue(literalArgument.getLiteral());
-				resultGenerator.addRowData(literal);
+				resultGenerator.addCell(literal);
 			} else if (argument instanceof SWRLNamedIndividualBuiltInArgument) {
 				SWRLNamedIndividualBuiltInArgument individualArgument = (SWRLNamedIndividualBuiltInArgument)argument;
 				SQWRLIndividualResultValue individualValue = getSQWRLResultValueFactory()
 						.getIndividualValue(individualArgument);
-				resultGenerator.addRowData(individualValue);
+				resultGenerator.addCell(individualValue);
 			} else if (argument instanceof SWRLClassBuiltInArgument) {
 				SWRLClassBuiltInArgument classArgument = (SWRLClassBuiltInArgument)argument;
 				SQWRLClassResultValue classValue = getSQWRLResultValueFactory().getClassValue(classArgument);
-				resultGenerator.addRowData(classValue);
+				resultGenerator.addCell(classValue);
 			} else if (argument instanceof SWRLObjectPropertyBuiltInArgument) {
 				SWRLObjectPropertyBuiltInArgument objectPropertyArgument = (SWRLObjectPropertyBuiltInArgument)argument;
 				SQWRLObjectPropertyResultValue objectPropertyValue = getSQWRLResultValueFactory().getObjectPropertyValue(
 						objectPropertyArgument);
-				resultGenerator.addRowData(objectPropertyValue);
+				resultGenerator.addCell(objectPropertyValue);
 			} else if (argument instanceof SWRLDataPropertyBuiltInArgument) {
 				SWRLDataPropertyBuiltInArgument dataPropertyArgument = (SWRLDataPropertyBuiltInArgument)argument;
 				SQWRLDataPropertyResultValue dataPropertyValue = getSQWRLResultValueFactory().getDataPropertyValue(
 						dataPropertyArgument);
-				resultGenerator.addRowData(dataPropertyValue);
+				resultGenerator.addCell(dataPropertyValue);
 			} else if (argument instanceof SWRLAnnotationPropertyBuiltInArgument) {
 				SWRLAnnotationPropertyBuiltInArgument annotationPropertyArgument = (SWRLAnnotationPropertyBuiltInArgument)argument;
 				SQWRLAnnotationPropertyResultValue annotationPropertyValue = getSQWRLResultValueFactory()
 						.getAnnotationPropertyValue(annotationPropertyArgument);
-				resultGenerator.addRowData(annotationPropertyValue);
+				resultGenerator.addCell(annotationPropertyValue);
 			} else if (argument instanceof SQWRLCollectionVariableBuiltInArgument) {
 				throw new InvalidSWRLBuiltInArgumentException(argumentIndex, "collections cannot be selected");
 			} else
@@ -164,30 +164,30 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 		if (argument instanceof SWRLLiteralBuiltInArgument) {
 			SWRLLiteralBuiltInArgument literalArgument = (SWRLLiteralBuiltInArgument)argument;
 			SQWRLLiteralResultValue literal = getSQWRLResultValueFactory().getLiteralValue(literalArgument.getLiteral());
-			resultGenerator.addRowData(literal);
+			resultGenerator.addCell(literal);
 		} else if (argument instanceof SWRLNamedIndividualBuiltInArgument) {
 			SWRLNamedIndividualBuiltInArgument individualArgument = (SWRLNamedIndividualBuiltInArgument)argument;
 			SQWRLIndividualResultValue individualValue = getSQWRLResultValueFactory().getIndividualValue(individualArgument);
-			resultGenerator.addRowData(individualValue);
+			resultGenerator.addCell(individualValue);
 		} else if (argument instanceof SWRLClassBuiltInArgument) {
 			SWRLClassBuiltInArgument classArgument = (SWRLClassBuiltInArgument)argument;
 			SQWRLClassResultValue classValue = getSQWRLResultValueFactory().getClassValue(classArgument);
-			resultGenerator.addRowData(classValue);
+			resultGenerator.addCell(classValue);
 		} else if (argument instanceof SWRLObjectPropertyBuiltInArgument) {
 			SWRLObjectPropertyBuiltInArgument objectPropertyArgument = (SWRLObjectPropertyBuiltInArgument)argument;
 			SQWRLObjectPropertyResultValue objectPropertyValue = getSQWRLResultValueFactory().getObjectPropertyValue(
 					objectPropertyArgument);
-			resultGenerator.addRowData(objectPropertyValue);
+			resultGenerator.addCell(objectPropertyValue);
 		} else if (argument instanceof SWRLDataPropertyBuiltInArgument) {
 			SWRLDataPropertyBuiltInArgument dataPropertyArgument = (SWRLDataPropertyBuiltInArgument)argument;
 			SQWRLDataPropertyResultValue dataPropertyValue = getSQWRLResultValueFactory().getDataPropertyValue(
 					dataPropertyArgument);
-			resultGenerator.addRowData(dataPropertyValue);
+			resultGenerator.addCell(dataPropertyValue);
 		} else if (argument instanceof SWRLAnnotationPropertyBuiltInArgument) {
 			SWRLAnnotationPropertyBuiltInArgument annotationPropertyArgument = (SWRLAnnotationPropertyBuiltInArgument)argument;
 			SQWRLAnnotationPropertyResultValue annotationPropertyValue = getSQWRLResultValueFactory()
 					.getAnnotationPropertyValue(annotationPropertyArgument);
-			resultGenerator.addRowData(annotationPropertyValue);
+			resultGenerator.addCell(annotationPropertyValue);
 		} else if (argument instanceof SQWRLCollectionVariableBuiltInArgument) {
 			throw new InvalidSWRLBuiltInArgumentException(0, "collections cannot be counted");
 		} else
@@ -454,7 +454,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 				SWRLLiteralBuiltInArgument literalArgument = (SWRLLiteralBuiltInArgument)argument;
 				SQWRLLiteralResultValue literal = getSQWRLResultValueFactory().getLiteralValue(literalArgument.getLiteral());
 				if (literal.isNumeric()) {
-					resultGenerator.addRowData(literal);
+					resultGenerator.addCell(literal);
 				} else
 					throw new InvalidSWRLBuiltInArgumentException(resultArgumentNumber, "expecting numeric literal, got "
 							+ argument);
@@ -490,7 +490,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 				SWRLLiteralBuiltInArgument literalArgument = (SWRLLiteralBuiltInArgument)argument;
 				SQWRLLiteralResultValue literal = getSQWRLResultValueFactory().getLiteralValue(literalArgument.getLiteral());
 				if (literal.isNumeric()) {
-					resultGenerator.addRowData(literal);
+					resultGenerator.addCell(literal);
 				} else
 					throw new InvalidSWRLBuiltInArgumentException(resultArgumentNumber, "expecting numeric literal, got: "
 							+ argument);
@@ -527,7 +527,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 				SWRLLiteralBuiltInArgument literalArgument = (SWRLLiteralBuiltInArgument)argument;
 				SQWRLLiteralResultValue literal = getSQWRLResultValueFactory().getLiteralValue(literalArgument.getLiteral());
 				if (literal.isNumeric())
-					resultGenerator.addRowData(literal);
+					resultGenerator.addCell(literal);
 				else
 					throw new InvalidSWRLBuiltInArgumentException(resultArgumentNumber, "expecting numeric literal, got "
 							+ argument + " with type " + argument.getClass().getCanonicalName());
@@ -581,7 +581,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 				SWRLLiteralBuiltInArgument literalArgument = (SWRLLiteralBuiltInArgument)argument;
 				SQWRLLiteralResultValue literal = getSQWRLResultValueFactory().getLiteralValue(literalArgument.getLiteral());
 				if (literal.isNumeric())
-					resultGenerator.addRowData(literal);
+					resultGenerator.addCell(literal);
 				else
 					throw new InvalidSWRLBuiltInArgumentException(resultArgumentNumber, "expecting numeric literal, got "
 							+ argument + " with type " + argument.getClass().getCanonicalName());
@@ -635,7 +635,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 				SWRLLiteralBuiltInArgument literalArgument = (SWRLLiteralBuiltInArgument)argument;
 				SQWRLLiteralResultValue literal = getSQWRLResultValueFactory().getLiteralValue(literalArgument.getLiteral());
 				if (literal.isNumeric())
-					resultGenerator.addRowData(literal);
+					resultGenerator.addCell(literal);
 				else
 					throw new InvalidSWRLBuiltInArgumentException(resultArgumentNumber, "expecting numeric literal, got "
 							+ argument + " with type " + argument.getClass().getCanonicalName());

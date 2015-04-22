@@ -95,7 +95,7 @@ public interface OWL2RLEngine extends OWL2RLNames
 	/**
 	 * Disable selected OWL 2 RL rule tables
 	 * 
-	 * @param tables A list of OWL 2 RL talbes
+	 * @param table An OWL 2 RL table
 	 */
 	void disableTables(OWL2RLRuleTable... table);
 

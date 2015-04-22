@@ -40,7 +40,7 @@ public interface SWRLRuleEngineFactory
 	SWRLRuleEngine createSWRLRuleEngine(SWRLAPIOWLOntology swrlapiOWLOntology) throws SWRLRuleEngineException;
 
 	/**
-	 * @param The name of a rule engine
+	 * @param ruleEngineName The name of a rule engine
 	 * @param swrlapiOWLOntology A SWQRLAPI-based OWL ontology
 	 * @return A SWRL rule engine
 	 * @throws SWRLRuleEngineException If an error occurs during creation

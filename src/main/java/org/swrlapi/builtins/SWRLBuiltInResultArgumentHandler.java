@@ -151,7 +151,7 @@ public interface SWRLBuiltInResultArgumentHandler
 	 * @throws SWRLBuiltInException If an error occurs during processing
 	 */
 	boolean processResultArgument(List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
-			Collection<SWRLBuiltInArgument> generatedesultArguments) throws SWRLBuiltInException;
+			Collection<SWRLBuiltInArgument> generatedResultArguments) throws SWRLBuiltInException;
 
 	/**
 	 * @param arguments A list of built-in arguments

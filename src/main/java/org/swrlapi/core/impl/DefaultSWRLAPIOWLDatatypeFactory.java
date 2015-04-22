@@ -16,91 +16,91 @@ public class DefaultSWRLAPIOWLDatatypeFactory implements SWRLAPIOWLDatatypeFacto
 	}
 
 	@Override
-	public OWLDatatype getOWLBooleanDatatype()
+	public OWLDatatype getBooleanDatatype()
 	{
 		IRI iri = XSDVocabulary.BOOLEAN.getIRI();
 		return new OWLDatatypeImpl(iri);
 	}
 
 	@Override
-	public OWLDatatype getOWLShortDatatype()
+	public OWLDatatype getShortDatatype()
 	{
 		IRI iri = XSDVocabulary.SHORT.getIRI();
 		return new OWLDatatypeImpl(iri);
 	}
 
 	@Override
-	public OWLDatatype getOWLDoubleDatatype()
+	public OWLDatatype getDoubleDatatype()
 	{
 		IRI iri = XSDVocabulary.DOUBLE.getIRI();
 		return new OWLDatatypeImpl(iri);
 	}
 
 	@Override
-	public OWLDatatype getOWLFloatDatatype()
+	public OWLDatatype getFloatDatatype()
 	{
 		IRI iri = XSDVocabulary.FLOAT.getIRI();
 		return new OWLDatatypeImpl(iri);
 	}
 
 	@Override
-	public OWLDatatype getOWLIntDatatype()
+	public OWLDatatype getIntDatatype()
 	{
 		IRI iri = XSDVocabulary.INT.getIRI();
 		return new OWLDatatypeImpl(iri);
 	}
 
 	@Override
-	public OWLDatatype getOWLLongDatatype()
+	public OWLDatatype getLongDatatype()
 	{
 		IRI iri = XSDVocabulary.LONG.getIRI();
 		return new OWLDatatypeImpl(iri);
 	}
 
 	@Override
-	public OWLDatatype getOWLStringDatatype()
+	public OWLDatatype getStringDatatype()
 	{
 		IRI iri = XSDVocabulary.STRING.getIRI();
 		return new OWLDatatypeImpl(iri);
 	}
 
 	@Override
-	public OWLDatatype getOWLByteDatatype()
+	public OWLDatatype getByteDatatype()
 	{
 		IRI iri = XSDVocabulary.BYTE.getIRI();
 		return new OWLDatatypeImpl(iri);
 	}
 
 	@Override
-	public OWLDatatype getOWLURIDatatype()
+	public OWLDatatype getURIDatatype()
 	{
 		IRI iri = XSDVocabulary.ANY_URI.getIRI();
 		return new OWLDatatypeImpl(iri);
 	}
 
 	@Override
-	public OWLDatatype getOWLDateDatatype()
+	public OWLDatatype getDateDatatype()
 	{
 		IRI iri = XSDVocabulary.DATE.getIRI();
 		return new OWLDatatypeImpl(iri);
 	}
 
 	@Override
-	public OWLDatatype getOWLTimeDatatype()
+	public OWLDatatype getTimeDatatype()
 	{
 		IRI iri = XSDVocabulary.TIME.getIRI();
 		return new OWLDatatypeImpl(iri);
 	}
 
 	@Override
-	public OWLDatatype getOWLDateTimeDatatype()
+	public OWLDatatype getDateTimeDatatype()
 	{
 		IRI iri = XSDVocabulary.DATE_TIME.getIRI();
 		return new OWLDatatypeImpl(iri);
 	}
 
 	@Override
-	public OWLDatatype getOWLDurationDatatype()
+	public OWLDatatype getDurationDatatype()
 	{
 		IRI iri = XSDVocabulary.DURATION.getIRI();
 		return new OWLDatatypeImpl(iri);

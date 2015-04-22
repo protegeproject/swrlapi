@@ -157,11 +157,11 @@ public interface SWRLBuiltInArgumentCreator
 	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(XSDTime time) throws SWRLBuiltInException;
 
 	/**
-	 * @param dataTime A datetime
+	 * @param datetime A datetime
 	 * @return A literal built-in argument
 	 * @throws SWRLBuiltInException If an error occurs during generation
 	 */
-	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(XSDDateTime dateTime) throws SWRLBuiltInException;
+	SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(XSDDateTime datetime) throws SWRLBuiltInException;
 
 	/**
 	 * @param duration A duration
@@ -180,7 +180,7 @@ public interface SWRLBuiltInArgumentCreator
 
 	/**
 	 * @param variableIRI The IRI of a variable
-	 * @arguments A list of built-in arguments
+	 * @param arguments A list of built-in arguments
 	 * @return A multi-variable built-in argument
 	 * @throws SWRLBuiltInException If an error occurs during generation
 	 */
@@ -188,12 +188,12 @@ public interface SWRLBuiltInArgumentCreator
 			List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
 	/**
-	 * @param variableIRI
-	 * @param queryName
-	 * @param collectionName
-	 * @param collectionGroupID
-	 * @return
-	 * @throws SWRLBuiltInException
+	 * @param variableIRI The IRI of a variable
+	 * @param queryName A SQWRL query name
+	 * @param collectionName The name of a collection
+	 * @param collectionGroupID The group ID of the collection
+	 * @return A collection variable built-in argument
+	 * @throws SWRLBuiltInException If an error occurs during generation
 	 */
 	public SQWRLCollectionVariableBuiltInArgument createSQWRLCollectionVariableBuiltInArgument(IRI variableIRI,
 			String queryName, String collectionName, String collectionGroupID) throws SWRLBuiltInException;

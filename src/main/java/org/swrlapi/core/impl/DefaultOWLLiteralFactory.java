@@ -29,79 +29,79 @@ public class DefaultOWLLiteralFactory implements OWLLiteralFactory
 	@Override
 	public OWLLiteral getOWLLiteral(byte b)
 	{
-		return new OWLLiteralImpl("" + b, "", getOWLDatatypeFactory().getOWLByteDatatype());
+		return new OWLLiteralImpl("" + b, "", getOWLDatatypeFactory().getByteDatatype());
 	}
 
 	@Override
 	public OWLLiteral getOWLLiteral(short s)
 	{
-		return new OWLLiteralImpl("" + s, "", getOWLDatatypeFactory().getOWLShortDatatype());
+		return new OWLLiteralImpl("" + s, "", getOWLDatatypeFactory().getShortDatatype());
 	}
 
 	@Override
 	public OWLLiteral getOWLLiteral(int i)
 	{
-		return new OWLLiteralImpl("" + i, "", getOWLDatatypeFactory().getOWLIntDatatype());
+		return new OWLLiteralImpl("" + i, "", getOWLDatatypeFactory().getIntDatatype());
 	}
 
 	@Override
 	public OWLLiteral getOWLLiteral(long l)
 	{
-		return new OWLLiteralImpl("" + l, "", getOWLDatatypeFactory().getOWLLongDatatype());
+		return new OWLLiteralImpl("" + l, "", getOWLDatatypeFactory().getLongDatatype());
 	}
 
 	@Override
 	public OWLLiteral getOWLLiteral(float f)
 	{
-		return new OWLLiteralImpl("" + f, "", getOWLDatatypeFactory().getOWLFloatDatatype());
+		return new OWLLiteralImpl("" + f, "", getOWLDatatypeFactory().getFloatDatatype());
 	}
 
 	@Override
 	public OWLLiteral getOWLLiteral(double d)
 	{
-		return new OWLLiteralImpl("" + d, "", getOWLDatatypeFactory().getOWLDoubleDatatype());
+		return new OWLLiteralImpl("" + d, "", getOWLDatatypeFactory().getDoubleDatatype());
 	}
 
 	@Override
 	public OWLLiteral getOWLLiteral(String s)
 	{
-		return new OWLLiteralImpl(s, "", getOWLDatatypeFactory().getOWLStringDatatype());
+		return new OWLLiteralImpl(s, "", getOWLDatatypeFactory().getStringDatatype());
 	}
 
 	@Override
 	public OWLLiteral getOWLLiteral(boolean b)
 	{
-		return new OWLLiteralImpl("" + b, "", getOWLDatatypeFactory().getOWLBooleanDatatype());
+		return new OWLLiteralImpl("" + b, "", getOWLDatatypeFactory().getBooleanDatatype());
 	}
 
 	@Override
 	public OWLLiteral getOWLLiteral(URI uri)
 	{
-		return new OWLLiteralImpl("" + uri, "", getOWLDatatypeFactory().getOWLURIDatatype());
+		return new OWLLiteralImpl("" + uri, "", getOWLDatatypeFactory().getURIDatatype());
 	}
 
 	@Override
 	public OWLLiteral getOWLLiteral(XSDDate date)
 	{
-		return new OWLLiteralImpl(date.getContent(), "", getOWLDatatypeFactory().getOWLDateDatatype());
+		return new OWLLiteralImpl(date.getContent(), "", getOWLDatatypeFactory().getDateDatatype());
 	}
 
 	@Override
 	public OWLLiteral getOWLLiteral(XSDTime time)
 	{
-		return new OWLLiteralImpl(time.getContent(), "", getOWLDatatypeFactory().getOWLTimeDatatype());
+		return new OWLLiteralImpl(time.getContent(), "", getOWLDatatypeFactory().getTimeDatatype());
 	}
 
 	@Override
 	public OWLLiteral getOWLLiteral(XSDDateTime datetime)
 	{
-		return new OWLLiteralImpl(datetime.getContent(), "", getOWLDatatypeFactory().getOWLDateTimeDatatype());
+		return new OWLLiteralImpl(datetime.getContent(), "", getOWLDatatypeFactory().getDateTimeDatatype());
 	}
 
 	@Override
 	public OWLLiteral getOWLLiteral(XSDDuration duration)
 	{
-		return new OWLLiteralImpl(duration.getContent(), "", getOWLDatatypeFactory().getOWLDurationDatatype());
+		return new OWLLiteralImpl(duration.getContent(), "", getOWLDatatypeFactory().getDurationDatatype());
 	}
 
 	@Override

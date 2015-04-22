@@ -19,7 +19,7 @@ public interface SWRLRuleEngineBridgeController
 	int getNumberOfInferredOWLAxioms();
 
 	/**
-	 * @return A set of interred OWL axioms
+	 * @return A set of inferred OWL axioms
 	 */
 	Set<OWLAxiom> getInferredOWLAxioms();
 }

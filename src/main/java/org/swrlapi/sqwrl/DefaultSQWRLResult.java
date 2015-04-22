@@ -69,16 +69,16 @@ import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
  * result.configured();
  * 
  * result.openRow();
- * result.addRowData(valueFactory.getIndividualValue(&quot;Fred&quot;));
- * result.addRowData(valueFactory.getValue(27));
+ * result.addCell(valueFactory.getIndividualValue(&quot;Fred&quot;));
+ * result.addCell(valueFactory.getValue(27));
  * result.closeRow();
  * result.openRow();
- * result.addRowData(valueFactory.getIndividualValue(&quot;Joe&quot;));
- * result.addRowData(valueFactory.getLiteralValue(34));
+ * result.addCell(valueFactory.getIndividualValue(&quot;Joe&quot;));
+ * result.addCell(valueFactory.getLiteralValue(34));
  * result.closeRow();
  * result.openRow();
- * result.addRowData(valueFactory.getIndividualValue(&quot;Joe&quot;));
- * result.addRowData(valueFactory.getLiteralValue(21));
+ * result.addCell(valueFactory.getIndividualValue(&quot;Joe&quot;));
+ * result.addCell(valueFactory.getLiteralValue(21));
  * result.closeRow();
  * result.prepared();
  * </pre>
@@ -173,7 +173,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 	}
 
 	@Override
-	public boolean isAscending()
+	public boolean isOrderedAscending()
 	{
 		return this.isAscending;
 	}
@@ -316,7 +316,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 
 		openRow();
 		for (SQWRLResultValue value : row)
-			addRowData(value);
+			addCell(value);
 		closeRow();
 	}
 
@@ -333,7 +333,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 	}
 
 	@Override
-	public void addRowData(SQWRLResultValue value) throws SQWRLException
+	public void addCell(SQWRLResultValue value) throws SQWRLException
 	{
 		throwExceptionIfNotConfigured();
 		throwExceptionIfAlreadyPrepared();
@@ -358,7 +358,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 
 	@Override
 	public void closeRow() throws SQWRLException
-	{ // Will ignore if row is already closed, assuming it was automatically closed in addRowData
+	{ // Will ignore if row is already closed, assuming it was automatically closed in addCell
 		throwExceptionIfNotConfigured();
 		throwExceptionIfAlreadyPrepared();
 
@@ -1135,7 +1135,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 				String aggregateFunctionName = this.aggregateColumnIndexes.get(aggregateColumnIndex);
 				List<SQWRLResultValue> columnValues = aggregateRowMap.get(aggregateColumnIndex);
 
-				// We have checked in addRowData that only numeric data are added for sum, max, min, and avg
+				// We have checked in addCell that only numeric data are added for sum, max, min, and avg
 				if (aggregateFunctionName.equalsIgnoreCase(SQWRLResultNames.MinAggregateFunction)) {
 					List<SQWRLLiteralResultValue> literalColumnValues = convert2LiteralResultValues(columnValues,
 							aggregateColumnIndex);
