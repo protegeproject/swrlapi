@@ -25,8 +25,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	{
 		super(SWRLXLibraryName);
 
-		this.classInvocationMap = new HashMap<String, OWLClass>();
-		this.individualInvocationMap = new HashMap<String, OWLNamedIndividual>();
+		this.classInvocationMap = new HashMap<>();
+		this.individualInvocationMap = new HashMap<>();
 	}
 
 	@Override

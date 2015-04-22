@@ -60,8 +60,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 	{
 		super(SQWRLNames.SQWRLBuiltInLibraryName);
 
-		this.collectionsMap = new HashMap<String, Map<String, Collection<SWRLBuiltInArgument>>>();
-		this.collectionGroupElementNumbersMap = new HashMap<String, Integer>();
+		this.collectionsMap = new HashMap<>();
+		this.collectionGroupElementNumbersMap = new HashMap<>();
 		this.setKeys = new HashSet<String>();
 		this.bagKeys = new HashSet<String>();
 	}
@@ -1779,7 +1779,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 				throw new SWRLBuiltInException("internal error: collection " + collectionName + " in query " + queryName
 						+ " with group key " + collectionGroupKey + " is neither a bag or a set");
 
-			this.collectionsMap.put(collectionKey, new HashMap<String, Collection<SWRLBuiltInArgument>>());
+			this.collectionsMap.put(collectionKey, new HashMap<>());
 		}
 
 		if (!isCollection(queryName, collectionName, collectionGroupKey)) { // Is the collection for this group recorded

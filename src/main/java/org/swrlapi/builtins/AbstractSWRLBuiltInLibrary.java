@@ -80,7 +80,7 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, 
 	{
 		this.libraryName = libraryName;
 		this.invocationPatternID = 0L;
-		this.invocationPatternMap = new HashMap<String, Long>();
+		this.invocationPatternMap = new HashMap<>();
 	}
 
 	@Override
@@ -163,7 +163,7 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, 
 			reset();
 
 			this.invocationPatternID = 0L;
-			this.invocationPatternMap = new HashMap<String, Long>();
+			this.invocationPatternMap = new HashMap<>();
 
 			this.invokingBridge = null;
 		}
