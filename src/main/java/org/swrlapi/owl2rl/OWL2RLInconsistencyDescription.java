@@ -3,17 +3,17 @@ package org.swrlapi.owl2rl;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OWL2RLInconsistency
+public class OWL2RLInconsistencyDescription
 {
 	private static Map<String, OWL2RLRuleArguments> argumentsDescriptionMap;
 
 	static {
 		argumentsDescriptionMap = new HashMap<>();
 
-		createArgumentDescription(OWL2RLNames.Rule.EQ_DIFF1.toString(), 0, 2, 0, 0);
-		createArgumentDescription(OWL2RLNames.Rule.PRP_PDW.toString(), 0, 2, 2, 0);
-		createArgumentDescription(OWL2RLNames.Rule.PRP_ASYP.toString(), 0, 2, 1, 0);
-		createArgumentDescription(OWL2RLNames.Rule.CAX_DW.toString(), 2, 1, 0, 0);
+		createArgumentDescription(OWL2RLNames.OWL2RLRule.EQ_DIFF1.toString(), 0, 2, 0, 0);
+		createArgumentDescription(OWL2RLNames.OWL2RLRule.PRP_PDW.toString(), 0, 2, 2, 0);
+		createArgumentDescription(OWL2RLNames.OWL2RLRule.PRP_ASYP.toString(), 0, 2, 1, 0);
+		createArgumentDescription(OWL2RLNames.OWL2RLRule.CAX_DW.toString(), 2, 1, 0, 0);
 	}
 
 	public static boolean hasInconsistencyRuleArgumentsDescription(String owl2RLRuleName)
@@ -29,9 +29,8 @@ public class OWL2RLInconsistency
 	private static void createArgumentDescription(String owl2RLRuleName, int numberOfClassArguments,
 			int numberOfIndividualArguments, int numberOfObjectPropertyArguments, int numberOfDataPropertyArguments)
 	{
-		argumentsDescriptionMap.put(owl2RLRuleName,
-				new OWL2RLRuleArguments(numberOfClassArguments, numberOfIndividualArguments, numberOfObjectPropertyArguments,
-						numberOfDataPropertyArguments));
+		argumentsDescriptionMap.put(owl2RLRuleName, new OWL2RLRuleArguments(numberOfClassArguments,
+				numberOfIndividualArguments, numberOfObjectPropertyArguments, numberOfDataPropertyArguments));
 	}
 
 	public static class OWL2RLRuleArguments

@@ -9,9 +9,18 @@ import org.semanticweb.owlapi.model.IRI;
  */
 public interface SQWRLEntityResultValue extends SQWRLResultValue, Comparable<SQWRLEntityResultValue>
 {
+	/**
+	 * @return The IRI of the entity
+	 */
 	IRI getIRI();
 
+	/**
+	 * @return The prefixed names of the entity
+	 */
 	String getPrefixedName();
 
+	/**
+	 * @return The short name of the entity
+	 */
 	String getShortName();
 }

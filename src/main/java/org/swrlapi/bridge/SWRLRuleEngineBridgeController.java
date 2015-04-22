@@ -13,7 +13,13 @@ import org.semanticweb.owlapi.model.OWLAxiom;
  */
 public interface SWRLRuleEngineBridgeController
 {
+	/**
+	 * @return The number of inferred OWL axioms
+	 */
 	int getNumberOfInferredOWLAxioms();
 
+	/**
+	 * @return A set of interred OWL axioms
+	 */
 	Set<OWLAxiom> getInferredOWLAxioms();
 }

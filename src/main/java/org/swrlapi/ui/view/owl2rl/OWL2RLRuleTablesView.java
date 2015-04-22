@@ -39,7 +39,7 @@ public class OWL2RLRuleTablesView extends JTabbedPane implements SWRLAPIView
 	{
 		addTab("OWL2RL Control", this.owl2RLControlView);
 
-		for (OWL2RLNames.RuleTable ruleTable : getOWL2RLModel().getOWL2RLEngine().getRuleTables()) {
+		for (OWL2RLNames.OWL2RLRuleTable ruleTable : getOWL2RLModel().getOWL2RLEngine().getRuleTables()) {
 			OWL2RLRuleTableView owl2RLTableView = new OWL2RLRuleTableView(getOWL2RLModel(), ruleTable);
 			this.owl2RLTableViews.add(owl2RLTableView);
 			addTab(ruleTable.toString(), owl2RLTableView);

@@ -20,9 +20,9 @@ public class OWL2RLRuleTableActivationButton extends JCheckBox implements Action
 	private static final int TOOLTIP_PREFERRED_HEIGHT = 30;
 
 	private final OWL2RLModel owl2RLModel;
-	private final OWL2RLNames.RuleTable ruleTable;
+	private final OWL2RLNames.OWL2RLRuleTable ruleTable;
 
-	public OWL2RLRuleTableActivationButton(OWL2RLModel owl2RLModel, OWL2RLNames.RuleTable ruleTable)
+	public OWL2RLRuleTableActivationButton(OWL2RLModel owl2RLModel, OWL2RLNames.OWL2RLRuleTable ruleTable)
 	{
 		super(ruleTable.toString());
 

@@ -10,7 +10,7 @@ import java.util.Set;
  */
 public interface OWL2RLEngine extends OWL2RLNames
 {
-	enum RuleStatus {
+	enum OWL2RLRuleStatus {
 		Unsupported, PermanentlyOn, Switchable
 	};
 
@@ -19,47 +19,126 @@ public interface OWL2RLEngine extends OWL2RLNames
 	 */
 	boolean hasRuleSelectionChanged();
 
+	/**
+	 * Reset rule selection changed status
+	 */
 	void resetRuleSelectionChanged();
 
+	/**
+	 * Set rule selection changed status
+	 */
 	void setRuleSelectionChanged();
 
-	List<RuleTable> getRuleTables();
+	/**
+	 * @return A list of OWL 2 RL rule tables
+	 */
+	List<OWL2RLRuleTable> getRuleTables();
 
+	/**
+	 * @return The number of OWL 2 RL rules
+	 */
 	int getNumberOfRules();
 
+	/**
+	 * @return The number of OWL 2 RL tables
+	 */
 	int getNumberOfTables();
 
-	List<Rule> getRules();
+	/**
+	 * @return A list of OWL 2 RL rules
+	 */
+	List<OWL2RLRule> getRules();
 
-	List<Rule> getRules(RuleTable table);
+	/**
+	 * @param table An OWL 2 RL rule table
+	 * @return A list of OWL 2 RL rules
+	 */
+	List<OWL2RLRule> getRules(OWL2RLRuleTable table);
 
-	Set<Rule> getEnabledRules();
+	/**
+	 * @return A list of OWL 2 RL rules
+	 */
+	Set<OWL2RLRule> getEnabledRules();
 
-	Set<Rule> getUnsupportedRules();
+	/**
+	 * @return A list of OWL 2 RL rules
+	 */
+	Set<OWL2RLRule> getUnsupportedRules();
 
-	Set<Rule> getPermanentlyOnRules();
+	/**
+	 * @return A list of OWL 2 RL rules
+	 */
+	Set<OWL2RLRule> getPermanentlyOnRules();
 
-	Set<Rule> getSwitchableRules();
+	/**
+	 * @return A list of OWL 2 RL rules
+	 */
+	Set<OWL2RLRule> getSwitchableRules();
 
+	/**
+	 * Enable all OWL 2 RL rules
+	 */
 	void enableAll();
 
+	/**
+	 * Disable all OWL 2 RL rules
+	 */
 	void disableAll();
 
-	void enableTables(RuleTable... tables);
+	/**
+	 * Enable selected OWL 2 RL rule tables
+	 * 
+	 * @param tables A list of OWL 2 RL tables
+	 */
+	void enableTables(OWL2RLRuleTable... tables);
 
-	void disableTables(RuleTable... table);
+	/**
+	 * Disable selected OWL 2 RL rule tables
+	 * 
+	 * @param tables A list of OWL 2 RL talbes
+	 */
+	void disableTables(OWL2RLRuleTable... table);
 
-	void enableRules(Rule... rules);
+	/**
+	 * Enable selected OWL 2 RL rules
+	 * 
+	 * @param rules A collection of OWL 2 RL rules
+	 */
+	void enableRules(OWL2RLRule... rules);
 
-	void disableRules(Rule... rules);
+	/**
+	 * Disable selected OWL 2 RL rules
+	 * 
+	 * @param rules A collection of OWL 2 RL rules
+	 */
+	void disableRules(OWL2RLRule... rules);
 
-	boolean hasEnabledRules(RuleTable table);
+	/**
+	 * @param table A collection of OWL 2 RL rule tables
+	 * @return True if the specified table has enabled rules
+	 */
+	boolean hasEnabledRules(OWL2RLRuleTable table);
 
-	boolean hasSwitchableRules(RuleTable table);
+	/**
+	 * @param table A collection of OWL 2 RL rule tables
+	 * @return True if the specified table has switchable rules
+	 */
+	boolean hasSwitchableRules(OWL2RLRuleTable table);
 
-	boolean isRuleEnabled(Rule rule);
+	/**
+	 * @param rule An OWL 2 RL rule
+	 * @return True if the rule is enables
+	 */
+	boolean isRuleEnabled(OWL2RLRule rule);
 
-	RuleStatus getRuleStatus(Rule rule);
+	/**
+	 * @param rule An OWL 2 RL rule
+	 * @return The status of the rule
+	 */
+	OWL2RLRuleStatus getRuleStatus(OWL2RLRule rule);
 
+	/**
+	 * @return An OWL 2 RL persistence layer
+	 */
 	OWL2RLPersistenceLayer getOWL2RLPersistenceLayer();
 }

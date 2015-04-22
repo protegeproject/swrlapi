@@ -1,12 +1,13 @@
 package org.swrlapi.ui.view.owl2rl;
 
-import org.swrlapi.owl2rl.OWL2RLNames;
-import org.swrlapi.ui.model.OWL2RLModel;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JCheckBox;
+
+import org.swrlapi.owl2rl.OWL2RLNames;
+import org.swrlapi.ui.model.OWL2RLModel;
 
 public class OWL2RLRuleActivationButton extends JCheckBox implements ActionListener
 {
@@ -16,9 +17,9 @@ public class OWL2RLRuleActivationButton extends JCheckBox implements ActionListe
 	private static final int TOOLTIP_PREFERRED_HEIGHT = 30;
 
 	private final OWL2RLModel owl2RLModel;
-	private final OWL2RLNames.Rule rule;
+	private final OWL2RLNames.OWL2RLRule rule;
 
-	public OWL2RLRuleActivationButton(OWL2RLModel owl2RLModel, OWL2RLNames.Rule rule)
+	public OWL2RLRuleActivationButton(OWL2RLModel owl2RLModel, OWL2RLNames.OWL2RLRule rule)
 	{
 		super(rule.toString());
 

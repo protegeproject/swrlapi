@@ -18,11 +18,11 @@ public class DefaultOWL2RLPersistenceLayer implements OWL2RLPersistenceLayer
 	}
 
 	@Override
-	public Set<OWL2RLNames.Rule> getEnabledRules()
+	public Set<OWL2RLNames.OWL2RLRule> getEnabledRules()
 	{
-		Set<OWL2RLNames.Rule> enabledRules = new HashSet<>();
+		Set<OWL2RLNames.OWL2RLRule> enabledRules = new HashSet<>();
 
-		for (OWL2RLNames.Rule rule : EnumSet.allOf(OWL2RLNames.Rule.class))
+		for (OWL2RLNames.OWL2RLRule rule : EnumSet.allOf(OWL2RLNames.OWL2RLRule.class))
 			if (!isOWL2RLRuleDisabled(rule)) // If not explicitly disabled, assume enabled
 				enabledRules.add(rule);
 
@@ -30,9 +30,9 @@ public class DefaultOWL2RLPersistenceLayer implements OWL2RLPersistenceLayer
 	}
 
 	@Override
-	public void setEnabledRules(Set<OWL2RLNames.Rule> rules)
+	public void setEnabledRules(Set<OWL2RLNames.OWL2RLRule> rules)
 	{
-		for (OWL2RLNames.Rule rule : rules) {
+		for (OWL2RLNames.OWL2RLRule rule : rules) {
 			if (isOWL2RLRuleDisabled(rule)) {
 				// OWLIndividual p3OWLIndividual = getOWLModel().getOWLIndividual(OWL2RLNames.SWRLA_NAMESPACE +
 				// rule.toString());
@@ -45,26 +45,26 @@ public class DefaultOWL2RLPersistenceLayer implements OWL2RLPersistenceLayer
 	}
 
 	@Override
-	public void setDisabledRule(OWL2RLNames.Rule rule)
+	public void setDisabledRule(OWL2RLNames.OWL2RLRule rule)
 	{
 		disableRule(rule);
 	}
 
 	@Override
-	public void setDisabledRules(Set<OWL2RLNames.Rule> rules)
+	public void setDisabledRules(Set<OWL2RLNames.OWL2RLRule> rules)
 	{
-		for (OWL2RLNames.Rule rule : rules)
+		for (OWL2RLNames.OWL2RLRule rule : rules)
 			disableRule(rule);
 	}
 
 	@Override
 	public void disableAll()
 	{
-		for (OWL2RLNames.Rule rule : EnumSet.allOf(OWL2RLNames.Rule.class))
+		for (OWL2RLNames.OWL2RLRule rule : EnumSet.allOf(OWL2RLNames.OWL2RLRule.class))
 			disableRule(rule);
 	}
 
-	private void disableRule(OWL2RLNames.Rule rule)
+	private void disableRule(OWL2RLNames.OWL2RLRule rule)
 	{
 		if (!isOWL2RLRuleDisabled(rule)) {
 			// OWLIndividual p3OWLIndividual = getOWLModel().getOWLIndividual(OWL2RLNames.SWRLA_NAMESPACE + rule.toString());
@@ -74,7 +74,7 @@ public class DefaultOWL2RLPersistenceLayer implements OWL2RLPersistenceLayer
 		}
 	}
 
-	private boolean isOWL2RLRuleDisabled(OWL2RLNames.Rule rule)
+	private boolean isOWL2RLRuleDisabled(OWL2RLNames.OWL2RLRule rule)
 	{
 		// OWLIndividual p3OWLIndividual = getOWLModel().getOWLIndividual(OWL2RLNames.SWRLA_NAMESPACE + rule.toString());
 		// OWLDatatypeProperty p3OWLDataProperty = getIsOWL2RLRuleEnabledProperty();

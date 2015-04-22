@@ -20,6 +20,10 @@ public class SQWRLResultNames
 			SumAggregateFunction, AvgAggregateFunction, MedianAggregateFunction, CountAggregateFunction,
 			CountDistinctAggregateFunction };
 
+	/**
+	 * @param aggregateFunctionName The name of a function
+	 * @throws SQWRLInvalidAggregateFunctionNameException If the function is not an aggregate function
+	 */
 	public static void checkAggregateFunctionName(String aggregateFunctionName)
 			throws SQWRLInvalidAggregateFunctionNameException
 	{
