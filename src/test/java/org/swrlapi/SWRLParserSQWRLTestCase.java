@@ -5,9 +5,9 @@ import org.junit.Test;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
-import org.swrlapi.test.SWRLAPITestBase;
+import org.swrlapi.test.SWRLAPIIntegrationTestBase;
 
-public class SWRLParserSQWRLTestCase extends SWRLAPITestBase
+public class SWRLParserSQWRLTestCase extends SWRLAPIIntegrationTestBase
 {
 	final String Namespace = "http://protege.org/ontologies/SWRLParserSQWRLTests.owl#";
 

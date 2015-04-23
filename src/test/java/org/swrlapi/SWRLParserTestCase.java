@@ -14,9 +14,9 @@ import org.semanticweb.owlapi.model.SWRLObjectPropertyAtom;
 import org.semanticweb.owlapi.model.SWRLSameIndividualAtom;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.parser.SWRLParseException;
-import org.swrlapi.test.SWRLAPITestBase;
+import org.swrlapi.test.SWRLAPIIntegrationTestBase;
 
-public class SWRLParserTestCase extends SWRLAPITestBase
+public class SWRLParserTestCase extends SWRLAPIIntegrationTestBase
 {
 	private final String Namespace = "http://protege.org/ontologies/SWRLParserTestCase.owl#";
 
