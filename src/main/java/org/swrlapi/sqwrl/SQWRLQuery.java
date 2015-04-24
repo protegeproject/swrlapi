@@ -13,7 +13,6 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
  * <p>
  * A {@link org.swrlapi.core.SWRLRuleRenderer} can be used to display a query.
  *
- * @see org.swrlapi.core.SWRLAPIOntologyProcessor
  * @see org.swrlapi.core.SWRLAPIRule
  * @see org.swrlapi.sqwrl.SQWRLResult
  * @see org.swrlapi.sqwrl.SQWRLResultGenerator
