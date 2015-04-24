@@ -17,6 +17,7 @@ import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
+import org.swrlapi.ui.model.SWRLAutoCompleter;
 
 /**
  * Wraps the OWLAPI's {@link org.semanticweb.owlapi.model.OWLOntology} class with additional functionality used by the
@@ -66,6 +67,8 @@ public interface SWRLAPIOWLOntology
 
 	SWRLParser createSWRLParser();
 
+	SWRLAutoCompleter createSWRLAutoCompleter();
+
 	SWRLRuleRenderer createSWRLRuleRenderer();
 
 	// Methods for handling SQWRL Queries
@@ -77,17 +80,19 @@ public interface SWRLAPIOWLOntology
 	SQWRLQuery createSQWRLQuery(String queryName, String query, String comment, boolean isActive)
 			throws SWRLParseException, SQWRLException;
 
+	SQWRLQuery getSQWRLQuery(String queryName) throws SQWRLException;
+
+	SQWRLResult getSQWRLResult(String queryName) throws SQWRLException;
+
 	int getNumberOfSQWRLQueries();
 
 	Set<String> getSQWRLQueryNames();
 
-	SQWRLQuery getSQWRLQuery(String queryName) throws SQWRLException;
-
 	Set<SQWRLQuery> getSQWRLQueries();
 
-	SQWRLResult getSQWRLResult(String queryName) throws SQWRLException;
-
 	SQWRLResultGenerator getSQWRLResultGenerator(String queryName) throws SQWRLException;
+
+	SQWRLResultGenerator createSQWRLResultGenerator();
 
 	SQWRLQueryRenderer createSQWRLQueryRenderer();
 

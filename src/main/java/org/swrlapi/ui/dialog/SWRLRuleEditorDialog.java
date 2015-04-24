@@ -1,18 +1,11 @@
 package org.swrlapi.ui.dialog;
 
-import org.swrlapi.core.SWRLAPIOWLOntology;
-import org.swrlapi.core.SWRLAPIRule;
-import org.swrlapi.parser.SWRLIncompleteRuleException;
-import org.swrlapi.parser.SWRLParseException;
-import org.swrlapi.parser.SWRLParser;
-import org.swrlapi.parser.SWRLParserSupport;
-import org.swrlapi.sqwrl.exceptions.SQWRLException;
-import org.swrlapi.ui.model.SWRLAPIApplicationModel;
-import org.swrlapi.ui.model.SWRLRulesTableModel;
-
-import javax.swing.*;
-import javax.swing.text.BadLocationException;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -21,6 +14,26 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.text.BadLocationException;
+
+import org.swrlapi.core.SWRLAPIRule;
+import org.swrlapi.core.SWRLRuleEngine;
+import org.swrlapi.parser.SWRLIncompleteRuleException;
+import org.swrlapi.parser.SWRLParseException;
+import org.swrlapi.parser.SWRLParser;
+import org.swrlapi.parser.SWRLParserSupport;
+import org.swrlapi.sqwrl.exceptions.SQWRLException;
+import org.swrlapi.ui.model.SWRLAPIApplicationModel;
+import org.swrlapi.ui.model.SWRLAutoCompleter;
+import org.swrlapi.ui.model.SWRLRulesTableModel;
 
 /**
  * Modal dialog providing a SWRL rule and SQWRL query editor.
@@ -39,8 +52,8 @@ public class SWRLRuleEditorDialog extends JDialog
 	private static final String OK_BUTTON_TITLE = "Ok";
 	private static final String CANCEL_BUTTON_TITLE = "Cancel";
 	private static final String STATUS_OK = "Ok";
-	private static final String STATUS_NO_RULE_TEXT =
-			"Use Tab key to cycle through auto-completions;" + " to remove auto-complete expansion, use Escape key";
+	private static final String STATUS_NO_RULE_TEXT = "Use Tab key to cycle through auto-completions;"
+			+ " to remove auto-complete expansion, use Escape key";
 	private static final String INVALID_RULE_TITLE = "Invalid";
 	private static final String MISSING_RULE = "Nothing to save!";
 	private static final String MISSING_RULE_NAME_TITLE = "Empty Name";
@@ -65,17 +78,16 @@ public class SWRLRuleEditorDialog extends JDialog
 	private JTextField ruleNameTextField, commentTextField, statusTextField;
 	private JTextArea ruleTextTextArea;
 
-	private boolean editMode = false;
-
 	private final SWRLAutoCompleter autoCompleter;
 	private SWRLRuleEditorAutoCompleteState autoCompleteState = null; // Non null if in auto-complete mode
+	private boolean editMode = false;
 
 	public SWRLRuleEditorDialog(SWRLAPIApplicationModel applicationModel,
 			SWRLAPIApplicationDialogManager applicationDialogManager)
 	{
 		this.applicationModel = applicationModel;
 		this.applicationDialogManager = applicationDialogManager;
-		this.autoCompleter = new SWRLAutoCompleter(this.applicationModel.getSWRLAPIOWLOntology());
+		this.autoCompleter = applicationModel.getSWRLAutoCompleter();
 
 		setTitle(TITLE);
 		setModal(true);
@@ -86,8 +98,7 @@ public class SWRLRuleEditorDialog extends JDialog
 
 		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 
-		addWindowListener(new WindowAdapter()
-		{
+		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent we)
 			{
@@ -207,7 +218,10 @@ public class SWRLRuleEditorDialog extends JDialog
 		}
 
 		@Override
-		public void keyReleased(KeyEvent event) { updateStatus(); }
+		public void keyReleased(KeyEvent event)
+		{
+			updateStatus();
+		}
 	}
 
 	private void autoComplete()
@@ -453,10 +467,10 @@ public class SWRLRuleEditorDialog extends JDialog
 	private void createSWRLRule(String ruleName, String rule, String comment, boolean isActive)
 			throws SWRLParseException, SQWRLException
 	{
-		SWRLAPIRule swrlapiRule = getSWRLAPIOWLOntology().createSWRLRule(ruleName, rule, comment, isActive);
+		SWRLAPIRule swrlapiRule = getSWRLRuleEngine().createSWRLRule(ruleName, rule, comment, isActive);
 
 		if (swrlapiRule.isSQWRLQuery())
-			getSWRLAPIOWLOntology().createSQWRLQuery(ruleName, rule, comment, isActive);
+			getSWRLRuleEngine().createSWRLRule(ruleName, rule, comment, isActive);
 
 		getSWRLRulesTableModel().addSWRLRule(swrlapiRule);
 	}
@@ -464,7 +478,12 @@ public class SWRLRuleEditorDialog extends JDialog
 	private void deleteSWRLRule(String ruleName)
 	{
 		getSWRLRulesTableModel().removeSWRLRule(ruleName);
-		this.applicationModel.getSWRLAPIOWLOntology().deleteSWRLRule(ruleName);
+		this.applicationModel.getSWRLRuleEngine().deleteSWRLRule(ruleName);
+	}
+
+	private SWRLRuleEngine getSWRLRuleEngine()
+	{
+		return this.applicationModel.getSWRLRuleEngine();
 	}
 
 	private SWRLParser getSWRLParser()
@@ -481,8 +500,6 @@ public class SWRLRuleEditorDialog extends JDialog
 	{
 		return this.applicationDialogManager;
 	}
-
-	private SWRLAPIOWLOntology getSWRLAPIOWLOntology() { return this.applicationModel.getSWRLAPIOWLOntology(); }
 
 	private void setInitialDialogState()
 	{

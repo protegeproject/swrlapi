@@ -1,4 +1,4 @@
-package org.swrlapi.ui.dialog;
+package org.swrlapi.ui.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,11 +14,11 @@ import org.swrlapi.core.SWRLAPIOWLOntology;
 /**
  * @see org.swrlapi.ui.dialog.SWRLRuleEditorDialog
  */
-public class SWRLAutoCompleter
+public class DefaultSWRLAutoCompleter implements SWRLAutoCompleter
 {
 	private final List<String> shortForms;
 
-	public SWRLAutoCompleter(SWRLAPIOWLOntology swrlapiowlOntology)
+	public DefaultSWRLAutoCompleter(SWRLAPIOWLOntology swrlapiowlOntology)
 	{
 		DefaultPrefixManager prefixManager = swrlapiowlOntology.getPrefixManager();
 		this.shortForms = new ArrayList<>();
@@ -48,6 +48,7 @@ public class SWRLAutoCompleter
 		Collections.sort(this.shortForms);
 	}
 
+	@Override
 	public List<String> getCompletions(String prefix)
 	{ // TODO Look at - not very efficient
 		List<String> completions = new ArrayList<>();

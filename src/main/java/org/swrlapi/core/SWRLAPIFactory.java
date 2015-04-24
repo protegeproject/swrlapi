@@ -28,10 +28,14 @@ import org.swrlapi.core.impl.DefaultSWRLAPIOntologyProcessor;
 import org.swrlapi.core.impl.DefaultSWRLRuleEngineFactory;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.sqwrl.DefaultSQWRLResult;
+import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 import org.swrlapi.sqwrl.values.impl.DefaultSQWRLResultValueFactory;
+import org.swrlapi.ui.controller.DefaultSWRLAPIApplicationController;
 import org.swrlapi.ui.controller.SWRLAPIApplicationController;
+import org.swrlapi.ui.dialog.DefaultSWRLAPIApplicationDialogManager;
 import org.swrlapi.ui.dialog.SWRLAPIApplicationDialogManager;
+import org.swrlapi.ui.model.DefaultSWRLAPIApplicationModel;
 import org.swrlapi.ui.model.SWRLAPIApplicationModel;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
 
@@ -168,15 +172,6 @@ public class SWRLAPIFactory
 	}
 
 	/**
-	 * @param sqwrlResultValueFactory A SQWRL result value factory
-	 * @return A SQWRL result
-	 */
-	public static DefaultSQWRLResult createSQWRLResult(SQWRLResultValueFactory sqwrlResultValueFactory)
-	{
-		return new DefaultSQWRLResult(sqwrlResultValueFactory);
-	}
-
-	/**
 	 * @param swrlRuleEngine A SWRL rule engine
 	 * @param swrlRuleRenderer A SWRL renderer
 	 * @return A SWRL rule table model
@@ -219,15 +214,18 @@ public class SWRLAPIFactory
 		return new DefaultSWRLRuleEngineFactory();
 	}
 
+	public static SQWRLResultGenerator createSQWRLResultGenerator(SQWRLResultValueFactory sqwrlResultValueFactory)
+	{
+		return new DefaultSQWRLResult(sqwrlResultValueFactory);
+	}
+
 	/**
 	 * @param swrlapiOWLOntology A SWRLAPI-based wrapper for an OWL ontology
 	 * @param ruleEngine A SWRL rule engine
-	 * @return A SWRLAPI-based applicaiton model
 	 */
-	public static SWRLAPIApplicationModel createSWRLAPIApplicationModel(SWRLAPIOWLOntology swrlapiOWLOntology,
-			SWRLRuleEngine ruleEngine)
+	public static SWRLAPIApplicationModel createSWRLAPIApplicationModel(SWRLRuleEngine ruleEngine)
 	{
-		return new SWRLAPIApplicationModel(swrlapiOWLOntology, ruleEngine);
+		return new DefaultSWRLAPIApplicationModel(ruleEngine);
 	}
 
 	/**
@@ -236,7 +234,7 @@ public class SWRLAPIFactory
 	 */
 	public static SWRLAPIApplicationController createSWRLAPIApplicationController(SWRLAPIApplicationModel applicationModel)
 	{
-		return new SWRLAPIApplicationController(applicationModel);
+		return new DefaultSWRLAPIApplicationController(applicationModel);
 	}
 
 	/**
@@ -246,7 +244,7 @@ public class SWRLAPIFactory
 	public static SWRLAPIApplicationDialogManager createSWRLAPIApplicationDialogManager(
 			SWRLAPIApplicationModel applicationModel)
 	{
-		return new SWRLAPIApplicationDialogManager(applicationModel);
+		return new DefaultSWRLAPIApplicationDialogManager(applicationModel);
 	}
 
 	/**

@@ -1,9 +1,6 @@
 package org.swrlapi.ui.model;
 
-import org.swrlapi.core.SWRLAPIFactory;
-import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLRuleEngine;
-import org.swrlapi.core.SWRLRuleRenderer;
 import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 
@@ -15,57 +12,41 @@ import org.swrlapi.sqwrl.SQWRLQueryEngine;
  * @see org.swrlapi.ui.view.SWRLAPIApplicationView
  * @see org.swrlapi.ui.controller.SWRLAPIApplicationController
  */
-public class SWRLAPIApplicationModel implements SWRLAPIModel
+public interface SWRLAPIApplicationModel extends SWRLAPIModel
 {
-	private final SWRLAPIOWLOntology swrlapiOWLOntology;
-	private final SWRLRulesTableModel swrlRulesTableModel;
-	private final SQWRLQueryEngine queryEngine;
-	private final SWRLRuleEngine ruleEngine;
-	private final SWRLParser swrlParser;
-	private final SWRLRuleRenderer swrlRuleRenderer;
+	/**
+	 * @return A SWRL rule engine
+	 */
+	SWRLRuleEngine getSWRLRuleEngine();
 
-	public SWRLAPIApplicationModel(SWRLAPIOWLOntology swrlapiOWLOntology, SWRLRuleEngine ruleEngine)
-	{
-		this.swrlapiOWLOntology = swrlapiOWLOntology;
-		this.ruleEngine = ruleEngine;
-		this.queryEngine = ruleEngine;
-		this.swrlRuleRenderer = this.swrlapiOWLOntology.createSWRLRuleRenderer();
-		this.swrlRulesTableModel = SWRLAPIFactory.createSWRLRulesTableModel(ruleEngine, swrlRuleRenderer);
-		this.swrlParser = this.swrlapiOWLOntology.createSWRLParser();
-	}
+	/**
+	 * @return A SQWRL query engine
+	 */
+	SQWRLQueryEngine getSQWRLQueryEngine();
 
-	public SWRLAPIOWLOntology getSWRLAPIOWLOntology()
-	{
-		return this.swrlapiOWLOntology;
-	}
+	/**
+	 * @return A SWRL parser
+	 */
+	SWRLParser getSWRLParser();
 
-	public SWRLRuleEngine getSWRLRuleEngine()
-	{
-		return this.ruleEngine;
-	}
+	/**
+	 * @return A SWRL auto-completer
+	 */
+	SWRLAutoCompleter getSWRLAutoCompleter();
 
-	public SQWRLQueryEngine getSQWRLQueryEngine()
-	{
-		return this.queryEngine;
-	}
+	/**
+	 * @return A SWRL rules table model
+	 */
+	SWRLRulesTableModel getSWRLRulesTableModel();
 
-	public SWRLParser getSWRLParser()
-	{
-		return this.swrlParser;
-	}
+	/**
+	 * @return True if the rules in the underlying ontology have been modified since the last call to
+	 *         {@link SWRLAPIApplicationModel#clearSWRLRulesModified()}.
+	 */
+	boolean areSWRLRulesModified();
 
-	public SWRLRulesTableModel getSWRLRulesTableModel()
-	{
-		return this.swrlRulesTableModel;
-	}
-
-	public boolean areSWRLRulesModified()
-	{
-		return swrlRulesTableModel.hasBeenModified();
-	}
-
-	public void clearSWRLRulesModified()
-	{
-		swrlRulesTableModel.clearModifiedStatus();
-	}
+	/**
+	 * Clear the modified status of SWRL rules. Used in conjunction with {@link #areSWRLRulesModified()}.
+	 */
+	void clearSWRLRulesModified();
 }

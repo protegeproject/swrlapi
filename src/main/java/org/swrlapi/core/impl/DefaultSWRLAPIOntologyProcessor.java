@@ -396,7 +396,7 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 
 	private void processSWRLRulesAndSQWRLQueries() throws SQWRLException
 	{
-		for (SWRLAPIRule ruleOrQuery : getSWRLAPIOWLOntology().getSWRLAPIRules())
+		for (SWRLAPIRule ruleOrQuery : getSWRLAPIOWLOntology().getSWRLRules())
 			processSWRLRuleOrSQWRLQuery(ruleOrQuery);
 	}
 

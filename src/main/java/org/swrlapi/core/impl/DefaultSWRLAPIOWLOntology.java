@@ -53,6 +53,9 @@ import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
+import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
+import org.swrlapi.ui.model.DefaultSWRLAutoCompleter;
+import org.swrlapi.ui.model.SWRLAutoCompleter;
 
 /**
  * This class does not directly deal with SQWRL queries. Instead, a {@link org.swrlapi.core.SWRLAPIOntologyProcessor} is
@@ -68,6 +71,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	private final Set<IRI> swrlBuiltInIRIs;
 	private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
 	private final SWRLAPIOntologyProcessor swrlapiOntologyProcessor;
+	private final SQWRLResultValueFactory sqwrlResultValueFactory;
 
 	public DefaultSWRLAPIOWLOntology(OWLOntology ontology, DefaultPrefixManager prefixManager)
 	{
@@ -78,6 +82,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		this.swrlBuiltInIRIs = new HashSet<>();
 		this.swrlapiOWLDataFactory = SWRLAPIFactory.createSWRLAPIOWLDataFactory(this);
 		this.swrlapiOntologyProcessor = SWRLAPIFactory.createSWRLAPIOntologyProcessor(this);
+		this.sqwrlResultValueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(this);
 
 		addDefaultSWRLBuiltIns();
 	}
@@ -136,6 +141,12 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	}
 
 	@Override
+	public SWRLAutoCompleter createSWRLAutoCompleter()
+	{
+		return new DefaultSWRLAutoCompleter(this);
+	}
+
+	@Override
 	public SWRLRuleRenderer createSWRLRuleRenderer()
 	{
 		return new DefaultSWRLAPIRenderer(this);
@@ -186,7 +197,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	}
 
 	@Override
-	public Set<SWRLAPIRule> getSWRLAPIRules()
+	public Set<SWRLAPIRule> getSWRLRules()
 	{
 		Set<SWRLAPIRule> swrlapiRules = new HashSet<>();
 		Set<SWRLRule> unannotatedOWLAPIRules = new HashSet<>();
@@ -361,6 +372,12 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	public SQWRLResultGenerator getSQWRLResultGenerator(String queryName) throws SQWRLException
 	{
 		return this.swrlapiOntologyProcessor.getSQWRLResultGenerator(queryName);
+	}
+
+	@Override
+	public SQWRLResultGenerator createSQWRLResultGenerator()
+	{
+		return SWRLAPIFactory.createSQWRLResultGenerator(this.sqwrlResultValueFactory);
 	}
 
 	@Override

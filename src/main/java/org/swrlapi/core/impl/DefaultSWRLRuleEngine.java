@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.semanticweb.owlapi.model.AddAxiom;
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
@@ -15,14 +16,19 @@ import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLRuleEngine;
+import org.swrlapi.core.SWRLRuleRenderer;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLRuleEngineException;
+import org.swrlapi.exceptions.SWRLRuleException;
 import org.swrlapi.exceptions.TargetSWRLRuleEngineException;
 import org.swrlapi.owl2rl.OWL2RLEngine;
+import org.swrlapi.parser.SWRLParseException;
+import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.sqwrl.SQWRLQuery;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
+import org.swrlapi.ui.model.SWRLAutoCompleter;
 
 /**
  * This class provides an implementation of some of the core functionality required by a SWRL rule engine.
@@ -299,7 +305,68 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 	@Override
 	public Set<SWRLAPIRule> getSWRLRules()
 	{
-		return this.swrlapiOWLOntology.getSWRLAPIRules();
+		return this.swrlapiOWLOntology.getSWRLRules();
+	}
+
+	@Override
+	public SWRLAPIRule getSWRLRule(String ruleName) throws SWRLRuleException
+	{
+		return this.swrlapiOWLOntology.getSWRLRule(ruleName);
+	}
+
+	@Override
+	public SWRLAPIRule createSWRLRule(String ruleName, String rule) throws SWRLParseException
+	{
+		return this.swrlapiOWLOntology.createSWRLRule(ruleName, rule);
+	}
+
+	@Override
+	public SWRLAPIRule createSWRLRule(String ruleName, String rule, String comment, boolean isActive)
+			throws SWRLParseException
+	{
+		return this.swrlapiOWLOntology.createSWRLRule(ruleName, rule, comment, isActive);
+	}
+
+	@Override
+	public void deleteSWRLRule(String ruleName)
+	{
+		this.swrlapiOWLOntology.deleteSWRLRule(ruleName);
+	}
+
+	@Override
+	public boolean isSWRLBuiltIn(IRI iri)
+	{
+		return this.isSWRLBuiltIn(iri);
+	}
+
+	@Override
+	public void addSWRLBuiltIn(IRI iri)
+	{
+		this.swrlapiOWLOntology.addSWRLBuiltIn(iri);
+	}
+
+	@Override
+	public Set<IRI> getSWRLBuiltInIRIs()
+	{
+		return this.swrlapiOWLOntology.getSWRLBuiltInIRIs();
+	}
+
+	@Override
+	public SWRLParser createSWRLParser()
+	{
+		return this.swrlapiOWLOntology.createSWRLParser();
+	}
+
+	@Override
+	public SWRLAutoCompleter createSWRLAutoCompleter()
+	{
+		return this.swrlapiOWLOntology.createSWRLAutoCompleter();
+	}
+
+	@Override
+	public SWRLRuleRenderer createSWRLRuleRenderer()
+	{
+		return this.swrlapiOWLOntology.createSWRLRuleRenderer();
 	}
 
 	@Override

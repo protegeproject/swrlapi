@@ -1,30 +1,33 @@
 package org.swrlapi.ui.view.rules;
 
-import org.swrlapi.core.SWRLAPIOWLOntology;
+import java.awt.BorderLayout;
+import java.util.Set;
+
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JViewport;
+import javax.swing.table.AbstractTableModel;
+
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLRuleEngine;
-import org.swrlapi.core.impl.DefaultSWRLAPIRenderer;
+import org.swrlapi.core.SWRLRuleRenderer;
 import org.swrlapi.ui.view.SWRLAPIView;
-
-import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
-import java.awt.*;
-import java.util.Set;
 
 public class ImportedSWRLRulesView extends JPanel implements SWRLAPIView
 {
 	private static final long serialVersionUID = 1L;
 
 	private final SWRLRuleEngine swrlRuleEngine;
-	private final DefaultSWRLAPIRenderer swrlRulePrinter;
+	private final SWRLRuleRenderer swrlRulePrinter;
 	private final SWRLRulesTableModel swrlRulesTableModel;
 
-	public ImportedSWRLRulesView(SWRLRuleEngine ruleEngine, SWRLAPIOWLOntology swrlapiowlOntology)
+	public ImportedSWRLRulesView(SWRLRuleEngine ruleEngine)
 	{
 		this.swrlRuleEngine = ruleEngine;
 		this.swrlRulesTableModel = new SWRLRulesTableModel();
 		JTable swrlRulesTable = new JTable(this.swrlRulesTableModel);
-		this.swrlRulePrinter = new DefaultSWRLAPIRenderer(swrlapiowlOntology);
+		this.swrlRulePrinter = ruleEngine.createSWRLRuleRenderer();
 
 		JScrollPane scrollPane = new JScrollPane(swrlRulesTable);
 		JViewport viewPort = scrollPane.getViewport();

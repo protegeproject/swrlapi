@@ -10,26 +10,10 @@ import org.swrlapi.ui.view.SWRLAPIApplicationView;
  * @see org.swrlapi.ui.model.SWRLAPIApplicationModel
  * @see org.swrlapi.ui.view.SWRLAPIApplicationView
  */
-public class SWRLAPIApplicationController
+public interface SWRLAPIApplicationController
 {
-	// private final SWRLAPIApplicationView applicationView;
-	private final SWRLAPIApplicationModel applicationModel;
-
-	public SWRLAPIApplicationController(SWRLAPIApplicationModel applicationModel)
-	{
-		this.applicationModel = applicationModel;
-	}
-
-	// public SWRLAPIApplicationView getApplicationView()
-	// {
-	// return applicationView;
-	// }
-
 	/**
 	 * @return The application model associated with the controller
 	 */
-	public SWRLAPIApplicationModel getApplicationModel()
-	{
-		return this.applicationModel;
-	}
+	SWRLAPIApplicationModel getApplicationModel();
 }
