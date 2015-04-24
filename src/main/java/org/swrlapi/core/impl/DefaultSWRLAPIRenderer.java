@@ -518,7 +518,7 @@ public class DefaultSWRLAPIRenderer implements SWRLRuleRenderer, SQWRLQueryRende
 		else if (datatype.getIRI().equals(XSDVocabulary.INT.getIRI()))
 			return value;
 		else
-			return "\"" + value + "\"^^\"" + visit(datatype) + "\"";
+			return "\"" + value + "\"^^" + visit(datatype);
 	}
 
 	private String variablePrefixedName2VariableName(String variablePrefixedName)

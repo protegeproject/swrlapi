@@ -255,8 +255,7 @@ public class SQWRLResultView extends JPanel implements SWRLAPIView
 							|| sqwrLiteralResultValue.isBoolean())
 						return sqwrLiteralResultValue.getValue();
 					else
-						return "\"" + sqwrLiteralResultValue.getValue() + "\"^^\""
-								+ sqwrLiteralResultValue.getDatatypePrefixedName() + "\"";
+						return "\"" + sqwrLiteralResultValue.getValue() + "\"^^" + sqwrLiteralResultValue.getDatatypePrefixedName();
 				} else
 					return "INVALID";
 			} catch (SQWRLException e) {
