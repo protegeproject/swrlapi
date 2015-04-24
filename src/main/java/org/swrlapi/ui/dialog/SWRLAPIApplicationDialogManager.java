@@ -6,7 +6,7 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 
 /**
- * Provides a set of dialogs that can be used to build a MVC-based GUI that uses the SWRLAPI. Used in conjunction with a
+ * Provides a set of standard dialogs. Used in conjunction with a
  * {@link org.swrlapi.ui.controller.SWRLAPIApplicationController}.
  *
  * @see org.swrlapi.ui.controller.SWRLAPIApplicationController
