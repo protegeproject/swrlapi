@@ -4,7 +4,7 @@ import javax.swing.Icon;
 import javax.swing.JSplitPane;
 
 import org.swrlapi.exceptions.SWRLAPIException;
-import org.swrlapi.ui.dialog.SWRLAPIApplicationDialogManager;
+import org.swrlapi.ui.dialog.SWRLRuleEngineDialogManager;
 import org.swrlapi.ui.model.SQWRLQueryEngineModel;
 import org.swrlapi.ui.view.SWRLAPIView;
 import org.swrlapi.ui.view.SWRLRulesTableView;
@@ -25,7 +25,7 @@ public class SWRLAPIQueriesView extends JSplitPane implements SWRLAPIView
 	private final SQWRLQueryExecutionView sqwrlQueryExecutionView;
 
 	public SWRLAPIQueriesView(SQWRLQueryEngineModel sqwrlQueryEngineModel,
-			SWRLAPIApplicationDialogManager applicationDialogManager, Icon queryEngineIcon) throws SWRLAPIException
+			SWRLRuleEngineDialogManager applicationDialogManager, Icon queryEngineIcon) throws SWRLAPIException
 	{
 		this.swrlRulesTableView = new SWRLRulesTableView(sqwrlQueryEngineModel, applicationDialogManager);
 		this.sqwrlQueryExecutionView = new SQWRLQueryExecutionView(sqwrlQueryEngineModel, queryEngineIcon,

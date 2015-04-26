@@ -5,10 +5,10 @@ import org.swrlapi.parser.SWRLParser;
 
 /**
  * Provides an model that can be used to build a MVC-based GUI that uses a SWRL rule engine. Used in conjunction with a
- * {@link org.swrlapi.ui.controller.SWRLAPIApplicationController} .
+ * {@link org.swrlapi.ui.controller.SWRLRuleEngineController} .
  *
  * @see org.swrlapi.ui.view.SWRLAPIApplicationView
- * @see org.swrlapi.ui.controller.SWRLAPIApplicationController
+ * @see org.swrlapi.ui.controller.SWRLRuleEngineController
  */
 public interface SWRLRuleEngineModel extends SWRLAPIModel
 {

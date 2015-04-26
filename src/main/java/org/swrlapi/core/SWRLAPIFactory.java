@@ -32,10 +32,10 @@ import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 import org.swrlapi.sqwrl.values.impl.DefaultSQWRLResultValueFactory;
-import org.swrlapi.ui.controller.DefaultSWRLAPIApplicationController;
-import org.swrlapi.ui.controller.SWRLAPIApplicationController;
-import org.swrlapi.ui.dialog.DefaultSWRLAPIApplicationDialogManager;
-import org.swrlapi.ui.dialog.SWRLAPIApplicationDialogManager;
+import org.swrlapi.ui.controller.DefaultSWRLRuleEngineController;
+import org.swrlapi.ui.controller.SWRLRuleEngineController;
+import org.swrlapi.ui.dialog.DefaultSWRLRuleEngineDialogManager;
+import org.swrlapi.ui.dialog.SWRLRuleEngineDialogManager;
 import org.swrlapi.ui.model.DefaultSQWRLQueryEngineModel;
 import org.swrlapi.ui.model.DefaultSWRLRuleEngineModel;
 import org.swrlapi.ui.model.SQWRLQueryEngineModel;
@@ -239,22 +239,21 @@ public class SWRLAPIFactory
 	}
 
 	/**
-	 * @param applicationModel A SWRLAPI-based application model
-	 * @return A SWRLAPI-based application controller
+	 * @param swrlRuleEngineModel A SWRL rule engine model
+	 * @return A SWRL rule engine controller
 	 */
-	public static SWRLAPIApplicationController createSWRLAPIApplicationController(SWRLRuleEngineModel applicationModel)
+	public static SWRLRuleEngineController createSWRLRuleEngineController(SWRLRuleEngineModel swrlRuleEngineModel)
 	{
-		return new DefaultSWRLAPIApplicationController(applicationModel);
+		return new DefaultSWRLRuleEngineController(swrlRuleEngineModel);
 	}
 
 	/**
-	 * @param applicationModel An application model
-	 * @return A SWRLAPI-based application dialog manager
+	 * @param swrlRuleEngineModel An SWRL rule engine model
+	 * @return A SWRL rule engine dialog manager
 	 */
-	public static SWRLAPIApplicationDialogManager createSWRLAPIApplicationDialogManager(
-			SWRLRuleEngineModel applicationModel)
+	public static SWRLRuleEngineDialogManager createSWRLRuleEngineDialogManager(SWRLRuleEngineModel swrlRuleEngineModel)
 	{
-		return new DefaultSWRLAPIApplicationDialogManager(applicationModel);
+		return new DefaultSWRLRuleEngineDialogManager(swrlRuleEngineModel);
 	}
 
 	/**

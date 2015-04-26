@@ -70,7 +70,7 @@ public class SWRLRuleEditorDialog extends JDialog
 	private static final int RULE_EDIT_AREA_ROWS = 60;
 
 	private final SWRLRuleEngineModel applicationModel;
-	private final SWRLAPIApplicationDialogManager applicationDialogManager;
+	private final SWRLRuleEngineDialogManager applicationDialogManager;
 
 	private final SWRLRuleEditorInitialDialogState initialDialogState = new SWRLRuleEditorInitialDialogState();
 
@@ -83,7 +83,7 @@ public class SWRLRuleEditorDialog extends JDialog
 	private boolean editMode = false;
 
 	public SWRLRuleEditorDialog(SWRLRuleEngineModel applicationModel,
-			SWRLAPIApplicationDialogManager applicationDialogManager)
+			SWRLRuleEngineDialogManager applicationDialogManager)
 	{
 		this.applicationModel = applicationModel;
 		this.applicationDialogManager = applicationDialogManager;
@@ -496,7 +496,7 @@ public class SWRLRuleEditorDialog extends JDialog
 		return this.applicationModel.getSWRLRulesTableModel();
 	}
 
-	private SWRLAPIApplicationDialogManager getApplicationDialogManager()
+	private SWRLRuleEngineDialogManager getApplicationDialogManager()
 	{
 		return this.applicationDialogManager;
 	}
