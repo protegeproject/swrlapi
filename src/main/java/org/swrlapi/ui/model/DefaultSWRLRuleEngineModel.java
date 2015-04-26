@@ -4,21 +4,18 @@ import org.swrlapi.core.SWRLAPIFactory;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.core.SWRLRuleRenderer;
 import org.swrlapi.parser.SWRLParser;
-import org.swrlapi.sqwrl.SQWRLQueryEngine;
 
-public class DefaultSWRLAPIApplicationModel implements SWRLAPIApplicationModel
+public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel
 {
 	private final SWRLRulesTableModel swrlRulesTableModel;
-	private final SQWRLQueryEngine queryEngine;
 	private final SWRLRuleEngine ruleEngine;
 	private final SWRLParser swrlParser;
 	private final SWRLRuleRenderer swrlRuleRenderer;
 	private final SWRLAutoCompleter swrlAutoCompleter;
 
-	public DefaultSWRLAPIApplicationModel(SWRLRuleEngine ruleEngine)
+	public DefaultSWRLRuleEngineModel(SWRLRuleEngine ruleEngine)
 	{
 		this.ruleEngine = ruleEngine;
-		this.queryEngine = ruleEngine;
 		this.swrlRuleRenderer = this.ruleEngine.createSWRLRuleRenderer();
 		this.swrlRulesTableModel = SWRLAPIFactory.createSWRLRulesTableModel(ruleEngine, swrlRuleRenderer);
 		this.swrlParser = this.ruleEngine.createSWRLParser();
@@ -29,12 +26,6 @@ public class DefaultSWRLAPIApplicationModel implements SWRLAPIApplicationModel
 	public SWRLRuleEngine getSWRLRuleEngine()
 	{
 		return this.ruleEngine;
-	}
-
-	@Override
-	public SQWRLQueryEngine getSQWRLQueryEngine()
-	{
-		return this.queryEngine;
 	}
 
 	@Override

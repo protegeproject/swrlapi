@@ -1,12 +1,13 @@
 package org.swrlapi.ui.view.queries;
 
+import javax.swing.Icon;
+import javax.swing.JSplitPane;
+
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.ui.dialog.SWRLAPIApplicationDialogManager;
-import org.swrlapi.ui.model.SWRLAPIApplicationModel;
+import org.swrlapi.ui.model.SQWRLQueryEngineModel;
 import org.swrlapi.ui.view.SWRLAPIView;
 import org.swrlapi.ui.view.SWRLRulesTableView;
-
-import javax.swing.*;
 
 /**
  * Graphical component that presents a SQWRL editor and query execution graphical interface. It can be used to embed
@@ -23,11 +24,11 @@ public class SWRLAPIQueriesView extends JSplitPane implements SWRLAPIView
 	private final SWRLRulesTableView swrlRulesTableView;
 	private final SQWRLQueryExecutionView sqwrlQueryExecutionView;
 
-	public SWRLAPIQueriesView(SWRLAPIApplicationModel applicationModel,
+	public SWRLAPIQueriesView(SQWRLQueryEngineModel sqwrlQueryEngineModel,
 			SWRLAPIApplicationDialogManager applicationDialogManager, Icon queryEngineIcon) throws SWRLAPIException
 	{
-		this.swrlRulesTableView = new SWRLRulesTableView(applicationModel, applicationDialogManager);
-		this.sqwrlQueryExecutionView = new SQWRLQueryExecutionView(applicationModel, queryEngineIcon,
+		this.swrlRulesTableView = new SWRLRulesTableView(sqwrlQueryEngineModel, applicationDialogManager);
+		this.sqwrlQueryExecutionView = new SQWRLQueryExecutionView(sqwrlQueryEngineModel, queryEngineIcon,
 				new SQWRLQuerySelector(this.swrlRulesTableView));
 
 		setOrientation(JSplitPane.VERTICAL_SPLIT);

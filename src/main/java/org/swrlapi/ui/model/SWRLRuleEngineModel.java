@@ -2,27 +2,20 @@ package org.swrlapi.ui.model;
 
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.parser.SWRLParser;
-import org.swrlapi.sqwrl.SQWRLQueryEngine;
 
 /**
- * Provides an application model that can be used to build a MVC-based GUI that uses the SWRLAPI. Used in conjunction
- * with a {@link org.swrlapi.ui.model.SWRLAPIApplicationModel} and a
- * {@link org.swrlapi.ui.controller.SWRLAPIApplicationController}.
+ * Provides an model that can be used to build a MVC-based GUI that uses a SWRL rule engine. Used in conjunction with a
+ * {@link org.swrlapi.ui.controller.SWRLAPIApplicationController} .
  *
  * @see org.swrlapi.ui.view.SWRLAPIApplicationView
  * @see org.swrlapi.ui.controller.SWRLAPIApplicationController
  */
-public interface SWRLAPIApplicationModel extends SWRLAPIModel
+public interface SWRLRuleEngineModel extends SWRLAPIModel
 {
 	/**
 	 * @return A SWRL rule engine
 	 */
 	SWRLRuleEngine getSWRLRuleEngine();
-
-	/**
-	 * @return A SQWRL query engine
-	 */
-	SQWRLQueryEngine getSQWRLQueryEngine();
 
 	/**
 	 * @return A SWRL parser
@@ -41,7 +34,7 @@ public interface SWRLAPIApplicationModel extends SWRLAPIModel
 
 	/**
 	 * @return True if the rules in the underlying ontology have been modified since the last call to
-	 *         {@link SWRLAPIApplicationModel#clearSWRLRulesModified()}.
+	 *         {@link SWRLRuleEngineModel#clearSWRLRulesModified()}.
 	 */
 	boolean areSWRLRulesModified();
 

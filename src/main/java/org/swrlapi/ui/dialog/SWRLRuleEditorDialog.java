@@ -31,7 +31,7 @@ import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.parser.SWRLParserSupport;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
-import org.swrlapi.ui.model.SWRLAPIApplicationModel;
+import org.swrlapi.ui.model.SWRLRuleEngineModel;
 import org.swrlapi.ui.model.SWRLAutoCompleter;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
 
@@ -69,7 +69,7 @@ public class SWRLRuleEditorDialog extends JDialog
 	private static final int RULE_EDIT_AREA_COLUMNS = 20;
 	private static final int RULE_EDIT_AREA_ROWS = 60;
 
-	private final SWRLAPIApplicationModel applicationModel;
+	private final SWRLRuleEngineModel applicationModel;
 	private final SWRLAPIApplicationDialogManager applicationDialogManager;
 
 	private final SWRLRuleEditorInitialDialogState initialDialogState = new SWRLRuleEditorInitialDialogState();
@@ -82,7 +82,7 @@ public class SWRLRuleEditorDialog extends JDialog
 	private SWRLRuleEditorAutoCompleteState autoCompleteState = null; // Non null if in auto-complete mode
 	private boolean editMode = false;
 
-	public SWRLRuleEditorDialog(SWRLAPIApplicationModel applicationModel,
+	public SWRLRuleEditorDialog(SWRLRuleEngineModel applicationModel,
 			SWRLAPIApplicationDialogManager applicationDialogManager)
 	{
 		this.applicationModel = applicationModel;

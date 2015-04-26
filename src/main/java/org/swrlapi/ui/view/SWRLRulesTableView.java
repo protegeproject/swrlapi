@@ -18,7 +18,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumnModel;
 
 import org.swrlapi.ui.dialog.SWRLAPIApplicationDialogManager;
-import org.swrlapi.ui.model.SWRLAPIApplicationModel;
+import org.swrlapi.ui.model.SWRLRuleEngineModel;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
 
 /**
@@ -39,16 +39,16 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 	private static final int COMMENT_COLUMN_PREFERRED_WIDTH = 200;
 	private static final int COMMENT_COLUMN_MAX_WIDTH = 300;
 
-	private final SWRLAPIApplicationModel applicationModel;
+	private final SWRLRuleEngineModel swrlRuleEngineModel;
 	private final SWRLAPIApplicationDialogManager applicationDialogManager;
 	private final SWRLRulesTableModel swrlRulesTableModel;
 	private final JTable swrlRulesTable;
 
 	private JButton editButton, deleteButton;
 
-	public SWRLRulesTableView(SWRLAPIApplicationModel applicationModel, SWRLAPIApplicationDialogManager dialogManager)
+	public SWRLRulesTableView(SWRLRuleEngineModel applicationModel, SWRLAPIApplicationDialogManager dialogManager)
 	{
-		this.applicationModel = applicationModel;
+		this.swrlRuleEngineModel = applicationModel;
 		this.applicationDialogManager = dialogManager;
 		this.swrlRulesTableModel = applicationModel.getSWRLRulesTableModel();
 		this.swrlRulesTable = new JTable(this.swrlRulesTableModel);
@@ -199,9 +199,9 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 		return this.swrlRulesTable.getSelectedRow() != -1;
 	}
 
-	private SWRLAPIApplicationModel getSWRLAPIApplicationModel()
+	private SWRLRuleEngineModel getSWRLRuleEngineModel()
 	{
-		return this.applicationModel;
+		return this.swrlRuleEngineModel;
 	}
 
 	private abstract class ActionListenerBase implements ActionListener
@@ -266,7 +266,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 					&& this.applicationDialogManager.showConfirmDialog(parent, "Do you really want to delete the rule?",
 							"Delete Rule")) {
 				SWRLRulesTableView.this.swrlRulesTableModel.removeSWRLRule(selectedRuleName);
-				getSWRLAPIApplicationModel().getSWRLRuleEngine().deleteSWRLRule(selectedRuleName);
+				getSWRLRuleEngineModel().getSWRLRuleEngine().deleteSWRLRule(selectedRuleName);
 			}
 		}
 	}

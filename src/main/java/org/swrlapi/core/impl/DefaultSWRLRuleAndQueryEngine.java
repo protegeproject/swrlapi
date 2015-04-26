@@ -26,6 +26,7 @@ import org.swrlapi.owl2rl.OWL2RLEngine;
 import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.sqwrl.SQWRLQuery;
+import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.ui.model.SWRLAutoCompleter;
@@ -33,7 +34,7 @@ import org.swrlapi.ui.model.SWRLAutoCompleter;
 /**
  * This class provides an implementation of some of the core functionality required by a SWRL rule engine.
  */
-public class DefaultSWRLRuleEngine implements SWRLRuleEngine
+public class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
 {
 	private final SWRLAPIOWLOntology swrlapiOWLOntology;
 	private final TargetSWRLRuleEngine targetSWRLRuleEngine;
@@ -41,7 +42,7 @@ public class DefaultSWRLRuleEngine implements SWRLRuleEngine
 	private final SWRLRuleEngineBridgeController ruleEngineBridgeController;
 	private final Set<OWLAxiom> exportedOWLAxioms; // Axioms exported to target rule engine
 
-	public DefaultSWRLRuleEngine(SWRLAPIOWLOntology swrlapiOWLOntology, TargetSWRLRuleEngine targetSWRLRuleEngine,
+	public DefaultSWRLRuleAndQueryEngine(SWRLAPIOWLOntology swrlapiOWLOntology, TargetSWRLRuleEngine targetSWRLRuleEngine,
 			SWRLRuleEngineBridgeController ruleEngineBridgeController, SWRLBuiltInBridgeController builtInBridgeController)
 			throws SWRLRuleEngineException
 	{

@@ -10,7 +10,6 @@ import org.swrlapi.exceptions.SWRLRuleException;
 import org.swrlapi.owl2rl.OWL2RLEngine;
 import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.parser.SWRLParser;
-import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.ui.model.SWRLAutoCompleter;
 
 /**
@@ -20,9 +19,9 @@ import org.swrlapi.ui.model.SWRLAutoCompleter;
  *
  * @see org.swrlapi.core.SWRLAPIRule
  * @see org.swrlapi.bridge.TargetSWRLRuleEngine
- * @see org.swrlapi.core.impl.DefaultSWRLRuleEngine
+ * @see org.swrlapi.core.impl.DefaultSWRLRuleAndQueryEngine
  */
-public interface SWRLRuleEngine extends SQWRLQueryEngine
+public interface SWRLRuleEngine
 {
 	/**
 	 * Load rules and knowledge from OWL, send them to the rule engine, run the rule engine, and write any inferred
@@ -66,7 +65,6 @@ public interface SWRLRuleEngine extends SQWRLQueryEngine
 	/**
 	 * Reset the rule engine.
 	 */
-	@Override
 	void reset();
 
 	/**
@@ -138,19 +136,16 @@ public interface SWRLRuleEngine extends SQWRLQueryEngine
 	/**
 	 * Get the underlying OWL 2 RL reasoner used by the rule and query engine.
 	 */
-	@Override
 	OWL2RLEngine getOWL2RLEngine();
 
 	/**
 	 * Get the name of the native rule engine implementing this SWRL rule engine.
 	 */
-	@Override
 	String getTargetRuleEngineName();
 
 	/**
 	 * Get the version of the native rule engine implementing this SWRL rule engine.
 	 */
-	@Override
 	String getTargetRuleEngineVersion();
 
 	/**

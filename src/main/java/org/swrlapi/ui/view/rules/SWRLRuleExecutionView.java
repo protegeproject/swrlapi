@@ -6,7 +6,7 @@ import javax.swing.JTabbedPane;
 import org.swrlapi.core.SWRLAPIFactory;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.exceptions.SWRLAPIException;
-import org.swrlapi.ui.model.SWRLAPIApplicationModel;
+import org.swrlapi.ui.model.SWRLRuleEngineModel;
 import org.swrlapi.ui.view.SWRLAPIView;
 import org.swrlapi.ui.view.owl2rl.OWL2RLRuleTablesView;
 
@@ -14,7 +14,7 @@ public class SWRLRuleExecutionView extends JTabbedPane implements SWRLAPIView
 {
 	private static final long serialVersionUID = 1L;
 
-	public SWRLRuleExecutionView(SWRLAPIApplicationModel applicationModel, Icon ruleEngineIcon) throws SWRLAPIException
+	public SWRLRuleExecutionView(SWRLRuleEngineModel applicationModel, Icon ruleEngineIcon) throws SWRLAPIException
 	{
 		SWRLRuleEngine swrlRuleEngine = applicationModel.getSWRLRuleEngine();
 		Icon owl2RLIcon = SWRLAPIFactory.getOWL2RLReasonerIcon();

@@ -10,7 +10,7 @@ import javax.swing.JFileChooser;
  * {@link org.swrlapi.ui.controller.SWRLAPIApplicationController}.
  *
  * @see org.swrlapi.ui.controller.SWRLAPIApplicationController
- * @see org.swrlapi.ui.model.SWRLAPIApplicationModel
+ * @see org.swrlapi.ui.model.SWRLRuleEngineModel
  * @see org.swrlapi.ui.view.SWRLAPIApplicationView
  */
 public interface SWRLAPIApplicationDialogManager

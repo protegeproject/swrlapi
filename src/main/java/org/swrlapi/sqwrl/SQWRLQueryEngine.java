@@ -2,6 +2,7 @@ package org.swrlapi.sqwrl;
 
 import java.util.Set;
 
+import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.owl2rl.OWL2RLEngine;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
@@ -11,7 +12,7 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
  * @see org.swrlapi.sqwrl.SQWRLQuery
  * @see org.swrlapi.sqwrl.SQWRLResult
  */
-public interface SQWRLQueryEngine
+public interface SQWRLQueryEngine extends SWRLRuleEngine
 {
 	/**
 	 * Create and run a SQWRL query. The query will be created and added to the associated ontology.

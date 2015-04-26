@@ -7,14 +7,14 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-import org.swrlapi.ui.model.SWRLAPIApplicationModel;
+import org.swrlapi.ui.model.SWRLRuleEngineModel;
 
 public class DefaultSWRLAPIApplicationDialogManager implements SWRLAPIApplicationDialogManager
 {
 	private final SWRLRuleEditorDialog swrlRuleEditorDialog;
 	private File lastDirectory = null;
 
-	public DefaultSWRLAPIApplicationDialogManager(SWRLAPIApplicationModel applicationModel)
+	public DefaultSWRLAPIApplicationDialogManager(SWRLRuleEngineModel applicationModel)
 	{
 		this.swrlRuleEditorDialog = new SWRLRuleEditorDialog(applicationModel, this);
 	}

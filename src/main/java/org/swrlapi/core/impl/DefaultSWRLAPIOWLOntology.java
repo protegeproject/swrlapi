@@ -40,7 +40,7 @@ import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIOntologyProcessor;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLRuleEngine;
-import org.swrlapi.core.SWRLRuleEngineFactory;
+import org.swrlapi.core.SWRLRuleAndQueryEngineFactory;
 import org.swrlapi.core.SWRLRuleEngineManager;
 import org.swrlapi.core.SWRLRuleRenderer;
 import org.swrlapi.core.resolvers.IRIResolver;
@@ -108,7 +108,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	@Override
 	public SWRLRuleEngine createSWRLRuleEngine(SWRLRuleEngineManager.TargetSWRLRuleEngineCreator ruleEngineCreator)
 	{
-		SWRLRuleEngineFactory swrlRuleEngineFactory = SWRLAPIFactory.createSWRLRuleEngineFactory();
+		SWRLRuleAndQueryEngineFactory swrlRuleEngineFactory = SWRLAPIFactory.createSWRLRuleEngineFactory();
 		swrlRuleEngineFactory.registerRuleEngine(ruleEngineCreator);
 
 		SWRLRuleEngine swrlRuleEngine = swrlRuleEngineFactory.createSWRLRuleEngine(this);
@@ -161,7 +161,7 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 	@Override
 	public SQWRLQueryEngine createSQWRLQueryEngine(SWRLRuleEngineManager.TargetSWRLRuleEngineCreator ruleEngineCreator)
 	{
-		SWRLRuleEngineFactory swrlRuleEngineFactory = SWRLAPIFactory.createSWRLRuleEngineFactory();
+		SWRLRuleAndQueryEngineFactory swrlRuleEngineFactory = SWRLAPIFactory.createSWRLRuleEngineFactory();
 		swrlRuleEngineFactory.registerRuleEngine(ruleEngineCreator);
 
 		SQWRLQueryEngine sqwrlQueryEngine = swrlRuleEngineFactory.createSQWRLQueryEngine(this);

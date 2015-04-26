@@ -1,13 +1,14 @@
 package org.swrlapi.ui.view.queries;
 
+import javax.swing.Icon;
+import javax.swing.JTabbedPane;
+
 import org.swrlapi.core.SWRLAPIFactory;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
-import org.swrlapi.ui.model.SWRLAPIApplicationModel;
+import org.swrlapi.ui.model.SQWRLQueryEngineModel;
 import org.swrlapi.ui.view.SWRLAPIView;
 import org.swrlapi.ui.view.owl2rl.OWL2RLRuleTablesView;
-
-import javax.swing.*;
 
 /**
  *
@@ -16,10 +17,10 @@ public class SQWRLQueryExecutionView extends JTabbedPane implements SWRLAPIView
 {
 	private static final long serialVersionUID = 1L;
 
-	public SQWRLQueryExecutionView(SWRLAPIApplicationModel applicationModel, Icon queryEngineIcon,
+	public SQWRLQueryExecutionView(SQWRLQueryEngineModel sqwrlQueryEngineModel, Icon queryEngineIcon,
 			SQWRLQuerySelector querySelector) throws SWRLAPIException
 	{
-		SQWRLQueryEngine queryEngine = applicationModel.getSQWRLQueryEngine();
+		SQWRLQueryEngine queryEngine = sqwrlQueryEngineModel.getSQWRLQueryEngine();
 		Icon owl2RLIcon = SWRLAPIFactory.getOWL2RLReasonerIcon();
 
 		addTab("SWRLAPI Queries", queryEngineIcon, new SQWRLQueryControlView(queryEngine, querySelector, queryEngineIcon),

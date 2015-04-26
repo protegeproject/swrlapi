@@ -15,7 +15,7 @@ import org.swrlapi.ui.view.SWRLAPIView;
 /**
  * This class models a list of SWRL rules or SQWRL queries in an ontology for tabular display.
  *
- * @see org.swrlapi.ui.model.SWRLAPIApplicationModel
+ * @see org.swrlapi.ui.model.SWRLRuleEngineModel
  * @see org.swrlapi.core.SWRLAPIRule
  * @see org.swrlapi.sqwrl.SQWRLQuery
  */

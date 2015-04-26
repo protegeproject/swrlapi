@@ -1,13 +1,13 @@
 package org.swrlapi.ui.controller;
 
-import org.swrlapi.ui.model.SWRLAPIApplicationModel;
+import org.swrlapi.ui.model.SWRLRuleEngineModel;
 
 public class DefaultSWRLAPIApplicationController implements SWRLAPIApplicationController
 {
 	// private final SWRLAPIApplicationView applicationView;
-	private final SWRLAPIApplicationModel applicationModel;
+	private final SWRLRuleEngineModel applicationModel;
 
-	public DefaultSWRLAPIApplicationController(SWRLAPIApplicationModel applicationModel)
+	public DefaultSWRLAPIApplicationController(SWRLRuleEngineModel applicationModel)
 	{
 		this.applicationModel = applicationModel;
 	}
@@ -20,7 +20,7 @@ public class DefaultSWRLAPIApplicationController implements SWRLAPIApplicationCo
 	/**
 	 * @return The application model associated with the controller
 	 */
-	public SWRLAPIApplicationModel getApplicationModel()
+	public SWRLRuleEngineModel getSWRLRuleEngineModel()
 	{
 		return this.applicationModel;
 	}
