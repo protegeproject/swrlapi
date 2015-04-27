@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JViewport;
@@ -17,6 +18,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumnModel;
 
+import org.swrlapi.ui.action.DisableAllRulesAction;
+import org.swrlapi.ui.action.EnableAllRulesAction;
 import org.swrlapi.ui.dialog.SWRLRuleEngineDialogManager;
 import org.swrlapi.ui.model.SWRLRuleEngineModel;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
@@ -58,6 +61,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 		setPreferredColumnWidths();
 		swrlRulesTableModel.setView(this);
 		createComponents(dialogManager);
+		createPopupMenu();
 	}
 
 	@Override
@@ -268,6 +272,42 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 				SWRLRulesTableView.this.swrlRulesTableModel.removeSWRLRule(selectedRuleName);
 				getSWRLRuleEngineModel().getSWRLRuleEngine().deleteSWRLRule(selectedRuleName);
 			}
+		}
+	}
+
+	private void createPopupMenu()
+	{
+		JPopupMenu popup = new JPopupMenu();
+		popup.add(new EnableAllRulesAction());
+		popup.add(new DisableAllRulesAction());
+		addMouseListener(new PopupListener(popup));
+	}
+
+	private class PopupListener extends MouseAdapter
+	{
+		JPopupMenu popup;
+
+		public PopupListener(JPopupMenu popupMenu)
+		{
+			popup = popupMenu;
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e)
+		{
+			maybeShowPopup(e);
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e)
+		{
+			maybeShowPopup(e);
+		}
+
+		private void maybeShowPopup(MouseEvent e)
+		{
+			if (e.isPopupTrigger())
+				popup.show(e.getComponent(), e.getX(), e.getY());
 		}
 	}
 }
