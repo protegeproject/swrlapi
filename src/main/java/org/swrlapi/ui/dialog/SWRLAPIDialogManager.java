@@ -6,14 +6,9 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 
 /**
- * Provides a set of standard dialogs. Used in conjunction with a
- * {@link org.swrlapi.ui.controller.SWRLRuleEngineController}.
- *
- * @see org.swrlapi.ui.controller.SWRLRuleEngineController
- * @see org.swrlapi.ui.model.SWRLRuleEngineModel
- * @see org.swrlapi.ui.view.SWRLAPIApplicationView
+ * Provides a set of standard dialogs.
  */
-public interface SWRLRuleEngineDialogManager
+public interface SWRLAPIDialogManager
 {
 	JDialog getSWRLRuleEditorDialog(Component parent);
 

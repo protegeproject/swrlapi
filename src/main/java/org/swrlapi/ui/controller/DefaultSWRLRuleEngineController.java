@@ -5,11 +5,11 @@ import org.swrlapi.ui.model.SWRLRuleEngineModel;
 public class DefaultSWRLRuleEngineController implements SWRLRuleEngineController
 {
 	// private final SWRLAPIApplicationView applicationView;
-	private final SWRLRuleEngineModel applicationModel;
+	private final SWRLRuleEngineModel ruleEngineModel;
 
-	public DefaultSWRLRuleEngineController(SWRLRuleEngineModel applicationModel)
+	public DefaultSWRLRuleEngineController(SWRLRuleEngineModel ruleEngineModel)
 	{
-		this.applicationModel = applicationModel;
+		this.ruleEngineModel = ruleEngineModel;
 	}
 
 	// public SWRLAPIApplicationView getApplicationView()
@@ -22,6 +22,6 @@ public class DefaultSWRLRuleEngineController implements SWRLRuleEngineController
 	 */
 	public SWRLRuleEngineModel getSWRLRuleEngineModel()
 	{
-		return this.applicationModel;
+		return this.ruleEngineModel;
 	}
 }

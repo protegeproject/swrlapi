@@ -20,7 +20,7 @@ import javax.swing.table.TableColumnModel;
 
 import org.swrlapi.ui.action.DisableAllRulesAction;
 import org.swrlapi.ui.action.EnableAllRulesAction;
-import org.swrlapi.ui.dialog.SWRLRuleEngineDialogManager;
+import org.swrlapi.ui.dialog.SWRLAPIDialogManager;
 import org.swrlapi.ui.model.SWRLRuleEngineModel;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
 
@@ -43,17 +43,17 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 	private static final int COMMENT_COLUMN_MAX_WIDTH = 300;
 
 	private final SWRLRuleEngineModel swrlRuleEngineModel;
-	private final SWRLRuleEngineDialogManager applicationDialogManager;
+	private final SWRLAPIDialogManager applicationDialogManager;
 	private final SWRLRulesTableModel swrlRulesTableModel;
 	private final JTable swrlRulesTable;
 
 	private JButton editButton, deleteButton;
 
-	public SWRLRulesTableView(SWRLRuleEngineModel applicationModel, SWRLRuleEngineDialogManager dialogManager)
+	public SWRLRulesTableView(SWRLRuleEngineModel swrlRuleEngineModel, SWRLAPIDialogManager dialogManager)
 	{
-		this.swrlRuleEngineModel = applicationModel;
+		this.swrlRuleEngineModel = swrlRuleEngineModel;
 		this.applicationDialogManager = dialogManager;
-		this.swrlRulesTableModel = applicationModel.getSWRLRulesTableModel();
+		this.swrlRulesTableModel = swrlRuleEngineModel.getSWRLRulesTableModel();
 		this.swrlRulesTable = new JTable(this.swrlRulesTableModel);
 		this.swrlRulesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -152,7 +152,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 		}
 	}
 
-	private void createComponents(SWRLRuleEngineDialogManager applicationDialogManager)
+	private void createComponents(SWRLAPIDialogManager applicationDialogManager)
 	{
 		JScrollPane scrollPane = new JScrollPane(swrlRulesTable);
 		JViewport viewport = scrollPane.getViewport();
@@ -210,11 +210,11 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 
 	private abstract class ActionListenerBase implements ActionListener
 	{
-		protected final SWRLRuleEngineDialogManager applicationDialogManager;
+		protected final SWRLAPIDialogManager applicationDialogManager;
 
 		protected final Component parent;
 
-		protected ActionListenerBase(Component parent, SWRLRuleEngineDialogManager applicationDialogManager)
+		protected ActionListenerBase(Component parent, SWRLAPIDialogManager applicationDialogManager)
 		{
 			this.parent = parent;
 			this.applicationDialogManager = applicationDialogManager;
@@ -223,7 +223,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 
 	private class NewSWRLRuleActionListener extends ActionListenerBase
 	{
-		public NewSWRLRuleActionListener(Component parent, SWRLRuleEngineDialogManager applicationDialogManager)
+		public NewSWRLRuleActionListener(Component parent, SWRLAPIDialogManager applicationDialogManager)
 		{
 			super(parent, applicationDialogManager);
 		}
@@ -237,7 +237,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 
 	private class EditSWRLRuleActionListener extends ActionListenerBase
 	{
-		public EditSWRLRuleActionListener(Component parent, SWRLRuleEngineDialogManager applicationDialogManager)
+		public EditSWRLRuleActionListener(Component parent, SWRLAPIDialogManager applicationDialogManager)
 		{
 			super(parent, applicationDialogManager);
 		}
@@ -251,7 +251,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 
 	private class DeleteSWRLRuleActionListener extends ActionListenerBase
 	{
-		public DeleteSWRLRuleActionListener(Component parent, SWRLRuleEngineDialogManager applicationDialogManager)
+		public DeleteSWRLRuleActionListener(Component parent, SWRLAPIDialogManager applicationDialogManager)
 		{
 			super(parent, applicationDialogManager);
 		}

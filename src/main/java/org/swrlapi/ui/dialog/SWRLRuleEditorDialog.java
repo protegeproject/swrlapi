@@ -69,8 +69,8 @@ public class SWRLRuleEditorDialog extends JDialog
 	private static final int RULE_EDIT_AREA_COLUMNS = 20;
 	private static final int RULE_EDIT_AREA_ROWS = 60;
 
-	private final SWRLRuleEngineModel applicationModel;
-	private final SWRLRuleEngineDialogManager applicationDialogManager;
+	private final SWRLRuleEngineModel swrlRuleEngineModel;
+	private final SWRLAPIDialogManager dialogManager;
 
 	private final SWRLRuleEditorInitialDialogState initialDialogState = new SWRLRuleEditorInitialDialogState();
 
@@ -82,12 +82,12 @@ public class SWRLRuleEditorDialog extends JDialog
 	private SWRLRuleEditorAutoCompleteState autoCompleteState = null; // Non null if in auto-complete mode
 	private boolean editMode = false;
 
-	public SWRLRuleEditorDialog(SWRLRuleEngineModel applicationModel,
-			SWRLRuleEngineDialogManager applicationDialogManager)
+	public SWRLRuleEditorDialog(SWRLRuleEngineModel swrlRuleEngineModel,
+			SWRLAPIDialogManager applicationDialogManager)
 	{
-		this.applicationModel = applicationModel;
-		this.applicationDialogManager = applicationDialogManager;
-		this.autoCompleter = applicationModel.getSWRLAutoCompleter();
+		this.swrlRuleEngineModel = swrlRuleEngineModel;
+		this.dialogManager = applicationDialogManager;
+		this.autoCompleter = swrlRuleEngineModel.getSWRLAutoCompleter();
 
 		setTitle(TITLE);
 		setModal(true);
@@ -335,7 +335,7 @@ public class SWRLRuleEditorDialog extends JDialog
 			boolean okToQuit;
 
 			if (hasDialogStateChanged()) {
-				okToQuit = getApplicationDialogManager().showConfirmDialog(parent, QUIT_CONFIRM_MESSAGE, QUIT_CONFIRM_TITLE);
+				okToQuit = getDialogManager().showConfirmDialog(parent, QUIT_CONFIRM_MESSAGE, QUIT_CONFIRM_TITLE);
 			} else
 				okToQuit = true;
 
@@ -364,13 +364,13 @@ public class SWRLRuleEditorDialog extends JDialog
 			boolean errorOccurred;
 
 			if (ruleName.trim().equals("")) {
-				getApplicationDialogManager().showErrorMessageDialog(parent, MISSING_RULE_NAME, MISSING_RULE_NAME_TITLE);
+				getDialogManager().showErrorMessageDialog(parent, MISSING_RULE_NAME, MISSING_RULE_NAME_TITLE);
 				errorOccurred = true;
 			} else if (ruleText.trim().equals("")) {
-				getApplicationDialogManager().showErrorMessageDialog(parent, MISSING_RULE, MISSING_RULE);
+				getDialogManager().showErrorMessageDialog(parent, MISSING_RULE, MISSING_RULE);
 				errorOccurred = true;
 			} else if (getSWRLRulesTableModel().hasSWRLRule(ruleName) && !editMode) {
-				getApplicationDialogManager().showErrorMessageDialog(parent, DUPLICATE_RULE_TEXT, DUPLICATE_RULE_TITLE);
+				getDialogManager().showErrorMessageDialog(parent, DUPLICATE_RULE_TEXT, DUPLICATE_RULE_TITLE);
 				errorOccurred = true;
 			} else {
 				try {
@@ -380,7 +380,7 @@ public class SWRLRuleEditorDialog extends JDialog
 						errorOccurred = false;
 					} else {
 						if (getSWRLRulesTableModel().hasSWRLRule(ruleName)) {
-							getApplicationDialogManager().showErrorMessageDialog(parent, DUPLICATE_RULE_TEXT, DUPLICATE_RULE_TITLE);
+							getDialogManager().showErrorMessageDialog(parent, DUPLICATE_RULE_TEXT, DUPLICATE_RULE_TITLE);
 							errorOccurred = true;
 						} else {
 							createSWRLRule(ruleName, ruleText, comment, true);
@@ -388,13 +388,13 @@ public class SWRLRuleEditorDialog extends JDialog
 						}
 					}
 				} catch (SWRLParseException pe) {
-					getApplicationDialogManager().showErrorMessageDialog(parent, pe.getMessage(), INVALID_RULE_TITLE);
+					getDialogManager().showErrorMessageDialog(parent, pe.getMessage(), INVALID_RULE_TITLE);
 					errorOccurred = true;
 				} catch (SQWRLException pe) {
-					getApplicationDialogManager().showErrorMessageDialog(parent, pe.getMessage(), INVALID_RULE_TITLE);
+					getDialogManager().showErrorMessageDialog(parent, pe.getMessage(), INVALID_RULE_TITLE);
 					errorOccurred = true;
 				} catch (RuntimeException pe) {
-					getApplicationDialogManager().showErrorMessageDialog(parent, pe.getMessage(), INTERNAL_ERROR_TITLE);
+					getDialogManager().showErrorMessageDialog(parent, pe.getMessage(), INTERNAL_ERROR_TITLE);
 					errorOccurred = true;
 				}
 			}
@@ -478,27 +478,27 @@ public class SWRLRuleEditorDialog extends JDialog
 	private void deleteSWRLRule(String ruleName)
 	{
 		getSWRLRulesTableModel().removeSWRLRule(ruleName);
-		this.applicationModel.getSWRLRuleEngine().deleteSWRLRule(ruleName);
+		this.swrlRuleEngineModel.getSWRLRuleEngine().deleteSWRLRule(ruleName);
 	}
 
 	private SWRLRuleEngine getSWRLRuleEngine()
 	{
-		return this.applicationModel.getSWRLRuleEngine();
+		return this.swrlRuleEngineModel.getSWRLRuleEngine();
 	}
 
 	private SWRLParser getSWRLParser()
 	{
-		return this.applicationModel.getSWRLParser();
+		return this.swrlRuleEngineModel.getSWRLParser();
 	}
 
 	private SWRLRulesTableModel getSWRLRulesTableModel()
 	{
-		return this.applicationModel.getSWRLRulesTableModel();
+		return this.swrlRuleEngineModel.getSWRLRulesTableModel();
 	}
 
-	private SWRLRuleEngineDialogManager getApplicationDialogManager()
+	private SWRLAPIDialogManager getDialogManager()
 	{
-		return this.applicationDialogManager;
+		return this.dialogManager;
 	}
 
 	private void setInitialDialogState()

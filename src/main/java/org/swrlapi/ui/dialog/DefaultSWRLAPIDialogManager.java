@@ -9,14 +9,14 @@ import javax.swing.JOptionPane;
 
 import org.swrlapi.ui.model.SWRLRuleEngineModel;
 
-public class DefaultSWRLRuleEngineDialogManager implements SWRLRuleEngineDialogManager
+public class DefaultSWRLAPIDialogManager implements SWRLAPIDialogManager
 {
 	private final SWRLRuleEditorDialog swrlRuleEditorDialog;
 	private File lastDirectory = null;
 
-	public DefaultSWRLRuleEngineDialogManager(SWRLRuleEngineModel applicationModel)
+	public DefaultSWRLAPIDialogManager(SWRLRuleEngineModel swrlRuleEngineModel)
 	{
-		this.swrlRuleEditorDialog = new SWRLRuleEditorDialog(applicationModel, this);
+		this.swrlRuleEditorDialog = new SWRLRuleEditorDialog(swrlRuleEngineModel, this);
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class DefaultSWRLRuleEngineDialogManager implements SWRLRuleEngineDialogM
 			{
 				int rval = super.showDialog(c, s);
 				if (rval == APPROVE_OPTION) {
-					DefaultSWRLRuleEngineDialogManager.this.lastDirectory = getCurrentDirectory();
+					DefaultSWRLAPIDialogManager.this.lastDirectory = getCurrentDirectory();
 				}
 				return rval;
 			}
@@ -105,7 +105,7 @@ public class DefaultSWRLRuleEngineDialogManager implements SWRLRuleEngineDialogM
 			{
 				int rval = super.showDialog(c, s);
 				if (rval == APPROVE_OPTION) {
-					DefaultSWRLRuleEngineDialogManager.this.lastDirectory = getCurrentDirectory();
+					DefaultSWRLAPIDialogManager.this.lastDirectory = getCurrentDirectory();
 				}
 				return rval;
 			}

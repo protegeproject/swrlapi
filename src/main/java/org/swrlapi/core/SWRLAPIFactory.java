@@ -34,8 +34,8 @@ import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 import org.swrlapi.sqwrl.values.impl.DefaultSQWRLResultValueFactory;
 import org.swrlapi.ui.controller.DefaultSWRLRuleEngineController;
 import org.swrlapi.ui.controller.SWRLRuleEngineController;
-import org.swrlapi.ui.dialog.DefaultSWRLRuleEngineDialogManager;
-import org.swrlapi.ui.dialog.SWRLRuleEngineDialogManager;
+import org.swrlapi.ui.dialog.DefaultSWRLAPIDialogManager;
+import org.swrlapi.ui.dialog.SWRLAPIDialogManager;
 import org.swrlapi.ui.model.DefaultSQWRLQueryEngineModel;
 import org.swrlapi.ui.model.DefaultSWRLRuleEngineModel;
 import org.swrlapi.ui.model.SQWRLQueryEngineModel;
@@ -251,9 +251,9 @@ public class SWRLAPIFactory
 	 * @param swrlRuleEngineModel An SWRL rule engine model
 	 * @return A SWRL rule engine dialog manager
 	 */
-	public static SWRLRuleEngineDialogManager createSWRLRuleEngineDialogManager(SWRLRuleEngineModel swrlRuleEngineModel)
+	public static SWRLAPIDialogManager createSWRLAPIDialogManager(SWRLRuleEngineModel swrlRuleEngineModel)
 	{
-		return new DefaultSWRLRuleEngineDialogManager(swrlRuleEngineModel);
+		return new DefaultSWRLAPIDialogManager(swrlRuleEngineModel);
 	}
 
 	/**

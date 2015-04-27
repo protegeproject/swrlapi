@@ -4,7 +4,7 @@ import javax.swing.Icon;
 import javax.swing.JSplitPane;
 
 import org.swrlapi.exceptions.SWRLAPIException;
-import org.swrlapi.ui.dialog.SWRLRuleEngineDialogManager;
+import org.swrlapi.ui.dialog.SWRLAPIDialogManager;
 import org.swrlapi.ui.model.SWRLRuleEngineModel;
 import org.swrlapi.ui.view.SWRLAPIView;
 import org.swrlapi.ui.view.SWRLRulesTableView;
@@ -15,7 +15,7 @@ import org.swrlapi.ui.view.SWRLRulesTableView;
  *
  * @see org.swrlapi.ui.view.queries.SWRLAPIQueriesView
  */
-public class SWRLAPIRulesView extends JSplitPane implements SWRLAPIView
+public class SWRLRulesView extends JSplitPane implements SWRLAPIView
 {
 	private static final long serialVersionUID = 1L;
 
@@ -24,8 +24,8 @@ public class SWRLAPIRulesView extends JSplitPane implements SWRLAPIView
 	private final SWRLRulesTableView ruleTablesView;
 	private final SWRLRuleExecutionView ruleExecutionView;
 
-	public SWRLAPIRulesView(SWRLRuleEngineModel swrlRuleEngineModel,
-			SWRLRuleEngineDialogManager applicationDialogManager, Icon ruleEngineIcon) throws SWRLAPIException
+	public SWRLRulesView(SWRLRuleEngineModel swrlRuleEngineModel,
+			SWRLAPIDialogManager applicationDialogManager, Icon ruleEngineIcon) throws SWRLAPIException
 	{
 
 		this.ruleTablesView = new SWRLRulesTableView(swrlRuleEngineModel, applicationDialogManager);

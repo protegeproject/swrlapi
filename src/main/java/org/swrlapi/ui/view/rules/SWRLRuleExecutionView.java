@@ -14,9 +14,9 @@ public class SWRLRuleExecutionView extends JTabbedPane implements SWRLAPIView
 {
 	private static final long serialVersionUID = 1L;
 
-	public SWRLRuleExecutionView(SWRLRuleEngineModel applicationModel, Icon ruleEngineIcon) throws SWRLAPIException
+	public SWRLRuleExecutionView(SWRLRuleEngineModel ruleEngineModel, Icon ruleEngineIcon) throws SWRLAPIException
 	{
-		SWRLRuleEngine swrlRuleEngine = applicationModel.getSWRLRuleEngine();
+		SWRLRuleEngine swrlRuleEngine = ruleEngineModel.getSWRLRuleEngine();
 		Icon owl2RLIcon = SWRLAPIFactory.getOWL2RLReasonerIcon();
 
 		addTab("Control", ruleEngineIcon, new SWRLRulesControlView(swrlRuleEngine), "Control Tab");
