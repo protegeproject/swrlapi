@@ -26,9 +26,9 @@ public class SWRLAPIIntegrationTestBase
 	private DefaultPrefixManager prefixManager;
 
 	// TODO This approach does not allow tests to be run in parallel
-	protected OWLOntology createEmptyOWLOntology(String namespace) throws OWLOntologyCreationException
+	protected OWLOntology createEmptyOWLOntology() throws OWLOntologyCreationException
 	{
-		this.namespace = namespace;
+		this.namespace = ":";
 		this.manager = OWLManager.createOWLOntologyManager();
 		this.ontology = this.manager.createOntology();
 		this.sqwrlQueryEngine = SWRLAPIFactory.createSQWRLQueryEngine(ontology);

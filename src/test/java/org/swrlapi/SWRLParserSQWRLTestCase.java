@@ -9,12 +9,10 @@ import org.swrlapi.test.SWRLAPIIntegrationTestBase;
 
 public class SWRLParserSQWRLTestCase extends SWRLAPIIntegrationTestBase
 {
-	final String Namespace = "http://protege.org/ontologies/SWRLParserSQWRLTests.owl#";
-
 	@Before
 	public void setUp() throws OWLOntologyCreationException
 	{
-		createEmptyOWLOntology(Namespace);
+		createEmptyOWLOntology();
 	}
 
 	@Test
