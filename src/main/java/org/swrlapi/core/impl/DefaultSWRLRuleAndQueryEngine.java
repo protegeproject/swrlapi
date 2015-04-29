@@ -52,7 +52,7 @@ public class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQuery
 		this.ruleEngineBridgeController = ruleEngineBridgeController;
 		this.exportedOWLAxioms = new HashSet<>();
 
-		importSWRLRulesAndOWLKnowledge();
+		importAssertedOWLAxioms();
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQuery
 	 * the associated rule engine will be reset.
 	 */
 	@Override
-	public void importSWRLRulesAndOWLKnowledge() throws SWRLRuleEngineException
+	public void importAssertedOWLAxioms() throws SWRLRuleEngineException
 	{
 		reset();
 
@@ -76,7 +76,7 @@ public class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQuery
 	 * bridge rules and knowledge will first be cleared and the associated rule engine will be reset.
 	 */
 	@Override
-	public void importSQWRLQueryAndOWLKnowledge(String queryName) throws SWRLRuleEngineException
+	public void importSQWRLQueryAndOWLAxioms(String queryName) throws SWRLRuleEngineException
 	{
 		reset();
 
@@ -152,7 +152,7 @@ public class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQuery
 	public SQWRLResult runSQWRLQuery(String queryName) throws SQWRLException
 	{
 		try {
-			importSQWRLQueryAndOWLKnowledge(queryName);
+			importSQWRLQueryAndOWLAxioms(queryName);
 
 			run();
 			return getSQWRLResult(queryName);
@@ -168,7 +168,7 @@ public class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQuery
 	public void runSQWRLQueries() throws SQWRLException
 	{
 		try {
-			importSWRLRulesAndOWLKnowledge();
+			importAssertedOWLAxioms();
 			exportSQWRLQueries2TargetRuleEngine();
 		} catch (SWRLRuleEngineException | TargetSWRLRuleEngineException | SWRLBuiltInException e) {
 			throw new SQWRLException("error processing SQWRL queries: " + e.getMessage(), e);
@@ -185,7 +185,7 @@ public class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQuery
 	 * Write knowledge inferred by rule engine back to OWL.
 	 */
 	@Override
-	public void writeInferredKnowledge() throws SWRLRuleEngineException
+	public void exportInferredOWLAxioms() throws SWRLRuleEngineException
 	{
 		try {
 			getSWRLAPIOWLOntology().startBulkConversion(); // Suspend possible event generation for bulk updates.
@@ -207,9 +207,9 @@ public class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQuery
 	public void infer() throws SWRLRuleEngineException
 	{
 		reset();
-		importSWRLRulesAndOWLKnowledge();
+		importAssertedOWLAxioms();
 		run();
-		writeInferredKnowledge();
+		exportInferredOWLAxioms();
 	}
 
 	/**

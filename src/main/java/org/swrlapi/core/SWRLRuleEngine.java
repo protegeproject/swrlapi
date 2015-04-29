@@ -37,16 +37,7 @@ public interface SWRLRuleEngine
 	 *
 	 * @throws SWRLRuleEngineException If an error occurs during inference
 	 */
-	void importSWRLRulesAndOWLKnowledge() throws SWRLRuleEngineException;
-
-	/**
-	 * Load specific query, all enabled rules, and relevant knowledge from OWL. All existing bridge rules and knowledge
-	 * will first be cleared and the rule engine will be reset.
-	 *
-	 * @param queryName The name of the query
-	 * @throws SWRLRuleEngineException If an error occurs during inference
-	 */
-	void importSQWRLQueryAndOWLKnowledge(String queryName) throws SWRLRuleEngineException;
+	void importAssertedOWLAxioms() throws SWRLRuleEngineException;
 
 	/**
 	 * Run the rule engine.
@@ -60,7 +51,7 @@ public interface SWRLRuleEngine
 	 *
 	 * @throws SWRLRuleEngineException If an error occurs during inference
 	 */
-	void writeInferredKnowledge() throws SWRLRuleEngineException;
+	void exportInferredOWLAxioms() throws SWRLRuleEngineException;
 
 	/**
 	 * Reset the rule engine.

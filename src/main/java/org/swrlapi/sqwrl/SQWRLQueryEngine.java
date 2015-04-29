@@ -4,6 +4,7 @@ import java.util.Set;
 
 import org.swrlapi.core.SQWRLQueryRenderer;
 import org.swrlapi.core.SWRLRuleEngine;
+import org.swrlapi.exceptions.SWRLRuleEngineException;
 import org.swrlapi.owl2rl.OWL2RLEngine;
 import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
@@ -79,6 +80,15 @@ public interface SQWRLQueryEngine extends SWRLRuleEngine
 	 * @return A SQWRL query renderer
 	 */
 	SQWRLQueryRenderer createSQWRLQueryRenderer();
+
+	/**
+	 * Load specific query, all enabled rules, and relevant knowledge from OWL. All existing bridge rules and knowledge
+	 * will first be cleared and the rule engine will be reset.
+	 *
+	 * @param queryName The name of the query
+	 * @throws SWRLRuleEngineException If an error occurs during inference
+	 */
+	void importSQWRLQueryAndOWLAxioms(String queryName) throws SWRLRuleEngineException;
 
 	/**
 	 * Reset the query engine.

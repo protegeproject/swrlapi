@@ -123,7 +123,7 @@ public class SWRLRulesControlView extends JPanel implements SWRLAPIView
 		{
 			try {
 				long startTime = System.currentTimeMillis();
-				this.ruleEngine.importSWRLRulesAndOWLKnowledge();
+				this.ruleEngine.importAssertedOWLAxioms();
 
 				clearConsole();
 				appendToConsole("OWL axioms successfully transferred to rule engine.\n");
@@ -202,7 +202,7 @@ public class SWRLRulesControlView extends JPanel implements SWRLAPIView
 		{
 			try {
 				long startTime = System.currentTimeMillis();
-				this.ruleEngine.writeInferredKnowledge();
+				this.ruleEngine.exportInferredOWLAxioms();
 
 				appendToConsole("Successfully transferred inferred axioms to OWL model.\n");
 				appendToConsole("The process took " + (System.currentTimeMillis() - startTime) + " millisecond(s).\n");
