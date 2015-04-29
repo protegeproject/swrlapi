@@ -2,8 +2,10 @@ package org.swrlapi.sqwrl;
 
 import java.util.Set;
 
+import org.swrlapi.core.SQWRLQueryRenderer;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.owl2rl.OWL2RLEngine;
+import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
 /**
@@ -22,7 +24,7 @@ public interface SQWRLQueryEngine extends SWRLRuleEngine
 	 * @return The result of the query
 	 * @throws SQWRLException If an error occurs during processing
 	 */
-	SQWRLResult runSQWRLQuery(String queryName, String queryText) throws SQWRLException;
+	SQWRLResult runSQWRLQuery(String queryName, String queryText) throws SWRLParseException, SQWRLException;
 
 	/**
 	 * Create a SQWRL query.
@@ -31,7 +33,7 @@ public interface SQWRLQueryEngine extends SWRLRuleEngine
 	 * @param queryText The query
 	 * @throws SQWRLException If an error occurs during processing
 	 */
-	void createSQWRLQuery(String queryName, String queryText) throws SQWRLException;
+	void createSQWRLQuery(String queryName, String queryText) throws SWRLParseException, SQWRLException;
 
 	/**
 	 * Run a named SQWRL query. SWRL rules will also be executed and any inferences produced by them will be available in
@@ -74,8 +76,14 @@ public interface SQWRLQueryEngine extends SWRLRuleEngine
 	Set<String> getSQWRLQueryNames();
 
 	/**
+	 * @return A SQWRL query renderer
+	 */
+	SQWRLQueryRenderer createSQWRLQueryRenderer();
+
+	/**
 	 * Reset the query engine.
 	 */
+	@Override
 	void reset();
 
 	/**
@@ -83,6 +91,7 @@ public interface SQWRLQueryEngine extends SWRLRuleEngine
 	 *
 	 * @return The name of the target rule engine
 	 */
+	@Override
 	String getTargetRuleEngineName();
 
 	/**
@@ -90,6 +99,7 @@ public interface SQWRLQueryEngine extends SWRLRuleEngine
 	 *
 	 * @return The version of the target rule engine
 	 */
+	@Override
 	String getTargetRuleEngineVersion();
 
 	/**
@@ -97,5 +107,6 @@ public interface SQWRLQueryEngine extends SWRLRuleEngine
 	 *
 	 * @return The underlying OWL 2 RL engine
 	 */
+	@Override
 	OWL2RLEngine getOWL2RLEngine();
 }

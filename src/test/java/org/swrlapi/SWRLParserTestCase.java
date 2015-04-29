@@ -23,7 +23,7 @@ public class SWRLParserTestCase extends SWRLAPIIntegrationTestBase
 	@Before
 	public void setUp() throws OWLOntologyCreationException
 	{
-		createEmptySWRLAPIOWLOntology(Namespace);
+		createEmptyOWLOntology(Namespace);
 	}
 
 	@Test

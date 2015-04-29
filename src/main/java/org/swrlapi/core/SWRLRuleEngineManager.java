@@ -1,5 +1,6 @@
 package org.swrlapi.core;
 
+import java.util.Optional;
 import java.util.Set;
 
 import org.swrlapi.bridge.SWRLRuleEngineBridge;
@@ -19,15 +20,15 @@ public interface SWRLRuleEngineManager
 	boolean hasRegisteredRuleEngines();
 
 	/**
-	 * @return Any registered rule engine name; an empty string if no engines are registered
+	 * @return Any registered rule engine name - if any.
 	 */
-	String getAnyRegisteredRuleEngineName();
+	Optional<String> getAnyRegisteredRuleEngineName();
 
 	/**
 	 * @param ruleEngineName The name of the rule engine
 	 * @param ruleEngineCreator A creator for the rule engine
 	 */
-	void registerRuleEngine(String ruleEngineName, TargetSWRLRuleEngineCreator ruleEngineCreator);
+	void registerRuleEngine(TargetSWRLRuleEngineCreator ruleEngineCreator);
 
 	/**
 	 * @param ruleEngineName A rule engine name

@@ -13,7 +13,6 @@ import org.swrlapi.exceptions.SWRLRuleException;
 import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.sqwrl.SQWRLQuery;
-import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
@@ -47,8 +46,6 @@ public interface SWRLAPIOWLOntology
 {
 	// Methods for handling SWRL Rules
 
-	SWRLRuleEngine createSWRLRuleEngine(SWRLRuleEngineManager.TargetSWRLRuleEngineCreator ruleEngineCreator);
-
 	Set<SWRLAPIRule> getSWRLRules();
 
 	SWRLAPIRule getSWRLRule(String ruleName) throws SWRLRuleException;
@@ -72,8 +69,6 @@ public interface SWRLAPIOWLOntology
 	SWRLRuleRenderer createSWRLRuleRenderer();
 
 	// Methods for handling SQWRL Queries
-
-	SQWRLQueryEngine createSQWRLQueryEngine(SWRLRuleEngineManager.TargetSWRLRuleEngineCreator ruleEngineCreator);
 
 	SQWRLQuery createSQWRLQuery(String queryName, String query) throws SWRLParseException, SQWRLException;
 

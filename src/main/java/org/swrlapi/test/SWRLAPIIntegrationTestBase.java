@@ -1,17 +1,17 @@
 package org.swrlapi.test;
 
-import static org.swrlapi.test.SWRLAPITestUtil.createEmptyOWLOntology;
-import static org.swrlapi.test.SWRLAPITestUtil.createSWRLAPIOWLOntology;
-
 import java.util.Set;
 
+import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
-import org.swrlapi.core.SWRLAPIOWLOntology;
+import org.semanticweb.owlapi.util.DefaultPrefixManager;
+import org.swrlapi.core.SWRLAPIFactory;
 import org.swrlapi.core.SWRLAPIRule;
+import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.parser.SWRLParseException;
-import org.swrlapi.sqwrl.SQWRLQuery;
+import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
 public class SWRLAPIIntegrationTestBase
@@ -21,19 +21,21 @@ public class SWRLAPIIntegrationTestBase
 	private String namespace;
 	private OWLOntology ontology;
 	private OWLOntologyManager manager;
-	private SWRLAPIOWLOntology swrlapiowlOntology;
+	private SWRLRuleEngine swrlRuleEngine;
+	private SQWRLQueryEngine sqwrlQueryEngine;
+	private DefaultPrefixManager prefixManager;
 
 	// TODO This approach does not allow tests to be run in parallel
-	protected SWRLAPIOWLOntology createEmptySWRLAPIOWLOntology(String namespace) throws OWLOntologyCreationException
+	protected OWLOntology createEmptyOWLOntology(String namespace) throws OWLOntologyCreationException
 	{
 		this.namespace = namespace;
-		this.ontology = createEmptyOWLOntology();
-		this.manager = ontology.getOWLOntologyManager();
-		this.swrlapiowlOntology = createSWRLAPIOWLOntology(ontology);
+		this.manager = OWLManager.createOWLOntologyManager();
+		this.ontology = this.manager.createOntology();
+		this.sqwrlQueryEngine = SWRLAPIFactory.createSQWRLQueryEngine(ontology);
+		this.prefixManager = new DefaultPrefixManager();
+		this.prefixManager.setDefaultPrefix(namespace);
 
-		this.swrlapiowlOntology.getPrefixManager().setDefaultPrefix(namespace);
-
-		return swrlapiowlOntology;
+		return ontology;
 	}
 
 	protected void declareOWLClass(String localName)
@@ -108,7 +110,7 @@ public class SWRLAPIIntegrationTestBase
 			String datatypePrefixedName)
 	{
 		SWRLAPITestUtil.declareOWLDataPropertyAssertionAxiom(manager, ontology, namespace + subjectLocalName, namespace
-				+ propertyLocalName, value, datatypePrefixedName, swrlapiowlOntology.getPrefixManager());
+				+ propertyLocalName, value, datatypePrefixedName, prefixManager);
 	}
 
 	protected void declareOWLSameAsAssertion(String individualLocalName1, String individualLocalName2)
@@ -135,13 +137,13 @@ public class SWRLAPIIntegrationTestBase
 				+ classLocalName);
 	}
 
-	protected SQWRLQuery createSQWRLQuery(String queryName, String query) throws SQWRLException, SWRLParseException
+	protected void createSQWRLQuery(String queryName, String query) throws SQWRLException, SWRLParseException
 	{
-		return swrlapiowlOntology.createSQWRLQuery(queryName, query);
+		this.sqwrlQueryEngine.createSQWRLQuery(queryName, query);
 	}
 
 	protected SWRLAPIRule createSWRLRule(String ruleName, String rule) throws SWRLParseException
 	{
-		return swrlapiowlOntology.createSWRLRule(ruleName, rule);
+		return this.swrlRuleEngine.createSWRLRule(ruleName, rule);
 	}
 }

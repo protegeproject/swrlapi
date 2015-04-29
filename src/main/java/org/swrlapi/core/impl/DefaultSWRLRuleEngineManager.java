@@ -2,6 +2,7 @@ package org.swrlapi.core.impl;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.swrlapi.core.SWRLRuleEngineManager;
@@ -16,8 +17,10 @@ public class DefaultSWRLRuleEngineManager implements SWRLRuleEngineManager
 	}
 
 	@Override
-	public void registerRuleEngine(String ruleEngineName, TargetSWRLRuleEngineCreator ruleEngineCreator)
+	public void registerRuleEngine(TargetSWRLRuleEngineCreator ruleEngineCreator)
 	{
+		String ruleEngineName = ruleEngineCreator.getRuleEngineName();
+
 		if (this.registeredSWRLRuleEngines.containsKey(ruleEngineName)) {
 			this.registeredSWRLRuleEngines.remove(ruleEngineName);
 			this.registeredSWRLRuleEngines.put(ruleEngineName, ruleEngineCreator);
@@ -38,12 +41,12 @@ public class DefaultSWRLRuleEngineManager implements SWRLRuleEngineManager
 	}
 
 	@Override
-	public String getAnyRegisteredRuleEngineName()
+	public Optional<String> getAnyRegisteredRuleEngineName()
 	{
 		if (hasRegisteredRuleEngines())
-			return this.registeredSWRLRuleEngines.keySet().iterator().next();
+			return Optional.of(this.registeredSWRLRuleEngines.keySet().iterator().next());
 		else
-			return null;
+			return Optional.empty();
 	}
 
 	@Override

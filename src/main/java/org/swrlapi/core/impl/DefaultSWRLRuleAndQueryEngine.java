@@ -12,7 +12,7 @@ import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import org.swrlapi.bridge.SWRLRuleEngineBridgeController;
 import org.swrlapi.bridge.TargetSWRLRuleEngine;
 import org.swrlapi.builtins.SWRLBuiltInBridgeController;
-import org.swrlapi.core.SWRLAPIOWLDataFactory;
+import org.swrlapi.core.SQWRLQueryRenderer;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLRuleEngine;
@@ -42,9 +42,9 @@ public class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQuery
 	private final SWRLRuleEngineBridgeController ruleEngineBridgeController;
 	private final Set<OWLAxiom> exportedOWLAxioms; // Axioms exported to target rule engine
 
-	public DefaultSWRLRuleAndQueryEngine(SWRLAPIOWLOntology swrlapiOWLOntology, TargetSWRLRuleEngine targetSWRLRuleEngine,
-			SWRLRuleEngineBridgeController ruleEngineBridgeController, SWRLBuiltInBridgeController builtInBridgeController)
-			throws SWRLRuleEngineException
+	public DefaultSWRLRuleAndQueryEngine(SWRLAPIOWLOntology swrlapiOWLOntology,
+			TargetSWRLRuleEngine targetSWRLRuleEngine, SWRLRuleEngineBridgeController ruleEngineBridgeController,
+			SWRLBuiltInBridgeController builtInBridgeController) throws SWRLRuleEngineException
 	{
 		this.swrlapiOWLOntology = swrlapiOWLOntology;
 		this.targetSWRLRuleEngine = targetSWRLRuleEngine;
@@ -124,11 +124,10 @@ public class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQuery
 	}
 
 	@Override
-	public void createSQWRLQuery(String queryName, String queryText) throws SQWRLException
+	public void createSQWRLQuery(String queryName, String queryText) throws SWRLParseException, SQWRLException
 	{
 		try {
-			SWRLAPIRule query = getSWRLAPIOWLDataFactory().getSWRLRule(queryName, queryText);
-			writeOWLAxiom2OWLOntology(query);
+			this.swrlapiOWLOntology.createSQWRLQuery(queryName, queryText);
 		} catch (RuntimeException e) {
 			throw new SQWRLException("error creating SQWRL query: " + e.getMessage(), e);
 		}
@@ -138,7 +137,7 @@ public class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQuery
 	 * Create and run a SQWRL query. The query will be created and added to the associated ontology.
 	 */
 	@Override
-	public SQWRLResult runSQWRLQuery(String queryName, String queryText) throws SQWRLException
+	public SQWRLResult runSQWRLQuery(String queryName, String queryText) throws SWRLParseException, SQWRLException
 	{
 		createSQWRLQuery(queryName, queryText);
 
@@ -238,6 +237,12 @@ public class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQuery
 	public Set<String> getSQWRLQueryNames()
 	{
 		return this.swrlapiOWLOntology.getSQWRLQueryNames();
+	}
+
+	@Override
+	public SQWRLQueryRenderer createSQWRLQueryRenderer()
+	{
+		return this.swrlapiOWLOntology.createSQWRLQueryRenderer();
 	}
 
 	@Override
@@ -478,11 +483,6 @@ public class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQuery
 	private OWLOntology getOWLOntology()
 	{
 		return getSWRLAPIOWLOntology().getOWLOntology();
-	}
-
-	private SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory()
-	{
-		return getSWRLAPIOWLOntology().getSWRLAPIOWLDataFactory();
 	}
 
 	private SWRLBuiltInBridgeController getBuiltInBridgeController()

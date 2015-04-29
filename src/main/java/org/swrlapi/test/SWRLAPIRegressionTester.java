@@ -7,7 +7,6 @@ import java.util.StringTokenizer;
 
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.swrlapi.core.SQWRLQueryRenderer;
-import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.sqwrl.SQWRLQuery;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.SQWRLResult;
@@ -22,12 +21,10 @@ import org.swrlapi.sqwrl.values.SQWRLResultValue;
  */
 public class SWRLAPIRegressionTester
 {
-	private final SWRLAPIOWLOntology swrlapiOWLOntology;
 	private final SQWRLQueryEngine sqwrlQueryEngine;
 
-	public SWRLAPIRegressionTester(SWRLAPIOWLOntology swrlapiOWLOntology, SQWRLQueryEngine sqwrlQueryEngine)
+	public SWRLAPIRegressionTester(SQWRLQueryEngine sqwrlQueryEngine)
 	{
-		this.swrlapiOWLOntology = swrlapiOWLOntology;
 		this.sqwrlQueryEngine = sqwrlQueryEngine;
 	}
 
@@ -37,7 +34,7 @@ public class SWRLAPIRegressionTester
 		int numberOfTests = 0;
 		int passedTests = 0;
 
-		SQWRLQueryRenderer renderer = this.swrlapiOWLOntology.createSQWRLQueryRenderer();
+		SQWRLQueryRenderer renderer = this.sqwrlQueryEngine.createSQWRLQueryRenderer();
 
 		try {
 			sqwrlQueryEngine.getOWL2RLEngine().enableAll();

@@ -1,5 +1,6 @@
 package org.swrlapi.core;
 
+import org.semanticweb.owlapi.model.OWLOntology;
 import org.swrlapi.exceptions.SWRLRuleEngineException;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 
@@ -23,35 +24,32 @@ public interface SWRLRuleAndQueryEngineFactory
 	/**
 	 * Create an instance of a rule engine.
 	 * 
-	 * @param swrlapiOWLOntology A SWQRLAPI-based OWL ontology
+	 * @param ontology A OWL ontology
 	 * @return A SWRL rule engine
 	 * @throws SWRLRuleEngineException If an error occurs during creation
 	 */
-	SWRLRuleEngine createSWRLRuleEngine(SWRLAPIOWLOntology swrlapiOWLOntology) throws SWRLRuleEngineException;
+	SWRLRuleEngine createSWRLRuleEngine(OWLOntology ontology) throws SWRLRuleEngineException;
 
 	/**
 	 * @param ruleEngineName The name of a rule engine
-	 * @param swrlapiOWLOntology A SWQRLAPI-based OWL ontology
+	 * @param ontology An OWL ontology
 	 * @return A SWRL rule engine
 	 * @throws SWRLRuleEngineException If an error occurs during creation
 	 */
-	SWRLRuleEngine createSWRLRuleEngine(String ruleEngineName, SWRLAPIOWLOntology swrlapiOWLOntology)
-			throws SWRLRuleEngineException;
+	SWRLRuleEngine createSWRLRuleEngine(String ruleEngineName, OWLOntology ontology) throws SWRLRuleEngineException;
 
 	/**
-	 * @param swrlapiOWLOntology A SWQRLAPI-based OWL ontology
+	 * @param ontology An OWL ontology
 	 * @return A SQWRL query engine
 	 * @throws SWRLRuleEngineException If an error occurs during creation
 	 */
-	SQWRLQueryEngine createSQWRLQueryEngine(SWRLAPIOWLOntology swrlapiOWLOntology) throws SWRLRuleEngineException;
+	SQWRLQueryEngine createSQWRLQueryEngine(OWLOntology ontology) throws SWRLRuleEngineException;
 
 	/**
 	 * @param ruleEngineName The name of a rule engine
-	 * @param swrlapiOWLOntology A SWQRLAPI-based OWL ontology
+	 * @param ontology An OWL ontology
 	 * @return A SQWRL query engine
 	 * @throws SWRLRuleEngineException If an error occurs during creation
 	 */
-	SQWRLQueryEngine createSQWRLQueryEngine(String ruleEngineName, SWRLAPIOWLOntology swrlapiOWLOntology)
-			throws SWRLRuleEngineException;
-
+	SQWRLQueryEngine createSQWRLQueryEngine(String ruleEngineName, OWLOntology ontology) throws SWRLRuleEngineException;
 }

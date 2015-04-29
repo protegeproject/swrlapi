@@ -27,6 +27,7 @@ import org.swrlapi.core.impl.DefaultSWRLAPIOWLOntology;
 import org.swrlapi.core.impl.DefaultSWRLAPIOntologyProcessor;
 import org.swrlapi.core.impl.DefaultSWRLRuleAndQueryEngineFactory;
 import org.swrlapi.exceptions.SWRLAPIException;
+import org.swrlapi.exceptions.SWRLRuleEngineException;
 import org.swrlapi.sqwrl.DefaultSQWRLResult;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
@@ -56,6 +57,18 @@ public class SWRLAPIFactory
 {
 	private static final String SQWRL_ICON_NAME = "SQWRL.gif";
 	private static final String OWL2RL_ICON_NAME = "OWL2RL.gif";
+
+	private static final SWRLRuleAndQueryEngineFactory swrlRuleAndQueryEngineFactory = new DefaultSWRLRuleAndQueryEngineFactory();
+
+	public static SWRLRuleEngine createSWRLRuleEngine(OWLOntology ontology) throws SWRLRuleEngineException
+	{
+		return swrlRuleAndQueryEngineFactory.createSWRLRuleEngine(ontology);
+	}
+
+	public static SQWRLQueryEngine createSQWRLQueryEngine(OWLOntology ontology) throws SWRLRuleEngineException
+	{
+		return swrlRuleAndQueryEngineFactory.createSQWRLQueryEngine(ontology);
+	}
 
 	/**
 	 * Create an empty {@link org.swrlapi.core.SWRLAPIOWLOntology}.
@@ -212,7 +225,7 @@ public class SWRLAPIFactory
 	/**
 	 * @return A SWRL rule engine factory
 	 */
-	public static SWRLRuleAndQueryEngineFactory createSWRLRuleEngineFactory()
+	public static SWRLRuleAndQueryEngineFactory createSWRLRuleAndQueryEngineFactory()
 	{
 		return new DefaultSWRLRuleAndQueryEngineFactory();
 	}
@@ -344,6 +357,7 @@ public class SWRLAPIFactory
 		}
 	}
 
+	// TODO This looks dodgy
 	private static String resourceName2File(String resourceName)
 	{
 		URL url = SWRLAPIFactory.class.getClassLoader().getResource(resourceName);
