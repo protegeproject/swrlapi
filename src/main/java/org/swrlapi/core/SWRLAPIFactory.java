@@ -121,6 +121,7 @@ public class SWRLAPIFactory
 		if (prefixManager == null)
 			throw new SWRLAPIException("supplied prefix manager is null");
 
+		addDefaultPrefixes(ontology, prefixManager);
 		addSWRLAPIBuiltInOntologies(ontology.getOWLOntologyManager());
 
 		return new DefaultSWRLAPIOWLOntology(ontology, prefixManager);
