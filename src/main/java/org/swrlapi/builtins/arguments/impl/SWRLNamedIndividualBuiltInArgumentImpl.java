@@ -6,7 +6,7 @@ import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 
 class SWRLNamedIndividualBuiltInArgumentImpl extends SWRLNamedBuiltInArgumentImpl implements
-SWRLNamedIndividualBuiltInArgument
+    SWRLNamedIndividualBuiltInArgument
 {
   private static final long serialVersionUID = 1L;
 

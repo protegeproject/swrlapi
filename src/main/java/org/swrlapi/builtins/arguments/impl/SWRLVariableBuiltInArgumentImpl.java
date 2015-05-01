@@ -217,7 +217,7 @@ class SWRLVariableBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements
     SWRLVariableBuiltInArgumentImpl impl = (SWRLVariableBuiltInArgumentImpl)obj;
     return super.equals(impl)
         && ((this.builtInResult == impl.builtInResult) || (this.builtInResult != null && this.builtInResult
-        .equals(impl.builtInResult)) && this.isBound == impl.isBound);
+            .equals(impl.builtInResult)) && this.isBound == impl.isBound);
   }
 
   @Override

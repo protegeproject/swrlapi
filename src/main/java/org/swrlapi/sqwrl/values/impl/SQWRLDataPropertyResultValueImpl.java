@@ -11,6 +11,9 @@ class SQWRLDataPropertyResultValueImpl extends SQWRLPropertyResultValueImpl impl
   }
 
   @Override
-  public boolean isDataProperty() { return true; }
+  public boolean isDataProperty()
+  {
+    return true;
+  }
 
 }

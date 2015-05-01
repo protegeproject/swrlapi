@@ -53,36 +53,36 @@ class Temporal
   // with them
   // separately. Leap years are also handled separately.
   private static final long conversion_table[][] = {
-    /* year, month, day, hours, minutes, seconds, milliseconds */
-    { 1, 12, 365, 365 * 24, 365 * 24 * 60, 365 * 24 * 60 * 60, 365 * 24 * 60 * 60 * 1000L }, /* year */
-    { 0, 1, 0, 0, 0, 0, 0 }, /* month */
-    { 365, 0, 1, 24, 24 * 60, 24 * 60 * 60, 24 * 60 * 60 * 1000 }, /* day */
-    { 365 * 24, 0, 24, 1, 60, 60 * 60, 60 * 60 * 1000 }, /* hour */
-    { 365 * 24 * 60, 0, 24 * 60, 60, 1, 60, 60 * 1000 }, /* minute */
-    { 365 * 24 * 60 * 60, 0, 24 * 60 * 60, 60 * 60, 60, 1, 1000 }, /* second */
-    { 365 * 24 * 60 * 60 * 1000L, 0, 24 * 60 * 60 * 1000, 60 * 60 * 1000, 60 * 1000, 1000, 1 } /* mseconds */
+  /* year, month, day, hours, minutes, seconds, milliseconds */
+  { 1, 12, 365, 365 * 24, 365 * 24 * 60, 365 * 24 * 60 * 60, 365 * 24 * 60 * 60 * 1000L }, /* year */
+  { 0, 1, 0, 0, 0, 0, 0 }, /* month */
+  { 365, 0, 1, 24, 24 * 60, 24 * 60 * 60, 24 * 60 * 60 * 1000 }, /* day */
+  { 365 * 24, 0, 24, 1, 60, 60 * 60, 60 * 60 * 1000 }, /* hour */
+  { 365 * 24 * 60, 0, 24 * 60, 60, 1, 60, 60 * 1000 }, /* minute */
+  { 365 * 24 * 60 * 60, 0, 24 * 60 * 60, 60 * 60, 60, 1, 1000 }, /* second */
+  { 365 * 24 * 60 * 60 * 1000L, 0, 24 * 60 * 60 * 1000, 60 * 60 * 1000, 60 * 1000, 1000, 1 } /* mseconds */
   };
 
   private static final String[] stringGranularityRepresentation = { "years", "months", "days", "hours", "minutes",
-    "seconds", "milliseconds" };
+      "seconds", "milliseconds" };
 
   // Individual routines will adjust February for leap years.
   private static final long[] days_in_month = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
   // Days up until a month. Routine convertMonth2Granularity will adjust for leap years.
   private static final long[] days_to_month = { 0, // to January
-    31, // to February
-    31 + 28, // to March (code will handle leap years separately))
-    31 + 28 + 31, // to April
-    31 + 28 + 31 + 30, // to May
-    31 + 28 + 31 + 30 + 31, // to June
-    31 + 28 + 31 + 30 + 31 + 30, // to July
-    31 + 28 + 31 + 30 + 31 + 30 + 31, // to August
-    31 + 28 + 31 + 30 + 31 + 30 + 31 + 31, // to September
-    31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30, // to October
-    31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31, // to November
-    31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30, // to December
-    365 };
+      31, // to February
+      31 + 28, // to March (code will handle leap years separately))
+      31 + 28 + 31, // to April
+      31 + 28 + 31 + 30, // to May
+      31 + 28 + 31 + 30 + 31, // to June
+      31 + 28 + 31 + 30 + 31 + 30, // to July
+      31 + 28 + 31 + 30 + 31 + 30 + 31, // to August
+      31 + 28 + 31 + 30 + 31 + 30 + 31 + 31, // to September
+      31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30, // to October
+      31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31, // to November
+      31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30, // to December
+      365 };
 
   private final GregorianCalendar gc;
 
@@ -635,8 +635,7 @@ class Temporal
   }
 
   /**
-   * Calculate the number of leap years up until a granule count specified at any granularity.
-   * TODO: rewrite - very,
+   * Calculate the number of leap years up until a granule count specified at any granularity. TODO: rewrite - very,
    *
    * @param granuleCount
    * @param granularity

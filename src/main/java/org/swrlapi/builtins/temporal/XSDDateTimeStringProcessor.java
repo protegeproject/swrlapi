@@ -19,11 +19,11 @@ class XSDDateTimeStringProcessor extends DatetimeStringProcessor
 
   // Strings to pad a partially specified datetime.
   private static final String _datetimeRoundDownPadding[] = { "-01-01T00:00:00.000", "-01T00:00:00.000",
-    "T00:00:00.000", ":00:00.000", ":00.000", ".000", "" };
+      "T00:00:00.000", ":00:00.000", ":00.000", ".000", "" };
 
   // Day-in-month must be dealt with separately.
   private static final String _datetimeRoundUpPadding[] = { "-12-31T23:59:59.999", "", "T23:59:59.999", ":59:59.999",
-    ":59.999", ".999", "" };
+      ":59.999", ".999", "" };
 
   public XSDDateTimeStringProcessor()
   {

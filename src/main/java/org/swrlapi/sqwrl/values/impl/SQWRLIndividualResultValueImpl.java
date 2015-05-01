@@ -11,5 +11,8 @@ class SQWRLIndividualResultValueImpl extends SQWRLEntityResultValueImpl implemen
   }
 
   @Override
-  public boolean isIndividual() { return true; }
+  public boolean isIndividual()
+  {
+    return true;
+  }
 }

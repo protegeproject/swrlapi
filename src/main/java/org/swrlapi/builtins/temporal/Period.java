@@ -231,8 +231,8 @@ public class Period
   {
     return (((p2.getStartGranuleCount(granularity) > getStartGranuleCount(granularity)) || (p2
         .getStartGranuleCount(granularity) == getStartGranuleCount(granularity))) && ((p2
-            .getFinishGranuleCount(granularity) < getFinishGranuleCount(granularity)) || (p2
-                .getFinishGranuleCount(granularity) == getFinishGranuleCount(granularity))));
+        .getFinishGranuleCount(granularity) < getFinishGranuleCount(granularity)) || (p2
+        .getFinishGranuleCount(granularity) == getFinishGranuleCount(granularity))));
 
   }
 

@@ -16,7 +16,7 @@ class JDBCDatetimeStringProcessor extends DatetimeStringProcessor
 
   // Strings to pad a partially specified datetime.
   private static final String _datetimeRoundDownPadding[] = { "-01-01 00:00:00.000", "-01 00:00:00.000",
-    " 00:00:00.000", ":00:00.000", ":00.000", ".000", "" };
+      " 00:00:00.000", ":00:00.000", ":00.000", ".000", "" };
 
   /**
    * .997 is used for the millisecond value instead of .999 because SQL Server appears to have a resolution of .003
@@ -24,7 +24,7 @@ class JDBCDatetimeStringProcessor extends DatetimeStringProcessor
    * separately.
    */
   private static final String _datetimeRoundUpPadding[] = { "-12-31 23:59:59.997", "", " 23:59:59.997", ":59:59.997",
-    ":59.997", ".997", "" };
+      ":59.997", ".997", "" };
 
   public JDBCDatetimeStringProcessor()
   {

@@ -40,22 +40,40 @@ abstract class SQWRLEntityResultValueImpl implements SQWRLEntityResultValue
   }
 
   @Override
-  public boolean isEntity() { return true; }
+  public boolean isEntity()
+  {
+    return true;
+  }
 
   @Override
-  public boolean isClass() { return false; }
+  public boolean isClass()
+  {
+    return false;
+  }
 
   @Override
-  public boolean isIndividual() { return false; }
+  public boolean isIndividual()
+  {
+    return false;
+  }
 
   @Override
-  public boolean isObjectProperty() { return false; }
+  public boolean isObjectProperty()
+  {
+    return false;
+  }
 
   @Override
-  public boolean isDataProperty() { return false; }
+  public boolean isDataProperty()
+  {
+    return false;
+  }
 
   @Override
-  public boolean isAnnotationProperty() { return false; }
+  public boolean isAnnotationProperty()
+  {
+    return false;
+  }
 
   @Override
   public boolean isLiteral()

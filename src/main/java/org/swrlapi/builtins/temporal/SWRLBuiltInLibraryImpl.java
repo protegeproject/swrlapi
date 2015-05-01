@@ -766,7 +766,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   }
 
   private Instant validInstantIndividual2Instant(IRI individualIRI, int granularity) throws SWRLBuiltInException,
-  TemporalException
+      TemporalException
   {
     String datetimeString = getDataPropertyValueAsAString(getBuiltInBridge(), individualIRI,
         createIRI(HasTimePropertyName));
@@ -775,7 +775,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   }
 
   private Period validPeriodIndividual2Period(IRI individualIRI, int granularity) throws SWRLBuiltInException,
-  TemporalException
+      TemporalException
   {
     String startDatetimeString = getDataPropertyValueAsAString(getBuiltInBridge(), individualIRI,
         createIRI(HasStartTimePropertyName));

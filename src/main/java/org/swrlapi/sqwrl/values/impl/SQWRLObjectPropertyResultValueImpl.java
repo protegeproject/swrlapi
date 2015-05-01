@@ -11,5 +11,8 @@ class SQWRLObjectPropertyResultValueImpl extends SQWRLPropertyResultValueImpl im
   }
 
   @Override
-  public boolean isObjectProperty() { return true; }
+  public boolean isObjectProperty()
+  {
+    return true;
+  }
 }

@@ -24,8 +24,8 @@ public class SWRLRulesView extends JSplitPane implements SWRLAPIView
   private final SWRLRulesTableView ruleTablesView;
   private final SWRLRuleExecutionView ruleExecutionView;
 
-  public SWRLRulesView(SWRLRuleEngineModel swrlRuleEngineModel,
-      SWRLAPIDialogManager applicationDialogManager, Icon ruleEngineIcon) throws SWRLAPIException
+  public SWRLRulesView(SWRLRuleEngineModel swrlRuleEngineModel, SWRLAPIDialogManager applicationDialogManager,
+      Icon ruleEngineIcon) throws SWRLAPIException
   {
 
     this.ruleTablesView = new SWRLRulesTableView(swrlRuleEngineModel, applicationDialogManager);

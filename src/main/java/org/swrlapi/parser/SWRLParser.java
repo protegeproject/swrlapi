@@ -205,8 +205,8 @@ public class SWRLParser
     tokenizer.checkAndSkipRParen("Expecting closing parenthesis after second argument of object property atom "
         + shortName);
 
-    return !tokenizer.isInteractiveParseOnly() ? this.swrlParserSupport.getSWRLObjectPropertyAtom(shortName, iArgument1,
-        iArgument2) : null;
+    return !tokenizer.isInteractiveParseOnly() ? this.swrlParserSupport.getSWRLObjectPropertyAtom(shortName,
+        iArgument1, iArgument2) : null;
   }
 
   private SWRLDataPropertyAtom parseSWRLDataPropertyAtomArguments(String shortName, SWRLTokenizer tokenizer,
@@ -252,8 +252,8 @@ public class SWRLParser
 
     tokenizer.checkAndSkipRParen("Expecting closing parenthesis after second argument to different individuals atom");
 
-    return tokenizer.isInteractiveParseOnly() ? null : this.swrlParserSupport.getSWRLDifferentIndividualsAtom(iArgument1,
-        iArgument2);
+    return tokenizer.isInteractiveParseOnly() ? null : this.swrlParserSupport.getSWRLDifferentIndividualsAtom(
+        iArgument1, iArgument2);
   }
 
   private SWRLVariable parseSWRLVariable(SWRLTokenizer tokenizer, boolean isInHead) throws SWRLParseException
@@ -281,7 +281,8 @@ public class SWRLParser
     else if (token.isShortName()) {
       String identifier = token.getValue();
       if (this.swrlParserSupport.isOWLNamedIndividual(identifier)) {
-        return !tokenizer.isInteractiveParseOnly() ? this.swrlParserSupport.getSWRLIndividualArgument(identifier) : null;
+        return !tokenizer.isInteractiveParseOnly() ? this.swrlParserSupport.getSWRLIndividualArgument(identifier)
+            : null;
       } else
         throw generateEndOfRuleException("Invalid OWL individual name '" + token.getValue() + "'", tokenizer);
     } else
@@ -304,11 +305,11 @@ public class SWRLParser
       String literalValue = token.getValue();
       return parseLiteralSWRLDArgument(tokenizer, literalValue);
     } else if (token.isInt()) {
-      return !tokenizer.isInteractiveParseOnly() ? this.swrlParserSupport.getXSDIntSWRLLiteralArgument(token.getValue())
-          : null;
+      return !tokenizer.isInteractiveParseOnly() ? this.swrlParserSupport
+          .getXSDIntSWRLLiteralArgument(token.getValue()) : null;
     } else if (token.isFloat()) {
-      return !tokenizer.isInteractiveParseOnly() ? this.swrlParserSupport.getXSDFloatSWRLLiteralArgument(token.getValue())
-          : null;
+      return !tokenizer.isInteractiveParseOnly() ? this.swrlParserSupport.getXSDFloatSWRLLiteralArgument(token
+          .getValue()) : null;
     } else
       throw new SWRLParseException("Expecting variable or OWL literal, got '" + token.getValue() + "'");
   }
@@ -326,8 +327,8 @@ public class SWRLParser
       String datatype = datatypeToken.getValue();
       if (datatype.length() == 0)
         throw generateEndOfRuleException("Empty datatype qualifier - must supply a datatype", tokenizer);
-      return !tokenizer.isInteractiveParseOnly() ? this.swrlParserSupport.getSWRLLiteralArgument(literalValue, datatype)
-          : null;
+      return !tokenizer.isInteractiveParseOnly() ? this.swrlParserSupport
+          .getSWRLLiteralArgument(literalValue, datatype) : null;
     } else
       return !tokenizer.isInteractiveParseOnly() ? this.swrlParserSupport.getXSDStringSWRLLiteralArgument(literalValue)
           : null;
@@ -338,14 +339,16 @@ public class SWRLParser
   {
     // We allow the values "true" and "false" and interpret them as OWL literals of type xsd:boolean.
     if (shortName.equalsIgnoreCase("true") || shortName.equalsIgnoreCase("false")) {
-      return !tokenizer.isInteractiveParseOnly() ? this.swrlParserSupport.getXSDBooleanSWRLLiteralArgument(shortName) : null;
+      return !tokenizer.isInteractiveParseOnly() ? this.swrlParserSupport.getXSDBooleanSWRLLiteralArgument(shortName)
+          : null;
     } else { // Not "true" or "false"
       if (isInBuiltIn) { // SWRL built-ins in the SWRLAPI allow OWL entity names as arguments
         if (this.swrlParserSupport.isOWLNamedIndividual(shortName)) {
           return tokenizer.isInteractiveParseOnly() ? null : this.swrlParserSupport
               .getSWRLNamedIndividualBuiltInArgument(shortName);
         } else if (this.swrlParserSupport.isOWLClass(shortName)) {
-          return tokenizer.isInteractiveParseOnly() ? null : this.swrlParserSupport.getSWRLClassBuiltInArgument(shortName);
+          return tokenizer.isInteractiveParseOnly() ? null : this.swrlParserSupport
+              .getSWRLClassBuiltInArgument(shortName);
         } else if (this.swrlParserSupport.isOWLObjectProperty(shortName)) {
           return tokenizer.isInteractiveParseOnly() ? null : this.swrlParserSupport
               .getSWRLObjectPropertyBuiltInArgument(shortName);
@@ -368,7 +371,7 @@ public class SWRLParser
 
   private List<SWRLDArgument> parseSWRLDArgumentList(SWRLTokenizer tokenizer, boolean isInHead)
       throws SWRLParseException
-      { // Parse an argument list that can contain variables, OWL named entities, and literals
+  { // Parse an argument list that can contain variables, OWL named entities, and literals
     List<SWRLDArgument> dArguments = !tokenizer.isInteractiveParseOnly() ? new ArrayList<SWRLDArgument>() : null;
 
     SWRLDArgument dArgument = parseSWRLDArgument(tokenizer, isInHead, true);
@@ -387,7 +390,7 @@ public class SWRLParser
         throw new SWRLParseException("Expecting ',' or ')', got '" + token.getValue() + "'");
     }
     return dArguments;
-      }
+  }
 
   private SWRLParseException generateEndOfRuleException(String message, SWRLTokenizer tokenizer)
   {

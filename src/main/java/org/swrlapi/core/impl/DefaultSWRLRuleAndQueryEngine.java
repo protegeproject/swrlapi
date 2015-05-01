@@ -420,7 +420,7 @@ public class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQuery
   }
 
   private void exportSQWRLQuery2TargetRuleEngine(String activeQueryName) throws SWRLRuleEngineException,
-  TargetSWRLRuleEngineException, SWRLBuiltInException
+      TargetSWRLRuleEngineException, SWRLBuiltInException
   {
     for (SQWRLQuery query : this.swrlapiOWLOntology.getSQWRLQueries()) {
       query.setActive(query.getQueryName().equalsIgnoreCase(activeQueryName));
@@ -429,7 +429,7 @@ public class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQuery
   }
 
   private void exportSQWRLQueries2TargetRuleEngine() throws SWRLRuleEngineException, TargetSWRLRuleEngineException,
-  SWRLBuiltInException
+      SWRLBuiltInException
   {
     for (SQWRLQuery query : this.swrlapiOWLOntology.getSQWRLQueries()) {
       query.setActive(true);
@@ -438,7 +438,7 @@ public class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQuery
   }
 
   private void exportSQWRLQuery2TargetRuleEngine(SQWRLQuery query) throws SWRLRuleEngineException,
-  TargetSWRLRuleEngineException, SWRLBuiltInException
+      TargetSWRLRuleEngineException, SWRLBuiltInException
   {
     getTargetSWRLRuleEngine().defineSQWRLQuery(query);
   }
@@ -452,7 +452,7 @@ public class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQuery
   }
 
   private void exportOWLAxioms2TargetRuleEngine(Set<OWLAxiom> axioms) throws SWRLRuleEngineException,
-  TargetSWRLRuleEngineException
+      TargetSWRLRuleEngineException
   {
     for (OWLAxiom axiom : axioms) {
       if (!this.exportedOWLAxioms.contains(axiom))

@@ -348,8 +348,8 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
     if (this.aggregateColumnIndexes.containsKey(this.currentRowDataColumnIndex)
         && (!this.aggregateColumnIndexes.get(this.currentRowDataColumnIndex).equals(
             SQWRLResultNames.CountAggregateFunction))
-            && (!this.aggregateColumnIndexes.get(this.currentRowDataColumnIndex).equals(
-                SQWRLResultNames.CountDistinctAggregateFunction)) && (!isNumericValue(value)))
+        && (!this.aggregateColumnIndexes.get(this.currentRowDataColumnIndex).equals(
+            SQWRLResultNames.CountDistinctAggregateFunction)) && (!isNumericValue(value)))
       throw new SQWRLException("attempt to add non numeric value " + value
           + " to min, max, sum, or avg aggregate column " + this.allColumnNames.get(this.currentRowDataColumnIndex));
     this.rowData.add(value);
@@ -678,7 +678,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
   // nth, firstN, etc. are 1-indexed
   private List<List<SQWRLResultValue>> processSelectionOperators(List<List<SQWRLResultValue>> sourceRows)
       throws SQWRLException
-      {
+  {
     List<List<SQWRLResultValue>> processedRows = new ArrayList<>();
     boolean hasSelection = false;
 
@@ -800,7 +800,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
       return processedRows;
     else
       return sourceRows;
-      }
+  }
 
   // nth, firstN, etc. are 1-indexed
   public void setLimit(int limit)
@@ -1175,7 +1175,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 
   private List<List<SQWRLResultValue>> orderBy(List<List<SQWRLResultValue>> sourceRows, boolean ascending)
       throws SQWRLException
-      {
+  {
     List<List<SQWRLResultValue>> result = new ArrayList<>(sourceRows);
     SQWRLResultRowComparator rowComparator = new SQWRLResultRowComparator(this.allColumnNames,
         this.orderByColumnIndexes, ascending);
@@ -1187,7 +1187,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
     }
 
     return result;
-      }
+  }
 
   private SQWRLLiteralResultValue min(List<SQWRLLiteralResultValue> columnValues, int columnIndex)
       throws SQWRLException
@@ -1404,7 +1404,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 
   private List<SQWRLLiteralResultValue> convert2LiteralResultValues(List<SQWRLResultValue> columnValues, int columnIndex)
       throws SQWRLException
-      {
+  {
     List<SQWRLLiteralResultValue> literalValues = new ArrayList<>();
 
     int rowIndex = 0;
@@ -1417,7 +1417,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
       rowIndex++;
     }
     return literalValues;
-      }
+  }
 
   private SQWRLResultValueFactory getSQWRLResultValueFactory()
   {

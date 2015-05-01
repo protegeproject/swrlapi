@@ -136,15 +136,16 @@ public class SWRLAPIIntegrationTestBase
   protected void declareOWLObjectPropertyAssertion(String subjectLocalName, String propertyLocalName,
       String objectLocalName)
   {
-    SWRLAPITestUtil.declareOWLObjectPropertyAssertionAxiom(this.manager, this.ontology, this.namespace + subjectLocalName,
-        this.namespace + propertyLocalName, this.namespace + objectLocalName);
+    SWRLAPITestUtil.declareOWLObjectPropertyAssertionAxiom(this.manager, this.ontology, this.namespace
+        + subjectLocalName, this.namespace + propertyLocalName, this.namespace + objectLocalName);
   }
 
   protected void declareOWLDataPropertyAssertion(String subjectLocalName, String propertyLocalName, String value,
       String datatypePrefixedName)
   {
-    SWRLAPITestUtil.declareOWLDataPropertyAssertionAxiom(this.manager, this.ontology, this.namespace + subjectLocalName,
-        this.namespace + propertyLocalName, value, datatypePrefixedName, this.prefixManager);
+    SWRLAPITestUtil.declareOWLDataPropertyAssertionAxiom(this.manager, this.ontology,
+        this.namespace + subjectLocalName, this.namespace + propertyLocalName, value, datatypePrefixedName,
+        this.prefixManager);
   }
 
   protected void declareOWLSameAsAssertion(String individualLocalName1, String individualLocalName2)
@@ -155,14 +156,14 @@ public class SWRLAPIIntegrationTestBase
 
   protected void declareOWLDifferentFromAssertion(String individualLocalName1, String individualLocalName2)
   {
-    SWRLAPITestUtil.declareOWLDifferentIndividualsAxiom(this.manager, this.ontology, this.namespace + individualLocalName1,
-        this.namespace + individualLocalName2);
+    SWRLAPITestUtil.declareOWLDifferentIndividualsAxiom(this.manager, this.ontology, this.namespace
+        + individualLocalName1, this.namespace + individualLocalName2);
   }
 
   protected void declareOWLObjectPropertyDomainAxiom(String propertyLocalName, String classLocalName)
   {
-    SWRLAPITestUtil.declareOWLObjectPropertyDomainAxiom(this.manager, this.ontology, this.namespace + propertyLocalName,
-        this.namespace + classLocalName);
+    SWRLAPITestUtil.declareOWLObjectPropertyDomainAxiom(this.manager, this.ontology,
+        this.namespace + propertyLocalName, this.namespace + classLocalName);
   }
 
   protected void declareOWLDataPropertyDomainAxiom(String propertyLocalName, String classLocalName)

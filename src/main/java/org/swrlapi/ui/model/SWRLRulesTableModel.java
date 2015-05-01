@@ -283,8 +283,8 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
     @Override
     public String toString()
     {
-      return "(ruleName: " + this.ruleName + ", ruleText: " + this.ruleText + ", comment: " + this.comment + ", active: " + this.active
-          + ")";
+      return "(ruleName: " + this.ruleName + ", ruleText: " + this.ruleText + ", comment: " + this.comment
+          + ", active: " + this.active + ")";
     }
   }
 }

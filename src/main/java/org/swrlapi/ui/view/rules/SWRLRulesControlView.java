@@ -37,11 +37,11 @@ public class SWRLRulesControlView extends JPanel implements SWRLAPIView
 
     JPanel buttonsPanel = new JPanel(new FlowLayout());
     JButton button = createButton("OWL+SWRL->" + ruleEngineName,
-        "Translate SWRL rules and relevant OWL knowledge to rule engine",
-        new ImportActionListener(swrlRuleEngine, console, this));
+        "Translate SWRL rules and relevant OWL knowledge to rule engine", new ImportActionListener(swrlRuleEngine,
+            console, this));
     buttonsPanel.add(button);
-    button = createButton("Run " + ruleEngineName, "Run the rule engine",
-        new RunActionListener(swrlRuleEngine, console, this));
+    button = createButton("Run " + ruleEngineName, "Run the rule engine", new RunActionListener(swrlRuleEngine,
+        console, this));
     buttonsPanel.add(button);
     button = createButton(ruleEngineName + "->OWL", "Translate asserted rule engine knowledge to OWL knowledge",
         new ExportActionListener(this.swrlRuleEngine, console, this));
@@ -54,8 +54,8 @@ public class SWRLRulesControlView extends JPanel implements SWRLAPIView
     console.append("Press the 'Run " + ruleEngineName + "' button to run the rule engine.\n");
     console.append("Press the '" + ruleEngineName
         + "->OWL' button to transfer the inferred rule engine knowledge to OWL knowledge.\n\n");
-    console.append(
-        "The SWRLAPI supports an OWL profile called OWL 2 RL and uses an OWL 2 RL-based reasoner to perform reasoning.\n");
+    console
+        .append("The SWRLAPI supports an OWL profile called OWL 2 RL and uses an OWL 2 RL-based reasoner to perform reasoning.\n");
     console.append("See the 'OWL 2 RL' subtab for more information on this reasoner.");
   }
 
@@ -127,19 +127,18 @@ public class SWRLRulesControlView extends JPanel implements SWRLAPIView
 
         clearConsole();
         appendToConsole("OWL axioms successfully transferred to rule engine.\n");
-        appendToConsole(
-            "Number of SWRL rules exported to rule engine: " + this.ruleEngine.getNumberOfImportedSWRLRules() + "\n");
-        appendToConsole("Number of OWL class declarations exported to rule engine: " + this.ruleEngine
-            .getNumberOfAssertedOWLClassDeclarationAxioms() + "\n");
-        appendToConsole("Number of OWL individual declarations exported to rule engine: " + this.ruleEngine
-            .getNumberOfAssertedOWLIndividualDeclarationsAxioms() + "\n");
-        appendToConsole("Number of OWL object property declarations exported to rule engine: " + this.ruleEngine
-            .getNumberOfAssertedOWLObjectPropertyDeclarationAxioms() + "\n");
-        appendToConsole("Number of OWL data property declarations exported to rule engine: " + this.ruleEngine
-            .getNumberOfAssertedOWLDataPropertyDeclarationAxioms() + "\n");
-        appendToConsole(
-            "Total number of OWL axioms exported to rule engine: " + this.ruleEngine.getNumberOfAssertedOWLAxioms()
-            + "\n");
+        appendToConsole("Number of SWRL rules exported to rule engine: "
+            + this.ruleEngine.getNumberOfImportedSWRLRules() + "\n");
+        appendToConsole("Number of OWL class declarations exported to rule engine: "
+            + this.ruleEngine.getNumberOfAssertedOWLClassDeclarationAxioms() + "\n");
+        appendToConsole("Number of OWL individual declarations exported to rule engine: "
+            + this.ruleEngine.getNumberOfAssertedOWLIndividualDeclarationsAxioms() + "\n");
+        appendToConsole("Number of OWL object property declarations exported to rule engine: "
+            + this.ruleEngine.getNumberOfAssertedOWLObjectPropertyDeclarationAxioms() + "\n");
+        appendToConsole("Number of OWL data property declarations exported to rule engine: "
+            + this.ruleEngine.getNumberOfAssertedOWLDataPropertyDeclarationAxioms() + "\n");
+        appendToConsole("Total number of OWL axioms exported to rule engine: "
+            + this.ruleEngine.getNumberOfAssertedOWLAxioms() + "\n");
         appendToConsole("The transfer took " + (System.currentTimeMillis() - startTime) + " millisecond(s).\n");
         appendToConsole("Press the 'Run " + SWRLRulesControlView.this.swrlRuleEngine.getTargetRuleEngineName()
             + "' button to run the rule engine.\n");
@@ -172,8 +171,8 @@ public class SWRLRulesControlView extends JPanel implements SWRLAPIView
         appendToConsole("Successful execution of rule engine.\n");
         appendToConsole("Number of inferred axioms: " + this.ruleEngine.getNumberOfInferredOWLAxioms() + "\n");
         if (this.ruleEngine.getNumberOfInjectedOWLAxioms() != 0)
-          appendToConsole(
-              "Number of axioms injected by built-ins: " + this.ruleEngine.getNumberOfInjectedOWLAxioms() + "\n");
+          appendToConsole("Number of axioms injected by built-ins: " + this.ruleEngine.getNumberOfInjectedOWLAxioms()
+              + "\n");
         appendToConsole("The process took " + (System.currentTimeMillis() - startTime) + " millisecond(s).\n");
         appendToConsole("Look at the 'Inferred Axioms' tab to see the inferred axioms.\n");
         appendToConsole("Press the '" + SWRLRulesControlView.this.swrlRuleEngine.getTargetRuleEngineName()

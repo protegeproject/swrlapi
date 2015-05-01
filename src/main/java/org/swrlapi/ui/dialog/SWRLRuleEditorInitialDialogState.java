@@ -11,12 +11,14 @@ class SWRLRuleEditorInitialDialogState
     this.ruleText = ruleText.trim();
   }
 
-  public String getRuleName() { return this.ruleName; }
+  public String getRuleName()
+  {
+    return this.ruleName;
+  }
 
   public boolean hasStateChanged(String currentRuleName, String currentComment, String currentRuleText)
   {
-    return !this.ruleName.equals(currentRuleName.trim()) ||
-        !this.comment.equals(currentComment.trim()) ||
-        !this.ruleText.equals(currentRuleText.trim());
+    return !this.ruleName.equals(currentRuleName.trim()) || !this.comment.equals(currentComment.trim())
+        || !this.ruleText.equals(currentRuleText.trim());
   }
 }

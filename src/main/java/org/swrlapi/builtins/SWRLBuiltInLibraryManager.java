@@ -60,8 +60,8 @@ public abstract class SWRLBuiltInLibraryManager
    */
   public static List<List<SWRLBuiltInArgument>> invokeSWRLBuiltIn(SWRLBuiltInBridge bridge, String ruleName,
       String builtInName, int builtInIndex, boolean isInConsequent, List<SWRLBuiltInArgument> arguments)
-          throws SWRLBuiltInException
-          {
+      throws SWRLBuiltInException
+  {
     String prefix = getPrefix(builtInName);
     String implementationClassName = getBuiltInLibraryImplementationClassName(prefix);
     String builtInMethodName = getBuiltInMethodName(builtInName);
@@ -84,7 +84,7 @@ public abstract class SWRLBuiltInLibraryManager
     }
 
     return argumentPatterns;
-          }
+  }
 
   private static void processBoundArguments(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
@@ -163,7 +163,7 @@ public abstract class SWRLBuiltInLibraryManager
    */
   private static Set<List<SWRLBuiltInArgument>> generateBuiltInArgumentPattern(String ruleName, String builtInName,
       int builtInIndex, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
-      {
+  {
     List<Integer> multiValueBuiltInArgumentIndexes = getMultiValueBuiltInArgumentIndexes(arguments);
     Set<List<SWRLBuiltInArgument>> pattern = new HashSet<List<SWRLBuiltInArgument>>();
 
@@ -177,16 +177,17 @@ public abstract class SWRLBuiltInLibraryManager
       int numberOfArgumentsInMultiValueBuiltInArgument = multiValueBuiltInArgument.getNumberOfArguments();
 
       if (numberOfArgumentsInMultiValueBuiltInArgument < 1)
-        throw new SWRLBuiltInException("empty multi-value argument for built-in " + builtInName + "(index " + builtInIndex
-            + ") in rule " + ruleName);
+        throw new SWRLBuiltInException("empty multi-value argument for built-in " + builtInName + "(index "
+            + builtInIndex + ") in rule " + ruleName);
 
       for (int i = 1; i < multiValueBuiltInArgumentIndexes.size(); i++) {
         int multiValueBuiltInArgumentIndex = multiValueBuiltInArgumentIndexes.get(i);
         multiValueBuiltInArgument = getArgumentAsASWRLMultiValueBuiltInArgument(arguments,
             multiValueBuiltInArgumentIndex);
         if (numberOfArgumentsInMultiValueBuiltInArgument != multiValueBuiltInArgument.getNumberOfArguments())
-          throw new SWRLBuiltInException("all multi-value arguments must have the same number of elements for built-in "
-              + builtInName + "(index " + builtInIndex + ") in rule " + ruleName);
+          throw new SWRLBuiltInException(
+              "all multi-value arguments must have the same number of elements for built-in " + builtInName + "(index "
+                  + builtInIndex + ") in rule " + ruleName);
       }
 
       for (int multiValueBuiltInArgumentArgumentIndex = 0; multiValueBuiltInArgumentArgumentIndex < numberOfArgumentsInMultiValueBuiltInArgument; multiValueBuiltInArgumentArgumentIndex++) {
@@ -196,7 +197,7 @@ public abstract class SWRLBuiltInLibraryManager
       }
     }
     return pattern;
-      }
+  }
 
   private static SWRLMultiValueVariableBuiltInArgument getArgumentAsASWRLMultiValueBuiltInArgument(
       List<SWRLBuiltInArgument> arguments, int argumentIndex) throws SWRLBuiltInException
@@ -221,7 +222,7 @@ public abstract class SWRLBuiltInLibraryManager
 
   private static List<SWRLBuiltInArgument> generateArgumentsPattern(List<SWRLBuiltInArgument> arguments,
       int multiValueBuiltInArgumentArgumentIndex) throws SWRLBuiltInException
-      {
+  {
     List<SWRLBuiltInArgument> result = new ArrayList<SWRLBuiltInArgument>();
 
     for (SWRLBuiltInArgument argument : arguments) {
@@ -233,7 +234,7 @@ public abstract class SWRLBuiltInLibraryManager
     }
 
     return result;
-      }
+  }
 
   private static Method resolveBuiltInMethod(String ruleName, SWRLBuiltInLibrary library, String prefix,
       String builtInMethodName) throws UnresolvedSWRLBuiltInMethodException

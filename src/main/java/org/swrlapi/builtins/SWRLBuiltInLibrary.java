@@ -50,7 +50,7 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
    */
   boolean invokeBuiltInMethod(Method method, SWRLBuiltInBridge bridge, String ruleName, String prefix,
       String builtInMethodName, int builtInIndex, boolean isInConsequent, List<SWRLBuiltInArgument> arguments)
-          throws SWRLBuiltInException;
+      throws SWRLBuiltInException;
 
   /**
    * Create a string that represents a unique invocation pattern for a built-in for a bridge/rule/built-in/arguments

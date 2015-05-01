@@ -1,6 +1,5 @@
 package org.swrlapi.sqwrl.exceptions;
 
-
 public class SQWRLInvalidColumnIndexException extends SQWRLException
 {
   private static final long serialVersionUID = 1L;

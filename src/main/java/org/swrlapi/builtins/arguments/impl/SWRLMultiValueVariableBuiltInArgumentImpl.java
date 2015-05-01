@@ -13,7 +13,7 @@ import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
  * A class used to bind multiple arguments to a built-in argument
  */
 class SWRLMultiValueVariableBuiltInArgumentImpl extends SWRLVariableBuiltInArgumentImpl implements
-SWRLMultiValueVariableBuiltInArgument
+    SWRLMultiValueVariableBuiltInArgument
 {
   private static final long serialVersionUID = 1L;
 

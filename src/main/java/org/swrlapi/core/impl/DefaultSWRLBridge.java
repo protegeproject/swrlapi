@@ -45,7 +45,7 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
  * {@link org.swrlapi.bridge.TargetSWRLRuleEngine#defineOWLAxiom(OWLAxiom)} call.
  */
 public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridge, SWRLBuiltInBridgeController,
-SWRLRuleEngineBridgeController
+    SWRLRuleEngineBridgeController
 {
   private final SWRLAPIOWLOntology swrlapiOWLOntology;
   private final OWL2RLPersistenceLayer owl2RLPersistenceLayer;
@@ -209,10 +209,10 @@ SWRLRuleEngineBridgeController
   @Override
   public List<List<SWRLBuiltInArgument>> invokeSWRLBuiltIn(String ruleName, String builtInName, int builtInIndex,
       boolean isInConsequent, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
-      {
+  {
     return SWRLBuiltInLibraryManager.invokeSWRLBuiltIn(this, ruleName, builtInName, builtInIndex, isInConsequent,
         arguments);
-      }
+  }
 
   public boolean isOWLClass(IRI iri)
   {

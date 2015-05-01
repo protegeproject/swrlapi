@@ -35,7 +35,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 
   public DefaultSQWRLQuery(String queryName, List<SWRLAtom> bodyAtoms, List<SWRLAtom> headAtoms, boolean active,
       String comment, SWRLAPILiteralFactory swrlapiLiteralFactory, SQWRLResultValueFactory sqwrlResultValueFactory)
-          throws SQWRLException
+      throws SQWRLException
   {
     this.queryName = queryName;
     this.bodyAtoms = new ArrayList<>(bodyAtoms);
@@ -841,7 +841,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 
   private Set<String> getMatchingRootVariableNames(Map<String, Set<Set<String>>> pathMap,
       Set<String> variablePrefixedNames)
-      {
+  {
     Set<String> matchingRootVariableNames = new HashSet<>();
 
     for (String rootVariableName : pathMap.keySet()) {
@@ -852,7 +852,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
     }
 
     return matchingRootVariableNames;
-      }
+  }
 
   private Set<String> getReferencedVariablePrefixedNames(SWRLAtom atom)
   {

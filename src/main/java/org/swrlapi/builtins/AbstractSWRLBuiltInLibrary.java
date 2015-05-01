@@ -61,7 +61,7 @@ import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
  * @see org.swrlapi.builtins.SWRLBuiltInArgumentCreator
  */
 public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, SWRLBuiltInInputArgumentHandler,
-SWRLBuiltInResultArgumentHandler, SWRLBuiltInArgumentCreator
+    SWRLBuiltInResultArgumentHandler, SWRLBuiltInArgumentCreator
 {
   private final String libraryName;
 
@@ -172,7 +172,7 @@ SWRLBuiltInResultArgumentHandler, SWRLBuiltInArgumentCreator
   @Override
   public boolean invokeBuiltInMethod(Method method, SWRLBuiltInBridge bridge, String ruleName, String prefix,
       String builtInMethodName, int builtInIndex, boolean inConsequent, List<SWRLBuiltInArgument> arguments)
-          throws SWRLBuiltInException
+      throws SWRLBuiltInException
   {
     String builtInName = prefix + ":" + builtInMethodName;
     Boolean result;
@@ -394,7 +394,7 @@ SWRLBuiltInResultArgumentHandler, SWRLBuiltInArgumentCreator
   {
     return (isArgumentNumeric(argumentNumber, arguments) && isArgumentAByte(argumentNumber, arguments)
         && isArgumentAShort(argumentNumber, arguments) && isArgumentAnInt(argumentNumber, arguments) && isArgumentALong(
-            argumentNumber, arguments));
+          argumentNumber, arguments));
   }
 
   @Override

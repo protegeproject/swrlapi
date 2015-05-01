@@ -3,8 +3,8 @@ package org.swrlapi.sqwrl.values.impl;
 import org.semanticweb.owlapi.model.IRI;
 import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue;
 
-class SQWRLAnnotationPropertyResultValueImpl extends SQWRLPropertyResultValueImpl
-implements SQWRLAnnotationPropertyResultValue
+class SQWRLAnnotationPropertyResultValueImpl extends SQWRLPropertyResultValueImpl implements
+    SQWRLAnnotationPropertyResultValue
 {
   public SQWRLAnnotationPropertyResultValueImpl(IRI propertyIRI, String prefixedName)
   {
@@ -12,5 +12,8 @@ implements SQWRLAnnotationPropertyResultValue
   }
 
   @Override
-  public boolean isAnnotationProperty() { return true; }
+  public boolean isAnnotationProperty()
+  {
+    return true;
+  }
 }

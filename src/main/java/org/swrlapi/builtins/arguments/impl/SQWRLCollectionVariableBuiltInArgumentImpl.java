@@ -6,7 +6,7 @@ import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
 
 class SQWRLCollectionVariableBuiltInArgumentImpl extends SWRLVariableBuiltInArgumentImpl implements
-SQWRLCollectionVariableBuiltInArgument
+    SQWRLCollectionVariableBuiltInArgument
 {
   private static final long serialVersionUID = 1L;
 
@@ -62,7 +62,7 @@ SQWRLCollectionVariableBuiltInArgument
     return (getQueryName() == impl.getQueryName() || (getQueryName() != null && getQueryName().equals(
         impl.getQueryName())))
         && (getCollectionName() == impl.getCollectionName() || (getCollectionName() != null && getCollectionName()
-        .equals(impl.getCollectionName())))
+            .equals(impl.getCollectionName())))
         && (getGroupID() == impl.getGroupID() || (getGroupID() != null && getGroupID().equals(impl.getGroupID())));
   }
 

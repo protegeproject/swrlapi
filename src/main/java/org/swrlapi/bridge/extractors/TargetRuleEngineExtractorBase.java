@@ -15,8 +15,8 @@ import org.swrlapi.core.resolvers.OWLDataRangeResolver;
 import org.swrlapi.core.resolvers.OWLObjectPropertyExpressionResolver;
 
 /**
- * This interface describes a set of methods that will be needed by a target rule engine to create OWLAPI representations
- * of OWL properties from the rule engine's native rule engine representation of those properties.
+ * This interface describes a set of methods that will be needed by a target rule engine to create OWLAPI
+ * representations of OWL properties from the rule engine's native rule engine representation of those properties.
  * <p>
  * The corresponding {@link TargetRuleEngineConverterBase} is used when creating native rule engine representations of
  * OWLAPI OWL objects.
@@ -57,15 +57,18 @@ public abstract class TargetRuleEngineExtractorBase implements TargetRuleEngineE
     return getBridge().getOWLLiteralFactory();
   }
 
-  protected OWLClassExpressionResolver getOWLClassExpressionResolver() {
+  protected OWLClassExpressionResolver getOWLClassExpressionResolver()
+  {
     return getBridge().getOWLClassExpressionResolver();
   }
 
-  protected OWLObjectPropertyExpressionResolver getOWLObjectPropertyExpressionResolver() {
+  protected OWLObjectPropertyExpressionResolver getOWLObjectPropertyExpressionResolver()
+  {
     return getBridge().getOWLObjectPropertyExpressionResolver();
   }
 
-  protected OWLDataPropertyExpressionResolver getOWLDataPropertyExpressionResolver() {
+  protected OWLDataPropertyExpressionResolver getOWLDataPropertyExpressionResolver()
+  {
     return getBridge().getOWLDataPropertyExpressionResolver();
   }
 

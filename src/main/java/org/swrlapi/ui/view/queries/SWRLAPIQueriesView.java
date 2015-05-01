@@ -24,8 +24,8 @@ public class SWRLAPIQueriesView extends JSplitPane implements SWRLAPIView
   private final SWRLRulesTableView swrlRulesTableView;
   private final SQWRLQueryExecutionView sqwrlQueryExecutionView;
 
-  public SWRLAPIQueriesView(SQWRLQueryEngineModel sqwrlQueryEngineModel,
-      SWRLAPIDialogManager applicationDialogManager, Icon queryEngineIcon) throws SWRLAPIException
+  public SWRLAPIQueriesView(SQWRLQueryEngineModel sqwrlQueryEngineModel, SWRLAPIDialogManager applicationDialogManager,
+      Icon queryEngineIcon) throws SWRLAPIException
   {
     this.swrlRulesTableView = new SWRLRulesTableView(sqwrlQueryEngineModel, applicationDialogManager);
     this.sqwrlQueryExecutionView = new SQWRLQueryExecutionView(sqwrlQueryEngineModel, queryEngineIcon,

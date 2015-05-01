@@ -11,5 +11,8 @@ class SQWRLClassResultValueImpl extends SQWRLEntityResultValueImpl implements SQ
   }
 
   @Override
-  public boolean isClass() { return true; }
+  public boolean isClass()
+  {
+    return true;
+  }
 }
