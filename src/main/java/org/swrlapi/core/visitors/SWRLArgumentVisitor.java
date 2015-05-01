@@ -9,9 +9,9 @@ import org.semanticweb.owlapi.model.SWRLVariable;
  */
 public interface SWRLArgumentVisitor
 {
-	void visit(SWRLVariable swrlVariable);
+  void visit(SWRLVariable swrlVariable);
 
-	void visit(SWRLIndividualArgument swrlIndividualArgument);
+  void visit(SWRLIndividualArgument swrlIndividualArgument);
 
-	void visit(SWRLLiteralArgument swrlLiteralArgument);
+  void visit(SWRLLiteralArgument swrlLiteralArgument);
 }

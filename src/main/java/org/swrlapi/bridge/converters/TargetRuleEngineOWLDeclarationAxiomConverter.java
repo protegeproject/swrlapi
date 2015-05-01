@@ -11,13 +11,13 @@ import org.semanticweb.owlapi.model.OWLObjectProperty;
  */
 public interface TargetRuleEngineOWLDeclarationAxiomConverter extends TargetRuleEngineConverter
 {
-	void convert(OWLClass cls);
+  void convert(OWLClass cls);
 
-	void convert(OWLNamedIndividual individal);
+  void convert(OWLNamedIndividual individal);
 
-	void convert(OWLObjectProperty property);
+  void convert(OWLObjectProperty property);
 
-	void convert(OWLDataProperty property);
+  void convert(OWLDataProperty property);
 
-	void convert(OWLDatatype datatype);
+  void convert(OWLDatatype datatype);
 }

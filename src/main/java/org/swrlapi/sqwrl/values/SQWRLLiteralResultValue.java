@@ -10,8 +10,8 @@ import org.swrlapi.core.SWRLAPILiteral;
  */
 public interface SQWRLLiteralResultValue extends SQWRLResultValue, Comparable<SQWRLLiteralResultValue>, SWRLAPILiteral
 {
-	/**
-	 * @return The prefixed name of the literal's datatype
-	 */
-	String getDatatypePrefixedName();
+  /**
+   * @return The prefixed name of the literal's datatype
+   */
+  String getDatatypePrefixedName();
 }

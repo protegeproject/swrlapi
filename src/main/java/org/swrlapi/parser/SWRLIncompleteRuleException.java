@@ -5,10 +5,10 @@ package org.swrlapi.parser;
  */
 public class SWRLIncompleteRuleException extends SWRLParseException
 {
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	public SWRLIncompleteRuleException(String message)
-	{
-		super(message);
-	}
+  public SWRLIncompleteRuleException(String message)
+  {
+    super(message);
+  }
 }

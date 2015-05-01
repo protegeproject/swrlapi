@@ -17,29 +17,29 @@ import org.swrlapi.exceptions.SWRLAPIInternalException;
  */
 public class OWLDataRangeResolver
 {
-	private final Map<String, OWLDataRange> dataRangeMap;
+  private final Map<String, OWLDataRange> dataRangeMap;
 
-	public OWLDataRangeResolver()
-	{
-		this.dataRangeMap = new HashMap<>();
-		reset();
-	}
+  public OWLDataRangeResolver()
+  {
+    this.dataRangeMap = new HashMap<>();
+    reset();
+  }
 
-	public void reset()
-	{
-		this.dataRangeMap.clear();
-	}
+  public void reset()
+  {
+    this.dataRangeMap.clear();
+  }
 
-	public void recordOWLDataRange(String dataRangeID, OWLDataRange dataRange)
-	{
-		this.dataRangeMap.put(dataRangeID, dataRange);
-	}
+  public void recordOWLDataRange(String dataRangeID, OWLDataRange dataRange)
+  {
+    this.dataRangeMap.put(dataRangeID, dataRange);
+  }
 
-	public OWLDataRange resolveOWLDataRange(String dataRangeID)
-	{
-		if (this.dataRangeMap.containsKey(dataRangeID))
-			return this.dataRangeMap.get(dataRangeID);
-		else
-			throw new SWRLAPIInternalException("no data range found with ID " + dataRangeID);
-	}
+  public OWLDataRange resolveOWLDataRange(String dataRangeID)
+  {
+    if (this.dataRangeMap.containsKey(dataRangeID))
+      return this.dataRangeMap.get(dataRangeID);
+    else
+      throw new SWRLAPIInternalException("no data range found with ID " + dataRangeID);
+  }
 }

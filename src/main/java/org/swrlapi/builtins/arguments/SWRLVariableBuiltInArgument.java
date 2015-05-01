@@ -10,52 +10,52 @@ import org.swrlapi.exceptions.SWRLBuiltInException;
  */
 public interface SWRLVariableBuiltInArgument extends SWRLBuiltInArgument, SWRLVariable
 {
-	/**
-	 * @return The prefixed name of the variable
-	 */
-	String getVariablePrefixedName();
+  /**
+   * @return The prefixed name of the variable
+   */
+  String getVariablePrefixedName();
 
-	/**
-	 * @return The name of the variable stripped of a ":" if it is a local prefixed name
-	 */
-	String getVariableName();
+  /**
+   * @return The name of the variable stripped of a ":" if it is a local prefixed name
+   */
+  String getVariableName();
 
-	@Override
-	boolean isVariable();
+  @Override
+  boolean isVariable();
 
-	/**
-	 * @return True if the variable has a built-in result attached
-	 */
-	boolean hasBuiltInResult();
+  /**
+   * @return True if the variable has a built-in result attached
+   */
+  boolean hasBuiltInResult();
 
-	/**
-	 * @return A SWRL built-in result
-	 */
-	SWRLBuiltInArgument getBuiltInResult();
+  /**
+   * @return A SWRL built-in result
+   */
+  SWRLBuiltInArgument getBuiltInResult();
 
-	/**
-	 * @param builtInResult A SWRL built-in result
-	 * @throws SWRLBuiltInException If the variable is bound
-	 */
-	void setBuiltInResult(SWRLBuiltInArgument builtInResult) throws SWRLBuiltInException;
+  /**
+   * @param builtInResult A SWRL built-in result
+   * @throws SWRLBuiltInException If the variable is bound
+   */
+  void setBuiltInResult(SWRLBuiltInArgument builtInResult) throws SWRLBuiltInException;
 
-	/**
-	 * @return True if the variable is unbound
-	 */
-	boolean isUnbound();
+  /**
+   * @return True if the variable is unbound
+   */
+  boolean isUnbound();
 
-	/**
-	 * @return True if the variable is bound
-	 */
-	boolean isBound();
+  /**
+   * @return True if the variable is bound
+   */
+  boolean isBound();
 
-	/**
-	 * Set the variable as unbound
-	 */
-	void setUnbound();
+  /**
+   * Set the variable as unbound
+   */
+  void setUnbound();
 
-	/**
-	 * The set variable as bound
-	 */
-	void setBound();
+  /**
+   * The set variable as bound
+   */
+  void setBound();
 }

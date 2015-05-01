@@ -19,6 +19,6 @@ import org.swrlapi.core.impl.DefaultSWRLAPIOWLOntology;
  */
 public interface SWRLNamedBuiltInArgument extends SWRLBuiltInArgument, SWRLVariable
 {
-	@Override
-	IRI getIRI();
+  @Override
+  IRI getIRI();
 }

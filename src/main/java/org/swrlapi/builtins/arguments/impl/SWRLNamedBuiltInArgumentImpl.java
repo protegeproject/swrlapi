@@ -19,113 +19,113 @@ import org.swrlapi.exceptions.SWRLAPIException;
 
 abstract class SWRLNamedBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements SWRLNamedBuiltInArgument
 {
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	private final OWLEntity entity;
+  private final OWLEntity entity;
 
-	public SWRLNamedBuiltInArgumentImpl(OWLEntity entity)
-	{
-		this.entity = entity;
-	}
+  public SWRLNamedBuiltInArgumentImpl(OWLEntity entity)
+  {
+    this.entity = entity;
+  }
 
-	@Override
-	public IRI getIRI()
-	{
-		return this.entity.getIRI();
-	}
+  @Override
+  public IRI getIRI()
+  {
+    return this.entity.getIRI();
+  }
 
-	protected OWLEntity getOWLEntity()
-	{
-		return this.entity;
-	}
+  protected OWLEntity getOWLEntity()
+  {
+    return this.entity;
+  }
 
-	public @Override boolean isLiteral()
-	{
-		return false;
-	}
+  public @Override boolean isLiteral()
+  {
+    return false;
+  }
 
-	public @Override boolean isNamed()
-	{
-		return true;
-	}
+  public @Override boolean isNamed()
+  {
+    return true;
+  }
 
-	@Override
-	public SWRLLiteralBuiltInArgument asSWRLLiteralBuiltInArgument()
-	{
-		throw new SWRLAPIException("Not a SWRLLiteralBuiltInArgument");
-	}
+  @Override
+  public SWRLLiteralBuiltInArgument asSWRLLiteralBuiltInArgument()
+  {
+    throw new SWRLAPIException("Not a SWRLLiteralBuiltInArgument");
+  }
 
-	@Override
-	public SWRLNamedBuiltInArgument asSWRLNamedBuiltInArgument()
-	{
-		return this;
-	}
+  @Override
+  public SWRLNamedBuiltInArgument asSWRLNamedBuiltInArgument()
+  {
+    return this;
+  }
 
-	@Override
-	public int compareTo(OWLObject o)
-	{
-		if (!(o instanceof SWRLNamedBuiltInArgumentImpl))
-			return -1;
+  @Override
+  public int compareTo(OWLObject o)
+  {
+    if (!(o instanceof SWRLNamedBuiltInArgumentImpl))
+      return -1;
 
-		SWRLNamedBuiltInArgumentImpl other = (SWRLNamedBuiltInArgumentImpl)o;
+    SWRLNamedBuiltInArgumentImpl other = (SWRLNamedBuiltInArgumentImpl)o;
 
-		return this.entity.getIRI().compareTo(other.entity.getIRI());
-	}
+    return this.entity.getIRI().compareTo(other.entity.getIRI());
+  }
 
-	@Nonnull
-	@Override
-	public Set<OWLAnnotationProperty> getAnnotationPropertiesInSignature()
-	{
-		return Collections.emptySet(); // TODO Implement getAnnotationPropertiesInSignature
-	}
+  @Nonnull
+  @Override
+  public Set<OWLAnnotationProperty> getAnnotationPropertiesInSignature()
+  {
+    return Collections.emptySet(); // TODO Implement getAnnotationPropertiesInSignature
+  }
 
-	@Override
-	public boolean equals(Object obj)
-	{
-		if (this == obj)
-			return true;
-		if ((obj == null) || (obj.getClass() != this.getClass()))
-			return false;
-		SWRLNamedBuiltInArgumentImpl impl = (SWRLNamedBuiltInArgumentImpl)obj;
-		return (this.entity.getIRI() == impl.entity.getIRI() || (this.entity.getIRI() != null && this.entity.getIRI()
-				.equals(impl.entity.getIRI())));
-	}
+  @Override
+  public boolean equals(Object obj)
+  {
+    if (this == obj)
+      return true;
+    if ((obj == null) || (obj.getClass() != this.getClass()))
+      return false;
+    SWRLNamedBuiltInArgumentImpl impl = (SWRLNamedBuiltInArgumentImpl)obj;
+    return (this.entity.getIRI() == impl.entity.getIRI() || (this.entity.getIRI() != null && this.entity.getIRI()
+        .equals(impl.entity.getIRI())));
+  }
 
-	@Override
-	public int hashCode()
-	{
-		int hash = 152;
-		hash = hash + (null == this.entity.getIRI() ? 0 : this.entity.getIRI().hashCode());
-		return hash;
-	}
+  @Override
+  public int hashCode()
+  {
+    int hash = 152;
+    hash = hash + (null == this.entity.getIRI() ? 0 : this.entity.getIRI().hashCode());
+    return hash;
+  }
 
-	@Override
-	public void accept(SWRLObjectVisitor visitor)
-	{
-		visitor.visit(this);
-	}
+  @Override
+  public void accept(SWRLObjectVisitor visitor)
+  {
+    visitor.visit(this);
+  }
 
-	@Override
-	public <O> O accept(SWRLObjectVisitorEx<O> visitor)
-	{
-		return visitor.visit(this);
-	}
+  @Override
+  public <O> O accept(SWRLObjectVisitorEx<O> visitor)
+  {
+    return visitor.visit(this);
+  }
 
-	@Override
-	public void accept(OWLObjectVisitor visitor)
-	{
-		visitor.visit(this);
-	}
+  @Override
+  public void accept(OWLObjectVisitor visitor)
+  {
+    visitor.visit(this);
+  }
 
-	@Override
-	public <O> O accept(OWLObjectVisitorEx<O> visitor)
-	{
-		return visitor.visit(this);
-	}
+  @Override
+  public <O> O accept(OWLObjectVisitorEx<O> visitor)
+  {
+    return visitor.visit(this);
+  }
 
-	@Override
-	public String toString()
-	{
-		return entity.toString();
-	}
+  @Override
+  public String toString()
+  {
+    return this.entity.toString();
+  }
 }

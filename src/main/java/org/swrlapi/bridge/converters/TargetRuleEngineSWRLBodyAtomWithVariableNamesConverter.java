@@ -22,17 +22,17 @@ import org.swrlapi.core.SWRLAPIBuiltInAtom;
  */
 public interface TargetRuleEngineSWRLBodyAtomWithVariableNamesConverter<T> extends TargetRuleEngineConverter
 {
-	T convert(SWRLClassAtom atom, Set<String> previouslyEncounteredVariablePrefixedNames);
+  T convert(SWRLClassAtom atom, Set<String> previouslyEncounteredVariablePrefixedNames);
 
-	T convert(SWRLDataPropertyAtom atom, Set<String> previouslyEncounteredVariablePrefixedNames);
+  T convert(SWRLDataPropertyAtom atom, Set<String> previouslyEncounteredVariablePrefixedNames);
 
-	T convert(SWRLObjectPropertyAtom atom, Set<String> previouslyEncounteredVariablePrefixedNames);
+  T convert(SWRLObjectPropertyAtom atom, Set<String> previouslyEncounteredVariablePrefixedNames);
 
-	T convert(SWRLSameIndividualAtom atom, Set<String> previouslyEncounteredVariablePrefixedNames);
+  T convert(SWRLSameIndividualAtom atom, Set<String> previouslyEncounteredVariablePrefixedNames);
 
-	T convert(SWRLDifferentIndividualsAtom atom, Set<String> previouslyEncounteredVariablePrefixedNames);
+  T convert(SWRLDifferentIndividualsAtom atom, Set<String> previouslyEncounteredVariablePrefixedNames);
 
-	T convert(SWRLAPIBuiltInAtom atom, Set<String> previouslyEncounteredVariablePrefixedNames);
+  T convert(SWRLAPIBuiltInAtom atom, Set<String> previouslyEncounteredVariablePrefixedNames);
 
-	T convert(SWRLDataRangeAtom atom, Set<String> previouslyEncounteredVariablePrefixedNames);
+  T convert(SWRLDataRangeAtom atom, Set<String> previouslyEncounteredVariablePrefixedNames);
 }

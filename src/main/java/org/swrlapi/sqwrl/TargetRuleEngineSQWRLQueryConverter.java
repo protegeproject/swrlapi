@@ -11,10 +11,10 @@ import org.swrlapi.exceptions.TargetSWRLRuleEngineException;
  */
 public interface TargetRuleEngineSQWRLQueryConverter extends TargetRuleEngineConverter
 {
-	/**
-	 * @param query A SQWRL query
-	 * @throws TargetSWRLRuleEngineException If an error occurs in the target rule engine
-	 * @throws SWRLBuiltInException If an error occurs during built-in processing
-	 */
-	public void convert(SQWRLQuery query) throws TargetSWRLRuleEngineException, SWRLBuiltInException;
+  /**
+   * @param query A SQWRL query
+   * @throws TargetSWRLRuleEngineException If an error occurs in the target rule engine
+   * @throws SWRLBuiltInException If an error occurs during built-in processing
+   */
+  public void convert(SQWRLQuery query) throws TargetSWRLRuleEngineException, SWRLBuiltInException;
 }

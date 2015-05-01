@@ -49,81 +49,81 @@ import org.swrlapi.core.SWRLAPIRule;
  */
 public interface TargetRuleEngineOWLAxiomConverter extends TargetRuleEngineConverter
 {
-	void convert(SWRLAPIRule axiom);
+  void convert(SWRLAPIRule axiom);
 
-	void convert(OWLDeclarationAxiom axiom);
+  void convert(OWLDeclarationAxiom axiom);
 
-	void convert(OWLClassAssertionAxiom axiom);
+  void convert(OWLClassAssertionAxiom axiom);
 
-	void convert(OWLObjectPropertyAssertionAxiom axiom);
+  void convert(OWLObjectPropertyAssertionAxiom axiom);
 
-	void convert(OWLDataPropertyAssertionAxiom axiom);
+  void convert(OWLDataPropertyAssertionAxiom axiom);
 
-	void convert(OWLSameIndividualAxiom axiom);
+  void convert(OWLSameIndividualAxiom axiom);
 
-	void convert(OWLDifferentIndividualsAxiom axiom);
+  void convert(OWLDifferentIndividualsAxiom axiom);
 
-	void convert(OWLDisjointClassesAxiom axiom);
+  void convert(OWLDisjointClassesAxiom axiom);
 
-	void convert(OWLEquivalentClassesAxiom axiom);
+  void convert(OWLEquivalentClassesAxiom axiom);
 
-	void convert(OWLSubClassOfAxiom axiom);
+  void convert(OWLSubClassOfAxiom axiom);
 
-	void convert(OWLSubDataPropertyOfAxiom axiom);
+  void convert(OWLSubDataPropertyOfAxiom axiom);
 
-	void convert(OWLSubObjectPropertyOfAxiom axiom);
+  void convert(OWLSubObjectPropertyOfAxiom axiom);
 
-	void convert(OWLEquivalentDataPropertiesAxiom axiom);
+  void convert(OWLEquivalentDataPropertiesAxiom axiom);
 
-	void convert(OWLEquivalentObjectPropertiesAxiom axiom);
+  void convert(OWLEquivalentObjectPropertiesAxiom axiom);
 
-	void convert(OWLDisjointDataPropertiesAxiom axiom);
+  void convert(OWLDisjointDataPropertiesAxiom axiom);
 
-	void convert(OWLDisjointObjectPropertiesAxiom axiom);
+  void convert(OWLDisjointObjectPropertiesAxiom axiom);
 
-	void convert(OWLObjectPropertyDomainAxiom axiom);
+  void convert(OWLObjectPropertyDomainAxiom axiom);
 
-	void convert(OWLDataPropertyDomainAxiom axiom);
+  void convert(OWLDataPropertyDomainAxiom axiom);
 
-	void convert(OWLObjectPropertyRangeAxiom axiom);
+  void convert(OWLObjectPropertyRangeAxiom axiom);
 
-	void convert(OWLDataPropertyRangeAxiom axiom);
+  void convert(OWLDataPropertyRangeAxiom axiom);
 
-	void convert(OWLFunctionalObjectPropertyAxiom axiom);
+  void convert(OWLFunctionalObjectPropertyAxiom axiom);
 
-	void convert(OWLFunctionalDataPropertyAxiom axiom);
+  void convert(OWLFunctionalDataPropertyAxiom axiom);
 
-	void convert(OWLInverseFunctionalObjectPropertyAxiom axiom);
+  void convert(OWLInverseFunctionalObjectPropertyAxiom axiom);
 
-	void convert(OWLIrreflexiveObjectPropertyAxiom axiom);
+  void convert(OWLIrreflexiveObjectPropertyAxiom axiom);
 
-	void convert(OWLTransitiveObjectPropertyAxiom axiom);
+  void convert(OWLTransitiveObjectPropertyAxiom axiom);
 
-	void convert(OWLSymmetricObjectPropertyAxiom axiom);
+  void convert(OWLSymmetricObjectPropertyAxiom axiom);
 
-	void convert(OWLAsymmetricObjectPropertyAxiom axiom);
+  void convert(OWLAsymmetricObjectPropertyAxiom axiom);
 
-	void convert(OWLInverseObjectPropertiesAxiom axiom);
+  void convert(OWLInverseObjectPropertiesAxiom axiom);
 
-	void convert(OWLNegativeDataPropertyAssertionAxiom axiom);
+  void convert(OWLNegativeDataPropertyAssertionAxiom axiom);
 
-	void convert(OWLNegativeObjectPropertyAssertionAxiom axiom);
+  void convert(OWLNegativeObjectPropertyAssertionAxiom axiom);
 
-	void convert(OWLReflexiveObjectPropertyAxiom axiom);
+  void convert(OWLReflexiveObjectPropertyAxiom axiom);
 
-	void convert(OWLDisjointUnionAxiom axiom);
+  void convert(OWLDisjointUnionAxiom axiom);
 
-	void convert(OWLAnnotationAssertionAxiom axiom);
+  void convert(OWLAnnotationAssertionAxiom axiom);
 
-	void convert(OWLSubPropertyChainOfAxiom axiom);
+  void convert(OWLSubPropertyChainOfAxiom axiom);
 
-	void convert(OWLHasKeyAxiom axiom);
+  void convert(OWLHasKeyAxiom axiom);
 
-	void convert(OWLDatatypeDefinitionAxiom axiom);
+  void convert(OWLDatatypeDefinitionAxiom axiom);
 
-	void convert(OWLAnnotationPropertyRangeAxiom axiom);
+  void convert(OWLAnnotationPropertyRangeAxiom axiom);
 
-	void convert(OWLAnnotationPropertyDomainAxiom axiom);
+  void convert(OWLAnnotationPropertyDomainAxiom axiom);
 
-	void convert(OWLSubAnnotationPropertyOfAxiom axiom);
+  void convert(OWLSubAnnotationPropertyOfAxiom axiom);
 }

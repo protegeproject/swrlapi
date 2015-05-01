@@ -39,70 +39,70 @@ import org.semanticweb.owlapi.model.SWRLDArgument;
  */
 public interface SWRLBuiltInArgument extends SWRLDArgument
 {
-	/**
-	 * @return True if the built-in argument is a variable
-	 */
-	boolean isVariable();
+  /**
+   * @return True if the built-in argument is a variable
+   */
+  boolean isVariable();
 
-	/**
-	 * @return True if the built-in argument is a multi-value variable
-	 */
-	boolean isMultiValueVariable();
+  /**
+   * @return True if the built-in argument is a multi-value variable
+   */
+  boolean isMultiValueVariable();
 
-	/**
-	 * @return True if the built-in argument is a literal
-	 */
-	boolean isLiteral();
+  /**
+   * @return True if the built-in argument is a literal
+   */
+  boolean isLiteral();
 
-	/**
-	 * @return True if the built-in argument is named
-	 */
-	boolean isNamed();
+  /**
+   * @return True if the built-in argument is named
+   */
+  boolean isNamed();
 
-	/**
-	 * @return The argument as a SWRL variable built-in argument
-	 */
-	SWRLVariableBuiltInArgument asVariable();
+  /**
+   * @return The argument as a SWRL variable built-in argument
+   */
+  SWRLVariableBuiltInArgument asVariable();
 
-	/**
-	 * @return The argument as a SWRL multi-value variable built-in argument
-	 */
-	SWRLMultiValueVariableBuiltInArgument asMultiValueVariable();
+  /**
+   * @return The argument as a SWRL multi-value variable built-in argument
+   */
+  SWRLMultiValueVariableBuiltInArgument asMultiValueVariable();
 
-	/**
-	 * @return The argument as a SWRL literal built-in argument
-	 */
-	SWRLLiteralBuiltInArgument asSWRLLiteralBuiltInArgument();
+  /**
+   * @return The argument as a SWRL literal built-in argument
+   */
+  SWRLLiteralBuiltInArgument asSWRLLiteralBuiltInArgument();
 
-	/**
-	 * @return The argument as a SWRL named built-in argument
-	 */
-	SWRLNamedBuiltInArgument asSWRLNamedBuiltInArgument();
+  /**
+   * @return The argument as a SWRL named built-in argument
+   */
+  SWRLNamedBuiltInArgument asSWRLNamedBuiltInArgument();
 
-	/**
-	 * @return True if the argument is a variable and was bound
-	 */
-	boolean wasBoundVariable();
+  /**
+   * @return True if the argument is a variable and was bound
+   */
+  boolean wasBoundVariable();
 
-	/**
-	 * @return The bound variable name
-	 */
-	String getBoundVariableName();
+  /**
+   * @return The bound variable name
+   */
+  String getBoundVariableName();
 
-	/**
-	 * @param boundVariableName The variable name that the built-in argument is bound to
-	 */
-	void setBoundVariableName(String boundVariableName);
+  /**
+   * @param boundVariableName The variable name that the built-in argument is bound to
+   */
+  void setBoundVariableName(String boundVariableName);
 
-	/**
-	 * @param visitor A visitor
-	 */
-	void accept(SWRLBuiltInArgumentVisitor visitor);
+  /**
+   * @param visitor A visitor
+   */
+  void accept(SWRLBuiltInArgumentVisitor visitor);
 
-	/**
-	 * @param <T> Type returned by the visitor
-	 * @param visitor A visitor
-	 * @return A result generate by the visitor
-	 */
-	<T> T accept(SWRLBuiltInArgumentVisitorEx<T> visitor);
+  /**
+   * @param <T> Type returned by the visitor
+   * @param visitor A visitor
+   * @return A result generate by the visitor
+   */
+  <T> T accept(SWRLBuiltInArgumentVisitorEx<T> visitor);
 }

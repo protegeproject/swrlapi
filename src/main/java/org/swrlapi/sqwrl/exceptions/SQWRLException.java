@@ -4,15 +4,15 @@ import org.swrlapi.exceptions.SWRLBuiltInException;
 
 public class SQWRLException extends SWRLBuiltInException
 {
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	public SQWRLException(String message)
-	{
-		super(message);
-	}
+  public SQWRLException(String message)
+  {
+    super(message);
+  }
 
-	public SQWRLException(String message, Throwable cause)
-	{
-		super(message, cause);
-	}
+  public SQWRLException(String message, Throwable cause)
+  {
+    super(message, cause);
+  }
 }

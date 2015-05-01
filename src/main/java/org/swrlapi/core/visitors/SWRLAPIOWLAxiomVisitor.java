@@ -13,5 +13,5 @@ import org.swrlapi.core.SWRLAPIRule;
  */
 public interface SWRLAPIOWLAxiomVisitor extends OWLAxiomVisitor
 {
-	void visit(SWRLAPIRule swrlapiRule);
+  void visit(SWRLAPIRule swrlapiRule);
 }

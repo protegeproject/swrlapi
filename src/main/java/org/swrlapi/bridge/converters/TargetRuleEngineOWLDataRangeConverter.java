@@ -12,15 +12,15 @@ import org.semanticweb.owlapi.model.OWLDatatypeRestriction;
  */
 public interface TargetRuleEngineOWLDataRangeConverter<TR> extends TargetRuleEngineConverter
 {
-	TR convert(OWLDatatype range);
+  TR convert(OWLDatatype range);
 
-	TR convert(OWLDataOneOf range);
+  TR convert(OWLDataOneOf range);
 
-	TR convert(OWLDataComplementOf range);
+  TR convert(OWLDataComplementOf range);
 
-	TR convert(OWLDataIntersectionOf range);
+  TR convert(OWLDataIntersectionOf range);
 
-	TR convert(OWLDataUnionOf range);
+  TR convert(OWLDataUnionOf range);
 
-	TR convert(OWLDatatypeRestriction range);
+  TR convert(OWLDatatypeRestriction range);
 }

@@ -16,266 +16,266 @@ import java.util.Set;
  */
 public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 {
-	private final Set<OWL2RLRule> rules;
-	private final List<OWL2RLRuleTable> ruleTables;
-	private final Map<OWL2RLRuleTable, List<OWL2RLRule>> table2RulesMap;
-	private final Set<Set<OWL2RLRule>> groupedRuleSets;
-	private final OWL2RLPersistenceLayer persistenceLayer;
-	private final Set<OWL2RLRule> unsupportedRules;
-	private final Set<OWL2RLRule> permanentlyOnRules;
-	private final Set<OWL2RLRule> switchableRules;
+  private final Set<OWL2RLRule> rules;
+  private final List<OWL2RLRuleTable> ruleTables;
+  private final Map<OWL2RLRuleTable, List<OWL2RLRule>> table2RulesMap;
+  private final Set<Set<OWL2RLRule>> groupedRuleSets;
+  private final OWL2RLPersistenceLayer persistenceLayer;
+  private final Set<OWL2RLRule> unsupportedRules;
+  private final Set<OWL2RLRule> permanentlyOnRules;
+  private final Set<OWL2RLRule> switchableRules;
 
-	private Set<OWL2RLRule> enabledRules;
-	private boolean ruleSelectionChanged;
+  private Set<OWL2RLRule> enabledRules;
+  private boolean ruleSelectionChanged;
 
-	public AbstractOWL2RLEngine(OWL2RLPersistenceLayer persistenceLayer, Set<OWL2RLRule> unsupportedRules,
-			Set<OWL2RLRule> permanentlyOnRules, Set<Set<OWL2RLRule>> groupedRuleSets)
-	{
-		this.persistenceLayer = persistenceLayer;
+  public AbstractOWL2RLEngine(OWL2RLPersistenceLayer persistenceLayer, Set<OWL2RLRule> unsupportedRules,
+      Set<OWL2RLRule> permanentlyOnRules, Set<Set<OWL2RLRule>> groupedRuleSets)
+  {
+    this.persistenceLayer = persistenceLayer;
 
-		this.rules = EnumSet.allOf(OWL2RLRule.class);
-		this.ruleTables = new ArrayList<>(Arrays.asList(OWL2RLRuleTable.values()));
+    this.rules = EnumSet.allOf(OWL2RLRule.class);
+    this.ruleTables = new ArrayList<>(Arrays.asList(OWL2RLRuleTable.values()));
 
-		this.table2RulesMap = new HashMap<>();
-		this.table2RulesMap.put(OWL2RLRuleTable.RuleTable4, new ArrayList<>(Arrays.asList(Table4Rules)));
-		this.table2RulesMap.put(OWL2RLRuleTable.RuleTable5, new ArrayList<>(Arrays.asList(Table5Rules)));
-		this.table2RulesMap.put(OWL2RLRuleTable.RuleTable6, new ArrayList<>(Arrays.asList(Table6Rules)));
-		this.table2RulesMap.put(OWL2RLRuleTable.RuleTable7, new ArrayList<>(Arrays.asList(Table7Rules)));
-		this.table2RulesMap.put(OWL2RLRuleTable.RuleTable8, new ArrayList<>(Arrays.asList(Table8Rules)));
-		this.table2RulesMap.put(OWL2RLRuleTable.RuleTable9, new ArrayList<>(Arrays.asList(Table9Rules)));
+    this.table2RulesMap = new HashMap<>();
+    this.table2RulesMap.put(OWL2RLRuleTable.RuleTable4, new ArrayList<>(Arrays.asList(Table4Rules)));
+    this.table2RulesMap.put(OWL2RLRuleTable.RuleTable5, new ArrayList<>(Arrays.asList(Table5Rules)));
+    this.table2RulesMap.put(OWL2RLRuleTable.RuleTable6, new ArrayList<>(Arrays.asList(Table6Rules)));
+    this.table2RulesMap.put(OWL2RLRuleTable.RuleTable7, new ArrayList<>(Arrays.asList(Table7Rules)));
+    this.table2RulesMap.put(OWL2RLRuleTable.RuleTable8, new ArrayList<>(Arrays.asList(Table8Rules)));
+    this.table2RulesMap.put(OWL2RLRuleTable.RuleTable9, new ArrayList<>(Arrays.asList(Table9Rules)));
 
-		this.unsupportedRules = unsupportedRules;
-		this.permanentlyOnRules = permanentlyOnRules;
-		this.groupedRuleSets = groupedRuleSets;
+    this.unsupportedRules = unsupportedRules;
+    this.permanentlyOnRules = permanentlyOnRules;
+    this.groupedRuleSets = groupedRuleSets;
 
-		// Switchable rules are the subset of rules that are not permanently and are not unsupported.
-		this.switchableRules = new HashSet<>(this.rules);
-		this.switchableRules.removeAll(this.permanentlyOnRules);
-		this.switchableRules.removeAll(this.unsupportedRules);
+    // Switchable rules are the subset of rules that are not permanently and are not unsupported.
+    this.switchableRules = new HashSet<>(this.rules);
+    this.switchableRules.removeAll(this.permanentlyOnRules);
+    this.switchableRules.removeAll(this.unsupportedRules);
 
-		// Enabled all switchable rules plus permanently on rules
-		this.enabledRules = new HashSet<>(this.switchableRules);
-		this.enabledRules.addAll(this.permanentlyOnRules);
+    // Enabled all switchable rules plus permanently on rules
+    this.enabledRules = new HashSet<>(this.switchableRules);
+    this.enabledRules.addAll(this.permanentlyOnRules);
 
-		// Persistence layer can indicate rule is disabled.
-		this.enabledRules.retainAll(persistenceLayer.getEnabledRules());
+    // Persistence layer can indicate rule is disabled.
+    this.enabledRules.retainAll(persistenceLayer.getEnabledRules());
 
-		this.ruleSelectionChanged = false;
-	}
+    this.ruleSelectionChanged = false;
+  }
 
-	@Override
-	public void resetRuleSelectionChanged()
-	{
-		this.ruleSelectionChanged = false;
-	}
+  @Override
+  public void resetRuleSelectionChanged()
+  {
+    this.ruleSelectionChanged = false;
+  }
 
-	@Override
-	public void setRuleSelectionChanged()
-	{
-		this.ruleSelectionChanged = true;
-	}
+  @Override
+  public void setRuleSelectionChanged()
+  {
+    this.ruleSelectionChanged = true;
+  }
 
-	@Override
-	public boolean hasRuleSelectionChanged()
-	{
-		return this.ruleSelectionChanged;
-	}
+  @Override
+  public boolean hasRuleSelectionChanged()
+  {
+    return this.ruleSelectionChanged;
+  }
 
-	@Override
-	public List<OWL2RLRuleTable> getRuleTables()
-	{
-		return this.ruleTables;
-	}
+  @Override
+  public List<OWL2RLRuleTable> getRuleTables()
+  {
+    return this.ruleTables;
+  }
 
-	@Override
-	public int getNumberOfRules()
-	{
-		return this.rules.size();
-	}
+  @Override
+  public int getNumberOfRules()
+  {
+    return this.rules.size();
+  }
 
-	@Override
-	public int getNumberOfTables()
-	{
-		return this.ruleTables.size();
-	}
+  @Override
+  public int getNumberOfTables()
+  {
+    return this.ruleTables.size();
+  }
 
-	@Override
-	public List<OWL2RLRule> getRules()
-	{
-		return new ArrayList<>(this.rules);
-	}
+  @Override
+  public List<OWL2RLRule> getRules()
+  {
+    return new ArrayList<>(this.rules);
+  }
 
-	@Override
-	public List<OWL2RLRule> getRules(OWL2RLRuleTable table)
-	{
-		return this.table2RulesMap.get(table);
-	}
+  @Override
+  public List<OWL2RLRule> getRules(OWL2RLRuleTable table)
+  {
+    return this.table2RulesMap.get(table);
+  }
 
-	@Override
-	public Set<OWL2RLRule> getEnabledRules()
-	{
-		return this.enabledRules;
-	}
+  @Override
+  public Set<OWL2RLRule> getEnabledRules()
+  {
+    return this.enabledRules;
+  }
 
-	@Override
-	public Set<OWL2RLRule> getUnsupportedRules()
-	{
-		return this.unsupportedRules;
-	}
+  @Override
+  public Set<OWL2RLRule> getUnsupportedRules()
+  {
+    return this.unsupportedRules;
+  }
 
-	@Override
-	public Set<OWL2RLRule> getPermanentlyOnRules()
-	{
-		return this.permanentlyOnRules;
-	}
+  @Override
+  public Set<OWL2RLRule> getPermanentlyOnRules()
+  {
+    return this.permanentlyOnRules;
+  }
 
-	@Override
-	public Set<OWL2RLRule> getSwitchableRules()
-	{
-		return this.switchableRules;
-	}
+  @Override
+  public Set<OWL2RLRule> getSwitchableRules()
+  {
+    return this.switchableRules;
+  }
 
-	@Override
-	public void enableAll()
-	{
-		this.enabledRules = this.switchableRules;
+  @Override
+  public void enableAll()
+  {
+    this.enabledRules = this.switchableRules;
 
-		setRuleSelectionChanged();
-		getOWL2RLPersistenceLayer().setEnabledRules(this.enabledRules);
-	}
+    setRuleSelectionChanged();
+    getOWL2RLPersistenceLayer().setEnabledRules(this.enabledRules);
+  }
 
-	@Override
-	public void disableAll()
-	{
-		this.enabledRules.clear();
+  @Override
+  public void disableAll()
+  {
+    this.enabledRules.clear();
 
-		setRuleSelectionChanged();
-		getOWL2RLPersistenceLayer().disableAll();
-	}
+    setRuleSelectionChanged();
+    getOWL2RLPersistenceLayer().disableAll();
+  }
 
-	@Override
-	public void enableTables(OWL2RLRuleTable... enabledTables)
-	{
-		for (OWL2RLRuleTable table : enabledTables) {
-			for (OWL2RLRule rule : this.table2RulesMap.get(table))
-				this.enabledRules.add(rule);
-		}
-		setRuleSelectionChanged();
-		getOWL2RLPersistenceLayer().setEnabledRules(this.enabledRules);
-	}
+  @Override
+  public void enableTables(OWL2RLRuleTable... enabledTables)
+  {
+    for (OWL2RLRuleTable table : enabledTables) {
+      for (OWL2RLRule rule : this.table2RulesMap.get(table))
+        this.enabledRules.add(rule);
+    }
+    setRuleSelectionChanged();
+    getOWL2RLPersistenceLayer().setEnabledRules(this.enabledRules);
+  }
 
-	@Override
-	public void disableTables(OWL2RLRuleTable... disabledTables)
-	{
-		Set<OWL2RLRule> disabledRules = new HashSet<>();
+  @Override
+  public void disableTables(OWL2RLRuleTable... disabledTables)
+  {
+    Set<OWL2RLRule> disabledRules = new HashSet<>();
 
-		for (OWL2RLRuleTable table : disabledTables)
-			for (OWL2RLRule rule : this.table2RulesMap.get(table))
-				disabledRules.add(rule);
+    for (OWL2RLRuleTable table : disabledTables)
+      for (OWL2RLRule rule : this.table2RulesMap.get(table))
+        disabledRules.add(rule);
 
-		this.enabledRules.removeAll(disabledRules);
+    this.enabledRules.removeAll(disabledRules);
 
-		setRuleSelectionChanged();
-		getOWL2RLPersistenceLayer().setDisabledRules(disabledRules);
-	}
+    setRuleSelectionChanged();
+    getOWL2RLPersistenceLayer().setDisabledRules(disabledRules);
+  }
 
-	@Override
-	public void enableRules(OWL2RLRule... rulesToEnable)
-	{
-		for (OWL2RLRule rule : rulesToEnable)
-			enableRule(rule);
+  @Override
+  public void enableRules(OWL2RLRule... rulesToEnable)
+  {
+    for (OWL2RLRule rule : rulesToEnable)
+      enableRule(rule);
 
-		setRuleSelectionChanged();
-		getOWL2RLPersistenceLayer().setEnabledRules(this.enabledRules);
-	}
+    setRuleSelectionChanged();
+    getOWL2RLPersistenceLayer().setEnabledRules(this.enabledRules);
+  }
 
-	@Override
-	public OWL2RLPersistenceLayer getOWL2RLPersistenceLayer()
-	{
-		return this.persistenceLayer;
-	}
+  @Override
+  public OWL2RLPersistenceLayer getOWL2RLPersistenceLayer()
+  {
+    return this.persistenceLayer;
+  }
 
-	private void enableRule(OWL2RLRule rule)
-	{
-		for (OWL2RLRule groupedRule : getGroup(rule))
-			this.enabledRules.add(groupedRule);
+  private void enableRule(OWL2RLRule rule)
+  {
+    for (OWL2RLRule groupedRule : getGroup(rule))
+      this.enabledRules.add(groupedRule);
 
-		setRuleSelectionChanged();
-		getOWL2RLPersistenceLayer().setEnabledRules(this.enabledRules);
-	}
+    setRuleSelectionChanged();
+    getOWL2RLPersistenceLayer().setEnabledRules(this.enabledRules);
+  }
 
-	@Override
-	public void disableRules(OWL2RLRule... rulesToDisable)
-	{
-		for (OWL2RLRule rule : rulesToDisable)
-			disableRule(rule);
-	}
+  @Override
+  public void disableRules(OWL2RLRule... rulesToDisable)
+  {
+    for (OWL2RLRule rule : rulesToDisable)
+      disableRule(rule);
+  }
 
-	private void disableRule(OWL2RLRule rule)
-	{
-		for (OWL2RLRule groupedRule : getGroup(rule)) {
-			this.enabledRules.remove(groupedRule);
-			setRuleSelectionChanged();
-			getOWL2RLPersistenceLayer().setDisabledRule(rule);
-		}
-	}
+  private void disableRule(OWL2RLRule rule)
+  {
+    for (OWL2RLRule groupedRule : getGroup(rule)) {
+      this.enabledRules.remove(groupedRule);
+      setRuleSelectionChanged();
+      getOWL2RLPersistenceLayer().setDisabledRule(rule);
+    }
+  }
 
-	@Override
-	public boolean isRuleEnabled(OWL2RLRule rule)
-	{
-		return this.enabledRules.contains(rule);
-	}
+  @Override
+  public boolean isRuleEnabled(OWL2RLRule rule)
+  {
+    return this.enabledRules.contains(rule);
+  }
 
-	public boolean isRuleSwitchable(OWL2RLRule rule)
-	{
-		return this.switchableRules.contains(rule);
-	}
+  public boolean isRuleSwitchable(OWL2RLRule rule)
+  {
+    return this.switchableRules.contains(rule);
+  }
 
-	@Override
-	public boolean hasEnabledRules(OWL2RLRuleTable table)
-	{
-		for (OWL2RLRule rule : getRules(table)) {
-			if (isRuleEnabled(rule))
-				return true;
-		}
-		return false;
-	}
+  @Override
+  public boolean hasEnabledRules(OWL2RLRuleTable table)
+  {
+    for (OWL2RLRule rule : getRules(table)) {
+      if (isRuleEnabled(rule))
+        return true;
+    }
+    return false;
+  }
 
-	@Override
-	public boolean hasSwitchableRules(OWL2RLRuleTable table)
-	{
-		for (OWL2RLRule rule : getRules(table)) {
-			if (isRuleSwitchable(rule))
-				return true;
-		}
-		return false;
-	}
+  @Override
+  public boolean hasSwitchableRules(OWL2RLRuleTable table)
+  {
+    for (OWL2RLRule rule : getRules(table)) {
+      if (isRuleSwitchable(rule))
+        return true;
+    }
+    return false;
+  }
 
-	@Override
-	public OWL2RLRuleStatus getRuleStatus(OWL2RLRule rule)
-	{
-		if (this.unsupportedRules.contains(rule))
-			return OWL2RLRuleStatus.Unsupported;
-		else if (this.permanentlyOnRules.contains(rule))
-			return OWL2RLRuleStatus.PermanentlyOn;
-		else
-			return OWL2RLRuleStatus.Switchable;
-	}
+  @Override
+  public OWL2RLRuleStatus getRuleStatus(OWL2RLRule rule)
+  {
+    if (this.unsupportedRules.contains(rule))
+      return OWL2RLRuleStatus.Unsupported;
+    else if (this.permanentlyOnRules.contains(rule))
+      return OWL2RLRuleStatus.PermanentlyOn;
+    else
+      return OWL2RLRuleStatus.Switchable;
+  }
 
-	/**
-	 * Find other rules that are grouped with this rule. Grouped rules are enabled and disabled together. The rule itself
-	 * is added to the group and associated rules (if any) are then found and added.
-	 */
-	private Set<OWL2RLRule> getGroup(OWL2RLRule rule)
-	{
-		Set<OWL2RLRule> result = new HashSet<>();
+  /**
+   * Find other rules that are grouped with this rule. Grouped rules are enabled and disabled together. The rule itself
+   * is added to the group and associated rules (if any) are then found and added.
+   */
+  private Set<OWL2RLRule> getGroup(OWL2RLRule rule)
+  {
+    Set<OWL2RLRule> result = new HashSet<>();
 
-		result.add(rule);
+    result.add(rule);
 
-		for (Set<OWL2RLRule> group : this.groupedRuleSets) {
-			if (group.contains(rule))
-				result.addAll(group);
-		}
-		return result;
-	}
+    for (Set<OWL2RLRule> group : this.groupedRuleSets) {
+      if (group.contains(rule))
+        result.addAll(group);
+    }
+    return result;
+  }
 }

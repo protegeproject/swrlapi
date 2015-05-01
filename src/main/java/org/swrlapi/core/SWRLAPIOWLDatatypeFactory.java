@@ -10,31 +10,31 @@ import org.semanticweb.owlapi.model.OWLDatatype;
  */
 public interface SWRLAPIOWLDatatypeFactory
 {
-	OWLDatatype getOWLDatatype(IRI iri);
+  OWLDatatype getOWLDatatype(IRI iri);
 
-	OWLDatatype getByteDatatype();
+  OWLDatatype getByteDatatype();
 
-	OWLDatatype getShortDatatype();
+  OWLDatatype getShortDatatype();
 
-	OWLDatatype getDoubleDatatype();
+  OWLDatatype getDoubleDatatype();
 
-	OWLDatatype getFloatDatatype();
+  OWLDatatype getFloatDatatype();
 
-	OWLDatatype getIntDatatype();
+  OWLDatatype getIntDatatype();
 
-	OWLDatatype getLongDatatype();
+  OWLDatatype getLongDatatype();
 
-	OWLDatatype getStringDatatype();
+  OWLDatatype getStringDatatype();
 
-	OWLDatatype getBooleanDatatype();
+  OWLDatatype getBooleanDatatype();
 
-	OWLDatatype getURIDatatype();
+  OWLDatatype getURIDatatype();
 
-	OWLDatatype getDateDatatype();
+  OWLDatatype getDateDatatype();
 
-	OWLDatatype getTimeDatatype();
+  OWLDatatype getTimeDatatype();
 
-	OWLDatatype getDateTimeDatatype();
+  OWLDatatype getDateTimeDatatype();
 
-	OWLDatatype getDurationDatatype();
+  OWLDatatype getDurationDatatype();
 }

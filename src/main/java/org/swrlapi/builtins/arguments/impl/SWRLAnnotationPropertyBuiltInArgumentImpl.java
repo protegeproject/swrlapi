@@ -6,30 +6,30 @@ import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
 
 class SWRLAnnotationPropertyBuiltInArgumentImpl extends SWRLNamedBuiltInArgumentImpl implements
-		SWRLAnnotationPropertyBuiltInArgument
+SWRLAnnotationPropertyBuiltInArgument
 {
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	public SWRLAnnotationPropertyBuiltInArgumentImpl(OWLAnnotationProperty property)
-	{
-		super(property);
-	}
+  public SWRLAnnotationPropertyBuiltInArgumentImpl(OWLAnnotationProperty property)
+  {
+    super(property);
+  }
 
-	@Override
-	public OWLAnnotationProperty getOWLAnnotationProperty()
-	{
-		return getOWLEntity().asOWLAnnotationProperty();
-	}
+  @Override
+  public OWLAnnotationProperty getOWLAnnotationProperty()
+  {
+    return getOWLEntity().asOWLAnnotationProperty();
+  }
 
-	@Override
-	public <T> T accept(SWRLBuiltInArgumentVisitorEx<T> visitor)
-	{
-		return visitor.visit(this);
-	}
+  @Override
+  public <T> T accept(SWRLBuiltInArgumentVisitorEx<T> visitor)
+  {
+    return visitor.visit(this);
+  }
 
-	@Override
-	public void accept(SWRLBuiltInArgumentVisitor visitor)
-	{
-		visitor.visit(this);
-	}
+  @Override
+  public void accept(SWRLBuiltInArgumentVisitor visitor)
+  {
+    visitor.visit(this);
+  }
 }

@@ -15,21 +15,21 @@ import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
  */
 public interface TargetRuleEngineSWRLBuiltInArgumentConverter<T> extends TargetRuleEngineConverter
 {
-	T convert(SWRLVariableBuiltInArgument argument);
+  T convert(SWRLVariableBuiltInArgument argument);
 
-	T convert(SWRLClassBuiltInArgument argument);
+  T convert(SWRLClassBuiltInArgument argument);
 
-	T convert(SWRLNamedIndividualBuiltInArgument argument);
+  T convert(SWRLNamedIndividualBuiltInArgument argument);
 
-	T convert(SWRLObjectPropertyBuiltInArgument argument);
+  T convert(SWRLObjectPropertyBuiltInArgument argument);
 
-	T convert(SWRLDataPropertyBuiltInArgument argument);
+  T convert(SWRLDataPropertyBuiltInArgument argument);
 
-	T convert(SWRLAnnotationPropertyBuiltInArgument argument);
+  T convert(SWRLAnnotationPropertyBuiltInArgument argument);
 
-	T convert(SWRLDatatypeBuiltInArgument argument);
+  T convert(SWRLDatatypeBuiltInArgument argument);
 
-	T convert(SWRLLiteralBuiltInArgument argument);
+  T convert(SWRLLiteralBuiltInArgument argument);
 
-	T convert(SQWRLCollectionVariableBuiltInArgument argument);
+  T convert(SQWRLCollectionVariableBuiltInArgument argument);
 }

@@ -30,39 +30,39 @@ import java.util.List;
  */
 public interface SWRLAPIOWLDataFactory extends OWLDataFactory
 {
-	SWRLAPIRule getSWRLRule(String ruleName, String ruleText); // Also SQWRL query
+  SWRLAPIRule getSWRLRule(String ruleName, String ruleText); // Also SQWRL query
 
-	SWRLBuiltInArgumentFactory getSWRLBuiltInArgumentFactory();
+  SWRLBuiltInArgumentFactory getSWRLBuiltInArgumentFactory();
 
-	SWRLAPIBuiltInAtom getSWRLAPIBuiltInAtom(String ruleName, IRI builtInIRI, String builtInPrefixedName,
-			List<SWRLBuiltInArgument> arguments);
+  SWRLAPIBuiltInAtom getSWRLAPIBuiltInAtom(String ruleName, IRI builtInIRI, String builtInPrefixedName,
+      List<SWRLBuiltInArgument> arguments);
 
-	SWRLAPIOWLDatatypeFactory getSWRLAPIOWLDatatypeFactory();
+  SWRLAPIOWLDatatypeFactory getSWRLAPIOWLDatatypeFactory();
 
-	SQWRLResultValueFactory getSQWRLResultValueFactory();
+  SQWRLResultValueFactory getSQWRLResultValueFactory();
 
-	OWLLiteralFactory getOWLLiteralFactory();
+  OWLLiteralFactory getOWLLiteralFactory();
 
-	SWRLAPILiteralFactory getSWRLAPILiteralFactory();
+  SWRLAPILiteralFactory getSWRLAPILiteralFactory();
 
-	IRIResolver getIRIResolver();
+  IRIResolver getIRIResolver();
 
-	// We provide convenience methods for defining these declaration axioms, though we do not specialize the
-	// OWLDeclarationAxiom itself.
+  // We provide convenience methods for defining these declaration axioms, though we do not specialize the
+  // OWLDeclarationAxiom itself.
 
-	OWLDeclarationAxiom getOWLClassDeclarationAxiom(OWLClass individual);
+  OWLDeclarationAxiom getOWLClassDeclarationAxiom(OWLClass individual);
 
-	OWLDeclarationAxiom getOWLIndividualDeclarationAxiom(OWLNamedIndividual individual);
+  OWLDeclarationAxiom getOWLIndividualDeclarationAxiom(OWLNamedIndividual individual);
 
-	OWLDeclarationAxiom getOWLObjectPropertyDeclarationAxiom(OWLObjectProperty property);
+  OWLDeclarationAxiom getOWLObjectPropertyDeclarationAxiom(OWLObjectProperty property);
 
-	OWLDeclarationAxiom getOWLDataPropertyDeclarationAxiom(OWLDataProperty property);
+  OWLDeclarationAxiom getOWLDataPropertyDeclarationAxiom(OWLDataProperty property);
 
-	OWLDeclarationAxiom getOWLAnnotationPropertyDeclarationAxiom(OWLAnnotationProperty property);
+  OWLDeclarationAxiom getOWLAnnotationPropertyDeclarationAxiom(OWLAnnotationProperty property);
 
-	OWLDeclarationAxiom getOWLDatatypeDeclarationAxiom(OWLDatatype datatype);
+  OWLDeclarationAxiom getOWLDatatypeDeclarationAxiom(OWLDatatype datatype);
 
-	OWLClass getInjectedOWLClass(); // Generate an OWL class with a unique IRI
+  OWLClass getInjectedOWLClass(); // Generate an OWL class with a unique IRI
 
-	OWLNamedIndividual getInjectedOWLNamedIndividual(); // Generate an OWL individual with a unique IRI
+  OWLNamedIndividual getInjectedOWLNamedIndividual(); // Generate an OWL individual with a unique IRI
 }

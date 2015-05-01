@@ -28,129 +28,129 @@ import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 
 public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements SWRLAPIOWLDataFactory
 {
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	private final IRIResolver iriResolver;
-	private final OWLLiteralFactory owlLiteralFactory;
-	private final SWRLAPIOWLDatatypeFactory swrlapiOWLDatatypeFactory;
-	private final SWRLAPILiteralFactory swrlapiLiteralFactory;
-	private final SWRLBuiltInArgumentFactory swrlBuiltInArgumentFactory;
-	private final SQWRLResultValueFactory sqwrlResultValueFactory;
+  private final IRIResolver iriResolver;
+  private final OWLLiteralFactory owlLiteralFactory;
+  private final SWRLAPIOWLDatatypeFactory swrlapiOWLDatatypeFactory;
+  private final SWRLAPILiteralFactory swrlapiLiteralFactory;
+  private final SWRLBuiltInArgumentFactory swrlBuiltInArgumentFactory;
+  private final SQWRLResultValueFactory sqwrlResultValueFactory;
 
-	public DefaultSWRLAPIOWLDataFactory(SWRLAPIOWLOntology swrlapiOWLOntology)
-	{
-		this.iriResolver = swrlapiOWLOntology.getIRIResolver();
-		this.swrlapiOWLDatatypeFactory = SWRLAPIFactory.createSWRLAPIOWLDatatypeFactory();
-		this.owlLiteralFactory = SWRLAPIFactory.createOWLLiteralFactory();
-		this.swrlapiLiteralFactory = SWRLAPIFactory.createSWRLAPILiteralFactory();
-		this.swrlBuiltInArgumentFactory = SWRLAPIFactory.createSWRLBuiltInArgumentFactory(swrlapiOWLOntology);
-		this.sqwrlResultValueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(swrlapiOWLOntology);
-	}
+  public DefaultSWRLAPIOWLDataFactory(SWRLAPIOWLOntology swrlapiOWLOntology)
+  {
+    this.iriResolver = swrlapiOWLOntology.getIRIResolver();
+    this.swrlapiOWLDatatypeFactory = SWRLAPIFactory.createSWRLAPIOWLDatatypeFactory();
+    this.owlLiteralFactory = SWRLAPIFactory.createOWLLiteralFactory();
+    this.swrlapiLiteralFactory = SWRLAPIFactory.createSWRLAPILiteralFactory();
+    this.swrlBuiltInArgumentFactory = SWRLAPIFactory.createSWRLBuiltInArgumentFactory(swrlapiOWLOntology);
+    this.sqwrlResultValueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(swrlapiOWLOntology);
+  }
 
-	@Override
-	public SWRLBuiltInArgumentFactory getSWRLBuiltInArgumentFactory()
-	{
-		return this.swrlBuiltInArgumentFactory;
-	}
+  @Override
+  public SWRLBuiltInArgumentFactory getSWRLBuiltInArgumentFactory()
+  {
+    return this.swrlBuiltInArgumentFactory;
+  }
 
-	@Override
-	public SWRLAPIBuiltInAtom getSWRLAPIBuiltInAtom(String ruleName, IRI builtInIRI, String builtInPrefixedName,
-			List<SWRLBuiltInArgument> arguments)
-	{
-		return new DefaultSWRLAPIBuiltInAtom(ruleName, builtInIRI, builtInPrefixedName, arguments);
-	}
+  @Override
+  public SWRLAPIBuiltInAtom getSWRLAPIBuiltInAtom(String ruleName, IRI builtInIRI, String builtInPrefixedName,
+      List<SWRLBuiltInArgument> arguments)
+  {
+    return new DefaultSWRLAPIBuiltInAtom(ruleName, builtInIRI, builtInPrefixedName, arguments);
+  }
 
-	@Override
-	public SWRLAPIRule getSWRLRule(String ruleName, String ruleText)
-	{
-		throw new SWRLAPIException("SWRL parser not implemented"); // TODO - yes it is!
-	}
+  @Override
+  public SWRLAPIRule getSWRLRule(String ruleName, String ruleText)
+  {
+    throw new SWRLAPIException("SWRL parser not implemented"); // TODO - yes it is!
+  }
 
-	@Override
-	public SQWRLResultValueFactory getSQWRLResultValueFactory()
-	{
-		return this.sqwrlResultValueFactory;
-	}
+  @Override
+  public SQWRLResultValueFactory getSQWRLResultValueFactory()
+  {
+    return this.sqwrlResultValueFactory;
+  }
 
-	@Override
-	public OWLDeclarationAxiom getOWLClassDeclarationAxiom(OWLClass cls)
-	{
-		return getOWLDeclarationAxiom(cls);
-	}
+  @Override
+  public OWLDeclarationAxiom getOWLClassDeclarationAxiom(OWLClass cls)
+  {
+    return getOWLDeclarationAxiom(cls);
+  }
 
-	@Override
-	public OWLDeclarationAxiom getOWLIndividualDeclarationAxiom(OWLNamedIndividual individual)
-	{
-		return getOWLDeclarationAxiom(individual);
-	}
+  @Override
+  public OWLDeclarationAxiom getOWLIndividualDeclarationAxiom(OWLNamedIndividual individual)
+  {
+    return getOWLDeclarationAxiom(individual);
+  }
 
-	@Override
-	public OWLDeclarationAxiom getOWLObjectPropertyDeclarationAxiom(OWLObjectProperty property)
-	{
-		return getOWLDeclarationAxiom(property);
-	}
+  @Override
+  public OWLDeclarationAxiom getOWLObjectPropertyDeclarationAxiom(OWLObjectProperty property)
+  {
+    return getOWLDeclarationAxiom(property);
+  }
 
-	@Override
-	public OWLDeclarationAxiom getOWLDataPropertyDeclarationAxiom(OWLDataProperty property)
-	{
-		return getOWLDeclarationAxiom(property);
-	}
+  @Override
+  public OWLDeclarationAxiom getOWLDataPropertyDeclarationAxiom(OWLDataProperty property)
+  {
+    return getOWLDeclarationAxiom(property);
+  }
 
-	@Override
-	public OWLDeclarationAxiom getOWLAnnotationPropertyDeclarationAxiom(OWLAnnotationProperty property)
-	{
-		return getOWLDeclarationAxiom(property);
-	}
+  @Override
+  public OWLDeclarationAxiom getOWLAnnotationPropertyDeclarationAxiom(OWLAnnotationProperty property)
+  {
+    return getOWLDeclarationAxiom(property);
+  }
 
-	@Override
-	public OWLDeclarationAxiom getOWLDatatypeDeclarationAxiom(OWLDatatype datatype)
-	{
-		return getOWLDeclarationAxiom(datatype);
-	}
+  @Override
+  public OWLDeclarationAxiom getOWLDatatypeDeclarationAxiom(OWLDatatype datatype)
+  {
+    return getOWLDeclarationAxiom(datatype);
+  }
 
-	@Override
-	public SWRLAPIOWLDatatypeFactory getSWRLAPIOWLDatatypeFactory()
-	{
-		return this.swrlapiOWLDatatypeFactory;
-	}
+  @Override
+  public SWRLAPIOWLDatatypeFactory getSWRLAPIOWLDatatypeFactory()
+  {
+    return this.swrlapiOWLDatatypeFactory;
+  }
 
-	@Override
-	public OWLLiteralFactory getOWLLiteralFactory()
-	{
-		return this.owlLiteralFactory;
-	}
+  @Override
+  public OWLLiteralFactory getOWLLiteralFactory()
+  {
+    return this.owlLiteralFactory;
+  }
 
-	@Override
-	public SWRLAPILiteralFactory getSWRLAPILiteralFactory()
-	{
-		return this.swrlapiLiteralFactory;
-	}
+  @Override
+  public SWRLAPILiteralFactory getSWRLAPILiteralFactory()
+  {
+    return this.swrlapiLiteralFactory;
+  }
 
-	@Override
-	public IRIResolver getIRIResolver()
-	{
-		return this.iriResolver;
-	}
+  @Override
+  public IRIResolver getIRIResolver()
+  {
+    return this.iriResolver;
+  }
 
-	@Override
-	public OWLClass getInjectedOWLClass()
-	{
-		// TODO Implement getInjectedOWLClass
-		IRI iri = IRI
-		// .create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + UUID.randomUUID().toString());
-				.create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + "fred");
+  @Override
+  public OWLClass getInjectedOWLClass()
+  {
+    // TODO Implement getInjectedOWLClass
+    IRI iri = IRI
+        // .create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + UUID.randomUUID().toString());
+        .create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + "fred");
 
-		return getOWLClass(iri);
-	}
+    return getOWLClass(iri);
+  }
 
-	@Override
-	public OWLNamedIndividual getInjectedOWLNamedIndividual()
-	{
-		// TODO Implement getInjectedOWLNamedIndividual
-		IRI iri = IRI
-		// .create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + UUID.randomUUID().toString());
-				.create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + "fred");
+  @Override
+  public OWLNamedIndividual getInjectedOWLNamedIndividual()
+  {
+    // TODO Implement getInjectedOWLNamedIndividual
+    IRI iri = IRI
+        // .create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + UUID.randomUUID().toString());
+        .create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + "fred");
 
-		return getOWLNamedIndividual(iri);
-	}
+    return getOWLNamedIndividual(iri);
+  }
 }

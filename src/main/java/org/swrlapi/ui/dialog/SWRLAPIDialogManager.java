@@ -10,21 +10,21 @@ import javax.swing.JFileChooser;
  */
 public interface SWRLAPIDialogManager
 {
-	JDialog getSWRLRuleEditorDialog(Component parent);
+  JDialog getSWRLRuleEditorDialog(Component parent);
 
-	JDialog getSWRLRuleEditorDialog(Component parent, String ruleName, String ruleText, String comment);
+  JDialog getSWRLRuleEditorDialog(Component parent, String ruleName, String ruleText, String comment);
 
-	int showConfirmCancelDialog(Component parent, String message, String title);
+  int showConfirmCancelDialog(Component parent, String message, String title);
 
-	boolean showConfirmDialog(Component parent, String message, String title);
+  boolean showConfirmDialog(Component parent, String message, String title);
 
-	void showErrorMessageDialog(Component parent, String message, String title);
+  void showErrorMessageDialog(Component parent, String message, String title);
 
-	String showInputDialog(Component parent, String message, String initialValue);
+  String showInputDialog(Component parent, String message, String initialValue);
 
-	void showMessageDialog(Component parent, String message, String title);
+  void showMessageDialog(Component parent, String message, String title);
 
-	JFileChooser createFileChooser(String title, String fileDescription, String fileExtension);
+  JFileChooser createFileChooser(String title, String fileDescription, String fileExtension);
 
-	JFileChooser createSaveFileChooser(String title, String fileDescription, String fileExtension, final boolean overwrite);
+  JFileChooser createSaveFileChooser(String title, String fileDescription, String fileExtension, final boolean overwrite);
 }

@@ -9,40 +9,40 @@ import org.swrlapi.core.resolvers.*;
  */
 public abstract class TargetRuleEngineConverterBase implements TargetRuleEngineConverter
 {
-	private final SWRLRuleEngineBridge bridge;
+  private final SWRLRuleEngineBridge bridge;
 
-	public TargetRuleEngineConverterBase(SWRLRuleEngineBridge bridge)
-	{
-		this.bridge = bridge;
-	}
+  public TargetRuleEngineConverterBase(SWRLRuleEngineBridge bridge)
+  {
+    this.bridge = bridge;
+  }
 
-	protected IRIResolver getIRIResolver()
-	{
-		return getBridge().getIRIResolver();
-	}
+  protected IRIResolver getIRIResolver()
+  {
+    return getBridge().getIRIResolver();
+  }
 
-	protected OWLClassExpressionResolver getOWLClassExpressionResolver()
-	{
-		return getBridge().getOWLClassExpressionResolver();
-	}
+  protected OWLClassExpressionResolver getOWLClassExpressionResolver()
+  {
+    return getBridge().getOWLClassExpressionResolver();
+  }
 
-	protected OWLDataRangeResolver getOWLDataRangeResolver()
-	{
-		return getBridge().getOWLDataRangeResolver();
-	}
+  protected OWLDataRangeResolver getOWLDataRangeResolver()
+  {
+    return getBridge().getOWLDataRangeResolver();
+  }
 
-	protected OWLDataPropertyExpressionResolver getOWLDataPropertyExpressionResolver()
-	{
-		return getBridge().getOWLDataPropertyExpressionResolver();
-	}
+  protected OWLDataPropertyExpressionResolver getOWLDataPropertyExpressionResolver()
+  {
+    return getBridge().getOWLDataPropertyExpressionResolver();
+  }
 
-	protected OWLObjectPropertyExpressionResolver getOWLObjectPropertyExpressionResolver()
-	{
-		return getBridge().getOWLObjectPropertyExpressionResolver();
-	}
+  protected OWLObjectPropertyExpressionResolver getOWLObjectPropertyExpressionResolver()
+  {
+    return getBridge().getOWLObjectPropertyExpressionResolver();
+  }
 
-	protected SWRLRuleEngineBridge getBridge()
-	{
-		return this.bridge;
-	}
+  protected SWRLRuleEngineBridge getBridge()
+  {
+    return this.bridge;
+  }
 }

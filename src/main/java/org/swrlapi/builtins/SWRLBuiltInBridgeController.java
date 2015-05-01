@@ -10,26 +10,26 @@ import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
  */
 public interface SWRLBuiltInBridgeController
 {
-	/**
-	 * Reset the controller
-	 * 
-	 * @throws SWRLBuiltInBridgeException If an error occurs during resetting
-	 */
-	void reset() throws SWRLBuiltInBridgeException;
+  /**
+   * Reset the controller
+   * 
+   * @throws SWRLBuiltInBridgeException If an error occurs during resetting
+   */
+  void reset() throws SWRLBuiltInBridgeException;
 
-	/**
-	 * @return The number of OWL axioms injected into the controller
-	 */
-	int getNumberOfInjectedOWLAxioms();
+  /**
+   * @return The number of OWL axioms injected into the controller
+   */
+  int getNumberOfInjectedOWLAxioms();
 
-	/**
-	 * @param axiom An OWL axiom
-	 * @return True if the axiom has been injected into the controller
-	 */
-	boolean isInjectedOWLAxiom(OWLAxiom axiom);
+  /**
+   * @param axiom An OWL axiom
+   * @return True if the axiom has been injected into the controller
+   */
+  boolean isInjectedOWLAxiom(OWLAxiom axiom);
 
-	/**
-	 * @return A list of injected OWL axioms
-	 */
-	Set<OWLAxiom> getInjectedOWLAxioms();
+  /**
+   * @return A list of injected OWL axioms
+   */
+  Set<OWLAxiom> getInjectedOWLAxioms();
 }

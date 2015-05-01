@@ -14,39 +14,39 @@ import java.util.List;
  */
 public class OWL2RLTablesControlView extends JPanel implements SWRLAPIView
 {
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	private final OWL2RLModel owl2RLModel;
-	private final List<OWL2RLRuleTableActivationButton> ruleTableActivationButtons;
+  private final OWL2RLModel owl2RLModel;
+  private final List<OWL2RLRuleTableActivationButton> ruleTableActivationButtons;
 
-	public OWL2RLTablesControlView(OWL2RLModel owl2RLModel)
-	{
-		this.owl2RLModel = owl2RLModel;
-		this.ruleTableActivationButtons = new ArrayList<>();
+  public OWL2RLTablesControlView(OWL2RLModel owl2RLModel)
+  {
+    this.owl2RLModel = owl2RLModel;
+    this.ruleTableActivationButtons = new ArrayList<>();
 
-		initialize();
-	}
+    initialize();
+  }
 
-	@Override
-	public void update()
-	{
-		for (OWL2RLRuleTableActivationButton button : this.ruleTableActivationButtons)
-			button.update();
-	}
+  @Override
+  public void update()
+  {
+    for (OWL2RLRuleTableActivationButton button : this.ruleTableActivationButtons)
+      button.update();
+  }
 
-	private void initialize()
-	{
-		setLayout(new GridLayout(1, getOWL2RLModel().getOWL2RLEngine().getNumberOfTables()));
+  private void initialize()
+  {
+    setLayout(new GridLayout(1, getOWL2RLModel().getOWL2RLEngine().getNumberOfTables()));
 
-		for (OWL2RLNames.OWL2RLRuleTable ruleTable : getOWL2RLModel().getOWL2RLEngine().getRuleTables()) {
-			OWL2RLRuleTableActivationButton button = new OWL2RLRuleTableActivationButton(getOWL2RLModel(), ruleTable);
-			this.ruleTableActivationButtons.add(button);
-			add(button);
-		}
-	}
+    for (OWL2RLNames.OWL2RLRuleTable ruleTable : getOWL2RLModel().getOWL2RLEngine().getRuleTables()) {
+      OWL2RLRuleTableActivationButton button = new OWL2RLRuleTableActivationButton(getOWL2RLModel(), ruleTable);
+      this.ruleTableActivationButtons.add(button);
+      add(button);
+    }
+  }
 
-	private OWL2RLModel getOWL2RLModel()
-	{
-		return this.owl2RLModel;
-	}
+  private OWL2RLModel getOWL2RLModel()
+  {
+    return this.owl2RLModel;
+  }
 }

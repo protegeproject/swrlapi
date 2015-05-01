@@ -9,8 +9,8 @@ import org.semanticweb.owlapi.model.OWLDatatype;
  */
 public interface SWRLDatatypeBuiltInArgument extends SWRLNamedBuiltInArgument
 {
-	/**
-	 * @return An OWL datatype
-	 */
-	OWLDatatype getOWLDatatype();
+  /**
+   * @return An OWL datatype
+   */
+  OWLDatatype getOWLDatatype();
 }

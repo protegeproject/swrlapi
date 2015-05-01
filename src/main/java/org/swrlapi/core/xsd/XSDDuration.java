@@ -4,59 +4,59 @@ import org.semanticweb.owlapi.vocab.XSDVocabulary;
 
 public class XSDDuration extends XSDType<XSDDuration>
 {
-	private final org.apache.axis.types.Duration duration;
+  private final org.apache.axis.types.Duration duration;
 
-	public XSDDuration(String content)
-	{
-		super(content, XSDVocabulary.DURATION.getIRI());
+  public XSDDuration(String content)
+  {
+    super(content, XSDVocabulary.DURATION.getIRI());
 
-		this.duration = XSDTimeUtil.xsdDurationString2AxisDuration(getContent());
-	}
+    this.duration = XSDTimeUtil.xsdDurationString2AxisDuration(getContent());
+  }
 
-	@Override
-	protected void validate()
-	{
-		if (getContent() == null)
-			throw new IllegalArgumentException("null content for XSD:duration literal");
+  @Override
+  protected void validate()
+  {
+    if (getContent() == null)
+      throw new IllegalArgumentException("null content for XSD:duration literal");
 
-		if (!XSDTimeUtil.isValidXSDDuration(getContent()))
-			throw new IllegalArgumentException("invalid xsd:Duration: " + getContent());
-	}
+    if (!XSDTimeUtil.isValidXSDDuration(getContent()))
+      throw new IllegalArgumentException("invalid xsd:Duration: " + getContent());
+  }
 
-	@Override
-	public String getContent()
-	{
-		return this.content;
-	}
+  @Override
+  public String getContent()
+  {
+    return this.content;
+  }
 
-	@Override
-	public boolean equals(Object o)
-	{
-		if (this == o)
-			return true;
+  @Override
+  public boolean equals(Object o)
+  {
+    if (this == o)
+      return true;
 
-		if (!(o instanceof XSDDuration))
-			return false;
+    if (!(o instanceof XSDDuration))
+      return false;
 
-		XSDDuration otherDuration = (XSDDuration)o;
+    XSDDuration otherDuration = (XSDDuration)o;
 
-		return this.duration != null && otherDuration.duration != null && this.duration.equals(otherDuration.duration);
-	}
+    return this.duration != null && otherDuration.duration != null && this.duration.equals(otherDuration.duration);
+  }
 
-	@Override
-	public int hashCode()
-	{
-		int code = 34;
-		code += this.duration.hashCode();
-		return code;
-	}
+  @Override
+  public int hashCode()
+  {
+    int code = 34;
+    code += this.duration.hashCode();
+    return code;
+  }
 
-	@Override
-	public int compareTo(XSDDuration o)
-	{
-		if (this == o)
-			return 0;
+  @Override
+  public int compareTo(XSDDuration o)
+  {
+    if (this == o)
+      return 0;
 
-		return XSDTimeUtil.compareDurations(this.duration, o.duration);
-	}
+    return XSDTimeUtil.compareDurations(this.duration, o.duration);
+  }
 }

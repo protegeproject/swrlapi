@@ -5,11 +5,11 @@ import org.swrlapi.sqwrl.values.SQWRLIndividualResultValue;
 
 class SQWRLIndividualResultValueImpl extends SQWRLEntityResultValueImpl implements SQWRLIndividualResultValue
 {
-	public SQWRLIndividualResultValueImpl(IRI individualIRI, String prefixedName)
-	{
-		super(individualIRI, prefixedName);
-	}
+  public SQWRLIndividualResultValueImpl(IRI individualIRI, String prefixedName)
+  {
+    super(individualIRI, prefixedName);
+  }
 
-	@Override
-	public boolean isIndividual() { return true; }
+  @Override
+  public boolean isIndividual() { return true; }
 }

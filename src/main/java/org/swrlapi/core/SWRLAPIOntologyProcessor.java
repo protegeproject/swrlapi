@@ -32,55 +32,55 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
  */
 public interface SWRLAPIOntologyProcessor
 {
-	void processOntology() throws SQWRLException;
+  void processOntology() throws SQWRLException;
 
-	void reset();
+  void reset();
 
-	// SWRL rule-related methods
+  // SWRL rule-related methods
 
-	int getNumberOfSWRLRules();
+  int getNumberOfSWRLRules();
 
-	void addSWRLRule(SWRLAPIRule rule, SWRLRule owlapiRule);
+  void addSWRLRule(SWRLAPIRule rule, SWRLRule owlapiRule);
 
-	SWRLAPIRule getSWRLRule(String ruleName) throws SWRLRuleException;
+  SWRLAPIRule getSWRLRule(String ruleName) throws SWRLRuleException;
 
-	String getComment(SWRLRule rule);
+  String getComment(SWRLRule rule);
 
-	String getRuleName(SWRLRule rule);
+  String getRuleName(SWRLRule rule);
 
-	boolean getIsActive(SWRLRule rule);
+  boolean getIsActive(SWRLRule rule);
 
-	void deleteSWRLRule(String ruleName);
+  void deleteSWRLRule(String ruleName);
 
-	// SQWRL query-related methods
+  // SQWRL query-related methods
 
-	SQWRLQuery createSWRLQueryFromSWRLRule(SWRLAPIRule rule) throws SQWRLException;
+  SQWRLQuery createSWRLQueryFromSWRLRule(SWRLAPIRule rule) throws SQWRLException;
 
-	int getNumberOfSQWRLQueries();
+  int getNumberOfSQWRLQueries();
 
-	Set<String> getSQWRLQueryNames();
+  Set<String> getSQWRLQueryNames();
 
-	SQWRLQuery getSQWRLQuery(String queryName) throws SQWRLException;
+  SQWRLQuery getSQWRLQuery(String queryName) throws SQWRLException;
 
-	Set<SQWRLQuery> getSQWRLQueries();
+  Set<SQWRLQuery> getSQWRLQueries();
 
-	SQWRLResult getSQWRLResult(String queryName) throws SQWRLException;
+  SQWRLResult getSQWRLResult(String queryName) throws SQWRLException;
 
-	SQWRLResultGenerator getSQWRLResultGenerator(String queryName) throws SQWRLException;
+  SQWRLResultGenerator getSQWRLResultGenerator(String queryName) throws SQWRLException;
 
-	// OWL axiom-releated methods
+  // OWL axiom-releated methods
 
-	Set<OWLAxiom> getOWLAxioms();
+  Set<OWLAxiom> getOWLAxioms();
 
-	int getNumberOfOWLAxioms();
+  int getNumberOfOWLAxioms();
 
-	boolean hasAssertedOWLAxiom(OWLAxiom axiom);
+  boolean hasAssertedOWLAxiom(OWLAxiom axiom);
 
-	int getNumberOfOWLClassDeclarationAxioms();
+  int getNumberOfOWLClassDeclarationAxioms();
 
-	int getNumberOfOWLIndividualDeclarationAxioms();
+  int getNumberOfOWLIndividualDeclarationAxioms();
 
-	int getNumberOfOWLObjectPropertyDeclarationAxioms();
+  int getNumberOfOWLObjectPropertyDeclarationAxioms();
 
-	int getNumberOfOWLDataPropertyDeclarationAxioms();
+  int getNumberOfOWLDataPropertyDeclarationAxioms();
 }

@@ -5,27 +5,27 @@ import java.awt.event.ActionListener;
 
 public class CloseAction implements ActionListener
 {
-	public CloseAction()
-	{
-	}
+  public CloseAction()
+  {
+  }
 
-	@Override
-	public void actionPerformed(ActionEvent e)
-	{
-	}
+  @Override
+  public void actionPerformed(ActionEvent e)
+  {
+  }
 
-	public void confirmClose()
-	{
-		// if (mappingExpressionsModel.hasMappingExpressions()
-		// && applicationModel.areMappingsModified()
-		// && getApplicationDialogManager().showConfirmDialog(applicationView, "Close Mappings",
-		// "Do you really want to close the mappings?")) {
-		// close();
-		// } else
-		close();
-	}
+  public void confirmClose()
+  {
+    // if (mappingExpressionsModel.hasMappingExpressions()
+    // && applicationModel.areMappingsModified()
+    // && getApplicationDialogManager().showConfirmDialog(applicationView, "Close Mappings",
+    // "Do you really want to close the mappings?")) {
+    // close();
+    // } else
+    close();
+  }
 
-	private static void close()
-	{
-	}
+  private static void close()
+  {
+  }
 }

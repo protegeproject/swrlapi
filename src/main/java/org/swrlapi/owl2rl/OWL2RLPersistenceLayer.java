@@ -10,28 +10,28 @@ import java.util.Set;
  */
 public interface OWL2RLPersistenceLayer
 {
-	/**
-	 * @return The enabled OWL 2 RL rules
-	 */
-	Set<OWL2RLNames.OWL2RLRule> getEnabledRules();
+  /**
+   * @return The enabled OWL 2 RL rules
+   */
+  Set<OWL2RLNames.OWL2RLRule> getEnabledRules();
 
-	/**
-	 * @param rules The OWL 2 RL rule to enable
-	 */
-	void setEnabledRules(Set<OWL2RLNames.OWL2RLRule> rules);
+  /**
+   * @param rules The OWL 2 RL rule to enable
+   */
+  void setEnabledRules(Set<OWL2RLNames.OWL2RLRule> rules);
 
-	/**
-	 * @param rule The OWL 2 RL rule to disable
-	 */
-	void setDisabledRule(OWL2RLNames.OWL2RLRule rule);
+  /**
+   * @param rule The OWL 2 RL rule to disable
+   */
+  void setDisabledRule(OWL2RLNames.OWL2RLRule rule);
 
-	/**
-	 * @param rules The OWL 2 RL rules to disable
-	 */
-	void setDisabledRules(Set<OWL2RLNames.OWL2RLRule> rules);
+  /**
+   * @param rules The OWL 2 RL rules to disable
+   */
+  void setDisabledRules(Set<OWL2RLNames.OWL2RLRule> rules);
 
-	/**
-	 * Disable all rules
-	 */
-	void disableAll();
+  /**
+   * Disable all rules
+   */
+  void disableAll();
 }

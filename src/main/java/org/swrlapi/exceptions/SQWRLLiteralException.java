@@ -4,10 +4,10 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
 public class SQWRLLiteralException extends SQWRLException
 {
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	public SQWRLLiteralException(String message)
-	{
-		super(message);
-	}
+  public SQWRLLiteralException(String message)
+  {
+    super(message);
+  }
 }

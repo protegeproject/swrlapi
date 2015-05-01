@@ -41,98 +41,98 @@ import org.swrlapi.ui.model.SWRLAutoCompleter;
  */
 public interface SWRLAPIOWLOntology
 {
-	// Methods for handling SWRL Rules
+  // Methods for handling SWRL Rules
 
-	Set<SWRLAPIRule> getSWRLRules();
+  Set<SWRLAPIRule> getSWRLRules();
 
-	SWRLAPIRule getSWRLRule(String ruleName) throws SWRLRuleException;
+  SWRLAPIRule getSWRLRule(String ruleName) throws SWRLRuleException;
 
-	SWRLAPIRule createSWRLRule(String ruleName, String rule) throws SWRLParseException;
+  SWRLAPIRule createSWRLRule(String ruleName, String rule) throws SWRLParseException;
 
-	SWRLAPIRule createSWRLRule(String ruleName, String rule, String comment, boolean isActive) throws SWRLParseException;
+  SWRLAPIRule createSWRLRule(String ruleName, String rule, String comment, boolean isActive) throws SWRLParseException;
 
-	void deleteSWRLRule(String ruleName);
+  void deleteSWRLRule(String ruleName);
 
-	boolean isSWRLBuiltIn(IRI iri); // The SWRLAPI provides built-ins beyond the core set defined in the SWRL submission.
+  boolean isSWRLBuiltIn(IRI iri); // The SWRLAPI provides built-ins beyond the core set defined in the SWRL submission.
 
-	void addSWRLBuiltIn(IRI iri);
+  void addSWRLBuiltIn(IRI iri);
 
-	Set<IRI> getSWRLBuiltInIRIs();
+  Set<IRI> getSWRLBuiltInIRIs();
 
-	SWRLParser createSWRLParser();
+  SWRLParser createSWRLParser();
 
-	SWRLAutoCompleter createSWRLAutoCompleter();
+  SWRLAutoCompleter createSWRLAutoCompleter();
 
-	SWRLRuleRenderer createSWRLRuleRenderer();
+  SWRLRuleRenderer createSWRLRuleRenderer();
 
-	// Methods for handling SQWRL Queries
+  // Methods for handling SQWRL Queries
 
-	SQWRLQuery createSQWRLQuery(String queryName, String query) throws SWRLParseException, SQWRLException;
+  SQWRLQuery createSQWRLQuery(String queryName, String query) throws SWRLParseException, SQWRLException;
 
-	SQWRLQuery createSQWRLQuery(String queryName, String query, String comment, boolean isActive)
-			throws SWRLParseException, SQWRLException;
+  SQWRLQuery createSQWRLQuery(String queryName, String query, String comment, boolean isActive)
+      throws SWRLParseException, SQWRLException;
 
-	SQWRLQuery getSQWRLQuery(String queryName) throws SQWRLException;
+  SQWRLQuery getSQWRLQuery(String queryName) throws SQWRLException;
 
-	SQWRLResult getSQWRLResult(String queryName) throws SQWRLException;
+  SQWRLResult getSQWRLResult(String queryName) throws SQWRLException;
 
-	int getNumberOfSQWRLQueries();
+  int getNumberOfSQWRLQueries();
 
-	Set<String> getSQWRLQueryNames();
+  Set<String> getSQWRLQueryNames();
 
-	Set<SQWRLQuery> getSQWRLQueries();
+  Set<SQWRLQuery> getSQWRLQueries();
 
-	SQWRLResultGenerator getSQWRLResultGenerator(String queryName) throws SQWRLException;
+  SQWRLResultGenerator getSQWRLResultGenerator(String queryName) throws SQWRLException;
 
-	SQWRLResultGenerator createSQWRLResultGenerator();
+  SQWRLResultGenerator createSQWRLResultGenerator();
 
-	SQWRLQueryRenderer createSQWRLQueryRenderer();
+  SQWRLQueryRenderer createSQWRLQueryRenderer();
 
-	// Process methods
+  // Process methods
 
-	void reset();
+  void reset();
 
-	void processOntology() throws SQWRLException;
+  void processOntology() throws SQWRLException;
 
-	// Optimization methods
+  // Optimization methods
 
-	void startBulkConversion(); // Can be used, for example, to switch off notification during bulk conversion.
+  void startBulkConversion(); // Can be used, for example, to switch off notification during bulk conversion.
 
-	void completeBulkConversion();
+  void completeBulkConversion();
 
-	boolean hasOntologyChanged();
+  boolean hasOntologyChanged();
 
-	void resetOntologyChanged();
+  void resetOntologyChanged();
 
-	// Axiom counting methods
+  // Axiom counting methods
 
-	boolean hasAssertedOWLAxiom(OWLAxiom axiom);
+  boolean hasAssertedOWLAxiom(OWLAxiom axiom);
 
-	Set<OWLAxiom> getOWLAxioms();
+  Set<OWLAxiom> getOWLAxioms();
 
-	int getNumberOfSWRLRules();
+  int getNumberOfSWRLRules();
 
-	int getNumberOfOWLAxioms();
+  int getNumberOfOWLAxioms();
 
-	int getNumberOfOWLClassDeclarationAxioms();
+  int getNumberOfOWLClassDeclarationAxioms();
 
-	int getNumberOfOWLIndividualDeclarationAxioms();
+  int getNumberOfOWLIndividualDeclarationAxioms();
 
-	int getNumberOfOWLObjectPropertyDeclarationAxioms();
+  int getNumberOfOWLObjectPropertyDeclarationAxioms();
 
-	int getNumberOfOWLDataPropertyDeclarationAxioms();
+  int getNumberOfOWLDataPropertyDeclarationAxioms();
 
-	// Utility methods
+  // Utility methods
 
-	SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory();
+  SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory();
 
-	IRIResolver getIRIResolver();
+  IRIResolver getIRIResolver();
 
-	OWLOntologyManager getOWLOntologyManager();
+  OWLOntologyManager getOWLOntologyManager();
 
-	DefaultPrefixManager getPrefixManager();
+  DefaultPrefixManager getPrefixManager();
 
-	OWLOntology getOWLOntology();
+  OWLOntology getOWLOntology();
 
-	OWLDataFactory getOWLDataFactory();
+  OWLDataFactory getOWLDataFactory();
 }

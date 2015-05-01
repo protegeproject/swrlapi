@@ -17,29 +17,29 @@ import org.swrlapi.core.xsd.XSDTime;
  */
 public interface SWRLAPILiteralFactory
 {
-	SWRLAPILiteral getSWRLAPILiteral(byte b);
+  SWRLAPILiteral getSWRLAPILiteral(byte b);
 
-	SWRLAPILiteral getSWRLAPILiteral(short s);
+  SWRLAPILiteral getSWRLAPILiteral(short s);
 
-	SWRLAPILiteral getSWRLAPILiteral(int value);
+  SWRLAPILiteral getSWRLAPILiteral(int value);
 
-	SWRLAPILiteral getSWRLAPILiteral(float value);
+  SWRLAPILiteral getSWRLAPILiteral(float value);
 
-	SWRLAPILiteral getSWRLAPILiteral(double value);
+  SWRLAPILiteral getSWRLAPILiteral(double value);
 
-	SWRLAPILiteral getSWRLAPILiteral(String value);
+  SWRLAPILiteral getSWRLAPILiteral(String value);
 
-	SWRLAPILiteral getSWRLAPILiteral(boolean value);
+  SWRLAPILiteral getSWRLAPILiteral(boolean value);
 
-	SWRLAPILiteral getSWRLAPILiteral(URI uri);
+  SWRLAPILiteral getSWRLAPILiteral(URI uri);
 
-	SWRLAPILiteral getSWRLAPILiteral(XSDDate date);
+  SWRLAPILiteral getSWRLAPILiteral(XSDDate date);
 
-	SWRLAPILiteral getSWRLAPILiteral(XSDTime time);
+  SWRLAPILiteral getSWRLAPILiteral(XSDTime time);
 
-	SWRLAPILiteral getSWRLAPILiteral(XSDDateTime datetime);
+  SWRLAPILiteral getSWRLAPILiteral(XSDDateTime datetime);
 
-	SWRLAPILiteral getSWRLAPILiteral(XSDDuration duration);
+  SWRLAPILiteral getSWRLAPILiteral(XSDDuration duration);
 
-	SWRLAPILiteral getSWRLAPILiteral(OWLLiteral literal);
+  SWRLAPILiteral getSWRLAPILiteral(OWLLiteral literal);
 }

@@ -7,28 +7,28 @@ import org.semanticweb.owlapi.model.IRI;
  */
 public abstract class XSDType<T> implements Comparable<T>
 {
-	protected final String content;
-	private final IRI iri;
+  protected final String content;
+  private final IRI iri;
 
-	public XSDType(String content, IRI iri)
-	{
-		this.content = content;
-		this.iri = iri;
-		validate();
-	}
+  public XSDType(String content, IRI iri)
+  {
+    this.content = content;
+    this.iri = iri;
+    validate();
+  }
 
-	public abstract String getContent();
+  public abstract String getContent();
 
-	@Override
-	public String toString()
-	{
-		return this.content;
-	}
+  @Override
+  public String toString()
+  {
+    return this.content;
+  }
 
-	public IRI getIRI()
-	{
-		return this.iri;
-	}
+  public IRI getIRI()
+  {
+    return this.iri;
+  }
 
-	protected abstract void validate();
+  protected abstract void validate();
 }

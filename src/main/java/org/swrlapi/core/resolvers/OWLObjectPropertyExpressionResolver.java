@@ -18,42 +18,42 @@ import java.util.Map;
  */
 public class OWLObjectPropertyExpressionResolver
 {
-	private final Map<String, OWLObjectPropertyExpression> id2OWLPropertyExpression;
-	private final Map<OWLObjectPropertyExpression, String> owlPropertyExpression2ID;
+  private final Map<String, OWLObjectPropertyExpression> id2OWLPropertyExpression;
+  private final Map<OWLObjectPropertyExpression, String> owlPropertyExpression2ID;
 
-	public OWLObjectPropertyExpressionResolver()
-	{
-		this.id2OWLPropertyExpression = new HashMap<>();
-		this.owlPropertyExpression2ID = new HashMap<>();
-	}
+  public OWLObjectPropertyExpressionResolver()
+  {
+    this.id2OWLPropertyExpression = new HashMap<>();
+    this.owlPropertyExpression2ID = new HashMap<>();
+  }
 
-	public void reset()
-	{
-		this.id2OWLPropertyExpression.clear();
-		this.owlPropertyExpression2ID.clear();
-	}
+  public void reset()
+  {
+    this.id2OWLPropertyExpression.clear();
+    this.owlPropertyExpression2ID.clear();
+  }
 
-	public void record(String propertyExpressionID, OWLObjectPropertyExpression propertyExpression)
-	{
-		this.id2OWLPropertyExpression.put(propertyExpressionID, propertyExpression);
-		this.owlPropertyExpression2ID.put(propertyExpression, propertyExpressionID);
-	}
+  public void record(String propertyExpressionID, OWLObjectPropertyExpression propertyExpression)
+  {
+    this.id2OWLPropertyExpression.put(propertyExpressionID, propertyExpression);
+    this.owlPropertyExpression2ID.put(propertyExpression, propertyExpressionID);
+  }
 
-	public boolean records(OWLObjectPropertyExpression propertyExpression)
-	{
-		return this.owlPropertyExpression2ID.containsKey(propertyExpression);
-	}
+  public boolean records(OWLObjectPropertyExpression propertyExpression)
+  {
+    return this.owlPropertyExpression2ID.containsKey(propertyExpression);
+  }
 
-	public String resolve(OWLObjectPropertyExpression propertyExpression)
-	{
-		return this.owlPropertyExpression2ID.get(propertyExpression);
-	}
+  public String resolve(OWLObjectPropertyExpression propertyExpression)
+  {
+    return this.owlPropertyExpression2ID.get(propertyExpression);
+  }
 
-	public OWLObjectPropertyExpression resolve(String propertyExpressionID)
-	{
-		if (this.id2OWLPropertyExpression.containsKey(propertyExpressionID))
-			return this.id2OWLPropertyExpression.get(propertyExpressionID);
-		else
-			throw new SWRLAPIInternalException("no OWL object property expression found with ID " + propertyExpressionID);
-	}
+  public OWLObjectPropertyExpression resolve(String propertyExpressionID)
+  {
+    if (this.id2OWLPropertyExpression.containsKey(propertyExpressionID))
+      return this.id2OWLPropertyExpression.get(propertyExpressionID);
+    else
+      throw new SWRLAPIInternalException("no OWL object property expression found with ID " + propertyExpressionID);
+  }
 }

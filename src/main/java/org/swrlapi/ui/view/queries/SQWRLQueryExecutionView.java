@@ -15,23 +15,23 @@ import org.swrlapi.ui.view.owl2rl.OWL2RLRuleTablesView;
  */
 public class SQWRLQueryExecutionView extends JTabbedPane implements SWRLAPIView
 {
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	public SQWRLQueryExecutionView(SQWRLQueryEngineModel sqwrlQueryEngineModel, Icon queryEngineIcon,
-			SQWRLQuerySelector querySelector) throws SWRLAPIException
-	{
-		SQWRLQueryEngine queryEngine = sqwrlQueryEngineModel.getSQWRLQueryEngine();
-		Icon owl2RLIcon = SWRLAPIFactory.getOWL2RLReasonerIcon();
+  public SQWRLQueryExecutionView(SQWRLQueryEngineModel sqwrlQueryEngineModel, Icon queryEngineIcon,
+      SQWRLQuerySelector querySelector) throws SWRLAPIException
+  {
+    SQWRLQueryEngine queryEngine = sqwrlQueryEngineModel.getSQWRLQueryEngine();
+    Icon owl2RLIcon = SWRLAPIFactory.getOWL2RLReasonerIcon();
 
-		addTab("SWRLAPI Queries", queryEngineIcon, new SQWRLQueryControlView(queryEngine, querySelector, queryEngineIcon),
-				"Control Panel");
+    addTab("SWRLAPI Queries", queryEngineIcon, new SQWRLQueryControlView(queryEngine, querySelector, queryEngineIcon),
+        "Control Panel");
 
-		addTab("OWL 2 RL", owl2RLIcon, new OWL2RLRuleTablesView(queryEngine.getOWL2RLEngine()), "OWL 2 RL Tab");
-	}
+    addTab("OWL 2 RL", owl2RLIcon, new OWL2RLRuleTablesView(queryEngine.getOWL2RLEngine()), "OWL 2 RL Tab");
+  }
 
-	@Override
-	public void update()
-	{
-		validate();
-	}
+  @Override
+  public void update()
+  {
+    validate();
+  }
 }

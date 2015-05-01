@@ -11,34 +11,34 @@ import org.swrlapi.parser.SWRLParser;
  */
 public interface SWRLRuleEngineModel extends SWRLAPIModel
 {
-	/**
-	 * @return A SWRL rule engine
-	 */
-	SWRLRuleEngine getSWRLRuleEngine();
+  /**
+   * @return A SWRL rule engine
+   */
+  SWRLRuleEngine getSWRLRuleEngine();
 
-	/**
-	 * @return A SWRL parser
-	 */
-	SWRLParser getSWRLParser();
+  /**
+   * @return A SWRL parser
+   */
+  SWRLParser getSWRLParser();
 
-	/**
-	 * @return A SWRL auto-completer
-	 */
-	SWRLAutoCompleter getSWRLAutoCompleter();
+  /**
+   * @return A SWRL auto-completer
+   */
+  SWRLAutoCompleter getSWRLAutoCompleter();
 
-	/**
-	 * @return A SWRL rules table model
-	 */
-	SWRLRulesTableModel getSWRLRulesTableModel();
+  /**
+   * @return A SWRL rules table model
+   */
+  SWRLRulesTableModel getSWRLRulesTableModel();
 
-	/**
-	 * @return True if the rules in the underlying ontology have been modified since the last call to
-	 *         {@link SWRLRuleEngineModel#clearSWRLRulesModified()}.
-	 */
-	boolean areSWRLRulesModified();
+  /**
+   * @return True if the rules in the underlying ontology have been modified since the last call to
+   *         {@link SWRLRuleEngineModel#clearSWRLRulesModified()}.
+   */
+  boolean areSWRLRulesModified();
 
-	/**
-	 * Clear the modified status of SWRL rules. Used in conjunction with {@link #areSWRLRulesModified()}.
-	 */
-	void clearSWRLRulesModified();
+  /**
+   * Clear the modified status of SWRL rules. Used in conjunction with {@link #areSWRLRulesModified()}.
+   */
+  void clearSWRLRulesModified();
 }

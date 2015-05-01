@@ -5,11 +5,11 @@ import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
 
 class SQWRLClassResultValueImpl extends SQWRLEntityResultValueImpl implements SQWRLClassResultValue
 {
-	public SQWRLClassResultValueImpl(IRI classIRI, String prefixedName)
-	{
-		super(classIRI, prefixedName);
-	}
+  public SQWRLClassResultValueImpl(IRI classIRI, String prefixedName)
+  {
+    super(classIRI, prefixedName);
+  }
 
-	@Override
-	public boolean isClass() { return true; }
+  @Override
+  public boolean isClass() { return true; }
 }

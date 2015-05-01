@@ -5,11 +5,11 @@ import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
 
 class SQWRLObjectPropertyResultValueImpl extends SQWRLPropertyResultValueImpl implements SQWRLObjectPropertyResultValue
 {
-	public SQWRLObjectPropertyResultValueImpl(IRI propertyIRI, String prefixedName)
-	{
-		super(propertyIRI, prefixedName);
-	}
+  public SQWRLObjectPropertyResultValueImpl(IRI propertyIRI, String prefixedName)
+  {
+    super(propertyIRI, prefixedName);
+  }
 
-	@Override
-	public boolean isObjectProperty() { return true; }
+  @Override
+  public boolean isObjectProperty() { return true; }
 }

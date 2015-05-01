@@ -24,62 +24,62 @@ import org.swrlapi.sqwrl.SQWRLQuery;
  */
 public interface TargetSWRLRuleEngine
 {
-	/**
-	 * Define a target rule engine representation of an OWL axiom. Note that SWRL rules are a type of OWL axiom.
-	 * 
-	 * @param axiom The OWL axiom to define
-	 * @throws TargetSWRLRuleEngineException If an error occurs during definition
-	 */
-	void defineOWLAxiom(OWLAxiom axiom) throws TargetSWRLRuleEngineException;
+  /**
+   * Define a target rule engine representation of an OWL axiom. Note that SWRL rules are a type of OWL axiom.
+   * 
+   * @param axiom The OWL axiom to define
+   * @throws TargetSWRLRuleEngineException If an error occurs during definition
+   */
+  void defineOWLAxiom(OWLAxiom axiom) throws TargetSWRLRuleEngineException;
 
-	/**
-	 * Define a target rule engine representation of a SQWRL query.
-	 * 
-	 * @param query A SQWRL query to define
-	 * @throws TargetSWRLRuleEngineException If an error occurs in the target rule engine
-	 * @throws SWRLBuiltInException If a built-in error occurs
-	 */
-	void defineSQWRLQuery(SQWRLQuery query) throws TargetSWRLRuleEngineException, SWRLBuiltInException;
+  /**
+   * Define a target rule engine representation of a SQWRL query.
+   * 
+   * @param query A SQWRL query to define
+   * @throws TargetSWRLRuleEngineException If an error occurs in the target rule engine
+   * @throws SWRLBuiltInException If a built-in error occurs
+   */
+  void defineSQWRLQuery(SQWRLQuery query) throws TargetSWRLRuleEngineException, SWRLBuiltInException;
 
-	/**
-	 * Run the rule engine.
-	 * 
-	 * @throws TargetSWRLRuleEngineException If an error occurs in the tagret rule engine
-	 */
-	void runRuleEngine() throws TargetSWRLRuleEngineException;
+  /**
+   * Run the rule engine.
+   * 
+   * @throws TargetSWRLRuleEngineException If an error occurs in the tagret rule engine
+   */
+  void runRuleEngine() throws TargetSWRLRuleEngineException;
 
-	/**
-	 * Reset the rule engine.
-	 * 
-	 * @throws TargetSWRLRuleEngineException If an error occurs in the tagret rule engine
-	 */
-	void resetRuleEngine() throws TargetSWRLRuleEngineException;
+  /**
+   * Reset the rule engine.
+   * 
+   * @throws TargetSWRLRuleEngineException If an error occurs in the tagret rule engine
+   */
+  void resetRuleEngine() throws TargetSWRLRuleEngineException;
 
-	/**
-	 * Return the name of the target rule engine.
-	 *
-	 * @return The name of the target rule engine
-	 */
-	String getName();
+  /**
+   * Return the name of the target rule engine.
+   *
+   * @return The name of the target rule engine
+   */
+  String getName();
 
-	/**
-	 * Return version information of the target rule engine.
-	 *
-	 * @return The version of the target rule engine
-	 */
-	String getVersion();
+  /**
+   * Return version information of the target rule engine.
+   *
+   * @return The version of the target rule engine
+   */
+  String getVersion();
 
-	/**
-	 * A target rule engine must also define an OWL reasoner implementation.
-	 *
-	 * @return An OWL reasoner
-	 */
-	OWLReasoner getOWLReasoner();
+  /**
+   * A target rule engine must also define an OWL reasoner implementation.
+   *
+   * @return An OWL reasoner
+   */
+  OWLReasoner getOWLReasoner();
 
-	/**
-	 * Get the underlying OWL 2 RL reasoner provided by the rule engine.
-	 *
-	 * @return The underlying OWL 2 RL-based rule engine
-	 */
-	OWL2RLEngine getOWL2RLEngine();
+  /**
+   * Get the underlying OWL 2 RL reasoner provided by the rule engine.
+   *
+   * @return The underlying OWL 2 RL-based rule engine
+   */
+  OWL2RLEngine getOWL2RLEngine();
 }

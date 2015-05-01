@@ -17,72 +17,72 @@ import org.swrlapi.exceptions.SQWRLLiteralException;
  */
 public interface SWRLAPILiteral
 {
-	boolean isNumeric();
+  boolean isNumeric();
 
-	boolean isByte();
+  boolean isByte();
 
-	boolean isShort();
+  boolean isShort();
 
-	boolean isInt();
+  boolean isInt();
 
-	boolean isLong();
+  boolean isLong();
 
-	boolean isFloat();
+  boolean isFloat();
 
-	boolean isDouble();
+  boolean isDouble();
 
-	boolean isString();
+  boolean isString();
 
-	boolean isBoolean();
+  boolean isBoolean();
 
-	boolean isAnyURI();
+  boolean isAnyURI();
 
-	boolean isTime();
+  boolean isTime();
 
-	boolean isDate();
+  boolean isDate();
 
-	boolean isDateTime();
+  boolean isDateTime();
 
-	boolean isDuration();
+  boolean isDuration();
 
-	byte getByte() throws SQWRLLiteralException;
+  byte getByte() throws SQWRLLiteralException;
 
-	short getShort() throws SQWRLLiteralException;
+  short getShort() throws SQWRLLiteralException;
 
-	int getInt() throws SQWRLLiteralException;
+  int getInt() throws SQWRLLiteralException;
 
-	long getLong() throws SQWRLLiteralException;
+  long getLong() throws SQWRLLiteralException;
 
-	float getFloat() throws SQWRLLiteralException;
+  float getFloat() throws SQWRLLiteralException;
 
-	double getDouble() throws SQWRLLiteralException;
+  double getDouble() throws SQWRLLiteralException;
 
-	String getString() throws SQWRLLiteralException;
+  String getString() throws SQWRLLiteralException;
 
-	boolean getBoolean() throws SQWRLLiteralException;
+  boolean getBoolean() throws SQWRLLiteralException;
 
-	URI getAnyURI() throws SQWRLLiteralException;
+  URI getAnyURI() throws SQWRLLiteralException;
 
-	XSDTime getTime() throws SQWRLLiteralException;
+  XSDTime getTime() throws SQWRLLiteralException;
 
-	XSDDate getDate() throws SQWRLLiteralException;
+  XSDDate getDate() throws SQWRLLiteralException;
 
-	XSDDateTime getDateTime() throws SQWRLLiteralException;
+  XSDDateTime getDateTime() throws SQWRLLiteralException;
 
-	XSDDuration getDuration() throws SQWRLLiteralException;
+  XSDDuration getDuration() throws SQWRLLiteralException;
 
-	String getValue();
+  String getValue();
 
-	boolean isComparable();
+  boolean isComparable();
 
-	boolean isQuotableType();
+  boolean isQuotableType();
 
-	@Override
-	String toString();
+  @Override
+  String toString();
 
-	String toQuotedString();
+  String toQuotedString();
 
-	OWLLiteral getOWLLiteral();
+  OWLLiteral getOWLLiteral();
 
-	OWLDatatype getOWLDatatype();
+  OWLDatatype getOWLDatatype();
 }

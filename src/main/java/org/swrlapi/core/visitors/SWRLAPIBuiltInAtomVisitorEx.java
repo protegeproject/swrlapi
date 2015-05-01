@@ -4,5 +4,5 @@ import org.swrlapi.core.SWRLAPIBuiltInAtom;
 
 public interface SWRLAPIBuiltInAtomVisitorEx<T>
 {
-	T visit(SWRLAPIBuiltInAtom swrlapiBuiltInAtom);
+  T visit(SWRLAPIBuiltInAtom swrlapiBuiltInAtom);
 }

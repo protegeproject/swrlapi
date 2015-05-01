@@ -17,108 +17,108 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
  */
 public interface SQWRLQueryEngine extends SWRLRuleEngine
 {
-	/**
-	 * Create and run a SQWRL query. The query will be created and added to the associated ontology.
-	 * 
-	 * @param queryName The name of the query
-	 * @param queryText The query
-	 * @return The result of the query
-	 * @throws SWRLParseException If a parsing error occurs during processing
-	 * @throws SQWRLException If a SQWRL-specific error occurs during processing
-	 */
-	SQWRLResult runSQWRLQuery(String queryName, String queryText) throws SWRLParseException, SQWRLException;
+  /**
+   * Create and run a SQWRL query. The query will be created and added to the associated ontology.
+   * 
+   * @param queryName The name of the query
+   * @param queryText The query
+   * @return The result of the query
+   * @throws SWRLParseException If a parsing error occurs during processing
+   * @throws SQWRLException If a SQWRL-specific error occurs during processing
+   */
+  SQWRLResult runSQWRLQuery(String queryName, String queryText) throws SWRLParseException, SQWRLException;
 
-	/**
-	 * Create a SQWRL query.
-	 *
-	 * @param queryName The name of the query
-	 * @param queryText The query
-	 * @throws SWRLParseException If a parsing error occurs during processing
-	 * @throws SQWRLException If a SQWRL-specific error occurs during processing
-	 */
-	void createSQWRLQuery(String queryName, String queryText) throws SWRLParseException, SQWRLException;
+  /**
+   * Create a SQWRL query.
+   *
+   * @param queryName The name of the query
+   * @param queryText The query
+   * @throws SWRLParseException If a parsing error occurs during processing
+   * @throws SQWRLException If a SQWRL-specific error occurs during processing
+   */
+  void createSQWRLQuery(String queryName, String queryText) throws SWRLParseException, SQWRLException;
 
-	/**
-	 * Run a named SQWRL query. SWRL rules will also be executed and any inferences produced by them will be available in
-	 * the query.
-	 * 
-	 * @param queryName The name of the query
-	 * @return The result of the query
-	 * @throws SQWRLException If an exception occurs during processing
-	 */
-	SQWRLResult runSQWRLQuery(String queryName) throws SQWRLException;
+  /**
+   * Run a named SQWRL query. SWRL rules will also be executed and any inferences produced by them will be available in
+   * the query.
+   * 
+   * @param queryName The name of the query
+   * @return The result of the query
+   * @throws SQWRLException If an exception occurs during processing
+   */
+  SQWRLResult runSQWRLQuery(String queryName) throws SQWRLException;
 
-	/**
-	 * Run all enabled SQWRL queries.
-	 *
-	 * @throws SQWRLException If an error occurs during processing
-	 */
-	void runSQWRLQueries() throws SQWRLException;
+  /**
+   * Run all enabled SQWRL queries.
+   *
+   * @throws SQWRLException If an error occurs during processing
+   */
+  void runSQWRLQueries() throws SQWRLException;
 
-	/**
-	 * Get the results from a previously executed SQWRL query. Null is returned if there is no result.
-	 *
-	 * @param queryName The name of the query
-	 * @return The result of the query
-	 * @throws SQWRLException If an error occurs during processing
-	 */
-	SQWRLResult getSQWRLResult(String queryName) throws SQWRLException;
+  /**
+   * Get the results from a previously executed SQWRL query. Null is returned if there is no result.
+   *
+   * @param queryName The name of the query
+   * @return The result of the query
+   * @throws SQWRLException If an error occurs during processing
+   */
+  SQWRLResult getSQWRLResult(String queryName) throws SQWRLException;
 
-	/**
-	 * Get all the enabled SQWRL queries in the ontology.
-	 *
-	 * @return A set of queries
-	 */
-	Set<SQWRLQuery> getSQWRLQueries();
+  /**
+   * Get all the enabled SQWRL queries in the ontology.
+   *
+   * @return A set of queries
+   */
+  Set<SQWRLQuery> getSQWRLQueries();
 
-	/**
-	 * Get the names of the enabled SQWRL queries in the ontology.
-	 *
-	 * @return The names of all SQWRL queries
-	 */
-	Set<String> getSQWRLQueryNames();
+  /**
+   * Get the names of the enabled SQWRL queries in the ontology.
+   *
+   * @return The names of all SQWRL queries
+   */
+  Set<String> getSQWRLQueryNames();
 
-	/**
-	 * @return A SQWRL query renderer
-	 */
-	SQWRLQueryRenderer createSQWRLQueryRenderer();
+  /**
+   * @return A SQWRL query renderer
+   */
+  SQWRLQueryRenderer createSQWRLQueryRenderer();
 
-	/**
-	 * Load specific query, all enabled rules, and relevant knowledge from OWL. All existing bridge rules and knowledge
-	 * will first be cleared and the rule engine will be reset.
-	 *
-	 * @param queryName The name of the query
-	 * @throws SWRLRuleEngineException If an error occurs during inference
-	 */
-	void importSQWRLQueryAndOWLAxioms(String queryName) throws SWRLRuleEngineException;
+  /**
+   * Load specific query, all enabled rules, and relevant knowledge from OWL. All existing bridge rules and knowledge
+   * will first be cleared and the rule engine will be reset.
+   *
+   * @param queryName The name of the query
+   * @throws SWRLRuleEngineException If an error occurs during inference
+   */
+  void importSQWRLQueryAndOWLAxioms(String queryName) throws SWRLRuleEngineException;
 
-	/**
-	 * Reset the query engine.
-	 */
-	@Override
-	void reset();
+  /**
+   * Reset the query engine.
+   */
+  @Override
+  void reset();
 
-	/**
-	 * Returns the name of the underlying target rule engine.
-	 *
-	 * @return The name of the target rule engine
-	 */
-	@Override
-	String getTargetRuleEngineName();
+  /**
+   * Returns the name of the underlying target rule engine.
+   *
+   * @return The name of the target rule engine
+   */
+  @Override
+  String getTargetRuleEngineName();
 
-	/**
-	 * Returns the version number of the underlying target rule engine.
-	 *
-	 * @return The version of the target rule engine
-	 */
-	@Override
-	String getTargetRuleEngineVersion();
+  /**
+   * Returns the version number of the underlying target rule engine.
+   *
+   * @return The version of the target rule engine
+   */
+  @Override
+  String getTargetRuleEngineVersion();
 
-	/**
-	 * Get the underlying controller for the OWL 2 RL reasoner used by the rule and query engine.
-	 *
-	 * @return The underlying OWL 2 RL engine
-	 */
-	@Override
-	OWL2RLEngine getOWL2RLEngine();
+  /**
+   * Get the underlying controller for the OWL 2 RL reasoner used by the rule and query engine.
+   *
+   * @return The underlying OWL 2 RL engine
+   */
+  @Override
+  OWL2RLEngine getOWL2RLEngine();
 }

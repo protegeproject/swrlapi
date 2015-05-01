@@ -5,12 +5,12 @@ import org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue;
 
 class SQWRLDataPropertyResultValueImpl extends SQWRLPropertyResultValueImpl implements SQWRLDataPropertyResultValue
 {
-	public SQWRLDataPropertyResultValueImpl(IRI propertyIRI, String prefixedName)
-	{
-		super(propertyIRI, prefixedName);
-	}
+  public SQWRLDataPropertyResultValueImpl(IRI propertyIRI, String prefixedName)
+  {
+    super(propertyIRI, prefixedName);
+  }
 
-	@Override
-	public boolean isDataProperty() { return true; }
+  @Override
+  public boolean isDataProperty() { return true; }
 
 }

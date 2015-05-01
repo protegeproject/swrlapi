@@ -5,7 +5,7 @@ import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 
 public interface TargetRuleEngineOWLPropertyExpressionConverter<PE> extends TargetRuleEngineConverter
 {
-	PE convert(OWLObjectPropertyExpression propertyExpression);
+  PE convert(OWLObjectPropertyExpression propertyExpression);
 
-	PE convert(OWLDataPropertyExpression propertyExpression);
+  PE convert(OWLDataPropertyExpression propertyExpression);
 }

@@ -2,20 +2,20 @@ package org.swrlapi.exceptions;
 
 public class SWRLAPIException extends RuntimeException
 {
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	public SWRLAPIException()
-	{
-		super();
-	}
+  public SWRLAPIException()
+  {
+    super();
+  }
 
-	public SWRLAPIException(String message)
-	{
-		super(message);
-	}
+  public SWRLAPIException(String message)
+  {
+    super(message);
+  }
 
-	public SWRLAPIException(String message, Throwable cause)
-	{
-		super(message, cause);
-	}
+  public SWRLAPIException(String message, Throwable cause)
+  {
+    super(message, cause);
+  }
 }

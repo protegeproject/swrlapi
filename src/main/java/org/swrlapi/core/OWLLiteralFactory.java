@@ -26,33 +26,33 @@ import org.swrlapi.core.xsd.XSDTime;
  */
 public interface OWLLiteralFactory
 {
-	OWLLiteral getOWLLiteral(byte b);
+  OWLLiteral getOWLLiteral(byte b);
 
-	OWLLiteral getOWLLiteral(short s);
+  OWLLiteral getOWLLiteral(short s);
 
-	OWLLiteral getOWLLiteral(int value);
+  OWLLiteral getOWLLiteral(int value);
 
-	OWLLiteral getOWLLiteral(long value);
+  OWLLiteral getOWLLiteral(long value);
 
-	OWLLiteral getOWLLiteral(float value);
+  OWLLiteral getOWLLiteral(float value);
 
-	OWLLiteral getOWLLiteral(double value);
+  OWLLiteral getOWLLiteral(double value);
 
-	OWLLiteral getOWLLiteral(String value);
+  OWLLiteral getOWLLiteral(String value);
 
-	OWLLiteral getOWLLiteral(boolean value);
+  OWLLiteral getOWLLiteral(boolean value);
 
-	OWLLiteral getOWLLiteral(URI uri);
+  OWLLiteral getOWLLiteral(URI uri);
 
-	OWLLiteral getOWLLiteral(XSDDate date);
+  OWLLiteral getOWLLiteral(XSDDate date);
 
-	OWLLiteral getOWLLiteral(XSDTime time);
+  OWLLiteral getOWLLiteral(XSDTime time);
 
-	OWLLiteral getOWLLiteral(XSDDateTime datetime);
+  OWLLiteral getOWLLiteral(XSDDateTime datetime);
 
-	OWLLiteral getOWLLiteral(XSDDuration duration);
+  OWLLiteral getOWLLiteral(XSDDuration duration);
 
-	OWLLiteral getOWLLiteral(String literal, OWLDatatype datatype);
+  OWLLiteral getOWLLiteral(String literal, OWLDatatype datatype);
 
-	OWLLiteral createLeastNarrowNumericOWLLiteral(double value, List<OWLLiteral> inputLiterals);
+  OWLLiteral createLeastNarrowNumericOWLLiteral(double value, List<OWLLiteral> inputLiterals);
 }

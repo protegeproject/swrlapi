@@ -15,111 +15,111 @@ import org.swrlapi.sqwrl.values.SQWRLResultValue;
  */
 public interface SQWRLResultGenerator
 {
-	/**
-	 * @param columnNames A list of column names
-	 * @throws SQWRLException If an error occurs during column addition
-	 */
-	void addColumns(List<String> columnNames) throws SQWRLException;
+  /**
+   * @param columnNames A list of column names
+   * @throws SQWRLException If an error occurs during column addition
+   */
+  void addColumns(List<String> columnNames) throws SQWRLException;
 
-	/**
-	 * @param columnName A column name
-	 * @throws SQWRLException If an error occurs during column addition
-	 */
-	void addColumn(String columnName) throws SQWRLException;
+  /**
+   * @param columnName A column name
+   * @throws SQWRLException If an error occurs during column addition
+   */
+  void addColumn(String columnName) throws SQWRLException;
 
-	/**
-	 * @param columnName A column name
-	 * @param aggregateFunctionName The name of an aggregate function
-	 * @throws SQWRLException If an error occurs during column addition
-	 */
-	void addAggregateColumn(String columnName, String aggregateFunctionName) throws SQWRLException;
+  /**
+   * @param columnName A column name
+   * @param aggregateFunctionName The name of an aggregate function
+   * @throws SQWRLException If an error occurs during column addition
+   */
+  void addAggregateColumn(String columnName, String aggregateFunctionName) throws SQWRLException;
 
-	/**
-	 * @param orderedColumnIndex The 0-based index of an order column
-	 * @param ascending Order ascending or descending
-	 * @throws SQWRLException If an error occurs during column addition
-	 */
-	void addOrderByColumn(int orderedColumnIndex, boolean ascending) throws SQWRLException;
+  /**
+   * @param orderedColumnIndex The 0-based index of an order column
+   * @param ascending Order ascending or descending
+   * @throws SQWRLException If an error occurs during column addition
+   */
+  void addOrderByColumn(int orderedColumnIndex, boolean ascending) throws SQWRLException;
 
-	/**
-	 * @return True of the result is ordered
-	 */
-	boolean isOrdered();
+  /**
+   * @return True of the result is ordered
+   */
+  boolean isOrdered();
 
-	/**
-	 * @return True if the result is ordered ascending
-	 */
-	boolean isOrderedAscending();
+  /**
+   * @return True if the result is ordered ascending
+   */
+  boolean isOrderedAscending();
 
-	/**
-	 * Indicate that the duplicate columns should be removed
-	 */
-	void setIsDistinct();
+  /**
+   * Indicate that the duplicate columns should be removed
+   */
+  void setIsDistinct();
 
-	/**
-	 * @param columnName The name of a column
-	 * @throws SQWRLException If an error occurs during display name addition
-	 */
-	void addColumnDisplayName(String columnName) throws SQWRLException;
+  /**
+   * @param columnName The name of a column
+   * @throws SQWRLException If an error occurs during display name addition
+   */
+  void addColumnDisplayName(String columnName) throws SQWRLException;
 
-	/**
-	 * @return The current number of result columns
-	 * @throws SQWRLException If the result is already configured
-	 */
-	int getCurrentNumberOfColumns() throws SQWRLException;
+  /**
+   * @return The current number of result columns
+   * @throws SQWRLException If the result is already configured
+   */
+  int getCurrentNumberOfColumns() throws SQWRLException;
 
-	/**
-	 * @return Is the result configured
-	 */
-	boolean isConfigured();
+  /**
+   * @return Is the result configured
+   */
+  boolean isConfigured();
 
-	/**
-	 * Indicate that the result is configured
-	 * 
-	 * @throws SQWRLException If the result is already configured
-	 */
-	void configured() throws SQWRLException;
+  /**
+   * Indicate that the result is configured
+   * 
+   * @throws SQWRLException If the result is already configured
+   */
+  void configured() throws SQWRLException;
 
-	/**
-	 * Add a row to the result.
-	 * 
-	 * @param resultValues A list of SQWRL result values
-	 * @throws SQWRLException If an error occurs during row addition
-	 */
-	void addRow(List<SQWRLResultValue> resultValues) throws SQWRLException;
+  /**
+   * Add a row to the result.
+   * 
+   * @param resultValues A list of SQWRL result values
+   * @throws SQWRLException If an error occurs during row addition
+   */
+  void addRow(List<SQWRLResultValue> resultValues) throws SQWRLException;
 
-	/**
-	 * Open a row for incremental cell addition
-	 * 
-	 * @throws SQWRLException If an error occurs opening the row
-	 */
-	void openRow() throws SQWRLException;
+  /**
+   * Open a row for incremental cell addition
+   * 
+   * @throws SQWRLException If an error occurs opening the row
+   */
+  void openRow() throws SQWRLException;
 
-	/**
-	 * @param value A cell value
-	 * @throws SQWRLException If an error occurs adding the cell
-	 */
-	void addCell(SQWRLResultValue value) throws SQWRLException;
+  /**
+   * @param value A cell value
+   * @throws SQWRLException If an error occurs adding the cell
+   */
+  void addCell(SQWRLResultValue value) throws SQWRLException;
 
-	/**
-	 * @throws SQWRLException If an error occurs during row closing
-	 */
-	void closeRow() throws SQWRLException;
+  /**
+   * @throws SQWRLException If an error occurs during row closing
+   */
+  void closeRow() throws SQWRLException;
 
-	/**
-	 * @return True if a row is open
-	 */
-	boolean isRowOpen();
+  /**
+   * @return True if a row is open
+   */
+  boolean isRowOpen();
 
-	/**
-	 * @return True if the result is prepared
-	 */
-	boolean isPrepared();
+  /**
+   * @return True if the result is prepared
+   */
+  boolean isPrepared();
 
-	/**
-	 * Indicate that the result is prepared
-	 * 
-	 * @throws SQWRLException If the result is not configured or is already prepared
-	 */
-	void prepared() throws SQWRLException;
+  /**
+   * Indicate that the result is prepared
+   * 
+   * @throws SQWRLException If the result is not configured or is already prepared
+   */
+  void prepared() throws SQWRLException;
 }

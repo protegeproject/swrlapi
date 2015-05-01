@@ -10,15 +10,15 @@ import org.swrlapi.ui.view.SWRLRulesTableView;
  */
 class SQWRLQuerySelector
 {
-	private final SWRLRulesTableView swrlRulesTableView;
+  private final SWRLRulesTableView swrlRulesTableView;
 
-	public SQWRLQuerySelector(SWRLRulesTableView swrlRulesTableView)
-	{
-		this.swrlRulesTableView = swrlRulesTableView;
-	}
+  public SQWRLQuerySelector(SWRLRulesTableView swrlRulesTableView)
+  {
+    this.swrlRulesTableView = swrlRulesTableView;
+  }
 
-	public String getSelectedQueryName()
-	{
-		return this.swrlRulesTableView.getSelectedSWRLRuleName();
-	}
+  public String getSelectedQueryName()
+  {
+    return this.swrlRulesTableView.getSelectedSWRLRuleName();
+  }
 }

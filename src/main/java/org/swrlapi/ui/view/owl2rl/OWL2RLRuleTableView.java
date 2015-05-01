@@ -16,44 +16,44 @@ import org.swrlapi.ui.view.SWRLAPIView;
  */
 public class OWL2RLRuleTableView extends JPanel implements SWRLAPIView
 {
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	private final OWL2RLModel owl2RLModel;
-	private final OWL2RLNames.OWL2RLRuleTable owl2RLRuleTable;
-	private final List<OWL2RLRuleActivationButton> ruleActivationButtons;
+  private final OWL2RLModel owl2RLModel;
+  private final OWL2RLNames.OWL2RLRuleTable owl2RLRuleTable;
+  private final List<OWL2RLRuleActivationButton> ruleActivationButtons;
 
-	public OWL2RLRuleTableView(OWL2RLModel owl2RLModel, OWL2RLNames.OWL2RLRuleTable owl2RLRuleTable)
-	{
-		this.owl2RLModel = owl2RLModel;
-		this.owl2RLRuleTable = owl2RLRuleTable;
-		this.ruleActivationButtons = new ArrayList<>();
+  public OWL2RLRuleTableView(OWL2RLModel owl2RLModel, OWL2RLNames.OWL2RLRuleTable owl2RLRuleTable)
+  {
+    this.owl2RLModel = owl2RLModel;
+    this.owl2RLRuleTable = owl2RLRuleTable;
+    this.ruleActivationButtons = new ArrayList<>();
 
-		initialize();
-	}
+    initialize();
+  }
 
-	@Override
-	public void update()
-	{
-		for (OWL2RLRuleActivationButton button : this.ruleActivationButtons)
-			button.update();
-	}
+  @Override
+  public void update()
+  {
+    for (OWL2RLRuleActivationButton button : this.ruleActivationButtons)
+      button.update();
+  }
 
-	private void initialize()
-	{
-		int numberOfButtons = getOWL2RLModel().getOWL2RLEngine().getRules(this.owl2RLRuleTable).size();
-		int n = 1 + (int)java.lang.Math.sqrt(numberOfButtons);
+  private void initialize()
+  {
+    int numberOfButtons = getOWL2RLModel().getOWL2RLEngine().getRules(this.owl2RLRuleTable).size();
+    int n = 1 + (int)java.lang.Math.sqrt(numberOfButtons);
 
-		setLayout(new GridLayout(n, n));
+    setLayout(new GridLayout(n, n));
 
-		for (OWL2RLNames.OWL2RLRule rule : getOWL2RLModel().getOWL2RLEngine().getRules(this.owl2RLRuleTable)) {
-			OWL2RLRuleActivationButton button = new OWL2RLRuleActivationButton(getOWL2RLModel(), rule);
-			this.ruleActivationButtons.add(button);
-			add(button);
-		}
-	}
+    for (OWL2RLNames.OWL2RLRule rule : getOWL2RLModel().getOWL2RLEngine().getRules(this.owl2RLRuleTable)) {
+      OWL2RLRuleActivationButton button = new OWL2RLRuleActivationButton(getOWL2RLModel(), rule);
+      this.ruleActivationButtons.add(button);
+      add(button);
+    }
+  }
 
-	private OWL2RLModel getOWL2RLModel()
-	{
-		return this.owl2RLModel;
-	}
+  private OWL2RLModel getOWL2RLModel()
+  {
+    return this.owl2RLModel;
+  }
 }

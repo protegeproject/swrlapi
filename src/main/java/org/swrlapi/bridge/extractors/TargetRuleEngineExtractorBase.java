@@ -25,67 +25,67 @@ import org.swrlapi.core.resolvers.OWLObjectPropertyExpressionResolver;
  */
 public abstract class TargetRuleEngineExtractorBase implements TargetRuleEngineExtractor
 {
-	private final SWRLRuleEngineBridge bridge;
+  private final SWRLRuleEngineBridge bridge;
 
-	public TargetRuleEngineExtractorBase(SWRLRuleEngineBridge bridge)
-	{
-		this.bridge = bridge;
-	}
+  public TargetRuleEngineExtractorBase(SWRLRuleEngineBridge bridge)
+  {
+    this.bridge = bridge;
+  }
 
-	protected SWRLBuiltInArgumentFactory getSWRLBuiltInArgumentFactory()
-	{
-		return getBridge().getSWRLBuiltInArgumentFactory();
-	}
+  protected SWRLBuiltInArgumentFactory getSWRLBuiltInArgumentFactory()
+  {
+    return getBridge().getSWRLBuiltInArgumentFactory();
+  }
 
-	protected SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory()
-	{
-		return getBridge().getSWRLAPIOWLDataFactory();
-	}
+  protected SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory()
+  {
+    return getBridge().getSWRLAPIOWLDataFactory();
+  }
 
-	protected OWLDataFactory getOWLDataFactory()
-	{
-		return getBridge().getSWRLAPIOWLDataFactory();
-	}
+  protected OWLDataFactory getOWLDataFactory()
+  {
+    return getBridge().getSWRLAPIOWLDataFactory();
+  }
 
-	protected SWRLAPIOWLDatatypeFactory getOWLDatatypeFactory()
-	{
-		return getBridge().getOWLDatatypeFactory();
-	}
+  protected SWRLAPIOWLDatatypeFactory getOWLDatatypeFactory()
+  {
+    return getBridge().getOWLDatatypeFactory();
+  }
 
-	protected OWLLiteralFactory getOWLLiteralFactory()
-	{
-		return getBridge().getOWLLiteralFactory();
-	}
+  protected OWLLiteralFactory getOWLLiteralFactory()
+  {
+    return getBridge().getOWLLiteralFactory();
+  }
 
-	protected OWLClassExpressionResolver getOWLClassExpressionResolver() {
-		return getBridge().getOWLClassExpressionResolver();
-	}
+  protected OWLClassExpressionResolver getOWLClassExpressionResolver() {
+    return getBridge().getOWLClassExpressionResolver();
+  }
 
-	protected OWLObjectPropertyExpressionResolver getOWLObjectPropertyExpressionResolver() {
-		return getBridge().getOWLObjectPropertyExpressionResolver();
-	}
+  protected OWLObjectPropertyExpressionResolver getOWLObjectPropertyExpressionResolver() {
+    return getBridge().getOWLObjectPropertyExpressionResolver();
+  }
 
-	protected OWLDataPropertyExpressionResolver getOWLDataPropertyExpressionResolver() {
-		return getBridge().getOWLDataPropertyExpressionResolver();
-	}
+  protected OWLDataPropertyExpressionResolver getOWLDataPropertyExpressionResolver() {
+    return getBridge().getOWLDataPropertyExpressionResolver();
+  }
 
-	protected OWLDataRangeResolver getOWLDataRangeResolver()
-	{
-		return getBridge().getOWLDataRangeResolver();
-	}
+  protected OWLDataRangeResolver getOWLDataRangeResolver()
+  {
+    return getBridge().getOWLDataRangeResolver();
+  }
 
-	protected IRIResolver getIRIResolver()
-	{
-		return getBridge().getIRIResolver();
-	}
+  protected IRIResolver getIRIResolver()
+  {
+    return getBridge().getIRIResolver();
+  }
 
-	protected IRI prefixedName2IRI(String prefixedName)
-	{
-		return getIRIResolver().prefixedName2IRI(prefixedName);
-	}
+  protected IRI prefixedName2IRI(String prefixedName)
+  {
+    return getIRIResolver().prefixedName2IRI(prefixedName);
+  }
 
-	private SWRLRuleEngineBridge getBridge()
-	{
-		return this.bridge;
-	}
+  private SWRLRuleEngineBridge getBridge()
+  {
+    return this.bridge;
+  }
 }

@@ -28,45 +28,45 @@ import org.semanticweb.owlapi.model.SWRLRule;
  */
 public interface SWRLAPIRule extends SWRLRule
 {
-	/**
-	 * @return The name of the rule
-	 */
-	String getRuleName();
+  /**
+   * @return The name of the rule
+   */
+  String getRuleName();
 
-	/**
-	 * @return A comment annotation associated with a rule
-	 */
-	String getComment();
+  /**
+   * @return A comment annotation associated with a rule
+   */
+  String getComment();
 
-	/**
-	 * @return True if the rule is active
-	 */
-	boolean isActive();
+  /**
+   * @return True if the rule is active
+   */
+  boolean isActive();
 
-	/**
-	 * @return True if this is a SQWRL query
-	 */
-	boolean isSQWRLQuery();
+  /**
+   * @return True if this is a SQWRL query
+   */
+  boolean isSQWRLQuery();
 
-	/**
-	 * @return A list of SWRL atoms
-	 */
-	List<SWRLAtom> getHeadAtoms();
+  /**
+   * @return A list of SWRL atoms
+   */
+  List<SWRLAtom> getHeadAtoms();
 
-	/**
-	 * @return A list of SWRL atoms
-	 */
-	List<SWRLAtom> getBodyAtoms();
+  /**
+   * @return A list of SWRL atoms
+   */
+  List<SWRLAtom> getBodyAtoms();
 
-	/**
-	 * @param builtInNames A set of built-in names
-	 * @return A list of built-in atoms
-	 */
-	List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromHead(Set<String> builtInNames);
+  /**
+   * @param builtInNames A set of built-in names
+   * @return A list of built-in atoms
+   */
+  List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromHead(Set<String> builtInNames);
 
-	/**
-	 * @param builtInNames A set of built-in names
-	 * @return A list of built-in atoms
-	 */
-	List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromBody(Set<String> builtInNames);
+  /**
+   * @param builtInNames A set of built-in names
+   * @return A list of built-in atoms
+   */
+  List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromBody(Set<String> builtInNames);
 }

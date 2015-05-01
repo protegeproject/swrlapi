@@ -4,5 +4,5 @@ import org.semanticweb.owlapi.model.OWLIndividual;
 
 public interface TargetRuleEngineOWLIndividualConverter<TR> extends TargetRuleEngineConverter
 {
-	TR convert(OWLIndividual individual);
+  TR convert(OWLIndividual individual);
 }

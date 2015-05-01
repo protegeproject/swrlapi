@@ -16,17 +16,17 @@ import org.swrlapi.core.SWRLAPIBuiltInAtom;
  */
 public interface TargetRuleEngineSWRLBodyAtomConverter<T> extends TargetRuleEngineConverter
 {
-	T convert(SWRLClassAtom atom);
+  T convert(SWRLClassAtom atom);
 
-	T convert(SWRLDataPropertyAtom atom);
+  T convert(SWRLDataPropertyAtom atom);
 
-	T convert(SWRLObjectPropertyAtom atom);
+  T convert(SWRLObjectPropertyAtom atom);
 
-	T convert(SWRLSameIndividualAtom atom);
+  T convert(SWRLSameIndividualAtom atom);
 
-	T convert(SWRLDifferentIndividualsAtom atom);
+  T convert(SWRLDifferentIndividualsAtom atom);
 
-	T convert(SWRLAPIBuiltInAtom atom);
+  T convert(SWRLAPIBuiltInAtom atom);
 
-	T convert(SWRLDataRangeAtom atom);
+  T convert(SWRLDataRangeAtom atom);
 }

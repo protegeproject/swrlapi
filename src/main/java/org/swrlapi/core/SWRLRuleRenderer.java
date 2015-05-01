@@ -13,9 +13,9 @@ import org.swrlapi.core.visitors.SWRLAPIEntityVisitorEx;
  */
 public interface SWRLRuleRenderer extends SWRLAPIEntityVisitorEx<String>
 {
-	/**
-	 * @param rule A SWRL rule
-	 * @return A text rendering of the rule
-	 */
-	String renderSWRLRule(SWRLRule rule);
+  /**
+   * @param rule A SWRL rule
+   * @return A text rendering of the rule
+   */
+  String renderSWRLRule(SWRLRule rule);
 }

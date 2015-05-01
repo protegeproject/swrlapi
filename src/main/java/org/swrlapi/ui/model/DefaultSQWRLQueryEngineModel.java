@@ -4,17 +4,17 @@ import org.swrlapi.sqwrl.SQWRLQueryEngine;
 
 public class DefaultSQWRLQueryEngineModel extends DefaultSWRLRuleEngineModel implements SQWRLQueryEngineModel
 {
-	private final SQWRLQueryEngine queryEngine;
+  private final SQWRLQueryEngine queryEngine;
 
-	public DefaultSQWRLQueryEngineModel(SQWRLQueryEngine sqwrlQueryEngine)
-	{
-		super(sqwrlQueryEngine);
-		this.queryEngine = sqwrlQueryEngine;
-	}
+  public DefaultSQWRLQueryEngineModel(SQWRLQueryEngine sqwrlQueryEngine)
+  {
+    super(sqwrlQueryEngine);
+    this.queryEngine = sqwrlQueryEngine;
+  }
 
-	@Override
-	public SQWRLQueryEngine getSQWRLQueryEngine()
-	{
-		return this.queryEngine;
-	}
+  @Override
+  public SQWRLQueryEngine getSQWRLQueryEngine()
+  {
+    return this.queryEngine;
+  }
 }

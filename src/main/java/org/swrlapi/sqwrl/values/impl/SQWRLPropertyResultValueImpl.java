@@ -5,8 +5,8 @@ import org.swrlapi.sqwrl.values.SQWRLPropertyResultValue;
 
 abstract class SQWRLPropertyResultValueImpl extends SQWRLEntityResultValueImpl implements SQWRLPropertyResultValue
 {
-	protected SQWRLPropertyResultValueImpl(IRI propertyIRI, String prefixedName)
-	{
-		super(propertyIRI, prefixedName);
-	}
+  protected SQWRLPropertyResultValueImpl(IRI propertyIRI, String prefixedName)
+  {
+    super(propertyIRI, prefixedName);
+  }
 }

@@ -4,8 +4,8 @@ import org.swrlapi.sqwrl.SQWRLQueryEngine;
 
 public interface SQWRLQueryEngineModel extends SWRLRuleEngineModel
 {
-	/**
-	 * @return A SQWRL query engine
-	 */
-	SQWRLQueryEngine getSQWRLQueryEngine();
+  /**
+   * @return A SQWRL query engine
+   */
+  SQWRLQueryEngine getSQWRLQueryEngine();
 }

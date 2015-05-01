@@ -10,5 +10,5 @@ import org.semanticweb.owlapi.model.OWLLiteral;
  */
 public interface TargetRuleEngineOWLLiteralConverter<T> extends TargetRuleEngineConverter
 {
-	public T convert(OWLLiteral literal);
+  public T convert(OWLLiteral literal);
 }

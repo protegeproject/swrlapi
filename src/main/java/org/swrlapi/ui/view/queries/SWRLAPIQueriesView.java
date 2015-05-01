@@ -17,30 +17,30 @@ import org.swrlapi.ui.view.SWRLRulesTableView;
  */
 public class SWRLAPIQueriesView extends JSplitPane implements SWRLAPIView
 {
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	private static final double SPLIT_PANE_RESIZE_WEIGHT = 0.6;
+  private static final double SPLIT_PANE_RESIZE_WEIGHT = 0.6;
 
-	private final SWRLRulesTableView swrlRulesTableView;
-	private final SQWRLQueryExecutionView sqwrlQueryExecutionView;
+  private final SWRLRulesTableView swrlRulesTableView;
+  private final SQWRLQueryExecutionView sqwrlQueryExecutionView;
 
-	public SWRLAPIQueriesView(SQWRLQueryEngineModel sqwrlQueryEngineModel,
-			SWRLAPIDialogManager applicationDialogManager, Icon queryEngineIcon) throws SWRLAPIException
-	{
-		this.swrlRulesTableView = new SWRLRulesTableView(sqwrlQueryEngineModel, applicationDialogManager);
-		this.sqwrlQueryExecutionView = new SQWRLQueryExecutionView(sqwrlQueryEngineModel, queryEngineIcon,
-				new SQWRLQuerySelector(this.swrlRulesTableView));
+  public SWRLAPIQueriesView(SQWRLQueryEngineModel sqwrlQueryEngineModel,
+      SWRLAPIDialogManager applicationDialogManager, Icon queryEngineIcon) throws SWRLAPIException
+  {
+    this.swrlRulesTableView = new SWRLRulesTableView(sqwrlQueryEngineModel, applicationDialogManager);
+    this.sqwrlQueryExecutionView = new SQWRLQueryExecutionView(sqwrlQueryEngineModel, queryEngineIcon,
+        new SQWRLQuerySelector(this.swrlRulesTableView));
 
-		setOrientation(JSplitPane.VERTICAL_SPLIT);
-		setResizeWeight(SPLIT_PANE_RESIZE_WEIGHT);
-		setTopComponent(this.swrlRulesTableView);
-		setBottomComponent(this.sqwrlQueryExecutionView);
-	}
+    setOrientation(JSplitPane.VERTICAL_SPLIT);
+    setResizeWeight(SPLIT_PANE_RESIZE_WEIGHT);
+    setTopComponent(this.swrlRulesTableView);
+    setBottomComponent(this.sqwrlQueryExecutionView);
+  }
 
-	@Override
-	public void update()
-	{
-		this.swrlRulesTableView.update();
-		this.sqwrlQueryExecutionView.update();
-	}
+  @Override
+  public void update()
+  {
+    this.swrlRulesTableView.update();
+    this.sqwrlQueryExecutionView.update();
+  }
 }

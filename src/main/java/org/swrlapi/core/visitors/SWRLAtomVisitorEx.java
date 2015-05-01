@@ -8,17 +8,17 @@ import org.swrlapi.core.SWRLAPIBuiltInAtom;
  */
 public interface SWRLAtomVisitorEx<T>
 {
-	T visit(SWRLClassAtom atom);
+  T visit(SWRLClassAtom atom);
 
-	T visit(SWRLObjectPropertyAtom atom);
+  T visit(SWRLObjectPropertyAtom atom);
 
   T visit(SWRLDataPropertyAtom atom);
 
-	T visit(SWRLSameIndividualAtom atom);
+  T visit(SWRLSameIndividualAtom atom);
 
-	T visit(SWRLDifferentIndividualsAtom atom);
+  T visit(SWRLDifferentIndividualsAtom atom);
 
-	T visit(SWRLDataRangeAtom atom);
+  T visit(SWRLDataRangeAtom atom);
 
-	T visit(SWRLAPIBuiltInAtom atom);
+  T visit(SWRLAPIBuiltInAtom atom);
 }

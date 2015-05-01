@@ -12,15 +12,15 @@ import org.semanticweb.owlapi.model.OWLObjectProperty;
  */
 public interface TargetRuleEngineOWLEntityConverter<TR> extends TargetRuleEngineConverter
 {
-	TR convert(OWLClass cls);
+  TR convert(OWLClass cls);
 
-	TR convert(OWLNamedIndividual individual);
+  TR convert(OWLNamedIndividual individual);
 
-	TR convert(OWLObjectProperty property);
+  TR convert(OWLObjectProperty property);
 
-	TR convert(OWLDataProperty property);
+  TR convert(OWLDataProperty property);
 
-	TR convert(OWLAnnotationProperty property);
+  TR convert(OWLAnnotationProperty property);
 
-	TR convert(OWLDatatype datatype);
+  TR convert(OWLDatatype datatype);
 }

@@ -19,53 +19,53 @@ import org.swrlapi.exceptions.SWRLAPIInternalException;
  */
 public class OWLClassExpressionResolver
 {
-	private final Map<String, OWLClassExpression> id2OWLClassExpression;
-	private final Map<OWLClassExpression, String> owlClassExpression2ID;
+  private final Map<String, OWLClassExpression> id2OWLClassExpression;
+  private final Map<OWLClassExpression, String> owlClassExpression2ID;
 
-	private final OWLDataFactory owlDataFactory;
+  private final OWLDataFactory owlDataFactory;
 
-	public OWLClassExpressionResolver(OWLDataFactory owlDataFactory)
-	{
-		this.id2OWLClassExpression = new HashMap<>();
-		this.owlClassExpression2ID = new HashMap<>();
-		this.owlDataFactory = owlDataFactory;
-		reset();
-	}
+  public OWLClassExpressionResolver(OWLDataFactory owlDataFactory)
+  {
+    this.id2OWLClassExpression = new HashMap<>();
+    this.owlClassExpression2ID = new HashMap<>();
+    this.owlDataFactory = owlDataFactory;
+    reset();
+  }
 
-	public void reset()
-	{
-		this.id2OWLClassExpression.clear();
-		this.owlClassExpression2ID.clear();
-		record(OWLRDFVocabulary.OWL_THING.getPrefixedName(), getOWLDataFactory().getOWLThing());
-		record(OWLRDFVocabulary.OWL_NOTHING.getPrefixedName(), getOWLDataFactory().getOWLNothing());
-	}
+  public void reset()
+  {
+    this.id2OWLClassExpression.clear();
+    this.owlClassExpression2ID.clear();
+    record(OWLRDFVocabulary.OWL_THING.getPrefixedName(), getOWLDataFactory().getOWLThing());
+    record(OWLRDFVocabulary.OWL_NOTHING.getPrefixedName(), getOWLDataFactory().getOWLNothing());
+  }
 
-	public void record(String classExpressionID, OWLClassExpression classExpression)
-	{
-		this.id2OWLClassExpression.put(classExpressionID, classExpression);
-		this.owlClassExpression2ID.put(classExpression, classExpressionID);
-	}
+  public void record(String classExpressionID, OWLClassExpression classExpression)
+  {
+    this.id2OWLClassExpression.put(classExpressionID, classExpression);
+    this.owlClassExpression2ID.put(classExpression, classExpressionID);
+  }
 
-	public boolean records(OWLClassExpression owlClassExpression)
-	{
-		return this.owlClassExpression2ID.containsKey(owlClassExpression);
-	}
+  public boolean records(OWLClassExpression owlClassExpression)
+  {
+    return this.owlClassExpression2ID.containsKey(owlClassExpression);
+  }
 
-	public String resolve(OWLClassExpression owlClassExpression)
-	{
-		return this.owlClassExpression2ID.get(owlClassExpression);
-	}
+  public String resolve(OWLClassExpression owlClassExpression)
+  {
+    return this.owlClassExpression2ID.get(owlClassExpression);
+  }
 
-	public OWLClassExpression resolve(String classExpressionID)
-	{
-		if (this.id2OWLClassExpression.containsKey(classExpressionID))
-			return this.id2OWLClassExpression.get(classExpressionID);
-		else
-			throw new SWRLAPIInternalException("no class expression found with ID " + classExpressionID);
-	}
+  public OWLClassExpression resolve(String classExpressionID)
+  {
+    if (this.id2OWLClassExpression.containsKey(classExpressionID))
+      return this.id2OWLClassExpression.get(classExpressionID);
+    else
+      throw new SWRLAPIInternalException("no class expression found with ID " + classExpressionID);
+  }
 
-	private OWLDataFactory getOWLDataFactory()
-	{
-		return this.owlDataFactory;
-	}
+  private OWLDataFactory getOWLDataFactory()
+  {
+    return this.owlDataFactory;
+  }
 }

@@ -19,28 +19,28 @@ import org.swrlapi.exceptions.TargetSWRLRuleEngineException;
  */
 public class OWLIndividualResolver
 {
-	private final Map<String, OWLIndividual> individualID2OWLIndividual;
+  private final Map<String, OWLIndividual> individualID2OWLIndividual;
 
-	public OWLIndividualResolver()
-	{
-		this.individualID2OWLIndividual = new HashMap<>();
-	}
+  public OWLIndividualResolver()
+  {
+    this.individualID2OWLIndividual = new HashMap<>();
+  }
 
-	public void reset()
-	{
-		this.individualID2OWLIndividual.clear();
-	}
+  public void reset()
+  {
+    this.individualID2OWLIndividual.clear();
+  }
 
-	public void record(String individualID, OWLIndividual individual)
-	{
-		this.individualID2OWLIndividual.put(individualID, individual);
-	}
+  public void record(String individualID, OWLIndividual individual)
+  {
+    this.individualID2OWLIndividual.put(individualID, individual);
+  }
 
-	public OWLIndividual resolve(String individualID) throws TargetSWRLRuleEngineException
-	{
-		if (this.individualID2OWLIndividual.containsKey(individualID))
-			return this.individualID2OWLIndividual.get(individualID);
-		else
-			throw new TargetSWRLRuleEngineException("internal error: no individual found with ID " + individualID);
-	}
+  public OWLIndividual resolve(String individualID) throws TargetSWRLRuleEngineException
+  {
+    if (this.individualID2OWLIndividual.containsKey(individualID))
+      return this.individualID2OWLIndividual.get(individualID);
+    else
+      throw new TargetSWRLRuleEngineException("internal error: no individual found with ID " + individualID);
+  }
 }

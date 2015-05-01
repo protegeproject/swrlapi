@@ -5,18 +5,18 @@ package org.swrlapi.builtins.arguments;
  */
 public interface SQWRLCollectionVariableBuiltInArgument extends SWRLVariableBuiltInArgument
 {
-	/**
-	 * @return The name of the enclosing SQWRL query
-	 */
-	String getQueryName();
+  /**
+   * @return The name of the enclosing SQWRL query
+   */
+  String getQueryName();
 
-	/**
-	 * @return The collection name
-	 */
-	String getCollectionName();
+  /**
+   * @return The collection name
+   */
+  String getCollectionName();
 
-	/**
-	 * @return The collection group ID
-	 */
-	String getGroupID();
+  /**
+   * @return The collection group ID
+   */
+  String getGroupID();
 }
