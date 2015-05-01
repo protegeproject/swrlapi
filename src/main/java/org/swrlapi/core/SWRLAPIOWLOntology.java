@@ -37,10 +37,7 @@ import org.swrlapi.ui.model.SWRLAutoCompleter;
  * regeneration of knowledge.
  *
  * @see org.swrlapi.core.SWRLAPIRule
- * @see org.swrlapi.sqwrl.SQWRLQuery;
- * @see org.swrlapi.core.SWRLAPIOntologyProcessor
- * @see org.swrlapi.core.SWRLAPIOWLDataFactory
- * @see org.swrlapi.builtins.arguments.SWRLBuiltInArgument
+ * @see org.swrlapi.sqwrl.SQWRLQuery
  */
 public interface SWRLAPIOWLOntology
 {

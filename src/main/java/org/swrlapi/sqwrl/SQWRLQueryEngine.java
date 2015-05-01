@@ -23,7 +23,8 @@ public interface SQWRLQueryEngine extends SWRLRuleEngine
 	 * @param queryName The name of the query
 	 * @param queryText The query
 	 * @return The result of the query
-	 * @throws SQWRLException If an error occurs during processing
+	 * @throws SWRLParseException If a parsing error occurs during processing
+	 * @throws SQWRLException If a SQWRL-specific error occurs during processing
 	 */
 	SQWRLResult runSQWRLQuery(String queryName, String queryText) throws SWRLParseException, SQWRLException;
 
@@ -32,7 +33,8 @@ public interface SQWRLQueryEngine extends SWRLRuleEngine
 	 *
 	 * @param queryName The name of the query
 	 * @param queryText The query
-	 * @throws SQWRLException If an error occurs during processing
+	 * @throws SWRLParseException If a parsing error occurs during processing
+	 * @throws SQWRLException If a SQWRL-specific error occurs during processing
 	 */
 	void createSQWRLQuery(String queryName, String queryText) throws SWRLParseException, SQWRLException;
 

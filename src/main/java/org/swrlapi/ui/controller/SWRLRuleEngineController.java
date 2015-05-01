@@ -3,11 +3,10 @@ package org.swrlapi.ui.controller;
 import org.swrlapi.ui.model.SWRLRuleEngineModel;
 
 /**
- * Provides an MVC-based rule engine controller. Used in conjunction with a {@link SWRLRuleEngineModel} and a
- * {@link SWRLAPIApplicationView}.
+ * Provides an MVC-based rule engine controller. Used in conjunction with a
+ * {@link org.swrlapi.ui.model.SWRLRuleEngineModel}.
  *
- * @see org.swrlapi.ui.model.SWRLRuleEngineModel
- * @see org.swrlapi.ui.view.SWRLAPIApplicationView
+ * @see SWRLRuleEngineModel
  */
 public interface SWRLRuleEngineController
 {

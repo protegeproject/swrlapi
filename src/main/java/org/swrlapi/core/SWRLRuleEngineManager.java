@@ -25,7 +25,6 @@ public interface SWRLRuleEngineManager
 	Optional<String> getAnyRegisteredRuleEngineName();
 
 	/**
-	 * @param ruleEngineName The name of the rule engine
 	 * @param ruleEngineCreator A creator for the rule engine
 	 */
 	void registerRuleEngine(TargetSWRLRuleEngineCreator ruleEngineCreator);

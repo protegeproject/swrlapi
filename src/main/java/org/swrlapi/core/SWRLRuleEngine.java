@@ -126,16 +126,22 @@ public interface SWRLRuleEngine
 
 	/**
 	 * Get the underlying OWL 2 RL reasoner used by the rule and query engine.
+	 *
+	 * @return An OWL 2 RL engine
 	 */
-	OWL2RLEngine getOWL2RLEngine();
+    OWL2RLEngine getOWL2RLEngine();
 
 	/**
 	 * Get the name of the native rule engine implementing this SWRL rule engine.
+     *
+     * @return A rule engine name
 	 */
 	String getTargetRuleEngineName();
 
 	/**
 	 * Get the version of the native rule engine implementing this SWRL rule engine.
+     *
+     * @return A rule engine version
 	 */
 	String getTargetRuleEngineVersion();
 

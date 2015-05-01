@@ -237,7 +237,8 @@ public class SWRLAPIFactory
 	}
 
 	/**
-	 * @param ruleEngine A SWRL rule engine model
+	 * @param ruleEngine A SWRL rule engine name
+	 * @return A SWRL rule engine model
 	 */
 	public static SWRLRuleEngineModel createSWRLRuleEngineModel(SWRLRuleEngine ruleEngine)
 	{
@@ -245,7 +246,8 @@ public class SWRLAPIFactory
 	}
 
 	/**
-	 * @param ruleEngine A SQWRL query engine model
+	 * @param queryEngine A SQWRL query engine
+	 * @return A SQWRL query engine model
 	 */
 	public static SQWRLQueryEngineModel createSQWRLQueryEngineModel(SQWRLQueryEngine queryEngine)
 	{
