@@ -16,5 +16,5 @@ public interface TargetRuleEngineSQWRLQueryConverter extends TargetRuleEngineCon
    * @throws TargetSWRLRuleEngineException If an error occurs in the target rule engine
    * @throws SWRLBuiltInException If an error occurs during built-in processing
    */
-  public void convert(SQWRLQuery query) throws TargetSWRLRuleEngineException, SWRLBuiltInException;
+  void convert(SQWRLQuery query) throws TargetSWRLRuleEngineException, SWRLBuiltInException;
 }

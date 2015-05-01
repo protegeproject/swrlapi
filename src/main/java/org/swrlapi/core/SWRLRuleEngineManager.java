@@ -54,7 +54,7 @@ public interface SWRLRuleEngineManager
   /**
    * A creator for a SWRL rule engine
    */
-  public interface TargetSWRLRuleEngineCreator
+  interface TargetSWRLRuleEngineCreator
   {
     /**
      * @param bridge A SWRL rule engine bridge associated with the engine

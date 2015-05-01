@@ -63,7 +63,6 @@ public class Instant
   {
     this.temporal = temporal;
     this.granuleCount = Temporal.sqlDate2GranuleCount(date, granularity);
-    ;
     this.granularity = granularity;
 
     clearGranuleCountArray();

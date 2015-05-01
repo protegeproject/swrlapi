@@ -7,7 +7,7 @@ package org.swrlapi.owl2rl;
  */
 public interface OWL2RLNames
 {
-  public final static String SWRLA_NAMESPACE = "http://swrl.stanford.edu/ontologies/3.3/swrla.owl#";
+  String SWRLA_NAMESPACE = "http://swrl.stanford.edu/ontologies/3.3/swrla.owl#";
 
   enum OWL2RLRuleTable {
     RuleTable4, RuleTable5, RuleTable6, RuleTable7, RuleTable8, RuleTable9
@@ -44,9 +44,9 @@ public interface OWL2RLNames
       OWL2RLRule.SCM_SVF1, OWL2RLRule.SCM_SVF2, OWL2RLRule.SCM_AVF1, OWL2RLRule.SCM_AVF2, OWL2RLRule.SCM_INT,
       OWL2RLRule.SCM_UNI };
 
-  public static interface Annotations
+  interface Annotations
   {
-    public final static String OWL2RL_RULE = (SWRLA_NAMESPACE + "OWL2RLRule").intern();
-    public final static String IS_OWL2RL_RULE_ENABLED = (SWRLA_NAMESPACE + "isOWL2RLRuleEnabled").intern();
+    String OWL2RL_RULE = (SWRLA_NAMESPACE + "OWL2RLRule").intern();
+    String IS_OWL2RL_RULE_ENABLED = (SWRLA_NAMESPACE + "isOWL2RLRuleEnabled").intern();
   }
 }

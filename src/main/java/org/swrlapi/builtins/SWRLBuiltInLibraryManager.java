@@ -245,7 +245,7 @@ public abstract class SWRLBuiltInLibraryManager
       return methods.get(key);
     else {
       try {
-        Method method = library.getClass().getMethod(builtInMethodName, new Class[] { List.class });
+        Method method = library.getClass().getMethod(builtInMethodName, List.class);
 
         checkBuiltInMethodSignature(ruleName, prefix, builtInMethodName, method); // Check signature of method
 
@@ -260,7 +260,7 @@ public abstract class SWRLBuiltInLibraryManager
 
   // TODO Need to get constructor of library to catch exceptions it may throw.
   private static SWRLBuiltInLibrary loadBuiltInLibraryImpl(String ruleName, String prefix, String className)
-      throws UnresolvedSWRLBuiltInClassException, IncompatibleSWRLBuiltInClassException, SWRLBuiltInLibraryException
+      throws SWRLBuiltInLibraryException
   {
     Class<?> swrlBuiltInLibraryClass;
     SWRLBuiltInLibrary swrlBuiltInLibrary;

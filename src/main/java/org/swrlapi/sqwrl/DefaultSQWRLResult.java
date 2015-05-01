@@ -436,10 +436,7 @@ public class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Se
 
     this.currentRowIndex++;
 
-    if (this.currentRowIndex != -1 && this.currentRowIndex < getNumberOfRows()) {
-      return true;
-    } else
-      return false;
+    return this.currentRowIndex != -1 && this.currentRowIndex < getNumberOfRows();
   }
 
   @Override

@@ -298,7 +298,6 @@ public class DefaultSWRLAPILiteral implements SWRLAPILiteral
     if (!isDateTime())
       throw new SQWRLLiteralException("cannot convert value of type " + this.literal.getDatatype() + " to "
           + XSDVocabulary.DATE_TIME);
-    ;
     return new XSDDateTime(this.literal.getLiteral());
   }
 

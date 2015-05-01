@@ -195,6 +195,6 @@ public interface SWRLBuiltInArgumentCreator
    * @return A collection variable built-in argument
    * @throws SWRLBuiltInException If an error occurs during generation
    */
-  public SQWRLCollectionVariableBuiltInArgument createSQWRLCollectionVariableBuiltInArgument(IRI variableIRI,
-      String queryName, String collectionName, String collectionGroupID) throws SWRLBuiltInException;
+  SQWRLCollectionVariableBuiltInArgument createSQWRLCollectionVariableBuiltInArgument(IRI variableIRI, String queryName,
+      String collectionName, String collectionGroupID) throws SWRLBuiltInException;
 }

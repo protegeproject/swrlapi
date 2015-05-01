@@ -99,11 +99,8 @@ class SWRLLiteralBuiltInArgumentImpl extends SWRLBuiltInArgumentImpl implements 
 
     SWRLLiteralBuiltInArgumentImpl that = (SWRLLiteralBuiltInArgumentImpl)o;
 
-    if (!this.literal.equals(that.literal)) {
-      return false;
-    }
+    return this.literal.equals(that.literal);
 
-    return true;
   }
 
   @Override

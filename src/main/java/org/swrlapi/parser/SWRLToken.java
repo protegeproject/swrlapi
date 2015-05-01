@@ -104,14 +104,14 @@ public class SWRLToken
     return "[" + this.tokenType.getName() + " with value '" + this.value + "']";
   }
 
-  public static enum SWRLTokenType {
+  public enum SWRLTokenType {
     SHORTNAME("short name"), // A short name is a user-friendly name. Note: it can be a prefixed name or a full IRI.
     IRI("IRI"), STRING("quoted string"), FLOAT("float"), INT("int"), TYPE_QUAL("^^"), AND("^"), IMP("->"), RING("."), LPAREN(
         "("), RPAREN(")"), COMMA(","), QUESTION("?"), END_OF_INPUT("end");
 
     private final String name;
 
-    private SWRLTokenType(String name)
+    SWRLTokenType(String name)
     {
       this.name = name;
     }

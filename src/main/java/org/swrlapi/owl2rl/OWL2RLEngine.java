@@ -12,7 +12,7 @@ public interface OWL2RLEngine extends OWL2RLNames
 {
   enum OWL2RLRuleStatus {
     Unsupported, PermanentlyOn, Switchable
-  };
+  }
 
   /**
    * @return True if the rule selection has changed since last call to {@link OWL2RLEngine#resetRuleSelectionChanged()}.
