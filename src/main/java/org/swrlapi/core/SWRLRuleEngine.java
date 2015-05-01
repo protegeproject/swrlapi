@@ -5,12 +5,15 @@ import java.util.Set;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
+import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.exceptions.SWRLRuleEngineException;
 import org.swrlapi.exceptions.SWRLRuleException;
 import org.swrlapi.owl2rl.OWL2RLEngine;
 import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.ui.model.SWRLAutoCompleter;
+
+import javax.swing.*;
 
 /**
  * This interface defines methods that must be provided by a SWRL rule engine in the SWRLAPI.
@@ -151,6 +154,12 @@ public interface SWRLRuleEngine
 	 * @return An OWL reasoner
 	 */
 	OWLReasoner getOWLReasoner();
+
+  /**
+   *
+   * @return The rule engine's icon
+   */
+	Icon getSWRLRuleEngineIcon();
 
 	// The following are convenience methods to display rule engine activity
 

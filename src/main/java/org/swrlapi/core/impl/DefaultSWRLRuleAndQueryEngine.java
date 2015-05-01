@@ -31,6 +31,8 @@ import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.ui.model.SWRLAutoCompleter;
 
+import javax.swing.*;
+
 /**
  * This class provides an implementation of some of the core functionality required by a SWRL rule engine.
  */
@@ -409,6 +411,12 @@ public class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQuery
 	public OWLReasoner getOWLReasoner()
 	{
 		return this.targetSWRLRuleEngine.getOWLReasoner();
+	}
+
+	@Override
+	public Icon getSWRLRuleEngineIcon()
+	{
+     return null; // TODO
 	}
 
 	private void exportSQWRLQuery2TargetRuleEngine(String activeQueryName) throws SWRLRuleEngineException,
