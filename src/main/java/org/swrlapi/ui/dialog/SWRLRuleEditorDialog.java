@@ -83,10 +83,10 @@ public class SWRLRuleEditorDialog extends JDialog
   private SWRLRuleEditorAutoCompleteState autoCompleteState = null; // Non null if in auto-complete mode
   private boolean editMode = false;
 
-  public SWRLRuleEditorDialog(SWRLRuleEngineModel swrlRuleEngineModel, SWRLAPIDialogManager applicationDialogManager)
+  public SWRLRuleEditorDialog(SWRLRuleEngineModel swrlRuleEngineModel, SWRLAPIDialogManager dialogManager)
   {
     this.swrlRuleEngineModel = swrlRuleEngineModel;
-    this.dialogManager = applicationDialogManager;
+    this.dialogManager = dialogManager;
     this.autoCompleter = swrlRuleEngineModel.getSWRLAutoCompleter();
 
     setTitle(TITLE);

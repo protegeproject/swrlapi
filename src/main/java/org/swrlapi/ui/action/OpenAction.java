@@ -1,12 +1,26 @@
 package org.swrlapi.ui.action;
 
+import org.swrlapi.ui.dialog.SWRLAPIDialogManager;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class OpenAction implements ActionListener
 {
-  public OpenAction()
+  final Component parent;
+  final SWRLAPIDialogManager dialogManager;
+
+  public static final String TITLE = "Open";
+  private static final String MESSAGE = "Open Ontology";
+  private static final String EXTENSON = "owl";
+
+  public OpenAction(Component parent, SWRLAPIDialogManager dialogManager)
   {
+    this.parent = parent;
+    this.dialogManager = dialogManager;
   }
 
   @Override
@@ -17,22 +31,13 @@ public class OpenAction implements ActionListener
 
   public void open()
   {
-    // JFileChooser fileChooser = getApplicationDialogManager().createFileChooser("Open Mapping Ontology", "owl");
-    //
-    // if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-    // File file = fileChooser.getSelectedFile();
-    // String fileName = file.getAbsolutePath();
-    //
-    // try {
-    // mappingExpressions = application.getMappingExpressionsPersistenceLayer().getMappingExpressions(fileName);
-    // } catch (MappingMasterException ex) {
-    // getApplicationDialogManager().showErrorMessageDialog(applicationView, ex.getMessage());
-    // }
-    //
-    // if (mappingExpressions != null) {
-    // applicationModel.setMappingFileName(fileName);
-    // } else
-    // applicationModel.clearModifiedStatus();
-    // }
+    JFileChooser fileChooser = this.dialogManager.createFileChooser(TITLE, MESSAGE, EXTENSON);
+
+     if (fileChooser.showOpenDialog(this.parent) == JFileChooser.APPROVE_OPTION) {
+       File file = fileChooser.getSelectedFile();
+       String fileName = file.getAbsolutePath();
+
+       //https://github.com/owlcs/owlapi/blob/version4/contract/src/test/java/org/semanticweb/owlapi/examples/Examples.java#L167
+     }
   }
 }
