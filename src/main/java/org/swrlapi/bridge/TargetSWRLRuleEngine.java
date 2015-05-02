@@ -7,6 +7,8 @@ import org.swrlapi.exceptions.TargetSWRLRuleEngineException;
 import org.swrlapi.owl2rl.OWL2RLEngine;
 import org.swrlapi.sqwrl.SQWRLQuery;
 
+import javax.swing.*;
+
 /**
  * This interface defines the methods that must be provided by an implementation of a SWRLAPI-based SWRL rule engine. A
  * {@link org.swrlapi.core.SWRLRuleEngine} uses an implementation of this interface to interact with an underlying rule
@@ -69,6 +71,11 @@ public interface TargetSWRLRuleEngine
    */
   String getVersion();
 
+  /**
+   *
+   * @return An icon for the rule engine
+   */
+  Icon getSWRLRuleEngineIcon();
   /**
    * A target rule engine must also define an OWL reasoner implementation.
    *

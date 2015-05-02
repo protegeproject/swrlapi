@@ -13,6 +13,7 @@ import org.swrlapi.bridge.SWRLRuleEngineBridgeController;
 import org.swrlapi.bridge.TargetSWRLRuleEngine;
 import org.swrlapi.builtins.SWRLBuiltInBridgeController;
 import org.swrlapi.core.SQWRLQueryRenderer;
+import org.swrlapi.core.SWRLAPIFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLRuleEngine;
@@ -29,7 +30,9 @@ import org.swrlapi.sqwrl.SQWRLQuery;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
+import org.swrlapi.ui.model.SQWRLQueryEngineModel;
 import org.swrlapi.ui.model.SWRLAutoCompleter;
+import org.swrlapi.ui.model.SWRLRuleEngineModel;
 
 import javax.swing.*;
 
@@ -248,6 +251,12 @@ public class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQuery
   }
 
   @Override
+  public SQWRLQueryEngineModel createSQWRLQueryEngineModel()
+  {
+    return SWRLAPIFactory.createSQWRLQueryEngineModel(this);
+  }
+
+  @Override
   public OWL2RLEngine getOWL2RLEngine()
   {
     return this.targetSWRLRuleEngine.getOWL2RLEngine();
@@ -378,6 +387,12 @@ public class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQuery
   }
 
   @Override
+  public SWRLRuleEngineModel createSWRLRuleEngineModel()
+  {
+    return SWRLAPIFactory.createSWRLRuleEngineModel(this);
+  }
+
+  @Override
   public Set<OWLAxiom> getAssertedOWLAxioms()
   {
     return this.swrlapiOWLOntology.getOWLAxioms();
@@ -416,7 +431,7 @@ public class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQuery
   @Override
   public Icon getSWRLRuleEngineIcon()
   {
-    return null; // TODO
+    return this.targetSWRLRuleEngine.getSWRLRuleEngineIcon();
   }
 
   private void exportSQWRLQuery2TargetRuleEngine(String activeQueryName) throws SWRLRuleEngineException,

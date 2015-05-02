@@ -11,6 +11,7 @@ import org.swrlapi.owl2rl.OWL2RLEngine;
 import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.ui.model.SWRLAutoCompleter;
+import org.swrlapi.ui.model.SWRLRuleEngineModel;
 
 import javax.swing.*;
 
@@ -125,6 +126,11 @@ public interface SWRLRuleEngine
    * @return A SWRL rule renderer
    */
   SWRLRuleRenderer createSWRLRuleRenderer();
+
+  /**
+   * @return A SWRL rule engine model
+   */
+  SWRLRuleEngineModel createSWRLRuleEngineModel();
 
   /**
    * Get the underlying OWL 2 RL reasoner used by the rule and query engine.

@@ -8,6 +8,7 @@ import org.swrlapi.exceptions.SWRLRuleEngineException;
 import org.swrlapi.owl2rl.OWL2RLEngine;
 import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
+import org.swrlapi.ui.model.SQWRLQueryEngineModel;
 
 /**
  * This interface defines the methods that must be provided by a SQWRL query engine.
@@ -82,6 +83,11 @@ public interface SQWRLQueryEngine extends SWRLRuleEngine
    * @return A SQWRL query renderer
    */
   SQWRLQueryRenderer createSQWRLQueryRenderer();
+
+  /**
+   * @return A SQWRL query engine model
+   */
+  SQWRLQueryEngineModel createSQWRLQueryEngineModel();
 
   /**
    * Load specific query, all enabled rules, and relevant knowledge from OWL. All existing bridge rules and knowledge
