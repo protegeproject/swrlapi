@@ -1,21 +1,21 @@
 package org.swrlapi.core;
 
-import java.net.URI;
-
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.swrlapi.core.xsd.XSDDate;
 import org.swrlapi.core.xsd.XSDDateTime;
 import org.swrlapi.core.xsd.XSDDuration;
 import org.swrlapi.core.xsd.XSDTime;
-import org.swrlapi.exceptions.SQWRLLiteralException;
+import org.swrlapi.exceptions.LiteralException;
+
+import java.net.URI;
 
 /**
- * The SWRLAPI's literal wraps an OWLAPI literal to provide additional convenience methods used by the SWRLAPI.
+ * Wraps an OWLAPI literal to provide additional convenience methods used by the SWRLAPI.
  *
  * @see org.semanticweb.owlapi.model.OWLLiteral
  */
-public interface SWRLAPILiteral
+public interface Literal
 {
   boolean isNumeric();
 
@@ -45,31 +45,31 @@ public interface SWRLAPILiteral
 
   boolean isDuration();
 
-  byte getByte() throws SQWRLLiteralException;
+  byte getByte() throws LiteralException;
 
-  short getShort() throws SQWRLLiteralException;
+  short getShort() throws LiteralException;
 
-  int getInt() throws SQWRLLiteralException;
+  int getInt() throws LiteralException;
 
-  long getLong() throws SQWRLLiteralException;
+  long getLong() throws LiteralException;
 
-  float getFloat() throws SQWRLLiteralException;
+  float getFloat() throws LiteralException;
 
-  double getDouble() throws SQWRLLiteralException;
+  double getDouble() throws LiteralException;
 
-  String getString() throws SQWRLLiteralException;
+  String getString() throws LiteralException;
 
-  boolean getBoolean() throws SQWRLLiteralException;
+  boolean getBoolean() throws LiteralException;
 
-  URI getAnyURI() throws SQWRLLiteralException;
+  URI getAnyURI() throws LiteralException;
 
-  XSDTime getTime() throws SQWRLLiteralException;
+  XSDTime getTime() throws LiteralException;
 
-  XSDDate getDate() throws SQWRLLiteralException;
+  XSDDate getDate() throws LiteralException;
 
-  XSDDateTime getDateTime() throws SQWRLLiteralException;
+  XSDDateTime getDateTime() throws LiteralException;
 
-  XSDDuration getDuration() throws SQWRLLiteralException;
+  XSDDuration getDuration() throws LiteralException;
 
   String getValue();
 

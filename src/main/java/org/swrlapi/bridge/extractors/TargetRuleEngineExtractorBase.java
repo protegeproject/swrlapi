@@ -7,7 +7,7 @@ import org.swrlapi.bridge.converters.TargetRuleEngineConverterBase;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.core.OWLLiteralFactory;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
-import org.swrlapi.core.SWRLAPIOWLDatatypeFactory;
+import org.swrlapi.core.OWLDatatypeFactory;
 import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.core.resolvers.OWLClassExpressionResolver;
 import org.swrlapi.core.resolvers.OWLDataPropertyExpressionResolver;
@@ -47,7 +47,7 @@ public abstract class TargetRuleEngineExtractorBase implements TargetRuleEngineE
     return getBridge().getSWRLAPIOWLDataFactory();
   }
 
-  protected SWRLAPIOWLDatatypeFactory getOWLDatatypeFactory()
+  protected OWLDatatypeFactory getOWLDatatypeFactory()
   {
     return getBridge().getOWLDatatypeFactory();
   }

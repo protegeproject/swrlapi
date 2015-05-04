@@ -174,7 +174,7 @@
             </Import-Package>
             <Export-Package>
               org.nfunk.*;version="${jep.version}",
-              org.apache.axis.*;version="1.4",
+              org.apache.axis.*;version="${axis.osgi.version}",
               org.swrlapi.*;version="${project.version}"
             </Export-Package>
             <Embed-Transitive>true</Embed-Transitive>

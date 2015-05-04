@@ -1,8 +1,5 @@
 package org.swrlapi.core.impl;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.semanticweb.owlapi.model.AddAxiom;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
@@ -13,7 +10,6 @@ import org.swrlapi.bridge.SWRLRuleEngineBridgeController;
 import org.swrlapi.bridge.TargetSWRLRuleEngine;
 import org.swrlapi.builtins.SWRLBuiltInBridgeController;
 import org.swrlapi.core.SQWRLQueryRenderer;
-import org.swrlapi.core.SWRLAPIFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLRuleEngine;
@@ -30,11 +26,11 @@ import org.swrlapi.sqwrl.SQWRLQuery;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
-import org.swrlapi.ui.model.SQWRLQueryEngineModel;
 import org.swrlapi.ui.model.SWRLAutoCompleter;
-import org.swrlapi.ui.model.SWRLRuleEngineModel;
 
 import javax.swing.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * This class provides an implementation of some of the core functionality required by a SWRL rule engine.
@@ -251,12 +247,6 @@ public class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQuery
   }
 
   @Override
-  public SQWRLQueryEngineModel createSQWRLQueryEngineModel()
-  {
-    return SWRLAPIFactory.createSQWRLQueryEngineModel(this);
-  }
-
-  @Override
   public OWL2RLEngine getOWL2RLEngine()
   {
     return this.targetSWRLRuleEngine.getOWL2RLEngine();
@@ -387,12 +377,6 @@ public class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQuery
   }
 
   @Override
-  public SWRLRuleEngineModel createSWRLRuleEngineModel()
-  {
-    return SWRLAPIFactory.createSWRLRuleEngineModel(this);
-  }
-
-  @Override
   public Set<OWLAxiom> getAssertedOWLAxioms()
   {
     return this.swrlapiOWLOntology.getOWLAxioms();
@@ -411,13 +395,25 @@ public class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQuery
   }
 
   @Override
-  public String getTargetRuleEngineName()
+  public String getRuleEngineName()
   {
     return this.targetSWRLRuleEngine.getName();
   }
 
   @Override
-  public String getTargetRuleEngineVersion()
+  public String getQueryEngineName()
+  {
+    return this.targetSWRLRuleEngine.getName();
+  }
+
+  @Override
+  public String getRuleEngineVersion()
+  {
+    return this.targetSWRLRuleEngine.getVersion();
+  }
+
+  @Override
+  public String getQueryEngineVersion()
   {
     return this.targetSWRLRuleEngine.getVersion();
   }
@@ -429,7 +425,13 @@ public class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQuery
   }
 
   @Override
-  public Icon getSWRLRuleEngineIcon()
+  public Icon getRuleEngineIcon()
+  {
+    return this.targetSWRLRuleEngine.getSWRLRuleEngineIcon();
+  }
+
+  @Override
+  public Icon getQueryEngineIcon()
   {
     return this.targetSWRLRuleEngine.getSWRLRuleEngineIcon();
   }

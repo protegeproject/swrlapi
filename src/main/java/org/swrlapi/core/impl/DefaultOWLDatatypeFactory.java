@@ -3,11 +3,11 @@ package org.swrlapi.core.impl;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
-import org.swrlapi.core.SWRLAPIOWLDatatypeFactory;
+import org.swrlapi.core.OWLDatatypeFactory;
 
 import uk.ac.manchester.cs.owl.owlapi.OWLDatatypeImpl;
 
-public class DefaultSWRLAPIOWLDatatypeFactory implements SWRLAPIOWLDatatypeFactory
+public class DefaultOWLDatatypeFactory implements OWLDatatypeFactory
 {
   @Override
   public OWLDatatype getOWLDatatype(IRI iri)

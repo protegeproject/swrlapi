@@ -30,20 +30,18 @@ import java.util.List;
  */
 public interface SWRLAPIOWLDataFactory extends OWLDataFactory
 {
-  SWRLAPIRule getSWRLRule(String ruleName, String ruleText); // Also SQWRL query
-
   SWRLBuiltInArgumentFactory getSWRLBuiltInArgumentFactory();
 
   SWRLAPIBuiltInAtom getSWRLAPIBuiltInAtom(String ruleName, IRI builtInIRI, String builtInPrefixedName,
       List<SWRLBuiltInArgument> arguments);
 
-  SWRLAPIOWLDatatypeFactory getSWRLAPIOWLDatatypeFactory();
+  OWLDatatypeFactory getOWLDatatypeFactory();
 
   SQWRLResultValueFactory getSQWRLResultValueFactory();
 
   OWLLiteralFactory getOWLLiteralFactory();
 
-  SWRLAPILiteralFactory getSWRLAPILiteralFactory();
+  LiteralFactory getLiteralFactory();
 
   IRIResolver getIRIResolver();
 

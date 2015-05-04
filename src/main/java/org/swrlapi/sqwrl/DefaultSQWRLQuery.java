@@ -14,8 +14,8 @@ import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
-import org.swrlapi.core.SWRLAPILiteral;
-import org.swrlapi.core.SWRLAPILiteralFactory;
+import org.swrlapi.core.Literal;
+import org.swrlapi.core.LiteralFactory;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
@@ -28,13 +28,13 @@ public class DefaultSQWRLQuery implements SQWRLQuery
   private final DefaultSQWRLResult sqwrlResult;
   // Map of collection name to group arguments. Applies only to grouped collections.
   private final Map<String, List<SWRLBuiltInArgument>> collectionGroupArgumentsMap;
-  private final SWRLAPILiteralFactory swrlapiLiteralFactory;
+  private final LiteralFactory swrlapiLiteralFactory;
   private final String comment;
 
   private boolean active; // Like a SWRLRule, a SQWRL query can also be active or inactive.
 
   public DefaultSQWRLQuery(String queryName, List<SWRLAtom> bodyAtoms, List<SWRLAtom> headAtoms, boolean active,
-      String comment, SWRLAPILiteralFactory swrlapiLiteralFactory, SQWRLResultValueFactory sqwrlResultValueFactory)
+      String comment, LiteralFactory swrlapiLiteralFactory, SQWRLResultValueFactory sqwrlResultValueFactory)
       throws SQWRLException
   {
     this.queryName = queryName;
@@ -267,7 +267,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 
       if (nArgument instanceof SWRLLiteralBuiltInArgument) {
         SWRLLiteralBuiltInArgument sliceNArgument = (SWRLLiteralBuiltInArgument)nArgument;
-        SWRLAPILiteral literal = this.swrlapiLiteralFactory.getSWRLAPILiteral(sliceNArgument.getLiteral());
+        Literal literal = this.swrlapiLiteralFactory.getLiteral(sliceNArgument.getLiteral());
 
         if (literal.isInt()) {
           sliceN = literal.getInt();
@@ -296,7 +296,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
 
     if (sliceSizeArgument instanceof SWRLLiteralBuiltInArgument) {
       SWRLLiteralBuiltInArgument literalArgument = (SWRLLiteralBuiltInArgument)sliceSizeArgument;
-      SWRLAPILiteral literal = this.swrlapiLiteralFactory.getSWRLAPILiteral(literalArgument.getLiteral());
+      Literal literal = this.swrlapiLiteralFactory.getLiteral(literalArgument.getLiteral());
       if (literal.isInt()) {
         sliceSize = literal.getInt();
         if (sliceSize < 1)
@@ -521,7 +521,7 @@ public class DefaultSQWRLQuery implements SQWRLQuery
   {
     if (argument instanceof SWRLLiteralBuiltInArgument) {
       SWRLLiteralBuiltInArgument literalArgument = (SWRLLiteralBuiltInArgument)argument;
-      SWRLAPILiteral literal = this.swrlapiLiteralFactory.getSWRLAPILiteral(literalArgument.getLiteral());
+      Literal literal = this.swrlapiLiteralFactory.getLiteral(literalArgument.getLiteral());
       if (literal.isString())
         this.sqwrlResult.addColumnDisplayName(literal.getString());
       else

@@ -8,7 +8,7 @@ import org.semanticweb.owlapi.model.OWLDatatype;
  *
  * @see org.semanticweb.owlapi.model.OWLDatatype
  */
-public interface SWRLAPIOWLDatatypeFactory
+public interface OWLDatatypeFactory
 {
   OWLDatatype getOWLDatatype(IRI iri);
 

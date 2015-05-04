@@ -19,7 +19,7 @@ import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.core.OWLLiteralFactory;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
-import org.swrlapi.core.SWRLAPIOWLDatatypeFactory;
+import org.swrlapi.core.OWLDatatypeFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.core.resolvers.OWLClassExpressionResolver;
@@ -263,9 +263,9 @@ public class DefaultSWRLBridge implements SWRLRuleEngineBridge, SWRLBuiltInBridg
   }
 
   @Override
-  public SWRLAPIOWLDatatypeFactory getOWLDatatypeFactory()
+  public OWLDatatypeFactory getOWLDatatypeFactory()
   {
-    return getSWRLAPIOWLDataFactory().getSWRLAPIOWLDatatypeFactory();
+    return getSWRLAPIOWLDataFactory().getOWLDatatypeFactory();
   }
 
   @Override

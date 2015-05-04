@@ -1,14 +1,13 @@
 package org.swrlapi.sqwrl;
 
-import java.util.Set;
-
 import org.swrlapi.core.SQWRLQueryRenderer;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.exceptions.SWRLRuleEngineException;
-import org.swrlapi.owl2rl.OWL2RLEngine;
 import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
-import org.swrlapi.ui.model.SQWRLQueryEngineModel;
+
+import javax.swing.*;
+import java.util.Set;
 
 /**
  * This interface defines the methods that must be provided by a SQWRL query engine.
@@ -85,11 +84,6 @@ public interface SQWRLQueryEngine extends SWRLRuleEngine
   SQWRLQueryRenderer createSQWRLQueryRenderer();
 
   /**
-   * @return A SQWRL query engine model
-   */
-  SQWRLQueryEngineModel createSQWRLQueryEngineModel();
-
-  /**
    * Load specific query, all enabled rules, and relevant knowledge from OWL. All existing bridge rules and knowledge
    * will first be cleared and the rule engine will be reset.
    *
@@ -99,32 +93,22 @@ public interface SQWRLQueryEngine extends SWRLRuleEngine
   void importSQWRLQueryAndOWLAxioms(String queryName) throws SWRLRuleEngineException;
 
   /**
-   * Reset the query engine.
+   * Returns the name of the underlying target query engine.
+   *
+   * @return The name of the target query engine
    */
-  @Override
-  void reset();
+  String getQueryEngineName();
 
   /**
-   * Returns the name of the underlying target rule engine.
+   * Returns the version number of the underlying target query engine.
    *
-   * @return The name of the target rule engine
+   * @return The version of the target query engine
    */
-  @Override
-  String getTargetRuleEngineName();
+  String getQueryEngineVersion();
 
   /**
-   * Returns the version number of the underlying target rule engine.
    *
-   * @return The version of the target rule engine
+   * @return An icon representing the query engine
    */
-  @Override
-  String getTargetRuleEngineVersion();
-
-  /**
-   * Get the underlying controller for the OWL 2 RL reasoner used by the rule and query engine.
-   *
-   * @return The underlying OWL 2 RL engine
-   */
-  @Override
-  OWL2RLEngine getOWL2RLEngine();
+  Icon getQueryEngineIcon();
 }

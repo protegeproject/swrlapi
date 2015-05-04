@@ -24,8 +24,8 @@ public class SWRLRulesControlView extends JPanel implements SWRLAPIView
 
   public SWRLRulesControlView(SWRLRuleEngine swrlRuleEngine)
   {
-    String ruleEngineName = swrlRuleEngine.getTargetRuleEngineName();
-    String ruleEngineVersion = swrlRuleEngine.getTargetRuleEngineVersion();
+    String ruleEngineName = swrlRuleEngine.getRuleEngineName();
+    String ruleEngineVersion = swrlRuleEngine.getRuleEngineVersion();
 
     this.swrlRuleEngine = swrlRuleEngine;
 
@@ -140,7 +140,7 @@ public class SWRLRulesControlView extends JPanel implements SWRLAPIView
         appendToConsole("Total number of OWL axioms exported to rule engine: "
             + this.ruleEngine.getNumberOfAssertedOWLAxioms() + "\n");
         appendToConsole("The transfer took " + (System.currentTimeMillis() - startTime) + " millisecond(s).\n");
-        appendToConsole("Press the 'Run " + SWRLRulesControlView.this.swrlRuleEngine.getTargetRuleEngineName()
+        appendToConsole("Press the 'Run " + SWRLRulesControlView.this.swrlRuleEngine.getRuleEngineName()
             + "' button to run the rule engine.\n");
       } catch (SWRLRuleEngineException e) {
         appendToConsole("Exception importing SWRL rules and OWL knowledge: " + e.toString() + "\n");
@@ -175,7 +175,7 @@ public class SWRLRulesControlView extends JPanel implements SWRLAPIView
               + "\n");
         appendToConsole("The process took " + (System.currentTimeMillis() - startTime) + " millisecond(s).\n");
         appendToConsole("Look at the 'Inferred Axioms' tab to see the inferred axioms.\n");
-        appendToConsole("Press the '" + SWRLRulesControlView.this.swrlRuleEngine.getTargetRuleEngineName()
+        appendToConsole("Press the '" + SWRLRulesControlView.this.swrlRuleEngine.getRuleEngineName()
             + "->OWL' button to translate the inferred axioms to OWL knowledge.\n");
       } catch (SWRLRuleEngineException e) {
         appendToConsole("Exception running rule engine: " + e.getMessage() + "\n");

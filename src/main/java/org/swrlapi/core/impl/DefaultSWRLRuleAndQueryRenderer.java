@@ -1,7 +1,5 @@
 package org.swrlapi.core.impl;
 
-import java.util.Iterator;
-
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLClass;
@@ -53,6 +51,8 @@ import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.sqwrl.SQWRLNames;
 import org.swrlapi.sqwrl.SQWRLQuery;
 
+import java.util.Iterator;
+
 /**
  * Default implementation of a renderer for {@link org.swrlapi.core.SWRLAPIRule} and
  * {@link org.swrlapi.sqwrl.SQWRLQuery} objects.
@@ -61,12 +61,12 @@ import org.swrlapi.sqwrl.SQWRLQuery;
  * @see org.swrlapi.sqwrl.SQWRLQuery
  * @see org.swrlapi.core.SWRLAPIFactory
  */
-public class DefaultSWRLAPIRenderer implements SWRLRuleRenderer, SQWRLQueryRenderer
+public class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRenderer
 {
   private final OWLOntology ontology;
   private final DefaultPrefixManager prefixManager;
 
-  public DefaultSWRLAPIRenderer(SWRLAPIOWLOntology swrlapiowlOntology)
+  public DefaultSWRLRuleAndQueryRenderer(SWRLAPIOWLOntology swrlapiowlOntology)
   {
     this.ontology = swrlapiowlOntology.getOWLOntology();
     this.prefixManager = swrlapiowlOntology.getPrefixManager();

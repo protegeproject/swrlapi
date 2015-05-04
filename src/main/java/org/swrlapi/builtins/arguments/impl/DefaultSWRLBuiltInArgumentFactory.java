@@ -1,8 +1,5 @@
 package org.swrlapi.builtins.arguments.impl;
 
-import java.net.URI;
-import java.util.List;
-
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLClass;
@@ -24,12 +21,15 @@ import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.core.OWLLiteralFactory;
-import org.swrlapi.core.impl.DefaultOWLLiteralFactory;
+import org.swrlapi.core.SWRLAPIFactory;
 import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.core.xsd.XSDDate;
 import org.swrlapi.core.xsd.XSDDateTime;
 import org.swrlapi.core.xsd.XSDDuration;
 import org.swrlapi.core.xsd.XSDTime;
+
+import java.net.URI;
+import java.util.List;
 
 public class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFactory
 {
@@ -39,7 +39,7 @@ public class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFac
   public DefaultSWRLBuiltInArgumentFactory(IRIResolver iriResolver)
   {
     this.iriResolver = iriResolver;
-    this.owlLiteralFactory = new DefaultOWLLiteralFactory();
+    this.owlLiteralFactory = SWRLAPIFactory.getOWLLiteralFactory();
   }
 
   @Override

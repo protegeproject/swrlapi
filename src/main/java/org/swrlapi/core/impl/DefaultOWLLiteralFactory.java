@@ -1,29 +1,29 @@
 package org.swrlapi.core.impl;
 
-import java.net.URI;
-import java.util.List;
-
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
+import org.swrlapi.core.OWLDatatypeFactory;
 import org.swrlapi.core.OWLLiteralFactory;
 import org.swrlapi.core.OWLLiteralValidator;
-import org.swrlapi.core.SWRLAPIOWLDatatypeFactory;
+import org.swrlapi.core.SWRLAPIFactory;
 import org.swrlapi.core.xsd.XSDDate;
 import org.swrlapi.core.xsd.XSDDateTime;
 import org.swrlapi.core.xsd.XSDDuration;
 import org.swrlapi.core.xsd.XSDTime;
 import org.swrlapi.exceptions.SWRLAPILiteralException;
-
 import uk.ac.manchester.cs.owl.owlapi.OWLLiteralImpl;
+
+import java.net.URI;
+import java.util.List;
 
 public class DefaultOWLLiteralFactory implements OWLLiteralFactory
 {
-  private final SWRLAPIOWLDatatypeFactory datatypeFactory;
+  private final OWLDatatypeFactory datatypeFactory;
 
   public DefaultOWLLiteralFactory()
   {
-    this.datatypeFactory = new DefaultSWRLAPIOWLDatatypeFactory();
+    this.datatypeFactory = SWRLAPIFactory.getOWLDatatypeFactory();
   }
 
   @Override
@@ -199,7 +199,7 @@ public class DefaultOWLLiteralFactory implements OWLLiteralFactory
       throw new SWRLAPILiteralException("literal value " + literal + " is not a valid " + datatype.getIRI());
   }
 
-  private SWRLAPIOWLDatatypeFactory getOWLDatatypeFactory()
+  private OWLDatatypeFactory getOWLDatatypeFactory()
   {
     return this.datatypeFactory;
   }

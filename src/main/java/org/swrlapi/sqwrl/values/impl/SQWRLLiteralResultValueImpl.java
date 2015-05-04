@@ -4,7 +4,7 @@ import java.util.Comparator;
 
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.swrlapi.core.OWLLiteralComparator;
-import org.swrlapi.core.impl.DefaultSWRLAPILiteral;
+import org.swrlapi.core.impl.DefaultLiteral;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
@@ -14,7 +14,7 @@ import org.swrlapi.sqwrl.values.SQWRLIndividualResultValue;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
 
-class SQWRLLiteralResultValueImpl extends DefaultSWRLAPILiteral implements SQWRLLiteralResultValue
+class SQWRLLiteralResultValueImpl extends DefaultLiteral implements SQWRLLiteralResultValue
 {
   private static Comparator<OWLLiteral> owlLiteralComparator = OWLLiteralComparator.COMPARATOR;
 

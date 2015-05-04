@@ -1,10 +1,5 @@
 package org.swrlapi.core.impl;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotation;
@@ -52,6 +47,11 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 import org.swrlapi.ui.model.DefaultSWRLAutoCompleter;
 import org.swrlapi.ui.model.SWRLAutoCompleter;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * This class does not directly deal with SQWRL queries. Instead, a {@link org.swrlapi.core.SWRLAPIOntologyProcessor} is
@@ -134,13 +134,13 @@ public class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
   @Override
   public SWRLRuleRenderer createSWRLRuleRenderer()
   {
-    return new DefaultSWRLAPIRenderer(this);
+    return new DefaultSWRLRuleAndQueryRenderer(this);
   }
 
   @Override
   public SQWRLQueryRenderer createSQWRLQueryRenderer()
   {
-    return new DefaultSWRLAPIRenderer(this);
+    return new DefaultSWRLRuleAndQueryRenderer(this);
   }
 
   @Override

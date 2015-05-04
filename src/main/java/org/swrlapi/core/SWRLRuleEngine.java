@@ -1,7 +1,5 @@
 package org.swrlapi.core;
 
-import java.util.Set;
-
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
@@ -11,9 +9,9 @@ import org.swrlapi.owl2rl.OWL2RLEngine;
 import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.ui.model.SWRLAutoCompleter;
-import org.swrlapi.ui.model.SWRLRuleEngineModel;
 
 import javax.swing.*;
+import java.util.Set;
 
 /**
  * This interface defines methods that must be provided by a SWRL rule engine in the SWRLAPI.
@@ -128,11 +126,6 @@ public interface SWRLRuleEngine
   SWRLRuleRenderer createSWRLRuleRenderer();
 
   /**
-   * @return A SWRL rule engine model
-   */
-  SWRLRuleEngineModel createSWRLRuleEngineModel();
-
-  /**
    * Get the underlying OWL 2 RL reasoner used by the rule and query engine.
    *
    * @return An OWL 2 RL engine
@@ -144,14 +137,14 @@ public interface SWRLRuleEngine
    *
    * @return A rule engine name
    */
-  String getTargetRuleEngineName();
+  String getRuleEngineName();
 
   /**
    * Get the version of the native rule engine implementing this SWRL rule engine.
    *
    * @return A rule engine version
    */
-  String getTargetRuleEngineVersion();
+  String getRuleEngineVersion();
 
   /**
    * A rule engine must also define an {@link org.semanticweb.owlapi.reasoner.OWLReasoner}.
@@ -164,7 +157,7 @@ public interface SWRLRuleEngine
    *
    * @return The rule engine's icon
    */
-  Icon getSWRLRuleEngineIcon();
+  Icon getRuleEngineIcon();
 
   // The following are convenience methods to display rule engine activity
 

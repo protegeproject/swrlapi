@@ -7,7 +7,7 @@ import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.core.OWLLiteralFactory;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
-import org.swrlapi.core.SWRLAPIOWLDatatypeFactory;
+import org.swrlapi.core.OWLDatatypeFactory;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.core.resolvers.OWLClassExpressionResolver;
@@ -74,7 +74,7 @@ public interface SWRLRuleEngineBridge
    * 
    * @return An OWLAPI datatype factory
    */
-  SWRLAPIOWLDatatypeFactory getOWLDatatypeFactory();
+  OWLDatatypeFactory getOWLDatatypeFactory();
 
   /**
    * A target rule engine can create OWL literals using the OWL factory supplied by the bridge.

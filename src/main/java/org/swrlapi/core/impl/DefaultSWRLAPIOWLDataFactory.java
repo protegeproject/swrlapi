@@ -1,7 +1,5 @@
 package org.swrlapi.core.impl;
 
-import java.util.List;
-
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLClass;
@@ -12,19 +10,18 @@ import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
+import org.swrlapi.core.LiteralFactory;
+import org.swrlapi.core.OWLDatatypeFactory;
 import org.swrlapi.core.OWLLiteralFactory;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
 import org.swrlapi.core.SWRLAPIFactory;
-import org.swrlapi.core.SWRLAPILiteralFactory;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
-import org.swrlapi.core.SWRLAPIOWLDatatypeFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
-import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.resolvers.IRIResolver;
-import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
-
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
+
+import java.util.List;
 
 public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements SWRLAPIOWLDataFactory
 {
@@ -32,17 +29,17 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
 
   private final IRIResolver iriResolver;
   private final OWLLiteralFactory owlLiteralFactory;
-  private final SWRLAPIOWLDatatypeFactory swrlapiOWLDatatypeFactory;
-  private final SWRLAPILiteralFactory swrlapiLiteralFactory;
+  private final OWLDatatypeFactory owlDatatypeFactory;
+  private final LiteralFactory literalFactory;
   private final SWRLBuiltInArgumentFactory swrlBuiltInArgumentFactory;
   private final SQWRLResultValueFactory sqwrlResultValueFactory;
 
   public DefaultSWRLAPIOWLDataFactory(SWRLAPIOWLOntology swrlapiOWLOntology)
   {
     this.iriResolver = swrlapiOWLOntology.getIRIResolver();
-    this.swrlapiOWLDatatypeFactory = SWRLAPIFactory.createSWRLAPIOWLDatatypeFactory();
+    this.owlDatatypeFactory = SWRLAPIFactory.createOWLDatatypeFactory();
     this.owlLiteralFactory = SWRLAPIFactory.createOWLLiteralFactory();
-    this.swrlapiLiteralFactory = SWRLAPIFactory.createSWRLAPILiteralFactory();
+    this.literalFactory = SWRLAPIFactory.createSWRLAPILiteralFactory();
     this.swrlBuiltInArgumentFactory = SWRLAPIFactory.createSWRLBuiltInArgumentFactory(swrlapiOWLOntology);
     this.sqwrlResultValueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(swrlapiOWLOntology);
   }
@@ -58,12 +55,6 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
       List<SWRLBuiltInArgument> arguments)
   {
     return new DefaultSWRLAPIBuiltInAtom(ruleName, builtInIRI, builtInPrefixedName, arguments);
-  }
-
-  @Override
-  public SWRLAPIRule getSWRLRule(String ruleName, String ruleText)
-  {
-    throw new SWRLAPIException("SWRL parser not implemented"); // TODO - yes it is!
   }
 
   @Override
@@ -109,9 +100,9 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
   }
 
   @Override
-  public SWRLAPIOWLDatatypeFactory getSWRLAPIOWLDatatypeFactory()
+  public OWLDatatypeFactory getOWLDatatypeFactory()
   {
-    return this.swrlapiOWLDatatypeFactory;
+    return this.owlDatatypeFactory;
   }
 
   @Override
@@ -121,9 +112,9 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
   }
 
   @Override
-  public SWRLAPILiteralFactory getSWRLAPILiteralFactory()
+  public LiteralFactory getLiteralFactory()
   {
-    return this.swrlapiLiteralFactory;
+    return this.literalFactory;
   }
 
   @Override

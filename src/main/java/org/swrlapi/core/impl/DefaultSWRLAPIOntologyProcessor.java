@@ -1,11 +1,5 @@
 package org.swrlapi.core.impl;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotation;
@@ -63,7 +57,7 @@ import org.semanticweb.owlapi.model.OWLTransitiveObjectPropertyAxiom;
 import org.semanticweb.owlapi.model.SWRLRule;
 import org.semanticweb.owlapi.model.parameters.Imports;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
-import org.swrlapi.core.SWRLAPILiteralFactory;
+import org.swrlapi.core.LiteralFactory;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIOntologyProcessor;
@@ -77,6 +71,12 @@ import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.exceptions.SQWRLInvalidQueryNameException;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 {
@@ -1063,9 +1063,9 @@ public class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
     return getSWRLAPIOWLOntology().getOWLDataFactory();
   }
 
-  private SWRLAPILiteralFactory getSWRLAPILiteralFactory()
+  private LiteralFactory getSWRLAPILiteralFactory()
   {
-    return getSWRLAPIOWLDataFactory().getSWRLAPILiteralFactory();
+    return getSWRLAPIOWLDataFactory().getLiteralFactory();
   }
 
   private SQWRLResultValueFactory getSQWRLResultValueFactory()

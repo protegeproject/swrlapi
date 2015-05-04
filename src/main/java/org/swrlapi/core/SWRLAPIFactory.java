@@ -1,13 +1,5 @@
 package org.swrlapi.core;
 
-import java.io.File;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.formats.PrefixDocumentFormat;
 import org.semanticweb.owlapi.model.IRI;
@@ -20,9 +12,9 @@ import org.semanticweb.owlapi.util.SimpleIRIMapper;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.builtins.arguments.impl.DefaultSWRLBuiltInArgumentFactory;
 import org.swrlapi.core.impl.DefaultOWLLiteralFactory;
-import org.swrlapi.core.impl.DefaultSWRLAPILiteralFactory;
+import org.swrlapi.core.impl.DefaultLiteralFactory;
 import org.swrlapi.core.impl.DefaultSWRLAPIOWLDataFactory;
-import org.swrlapi.core.impl.DefaultSWRLAPIOWLDatatypeFactory;
+import org.swrlapi.core.impl.DefaultOWLDatatypeFactory;
 import org.swrlapi.core.impl.DefaultSWRLAPIOWLOntology;
 import org.swrlapi.core.impl.DefaultSWRLAPIOntologyProcessor;
 import org.swrlapi.core.impl.DefaultSWRLRuleAndQueryEngineFactory;
@@ -43,6 +35,12 @@ import org.swrlapi.ui.model.SQWRLQueryEngineModel;
 import org.swrlapi.ui.model.SWRLRuleEngineModel;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
 
+import javax.swing.*;
+import java.io.File;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Factory for generating some of the core entities defined by the SWRLAPI.
  *
@@ -51,7 +49,7 @@ import org.swrlapi.ui.model.SWRLRulesTableModel;
  * @see org.swrlapi.core.SWRLRuleAndQueryEngineFactory
  * @see org.swrlapi.sqwrl.values.SQWRLResultValueFactory
  * @see org.swrlapi.core.SWRLAPIOWLDataFactory
- * @see org.swrlapi.core.SWRLAPIOWLDatatypeFactory
+ * @see OWLDatatypeFactory
  */
 public class SWRLAPIFactory
 {
@@ -180,6 +178,15 @@ public class SWRLAPIFactory
   }
 
   /**
+   *
+   * @return and OWL datatype factory
+   */
+  public static OWLDatatypeFactory getOWLDatatypeFactory()
+  {
+    return new DefaultOWLDatatypeFactory();
+  }
+
+  /**
    * @param swrlapiOWLOntology A SWRLAPI-based OWL ontology
    * @return A SWRLAPI-based OWL data factory
    */
@@ -202,17 +209,17 @@ public class SWRLAPIFactory
   /**
    * @return A SWRLAPI-based literal factory
    */
-  public static SWRLAPILiteralFactory createSWRLAPILiteralFactory()
+  public static LiteralFactory createSWRLAPILiteralFactory()
   {
-    return new DefaultSWRLAPILiteralFactory();
+    return new DefaultLiteralFactory();
   }
 
   /**
    * @return A SWRLAPI-based OWL datatype factory
    */
-  public static SWRLAPIOWLDatatypeFactory createSWRLAPIOWLDatatypeFactory()
+  public static OWLDatatypeFactory createOWLDatatypeFactory()
   {
-    return new DefaultSWRLAPIOWLDatatypeFactory();
+    return new DefaultOWLDatatypeFactory();
   }
 
   /**
@@ -267,7 +274,7 @@ public class SWRLAPIFactory
    * @param swrlRuleEngineModel An SWRL rule engine model
    * @return A SWRL rule engine dialog manager
    */
-  public static SWRLAPIDialogManager createSWRLAPIDialogManager(SWRLRuleEngineModel swrlRuleEngineModel)
+  public static SWRLAPIDialogManager createDialogManager(SWRLRuleEngineModel swrlRuleEngineModel)
   {
     return new DefaultSWRLAPIDialogManager(swrlRuleEngineModel);
   }
@@ -298,6 +305,11 @@ public class SWRLAPIFactory
       return new ImageIcon(url);
     else
       throw new SWRLAPIException("No OWL 2 RL icon found!");
+  }
+
+  public static OWLLiteralFactory getOWLLiteralFactory()
+  {
+    return new DefaultOWLLiteralFactory();
   }
 
   private static void addDefaultPrefixes(OWLOntology ontology, DefaultPrefixManager prefixManager)
