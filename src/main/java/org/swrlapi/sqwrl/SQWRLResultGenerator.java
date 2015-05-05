@@ -1,17 +1,16 @@
 package org.swrlapi.sqwrl;
 
-import java.util.List;
-
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.values.SQWRLResultValue;
 
+import java.util.List;
+
 /**
  * Interface to configure a SQWRL query result and then add data to it. See the
- * {@link org.swrlapi.sqwrl.DefaultSQWRLResult} class for detailed comments.
+ * <tt>org.swrlapi.factory.DefaultSQWRLResult</tt> class for detailed comments.
  *
  * @see org.swrlapi.sqwrl.SQWRLQuery
  * @see org.swrlapi.sqwrl.SQWRLQueryEngine
- * @see org.swrlapi.sqwrl.DefaultSQWRLResult
  */
 public interface SQWRLResultGenerator
 {

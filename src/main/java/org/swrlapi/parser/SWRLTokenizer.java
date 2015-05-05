@@ -18,7 +18,7 @@ import java.util.Set;
  * @see org.swrlapi.parser.SWRLParseException
  * @see org.swrlapi.parser.SWRLIncompleteRuleException
  */
-public class SWRLTokenizer
+class SWRLTokenizer
 {
   private static final char wordChars[] = { ':', '_', '/', '#' };
   private static final char ordinaryChars[] = { '-', '.', '^', '<', '>', '(', ')', '?' };

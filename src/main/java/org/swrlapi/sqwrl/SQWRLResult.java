@@ -1,7 +1,5 @@
 package org.swrlapi.sqwrl;
 
-import java.util.List;
-
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
@@ -11,15 +9,16 @@ import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLResultValue;
 
+import java.util.List;
+
 /**
  * Interface that defines methods to process results from a SQWRL query.
  * <p>
- * See the {@link org.swrlapi.sqwrl.DefaultSQWRLResult} class for detailed comments.
+ * See the <tt>org.swrlapi.factory.DefaultSQWRLResult</tt> class for detailed comments.
  *
  * @see org.swrlapi.sqwrl.SQWRLQuery
  * @see org.swrlapi.sqwrl.values.SQWRLResultValue
  * @see org.swrlapi.sqwrl.SQWRLResultGenerator
- * @see org.swrlapi.sqwrl.DefaultSQWRLResult
  */
 public interface SQWRLResult
 {

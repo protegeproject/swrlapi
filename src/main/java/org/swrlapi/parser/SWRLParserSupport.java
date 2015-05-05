@@ -1,10 +1,5 @@
 package org.swrlapi.parser;
 
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
-
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
@@ -42,7 +37,11 @@ import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.core.OWLLiteralFactory;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
-import org.swrlapi.exceptions.SWRLAPILiteralException;
+
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Provides support methods used by the {@link org.swrlapi.parser.SWRLParser}.
@@ -258,7 +257,7 @@ public class SWRLParserSupport
     try {
       OWLLiteral literal = getOWLLiteralFactory().getOWLLiteral(lexicalValue, owlDatatype);
       return getOWLDataFactory().getSWRLLiteralArgument(literal);
-    } catch (SWRLAPILiteralException e) {
+    } catch (RuntimeException e) {
       throw new SWRLParseException(e.getMessage());
     }
   }

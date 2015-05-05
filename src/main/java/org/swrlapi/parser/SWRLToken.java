@@ -7,7 +7,7 @@ package org.swrlapi.parser;
  * @see org.swrlapi.parser.SWRLTokenizer
  * @see org.swrlapi.parser.SWRLParser
  */
-public class SWRLToken
+class SWRLToken
 {
   private final SWRLTokenType tokenType;
   private final String value;

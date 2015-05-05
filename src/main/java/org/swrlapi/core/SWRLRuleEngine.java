@@ -20,7 +20,6 @@ import java.util.Set;
  *
  * @see org.swrlapi.core.SWRLAPIRule
  * @see org.swrlapi.bridge.TargetSWRLRuleEngine
- * @see org.swrlapi.core.impl.DefaultSWRLRuleAndQueryEngine
  */
 public interface SWRLRuleEngine
 {
@@ -73,7 +72,7 @@ public interface SWRLRuleEngine
 
   /**
    * @param ruleName The name of the rule
-   * @param rule The rule text
+   * @param rule     The rule text
    * @return A SWRL rule
    * @throws SWRLParseException If an error occurs during parsing
    */
@@ -81,8 +80,8 @@ public interface SWRLRuleEngine
 
   /**
    * @param ruleName The name of the rule
-   * @param rule The rule text
-   * @param comment A comment associated with the rule
+   * @param rule     The rule text
+   * @param comment  A comment associated with the rule
    * @param isActive Is the rule active
    * @return A SWRL rule
    * @throws SWRLParseException If an error occurs during parsing
@@ -154,7 +153,6 @@ public interface SWRLRuleEngine
   OWLReasoner getOWLReasoner();
 
   /**
-   *
    * @return The rule engine's icon
    */
   Icon getRuleEngineIcon();

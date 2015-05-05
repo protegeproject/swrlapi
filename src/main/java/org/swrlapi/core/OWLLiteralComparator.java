@@ -1,16 +1,16 @@
 package org.swrlapi.core;
 
-import java.net.URI;
-import java.util.Comparator;
-
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
-import org.swrlapi.builtins.arguments.impl.NaturalOrderComparator;
 import org.swrlapi.core.xsd.XSDDate;
 import org.swrlapi.core.xsd.XSDDateTime;
 import org.swrlapi.core.xsd.XSDDuration;
 import org.swrlapi.core.xsd.XSDTime;
 import org.swrlapi.exceptions.SWRLAPIException;
+import org.swrlapi.factory.NaturalOrderComparator;
+
+import java.net.URI;
+import java.util.Comparator;
 
 /**
  * A very basic literal comparator for core datatypes. Now OWL specification conformant.

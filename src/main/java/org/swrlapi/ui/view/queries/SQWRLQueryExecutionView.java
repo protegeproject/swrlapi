@@ -3,7 +3,7 @@ package org.swrlapi.ui.view.queries;
 import javax.swing.Icon;
 import javax.swing.JTabbedPane;
 
-import org.swrlapi.core.SWRLAPIFactory;
+import org.swrlapi.factory.SWRLAPIFactory;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.ui.model.SQWRLQueryEngineModel;

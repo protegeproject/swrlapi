@@ -3,7 +3,6 @@ package org.swrlapi.builtins.arguments;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.SWRLVariable;
-import org.swrlapi.core.impl.DefaultSWRLAPIOWLOntology;
 
 /**
  * Represents an OWL named entity argument to a built-in atom.
@@ -15,7 +14,6 @@ import org.swrlapi.core.impl.DefaultSWRLAPIOWLOntology;
  * <p>
  * A more principled approach should be identified (which would likely require modifying the OWLAPI).
  * 
- * @see DefaultSWRLAPIOWLOntology#convertSWRLVariable2SWRLBuiltInArgument
  */
 public interface SWRLNamedBuiltInArgument extends SWRLBuiltInArgument, SWRLVariable
 {

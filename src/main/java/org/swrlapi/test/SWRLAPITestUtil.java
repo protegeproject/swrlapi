@@ -24,7 +24,7 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.OWLSameIndividualAxiom;
 import org.semanticweb.owlapi.model.PrefixManager;
-import org.swrlapi.core.SWRLAPIFactory;
+import org.swrlapi.factory.SWRLAPIFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 
 public class SWRLAPITestUtil
