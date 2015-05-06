@@ -228,7 +228,8 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
     }
   }
 
-  private void updateView()
+  @Override
+  public void updateView()
   {
     if (this.swrlapiView != null)
       this.swrlapiView.update();

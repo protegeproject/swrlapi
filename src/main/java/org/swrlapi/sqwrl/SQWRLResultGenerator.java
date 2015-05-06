@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * Interface to configure a SQWRL query result and then add data to it. See the
- * <tt>org.swrlapi.factory.DefaultSQWRLResult</tt> class for detailed comments.
+ * <tt>org.swrlapi.factory.SQWRLResultManager</tt> class for detailed comments.
  *
  * @see org.swrlapi.sqwrl.SQWRLQuery
  * @see org.swrlapi.sqwrl.SQWRLQueryEngine

@@ -1,6 +1,7 @@
 package org.swrlapi.ui.action;
 
 import org.swrlapi.ui.dialog.SWRLAPIDialogManager;
+import org.swrlapi.ui.model.FileBackedOWLOntologyModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,17 +11,19 @@ import java.io.File;
 
 public class SaveAsAction implements ActionListener
 {
-  final Component parent;
-  final SWRLAPIDialogManager dialogManager;
+  private final Component parent;
+  private final SWRLAPIDialogManager dialogManager;
+  private final FileBackedOWLOntologyModel ontologyModel;
 
   public static final String TITLE = "Save As";
   private static final String MESSAGE = "Save Ontology";
   private static final String EXTENSON = "owl";
 
-  public SaveAsAction(Component parent, SWRLAPIDialogManager dialogManager)
+  public SaveAsAction(Component parent, FileBackedOWLOntologyModel ontologyModel, SWRLAPIDialogManager dialogManager)
   {
     this.parent = parent;
     this.dialogManager = dialogManager;
+    this.ontologyModel = ontologyModel;
   }
 
   @Override public void actionPerformed(ActionEvent e)

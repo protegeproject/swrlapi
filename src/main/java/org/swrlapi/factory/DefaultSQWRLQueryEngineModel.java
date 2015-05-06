@@ -18,4 +18,7 @@ public class DefaultSQWRLQueryEngineModel extends DefaultSWRLRuleEngineModel imp
   {
     return this.queryEngine;
   }
+
+	@Override
+	public void updateView() { }
 }

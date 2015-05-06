@@ -55,7 +55,7 @@ public class OWL2RLRuleActivationButton extends JCheckBox implements ActionListe
     else
       getOWL2RLModel().getOWL2RLEngine().disableRules(this.rule);
 
-    getOWL2RLModel().fireUpdate();
+    getOWL2RLModel().updateView();
   }
 
   private void initialize()

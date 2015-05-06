@@ -30,7 +30,8 @@ public class OWL2RLModel implements SWRLAPIModel
     return this.owl2RLEngine;
   }
 
-  public void fireUpdate()
+	@Override
+  public void updateView()
   {
     this.owl2RLRuleTablesView.update();
   }

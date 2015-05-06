@@ -59,4 +59,7 @@ public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel
   {
     this.swrlRulesTableModel.clearModifiedStatus();
   }
+
+	@Override
+	public void updateView() { this.swrlRulesTableModel.updateView(); }
 }

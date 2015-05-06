@@ -42,6 +42,7 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 import org.swrlapi.ui.controller.SWRLRuleEngineController;
 import org.swrlapi.ui.dialog.SWRLAPIDialogManager;
+import org.swrlapi.ui.model.FileBackedOWLOntologyModel;
 import org.swrlapi.ui.model.SQWRLQueryEngineModel;
 import org.swrlapi.ui.model.SWRLAutoCompleter;
 import org.swrlapi.ui.model.SWRLRuleEngineModel;
@@ -178,9 +179,9 @@ public class SWRLAPIFactory
    * @param sqwrlResultValueFactory A SQWRL result value factory
    * @return A SQWRL result
    */
-  public static DefaultSQWRLResult getSQWRLResult(SQWRLResultValueFactory sqwrlResultValueFactory)
+  public static SQWRLResultManager getSQWRLResult(SQWRLResultValueFactory sqwrlResultValueFactory)
   {
-    return new DefaultSQWRLResult(sqwrlResultValueFactory);
+    return new SQWRLResultManager(sqwrlResultValueFactory);
   }
 
   /**
@@ -371,7 +372,7 @@ public class SWRLAPIFactory
 
   public static SQWRLResultGenerator createSQWRLResultGenerator(SQWRLResultValueFactory sqwrlResultValueFactory)
   {
-    return new DefaultSQWRLResult(sqwrlResultValueFactory);
+    return new SQWRLResultManager(sqwrlResultValueFactory);
   }
 
   /**
@@ -410,6 +411,16 @@ public class SWRLAPIFactory
     return new DefaultSWRLAPIDialogManager(swrlRuleEngineModel);
   }
 
+  /**
+   *
+   * @param ontology An OWL ontology
+   * @param file The file containing it
+   * @return An ontology model
+   */
+  public static FileBackedOWLOntologyModel createFileBackedOWLOntologyModel(OWLOntology ontology, File file)
+  {
+    return new DefaultFileBackedOWLOntologyModel(ontology, file);
+  }
   /**
    * @return A SQWRL icon
    * @throws SWRLAPIException If an icon cannot be found

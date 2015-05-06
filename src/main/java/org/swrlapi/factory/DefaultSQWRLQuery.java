@@ -29,7 +29,7 @@ class DefaultSQWRLQuery implements SQWRLQuery
   private final String queryName;
   private final List<SWRLAtom> bodyAtoms;
   private final List<SWRLAtom> headAtoms;
-  private final DefaultSQWRLResult sqwrlResult;
+  private final SQWRLResultManager sqwrlResult;
   // Map of collection name to group arguments. Applies only to grouped collections.
   private final Map<String, List<SWRLBuiltInArgument>> collectionGroupArgumentsMap;
   private final LiteralFactory literalFactory;

@@ -63,26 +63,25 @@ import java.util.Set;
  * An example configuration, data generation, and result retrieval is:
  *
  * <pre>
- * SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(...);
- * SQWRLResultGenerator resultGenerator = swrlapiOWLOntology.createSQWRLResultGenerator();
+ * SQWRLResultManager resultManager = SWRLAPIFactory.createSQWRLResultManager(...);
+ *
+ * resultManager.addColumn(&quot;name&quot;);
+ * resultManager.addAggregateColumn(&quot;average&quot;, SQWRLResultNames.AvgAggregateFunction);
+ * resultManager.configured();
  * 
- * resultGenerator.addColumn(&quot;name&quot;);
- * resultGenerator.addAggregateColumn(&quot;average&quot;, SQWRLResultNames.AvgAggregateFunction);
- * resultGenerator.configured();
- * 
- * resultGenerator.openRow();
- * resultGenerator.addCell(valueFactory.getIndividualValue(&quot;Fred&quot;));
- * resultGenerator.addCell(valueFactory.getValue(27));
- * resultGenerator.closeRow();
- * resultGenerator.openRow();
- * resultGenerator.addCell(valueFactory.getIndividualValue(&quot;Joe&quot;));
- * resultGenerator.addCell(valueFactory.getLiteralValue(34));
- * resultGenerator.closeRow();
- * resultGenerator.openRow();
- * resultGenerator.addCell(valueFactory.getIndividualValue(&quot;Joe&quot;));
- * resultGenerator.addCell(valueFactory.getLiteralValue(21));
- * resultGenerator.closeRow();
- * resultGenerator.prepared();
+ * resultManager.openRow();
+ * resultManager.addCell(valueFactory.getIndividualValue(&quot;Fred&quot;));
+ * resultManager.addCell(valueFactory.getValue(27));
+ * resultManager.closeRow();
+ * resultManager.openRow();
+ * resultManager.addCell(valueFactory.getIndividualValue(&quot;Joe&quot;));
+ * resultManager.addCell(valueFactory.getLiteralValue(34));
+ * resultManager.closeRow();
+ * resultManager.openRow();
+ * resultManager.addCell(valueFactory.getIndividualValue(&quot;Joe&quot;));
+ * resultManager.addCell(valueFactory.getLiteralValue(21));
+ * resultManager.closeRow();
+ * resultManager.prepared();
  * </pre>
  * <p>
  * The result is now available for reading. The interface {@link org.swrlapi.sqwrl.SQWRLResult} defines the assessor
@@ -96,7 +95,7 @@ import java.util.Set;
  * {@link org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue}, representing OWL data properties, and (6)
  * {@link org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue}, representing OWL annotation properties.
  *
- * The folliwing is an example of dealing with a {@link org.swrlapi.sqwrl.SQWRLResult}:
+ * The following is an example of dealing with a {@link org.swrlapi.sqwrl.SQWRLResult}:
  * 
  * <pre>
  * SQWRLResult result = ...
@@ -109,7 +108,7 @@ import java.util.Set;
  * }
  * </pre>
  */
-class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Serializable
+class SQWRLResultManager implements SQWRLResult, SQWRLResultGenerator, Serializable
 {
   private static final long serialVersionUID = 1L;
 
@@ -129,7 +128,7 @@ class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Serializa
   private boolean notLastSelection = false, nthSliceSelection = false, notNthSliceSelection = false;
   private boolean nthLastSliceSelection = false, notNthLastSliceSelection = false;
 
-  public DefaultSQWRLResult(SQWRLResultValueFactory sqwrlResultValueFactory)
+  public SQWRLResultManager(SQWRLResultValueFactory sqwrlResultValueFactory)
   {
     this.sqwrlResultValueFactory = sqwrlResultValueFactory;
 
@@ -143,7 +142,6 @@ class DefaultSQWRLResult implements SQWRLResult, SQWRLResultGenerator, Serializa
     this.selectedColumnIndexes = new ArrayList<>();
     this.orderByColumnIndexes = new ArrayList<>();
     this.columnDisplayNames = new ArrayList<>();
-
     this.numberOfColumns = 0;
     this.isOrdered = this.isAscending = this.isDistinct = false;
 
