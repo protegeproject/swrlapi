@@ -1,5 +1,6 @@
 package org.swrlapi.ui.action;
 
+import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 import org.swrlapi.ui.dialog.SWRLAPIDialogManager;
 import org.swrlapi.ui.model.FileBackedOWLOntologyModel;
 
@@ -37,14 +38,12 @@ public class SaveAsAction implements ActionListener
 
     if (fileChooser.showOpenDialog(this.parent) == JFileChooser.APPROVE_OPTION) {
       File file = fileChooser.getSelectedFile();
-      String fileName = file.getAbsolutePath();
 
-      // if (!fileName.endsWith(".owl"))
-      // fileName = fileName.concat(".owl");
-      // clear modified statis
-
-      //https://github.com/owlcs/owlapi/blob/version4/contract/src/test/java/org/semanticweb/owlapi/examples/Examples.java#L167
+			try {
+				this.ontologyModel.saveAs(file);
+			} catch (OWLOntologyStorageException e) {
+				this.dialogManager.showErrorMessageDialog(this.parent, e.getMessage(), "Error");
+			}
     }
-    //this.dialogManager().showErrorMessageDialog(parent, ex.getMessage());
   }
 }

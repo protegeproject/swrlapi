@@ -1,6 +1,7 @@
 package org.swrlapi.ui.model;
 
 import org.swrlapi.owl2rl.OWL2RLEngine;
+import org.swrlapi.ui.view.SWRLAPIView;
 import org.swrlapi.ui.view.owl2rl.OWL2RLRuleTablesView;
 
 /**

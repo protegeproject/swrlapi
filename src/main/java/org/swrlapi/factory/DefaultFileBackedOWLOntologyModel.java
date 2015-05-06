@@ -73,4 +73,7 @@ class DefaultFileBackedOWLOntologyModel implements FileBackedOWLOntologyModel, O
 	{
 		this.hasOntologyChanged = true;
 	}
+
+	@Override
+	public void updateView() {}
 }

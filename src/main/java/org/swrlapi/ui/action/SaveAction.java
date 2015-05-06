@@ -1,5 +1,6 @@
 package org.swrlapi.ui.action;
 
+import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 import org.swrlapi.ui.dialog.SWRLAPIDialogManager;
 import org.swrlapi.ui.model.FileBackedOWLOntologyModel;
 
@@ -16,7 +17,6 @@ public class SaveAction implements ActionListener
 	private final FileBackedOWLOntologyModel ontologyModel;
 
 	public static final String TITLE = "Save";
-	private static final String MESSAGE = "Save Ontology";
 
 	public SaveAction(Component parent, FileBackedOWLOntologyModel ontologyModel, SWRLAPIDialogManager dialogManager)
 	{
@@ -32,9 +32,10 @@ public class SaveAction implements ActionListener
 
 	public void save()
 	{
-		// clear modified status
-
-		//https://github.com/owlcs/owlapi/blob/version4/contract/src/test/java/org/semanticweb/owlapi/examples/Examples.java#L167
-		//this.dialogManager().showErrorMessageDialog(parent, ex.getMessage());
+		try {
+			this.ontologyModel.save();
+		} catch (OWLOntologyStorageException e) {
+			this.dialogManager.showErrorMessageDialog(this.parent, e.getMessage(), "Error");
+		}
 	}
 }

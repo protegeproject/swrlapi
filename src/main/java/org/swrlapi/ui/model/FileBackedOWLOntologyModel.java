@@ -10,7 +10,7 @@ import org.semanticweb.owlapi.model.OWLOntologyStorageException;
  *
  * @see org.semanticweb.owlapi.model.OWLOntology
  */
-public interface FileBackedOWLOntologyModel
+public interface FileBackedOWLOntologyModel extends SWRLAPIModel
 {
 	/**
 	 * @return The underlying OWL ontology
