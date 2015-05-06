@@ -52,7 +52,7 @@ public class Instant
     this.granularity = granularity;
 
     clearGranuleCountArray();
-  } // Instant
+  }
 
   public Instant(Temporal temporal, java.sql.Date date) throws TemporalException
   {

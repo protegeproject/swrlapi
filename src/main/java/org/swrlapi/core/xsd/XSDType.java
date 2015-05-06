@@ -14,7 +14,6 @@ public abstract class XSDType<T> implements Comparable<T>
   {
     this.content = content;
     this.iri = iri;
-    validate();
   }
 
   public abstract String getContent();

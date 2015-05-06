@@ -29,7 +29,12 @@ public class OWLClassExpressionResolver
     this.id2OWLClassExpression = new HashMap<>();
     this.owlClassExpression2ID = new HashMap<>();
     this.owlDataFactory = owlDataFactory;
-    reset();
+
+    this.id2OWLClassExpression.put(OWLRDFVocabulary.OWL_THING.getPrefixedName(), owlDataFactory.getOWLThing());
+    this.owlClassExpression2ID.put(owlDataFactory.getOWLThing(), OWLRDFVocabulary.OWL_THING.getPrefixedName());
+
+    this.id2OWLClassExpression.put(OWLRDFVocabulary.OWL_NOTHING.getPrefixedName(), owlDataFactory.getOWLNothing());
+    this.owlClassExpression2ID.put(owlDataFactory.getOWLNothing(), OWLRDFVocabulary.OWL_NOTHING.getPrefixedName());
   }
 
   public void reset()

@@ -1,13 +1,12 @@
 package org.swrlapi.ui.view.rules;
 
-import javax.swing.Icon;
-import javax.swing.JSplitPane;
-
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.ui.dialog.SWRLAPIDialogManager;
 import org.swrlapi.ui.model.SWRLRuleEngineModel;
 import org.swrlapi.ui.view.SWRLAPIView;
 import org.swrlapi.ui.view.SWRLRulesTableView;
+
+import javax.swing.*;
 
 /**
  * Component that presents a SWRL editor and rule execution graphical interface. It can be used to embed SWRL rule
@@ -25,9 +24,8 @@ public class SWRLRulesView extends JSplitPane implements SWRLAPIView
   private final SWRLRuleExecutionView ruleExecutionView;
 
   public SWRLRulesView(SWRLRuleEngineModel swrlRuleEngineModel, SWRLAPIDialogManager applicationDialogManager,
-      Icon ruleEngineIcon) throws SWRLAPIException
+    Icon ruleEngineIcon) throws SWRLAPIException
   {
-
     this.ruleTablesView = new SWRLRulesTableView(swrlRuleEngineModel, applicationDialogManager);
     this.ruleExecutionView = new SWRLRuleExecutionView(swrlRuleEngineModel, ruleEngineIcon);
 
@@ -37,8 +35,7 @@ public class SWRLRulesView extends JSplitPane implements SWRLAPIView
     setBottomComponent(this.ruleExecutionView);
   }
 
-  @Override
-  public void update()
+  @Override public void update()
   {
     this.ruleTablesView.update();
     this.ruleExecutionView.update();

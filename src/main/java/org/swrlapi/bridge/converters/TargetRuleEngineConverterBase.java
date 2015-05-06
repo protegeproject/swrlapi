@@ -1,7 +1,11 @@
 package org.swrlapi.bridge.converters;
 
 import org.swrlapi.bridge.SWRLRuleEngineBridge;
-import org.swrlapi.core.resolvers.*;
+import org.swrlapi.core.resolvers.IRIResolver;
+import org.swrlapi.core.resolvers.OWLClassExpressionResolver;
+import org.swrlapi.core.resolvers.OWLDataPropertyExpressionResolver;
+import org.swrlapi.core.resolvers.OWLDataRangeResolver;
+import org.swrlapi.core.resolvers.OWLObjectPropertyExpressionResolver;
 
 /**
  * This interface represents provides utility methods converters implemented by target rule engines to convert

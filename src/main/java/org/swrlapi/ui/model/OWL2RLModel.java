@@ -1,7 +1,6 @@
 package org.swrlapi.ui.model;
 
 import org.swrlapi.owl2rl.OWL2RLEngine;
-import org.swrlapi.ui.view.SWRLAPIView;
 import org.swrlapi.ui.view.owl2rl.OWL2RLRuleTablesView;
 
 /**
@@ -31,7 +30,7 @@ public class OWL2RLModel implements SWRLAPIModel
     return this.owl2RLEngine;
   }
 
-	@Override
+  @Override
   public void updateView()
   {
     this.owl2RLRuleTablesView.update();

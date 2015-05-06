@@ -1,12 +1,12 @@
 package org.swrlapi.ui.model;
 
-import java.io.File;
-
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 
+import java.io.File;
+
 /**
- * Describes a model that can be used to build a MVC-based GUI that uses a file-backed OWL ontology.
+ * Describes a model that can be used to build an MVC-based GUI that uses a file-backed OWL ontology.
  *
  * @see org.semanticweb.owlapi.model.OWLOntology
  */
