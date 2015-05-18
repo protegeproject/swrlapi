@@ -10,16 +10,19 @@ import org.semanticweb.owlapi.model.OWLOntologyChange;
 import org.semanticweb.owlapi.model.OWLOntologyChangeListener;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 import org.swrlapi.ui.model.FileBackedOWLOntologyModel;
+import org.swrlapi.ui.model.SWRLRuleEngineModel;
 
 class DefaultFileBackedOWLOntologyModel implements FileBackedOWLOntologyModel, OWLOntologyChangeListener
 {
 	private final OWLOntology ontology;
+	private final SWRLRuleEngineModel swrlRuleEngineModel;
 	private File file;
 	private boolean hasOntologyChanged;
 
-	public DefaultFileBackedOWLOntologyModel(OWLOntology ontology, File file)
+	public DefaultFileBackedOWLOntologyModel(OWLOntology ontology, SWRLRuleEngineModel swrlRuleEngineModel, File file)
 	{
 		this.ontology = ontology;
+		this.swrlRuleEngineModel = swrlRuleEngineModel;
 		this.file = file;
 		this.hasOntologyChanged = false;
 
@@ -32,6 +35,11 @@ class DefaultFileBackedOWLOntologyModel implements FileBackedOWLOntologyModel, O
 		return this.ontology;
 	}
 
+	@Override
+	public SWRLRuleEngineModel getSWRLRuleEngineModel()
+	{
+		return this.swrlRuleEngineModel;
+	}
 	@Override
 	public File getBackingFile()
 	{
@@ -75,5 +83,8 @@ class DefaultFileBackedOWLOntologyModel implements FileBackedOWLOntologyModel, O
 	}
 
 	@Override
-	public void updateView() {}
+	public void updateView()
+	{
+	  this.swrlRuleEngineModel.updateView();
+	}
 }

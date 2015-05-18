@@ -414,12 +414,14 @@ public class SWRLAPIFactory
   /**
    *
    * @param ontology An OWL ontology
+	 * @param swrlRuleEngineModel A SWRL rule engine model
    * @param file The file containing it
    * @return An ontology model
    */
-  public static FileBackedOWLOntologyModel createFileBackedOWLOntologyModel(OWLOntology ontology, File file)
+  public static FileBackedOWLOntologyModel createFileBackedOWLOntologyModel(OWLOntology ontology,
+			SWRLRuleEngineModel swrlRuleEngineModel, File file)
   {
-    return new DefaultFileBackedOWLOntologyModel(ontology, file);
+    return new DefaultFileBackedOWLOntologyModel(ontology, swrlRuleEngineModel, file);
   }
   /**
    * @return A SQWRL icon

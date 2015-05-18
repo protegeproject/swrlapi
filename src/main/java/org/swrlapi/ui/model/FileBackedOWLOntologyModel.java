@@ -7,16 +7,9 @@ import java.io.File;
 
 /**
  * Describes a model that can be used to build an MVC-based GUI that uses a file-backed OWL ontology.
- *
- * @see org.semanticweb.owlapi.model.OWLOntology
  */
-public interface FileBackedOWLOntologyModel extends SWRLAPIModel
+public interface FileBackedOWLOntologyModel extends OWLOntologyModel
 {
-	/**
-	 * @return The underlying OWL ontology
-	 */
-	OWLOntology getOWLOntology();
-
 	/**
 	 * @return The file containing the OWL ontology
 	 */
@@ -34,14 +27,4 @@ public interface FileBackedOWLOntologyModel extends SWRLAPIModel
 	 * @throws OWLOntologyStorageException If an error occurs during saving
 	 */
 	void saveAs(File file) throws OWLOntologyStorageException;
-
-	/**
-	 * @return True if the ontology has changed since construction or the last call to {@link #resetOntologyChanged()}.
-	 */
-	boolean hasOntologyChanged();
-
-	/**
-	 * Reset the ontology changed status
-	 */
-	void resetOntologyChanged();
 }

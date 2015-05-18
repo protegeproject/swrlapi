@@ -1,6 +1,7 @@
 package org.swrlapi.ui.model;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -33,7 +34,7 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
   private final SWRLRuleRenderer swrlRuleRenderer;
   private final SortedMap<String, SWRLRuleModel> swrlRuleModels; // rule name -> SWRLRuleModel
 
-  private SWRLAPIView swrlapiView = null;
+  private Optional<SWRLAPIView> view = Optional.empty();
   private boolean isModified = false;
 
   public SWRLRulesTableModel(SWRLRuleEngine swrlRuleEngine, SWRLRuleRenderer swrlRuleRenderer)
@@ -52,7 +53,7 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 
   public void setView(SWRLAPIView view)
   {
-    this.swrlapiView = view;
+    this.view = Optional.of(view);
   }
 
   public Set<SWRLRuleModel> getSWRLRuleModels()
@@ -231,8 +232,8 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
   @Override
   public void updateView()
   {
-    if (this.swrlapiView != null)
-      this.swrlapiView.update();
+    if (this.view.isPresent())
+			this.view.get().update();
   }
 
   private SWRLRuleModel getSWRLRuleModelByIndex(int ruleIndex)
