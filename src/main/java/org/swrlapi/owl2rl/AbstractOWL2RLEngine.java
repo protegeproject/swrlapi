@@ -28,8 +28,8 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
   private Set<OWL2RLRule> enabledRules;
   private boolean ruleSelectionChanged;
 
-  public AbstractOWL2RLEngine(OWL2RLPersistenceLayer persistenceLayer, Set<OWL2RLRule> unsupportedRules,
-      Set<OWL2RLRule> permanentlyOnRules, Set<Set<OWL2RLRule>> groupedRuleSets)
+  protected AbstractOWL2RLEngine(OWL2RLPersistenceLayer persistenceLayer, Set<OWL2RLRule> unsupportedRules,
+    Set<OWL2RLRule> permanentlyOnRules, Set<Set<OWL2RLRule>> groupedRuleSets)
   {
     this.persistenceLayer = persistenceLayer;
 
@@ -226,10 +226,6 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
     return this.enabledRules.contains(rule);
   }
 
-  public boolean isRuleSwitchable(OWL2RLRule rule)
-  {
-    return this.switchableRules.contains(rule);
-  }
 
   @Override
   public boolean hasEnabledRules(OWL2RLRuleTable table)
@@ -277,5 +273,10 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
         result.addAll(group);
     }
     return result;
+  }
+
+  private boolean isRuleSwitchable(OWL2RLRule rule)
+  {
+    return this.switchableRules.contains(rule);
   }
 }

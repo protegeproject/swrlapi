@@ -1,7 +1,5 @@
 package org.swrlapi.builtins;
 
-import java.util.List;
-
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
@@ -9,8 +7,14 @@ import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
+import org.swrlapi.core.xsd.XSDDate;
+import org.swrlapi.core.xsd.XSDDateTime;
+import org.swrlapi.core.xsd.XSDDuration;
+import org.swrlapi.core.xsd.XSDTime;
 import org.swrlapi.exceptions.InvalidSWRLBuiltInArgumentNumberException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
+
+import java.util.List;
 
 /**
  * Utility methods for dealing with input arguments to SWRL built-ins.
@@ -35,31 +39,31 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @throws SWRLBuiltInException If the argument is not bound
    */
   void checkThatArgumentIsBound(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return True if the specified argument is unbound
    * @throws SWRLBuiltInException If an error occurs during processing
    */
   boolean isUnboundArgument(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
   /**
-   * @param ruleName The name of the rule
+   * @param ruleName    The name of the rule
    * @param builtInName The name of the built-in
-   * @param arguments The built-in arguments
+   * @param arguments   The built-in arguments
    * @throws SWRLBuiltInException If unbound arguments exist
    */
   void checkForUnboundArguments(String ruleName, String builtInName, List<SWRLBuiltInArgument> arguments)
-      throws SWRLBuiltInException;
+    throws SWRLBuiltInException;
 
   /**
    * Get 0-offset position of first unbound argument; return -1 if no unbound arguments are found.
-   * 
+   *
    * @param arguments The built-in arguments
    * @return The first unbound argument
    * @throws SWRLBuiltInException If an error occurs during processing
@@ -74,18 +78,18 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param arguments The built-in arguments
-   * @param message The exception message used if unbound arguments are found
+   * @param message   The exception message used if unbound arguments are found
    * @throws SWRLBuiltInException If at least one argument is unbound
    */
   void checkForUnboundArguments(List<SWRLBuiltInArgument> arguments, String message) throws SWRLBuiltInException;
 
   /**
    * @param arguments The built-in arguments
-   * @param message The exception message used if non bound variables are found
+   * @param message   The exception message used if non bound variables are found
    * @throws SWRLBuiltInException If not all argument are bound variables
    */
   void checkThatArgumentsWereBoundVariables(List<SWRLBuiltInArgument> arguments, String message)
-      throws SWRLBuiltInException;
+    throws SWRLBuiltInException;
 
   /**
    * @param arguments The built-in arguments
@@ -95,44 +99,44 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param expecting Number of expected arguments
-   * @param actual Actual number of arguments
+   * @param actual    Actual number of arguments
    * @throws InvalidSWRLBuiltInArgumentNumberException If the expected and actual number are not equal
    */
   void checkNumberOfArgumentsEqualTo(int expecting, int actual) throws InvalidSWRLBuiltInArgumentNumberException;
 
   /**
    * @param expectingAtLeast Minimum number of expected arguments
-   * @param actual Actual number of arguments
+   * @param actual           Actual number of arguments
    * @throws InvalidSWRLBuiltInArgumentNumberException If the condition is not met
    */
   void checkNumberOfArgumentsAtLeast(int expectingAtLeast, int actual) throws InvalidSWRLBuiltInArgumentNumberException;
 
   /**
    * @param expectingAtMost Maximum number of expected arguments
-   * @param actual Actual number of arguments
+   * @param actual          Actual number of arguments
    * @throws InvalidSWRLBuiltInArgumentNumberException If the condition is not met
    */
   void checkNumberOfArgumentsAtMost(int expectingAtMost, int actual) throws InvalidSWRLBuiltInArgumentNumberException;
 
   /**
    * @param expectingAtLeast Minimum number of expected arguments
-   * @param expectingAtMost Maximum number of expected arguments
-   * @param actual Actual number of arguments
+   * @param expectingAtMost  Maximum number of expected arguments
+   * @param actual           Actual number of arguments
    * @throws InvalidSWRLBuiltInArgumentNumberException If the condition is not met
    */
   void checkNumberOfArgumentsInRange(int expectingAtLeast, int expectingAtMost, int actual)
-      throws InvalidSWRLBuiltInArgumentNumberException;
+    throws InvalidSWRLBuiltInArgumentNumberException;
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @throws SWRLBuiltInException If the argument number is invalid
    */
   void checkArgumentNumber(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return An IRI representation of the specified argument
    * @throws SWRLBuiltInException If the specified argument cannot be converted to an IRI
    */
@@ -140,24 +144,24 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @throws SWRLBuiltInException If the argument does not meet the check
    */
   void checkThatArgumentIsAClassPropertyOrIndividual(int argumentNumber, List<SWRLBuiltInArgument> arguments)
-      throws SWRLBuiltInException;
+    throws SWRLBuiltInException;
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return True is the argument is a class, property or individual
    * @throws SWRLBuiltInException If an error occurs during processing
    */
   boolean isArgumentAClassPropertyOrIndividual(int argumentNumber, List<SWRLBuiltInArgument> arguments)
-      throws SWRLBuiltInException;
+    throws SWRLBuiltInException;
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return The IRI of the specified class argument
    * @throws SWRLBuiltInException If an error occurs during IRI generation
    */
@@ -165,16 +169,16 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return A class built-in argument
    * @throws SWRLBuiltInException If an error occurs during argument generation
    */
   SWRLClassBuiltInArgument getArgumentAsAClass(int argumentNumber, List<SWRLBuiltInArgument> arguments)
-      throws SWRLBuiltInException;
+    throws SWRLBuiltInException;
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return True if the specified argument is a class
    * @throws SWRLBuiltInException If an error occurs during processing
    */
@@ -182,14 +186,14 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @throws SWRLBuiltInException If the specified argument is not a class
    */
   void checkThatArgumentIsAClass(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return True if the specified argument is an individual
    * @throws SWRLBuiltInException If an error occurs during processing
    */
@@ -197,15 +201,15 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @throws SWRLBuiltInException If the specified argument is not an individual
    */
   void checkThatArgumentIsAnIndividual(int argumentNumber, List<SWRLBuiltInArgument> arguments)
-      throws SWRLBuiltInException;
+    throws SWRLBuiltInException;
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return The IRI of the OWL individual argument
    * @throws SWRLBuiltInException If the argument cannot be represented as an IRI
    */
@@ -213,16 +217,16 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return A named individual built-in argument
    * @throws SWRLBuiltInException If the argument cannot be represented as an individual built-in argument
    */
   SWRLNamedIndividualBuiltInArgument getArgumentAsAnIndividual(int argumentNumber, List<SWRLBuiltInArgument> arguments)
-      throws SWRLBuiltInException;
+    throws SWRLBuiltInException;
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return True if the specified argument is a property
    * @throws SWRLBuiltInException If an error occurs during processing
    */
@@ -230,16 +234,16 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return True if the specified argument is an object property
    * @throws SWRLBuiltInException If an error occurs during processing
    */
   boolean isArgumentAnObjectProperty(int argumentNumber, List<SWRLBuiltInArgument> arguments)
-      throws SWRLBuiltInException;
+    throws SWRLBuiltInException;
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return True if the specified argument is a data property
    * @throws SWRLBuiltInException If an error occurs during processing
    */
@@ -247,7 +251,7 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return The IRI of the specified property
    * @throws SWRLBuiltInException If an error occurs during processing
    */
@@ -255,45 +259,45 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return An object property built-in argument
    * @throws SWRLBuiltInException If an error occurs during processing
    */
   SWRLObjectPropertyBuiltInArgument getArgumentAsAnObjectProperty(int argumentNumber,
-      List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+    List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return A data property built-in argument
    * @throws SWRLBuiltInException If an error occurs during processing
    */
   SWRLDataPropertyBuiltInArgument getArgumentAsADataProperty(int argumentNumber, List<SWRLBuiltInArgument> arguments)
-      throws SWRLBuiltInException;
+    throws SWRLBuiltInException;
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @throws SWRLBuiltInException If the specified argument is not a property
    */
   void checkThatArgumentIsAProperty(int argumentNumber, List<SWRLBuiltInArgument> arguments)
-      throws SWRLBuiltInException;
+    throws SWRLBuiltInException;
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @throws SWRLBuiltInException If the specified argument is not an object property
    */
   void checkThatArgumentIsAnObjectProperty(int argumentNumber, List<SWRLBuiltInArgument> arguments)
-      throws SWRLBuiltInException;
+    throws SWRLBuiltInException;
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @throws SWRLBuiltInException If the specified argument is not a data property
    */
   void checkThatArgumentIsADataProperty(int argumentNumber, List<SWRLBuiltInArgument> arguments)
-      throws SWRLBuiltInException;
+    throws SWRLBuiltInException;
 
   /**
    * @param arguments The built-in arguments
@@ -310,14 +314,14 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @throws SWRLBuiltInException If the specified argument is not a literal
    */
   void checkThatArgumentIsALiteral(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return True if the specified argument is a literal
    * @throws SWRLBuiltInException If an error occurs during processing
    */
@@ -325,12 +329,12 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return An OWL literal
    * @throws SWRLBuiltInException If an error occurs during processing
    */
   OWLLiteral getArgumentAsAnOWLLiteral(int argumentNumber, List<SWRLBuiltInArgument> arguments)
-      throws SWRLBuiltInException;
+    throws SWRLBuiltInException;
 
   /**
    * @param argument A built-in argument
@@ -348,14 +352,14 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @throws SWRLBuiltInException If an error occurs during processing
    */
   void checkThatArgumentIsABoolean(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return True if the specified argument is a boolean
    * @throws SWRLBuiltInException If an error occurs during processing
    */
@@ -363,7 +367,7 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return A boolean argument value
    * @throws SWRLBuiltInException If an error occurs during processing
    */
@@ -377,7 +381,7 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return True if the specified argument is a string
    * @throws SWRLBuiltInException If an error occurs during processing
    */
@@ -385,7 +389,7 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return A string representation of an argument
    * @throws SWRLBuiltInException If an error occurs during processing
    */
@@ -400,27 +404,27 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @throws SWRLBuiltInException If the specified argument is not a string
    */
   void checkThatArgumentIsAString(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @throws SWRLBuiltInException If the specified argument is not of an ordered type
    */
   void checkThatArgumentIsOfAnOrderedType(int argumentNumber, List<SWRLBuiltInArgument> arguments)
-      throws SWRLBuiltInException;
+    throws SWRLBuiltInException;
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return True if the specified argument is of an ordered type
    * @throws SWRLBuiltInException If an error occurs during processing
    */
   boolean isArgumentOfAnOrderedType(int argumentNumber, List<SWRLBuiltInArgument> arguments)
-      throws SWRLBuiltInException;
+    throws SWRLBuiltInException;
 
   /**
    * @param arguments The built-in arguments
@@ -431,7 +435,7 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return True if the specified argument is numeric
    * @throws SWRLBuiltInException If an error occurs during processing
    */
@@ -439,7 +443,7 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return True if the specified argument if not numeric
    * @throws SWRLBuiltInException If an error occurs during processing
    */
@@ -453,7 +457,7 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @throws SWRLBuiltInException If the specified argument is not numeric
    */
   void checkThatArgumentIsNumeric(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
@@ -473,11 +477,11 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @throws SWRLBuiltInException If the specified argument is numeric
    */
   void checkThatArgumentIsNonNumeric(int argumentNumber, List<SWRLBuiltInArgument> arguments)
-      throws SWRLBuiltInException;
+    throws SWRLBuiltInException;
 
   /**
    * @param arguments The built-in arguments
@@ -495,16 +499,16 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
-   * @return True if the specified argument is convertable to a byte
+   * @param arguments      The built-in arguments
+   * @return True if the specified argument is convertible to a byte
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  boolean isArgumentConvertableToByte(int argumentNumber, List<SWRLBuiltInArgument> arguments)
-      throws SWRLBuiltInException;
+  boolean isArgumentConvertibleToByte(int argumentNumber, List<SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException;
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return True if the specified argument is a byte
    * @throws SWRLBuiltInException If an error occurs during processing
    */
@@ -512,15 +516,15 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return A byte representation of the specified argument
-   * @throws SWRLBuiltInException If the argument is not convertable to a byte
+   * @throws SWRLBuiltInException If the argument is not convertible to a byte
    */
   short getArgumentAsAByte(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @throws SWRLBuiltInException If the argument is not a byte
    */
   void checkThatArgumentIsAByte(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
@@ -541,16 +545,16 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
-   * @return True if the specified argument is convertable to short
+   * @param arguments      The built-in arguments
+   * @return True if the specified argument is convertible to short
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  boolean isArgumentConvertableToShort(int argumentNumber, List<SWRLBuiltInArgument> arguments)
-      throws SWRLBuiltInException;
+  boolean isArgumentConvertibleToShort(int argumentNumber, List<SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException;
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return True is the specified argument is a short
    * @throws SWRLBuiltInException If an error occurs during processing
    */
@@ -558,7 +562,7 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return A short representation of the specified argument
    * @throws SWRLBuiltInException If the specified argument can not be converted to a short
    */
@@ -566,7 +570,7 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @throws SWRLBuiltInException If the specified argument is not a short
    */
   void checkThatArgumentIsAShort(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
@@ -593,23 +597,23 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
-   * @return True if the specified argument is convertable to an int
+   * @param arguments      The built-in arguments
+   * @return True if the specified argument is convertible to an int
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  boolean isArgumentConvertableToInteger(int argumentNumber, List<SWRLBuiltInArgument> arguments)
-      throws SWRLBuiltInException;
+  boolean isArgumentConvertibleToInteger(int argumentNumber, List<SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException;
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @throws SWRLBuiltInException If the specifed argument is not an int
    */
   void checkThatArgumentIsAnInt(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return True if the specified argument is an int
    * @throws SWRLBuiltInException If an error occurs during processing
    */
@@ -617,7 +621,7 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return An int representation of the specified argument
    * @throws SWRLBuiltInException If the specified argument cannot be converted to an int
    */
@@ -625,7 +629,7 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return A positive int representation of the specified argument
    * @throws SWRLBuiltInException If an error occurs during processing
    */
@@ -647,16 +651,16 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
-   * @return True if the specified argument is convertable to a long
+   * @param arguments      The built-in arguments
+   * @return True if the specified argument is convertible to a long
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  boolean isArgumentConvertableToLong(int argumentNumber, List<SWRLBuiltInArgument> arguments)
-      throws SWRLBuiltInException;
+  boolean isArgumentConvertibleToLong(int argumentNumber, List<SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException;
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return True if the argument is a long
    * @throws SWRLBuiltInException If an error occurs during processing
    */
@@ -664,7 +668,7 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return A long representation of the specified argument
    * @throws SWRLBuiltInException If the specified argument cannot be converted to a long
    */
@@ -672,7 +676,7 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return A positive long representation of the specified argument
    * @throws SWRLBuiltInException If the specified argument cannot be converted to a positive long
    */
@@ -680,7 +684,7 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @throws SWRLBuiltInException If the specified argument is not a long
    */
   void checkThatArgumentIsALong(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
@@ -707,23 +711,23 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
-   * @return True if the specified argument is convertable to a float
+   * @param arguments      The built-in arguments
+   * @return True if the specified argument is convertible to a float
    * @throws SWRLBuiltInException If the specified argument cannot be converted to a long
    */
-  boolean isArgumentConvertableToFloat(int argumentNumber, List<SWRLBuiltInArgument> arguments)
-      throws SWRLBuiltInException;
+  boolean isArgumentConvertibleToFloat(int argumentNumber, List<SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException;
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @throws SWRLBuiltInException If the specified argument is not a float
    */
   void checkThatArgumentIsAFloat(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return True if the specified argument is a float
    * @throws SWRLBuiltInException If the specified argument cannot be converted to a long
    */
@@ -731,7 +735,7 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return A float representation of the specified argument
    * @throws SWRLBuiltInException If the specified argument cannot be converted to a float
    */
@@ -753,23 +757,23 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
-   * @return True if the specified argument is convertable to a double
+   * @param arguments      The built-in arguments
+   * @return True if the specified argument is convertible to a double
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  boolean isArgumentConvertableToDouble(int argumentNumber, List<SWRLBuiltInArgument> arguments)
-      throws SWRLBuiltInException;
+  boolean isArgumentConvertibleToDouble(int argumentNumber, List<SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException;
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @throws SWRLBuiltInException If the specified argument is not a double
    */
   void checkThatArgumentIsADouble(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return True if the specified argument is a double
    * @throws SWRLBuiltInException If an error occurs during processing
    */
@@ -777,7 +781,7 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return A double representing the specified argument
    * @throws SWRLBuiltInException If the specified argument cannot be converted to a double
    */
@@ -790,6 +794,34 @@ public interface SWRLBuiltInInputArgumentHandler
    */
   double getArgumentAsADouble(SWRLBuiltInArgument argument) throws SWRLBuiltInException;
 
+  void checkThatArgumentIsATime(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+
+  boolean isArgumentATime(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+
+  XSDTime getArgumentAsATime(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+
+  void checkThatArgumentIsADate(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+
+  boolean isArgumentADate(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+
+  XSDDate getArgumentAsADate(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+
+  void checkThatArgumentIsADateTime(int argumentNumber, List<SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException;
+
+  boolean isArgumentADateTime(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+
+  XSDDateTime getArgumentAsADateTime(int argumentNumber, List<SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException;
+
+  void checkThatArgumentIsADuration(int argumentNumber, List<SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException;
+
+  boolean isArgumentADuration(int argumentNumber, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+
+  XSDDuration getArgumentAsADuration(int argumentNumber, List<SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException;
+
   // Random methods
 
   /**
@@ -801,16 +833,16 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return A property value
    * @throws SWRLBuiltInException If an error occurs during processing
    */
   Object getArgumentAsAPropertyValue(int argumentNumber, List<SWRLBuiltInArgument> arguments)
-      throws SWRLBuiltInException;
+    throws SWRLBuiltInException;
 
   /**
    * @param argumentNumber The 0-based index of the argument
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return The prefixed name of a variable
    * @throws SWRLBuiltInException If an error occurs during processing
    */

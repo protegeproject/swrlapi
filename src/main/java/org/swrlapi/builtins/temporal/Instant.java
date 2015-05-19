@@ -121,7 +121,7 @@ public class Instant
     clearGranuleCountArray(); // All previous granularity conversion will now be invalid.
   }
 
-  public long getGranuleCount() throws TemporalException
+  public long getGranuleCount()
   {
     return this.granuleCount;
   }
@@ -259,6 +259,8 @@ public class Instant
 
   public boolean overlaps(Instant i2, int g) throws TemporalException
   {
+    Temporal.checkGranularity(g);
+
     return false; // Instants cannot overlap.
   }
 
@@ -269,16 +271,22 @@ public class Instant
 
   public boolean contains(Instant i2, int g) throws TemporalException
   {
+    Temporal.checkGranularity(g);
+
     return false; // Instant cannot contain another instant.
   }
 
   public boolean during(Instant i2, int g) throws TemporalException
   {
+    Temporal.checkGranularity(g);
+
     return false; // Instant cannot be during another instant.
   }
 
   public boolean starts(Instant i2, int g) throws TemporalException
   {
+    Temporal.checkGranularity(g);
+
     return false; // One instant cannot start another
   }
 
@@ -289,6 +297,8 @@ public class Instant
 
   public boolean finishes(Instant i2, int g) throws TemporalException
   {
+    Temporal.checkGranularity(g);
+
     return false; // One instant cannot finish another
   }
 

@@ -1,28 +1,20 @@
 package org.swrlapi.ui.view;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JViewport;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.TableColumnModel;
-
 import org.swrlapi.ui.action.DisableAllRulesAction;
 import org.swrlapi.ui.action.EnableAllRulesAction;
 import org.swrlapi.ui.dialog.SWRLAPIDialogManager;
 import org.swrlapi.ui.model.SWRLRuleEngineModel;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
+
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.TableColumnModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * Provides a model for graphical display or SWRL rules or SQWRL queries.
@@ -285,7 +277,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 
   private class PopupListener extends MouseAdapter
   {
-    JPopupMenu popup;
+    final JPopupMenu popup;
 
     public PopupListener(JPopupMenu popupMenu)
     {

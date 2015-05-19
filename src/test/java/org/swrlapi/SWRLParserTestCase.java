@@ -1,9 +1,5 @@
 package org.swrlapi;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
@@ -15,6 +11,10 @@ import org.semanticweb.owlapi.model.SWRLSameIndividualAtom;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.test.SWRLAPIIntegrationTestBase;
+
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
 
 public class SWRLParserTestCase extends SWRLAPIIntegrationTestBase
 {
@@ -441,7 +441,7 @@ public class SWRLParserTestCase extends SWRLAPIIntegrationTestBase
   }
 
   @Test
-  public void TestObjectPropertyInConsequentWithNamedIndivudals() throws SWRLParseException
+  public void TestObjectPropertyInConsequentWithNamedIndividals() throws SWRLParseException
   {
     declareOWLObjectProperty("hasUncle");
     declareOWLNamedIndividual("p1");

@@ -288,8 +288,8 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
   // OWLLiteral label = getOWLDataFactory().getOWLLiteral(ruleName, "en");
   // OWLAnnotation labelAnnotation = getOWLDataFactory().getOWLAnnotation(labelAnnotationProperty, label);
   //
-  // OWLAxiom anotationAssertionAxiom = getOWLDataFactory().getOWLAnnotationAssertionAxiom(rule, labelAnnotation);
-  // this.ontologyManager.applyChange(new AddAxiom(this.ontology, anotationAssertionAxiom));
+  // OWLAxiom annotationAssertionAxiom = getOWLDataFactory().getOWLAnnotationAssertionAxiom(rule, labelAnnotation);
+  // this.ontologyManager.applyChange(new AddAxiom(this.ontology, annotationAssertionAxiom));
   // }
 
   @Override

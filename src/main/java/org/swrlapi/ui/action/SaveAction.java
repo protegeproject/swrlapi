@@ -4,11 +4,9 @@ import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 import org.swrlapi.ui.dialog.SWRLAPIDialogManager;
 import org.swrlapi.ui.model.FileBackedOWLOntologyModel;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 public class SaveAction implements ActionListener
 {

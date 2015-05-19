@@ -1,10 +1,5 @@
 package org.swrlapi.factory;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLObject;
@@ -22,6 +17,10 @@ import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 
+import javax.annotation.Nonnull;
+import java.util.HashSet;
+import java.util.Set;
+
 class DefaultSWRLVariableBuiltInArgument extends DefaultSWRLBuiltInArgument implements SWRLVariableBuiltInArgument
 {
   // There is an equals methods defined for this class.
@@ -31,7 +30,7 @@ class DefaultSWRLVariableBuiltInArgument extends DefaultSWRLBuiltInArgument impl
   private final String variablePrefixedName;
 
   private SWRLBuiltInArgument builtInResult; // Used to store result of binding for unbound arguments
-  boolean isBound;
+  private boolean isBound;
 
   public DefaultSWRLVariableBuiltInArgument(IRI iri, String variablePrefixedName)
   {

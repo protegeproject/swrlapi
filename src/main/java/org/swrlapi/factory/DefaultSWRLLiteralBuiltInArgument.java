@@ -1,11 +1,5 @@
 package org.swrlapi.factory;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLObject;
@@ -22,11 +16,16 @@ import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.core.OWLLiteralComparator;
 import org.swrlapi.exceptions.SWRLAPIException;
 
+import javax.annotation.Nonnull;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Set;
+
 class DefaultSWRLLiteralBuiltInArgument extends DefaultSWRLBuiltInArgument implements SWRLLiteralBuiltInArgument
 {
   private static final long serialVersionUID = 1L;
 
-  private static Comparator<OWLLiteral> owlLiteralComparator = OWLLiteralComparator.COMPARATOR;
+  private static final Comparator<OWLLiteral> owlLiteralComparator = OWLLiteralComparator.COMPARATOR;
 
   private final OWLLiteral literal;
 

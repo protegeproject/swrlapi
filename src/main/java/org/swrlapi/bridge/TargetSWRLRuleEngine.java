@@ -46,14 +46,14 @@ public interface TargetSWRLRuleEngine
   /**
    * Run the rule engine.
    * 
-   * @throws TargetSWRLRuleEngineException If an error occurs in the tagret rule engine
+   * @throws TargetSWRLRuleEngineException If an error occurs in the target rule engine
    */
   void runRuleEngine() throws TargetSWRLRuleEngineException;
 
   /**
    * Reset the rule engine.
    * 
-   * @throws TargetSWRLRuleEngineException If an error occurs in the tagret rule engine
+   * @throws TargetSWRLRuleEngineException If an error occurs in the target rule engine
    */
   void resetRuleEngine() throws TargetSWRLRuleEngineException;
 

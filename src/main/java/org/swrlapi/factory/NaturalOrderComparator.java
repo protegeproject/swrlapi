@@ -52,8 +52,8 @@ import java.util.Comparator;
 
 public final class NaturalOrderComparator<T> implements Comparator<T>
 {
-  public static final Comparator<String> NUMERICAL_ORDER = new NaturalOrderComparator<String>(false);
-  public static final Comparator<String> CASEINSENSITIVE_NUMERICAL_ORDER = new NaturalOrderComparator<String>(true);
+  public static final Comparator<String> NUMERICAL_ORDER = new NaturalOrderComparator<>(false);
+  public static final Comparator<String> CASE_INSENSITIVE_NUMERICAL_ORDER = new NaturalOrderComparator<>(true);
 
   private final boolean caseInsensitive;
 
@@ -102,7 +102,7 @@ public final class NaturalOrderComparator<T> implements Comparator<T>
     String b = o2.toString();
 
     int ia = 0, ib = 0;
-    int nza = 0, nzb = 0;
+    int nza, nzb;
     char ca, cb;
     int result;
 

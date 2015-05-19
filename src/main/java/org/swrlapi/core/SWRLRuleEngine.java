@@ -195,7 +195,7 @@ public interface SWRLRuleEngine
   int getNumberOfInjectedOWLAxioms();
 
   /**
-   * @return The number of asserted OWL classdeclaration axioms
+   * @return The number of asserted OWL class declaration axioms
    */
   int getNumberOfAssertedOWLClassDeclarationAxioms();
 

@@ -551,15 +551,12 @@ public class Period
   @Override
   public String toString()
   {
-    String s = "";
-
     try {
       return toString(Temporal.FINEST);
     } catch (TemporalException e) {
+      return "";
     }
-
-    return s;
-  } // toString
+  }
 
   public int getGranularity()
   {

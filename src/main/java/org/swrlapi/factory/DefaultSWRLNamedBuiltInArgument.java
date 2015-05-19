@@ -1,10 +1,5 @@
 package org.swrlapi.factory;
 
-import java.util.Collections;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLEntity;
@@ -17,26 +12,30 @@ import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedBuiltInArgument;
 import org.swrlapi.exceptions.SWRLAPIException;
 
+import javax.annotation.Nonnull;
+import java.util.Collections;
+import java.util.Set;
+
 abstract class DefaultSWRLNamedBuiltInArgument extends DefaultSWRLBuiltInArgument implements SWRLNamedBuiltInArgument
 {
   private static final long serialVersionUID = 1L;
 
   private final OWLEntity entity;
 
-  public DefaultSWRLNamedBuiltInArgument(OWLEntity entity)
+  DefaultSWRLNamedBuiltInArgument(OWLEntity entity)
   {
     this.entity = entity;
+  }
+
+  OWLEntity getOWLEntity()
+  {
+    return this.entity;
   }
 
   @Override
   public IRI getIRI()
   {
     return this.entity.getIRI();
-  }
-
-  protected OWLEntity getOWLEntity()
-  {
-    return this.entity;
   }
 
   public @Override boolean isLiteral()

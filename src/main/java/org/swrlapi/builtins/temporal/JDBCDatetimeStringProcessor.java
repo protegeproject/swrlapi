@@ -33,7 +33,6 @@ class JDBCDatetimeStringProcessor extends DatetimeStringProcessor
 
   @Override
   protected String constructDatetimeStringFromMillisecondsFrom1970Count(long millisecondsFrom1970)
-      throws TemporalException
   {
     Timestamp ts = new Timestamp(millisecondsFrom1970);
 

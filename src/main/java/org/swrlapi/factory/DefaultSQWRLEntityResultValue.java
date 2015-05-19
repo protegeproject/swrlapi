@@ -15,7 +15,7 @@ abstract class DefaultSQWRLEntityResultValue implements SQWRLEntityResultValue
   private final IRI iri;
   private final String prefixedName;
 
-  protected DefaultSQWRLEntityResultValue(IRI iri, String prefixedName)
+  DefaultSQWRLEntityResultValue(IRI iri, String prefixedName)
   {
     this.iri = iri;
     this.prefixedName = prefixedName;

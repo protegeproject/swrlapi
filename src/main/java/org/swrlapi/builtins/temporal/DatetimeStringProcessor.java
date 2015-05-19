@@ -20,12 +20,12 @@ abstract class DatetimeStringProcessor
 
   /**
    * @param dateFormat A date format
-   * @param delimiters Delimeters
+   * @param delimiters Delimiters
    * @param gTokenIndex
    * @param datetimeRoundDownPadding
    * @param datetimeRoundUpPadding
    */
-  public DatetimeStringProcessor(SimpleDateFormat dateFormat, String delimiters, int gTokenIndex[],
+  protected DatetimeStringProcessor(SimpleDateFormat dateFormat, String delimiters, int gTokenIndex[],
       String datetimeRoundDownPadding[], String datetimeRoundUpPadding[])
   {
     this.dateFormat = dateFormat;
@@ -35,9 +35,7 @@ abstract class DatetimeStringProcessor
     this.datetimeRoundDownPadding = datetimeRoundDownPadding.clone();
   }
 
-  protected abstract String constructDatetimeStringFromMillisecondsFrom1970Count(long milliseconds)
-      throws TemporalException;
-
+  protected abstract String constructDatetimeStringFromMillisecondsFrom1970Count(long milliseconds);
   /**
    * Take a granule count (from the beginning of calendar time, i.e., January 1st 1 C.E) at any granularity and convert
    * it to a datetime string.
@@ -128,7 +126,7 @@ abstract class DatetimeStringProcessor
     String result;
     String localDatetimeString = datetimeString.trim();
 
-    tokenizer = new StringTokenizer(localDatetimeString, this.delimiters); // Do not count delimeters as tokens.
+    tokenizer = new StringTokenizer(localDatetimeString, this.delimiters); // Do not count delimiters as tokens.
 
     numberOfTokens = tokenizer.countTokens(); // YEARS will have one token, MONTHS 2, etc., so we can subtract one to
     // get the granularity.

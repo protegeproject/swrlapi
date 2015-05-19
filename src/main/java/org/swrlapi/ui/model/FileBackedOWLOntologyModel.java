@@ -1,6 +1,5 @@
 package org.swrlapi.ui.model;
 
-import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 
 import java.io.File;

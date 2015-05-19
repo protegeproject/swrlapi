@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class OWL2RLInconsistencyDescription
 {
-  private static Map<String, OWL2RLRuleArguments> argumentsDescriptionMap;
+  private static final Map<String, OWL2RLRuleArguments> argumentsDescriptionMap;
 
   static {
     argumentsDescriptionMap = new HashMap<>();

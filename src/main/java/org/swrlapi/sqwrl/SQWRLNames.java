@@ -1,16 +1,16 @@
 package org.swrlapi.sqwrl;
 
+import org.swrlapi.sqwrl.exceptions.SQWRLInvalidAggregateFunctionNameException;
+
 import java.util.HashSet;
 import java.util.Set;
-
-import org.swrlapi.sqwrl.exceptions.SQWRLInvalidAggregateFunctionNameException;
 
 /**
  * @see org.swrlapi.sqwrl.SQWRLQuery
  */
 public class SQWRLNames
 {
-  public static String SQWRLBuiltInLibraryName = "SQWRLBuiltIns";
+  public static final String SQWRLBuiltInLibraryName = "SQWRLBuiltIns";
 
   public static final String SQWRLPrefix = "sqwrl:";
   public static final String SQWRLNamespace = "http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#";
@@ -131,15 +131,19 @@ public class SQWRLNames
       SumAggregateFunction, AvgAggregateFunction, MedianAggregateFunction, CountAggregateFunction,
       CountDistinctAggregateFunction };
 
-  private static Set<String> sqwrlBuiltInNames;
-  private static Set<String> headBuiltInNames, headSelectionBuiltInNames, headAggregationBuiltInNames,
-      headSlicingBuiltInNames;
-  private static Set<String> collectionMakeBuiltInNames, collectionGroupByBuiltInNames;
-  private static Set<String> collectionCreateOperationBuiltInNames, collectionOperationBuiltInNames;
-  private static Set<String> singleCollectionOperationWithCollectionCreateBuiltInNames;
-  private static Set<String> singleCollectionOperationWithoutCollectionCreateBuiltInNames;
-  private static Set<String> multiCollectionOperationWithCollectionCreateBuiltInNames;
-  private static Set<String> multiCollectionOperationWithoutCollectionCreateBuiltInNames;
+  private static final Set<String> sqwrlBuiltInNames;
+  private static final Set<String> headBuiltInNames;
+  private static final Set<String> headSelectionBuiltInNames;
+  private static final Set<String> headAggregationBuiltInNames;
+  private static final Set<String> headSlicingBuiltInNames;
+  private static final Set<String> collectionMakeBuiltInNames;
+  private static final Set<String> collectionGroupByBuiltInNames;
+  private static final Set<String> collectionCreateOperationBuiltInNames;
+  private static final Set<String> collectionOperationBuiltInNames;
+  private static final Set<String> singleCollectionOperationWithCollectionCreateBuiltInNames;
+  private static final Set<String> singleCollectionOperationWithoutCollectionCreateBuiltInNames;
+  private static final Set<String> multiCollectionOperationWithCollectionCreateBuiltInNames;
+  private static final Set<String> multiCollectionOperationWithoutCollectionCreateBuiltInNames;
 
   static {
     sqwrlBuiltInNames = new HashSet<String>();

@@ -60,7 +60,7 @@ class Temporal
   { 365 * 24, 0, 24, 1, 60, 60 * 60, 60 * 60 * 1000 }, /* hour */
   { 365 * 24 * 60, 0, 24 * 60, 60, 1, 60, 60 * 1000 }, /* minute */
   { 365 * 24 * 60 * 60, 0, 24 * 60 * 60, 60 * 60, 60, 1, 1000 }, /* second */
-  { 365 * 24 * 60 * 60 * 1000L, 0, 24 * 60 * 60 * 1000, 60 * 60 * 1000, 60 * 1000, 1000, 1 } /* mseconds */
+  { 365 * 24 * 60 * 60 * 1000L, 0, 24 * 60 * 60 * 1000, 60 * 60 * 1000, 60 * 1000, 1000, 1 } /* milli-seconds */
   };
 
   private static final String[] stringGranularityRepresentation = { "years", "months", "days", "hours", "minutes",
@@ -117,7 +117,7 @@ class Temporal
 
   /**
    * @param granularity A granularity
-   * @throws TemporalException If the specified granulity is invalid
+   * @throws TemporalException If the specified granularity is invalid
    */
   public void checkGranularity(String granularity) throws TemporalException
   {

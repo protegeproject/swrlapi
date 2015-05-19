@@ -17,7 +17,7 @@ public class OpenAction implements ActionListener
 
 	public static final String TITLE = "Open";
 	private static final String MESSAGE = "Open Ontology";
-	private static final String EXTENSON = "owl";
+	private static final String EXTENSION = "owl";
 
 	public OpenAction(Component parent, FileBackedOWLOntologyModel ontologyModel, SWRLAPIDialogManager dialogManager)
 	{
@@ -33,7 +33,7 @@ public class OpenAction implements ActionListener
 
 	public void open()
 	{
-		JFileChooser fileChooser = this.dialogManager.createFileChooser(TITLE, MESSAGE, EXTENSON);
+		JFileChooser fileChooser = this.dialogManager.createFileChooser(TITLE, MESSAGE, EXTENSION);
 
 		if (fileChooser.showOpenDialog(this.parent) == JFileChooser.APPROVE_OPTION) {
 			File file = fileChooser.getSelectedFile();

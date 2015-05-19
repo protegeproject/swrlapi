@@ -19,7 +19,7 @@ import java.util.Comparator;
  */
 public final class OWLLiteralComparator implements Comparator<OWLLiteral>
 {
-  private static Comparator<String> naturalOrderComparator = NaturalOrderComparator.NUMERICAL_ORDER;
+  private static final Comparator<String> naturalOrderComparator = NaturalOrderComparator.NUMERICAL_ORDER;
 
   public static final Comparator<OWLLiteral> COMPARATOR = new OWLLiteralComparator();
 

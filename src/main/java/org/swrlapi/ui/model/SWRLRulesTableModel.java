@@ -1,17 +1,16 @@
 package org.swrlapi.ui.model;
 
+import org.swrlapi.core.SWRLAPIRule;
+import org.swrlapi.core.SWRLRuleEngine;
+import org.swrlapi.core.SWRLRuleRenderer;
+import org.swrlapi.ui.view.SWRLAPIView;
+
+import javax.swing.table.AbstractTableModel;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
-
-import javax.swing.table.AbstractTableModel;
-
-import org.swrlapi.core.SWRLAPIRule;
-import org.swrlapi.core.SWRLRuleEngine;
-import org.swrlapi.core.SWRLRuleRenderer;
-import org.swrlapi.ui.view.SWRLAPIView;
 
 /**
  * This class models a list of SWRL rules or SQWRL queries in an ontology for tabular display.
@@ -24,12 +23,12 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 {
   private static final long serialVersionUID = 1L;
 
-  public static int ACTIVE_COLUMN = 0;
-  public static int RULE_NAME_COLUMN = 1;
-  public static int RULE_TEXT_COLUMN = 2;
-  public static int RULE_COMMENT_COLUMN = 3;
+  public static final int ACTIVE_COLUMN = 0;
+  public static final int RULE_NAME_COLUMN = 1;
+  public static final int RULE_TEXT_COLUMN = 2;
+  public static final int RULE_COMMENT_COLUMN = 3;
 
-  public static int NUMBER_OF_COLUMNS = 4;
+  public static final int NUMBER_OF_COLUMNS = 4;
 
   private final SWRLRuleRenderer swrlRuleRenderer;
   private final SortedMap<String, SWRLRuleModel> swrlRuleModels; // rule name -> SWRLRuleModel

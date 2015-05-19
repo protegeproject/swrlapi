@@ -56,7 +56,7 @@ public class SWRLRulesControlView extends JPanel implements SWRLAPIView
         + "->OWL' button to transfer the inferred rule engine knowledge to OWL knowledge.\n\n");
     console
         .append("The SWRLAPI supports an OWL profile called OWL 2 RL and uses an OWL 2 RL-based reasoner to perform reasoning.\n");
-    console.append("See the 'OWL 2 RL' subtab for more information on this reasoner.");
+    console.append("See the 'OWL 2 RL' sub-tab for more information on this reasoner.");
   }
 
   @Override

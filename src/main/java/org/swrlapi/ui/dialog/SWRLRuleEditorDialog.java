@@ -321,10 +321,8 @@ public class SWRLRuleEditorDialog extends JDialog
     {
       boolean okToQuit;
 
-      if (hasDialogStateChanged()) {
-        okToQuit = getDialogManager().showConfirmDialog(this.parent, QUIT_CONFIRM_MESSAGE, QUIT_CONFIRM_TITLE);
-      } else
-        okToQuit = true;
+      okToQuit = !hasDialogStateChanged() || getDialogManager()
+        .showConfirmDialog(this.parent, QUIT_CONFIRM_MESSAGE, QUIT_CONFIRM_TITLE);
 
       if (okToQuit) {
         cancelEditMode();

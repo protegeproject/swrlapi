@@ -13,7 +13,7 @@ public interface TargetRuleEngineOWLDeclarationAxiomConverter extends TargetRule
 {
   void convert(OWLClass cls);
 
-  void convert(OWLNamedIndividual individal);
+  void convert(OWLNamedIndividual individual);
 
   void convert(OWLObjectProperty property);
 

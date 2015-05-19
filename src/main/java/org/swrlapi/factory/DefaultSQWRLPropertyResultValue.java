@@ -5,7 +5,7 @@ import org.swrlapi.sqwrl.values.SQWRLPropertyResultValue;
 
 abstract class DefaultSQWRLPropertyResultValue extends DefaultSQWRLEntityResultValue implements SQWRLPropertyResultValue
 {
-  protected DefaultSQWRLPropertyResultValue(IRI propertyIRI, String prefixedName)
+  DefaultSQWRLPropertyResultValue(IRI propertyIRI, String prefixedName)
   {
     super(propertyIRI, prefixedName);
   }

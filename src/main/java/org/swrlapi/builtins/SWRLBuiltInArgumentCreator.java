@@ -1,13 +1,11 @@
 package org.swrlapi.builtins;
 
-import java.net.URI;
-import java.util.List;
-
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLDatatype;
+import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.swrlapi.builtins.arguments.SQWRLCollectionVariableBuiltInArgument;
@@ -25,6 +23,9 @@ import org.swrlapi.core.xsd.XSDDateTime;
 import org.swrlapi.core.xsd.XSDDuration;
 import org.swrlapi.core.xsd.XSDTime;
 import org.swrlapi.exceptions.SWRLBuiltInException;
+
+import java.net.URI;
+import java.util.List;
 
 /**
  * Utility methods that can be used by built-ins to create SWRL built-in result arguments.
@@ -169,6 +170,13 @@ public interface SWRLBuiltInArgumentCreator
    * @throws SWRLBuiltInException If an error occurs during generation
    */
   SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(XSDDuration duration) throws SWRLBuiltInException;
+
+  /**
+   * @param literal An OWL literal
+   * @return A literal built-in argument
+   * @throws SWRLBuiltInException If an error occurs during generation
+   */
+  SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(OWLLiteral literal) throws SWRLBuiltInException;
 
   /**
    * @param variableIRI The IRI of a variable

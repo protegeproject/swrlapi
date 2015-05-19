@@ -8,8 +8,8 @@ import java.awt.event.ActionListener;
 
 public class CloseAction implements ActionListener
 {
-  final Component parent;
-  final SWRLAPIDialogManager dialogManager;
+  private final Component parent;
+  private final SWRLAPIDialogManager dialogManager;
 
   public static final String TITLE = "Close";
   private static final String MESSAGE = "Do you really want to close the ontology?";
@@ -25,7 +25,7 @@ public class CloseAction implements ActionListener
     confirmClose();
   }
 
-  public void confirmClose()
+  private void confirmClose()
   {
     // if modified
     if (dialogManager.showConfirmDialog(parent, TITLE, MESSAGE)) {
