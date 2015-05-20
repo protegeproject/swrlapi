@@ -264,9 +264,6 @@ public class SWRLAPIFactory
     OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
     OWLOntology ontology = createOWLOntology(ontologyManager, owlFile);
 
-    if (ontology == null)
-      throw new SWRLAPIException("failed to create ontology from file " + owlFile.getAbsolutePath());
-
     DefaultPrefixManager prefixManager = new DefaultPrefixManager();
 
     addDefaultPrefixes(ontology, prefixManager);
@@ -475,7 +472,7 @@ public class SWRLAPIFactory
     OWLOntologyManager owlOntologyManager = ontology.getOWLOntologyManager();
     OWLDocumentFormat ontologyFormat = owlOntologyManager.getOntologyFormat(ontology);
 
-    if (ontologyFormat.isPrefixOWLOntologyFormat()) {
+    if (ontologyFormat != null && ontologyFormat.isPrefixOWLOntologyFormat()) {
       PrefixDocumentFormat prefixOntologyFormat = ontologyFormat.asPrefixOWLOntologyFormat();
       String defaultPrefix = prefixOntologyFormat.getDefaultPrefix();
 

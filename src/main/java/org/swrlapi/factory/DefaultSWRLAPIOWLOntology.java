@@ -192,9 +192,8 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
     for (SWRLRule owlapiRule : unannotatedOWLAPIRules) {
       String ruleName = generateRuleName(ruleNames);
       String comment = "";
-      boolean isEnabled = true;
       SWRLRule annotatedOWLAPIRule = getOWLDataFactory().getSWRLRule(owlapiRule.getBody(), owlapiRule.getHead(),
-          generateRuleAnnotations(ruleName, comment, isEnabled));
+          generateRuleAnnotations(ruleName, comment, true));
 
       SWRLAPIRule swrlapiRule = convertOWLAPIRule2SWRLAPIRule(annotatedOWLAPIRule, ruleName, "", true);
       swrlapiRules.add(swrlapiRule);

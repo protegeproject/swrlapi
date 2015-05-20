@@ -42,9 +42,9 @@ import java.util.Set;
 public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 {
   /**
+   * A collections map is a map of collection keys to a map of group keys to collections.
    * A collection can be uniquely identified by its query name and collection name. A unique key is generated from this
-   * combination. If a collection is grouped, each group will be have a unique key generated. a {@link #collectionsMap}
-   * is a map of collection keys to a map of group keys to collections.
+   * combination. If a collection is grouped, each group will be have a unique key generated.
    */
   private final Map<String, Map<String, Collection<SWRLBuiltInArgument>>> collectionsMap;
 
@@ -1260,7 +1260,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     String collection1GroupKey = getCollectionGroupKeyInMultiOperandCollectionOperation(arguments,
       collection1ArgumentNumber, numberOfCoreArguments, 0, collection1NumberOfGroupElements);
     String collection2GroupKey = getCollectionGroupKeyInMultiOperandCollectionOperation(arguments,
-      collection2ArgumentNumber, numberOfCoreArguments, 0 + collection1NumberOfGroupElements,
+      collection2ArgumentNumber, numberOfCoreArguments, collection1NumberOfGroupElements,
       collection2NumberOfGroupElements);
     Collection<SWRLBuiltInArgument> collection1 = getCollection(queryName, collection1Name, collection1GroupKey);
     Collection<SWRLBuiltInArgument> collection2 = getCollection(queryName, collection2Name, collection2GroupKey);
@@ -1303,7 +1303,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     String collection1GroupKey = getCollectionGroupKeyInMultiOperandCollectionOperation(arguments,
       collection1ArgumentNumber, numberOfCoreArguments, 0, collection1NumberOfGroupElements);
     String collection2GroupKey = getCollectionGroupKeyInMultiOperandCollectionOperation(arguments,
-      collection2ArgumentNumber, numberOfCoreArguments, 0 + collection1NumberOfGroupElements,
+      collection2ArgumentNumber, numberOfCoreArguments, collection1NumberOfGroupElements,
       collection2NumberOfGroupElements);
     String resultCollectionGroupKey = getCollectionGroupKeyInMultiOperandCollectionOperation(arguments,
       resultCollectionArgumentNumber, numberOfCoreArguments, 0, resultCollectionNumberOfGroupElements);
@@ -1348,7 +1348,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     String collection1GroupKey = getCollectionGroupKeyInMultiOperandCollectionOperation(arguments,
       collection1ArgumentNumber, numberOfCoreArguments, 0, collection1NumberOfGroupElements);
     String collection2GroupKey = getCollectionGroupKeyInMultiOperandCollectionOperation(arguments,
-      collection2ArgumentNumber, numberOfCoreArguments, 0 + collection1NumberOfGroupElements,
+      collection2ArgumentNumber, numberOfCoreArguments, collection1NumberOfGroupElements,
       collection2NumberOfGroupElements);
     String resultCollectionGroupKey = getCollectionGroupKeyInMultiOperandCollectionOperation(arguments,
       resultCollectionArgumentNumber, numberOfCoreArguments, 0, resultCollectionNumberOfGroupElements);
@@ -1395,7 +1395,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     String collection1GroupKey = getCollectionGroupKeyInMultiOperandCollectionOperation(arguments,
       collection1ArgumentNumber, numberOfCoreArguments, 0, collection1NumberOfGroupElements);
     String collection2GroupKey = getCollectionGroupKeyInMultiOperandCollectionOperation(arguments,
-      collection2ArgumentNumber, numberOfCoreArguments, 0 + collection1NumberOfGroupElements,
+      collection2ArgumentNumber, numberOfCoreArguments, collection1NumberOfGroupElements,
       collection2NumberOfGroupElements);
     Collection<SWRLBuiltInArgument> collection1 = getCollection(queryName, collection1Name, collection1GroupKey);
     Collection<SWRLBuiltInArgument> collection2 = getCollection(queryName, collection2Name, collection2GroupKey);
@@ -1624,8 +1624,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
     if (numberOfRelevantGroupArguments != 0) // Is a grouped collection
       return createInvocationPattern(getBuiltInBridge(), queryName, 0, false, arguments
-          .subList(coreNumberOfArguments + groupArgumentOffset,
-            coreNumberOfArguments + groupArgumentOffset + numberOfRelevantGroupArguments));
+        .subList(coreNumberOfArguments + groupArgumentOffset,
+          coreNumberOfArguments + groupArgumentOffset + numberOfRelevantGroupArguments));
     else
       return "";
   }

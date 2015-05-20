@@ -54,9 +54,9 @@ class DefaultSQWRLCollectionVariableBuiltInArgument extends DefaultSWRLVariableB
       return false;
     DefaultSQWRLCollectionVariableBuiltInArgument impl = (DefaultSQWRLCollectionVariableBuiltInArgument)obj;
     return
-      (getQueryName() == impl.getQueryName() || (getQueryName() != null && getQueryName().equals(impl.getQueryName())))
+      (getQueryName().equals(impl.getQueryName()) || (getQueryName() != null && getQueryName().equals(impl.getQueryName())))
         && (getCollectionName() == impl.getCollectionName() || (getCollectionName() != null && getCollectionName()
-        .equals(impl.getCollectionName()))) && (getGroupID() == impl.getGroupID() || (getGroupID() != null
+        .equals(impl.getCollectionName()))) && (getGroupID().equals(impl.getGroupID()) || (getGroupID() != null
         && getGroupID().equals(impl.getGroupID())));
   }
 

@@ -7,7 +7,6 @@ import org.semanticweb.owlapi.model.SWRLAtom;
 import org.semanticweb.owlapi.model.SWRLClassAtom;
 import org.semanticweb.owlapi.model.SWRLVariable;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.sqwrl.SQWRLNames;
@@ -184,9 +183,6 @@ public class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
       if (argument instanceof SWRLVariable) {
         SWRLVariable variable = (SWRLVariable)argument;
         referencedVariableIRIs.add(variable.getIRI());
-      } else if (argument instanceof SWRLVariableBuiltInArgument) {
-        SWRLVariableBuiltInArgument variableBuiltInArgument = (SWRLVariableBuiltInArgument)argument;
-        referencedVariableIRIs.add(variableBuiltInArgument.getIRI());
       }
     }
     return referencedVariableIRIs;

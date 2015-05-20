@@ -12,21 +12,19 @@ abstract class DatetimeStringProcessor
 {
   private final SimpleDateFormat dateFormat;
   private final String delimiters;
-  private final int[] gTokenIndex; // The number of tokens (including delimeters) necessary to strip a datetime to a
-  // specified granularity
-  private final String datetimeRoundDownPadding[], datetimeRoundUpPadding[]; // Strings to pad a partially specified
-
-  // datetime
+  // The number of tokens (including delimeters) necessary to strip a datetime to the specified granularity
+  private final int[] gTokenIndex;
+  private final String datetimeRoundDownPadding[], datetimeRoundUpPadding[]; // Padding for a partially specified datetime
 
   /**
    * @param dateFormat A date format
    * @param delimiters Delimiters
-   * @param gTokenIndex
-   * @param datetimeRoundDownPadding
-   * @param datetimeRoundUpPadding
+   * @param gTokenIndex Indices of granularity tokens
+   * @param datetimeRoundDownPadding Padding for rounding down
+   * @param datetimeRoundUpPadding  Padding for rounding up
    */
-  protected DatetimeStringProcessor(SimpleDateFormat dateFormat, String delimiters, int gTokenIndex[],
-      String datetimeRoundDownPadding[], String datetimeRoundUpPadding[])
+  DatetimeStringProcessor(SimpleDateFormat dateFormat, String delimiters, int gTokenIndex[],
+    String datetimeRoundDownPadding[], String datetimeRoundUpPadding[])
   {
     this.dateFormat = dateFormat;
     this.delimiters = delimiters;
@@ -36,6 +34,7 @@ abstract class DatetimeStringProcessor
   }
 
   protected abstract String constructDatetimeStringFromMillisecondsFrom1970Count(long milliseconds);
+
   /**
    * Take a granule count (from the beginning of calendar time, i.e., January 1st 1 C.E) at any granularity and convert
    * it to a datetime string.
@@ -47,9 +46,8 @@ abstract class DatetimeStringProcessor
     long granuleCountInMilliSeconds = Temporal.convertGranuleCount(granuleCount, granularity, Temporal.MILLISECONDS);
 
     // The java.sql.Timestamp constructor will correctly deal with negative milliseconds.
-    granuleCountInMilliSeconds = granuleCount - Temporal.MillisecondsTo1970;
 
-    return constructDatetimeStringFromMillisecondsFrom1970Count(granuleCountInMilliSeconds); // Call subclass.
+    return constructDatetimeStringFromMillisecondsFrom1970Count(granuleCountInMilliSeconds - Temporal.MillisecondsTo1970); // Call subclass.
   }
 
   /**
@@ -59,7 +57,7 @@ abstract class DatetimeStringProcessor
    * 00:00:00.000'.
    */
   public String expressDatetimeStringAtGranularity(String datetimeString, int granularity, boolean roundUp)
-      throws TemporalException
+    throws TemporalException
   {
     String localDatetimeString = stripDatetimeString(datetimeString, granularity); // Also checks granularity for
     // sanity.
@@ -72,7 +70,7 @@ abstract class DatetimeStringProcessor
     return expressDatetimeStringAtGranularity(datetimeString, granularity, false);
   }
 
-  public void checkDatetimeString(String datetimeString) throws TemporalException
+  private void checkDatetimeString(String datetimeString) throws TemporalException
   {
     String localDatetimeString = datetimeString.trim();
     java.util.Date date = this.dateFormat.parse(localDatetimeString, new ParsePosition(0));
@@ -88,15 +86,12 @@ abstract class DatetimeStringProcessor
    * 12:10' is converted to '1988-1-1 12:59:59.999' when rounded up at a granularity of hours.
    */
   public String normalizeDatetimeString(String datetimeString, int granularity, boolean roundUp)
-      throws TemporalException
+    throws TemporalException
   {
-    String localDatetimeString;
-    String result = "";
-
-    localDatetimeString = datetimeString.trim();
+    String localDatetimeString = datetimeString.trim();
 
     localDatetimeString = stripDatetimeString(localDatetimeString, granularity);
-    result = padDatetimeString(localDatetimeString, roundUp);
+    String result = padDatetimeString(localDatetimeString, roundUp);
     checkDatetimeString(result);
 
     return result;
@@ -117,7 +112,7 @@ abstract class DatetimeStringProcessor
    * e.g., the JDBC datetime '1988-10-10 12' becomes '1988-10-10 12:59:59:999' when rounded up and '1988-10-10
    * 12:00:00.000' when rounded down.
    */
-  public String padDatetimeString(String datetimeString, boolean roundUp) throws TemporalException
+  private String padDatetimeString(String datetimeString, boolean roundUp) throws TemporalException
   {
     StringTokenizer tokenizer;
     String token;
@@ -266,8 +261,9 @@ abstract class DatetimeStringProcessor
       Temporal.throwInvalidDatetimeStringException(datetimeString);
 
     if (numberOfTokens < this.gTokenIndex[granularity])
-      throw new TemporalException("cannot extract " + Temporal.getStringGranularityRepresentation(granularity)
-          + " from incomplete datetime " + datetimeString);
+      throw new TemporalException(
+        "cannot extract " + Temporal.getStringGranularityRepresentation(granularity) + " from incomplete datetime "
+          + datetimeString);
 
     try {
       int i = 1;

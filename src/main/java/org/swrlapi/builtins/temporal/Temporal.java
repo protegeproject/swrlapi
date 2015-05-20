@@ -135,9 +135,9 @@ class Temporal
   }
 
   /**
-   * @param granularity
-   * @return
-   * @throws TemporalException
+   * @param granularity The granularity string
+   * @return The integer representation of the granularity
+   * @throws TemporalException If an error occurs during processing
    */
   public static int getIntegerGranularityRepresentation(String granularity) throws TemporalException
   {
@@ -637,10 +637,10 @@ class Temporal
   /**
    * Calculate the number of leap years up until a granule count specified at any granularity. TODO: rewrite - very,
    *
-   * @param granuleCount
-   * @param granularity
-   * @return
-   * @throws TemporalException
+   * @param granuleCount The count of the granules
+   * @param granularity The granularity
+   * @return The number of leap years
+   * @throws TemporalException If an error occurs during generation
    */
   private static long leapYearsUpToGranuleCount(long granuleCount, int granularity) throws TemporalException
   {
