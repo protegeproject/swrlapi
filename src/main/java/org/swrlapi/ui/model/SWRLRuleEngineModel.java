@@ -1,6 +1,7 @@
 package org.swrlapi.ui.model;
 
 import org.swrlapi.core.SWRLRuleEngine;
+import org.swrlapi.core.SWRLRuleRenderer;
 import org.swrlapi.parser.SWRLParser;
 
 /**
@@ -25,6 +26,12 @@ public interface SWRLRuleEngineModel extends SWRLAPIModel
    * @return A SWRL auto-completer
    */
   SWRLAutoCompleter getSWRLAutoCompleter();
+
+  /**
+   *
+   * @return A SWRL rule renderer
+   */
+  SWRLRuleRenderer getSWRLRuleRenderer();
 
   /**
    * @return A SWRL rules table model

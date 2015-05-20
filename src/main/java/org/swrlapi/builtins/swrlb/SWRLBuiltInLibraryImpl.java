@@ -1,14 +1,5 @@
 package org.swrlapi.builtins.swrlb;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.StringTokenizer;
-import java.util.TimeZone;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
-
 import org.semanticweb.owlapi.model.IRI;
 import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
@@ -23,6 +14,15 @@ import org.swrlapi.exceptions.InvalidSWRLBuiltInArgumentException;
 import org.swrlapi.exceptions.InvalidSWRLBuiltInNameException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLBuiltInNotImplementedException;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.StringTokenizer;
+import java.util.TimeZone;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * Implementations library for the core SWRL built-in methods. These built-ins are defined <a

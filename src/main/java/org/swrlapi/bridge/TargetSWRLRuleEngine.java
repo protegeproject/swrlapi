@@ -2,7 +2,6 @@ package org.swrlapi.bridge;
 
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
-import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.TargetSWRLRuleEngineException;
 import org.swrlapi.owl2rl.OWL2RLEngine;
 import org.swrlapi.sqwrl.SQWRLQuery;
@@ -39,7 +38,6 @@ public interface TargetSWRLRuleEngine
    * 
    * @param query A SQWRL query to define
    * @throws TargetSWRLRuleEngineException If an error occurs in the target rule engine
-   * @throws SWRLBuiltInException If a built-in error occurs
    */
   void defineSQWRLQuery(SQWRLQuery query) throws TargetSWRLRuleEngineException;
 

@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Class that represents a single instant in time.
  */
-public class Instant
+class Instant
 {
   private Temporal temporal;
   private long granuleCount; // Granule count since 1 C.E.

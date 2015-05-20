@@ -20,7 +20,7 @@ class Temporal
   public final static int YEARS = 0;
 
   public final static int FINEST = MILLISECONDS;
-  public final static int COARSEST = YEARS;
+  private final static int COARSEST = YEARS;
 
   public final static int NUMBER_OF_GRANULARITIES = 7;
 
@@ -311,7 +311,7 @@ class Temporal
   }
 
   // We ignore leap years here - convertGranuleCount adjusts for them.
-  public static long convertGranuleCount2MonthCount(long granuleCount, int from_granularity)
+  private static long convertGranuleCount2MonthCount(long granuleCount, int from_granularity)
   {
     long monthCount;
 
@@ -336,7 +336,7 @@ class Temporal
 
   // We ignore leap years here - convertGranuleCount adjusts for them.
 
-  public static java.util.Date sqlDate2UtilDate(java.sql.Date sqlDate, int granularity) throws TemporalException
+  private static java.util.Date sqlDate2UtilDate(java.sql.Date sqlDate, int granularity) throws TemporalException
   {
     checkGranularity(granularity);
 
@@ -463,33 +463,33 @@ class Temporal
   }
 
   // Take a java.util.Date object and convert it to a datetime string at the specified granularity.
-  public String utilDate2DatetimeString(java.util.Date date, int granularity) throws TemporalException
+  private String utilDate2DatetimeString(java.util.Date date, int granularity) throws TemporalException
   {
     checkGranularity(granularity);
 
     return granuleCount2DatetimeString(utilDate2GranuleCount(date, granularity), granularity);
   }
 
-  public String utilDate2DatetimeString(java.util.Date date) throws TemporalException
+  private String utilDate2DatetimeString(java.util.Date date) throws TemporalException
   {
     return utilDate2DatetimeString(date, FINEST);
   }
 
   // Take a datetime string and convert it to a java.sql.Date object at the specified granularity.
-  public java.sql.Date datetimeString2SQLDate(String datetimeString, int granularity) throws TemporalException
+  private java.sql.Date datetimeString2SQLDate(String datetimeString, int granularity) throws TemporalException
   {
     checkGranularity(granularity);
 
     return granuleCount2SQLDate(datetimeString2GranuleCount(datetimeString, granularity), granularity);
   }
 
-  public java.sql.Date datetimeString2SQLDate(String datetimeString) throws TemporalException
+  private java.sql.Date datetimeString2SQLDate(String datetimeString) throws TemporalException
   {
     return datetimeString2SQLDate(datetimeString, FINEST);
   }
 
   // Take a datetime string and convert it to a java.util.Date object at the specified granularity.
-  public java.util.Date datetimeString2UtilDate(String datetimeString, int granularity) throws TemporalException
+  private java.util.Date datetimeString2UtilDate(String datetimeString, int granularity) throws TemporalException
   {
     checkGranularity(granularity);
 
@@ -522,7 +522,7 @@ class Temporal
     return getDatetimeStringProcessor().stripDatetimeString(datetimeString, granularity);
   }
 
-  public String expressDatetimeStringAtGranularity(String datetimeString, int granularity, boolean roundUp)
+  private String expressDatetimeStringAtGranularity(String datetimeString, int granularity, boolean roundUp)
       throws TemporalException
   {
     return getDatetimeStringProcessor().expressDatetimeStringAtGranularity(datetimeString, granularity, roundUp);

@@ -54,6 +54,9 @@ public class XSDDuration extends XSDType<XSDDuration>
   @Override
   public int compareTo(XSDDuration o)
   {
+    if (o == null)
+      throw new NullPointerException();
+
     if (this == o)
       return 0;
 

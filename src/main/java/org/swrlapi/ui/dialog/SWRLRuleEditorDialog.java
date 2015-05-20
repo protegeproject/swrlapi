@@ -6,7 +6,6 @@ import org.swrlapi.parser.SWRLIncompleteRuleException;
 import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.parser.SWRLParserSupport;
-import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.ui.model.SWRLAutoCompleter;
 import org.swrlapi.ui.model.SWRLRuleEngineModel;
 import org.swrlapi.ui.model.SWRLRulesTableModel;

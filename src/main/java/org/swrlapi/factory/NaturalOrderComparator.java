@@ -62,7 +62,7 @@ public final class NaturalOrderComparator<T> implements Comparator<T>
     this.caseInsensitive = caseInsensitive;
   }
 
-  int compareRight(String a, String b)
+  private int compareRight(String a, String b)
   {
     int bias = 0;
     int ia = 0;

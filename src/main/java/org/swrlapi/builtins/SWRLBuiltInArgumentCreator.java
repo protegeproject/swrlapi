@@ -22,7 +22,6 @@ import org.swrlapi.core.xsd.XSDDate;
 import org.swrlapi.core.xsd.XSDDateTime;
 import org.swrlapi.core.xsd.XSDDuration;
 import org.swrlapi.core.xsd.XSDTime;
-import org.swrlapi.exceptions.SWRLBuiltInException;
 
 import java.net.URI;
 import java.util.List;

@@ -1,8 +1,8 @@
 package org.swrlapi.core.xsd;
 
-import java.util.Date;
-
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
+
+import java.util.Date;
 
 public class XSDDateTime extends XSDType<XSDDateTime>
 {
@@ -63,6 +63,9 @@ public class XSDDateTime extends XSDType<XSDDateTime>
   @Override
   public int compareTo(XSDDateTime o)
   {
+    if (o == null)
+      throw new NullPointerException();
+
     if (this == o)
       return 0;
 

@@ -1,10 +1,5 @@
 package org.swrlapi.core.resolvers;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.SWRLVariable;
@@ -14,6 +9,11 @@ import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.exceptions.SWRLAPIInternalException;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * For simplicity, SWRL rule engine implementations will typically use the prefixed names of OWL named objects to name
@@ -195,13 +195,6 @@ public class IRIResolver
     this.dataPropertyPrefixedNames.add(prefixedName);
   }
 
-  public void recordPrefixedName2IRIMapping(String prefixedName, IRI iri)
-  {
-    if (!this.prefixedName2IRI.containsKey(prefixedName)) {
-      this.prefixedName2IRI.put(prefixedName, iri);
-      this.iri2PrefixedNameCache.put(iri, prefixedName);
-    }
-  }
 
   public boolean isOWLClass(String prefixedName)
   {
@@ -231,5 +224,13 @@ public class IRIResolver
   public boolean isOWLDatatype(String prefixedName)
   {
     return this.datatypePrefixedNames.contains(prefixedName);
+  }
+
+  private void recordPrefixedName2IRIMapping(String prefixedName, IRI iri)
+  {
+    if (!this.prefixedName2IRI.containsKey(prefixedName)) {
+      this.prefixedName2IRI.put(prefixedName, iri);
+      this.iri2PrefixedNameCache.put(iri, prefixedName);
+    }
   }
 }

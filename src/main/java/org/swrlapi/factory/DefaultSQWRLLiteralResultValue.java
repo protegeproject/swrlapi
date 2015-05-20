@@ -138,6 +138,9 @@ class DefaultSQWRLLiteralResultValue extends DefaultLiteral implements SQWRLLite
   @Override
   public int compareTo(SQWRLLiteralResultValue o)
   {
+    if (o == null)
+      throw new NullPointerException();
+
     return owlLiteralComparator.compare(this.getOWLLiteral(), o.getOWLLiteral());
   }
 }

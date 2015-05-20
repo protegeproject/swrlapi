@@ -43,6 +43,12 @@ public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel
   }
 
   @Override
+  public SWRLRuleRenderer getSWRLRuleRenderer()
+  {
+    return this.swrlRuleRenderer;
+  }
+
+  @Override
   public SWRLRulesTableModel getSWRLRulesTableModel()
   {
     return this.swrlRulesTableModel;

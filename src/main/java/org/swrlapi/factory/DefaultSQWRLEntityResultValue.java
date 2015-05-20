@@ -146,6 +146,9 @@ abstract class DefaultSQWRLEntityResultValue implements SQWRLEntityResultValue
   @Override
   public int compareTo(SQWRLEntityResultValue o)
   {
+    if (o == null)
+      throw new NullPointerException();
+
     return this.iri.compareTo(o.getIRI());
   }
 

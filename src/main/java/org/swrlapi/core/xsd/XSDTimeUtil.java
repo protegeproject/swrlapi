@@ -650,7 +650,7 @@ public class XSDTimeUtil
     return getSeconds(duration1) - getSeconds(duration2);
   }
 
-  public static int getYears(org.apache.axis.types.Duration duration)
+  private static int getYears(org.apache.axis.types.Duration duration)
   {
     if (duration.isNegative())
       return -duration.getYears();
@@ -658,7 +658,7 @@ public class XSDTimeUtil
       return duration.getYears();
   }
 
-  public static int getMonths(org.apache.axis.types.Duration duration)
+  private static int getMonths(org.apache.axis.types.Duration duration)
   {
     if (duration.isNegative())
       return -duration.getMonths();
@@ -666,7 +666,7 @@ public class XSDTimeUtil
       return duration.getMonths();
   }
 
-  public static int getDays(org.apache.axis.types.Duration duration)
+  private static int getDays(org.apache.axis.types.Duration duration)
   {
     if (duration.isNegative())
       return -duration.getDays();
@@ -674,7 +674,7 @@ public class XSDTimeUtil
       return duration.getDays();
   }
 
-  public static int getHours(org.apache.axis.types.Duration duration)
+  private static int getHours(org.apache.axis.types.Duration duration)
   {
     if (duration.isNegative())
       return -duration.getHours();
@@ -682,7 +682,7 @@ public class XSDTimeUtil
       return duration.getHours();
   }
 
-  public static int getMinutes(org.apache.axis.types.Duration duration)
+  private static int getMinutes(org.apache.axis.types.Duration duration)
   {
     if (duration.isNegative())
       return -duration.getMinutes();
@@ -690,7 +690,7 @@ public class XSDTimeUtil
       return duration.getMinutes();
   }
 
-  public static double getSeconds(org.apache.axis.types.Duration duration)
+  private static double getSeconds(org.apache.axis.types.Duration duration)
   {
     if (duration.isNegative())
       return -duration.getSeconds();

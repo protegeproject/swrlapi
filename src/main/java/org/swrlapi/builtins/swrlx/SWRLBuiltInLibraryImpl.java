@@ -77,7 +77,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean makeOWLIndividual(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  private boolean makeOWLIndividual(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsAtLeast(2, arguments.size());
 

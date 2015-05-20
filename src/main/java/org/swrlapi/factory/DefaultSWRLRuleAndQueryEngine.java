@@ -82,8 +82,6 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
     try {
       exportOWLAxioms2TargetRuleEngine(this.swrlapiOWLOntology.getOWLAxioms()); // OWL axioms include SWRL rules
       exportSQWRLQuery2TargetRuleEngine(queryName);
-    } catch (SWRLBuiltInException e) {
-      throw new SWRLRuleEngineException("error exporting SQWRL query to rule engine: " + e.getMessage(), e);
     } catch (SWRLAPIException e) {
       throw new SWRLRuleEngineException("error exporting SQWRL query rule engine: " + e.getMessage(), e);
     }
@@ -164,7 +162,7 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
     try {
       importAssertedOWLAxioms();
       exportSQWRLQueries2TargetRuleEngine();
-    } catch (SWRLRuleEngineException | TargetSWRLRuleEngineException | SWRLBuiltInException e) {
+    } catch (SWRLRuleEngineException | TargetSWRLRuleEngineException e) {
       throw new SQWRLException("error processing SQWRL queries: " + e.getMessage(), e);
     }
 
@@ -394,7 +392,7 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
   }
 
   private void exportSQWRLQuery2TargetRuleEngine(String activeQueryName)
-    throws SWRLRuleEngineException, TargetSWRLRuleEngineException, SWRLBuiltInException
+    throws SWRLRuleEngineException, TargetSWRLRuleEngineException
   {
     for (SQWRLQuery query : this.swrlapiOWLOntology.getSQWRLQueries()) {
       query.setActive(query.getQueryName().equalsIgnoreCase(activeQueryName));
@@ -403,7 +401,7 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
   }
 
   private void exportSQWRLQueries2TargetRuleEngine()
-    throws SWRLRuleEngineException, TargetSWRLRuleEngineException, SWRLBuiltInException
+    throws SWRLRuleEngineException, TargetSWRLRuleEngineException
   {
     for (SQWRLQuery query : this.swrlapiOWLOntology.getSQWRLQueries()) {
       query.setActive(true);
@@ -412,7 +410,7 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
   }
 
   private void exportSQWRLQuery2TargetRuleEngine(SQWRLQuery query)
-    throws SWRLRuleEngineException, TargetSWRLRuleEngineException, SWRLBuiltInException
+    throws SWRLRuleEngineException, TargetSWRLRuleEngineException
   {
     getTargetSWRLRuleEngine().defineSQWRLQuery(query);
   }

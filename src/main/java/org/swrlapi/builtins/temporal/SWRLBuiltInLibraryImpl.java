@@ -1,9 +1,5 @@
 package org.swrlapi.builtins.temporal;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLIndividual;
@@ -20,15 +16,19 @@ import org.swrlapi.exceptions.InvalidSWRLBuiltInArgumentException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLBuiltInLibraryException;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 /**
  * Implementation library for SWRL temporal built-ins.
  */
 public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 {
-	public static final String TemporalLibraryName = "SWRLTemporalBuiltIns";
+	private static final String TemporalLibraryName = "SWRLTemporalBuiltIns";
 
-	public static final String Prefix = "temporal:";
-	public static final String Namespace = "http://swrl.stanford.edu/ontologies/built-ins/3.3/temporal.owl#";
+	private static final String Prefix = "temporal:";
+	private static final String Namespace = "http://swrl.stanford.edu/ontologies/built-ins/3.3/temporal.owl#";
 
 	private static final String TemporalEquals = Prefix + "equals";
 	private static final String TemporalAfter = Prefix + "after";

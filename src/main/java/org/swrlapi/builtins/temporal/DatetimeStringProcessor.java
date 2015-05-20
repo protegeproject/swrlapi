@@ -88,13 +88,12 @@ abstract class DatetimeStringProcessor
   public String normalizeDatetimeString(String datetimeString, int granularity, boolean roundUp)
     throws TemporalException
   {
-    String localDatetimeString = datetimeString.trim();
+    String localDatetimeString = stripDatetimeString(datetimeString.trim(), granularity);
+    String normalizedDatetimeString = padDatetimeString(localDatetimeString, roundUp);
 
-    localDatetimeString = stripDatetimeString(localDatetimeString, granularity);
-    String result = padDatetimeString(localDatetimeString, roundUp);
-    checkDatetimeString(result);
+    checkDatetimeString(normalizedDatetimeString);
 
-    return result;
+    return normalizedDatetimeString;
   }
 
   public String normalizeDatetimeString(String datetime, int granularity) throws TemporalException
@@ -114,41 +113,30 @@ abstract class DatetimeStringProcessor
    */
   private String padDatetimeString(String datetimeString, boolean roundUp) throws TemporalException
   {
-    StringTokenizer tokenizer;
-    String token;
-    long yearCount, monthCount, daysInMonth;
-    int granularity, numberOfTokens;
-    String result;
-    String localDatetimeString = datetimeString.trim();
-
-    tokenizer = new StringTokenizer(localDatetimeString, this.delimiters); // Do not count delimiters as tokens.
-
-    numberOfTokens = tokenizer.countTokens(); // YEARS will have one token, MONTHS 2, etc., so we can subtract one to
-    // get the granularity.
+    StringTokenizer tokenizer = new StringTokenizer(datetimeString.trim(), this.delimiters); // Do not count delimiters as tokens.
+    int numberOfTokens = tokenizer.countTokens();
 
     if (numberOfTokens == 0)
       Temporal.throwInvalidDatetimeStringException(datetimeString);
 
-    granularity = numberOfTokens - 1;
-    token = tokenizer.nextToken().trim();
-    yearCount = Long.parseLong(token);
+    int granularity = numberOfTokens - 1; // YEARS will have one token, MONTHS 2, etc., so subtract one for granularity
+    String token = tokenizer.nextToken().trim();
+    long yearCount = Long.parseLong(token);
 
     if (roundUp) {
       if (granularity != Temporal.MONTHS)
-        result = localDatetimeString + this.datetimeRoundUpPadding[granularity];
+        return datetimeString.trim() + this.datetimeRoundUpPadding[granularity];
       else { // If only a month is specified, deal with the days-in-month issue.
         token = tokenizer.nextToken().trim();
-        monthCount = Long.parseLong(token);
+        long monthCount = Long.parseLong(token);
         Temporal.checkMonthCount(monthCount);
-        daysInMonth = Temporal.getDaysInMonth(monthCount);
+        long daysInMonth = Temporal.getDaysInMonth(monthCount);
         if (Temporal.isLeapYear(yearCount) && (monthCount == 2))
           daysInMonth++;
-        result = localDatetimeString + "-" + daysInMonth + this.datetimeRoundUpPadding[Temporal.DAYS];
+        return datetimeString.trim() + "-" + daysInMonth + this.datetimeRoundUpPadding[Temporal.DAYS];
       }
     } else
-      result = localDatetimeString + this.datetimeRoundDownPadding[granularity];
-
-    return result;
+      return datetimeString.trim() + this.datetimeRoundDownPadding[granularity];
   }
 
   /*
@@ -159,32 +147,30 @@ abstract class DatetimeStringProcessor
    */
   public String stripDatetimeString(String datetimeString, int granularity) throws TemporalException
   {
-    StringTokenizer tokenizer;
-    String result = "";
-    int numberOfTokens;
+    String strippedDatetimeString = "";
 
     Temporal.checkGranularity(granularity);
 
-    tokenizer = new StringTokenizer(datetimeString, this.delimiters, true); // Return all tokens including delimiters.
-    numberOfTokens = tokenizer.countTokens();
+    StringTokenizer tokenizer = new StringTokenizer(datetimeString, this.delimiters, true); // Return all tokens including delimiters.
+    int numberOfTokens = tokenizer.countTokens();
 
     if (numberOfTokens == 0)
       Temporal.throwInvalidDatetimeStringException(datetimeString);
 
     if (numberOfTokens <= this.gTokenIndex[granularity])
-      result = datetimeString;
+      strippedDatetimeString = datetimeString;
     else {
       try {
         int i = 0;
         while (i < this.gTokenIndex[granularity] && tokenizer.hasMoreTokens()) {
-          result = result + tokenizer.nextToken();
+          strippedDatetimeString = strippedDatetimeString + tokenizer.nextToken();
           i++;
         }
       } catch (Exception e) {
         Temporal.throwInvalidDatetimeStringException(datetimeString);
       }
     }
-    return result;
+    return strippedDatetimeString;
   }
 
   /**

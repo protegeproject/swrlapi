@@ -101,6 +101,9 @@ class DefaultSWRLLiteralBuiltInArgument extends DefaultSWRLBuiltInArgument imple
 
   @Override public int compareTo(OWLObject o)
   {
+    if (o == null)
+      throw new NullPointerException();
+
     if (!(o instanceof SWRLLiteralBuiltInArgument))
       return -1;
 

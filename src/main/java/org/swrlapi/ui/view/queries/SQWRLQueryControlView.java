@@ -1,26 +1,17 @@
 package org.swrlapi.ui.view.queries;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.swing.Icon;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
-
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.exceptions.SQWRLInvalidQueryNameException;
 import org.swrlapi.ui.view.SWRLAPIView;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @see org.swrlapi.sqwrl.SQWRLQueryEngine
@@ -199,12 +190,14 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
     {
       appendToConsole("See the " + queryName + " tab to review results of the SQWRL query.\n");
       appendToConsole("The query took " + (System.currentTimeMillis() - startTime) + " milliseconds. ");
+
       if (sqwrlResult.getNumberOfRows() == 1)
         appendToConsole("1 row was returned.\n");
       else
         appendToConsole("" + sqwrlResult.getNumberOfRows() + " rows were returned.\n");
 
       SQWRLResultView sqwrlResultView;
+
       if (SQWRLQueryControlView.this.sqwrlResultViews.containsKey(queryName)) // Existing result tab found
         sqwrlResultView = SQWRLQueryControlView.this.sqwrlResultViews.get(queryName);
       else { // Create new result tab
@@ -214,6 +207,7 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
         ((JTabbedPane)getParent()).addTab(queryName, SQWRLQueryControlView.this.queryEngineIcon, sqwrlResultView,
             "SQWRL Result for query '" + queryName + "'");
       }
+
       sqwrlResultView.validate();
       this.sqwrlQueryControlView.getParent().validate();
     }

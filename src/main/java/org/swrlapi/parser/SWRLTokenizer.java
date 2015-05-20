@@ -65,14 +65,6 @@ class SWRLTokenizer
     this.tokenPosition = 0;
   }
 
-  public SWRLToken getToken() throws SWRLParseException
-  {
-    if (this.tokenPosition < this.tokens.size())
-      return this.tokens.get(this.tokenPosition++);
-    else
-      throw generateEndOfRuleException("Incomplete rule!");
-  }
-
   public SWRLToken getToken(SWRLToken.SWRLTokenType expectedTokenType, String unexpectedTokenMessage)
       throws SWRLParseException
   {
@@ -131,17 +123,6 @@ class SWRLTokenizer
     this.swrlVariables.add(variableName);
   }
 
-  public void checkAndSkipToken(SWRLToken.SWRLTokenType tokenType, String unexpectedTokenMessage)
-      throws SWRLParseException
-  {
-    if (hasMoreTokens()) {
-      SWRLToken token = getToken();
-
-      if (token.getTokenType() != tokenType)
-        throw new SWRLParseException(unexpectedTokenMessage + ", got '" + token.getValue() + "'");
-    } else
-      throw generateEndOfRuleException(unexpectedTokenMessage);
-  }
 
   public void checkAndSkipLParen(String unexpectedTokenMessage) throws SWRLParseException
   {
@@ -165,6 +146,26 @@ class SWRLTokenizer
         return true;
     }
     return false;
+  }
+
+  private SWRLToken getToken() throws SWRLParseException
+  {
+    if (this.tokenPosition < this.tokens.size())
+      return this.tokens.get(this.tokenPosition++);
+    else
+      throw generateEndOfRuleException("Incomplete rule!");
+  }
+
+  private void checkAndSkipToken(SWRLToken.SWRLTokenType tokenType, String unexpectedTokenMessage)
+    throws SWRLParseException
+  {
+    if (hasMoreTokens()) {
+      SWRLToken token = getToken();
+
+      if (token.getTokenType() != tokenType)
+        throw new SWRLParseException(unexpectedTokenMessage + ", got '" + token.getValue() + "'");
+    } else
+      throw generateEndOfRuleException(unexpectedTokenMessage);
   }
 
   private List<SWRLToken> generateTokens() throws SWRLParseException

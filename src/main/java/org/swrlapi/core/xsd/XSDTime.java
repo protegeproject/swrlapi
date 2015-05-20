@@ -20,8 +20,7 @@ public class XSDTime extends XSDType<XSDTime>
     this.time = XSDTimeUtil.utilDate2XSDTime(date);
   }
 
-  @Override
-  protected void validate()
+  @Override protected void validate()
   {
     if (getContent() == null)
       throw new IllegalArgumentException("null content for xsd:Time");
@@ -30,14 +29,12 @@ public class XSDTime extends XSDType<XSDTime>
       throw new IllegalArgumentException("invalid xsd:Time '" + getContent() + "'");
   }
 
-  @Override
-  public String getContent()
+  @Override public String getContent()
   {
     return this.content;
   }
 
-  @Override
-  public boolean equals(Object o)
+  @Override public boolean equals(Object o)
   {
     if (this == o)
       return true;
@@ -50,17 +47,18 @@ public class XSDTime extends XSDType<XSDTime>
     return this.time != null && otherTime.time != null && this.time.equals(otherTime.time);
   }
 
-  @Override
-  public int hashCode()
+  @Override public int hashCode()
   {
     int code = 156;
     code += this.time.hashCode();
     return code;
   }
 
-  @Override
-  public int compareTo(XSDTime o)
+  @Override public int compareTo(XSDTime o)
   {
+    if (o == null)
+      throw new NullPointerException();
+
     if (this == o)
       return 0;
 
