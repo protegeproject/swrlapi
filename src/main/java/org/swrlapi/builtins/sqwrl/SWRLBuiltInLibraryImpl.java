@@ -61,8 +61,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
     this.collectionsMap = new HashMap<>();
     this.collectionGroupElementNumbersMap = new HashMap<>();
-    this.setKeys = new HashSet<String>();
-    this.bagKeys = new HashSet<String>();
+    this.setKeys = new HashSet<>();
+    this.bagKeys = new HashSet<>();
   }
 
   @Override public void reset()
@@ -547,8 +547,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
           value = getArgumentAsADouble(element);
           sumValue += value;
         }
-        SWRLBuiltInArgument resultArgument = createLeastNarrowNumericLiteralBuiltInArgument(sumValue,
-          new ArrayList<SWRLBuiltInArgument>(collection));
+        SWRLBuiltInArgument resultArgument = createLeastNarrowNumericLiteralBuiltInArgument(sumValue, new ArrayList<>(collection));
 
         return processResultArgument(arguments, resultArgumentNumber, resultArgument);
       }
@@ -601,8 +600,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
           sumValue += value;
         }
         double avgValue = sumValue / collection.size();
-        SWRLBuiltInArgument resultArgument = createLeastNarrowNumericLiteralBuiltInArgument(avgValue,
-          new ArrayList<SWRLBuiltInArgument>(collection));
+        SWRLBuiltInArgument resultArgument = createLeastNarrowNumericLiteralBuiltInArgument(avgValue, new ArrayList<>(collection));
 
         return processResultArgument(arguments, resultArgumentNumber, resultArgument);
       }
@@ -666,7 +664,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
           medianValue = (valueArray[middle - 1] + valueArray[middle]) / 2;
 
         SWRLBuiltInArgument resultArgument = createLeastNarrowNumericLiteralBuiltInArgument(medianValue,
-          new ArrayList<SWRLBuiltInArgument>(collection));
+            new ArrayList<>(collection));
 
         return processResultArgument(arguments, resultArgumentNumber, resultArgument);
       }
@@ -819,7 +817,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
         sourceCollectionArgumentNumber, numberOfCoreArguments);
       int n = getArgumentAsAPositiveInt(nArgumentNumber, arguments) - 1; // 1-offset for user, 0 for processing
       int sliceSize = getArgumentAsAPositiveInt(sliceSizeArgumentNumber, arguments);
-      List<SWRLBuiltInArgument> slice = new ArrayList<SWRLBuiltInArgument>();
+      List<SWRLBuiltInArgument> slice = new ArrayList<>();
 
       if (!sortedList.isEmpty() && n >= 0) {
         int startIndex = n;
@@ -849,7 +847,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
         sourceCollectionArgumentNumber, numberOfCoreArguments);
       int n = getArgumentAsAPositiveInt(nArgumentNumber, arguments) - 1; // 1-offset for user, 0 for processing
       int sliceSize = getArgumentAsAPositiveInt(sliceSizeArgumentNumber, arguments);
-      List<SWRLBuiltInArgument> notSlice = new ArrayList<SWRLBuiltInArgument>();
+      List<SWRLBuiltInArgument> notSlice = new ArrayList<>();
 
       if (!sortedList.isEmpty() && n >= 0 && n < sortedList.size()) {
         int startIndex = n;
@@ -879,7 +877,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       List<SWRLBuiltInArgument> sortedList = getSortedListInSingleOperandCollectionOperation(arguments,
         sourceCollectionArgumentNumber, numberOfCoreArguments);
       int n = getArgumentAsAPositiveInt(nArgumentNumber, arguments);
-      List<SWRLBuiltInArgument> slice = new ArrayList<SWRLBuiltInArgument>();
+      List<SWRLBuiltInArgument> slice = new ArrayList<>();
       int sliceSize = getArgumentAsAPositiveInt(sliceSizeArgumentNumber, arguments);
 
       if (!sortedList.isEmpty() && n > 0) {
@@ -912,7 +910,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
         sourceCollectionArgumentNumber, numberOfCoreArguments);
       int n = getArgumentAsAPositiveInt(nArgumentNumber, arguments);
       int sliceSize = getArgumentAsAPositiveInt(sliceSizeArgumentNumber, arguments);
-      List<SWRLBuiltInArgument> slice = new ArrayList<SWRLBuiltInArgument>();
+      List<SWRLBuiltInArgument> slice = new ArrayList<>();
 
       if (!sortedList.isEmpty() && n > 0 && n <= sortedList.size()) {
         int startIndex = sortedList.size() - n;
@@ -989,7 +987,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       List<SWRLBuiltInArgument> sortedList = getSortedListInSingleOperandCollectionOperation(arguments,
         sourceCollectionArgumentNumber, numberOfCoreArguments);
       int n = getArgumentAsAPositiveInt(nArgumentNumber, arguments);
-      List<SWRLBuiltInArgument> greatestN = new ArrayList<SWRLBuiltInArgument>();
+      List<SWRLBuiltInArgument> greatestN = new ArrayList<>();
 
       if (!sortedList.isEmpty() && n > 0) {
         int startIndex = sortedList.size() - n;
@@ -1019,7 +1017,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       List<SWRLBuiltInArgument> sortedList = getSortedListInSingleOperandCollectionOperation(arguments,
         sourceCollectionArgumentNumber, numberOfCoreArguments);
       int n = getArgumentAsAPositiveInt(nArgumentNumber, arguments);
-      List<SWRLBuiltInArgument> notGreatestN = new ArrayList<SWRLBuiltInArgument>();
+      List<SWRLBuiltInArgument> notGreatestN = new ArrayList<>();
 
       if (!sortedList.isEmpty() && n > 0) {
         int startIndex = sortedList.size() - n;
@@ -1073,7 +1071,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       List<SWRLBuiltInArgument> sortedList = getSortedListInSingleOperandCollectionOperation(arguments,
         sourceCollectionArgumentNumber, numberOfCoreArguments);
       int n = getArgumentAsAPositiveInt(nArgumentNumber, arguments) - 1;
-      List<SWRLBuiltInArgument> leastN = new ArrayList<SWRLBuiltInArgument>();
+      List<SWRLBuiltInArgument> leastN = new ArrayList<>();
 
       for (int i = 0; i <= n && i < sortedList.size(); i++)
         leastN.add(sortedList.get(i));
@@ -1098,7 +1096,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       List<SWRLBuiltInArgument> sortedList = getSortedListInSingleOperandCollectionOperation(arguments,
         sourceCollectionArgumentNumber, numberOfCoreArguments);
       int n = getArgumentAsAPositiveInt(nArgumentNumber, arguments);
-      List<SWRLBuiltInArgument> notLeastN = new ArrayList<SWRLBuiltInArgument>();
+      List<SWRLBuiltInArgument> notLeastN = new ArrayList<>();
 
       for (int i = n; i >= 0 && i < sortedList.size(); i++)
         notLeastN.add(sortedList.get(i));
@@ -1264,7 +1262,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       collection2NumberOfGroupElements);
     Collection<SWRLBuiltInArgument> collection1 = getCollection(queryName, collection1Name, collection1GroupKey);
     Collection<SWRLBuiltInArgument> collection2 = getCollection(queryName, collection2Name, collection2GroupKey);
-    Collection<SWRLBuiltInArgument> intersection = new HashSet<SWRLBuiltInArgument>(collection1);
+    Collection<SWRLBuiltInArgument> intersection = new HashSet<>(collection1);
 
     intersection.retainAll(collection2);
 
@@ -1309,7 +1307,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       resultCollectionArgumentNumber, numberOfCoreArguments, 0, resultCollectionNumberOfGroupElements);
     Collection<SWRLBuiltInArgument> collection1 = getCollection(queryName, collection1Name, collection1GroupKey);
     Collection<SWRLBuiltInArgument> collection2 = getCollection(queryName, collection2Name, collection2GroupKey);
-    List<SWRLBuiltInArgument> resultCollection = new ArrayList<SWRLBuiltInArgument>(collection1);
+    List<SWRLBuiltInArgument> resultCollection = new ArrayList<>(collection1);
 
     resultCollection.addAll(collection2);
 
@@ -1354,7 +1352,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       resultCollectionArgumentNumber, numberOfCoreArguments, 0, resultCollectionNumberOfGroupElements);
     Collection<SWRLBuiltInArgument> collection1 = getCollection(queryName, collection1Name, collection1GroupKey);
     Collection<SWRLBuiltInArgument> collection2 = getCollection(queryName, collection2Name, collection2GroupKey);
-    Set<SWRLBuiltInArgument> union = new HashSet<SWRLBuiltInArgument>(collection1);
+    Set<SWRLBuiltInArgument> union = new HashSet<>(collection1);
 
     union.addAll(collection2);
 
@@ -1399,7 +1397,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       collection2NumberOfGroupElements);
     Collection<SWRLBuiltInArgument> collection1 = getCollection(queryName, collection1Name, collection1GroupKey);
     Collection<SWRLBuiltInArgument> collection2 = getCollection(queryName, collection2Name, collection2GroupKey);
-    Collection<SWRLBuiltInArgument> difference = new HashSet<SWRLBuiltInArgument>(collection1);
+    Collection<SWRLBuiltInArgument> difference = new HashSet<>(collection1);
 
     difference.removeAll(collection2);
 
@@ -1625,7 +1623,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     if (numberOfRelevantGroupArguments != 0) // Is a grouped collection
       return createInvocationPattern(getBuiltInBridge(), queryName, 0, false, arguments
         .subList(coreNumberOfArguments + groupArgumentOffset,
-          coreNumberOfArguments + groupArgumentOffset + numberOfRelevantGroupArguments));
+            coreNumberOfArguments + groupArgumentOffset + numberOfRelevantGroupArguments));
     else
       return "";
   }
@@ -1830,7 +1828,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     return this.bagKeys.contains(bagKey);
   }
 
-  private boolean isCollectionRecorded(String queryName, String collectionName) throws SWRLBuiltInException
+  private boolean isCollectionRecorded(String queryName, String collectionName)
   {
     String collectionKey = createCollectionKey(queryName, collectionName);
 
@@ -1858,9 +1856,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     if (!isCollectionRecorded(queryName, collectionName))
       throw new SWRLBuiltInException(collectionName + " in query " + queryName + " is not a collection");
     else {
-      Collection<SWRLBuiltInArgument> ungroupedCollection = isSet(queryName, collectionName) ?
-        new HashSet<SWRLBuiltInArgument>() :
-        new ArrayList<SWRLBuiltInArgument>();
+      Collection<SWRLBuiltInArgument> ungroupedCollection = isSet(queryName, collectionName) ? new HashSet<>() :
+          new ArrayList<>();
       String collectionKey = createCollectionKey(queryName, collectionName);
 
       for (String collectionGroupKey : this.collectionsMap.get(collectionKey).keySet()) {

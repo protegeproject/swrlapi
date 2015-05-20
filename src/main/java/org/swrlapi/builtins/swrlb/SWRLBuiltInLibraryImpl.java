@@ -1536,37 +1536,37 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     }
   }
 
-  private XSDDate utilDate2XSDDate(java.util.Date utilDate) throws SWRLBuiltInException
+  private XSDDate utilDate2XSDDate(java.util.Date utilDate)
   {
     return new XSDDate(XSDTimeUtil.utilDate2XSDDateString(utilDate));
   }
 
-  private XSDDate dateString2XSDDate(String date) throws SWRLBuiltInException
+  private XSDDate dateString2XSDDate(String date)
   {
     return new XSDDate(date);
   }
 
-  private XSDDateTime utilDate2XSDDateTime(java.util.Date utilDate) throws SWRLBuiltInException
+  private XSDDateTime utilDate2XSDDateTime(java.util.Date utilDate)
   {
     return new XSDDateTime(XSDTimeUtil.utilDate2XSDDateTimeString(utilDate));
   }
 
-  private XSDDateTime dateTimeString2XSDDateTime(String dateTime) throws SWRLBuiltInException
+  private XSDDateTime dateTimeString2XSDDateTime(String dateTime)
   {
     return new XSDDateTime(dateTime);
   }
 
-  private XSDDuration axisDuration2XSDDuration(org.apache.axis.types.Duration duration) throws SWRLBuiltInException
+  private XSDDuration axisDuration2XSDDuration(org.apache.axis.types.Duration duration)
   {
     return new XSDDuration(duration.toString());
   }
 
-  private XSDTime axisTime2XSDTime(org.apache.axis.types.Time time) throws SWRLBuiltInException
+  private XSDTime axisTime2XSDTime(org.apache.axis.types.Time time)
   {
     return new XSDTime(time.toString());
   }
 
-  private XSDTime timeString2XSDTime(String time) throws SWRLBuiltInException
+  private XSDTime timeString2XSDTime(String time)
   {
     return new XSDTime(time);
   }

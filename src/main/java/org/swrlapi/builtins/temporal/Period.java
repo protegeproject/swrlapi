@@ -391,7 +391,7 @@ public class Period
     Iterator<Period> iterator;
     Period p1, p2;
     boolean periodMerged;
-    List<Period> resultList = new ArrayList<Period>();
+    List<Period> resultList = new ArrayList<>();
 
     // Loop through each period in the list trying to merge with other periods.
     while (!periods.isEmpty()) {

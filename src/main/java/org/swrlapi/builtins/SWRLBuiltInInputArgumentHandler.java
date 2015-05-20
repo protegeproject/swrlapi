@@ -29,7 +29,7 @@ public interface SWRLBuiltInInputArgumentHandler
    * @throws SWRLBuiltInException If an error occurs during processing
    */
   // Unbound argument handling
-  boolean hasUnboundArguments(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+  boolean hasUnboundArguments(List<SWRLBuiltInArgument> arguments);
 
   /**
    * @param arguments The built-in arguments
@@ -68,7 +68,7 @@ public interface SWRLBuiltInInputArgumentHandler
    * @return The first unbound argument
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  int getFirstUnboundArgument(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+  int getFirstUnboundArgument(List<SWRLBuiltInArgument> arguments);
 
   /**
    * @param arguments The built-in arguments
@@ -829,7 +829,7 @@ public interface SWRLBuiltInInputArgumentHandler
    * @return A clone of the built-in argument list
    * @throws SWRLBuiltInException If an error occurs during cloning
    */
-  List<SWRLBuiltInArgument> cloneArguments(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+  List<SWRLBuiltInArgument> cloneArguments(List<SWRLBuiltInArgument> arguments);
 
   /**
    * @param argumentNumber The 0-based index of the argument

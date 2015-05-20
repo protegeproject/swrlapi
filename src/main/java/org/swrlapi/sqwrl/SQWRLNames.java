@@ -146,22 +146,22 @@ public class SQWRLNames
   private static final Set<String> multiCollectionOperationWithoutCollectionCreateBuiltInNames;
 
   static {
-    sqwrlBuiltInNames = new HashSet<String>();
+    sqwrlBuiltInNames = new HashSet<>();
 
-    headBuiltInNames = new HashSet<String>();
-    headSelectionBuiltInNames = new HashSet<String>();
-    headAggregationBuiltInNames = new HashSet<String>();
-    headSlicingBuiltInNames = new HashSet<String>();
+    headBuiltInNames = new HashSet<>();
+    headSelectionBuiltInNames = new HashSet<>();
+    headAggregationBuiltInNames = new HashSet<>();
+    headSlicingBuiltInNames = new HashSet<>();
 
-    collectionMakeBuiltInNames = new HashSet<String>();
-    collectionGroupByBuiltInNames = new HashSet<String>();
+    collectionMakeBuiltInNames = new HashSet<>();
+    collectionGroupByBuiltInNames = new HashSet<>();
 
-    collectionCreateOperationBuiltInNames = new HashSet<String>();
-    collectionOperationBuiltInNames = new HashSet<String>();
-    singleCollectionOperationWithCollectionCreateBuiltInNames = new HashSet<String>();
-    singleCollectionOperationWithoutCollectionCreateBuiltInNames = new HashSet<String>();
-    multiCollectionOperationWithCollectionCreateBuiltInNames = new HashSet<String>();
-    multiCollectionOperationWithoutCollectionCreateBuiltInNames = new HashSet<String>();
+    collectionCreateOperationBuiltInNames = new HashSet<>();
+    collectionOperationBuiltInNames = new HashSet<>();
+    singleCollectionOperationWithCollectionCreateBuiltInNames = new HashSet<>();
+    singleCollectionOperationWithoutCollectionCreateBuiltInNames = new HashSet<>();
+    multiCollectionOperationWithCollectionCreateBuiltInNames = new HashSet<>();
+    multiCollectionOperationWithoutCollectionCreateBuiltInNames = new HashSet<>();
 
     for (String builtInName : headSelectionBuiltInNamesArray)
       headSelectionBuiltInNames.add(builtInName);
@@ -296,8 +296,8 @@ public class SQWRLNames
   {
     boolean found = false;
 
-    for (int i = 0; i < aggregateFunctionNames.length; i++)
-      if (aggregateFunctionNames[i].equalsIgnoreCase(aggregateFunctionName))
+    for (String candidateAggregateFunctionName : aggregateFunctionNames)
+      if (candidateAggregateFunctionName.equalsIgnoreCase(aggregateFunctionName))
         found = true;
 
     if (!found)

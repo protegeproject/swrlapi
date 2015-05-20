@@ -20,7 +20,7 @@ public class ExtensionFilter extends FileFilter
 
   public ExtensionFilter(Iterator<String> extensions, String description)
   {
-    this._extensions = new ArrayList<String>();
+    this._extensions = new ArrayList<>();
     while (extensions.hasNext()) {
       String extension = extensions.next();
       if (!extension.startsWith(".")) {
@@ -43,9 +43,7 @@ public class ExtensionFilter extends FileFilter
       return true;
     } else {
       String lowerCaseName = file.getName().toLowerCase();
-      Iterator<String> it = this._extensions.iterator();
-      while (it.hasNext()) {
-        String s = it.next();
+      for (String s : this._extensions) {
         if (lowerCaseName.endsWith(s)) {
           return true;
         }

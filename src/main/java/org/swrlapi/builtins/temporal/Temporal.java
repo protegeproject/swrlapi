@@ -108,7 +108,7 @@ class Temporal
   /**
    * @throws TemporalException If an error occurs during processing
    */
-  public void setNow() throws TemporalException
+  public void setNow()
   {
     long millisecondsFrom1970 = System.currentTimeMillis();
 
@@ -314,7 +314,7 @@ class Temporal
   }
 
   // We ignore leap years here - convertGranuleCount adjusts for them.
-  public static long convertGranuleCount2MonthCount(long granuleCount, int from_granularity) throws TemporalException
+  public static long convertGranuleCount2MonthCount(long granuleCount, int from_granularity)
   {
     long monthCount;
 

@@ -32,7 +32,7 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
    *
    * @throws SWRLBuiltInException If an error occurs during reset
    */
-  void reset() throws SWRLBuiltInException;
+  void reset();
 
   /**
    * Method to invoke a built-in in the library. Invoked by {@link SWRLBuiltInLibraryManager}.

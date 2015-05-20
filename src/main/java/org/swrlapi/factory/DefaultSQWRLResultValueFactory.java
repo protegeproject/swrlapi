@@ -8,6 +8,7 @@ import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
+import org.swrlapi.core.Literal;
 import org.swrlapi.core.OWLLiteralFactory;
 import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.core.xsd.XSDDate;
@@ -216,8 +217,8 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
   public SQWRLLiteralResultValue createLeastNarrowNumericLiteralValue(double value,
       List<SQWRLLiteralResultValue> inputResultValues)
   {
-    List<OWLLiteral> numericLiterals = inputResultValues.stream().filter(e -> e.isNumeric())
-        .map(e -> e.getOWLLiteral()).collect(Collectors.toList());
+    List<OWLLiteral> numericLiterals = inputResultValues.stream().filter(Literal::isNumeric)
+        .map(Literal::getOWLLiteral).collect(Collectors.toList());
 
     OWLLiteral literal = getOWLLiteralFactory().createLeastNarrowNumericOWLLiteral(value, numericLiterals);
 

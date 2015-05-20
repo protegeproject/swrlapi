@@ -376,8 +376,8 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, 
   public boolean isArgumentConvertibleToShort(int argumentNumber, List<SWRLBuiltInArgument> arguments)
       throws SWRLBuiltInException
   {
-    return (isArgumentNumeric(argumentNumber, arguments) && isArgumentAByte(argumentNumber, arguments) && isArgumentAShort(
-        argumentNumber, arguments));
+    return (isArgumentNumeric(argumentNumber, arguments) && isArgumentAByte(argumentNumber,
+        arguments) && isArgumentAShort(argumentNumber, arguments));
   }
 
   @Override
@@ -394,7 +394,7 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, 
   {
     return (isArgumentNumeric(argumentNumber, arguments) && isArgumentAByte(argumentNumber, arguments)
         && isArgumentAShort(argumentNumber, arguments) && isArgumentAnInt(argumentNumber, arguments) && isArgumentALong(
-          argumentNumber, arguments));
+        argumentNumber, arguments));
   }
 
   @Override
@@ -1184,7 +1184,7 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, 
   // Unbound argument processing methods.
 
   @Override
-  public boolean hasUnboundArguments(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean hasUnboundArguments(List<SWRLBuiltInArgument> arguments)
   {
     for (SWRLBuiltInArgument argument : arguments)
       if (argument.isVariable() && argument.asVariable().isUnbound())
@@ -1227,7 +1227,7 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, 
    * Get 0-offset position of first unbound argument; return -1 if no unbound arguments are found.
    */
   @Override
-  public int getFirstUnboundArgument(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public int getFirstUnboundArgument(List<SWRLBuiltInArgument> arguments)
   {
     for (int index = 0; index < arguments.size(); index++)
       if (arguments.get(index).isVariable() && arguments.get(index).asVariable().isUnbound())
@@ -1369,9 +1369,9 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, 
   }
 
   @Override
-  public List<SWRLBuiltInArgument> cloneArguments(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public List<SWRLBuiltInArgument> cloneArguments(List<SWRLBuiltInArgument> arguments)
   {
-    return new ArrayList<SWRLBuiltInArgument>(arguments);
+    return new ArrayList<>(arguments);
   }
 
   @Override
@@ -1383,8 +1383,7 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, 
     if (isUnboundArgument(resultArgumentNumber, arguments)) {
       IRI variableIRI = arguments.get(resultArgumentNumber).asVariable().getIRI();
       SWRLMultiValueVariableBuiltInArgument resultMultiArgument = createSWRLMultiValueVariableBuiltInArgument(variableIRI);
-      for (SWRLBuiltInArgument argument : resultArguments)
-        resultMultiArgument.addArgument(argument);
+      resultArguments.forEach(resultMultiArgument::addArgument);
       arguments.get(resultArgumentNumber).asVariable().setBuiltInResult(resultMultiArgument);
       return !resultMultiArgument.hasNoArguments();
     } else {
@@ -1516,145 +1515,140 @@ public abstract class AbstractSWRLBuiltInLibrary implements SWRLBuiltInLibrary, 
   }
 
   @Override
-  public SWRLClassBuiltInArgument createClassBuiltInArgument(OWLClass cls) throws SWRLBuiltInException
+  public SWRLClassBuiltInArgument createClassBuiltInArgument(OWLClass cls)
   {
     return getSWRLBuiltInArgumentFactory().getClassBuiltInArgument(cls);
   }
 
   @Override
   public SWRLNamedIndividualBuiltInArgument createIndividualBuiltInArgument(OWLNamedIndividual individual)
-      throws SWRLBuiltInException
   {
     return getSWRLBuiltInArgumentFactory().getNamedIndividualBuiltInArgument(individual);
   }
 
   @Override
   public SWRLObjectPropertyBuiltInArgument createObjectPropertyBuiltInArgument(OWLObjectProperty property)
-      throws SWRLBuiltInException
   {
     return getSWRLBuiltInArgumentFactory().getObjectPropertyBuiltInArgument(property);
   }
 
   @Override
   public SWRLDataPropertyBuiltInArgument createDataPropertyBuiltInArgument(OWLDataProperty property)
-      throws SWRLBuiltInException
   {
     return getSWRLBuiltInArgumentFactory().getDataPropertyBuiltInArgument(property);
   }
 
   @Override
   public SWRLAnnotationPropertyBuiltInArgument createAnnotationPropertyBuiltInArgument(OWLAnnotationProperty property)
-      throws SWRLBuiltInException
   {
     return getSWRLBuiltInArgumentFactory().getAnnotationPropertyBuiltInArgument(property);
   }
 
   @Override
-  public SWRLDatatypeBuiltInArgument createDatatypeBuiltInArgument(OWLDatatype datatype) throws SWRLBuiltInException
+  public SWRLDatatypeBuiltInArgument createDatatypeBuiltInArgument(OWLDatatype datatype)
   {
     return getSWRLBuiltInArgumentFactory().getDatatypeBuiltInArgument(datatype);
   }
 
-  public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(OWLLiteral literal) throws SWRLBuiltInException
+  public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(OWLLiteral literal)
   {
     return getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(literal);
   }
 
   @Override
-  public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(String s) throws SWRLBuiltInException
+  public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(String s)
   {
     return getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(s);
   }
 
   @Override
-  public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(boolean b) throws SWRLBuiltInException
+  public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(boolean b)
   {
     return getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(b);
   }
 
   @Override
-  public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(byte b) throws SWRLBuiltInException
+  public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(byte b)
   {
     return getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(b);
   }
 
   @Override
-  public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(short s) throws SWRLBuiltInException
+  public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(short s)
   {
     return getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(s);
   }
 
   @Override
-  public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(int i) throws SWRLBuiltInException
+  public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(int i)
   {
     return getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(i);
   }
 
   @Override
-  public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(long l) throws SWRLBuiltInException
+  public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(long l)
   {
     return getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(l);
   }
 
   @Override
-  public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(float f) throws SWRLBuiltInException
+  public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(float f)
   {
     return getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(f);
   }
 
   @Override
-  public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(double d) throws SWRLBuiltInException
+  public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(double d)
   {
     return getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(d);
   }
 
   @Override
-  public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(XSDDate date) throws SWRLBuiltInException
+  public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(XSDDate date)
   {
     return getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(date);
   }
 
   @Override
-  public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(XSDTime time) throws SWRLBuiltInException
+  public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(XSDTime time)
   {
     return getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(time);
   }
 
   @Override
-  public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(XSDDateTime dateTime) throws SWRLBuiltInException
+  public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(XSDDateTime dateTime)
   {
     return getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(dateTime);
   }
 
   @Override
-  public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(XSDDuration duration) throws SWRLBuiltInException
+  public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(XSDDuration duration)
   {
     return getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(duration);
   }
 
   @Override
-  public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(URI uri) throws SWRLBuiltInException
+  public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(URI uri)
   {
     return getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(uri);
   }
 
   @Override
   public SWRLMultiValueVariableBuiltInArgument createSWRLMultiValueVariableBuiltInArgument(IRI variableIRI)
-      throws SWRLBuiltInException
   {
     return getSWRLBuiltInArgumentFactory().getMultiValueVariableBuiltInArgument(variableIRI);
   }
 
   @Override
   public SWRLMultiValueVariableBuiltInArgument createSWRLMultiValueVariableBuiltInArgument(IRI variableIRI,
-      List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+      List<SWRLBuiltInArgument> arguments)
   {
     return getSWRLBuiltInArgumentFactory().getMultiValueVariableBuiltInArgument(variableIRI, arguments);
   }
 
   @Override
   public SQWRLCollectionVariableBuiltInArgument createSQWRLCollectionVariableBuiltInArgument(IRI variableIRI,
-      String queryName, String collectionName, String collectionGroupID) throws SWRLBuiltInException
+      String queryName, String collectionName, String collectionGroupID)
   {
     return getSWRLBuiltInArgumentFactory().getSQWRLCollectionVariableBuiltInArgument(variableIRI, queryName,
         collectionName, collectionGroupID);

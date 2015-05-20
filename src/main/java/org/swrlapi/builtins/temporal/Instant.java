@@ -311,7 +311,7 @@ public class Instant
   public List<Instant> coalesce(List<Instant> instants, int g) throws TemporalException
   {
     Instant i1, i2;
-    List<Instant> resultList = new ArrayList<Instant>();
+    List<Instant> resultList = new ArrayList<>();
 
     // Loop through each instant in the list trying to merge with other instants.
     while (!instants.isEmpty()) {

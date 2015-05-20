@@ -11,6 +11,7 @@ import org.swrlapi.ui.model.SWRLAutoCompleter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @see org.swrlapi.ui.dialog.SWRLRuleEditorDialog
@@ -52,12 +53,9 @@ class DefaultSWRLAutoCompleter implements SWRLAutoCompleter
   @Override
   public List<String> getCompletions(String prefix)
   { // TODO Look at - not very efficient
-    List<String> completions = new ArrayList<>();
+    List<String> completions = this.shortForms.stream().filter(shortForm -> shortForm.startsWith(prefix))
+        .collect(Collectors.toList());
 
-    for (String shortForm : this.shortForms) {
-      if (shortForm.startsWith(prefix))
-        completions.add(shortForm);
-    }
     return completions;
   }
 }

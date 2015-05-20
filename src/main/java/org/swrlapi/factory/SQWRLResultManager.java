@@ -32,6 +32,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * This class implements the interfaces {@link org.swrlapi.sqwrl.SQWRLResult} and
@@ -675,7 +676,6 @@ class SQWRLResultManager implements SQWRLResult, SQWRLResultGenerator, Serializa
 
   // nth, firstN, etc. are 1-indexed
   private List<List<SQWRLResultValue>> processSelectionOperators(List<List<SQWRLResultValue>> sourceRows)
-      throws SQWRLException
   {
     List<List<SQWRLResultValue>> processedRows = new ArrayList<>();
     boolean hasSelection = false;
@@ -956,7 +956,7 @@ class SQWRLResultManager implements SQWRLResult, SQWRLResultGenerator, Serializa
       List<List<SQWRLResultValue>> columns = new ArrayList<>(getNumberOfColumns());
 
       for (int c = 0; c < getNumberOfColumns(); c++)
-        columns.add(new ArrayList<SQWRLResultValue>(getNumberOfRows()));
+        columns.add(new ArrayList<>(getNumberOfRows()));
 
       for (int r = 0; r < getNumberOfRows(); r++)
         for (int c = 0; c < getNumberOfColumns(); c++)
@@ -1081,9 +1081,8 @@ class SQWRLResultManager implements SQWRLResult, SQWRLResultGenerator, Serializa
 
     try {
       Collections.sort(localRows, rowComparator); // Binary search is expecting a sorted list
-      for (List<SQWRLResultValue> row : localRows)
-        if (Collections.binarySearch(processedRows, row, rowComparator) < 0)
-          processedRows.add(row);
+      localRows.stream().filter(row -> Collections.binarySearch(processedRows, row, rowComparator) < 0)
+          .forEach(processedRows::add);
     } catch (RuntimeException e) {
       throw new SQWRLException("Internal error comparing rows", e);
     }
@@ -1319,12 +1318,12 @@ class SQWRLResultManager implements SQWRLResult, SQWRLResultGenerator, Serializa
     return getSQWRLResultValueFactory().createLeastNarrowNumericLiteralValue(medianValue, columnValues);
   }
 
-  private SQWRLLiteralResultValue count(List<SQWRLResultValue> columnValues) throws SQWRLException
+  private SQWRLLiteralResultValue count(List<SQWRLResultValue> columnValues)
   {
     return getSQWRLResultValueFactory().getLiteralValue(columnValues.size());
   }
 
-  private SQWRLLiteralResultValue countDistinct(List<SQWRLResultValue> columnValues) throws SQWRLException
+  private SQWRLLiteralResultValue countDistinct(List<SQWRLResultValue> columnValues)
   {
     Set<SQWRLResultValue> distinctValues = new HashSet<>(columnValues);
 
@@ -1365,8 +1364,8 @@ class SQWRLResultManager implements SQWRLResult, SQWRLResultGenerator, Serializa
       this.ascending = ascending;
       this.orderByColumnIndexes = new ArrayList<>();
 
-      for (String columnName : allColumnNames)
-        this.orderByColumnIndexes.add(allColumnNames.indexOf(columnName));
+      this.orderByColumnIndexes
+          .addAll(allColumnNames.stream().map(allColumnNames::indexOf).collect(Collectors.toList()));
     }
 
     @Override

@@ -121,16 +121,12 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
       }
     });
 
-    this.swrlRulesTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-      @Override
-      public void valueChanged(ListSelectionEvent e)
-      {
-        if (hasSelectedRule())
-          enableEditAndDelete();
-        else
-          disableEditAndDelete();
-      }
-    });
+    this.swrlRulesTable.getSelectionModel().addListSelectionListener(e -> {
+			if (hasSelectedRule())
+				enableEditAndDelete();
+			else
+				disableEditAndDelete();
+		});
   }
 
   private void editSelectedSWRLRule()

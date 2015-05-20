@@ -22,7 +22,7 @@ class DefaultSWRLMultiValueVariableBuiltInArgument extends DefaultSWRLVariableBu
   public DefaultSWRLMultiValueVariableBuiltInArgument(IRI variableIRI, String variablePrefixedName)
   {
     super(variableIRI, variablePrefixedName);
-    this.arguments = new ArrayList<SWRLBuiltInArgument>();
+    this.arguments = new ArrayList<>();
   }
 
   public DefaultSWRLMultiValueVariableBuiltInArgument(IRI variableIRI, String variablePrefixedName,
