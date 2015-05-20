@@ -11,6 +11,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 /**
  * This class models a list of SWRL rules or SQWRL queries in an ontology for tabular display.
@@ -62,12 +63,8 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 
   public Set<SWRLRuleModel> getSWRLRuleModels(boolean isActiveFlag)
   {
-    Set<SWRLRuleModel> result = new HashSet<>();
-    for (SWRLRuleModel swrlRuleModel : this.swrlRuleModels.values()) {
-      if (swrlRuleModel.isActive() == isActiveFlag) {
-        result.add(swrlRuleModel);
-      }
-    }
+    Set<SWRLRuleModel> result = this.swrlRuleModels.values().stream()
+        .filter(swrlRuleModel -> swrlRuleModel.isActive() == isActiveFlag).collect(Collectors.toSet());
     return result;
   }
 

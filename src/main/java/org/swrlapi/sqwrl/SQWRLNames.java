@@ -2,6 +2,7 @@ package org.swrlapi.sqwrl;
 
 import org.swrlapi.sqwrl.exceptions.SQWRLInvalidAggregateFunctionNameException;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -163,45 +164,40 @@ public class SQWRLNames
     multiCollectionOperationWithCollectionCreateBuiltInNames = new HashSet<>();
     multiCollectionOperationWithoutCollectionCreateBuiltInNames = new HashSet<>();
 
-    for (String builtInName : headSelectionBuiltInNamesArray)
-      headSelectionBuiltInNames.add(builtInName);
-    for (String builtInName : headAggregationBuiltInNamesArray)
-      headAggregationBuiltInNames.add(builtInName);
-    for (String builtInName : headSlicingBuiltInNamesArray)
-      headSlicingBuiltInNames.add(builtInName);
+    Collections.addAll(headSelectionBuiltInNames, headSelectionBuiltInNamesArray);
+    Collections.addAll(headAggregationBuiltInNames, headAggregationBuiltInNamesArray);
+    Collections.addAll(headSlicingBuiltInNames, headSlicingBuiltInNamesArray);
     headBuiltInNames.addAll(headSelectionBuiltInNames);
     headBuiltInNames.addAll(headAggregationBuiltInNames);
     headBuiltInNames.addAll(headSlicingBuiltInNames);
     sqwrlBuiltInNames.addAll(headBuiltInNames);
 
-    for (String builtInName : collectionMakeBuiltInNamesArray)
-      collectionMakeBuiltInNames.add(builtInName);
+    Collections.addAll(collectionMakeBuiltInNames, collectionMakeBuiltInNamesArray);
     collectionCreateOperationBuiltInNames.addAll(collectionMakeBuiltInNames);
     sqwrlBuiltInNames.addAll(collectionMakeBuiltInNames);
 
-    for (String builtInName : collectionGroupByBuiltInNamesArray)
-      collectionGroupByBuiltInNames.add(builtInName);
+    Collections.addAll(collectionGroupByBuiltInNames, collectionGroupByBuiltInNamesArray);
     sqwrlBuiltInNames.addAll(collectionGroupByBuiltInNames);
 
-    for (String builtInName : singleCollectionOperationWithCollectionCreateBuiltInNamesArray)
-      singleCollectionOperationWithCollectionCreateBuiltInNames.add(builtInName);
+    Collections.addAll(singleCollectionOperationWithCollectionCreateBuiltInNames,
+        singleCollectionOperationWithCollectionCreateBuiltInNamesArray);
     collectionCreateOperationBuiltInNames.addAll(singleCollectionOperationWithCollectionCreateBuiltInNames);
     collectionOperationBuiltInNames.addAll(singleCollectionOperationWithCollectionCreateBuiltInNames);
     sqwrlBuiltInNames.addAll(singleCollectionOperationWithCollectionCreateBuiltInNames);
 
-    for (String builtInName : singleCollectionOperationWithoutCollectionCreateBuiltInNamesArray)
-      singleCollectionOperationWithoutCollectionCreateBuiltInNames.add(builtInName);
+    Collections.addAll(singleCollectionOperationWithoutCollectionCreateBuiltInNames,
+        singleCollectionOperationWithoutCollectionCreateBuiltInNamesArray);
     collectionOperationBuiltInNames.addAll(singleCollectionOperationWithoutCollectionCreateBuiltInNames);
     sqwrlBuiltInNames.addAll(singleCollectionOperationWithoutCollectionCreateBuiltInNames);
 
-    for (String builtInName : multiCollectionOperationWithCollectionCreateBuiltInNamesArray)
-      multiCollectionOperationWithCollectionCreateBuiltInNames.add(builtInName);
+    Collections.addAll(multiCollectionOperationWithCollectionCreateBuiltInNames,
+        multiCollectionOperationWithCollectionCreateBuiltInNamesArray);
     collectionCreateOperationBuiltInNames.addAll(multiCollectionOperationWithCollectionCreateBuiltInNames);
     collectionOperationBuiltInNames.addAll(multiCollectionOperationWithCollectionCreateBuiltInNames);
     sqwrlBuiltInNames.addAll(multiCollectionOperationWithCollectionCreateBuiltInNames);
 
-    for (String builtInName : multiCollectionOperationWithoutCollectionCreateBuiltInNamesArray)
-      multiCollectionOperationWithoutCollectionCreateBuiltInNames.add(builtInName);
+    Collections.addAll(multiCollectionOperationWithoutCollectionCreateBuiltInNames,
+        multiCollectionOperationWithoutCollectionCreateBuiltInNamesArray);
     collectionOperationBuiltInNames.addAll(multiCollectionOperationWithoutCollectionCreateBuiltInNames);
     sqwrlBuiltInNames.addAll(multiCollectionOperationWithoutCollectionCreateBuiltInNames);
   }

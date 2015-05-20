@@ -82,7 +82,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     checkNumberOfArgumentsAtLeast(2, arguments.size());
 
     if (isUnboundArgument(0, arguments)) {
-      OWLNamedIndividual individual = null;
+      OWLNamedIndividual individual;
       String createInvocationPattern = createInvocationPattern(getBuiltInBridge(), getInvokingRuleName(),
           getInvokingBuiltInIndex(), getIsInConsequent(), arguments.subList(1, arguments.size()));
 

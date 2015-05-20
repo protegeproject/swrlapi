@@ -46,7 +46,7 @@ public interface OWL2RLNames
 
   interface Annotations
   {
-    String OWL2RL_RULE = (SWRLA_NAMESPACE + "OWL2RLRule").intern();
-    String IS_OWL2RL_RULE_ENABLED = (SWRLA_NAMESPACE + "isOWL2RLRuleEnabled").intern();
+    String OWL2RL_RULE = (SWRLA_NAMESPACE + "OWL2RLRule");
+    String IS_OWL2RL_RULE_ENABLED = (SWRLA_NAMESPACE + "isOWL2RLRuleEnabled");
   }
 }

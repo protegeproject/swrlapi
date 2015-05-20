@@ -428,18 +428,14 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
   private void exportOWLAxioms2TargetRuleEngine(Set<OWLAxiom> axioms)
     throws SWRLRuleEngineException, TargetSWRLRuleEngineException
   {
-    for (OWLAxiom axiom : axioms) {
-      if (!this.exportedOWLAxioms.contains(axiom))
-        getTargetSWRLRuleEngine().defineOWLAxiom(axiom);
-    }
+    axioms.stream().filter(axiom -> !this.exportedOWLAxioms.contains(axiom))
+        .forEach(axiom -> getTargetSWRLRuleEngine().defineOWLAxiom(axiom));
   }
 
   private void writeOWLAxioms2OWLOntology(Set<OWLAxiom> axioms) throws SWRLRuleEngineException
   {
     try {
-      for (OWLAxiom axiom : axioms) {
-        writeOWLAxiom2OWLOntology(axiom);
-      }
+      axioms.forEach(this::writeOWLAxiom2OWLOntology);
     } catch (RuntimeException e) {
       throw new SWRLRuleEngineException("Error writing OWL axioms to ontology", e);
     }

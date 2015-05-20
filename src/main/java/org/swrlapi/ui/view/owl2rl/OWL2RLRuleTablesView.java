@@ -29,8 +29,7 @@ public class OWL2RLRuleTablesView extends JTabbedPane implements SWRLAPIView
   @Override
   public void update()
   {
-    for (OWL2RLRuleTableView owl2RLTableView : this.owl2RLTableViews)
-      owl2RLTableView.update();
+    this.owl2RLTableViews.forEach(org.swrlapi.ui.view.owl2rl.OWL2RLRuleTableView::update);
 
     this.owl2RLControlView.update();
   }

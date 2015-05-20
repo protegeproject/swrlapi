@@ -105,9 +105,6 @@ class Temporal
     this.nowGranuleCountInMillis = datetimeString2GranuleCount(nowDatetimeString, MILLISECONDS);
   }
 
-  /**
-   * @throws TemporalException If an error occurs during processing
-   */
   public void setNow()
   {
     long millisecondsFrom1970 = System.currentTimeMillis();
@@ -254,7 +251,7 @@ class Temporal
   public static long convertGranuleCount(long granuleCount, int from_granularity, int to_granularity)
       throws TemporalException
   {
-    long result, leapOffsetGranuleCount = 0;
+    long result, leapOffsetGranuleCount;
 
     checkGranularity(from_granularity);
     checkGranularity(to_granularity);

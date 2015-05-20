@@ -26,7 +26,6 @@ public interface SWRLBuiltInInputArgumentHandler
   /**
    * @param arguments The built-in arguments The built-in arguments
    * @return True if there are unbound arguments
-   * @throws SWRLBuiltInException If an error occurs during processing
    */
   // Unbound argument handling
   boolean hasUnboundArguments(List<SWRLBuiltInArgument> arguments);
@@ -66,7 +65,6 @@ public interface SWRLBuiltInInputArgumentHandler
    *
    * @param arguments The built-in arguments
    * @return The first unbound argument
-   * @throws SWRLBuiltInException If an error occurs during processing
    */
   int getFirstUnboundArgument(List<SWRLBuiltInArgument> arguments);
 
@@ -827,7 +825,6 @@ public interface SWRLBuiltInInputArgumentHandler
   /**
    * @param arguments The built-in arguments
    * @return A clone of the built-in argument list
-   * @throws SWRLBuiltInException If an error occurs during cloning
    */
   List<SWRLBuiltInArgument> cloneArguments(List<SWRLBuiltInArgument> arguments);
 

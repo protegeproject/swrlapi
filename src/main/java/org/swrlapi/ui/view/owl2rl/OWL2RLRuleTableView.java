@@ -34,8 +34,7 @@ public class OWL2RLRuleTableView extends JPanel implements SWRLAPIView
   @Override
   public void update()
   {
-    for (OWL2RLRuleActivationButton button : this.ruleActivationButtons)
-      button.update();
+    this.ruleActivationButtons.forEach(org.swrlapi.ui.view.owl2rl.OWL2RLRuleActivationButton::update);
   }
 
   private void initialize()

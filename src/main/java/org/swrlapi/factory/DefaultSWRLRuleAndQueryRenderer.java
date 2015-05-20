@@ -137,7 +137,6 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
   {
     StringBuilder sb = new StringBuilder();
     boolean isFirst = true;
-    isFirst = true;
 
     while (headAtomIterator.hasNext()) {
       SWRLAtom atom = headAtomIterator.next();
@@ -164,7 +163,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
 
     sb.append(visit(classExpression));
 
-    sb.append("(" + visit(iArgument) + ")");
+    sb.append("(").append(visit(iArgument)).append(")");
 
     return sb.toString();
   }
@@ -178,7 +177,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
 
     sb.append(visit(dataRange));
 
-    sb.append("(" + visit(dArgument) + ")");
+    sb.append("(").append(visit(dArgument)).append(")");
 
     return sb.toString();
   }
@@ -193,7 +192,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
 
     sb.append(visit(objectPropertyExpression));
 
-    sb.append("(" + visit(iArgument1) + ", " + visit(iArgument2) + ")");
+    sb.append("(").append(visit(iArgument1)).append(", ").append(visit(iArgument2)).append(")");
 
     return sb.toString();
   }
@@ -208,7 +207,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
 
     sb.append(visit(dataPropertyExpression));
 
-    sb.append("(" + visit(iArgument1) + ", " + visit(dArgument2) + ")");
+    sb.append("(").append(visit(iArgument1)).append(", ").append(visit(dArgument2)).append(")");
 
     return sb.toString();
   }
@@ -220,7 +219,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
     String builtInPrefixedName = this.prefixManager.getPrefixIRI(iri);
     StringBuilder sb = new StringBuilder();
 
-    sb.append(builtInPrefixedName + "(");
+    sb.append(builtInPrefixedName).append("(");
 
     boolean isFirst = true;
     for (SWRLDArgument argument : builtInAtom.getArguments()) {
@@ -290,7 +289,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
 
     sb.append("sameAs");
 
-    sb.append("(" + visit(iArgument1) + ", " + visit(iArgument2) + ")");
+    sb.append("(").append(visit(iArgument1)).append(", ").append(visit(iArgument2)).append(")");
 
     return sb.toString();
   }
@@ -304,7 +303,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
 
     sb.append("differentFrom");
 
-    sb.append("(" + visit(iArgument1) + ", " + visit(iArgument2) + ")");
+    sb.append("(").append(visit(iArgument1)).append(", ").append(visit(iArgument2)).append(")");
 
     return sb.toString();
   }
@@ -320,7 +319,8 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
       SWRLVariable variableArgument = (SWRLVariable)argument;
       sb.append(variableArgument.accept(this));
     } else
-      sb.append("[Unknown " + SWRLIArgument.class.getName() + " type " + argument.getClass().getName() + "]");
+      sb.append("[Unknown ").append(SWRLIArgument.class.getName()).append(" type ")
+          .append(argument.getClass().getName()).append("]");
 
     return sb.toString();
   }
@@ -340,7 +340,8 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
       SWRLVariable variableArgument = (SWRLVariable)argument;
       sb.append(variableArgument.accept(this));
     } else
-      sb.append("[Unknown " + SWRLDArgument.class.getName() + " type " + argument.getClass().getName() + "]");
+      sb.append("[Unknown ").append(SWRLDArgument.class.getName()).append(" type ")
+          .append(argument.getClass().getName()).append("]");
 
     return sb.toString();
   }

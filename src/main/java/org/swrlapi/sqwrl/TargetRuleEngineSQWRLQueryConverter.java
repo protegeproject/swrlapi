@@ -1,7 +1,6 @@
 package org.swrlapi.sqwrl;
 
 import org.swrlapi.bridge.converters.TargetRuleEngineConverter;
-import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.TargetSWRLRuleEngineException;
 
 /**
@@ -14,7 +13,6 @@ public interface TargetRuleEngineSQWRLQueryConverter extends TargetRuleEngineCon
   /**
    * @param query A SQWRL query
    * @throws TargetSWRLRuleEngineException If an error occurs in the target rule engine
-   * @throws SWRLBuiltInException If an error occurs during built-in processing
    */
   void convert(SQWRLQuery query) throws TargetSWRLRuleEngineException;
 }

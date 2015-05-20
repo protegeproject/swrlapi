@@ -5,6 +5,8 @@ import org.swrlapi.builtins.arguments.SQWRLCollectionVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
 
+import java.util.Objects;
+
 class DefaultSQWRLCollectionVariableBuiltInArgument extends DefaultSWRLVariableBuiltInArgument
   implements SQWRLCollectionVariableBuiltInArgument
 {
@@ -55,7 +57,7 @@ class DefaultSQWRLCollectionVariableBuiltInArgument extends DefaultSWRLVariableB
     DefaultSQWRLCollectionVariableBuiltInArgument impl = (DefaultSQWRLCollectionVariableBuiltInArgument)obj;
     return
       (getQueryName().equals(impl.getQueryName()) || (getQueryName() != null && getQueryName().equals(impl.getQueryName())))
-        && (getCollectionName() == impl.getCollectionName() || (getCollectionName() != null && getCollectionName()
+        && (Objects.equals(getCollectionName(), impl.getCollectionName()) || (getCollectionName() != null && getCollectionName()
         .equals(impl.getCollectionName()))) && (getGroupID().equals(impl.getGroupID()) || (getGroupID() != null
         && getGroupID().equals(impl.getGroupID())));
   }

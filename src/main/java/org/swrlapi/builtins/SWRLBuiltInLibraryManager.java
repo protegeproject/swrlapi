@@ -86,7 +86,7 @@ public abstract class SWRLBuiltInLibraryManager
     return argumentPatterns;
   }
 
-  private static void processBoundArguments(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  private static void processBoundArguments(List<SWRLBuiltInArgument> arguments)
   {
     for (int argumentIndex = 0; argumentIndex < arguments.size(); argumentIndex++) {
       SWRLBuiltInArgument argument = arguments.get(argumentIndex);
@@ -221,7 +221,7 @@ public abstract class SWRLBuiltInLibraryManager
   }
 
   private static List<SWRLBuiltInArgument> generateArgumentsPattern(List<SWRLBuiltInArgument> arguments,
-      int multiValueBuiltInArgumentArgumentIndex) throws SWRLBuiltInException
+      int multiValueBuiltInArgumentArgumentIndex)
   {
     List<SWRLBuiltInArgument> result = new ArrayList<>();
 

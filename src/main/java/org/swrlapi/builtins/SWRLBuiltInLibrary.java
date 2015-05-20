@@ -30,7 +30,6 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
   /**
    * Reset library, discarding any internal state if any (e.g., caches).
    *
-   * @throws SWRLBuiltInException If an error occurs during reset
    */
   void reset();
 

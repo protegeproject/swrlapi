@@ -1,7 +1,6 @@
 package org.swrlapi.factory;
 
 import org.semanticweb.owlapi.model.IRI;
-import org.semanticweb.owlapi.model.SWRLDArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;

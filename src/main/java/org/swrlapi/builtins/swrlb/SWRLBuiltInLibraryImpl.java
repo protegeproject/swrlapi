@@ -1347,7 +1347,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
   private int compareTwoNumericArguments(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
-    int result = 0;
+    int result;
 
     checkThatAllArgumentsAreNumeric(arguments);
 
@@ -1403,7 +1403,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
   private boolean mathOperation(String builtInName, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
-    double argument1 = 0.0, argument2, argument3, operationResult = 0.0;
+    double argument1 = 0.0, argument2, argument3, operationResult;
     boolean hasUnbound1stArgument = false;
 
     checkForUnboundNonFirstArguments(arguments); // Only supports binding of first argument

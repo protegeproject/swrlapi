@@ -980,24 +980,21 @@ class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 
   private Set<OWLDeclarationAxiom> getOWLAnnotationPropertyDeclarationAxioms()
   {
-    Set<OWLDeclarationAxiom> owlAnnotationPropertyDeclarationAxioms = new HashSet<>();
+    Set<OWLDeclarationAxiom> owlAnnotationPropertyDeclarationAxioms = getOWLOntology()
+        .getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream()
+        .filter(owlDeclarationAxiom -> owlDeclarationAxiom.getEntity().isOWLAnnotationProperty())
+        .collect(Collectors.toSet());
 
-    for (OWLDeclarationAxiom owlDeclarationAxiom : getOWLOntology().getAxioms(AxiomType.DECLARATION, Imports.INCLUDED)) {
-      if (owlDeclarationAxiom.getEntity().isOWLAnnotationProperty())
-        owlAnnotationPropertyDeclarationAxioms.add(owlDeclarationAxiom);
-    }
     return owlAnnotationPropertyDeclarationAxioms;
   }
 
   @SuppressWarnings("unused")
   private Set<OWLDeclarationAxiom> getOWLDatatypeDeclarationAxioms()
   {
-    Set<OWLDeclarationAxiom> owlDatatypeDeclarationAxioms = new HashSet<>();
+    Set<OWLDeclarationAxiom> owlDatatypeDeclarationAxioms = getOWLOntology()
+        .getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream()
+        .filter(owlDeclarationAxiom -> owlDeclarationAxiom.getEntity().isOWLDatatype()).collect(Collectors.toSet());
 
-    for (OWLDeclarationAxiom owlDeclarationAxiom : getOWLOntology().getAxioms(AxiomType.DECLARATION, Imports.INCLUDED)) {
-      if (owlDeclarationAxiom.getEntity().isOWLDatatype())
-        owlDatatypeDeclarationAxioms.add(owlDeclarationAxiom);
-    }
     return owlDatatypeDeclarationAxioms;
   }
 

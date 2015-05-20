@@ -41,7 +41,7 @@ public interface TargetSWRLRuleEngine
    * @throws TargetSWRLRuleEngineException If an error occurs in the target rule engine
    * @throws SWRLBuiltInException If a built-in error occurs
    */
-  void defineSQWRLQuery(SQWRLQuery query) throws TargetSWRLRuleEngineException, SWRLBuiltInException;
+  void defineSQWRLQuery(SQWRLQuery query) throws TargetSWRLRuleEngineException;
 
   /**
    * Run the rule engine.

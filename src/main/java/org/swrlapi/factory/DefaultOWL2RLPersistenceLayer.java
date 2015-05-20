@@ -5,7 +5,6 @@ import org.swrlapi.owl2rl.OWL2RLNames;
 import org.swrlapi.owl2rl.OWL2RLPersistenceLayer;
 
 import java.util.EnumSet;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -40,7 +39,7 @@ public class DefaultOWL2RLPersistenceLayer implements OWL2RLPersistenceLayer
     // if (p3OWLIndividual != null && p3OWLDataProperty != null) // Rather than setting value to true, we remove
     // // property value so it will default to true
     // p3OWLIndividual.removePropertyValue(p3OWLDataProperty, false);
-    rules.stream().filter(rule -> isOWL2RLRuleDisabled(rule)).forEach(rule -> {
+    rules.stream().filter(this::isOWL2RLRuleDisabled).forEach(rule -> {
       // OWLIndividual p3OWLIndividual = getOWLModel().getOWLIndividual(OWL2RLNames.SWRLA_NAMESPACE +
       // rule.toString());
       // OWLDatatypeProperty p3OWLDataProperty = getIsOWL2RLRuleEnabledProperty();
