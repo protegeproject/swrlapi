@@ -15,7 +15,7 @@ public abstract class TargetRuleEngineConverterBase implements TargetRuleEngineC
 {
   private final SWRLRuleEngineBridge bridge;
 
-  public TargetRuleEngineConverterBase(SWRLRuleEngineBridge bridge)
+  protected TargetRuleEngineConverterBase(SWRLRuleEngineBridge bridge)
   {
     this.bridge = bridge;
   }

@@ -27,7 +27,7 @@ public abstract class TargetRuleEngineExtractorBase implements TargetRuleEngineE
 {
   private final SWRLRuleEngineBridge bridge;
 
-  public TargetRuleEngineExtractorBase(SWRLRuleEngineBridge bridge)
+  protected TargetRuleEngineExtractorBase(SWRLRuleEngineBridge bridge)
   {
     this.bridge = bridge;
   }

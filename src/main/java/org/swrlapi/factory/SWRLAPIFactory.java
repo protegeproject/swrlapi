@@ -63,7 +63,7 @@ import java.util.Map;
  * @see org.swrlapi.core.SWRLRuleAndQueryEngineFactory
  * @see org.swrlapi.sqwrl.values.SQWRLResultValueFactory
  * @see org.swrlapi.core.SWRLAPIOWLDataFactory
- * @see OWLDatatypeFactory
+ * @see org.swrlapi.core.OWLDatatypeFactory
  */
 public class SWRLAPIFactory
 {

@@ -10,7 +10,7 @@ public abstract class XSDType<T> implements Comparable<T>
   protected final String content;
   private final IRI iri;
 
-  public XSDType(String content, IRI iri)
+  protected XSDType(String content, IRI iri)
   {
     this.content = content;
     this.iri = iri;
