@@ -1,5 +1,6 @@
 package org.swrlapi.ui.view.queries;
 
+import checkers.nullness.quals.NonNull;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
@@ -28,13 +29,13 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
   private static final int CONSOLE_COLUMNS = 80;
   private static final int MAXIMUM_OPEN_RESULT_VIEWS = 12;
 
-  private final SQWRLQueryEngine sqwrlQueryEngine;
+  @NonNull private final SQWRLQueryEngine sqwrlQueryEngine;
   private final SQWRLQuerySelector sqwrlQuerySelector;
-  private final JTextArea console;
+  @NonNull private final JTextArea console;
   private final Icon queryEngineIcon;
   private final Map<String, SQWRLResultView> sqwrlResultViews = new HashMap<>();
 
-  public SQWRLQueryControlView(SQWRLQueryEngine sqwrlQueryEngine, SQWRLQuerySelector sqwrlQuerySelector,
+  public SQWRLQueryControlView(@NonNull SQWRLQueryEngine sqwrlQueryEngine, SQWRLQuerySelector sqwrlQuerySelector,
       Icon queryEngineIcon)
   {
     this.sqwrlQueryEngine = sqwrlQueryEngine;
@@ -90,7 +91,7 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
     this.sqwrlResultViews.clear();
   }
 
-  private JButton createButton(String text, String toolTipText, ActionListener listener)
+  @NonNull private JButton createButton(String text, String toolTipText, ActionListener listener)
   {
     JButton button = new JButton(text);
 
@@ -101,7 +102,7 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
     return button;
   }
 
-  private JTextArea createConsole()
+  @NonNull private JTextArea createConsole()
   {
     JTextArea console = new JTextArea(CONSOLE_ROWS, CONSOLE_COLUMNS);
     console.setLineWrap(true);
@@ -166,7 +167,7 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
           }
         } catch (SQWRLInvalidQueryNameException e) {
           appendToConsole(queryName + " is not a valid SQWRL query or is not enabled.\n");
-        } catch (SQWRLException | RuntimeException e) {
+        } catch (@NonNull SQWRLException | RuntimeException e) {
           if (queryName == null || queryName.isEmpty())
             appendToConsole("Exception running SQWRL queries: " + e.getMessage() + "\n");
           else
@@ -186,7 +187,7 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
       }
     }
 
-    private void displaySQWRLResult(String queryName, SQWRLResult sqwrlResult, long startTime) throws SQWRLException
+    private void displaySQWRLResult(String queryName, @NonNull SQWRLResult sqwrlResult, long startTime) throws SQWRLException
     {
       appendToConsole("See the " + queryName + " tab to review results of the SQWRL query.\n");
       appendToConsole("The query took " + (System.currentTimeMillis() - startTime) + " milliseconds. ");

@@ -1,9 +1,10 @@
 package org.swrlapi.builtins;
 
-import java.util.Set;
-
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
+
+import java.util.Set;
 
 /**
  * This interface defines methods required by a built-in bridge controller.
@@ -31,5 +32,5 @@ public interface SWRLBuiltInBridgeController
   /**
    * @return A list of injected OWL axioms
    */
-  Set<OWLAxiom> getInjectedOWLAxioms();
+  @NonNull Set<OWLAxiom> getInjectedOWLAxioms();
 }

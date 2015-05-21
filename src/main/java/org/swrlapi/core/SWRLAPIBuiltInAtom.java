@@ -1,11 +1,12 @@
 package org.swrlapi.core;
 
-import java.util.List;
-import java.util.Set;
-
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.SWRLBuiltInAtom;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * The SWRLAPI's built-in atom extends the OWLAPI's built-in atom with additional functionality. In addition to the
@@ -23,7 +24,7 @@ public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtom
   /**
    * @return The IRI of the built-in
    */
-  IRI getBuiltInIRI();
+  @NonNull IRI getBuiltInIRI();
 
   /**
    * @return The 0-based index of the built-in in the enclosing rule
@@ -44,7 +45,7 @@ public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtom
   /**
    * @return A list of built-in arguments
    */
-  List<SWRLBuiltInArgument> getBuiltInArguments();
+  @NonNull List<SWRLBuiltInArgument> getBuiltInArguments();
 
   /**
    * @return The number of built-in arguments
@@ -76,7 +77,7 @@ public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtom
   /**
    * @return The prefixed names of the unbound variable arguments
    */
-  Set<String> getUnboundArgumentVariablePrefixedNames();
+  @NonNull Set<String> getUnboundArgumentVariablePrefixedNames();
 
   /**
    * @param argumentNumber An argument index
@@ -87,12 +88,12 @@ public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtom
   /**
    * @return A list of variable prefixed names
    */
-  List<String> getArgumentsVariablePrefixedNames();
+  @NonNull List<String> getArgumentsVariablePrefixedNames();
 
   /**
    * @return A list of variable prefixed names
    */
-  List<String> getArgumentsVariableNamesExceptFirst();
+  @NonNull List<String> getArgumentsVariableNamesExceptFirst();
 
   /**
    * @return The name of the rule
@@ -126,7 +127,7 @@ public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtom
    * 
    * @return A list of variable prefixed names
    */
-  Set<String> getPathVariablePrefixedNames();
+  @NonNull Set<String> getPathVariablePrefixedNames();
 
   /**
    * Indicate that the built-in uses a SQWRL collection result

@@ -1,5 +1,6 @@
 package org.swrlapi.factory;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.formats.PrefixDocumentFormat;
 import org.semanticweb.owlapi.model.IRI;
@@ -11,6 +12,7 @@ import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.SWRLAtom;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.semanticweb.owlapi.util.SimpleIRIMapper;
+import org.swrlapi.bridge.SWRLBridge;
 import org.swrlapi.bridge.SWRLRuleEngineBridgeController;
 import org.swrlapi.bridge.TargetSWRLRuleEngine;
 import org.swrlapi.builtins.SWRLBuiltInBridgeController;
@@ -26,7 +28,6 @@ import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIOntologyProcessor;
 import org.swrlapi.core.SWRLAPIRule;
-import org.swrlapi.bridge.SWRLBridge;
 import org.swrlapi.core.SWRLRuleAndQueryEngineFactory;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.core.SWRLRuleEngineManager;
@@ -67,17 +68,18 @@ import java.util.Map;
  */
 public class SWRLAPIFactory
 {
-  private static final String SQWRL_ICON_NAME = "SQWRL.gif";
-  private static final String OWL2RL_ICON_NAME = "OWL2RL.gif";
+  @NonNull private static final String SQWRL_ICON_NAME = "SQWRL.gif";
+  @NonNull private static final String OWL2RL_ICON_NAME = "OWL2RL.gif";
 
-  private static final SWRLRuleAndQueryEngineFactory swrlRuleAndQueryEngineFactory = new DefaultSWRLRuleAndQueryEngineFactory();
+  @NonNull private static final SWRLRuleAndQueryEngineFactory swrlRuleAndQueryEngineFactory = new DefaultSWRLRuleAndQueryEngineFactory();
 
   /**
    * @param ontology An OWL ontology
    * @return A SWRL rule engine
    * @throws SWRLRuleEngineException If an error occurs during rule engine creation
    */
-  public static SWRLRuleEngine createSWRLRuleEngine(OWLOntology ontology) throws SWRLRuleEngineException
+  @NonNull public static SWRLRuleEngine createSWRLRuleEngine(@NonNull OWLOntology ontology)
+    throws SWRLRuleEngineException
   {
     return swrlRuleAndQueryEngineFactory.createSWRLRuleEngine(ontology);
   }
@@ -87,54 +89,54 @@ public class SWRLAPIFactory
    * @return A SQWRL query engine
    * @throws SWRLRuleEngineException If an error occurs during query engine creation
    */
-  public static SQWRLQueryEngine createSQWRLQueryEngine(OWLOntology ontology) throws SWRLRuleEngineException
+  @NonNull public static SQWRLQueryEngine createSQWRLQueryEngine(@NonNull OWLOntology ontology)
+    throws SWRLRuleEngineException
   {
     return swrlRuleAndQueryEngineFactory.createSQWRLQueryEngine(ontology);
   }
 
   /**
-   *
-   * @param swrlapiOWLOntology A SWRLAPI-based OWL ontology
-   * @param targetSWRLRuleEngine A target SWRL rule engine implementation
+   * @param swrlapiOWLOntology         A SWRLAPI-based OWL ontology
+   * @param targetSWRLRuleEngine       A target SWRL rule engine implementation
    * @param ruleEngineBridgeController A rule engine bridge controller
-   * @param builtInBridgeController A built-in bridge controller
+   * @param builtInBridgeController    A built-in bridge controller
    * @return A SQWRL query engine
    * @throws SWRLRuleEngineException If an error occurs during query engine creation
    */
-  public static SQWRLQueryEngine getSQWRLQueryEngine(SWRLAPIOWLOntology swrlapiOWLOntology,
-    TargetSWRLRuleEngine targetSWRLRuleEngine, SWRLRuleEngineBridgeController ruleEngineBridgeController,
-    SWRLBuiltInBridgeController builtInBridgeController) throws SWRLRuleEngineException
+  @NonNull public static SQWRLQueryEngine getSQWRLQueryEngine(@NonNull SWRLAPIOWLOntology swrlapiOWLOntology,
+    @NonNull TargetSWRLRuleEngine targetSWRLRuleEngine,
+    @NonNull SWRLRuleEngineBridgeController ruleEngineBridgeController,
+    @NonNull SWRLBuiltInBridgeController builtInBridgeController) throws SWRLRuleEngineException
   {
     return new DefaultSWRLRuleAndQueryEngine(swrlapiOWLOntology, targetSWRLRuleEngine, ruleEngineBridgeController,
       builtInBridgeController);
   }
 
   /**
-   *
-   * @param swrlapiOWLOntology A SWRLAPI-based OWL ontology
-   * @param targetSWRLRuleEngine A target SWRL rule engine implementation
+   * @param swrlapiOWLOntology         A SWRLAPI-based OWL ontology
+   * @param targetSWRLRuleEngine       A target SWRL rule engine implementation
    * @param ruleEngineBridgeController A rule engine bridge controller
-   * @param builtInBridgeController A built-in bridge controller
+   * @param builtInBridgeController    A built-in bridge controller
    * @return A SWRL rule engine
    * @throws SWRLRuleEngineException If an error occurs during query engine creation
    */
-  public static SWRLRuleEngine getSWRLRuleEngine(SWRLAPIOWLOntology swrlapiOWLOntology,
-    TargetSWRLRuleEngine targetSWRLRuleEngine, SWRLRuleEngineBridgeController ruleEngineBridgeController,
-    SWRLBuiltInBridgeController builtInBridgeController) throws SWRLRuleEngineException
+  @NonNull public static SWRLRuleEngine getSWRLRuleEngine(@NonNull SWRLAPIOWLOntology swrlapiOWLOntology,
+    @NonNull TargetSWRLRuleEngine targetSWRLRuleEngine,
+    @NonNull SWRLRuleEngineBridgeController ruleEngineBridgeController,
+    @NonNull SWRLBuiltInBridgeController builtInBridgeController) throws SWRLRuleEngineException
   {
     return new DefaultSWRLRuleAndQueryEngine(swrlapiOWLOntology, targetSWRLRuleEngine, ruleEngineBridgeController,
       builtInBridgeController);
   }
 
   /**
-   *
-   * @param swrlapiOWLOntology A SWRLAPI-based OWL ontology
+   * @param swrlapiOWLOntology     A SWRLAPI-based OWL ontology
    * @param owl2RLPersistenceLayer An OWL 2 RL persistence layer
    * @return A SWRL rule engine bridge
    * @throws SWRLBuiltInBridgeException If an error occurs during rule engine bridge creation
    */
-  public static SWRLBridge getSWRLBridge(SWRLAPIOWLOntology swrlapiOWLOntology, OWL2RLPersistenceLayer owl2RLPersistenceLayer)
-    throws SWRLBuiltInBridgeException
+  @NonNull public static SWRLBridge getSWRLBridge(@NonNull SWRLAPIOWLOntology swrlapiOWLOntology,
+    @NonNull OWL2RLPersistenceLayer owl2RLPersistenceLayer) throws SWRLBuiltInBridgeException
   {
     return new DefaultSWRLBridge(swrlapiOWLOntology, owl2RLPersistenceLayer);
   }
@@ -143,16 +145,15 @@ public class SWRLAPIFactory
    * @param swrlapiowlOntology A SWRLAPI-based OWL ontology
    * @return A SWRL rule renderer
    */
-  public static SWRLRuleRenderer getSWRLRuleRenderer(SWRLAPIOWLOntology swrlapiowlOntology)
+  @NonNull public static SWRLRuleRenderer getSWRLRuleRenderer(@NonNull SWRLAPIOWLOntology swrlapiowlOntology)
   {
     return new DefaultSWRLRuleAndQueryRenderer(swrlapiowlOntology);
   }
 
   /**
-   *
    * @return A SWRL rule engine manager
    */
-  public static SWRLRuleEngineManager getSWRLRuleEngineManager()
+  @NonNull public static SWRLRuleEngineManager getSWRLRuleEngineManager()
   {
     return new DefaultSWRLRuleEngineManager();
   }
@@ -161,7 +162,7 @@ public class SWRLAPIFactory
    * @param swrlapiowlOntology A SWRLAPI-based OWL ontology
    * @return A SQWRL query renderer
    */
-  public static SQWRLQueryRenderer getSQWRLQueryRenderer(SWRLAPIOWLOntology swrlapiowlOntology)
+  @NonNull public static SQWRLQueryRenderer getSQWRLQueryRenderer(@NonNull SWRLAPIOWLOntology swrlapiowlOntology)
   {
     return new DefaultSWRLRuleAndQueryRenderer(swrlapiowlOntology);
   }
@@ -170,7 +171,7 @@ public class SWRLAPIFactory
    * @param swrlapiowlOntology A SWRLAPI-based OWL ontology
    * @return A SWRL auto-completer
    */
-  public static SWRLAutoCompleter getSWRLAutoCompleter(SWRLAPIOWLOntology swrlapiowlOntology)
+  @NonNull public static SWRLAutoCompleter getSWRLAutoCompleter(@NonNull SWRLAPIOWLOntology swrlapiowlOntology)
   {
     return new DefaultSWRLAutoCompleter(swrlapiowlOntology);
   }
@@ -179,7 +180,7 @@ public class SWRLAPIFactory
    * @param sqwrlResultValueFactory A SQWRL result value factory
    * @return A SQWRL result
    */
-  public static SQWRLResultManager getSQWRLResult(SQWRLResultValueFactory sqwrlResultValueFactory)
+  @NonNull public static SQWRLResultManager getSQWRLResult(@NonNull SQWRLResultValueFactory sqwrlResultValueFactory)
   {
     return new SQWRLResultManager(sqwrlResultValueFactory);
   }
@@ -188,7 +189,8 @@ public class SWRLAPIFactory
    * @param swrlapiOWLOntology A SWRLAPI-based OWL ontology
    * @return An OWL 2 RL persistence layer
    */
-  public static OWL2RLPersistenceLayer getOWL2RLPersistenceLayer(SWRLAPIOWLOntology swrlapiOWLOntology)
+  @NonNull public static OWL2RLPersistenceLayer getOWL2RLPersistenceLayer(
+    @NonNull SWRLAPIOWLOntology swrlapiOWLOntology)
   {
     return new DefaultOWL2RLPersistenceLayer(swrlapiOWLOntology);
   }
@@ -198,7 +200,7 @@ public class SWRLAPIFactory
    *
    * @return A SWRLAPI-based wrapper of an OWL ontology
    */
-  public static SWRLAPIOWLOntology createSWRLAPIOntology()
+  @NonNull public static SWRLAPIOWLOntology createSWRLAPIOntology()
   {
     try {
       OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
@@ -218,7 +220,7 @@ public class SWRLAPIFactory
    * @param ontology An OWLAPI-based ontology
    * @return A SWRLAPI-based wrapper of an OWL ontology
    */
-  public static SWRLAPIOWLOntology createSWRLAPIOntology(OWLOntology ontology)
+  @NonNull public static SWRLAPIOWLOntology createSWRLAPIOntology(@NonNull OWLOntology ontology)
   {
     DefaultPrefixManager prefixManager = new DefaultPrefixManager();
 
@@ -236,7 +238,8 @@ public class SWRLAPIFactory
    * @param prefixManager A prefix manager
    * @return A SWRLAPI-based wrapper of an OWL ontology
    */
-  public static SWRLAPIOWLOntology createSWRLAPIOntology(OWLOntology ontology, DefaultPrefixManager prefixManager)
+  @NonNull public static SWRLAPIOWLOntology createSWRLAPIOntology(@NonNull OWLOntology ontology,
+    @NonNull DefaultPrefixManager prefixManager)
   {
     if (ontology == null)
       throw new SWRLAPIException("supplied OWL ontology is null");
@@ -256,7 +259,7 @@ public class SWRLAPIFactory
    * @param owlFile A file containing an OWL ontology
    * @return A SWRLAPI-based wrapper of an OWL ontology
    */
-  public static SWRLAPIOWLOntology createSWRLAPIOntology(File owlFile)
+  @NonNull public static SWRLAPIOWLOntology createSWRLAPIOntology(@NonNull File owlFile)
   {
     if (owlFile == null)
       throw new SWRLAPIException("supplied OWL file is null");
@@ -276,7 +279,8 @@ public class SWRLAPIFactory
    * @param swrlapiOWLOntology A SWRLAPI-based OWL ontology
    * @return A SWRLAPI ontology processor
    */
-  public static SWRLAPIOntologyProcessor createSWRLAPIOntologyProcessor(SWRLAPIOWLOntology swrlapiOWLOntology)
+  @NonNull public static SWRLAPIOntologyProcessor createSWRLAPIOntologyProcessor(
+    @NonNull SWRLAPIOWLOntology swrlapiOWLOntology)
   {
     return new DefaultSWRLAPIOntologyProcessor(swrlapiOWLOntology);
   }
@@ -285,7 +289,8 @@ public class SWRLAPIFactory
    * @param swrlapiOWLOntology A SWRLAPI-based OWL ontology
    * @return A SWRL built-in argument factory
    */
-  public static SWRLBuiltInArgumentFactory createSWRLBuiltInArgumentFactory(SWRLAPIOWLOntology swrlapiOWLOntology)
+  @NonNull public static SWRLBuiltInArgumentFactory createSWRLBuiltInArgumentFactory(
+    @NonNull SWRLAPIOWLOntology swrlapiOWLOntology)
   {
     return new DefaultSWRLBuiltInArgumentFactory(swrlapiOWLOntology.getIRIResolver());
   }
@@ -294,14 +299,15 @@ public class SWRLAPIFactory
    * @param swrlapiOWLOntology A SWRLAPI-based OWL ontology
    * @return A SQWRL result value factory
    */
-  public static SQWRLResultValueFactory createSQWRLResultValueFactory(SWRLAPIOWLOntology swrlapiOWLOntology)
+  @NonNull public static SQWRLResultValueFactory createSQWRLResultValueFactory(
+    @NonNull SWRLAPIOWLOntology swrlapiOWLOntology)
   {
     return new DefaultSQWRLResultValueFactory(swrlapiOWLOntology.getIRIResolver());
   }
 
-  public static SQWRLQuery getSQWRLQuery(String queryName, List<SWRLAtom> bodyAtoms, List<SWRLAtom> headAtoms,
-    boolean active, String comment, LiteralFactory literalFactory, SQWRLResultValueFactory sqwrlResultValueFactory)
-    throws SQWRLException
+  @NonNull public static SQWRLQuery getSQWRLQuery(String queryName, @NonNull List<SWRLAtom> bodyAtoms,
+    @NonNull List<SWRLAtom> headAtoms, boolean active, @NonNull String comment, @NonNull LiteralFactory literalFactory,
+    @NonNull SQWRLResultValueFactory sqwrlResultValueFactory) throws SQWRLException
   {
     return new DefaultSQWRLQuery(queryName, bodyAtoms, headAtoms, active, comment, literalFactory,
       sqwrlResultValueFactory);
@@ -310,7 +316,7 @@ public class SWRLAPIFactory
   /**
    * @return and OWL datatype factory
    */
-  public static OWLDatatypeFactory getOWLDatatypeFactory()
+  @NonNull public static OWLDatatypeFactory getOWLDatatypeFactory()
   {
     return new DefaultOWLDatatypeFactory();
   }
@@ -319,7 +325,8 @@ public class SWRLAPIFactory
    * @param swrlapiOWLOntology A SWRLAPI-based OWL ontology
    * @return A SWRLAPI-based OWL data factory
    */
-  public static SWRLAPIOWLDataFactory createSWRLAPIOWLDataFactory(SWRLAPIOWLOntology swrlapiOWLOntology)
+  @NonNull public static SWRLAPIOWLDataFactory createSWRLAPIOWLDataFactory(
+    @NonNull SWRLAPIOWLOntology swrlapiOWLOntology)
   {
     return new DefaultSWRLAPIOWLDataFactory(swrlapiOWLOntology);
   }
@@ -329,8 +336,8 @@ public class SWRLAPIFactory
    * @param swrlRuleRenderer A SWRL renderer
    * @return A SWRL rule table model
    */
-  public static SWRLRulesTableModel createSWRLRulesTableModel(SWRLRuleEngine swrlRuleEngine,
-    SWRLRuleRenderer swrlRuleRenderer)
+  @NonNull public static SWRLRulesTableModel createSWRLRulesTableModel(@NonNull SWRLRuleEngine swrlRuleEngine,
+    @NonNull SWRLRuleRenderer swrlRuleRenderer)
   {
     return new SWRLRulesTableModel(swrlRuleEngine, swrlRuleRenderer);
   }
@@ -338,7 +345,7 @@ public class SWRLAPIFactory
   /**
    * @return A SWRLAPI-based literal factory
    */
-  public static LiteralFactory createLiteralFactory()
+  @NonNull public static LiteralFactory createLiteralFactory()
   {
     return new DefaultLiteralFactory();
   }
@@ -346,7 +353,7 @@ public class SWRLAPIFactory
   /**
    * @return A SWRLAPI-based OWL datatype factory
    */
-  public static OWLDatatypeFactory createOWLDatatypeFactory()
+  @NonNull public static OWLDatatypeFactory createOWLDatatypeFactory()
   {
     return new DefaultOWLDatatypeFactory();
   }
@@ -354,7 +361,7 @@ public class SWRLAPIFactory
   /**
    * @return An OWL literal factory
    */
-  public static OWLLiteralFactory createOWLLiteralFactory()
+  @NonNull public static OWLLiteralFactory createOWLLiteralFactory()
   {
     return new DefaultOWLLiteralFactory();
   }
@@ -362,12 +369,13 @@ public class SWRLAPIFactory
   /**
    * @return A SWRL rule engine factory
    */
-  public static SWRLRuleAndQueryEngineFactory createSWRLRuleAndQueryEngineFactory()
+  @NonNull public static SWRLRuleAndQueryEngineFactory createSWRLRuleAndQueryEngineFactory()
   {
     return new DefaultSWRLRuleAndQueryEngineFactory();
   }
 
-  public static SQWRLResultGenerator createSQWRLResultGenerator(SQWRLResultValueFactory sqwrlResultValueFactory)
+  @NonNull public static SQWRLResultGenerator createSQWRLResultGenerator(
+    SQWRLResultValueFactory sqwrlResultValueFactory)
   {
     return new SQWRLResultManager(sqwrlResultValueFactory);
   }
@@ -376,7 +384,7 @@ public class SWRLAPIFactory
    * @param ruleEngine A SWRL rule engine name
    * @return A SWRL rule engine model
    */
-  public static SWRLRuleEngineModel createSWRLRuleEngineModel(SWRLRuleEngine ruleEngine)
+  @NonNull public static SWRLRuleEngineModel createSWRLRuleEngineModel(@NonNull SWRLRuleEngine ruleEngine)
   {
     return new DefaultSWRLRuleEngineModel(ruleEngine);
   }
@@ -385,7 +393,7 @@ public class SWRLAPIFactory
    * @param queryEngine A SQWRL query engine
    * @return A SQWRL query engine model
    */
-  public static SQWRLQueryEngineModel createSQWRLQueryEngineModel(SQWRLQueryEngine queryEngine)
+  @NonNull public static SQWRLQueryEngineModel createSQWRLQueryEngineModel(@NonNull SQWRLQueryEngine queryEngine)
   {
     return new DefaultSQWRLQueryEngineModel(queryEngine);
   }
@@ -394,7 +402,8 @@ public class SWRLAPIFactory
    * @param swrlRuleEngineModel A SWRL rule engine model
    * @return A SWRL rule engine controller
    */
-  public static SWRLRuleEngineController createSWRLRuleEngineController(SWRLRuleEngineModel swrlRuleEngineModel)
+  @NonNull public static SWRLRuleEngineController createSWRLRuleEngineController(
+    SWRLRuleEngineModel swrlRuleEngineModel)
   {
     return new DefaultSWRLRuleEngineController(swrlRuleEngineModel);
   }
@@ -403,28 +412,28 @@ public class SWRLAPIFactory
    * @param swrlRuleEngineModel An SWRL rule engine model
    * @return A SWRL rule engine dialog manager
    */
-  public static SWRLAPIDialogManager createDialogManager(SWRLRuleEngineModel swrlRuleEngineModel)
+  @NonNull public static SWRLAPIDialogManager createDialogManager(@NonNull SWRLRuleEngineModel swrlRuleEngineModel)
   {
     return new DefaultSWRLAPIDialogManager(swrlRuleEngineModel);
   }
 
   /**
-   *
-   * @param ontology An OWL ontology
-	 * @param swrlRuleEngineModel A SWRL rule engine model
-   * @param file The file containing it
+   * @param ontology            An OWL ontology
+   * @param swrlRuleEngineModel A SWRL rule engine model
+   * @param file                The file containing it
    * @return An ontology model
    */
-  public static FileBackedOWLOntologyModel createFileBackedOWLOntologyModel(OWLOntology ontology,
-			SWRLRuleEngineModel swrlRuleEngineModel, File file)
+  @NonNull public static FileBackedOWLOntologyModel createFileBackedOWLOntologyModel(@NonNull OWLOntology ontology,
+    @NonNull SWRLRuleEngineModel swrlRuleEngineModel, @NonNull File file)
   {
     return new DefaultFileBackedOWLOntologyModel(ontology, swrlRuleEngineModel, file);
   }
+
   /**
    * @return A SQWRL icon
    * @throws SWRLAPIException If an icon cannot be found
    */
-  public static Icon getSQWRLIcon() throws SWRLAPIException
+  @NonNull public static Icon getSQWRLIcon() throws SWRLAPIException
   {
     URL url = SWRLAPIFactory.class.getResource(SQWRL_ICON_NAME);
 
@@ -438,7 +447,7 @@ public class SWRLAPIFactory
    * @return An icon for an OWL 2 RL reasoner
    * @throws SWRLAPIException If an icon cannot be found
    */
-  public static Icon getOWL2RLReasonerIcon() throws SWRLAPIException
+  @NonNull public static Icon getOWL2RLReasonerIcon() throws SWRLAPIException
   {
     URL url = SWRLAPIFactory.class.getResource(OWL2RL_ICON_NAME);
 
@@ -448,26 +457,27 @@ public class SWRLAPIFactory
       throw new SWRLAPIException("No OWL 2 RL icon found!");
   }
 
-  public static OWLLiteralFactory getOWLLiteralFactory()
+  @NonNull public static OWLLiteralFactory getOWLLiteralFactory()
   {
     return new DefaultOWLLiteralFactory();
   }
 
-  public static Literal getLiteral(OWLLiteral owlLiteral) { return new DefaultLiteral(owlLiteral); }
+  @NonNull public static Literal getLiteral(OWLLiteral owlLiteral) { return new DefaultLiteral(owlLiteral); }
 
-  public static SWRLAPIRule getSWRLAPIRule(String ruleName, List<? extends SWRLAtom> bodyAtoms,
-    List<? extends SWRLAtom> headAtoms, String comment, boolean isActive)
+  @NonNull public static SWRLAPIRule getSWRLAPIRule(@NonNull String ruleName,
+    @NonNull List<? extends SWRLAtom> bodyAtoms, @NonNull List<? extends SWRLAtom> headAtoms, @NonNull String comment,
+    boolean isActive)
   {
     return new DefaultSWRLAPIRule(ruleName, bodyAtoms, headAtoms, comment, isActive);
   }
 
-  public static SWRLAPIBuiltInAtom getSWRLAPIBuiltInAtom(String ruleName, IRI builtInIRI, String builtInPrefixedName,
-    List<SWRLBuiltInArgument> arguments)
+  @NonNull public static SWRLAPIBuiltInAtom getSWRLAPIBuiltInAtom(@NonNull String ruleName, @NonNull IRI builtInIRI,
+    @NonNull String builtInPrefixedName, @NonNull List<SWRLBuiltInArgument> arguments)
   {
     return new DefaultSWRLAPIBuiltInAtom(ruleName, builtInIRI, builtInPrefixedName, arguments);
   }
 
-  private static void addDefaultPrefixes(OWLOntology ontology, DefaultPrefixManager prefixManager)
+  private static void addDefaultPrefixes(@NonNull OWLOntology ontology, @NonNull DefaultPrefixManager prefixManager)
   {
     OWLOntologyManager owlOntologyManager = ontology.getOWLOntologyManager();
     OWLDocumentFormat ontologyFormat = owlOntologyManager.getOntologyFormat(ontology);
@@ -489,7 +499,7 @@ public class SWRLAPIFactory
     addSWRLAPIPrefixes(prefixManager);
   }
 
-  private static void addSWRLAPIPrefixes(DefaultPrefixManager prefixManager)
+  private static void addSWRLAPIPrefixes(@NonNull DefaultPrefixManager prefixManager)
   {
     prefixManager.setPrefix("owl:", "http://www.w3.org/2002/07/owl#");
     prefixManager.setPrefix("swrl:", "http://www.w3.org/2003/11/swrl#");
@@ -501,7 +511,7 @@ public class SWRLAPIFactory
     prefixManager.setPrefix("swrla:", "http://swrl.stanford.edu/ontologies/3.3/swrla.owl#");
   }
 
-  private static void addSWRLAPIBuiltInOntologies(OWLOntologyManager ontologyManager)
+  private static void addSWRLAPIBuiltInOntologies(@NonNull OWLOntologyManager ontologyManager)
   {
     Map<String, String> map = new HashMap<>();
 
@@ -517,7 +527,8 @@ public class SWRLAPIFactory
       ontologyManager.getIRIMappers().add(new SimpleIRIMapper(IRI.create(key), IRI.create(map.get(key))));
   }
 
-  private static OWLOntology createOWLOntology(OWLOntologyManager ontologyManager, File file) throws SWRLAPIException
+  private static OWLOntology createOWLOntology(@NonNull OWLOntologyManager ontologyManager, @NonNull File file)
+    throws SWRLAPIException
   {
     try {
       return ontologyManager.loadOntologyFromOntologyDocument(file);
@@ -528,11 +539,12 @@ public class SWRLAPIFactory
   }
 
   // TODO This looks dodgy
-  private static String resourceName2File(String resourceName)
+  @NonNull private static String resourceName2File(@NonNull String resourceName)
   {
     URL url = SWRLAPIFactory.class.getClassLoader().getResource(resourceName);
     if (url == null)
       throw new SWRLAPIException("Could not find resource " + resourceName);
+
     return "file:///" + url.getFile();
   }
 }

@@ -1,5 +1,7 @@
 package org.swrlapi.factory;
 
+import checkers.nullness.quals.NonNull;
+import checkers.nullness.quals.Nullable;
 import org.semanticweb.owlapi.model.OWLAnonymousIndividual;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;
@@ -20,7 +22,7 @@ abstract class DefaultSWRLBuiltInArgument implements SWRLBuiltInArgument
 {
   private static final long serialVersionUID = 1L;
 
-  private String boundVariableName = null;
+  @Nullable private String boundVariableName = null;
 
   @Override
   public boolean isVariable()
@@ -34,13 +36,13 @@ abstract class DefaultSWRLBuiltInArgument implements SWRLBuiltInArgument
     return false;
   }
 
-  @Override
+  @NonNull @Override
   public SWRLVariableBuiltInArgument asVariable()
   {
     throw new SWRLAPIException("Not a SWRLVariableBuiltInArgument");
   }
 
-  @Override
+  @NonNull @Override
   public SWRLMultiValueVariableBuiltInArgument asMultiValueVariable()
   {
     throw new SWRLAPIException("Not a SWRLMultiVariableBuiltInArgument");
@@ -52,67 +54,67 @@ abstract class DefaultSWRLBuiltInArgument implements SWRLBuiltInArgument
     return this.boundVariableName != null;
   }
 
-  @Override
+  @Nullable @Override
   public String getBoundVariableName()
   {
     return this.boundVariableName;
   }
 
   @Override
-  public void setBoundVariableName(String boundVariableName)
+  public void setBoundVariableName(@NonNull String boundVariableName)
   {
     this.boundVariableName = boundVariableName;
   }
 
   @Override
-  public boolean containsEntityInSignature(OWLEntity owlEntity)
+  public boolean containsEntityInSignature(@NonNull OWLEntity owlEntity)
   {
     return false; // TODO implement containsEntityInSignature
   }
 
-  @Override
+  @NonNull @Override
   public Set<OWLEntity> getSignature()
   {
     return Collections.emptySet(); // TODO implement getSignature
   }
 
-  @Override
+  @NonNull @Override
   public Set<OWLAnonymousIndividual> getAnonymousIndividuals()
   {
     return Collections.emptySet(); // TODO implement getAnonymousIndividuals
   }
 
-  @Override
+  @NonNull @Override
   public Set<OWLClass> getClassesInSignature()
   {
     return Collections.emptySet(); // TODO implement getClassesInSignature
   }
 
-  @Override
+  @NonNull @Override
   public Set<OWLDataProperty> getDataPropertiesInSignature()
   {
     return Collections.emptySet(); // TODO implement getDataPropertiesInSignature
   }
 
-  @Override
+  @NonNull @Override
   public Set<OWLObjectProperty> getObjectPropertiesInSignature()
   {
     return Collections.emptySet(); // TODO implement getObjectPropertiesInSignature
   }
 
-  @Override
+  @NonNull @Override
   public Set<OWLNamedIndividual> getIndividualsInSignature()
   {
     return Collections.emptySet(); // TODO implement getIndividualInSignature
   }
 
-  @Override
+  @NonNull @Override
   public Set<OWLDatatype> getDatatypesInSignature()
   {
     return Collections.emptySet(); // TODO implement getDatatypesInSignature
   }
 
-  @Override
+  @NonNull @Override
   public Set<OWLClassExpression> getNestedClassExpressions()
   {
     return Collections.emptySet(); // TODO implement getNestedClassExpressions

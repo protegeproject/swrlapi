@@ -1,5 +1,6 @@
 package org.swrlapi.factory;
 
+import checkers.nullness.quals.NonNull;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.core.SWRLRuleRenderer;
 import org.swrlapi.parser.SWRLParser;
@@ -9,13 +10,13 @@ import org.swrlapi.ui.model.SWRLRulesTableModel;
 
 public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel
 {
-  private final SWRLRulesTableModel swrlRulesTableModel;
-  private final SWRLRuleEngine ruleEngine;
-  private final SWRLParser swrlParser;
-  private final SWRLRuleRenderer swrlRuleRenderer;
-  private final SWRLAutoCompleter swrlAutoCompleter;
+  @NonNull private final SWRLRulesTableModel swrlRulesTableModel;
+  @NonNull private final SWRLRuleEngine ruleEngine;
+  @NonNull private final SWRLParser swrlParser;
+  @NonNull private final SWRLRuleRenderer swrlRuleRenderer;
+  @NonNull private final SWRLAutoCompleter swrlAutoCompleter;
 
-  public DefaultSWRLRuleEngineModel(SWRLRuleEngine ruleEngine)
+  public DefaultSWRLRuleEngineModel(@NonNull SWRLRuleEngine ruleEngine)
   {
     this.ruleEngine = ruleEngine;
     this.swrlRuleRenderer = this.ruleEngine.createSWRLRuleRenderer();
@@ -24,31 +25,31 @@ public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel
     this.swrlAutoCompleter = this.ruleEngine.createSWRLAutoCompleter();
   }
 
-  @Override
+  @NonNull @Override
   public SWRLRuleEngine getSWRLRuleEngine()
   {
     return this.ruleEngine;
   }
 
-  @Override
+  @NonNull @Override
   public SWRLParser getSWRLParser()
   {
     return this.swrlParser;
   }
 
-  @Override
+  @NonNull @Override
   public SWRLAutoCompleter getSWRLAutoCompleter()
   {
     return this.swrlAutoCompleter;
   }
 
-  @Override
+  @NonNull @Override
   public SWRLRuleRenderer getSWRLRuleRenderer()
   {
     return this.swrlRuleRenderer;
   }
 
-  @Override
+  @NonNull @Override
   public SWRLRulesTableModel getSWRLRulesTableModel()
   {
     return this.swrlRulesTableModel;

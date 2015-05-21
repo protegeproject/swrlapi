@@ -1,11 +1,12 @@
 package org.swrlapi.core;
 
-import java.util.Optional;
-import java.util.Set;
-
+import checkers.nullness.quals.NonNull;
 import org.swrlapi.bridge.SWRLRuleEngineBridge;
 import org.swrlapi.bridge.TargetSWRLRuleEngine;
 import org.swrlapi.exceptions.TargetSWRLRuleEngineException;
+
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * This interface defines a manager to create and manage instances of SWRL rule engines.
@@ -27,29 +28,29 @@ public interface SWRLRuleEngineManager
   /**
    * @param ruleEngineCreator A creator for the rule engine
    */
-  void registerRuleEngine(TargetSWRLRuleEngineCreator ruleEngineCreator);
+  void registerRuleEngine(@NonNull TargetSWRLRuleEngineCreator ruleEngineCreator);
 
   /**
    * @param ruleEngineName A rule engine name
    * @return True if an engine with the specified name is registered
    */
-  boolean isRuleEngineRegistered(String ruleEngineName);
+  boolean isRuleEngineRegistered(@NonNull String ruleEngineName);
 
   /**
    * @return A list of registered rule engine names
    */
-  Set<String> getRegisteredRuleEngineNames();
+  @NonNull Set<String> getRegisteredRuleEngineNames();
 
   /**
    * @param ruleEngineName A rule engine name
    * @return A creator for the specified rule engine; null if it is not registered
    */
-  TargetSWRLRuleEngineCreator getRegisteredRuleEngineCreator(String ruleEngineName);
+  TargetSWRLRuleEngineCreator getRegisteredRuleEngineCreator(@NonNull String ruleEngineName);
 
   /**
    * @param ruleEngineName A rule engine name
    */
-  void unregisterSWRLRuleEngine(String ruleEngineName);
+  void unregisterSWRLRuleEngine(@NonNull String ruleEngineName);
 
   /**
    * A creator for a SWRL rule engine
@@ -61,11 +62,11 @@ public interface SWRLRuleEngineManager
      * @return A target SWRL rule engine
      * @throws TargetSWRLRuleEngineException If an exception occurs during creation
      */
-    TargetSWRLRuleEngine create(SWRLRuleEngineBridge bridge) throws TargetSWRLRuleEngineException;
+    @NonNull TargetSWRLRuleEngine create(@NonNull SWRLRuleEngineBridge bridge) throws TargetSWRLRuleEngineException;
 
     /**
      * @return The name of the target rule engine
      */
-    String getRuleEngineName();
+    @NonNull String getRuleEngineName();
   }
 }

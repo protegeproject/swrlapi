@@ -1,11 +1,13 @@
 package org.swrlapi.owl2rl;
 
+import checkers.nullness.quals.NonNull;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class OWL2RLInconsistencyDescription
 {
-  private static final Map<String, OWL2RLRuleArguments> argumentsDescriptionMap;
+  @NonNull private static final Map<String, OWL2RLRuleArguments> argumentsDescriptionMap;
 
   static {
     argumentsDescriptionMap = new HashMap<>();
@@ -16,17 +18,17 @@ public class OWL2RLInconsistencyDescription
     createArgumentDescription(OWL2RLNames.OWL2RLRule.CAX_DW.toString(), 2, 1, 0, 0);
   }
 
-  public static boolean hasInconsistencyRuleArgumentsDescription(String owl2RLRuleName)
+  public static boolean hasInconsistencyRuleArgumentsDescription(@NonNull String owl2RLRuleName)
   {
     return argumentsDescriptionMap.containsKey(owl2RLRuleName);
   }
 
-  public static OWL2RLRuleArguments getRuleArguments(String owl2RLRuleName)
+  @NonNull public static OWL2RLRuleArguments getRuleArguments(@NonNull String owl2RLRuleName)
   {
     return argumentsDescriptionMap.get(owl2RLRuleName);
   }
 
-  private static void createArgumentDescription(String owl2RLRuleName, int numberOfClassArguments,
+  private static void createArgumentDescription(@NonNull String owl2RLRuleName, int numberOfClassArguments,
       int numberOfIndividualArguments, int numberOfObjectPropertyArguments, int numberOfDataPropertyArguments)
   {
     argumentsDescriptionMap.put(owl2RLRuleName, new OWL2RLRuleArguments(numberOfClassArguments,

@@ -1,5 +1,6 @@
 package org.swrlapi.ui.action;
 
+import checkers.nullness.quals.NonNull;
 import org.swrlapi.ui.dialog.SWRLAPIDialogManager;
 
 import java.awt.*;
@@ -8,19 +9,19 @@ import java.awt.event.ActionListener;
 
 public class QuitAction implements ActionListener
 {
-  final Component parent;
-  final SWRLAPIDialogManager dialogManager;
+  @NonNull private final Component parent;
+  @NonNull private final SWRLAPIDialogManager dialogManager;
 
   public static final String TITLE = "Quit";
   private static final String MESSAGE = "Do you really want to quit?";
 
-  public QuitAction(Component parent, SWRLAPIDialogManager dialogManager)
+  public QuitAction(@NonNull Component parent, @NonNull SWRLAPIDialogManager dialogManager)
   {
     this.parent = parent;
     this.dialogManager = dialogManager;
   }
 
-  @Override public void actionPerformed(ActionEvent e)
+  @Override public void actionPerformed(@NonNull ActionEvent e)
   {
     confirmQuit();
   }

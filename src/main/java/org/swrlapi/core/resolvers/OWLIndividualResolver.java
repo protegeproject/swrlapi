@@ -1,10 +1,11 @@
 package org.swrlapi.core.resolvers;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLIndividual;
 import org.swrlapi.exceptions.TargetSWRLRuleEngineException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class is used to keep track of OWL individuals, typically by a rule engine implementation. OWL 2 RL-based
@@ -19,7 +20,7 @@ import org.swrlapi.exceptions.TargetSWRLRuleEngineException;
  */
 public class OWLIndividualResolver
 {
-  private final Map<String, OWLIndividual> individualID2OWLIndividual;
+  @NonNull private final Map<String, OWLIndividual> individualID2OWLIndividual;
 
   public OWLIndividualResolver()
   {
@@ -31,12 +32,12 @@ public class OWLIndividualResolver
     this.individualID2OWLIndividual.clear();
   }
 
-  public void record(String individualID, OWLIndividual individual)
+  public void record(@NonNull String individualID, @NonNull OWLIndividual individual)
   {
     this.individualID2OWLIndividual.put(individualID, individual);
   }
 
-  public OWLIndividual resolve(String individualID) throws TargetSWRLRuleEngineException
+  @NonNull public OWLIndividual resolve(@NonNull String individualID) throws TargetSWRLRuleEngineException
   {
     if (this.individualID2OWLIndividual.containsKey(individualID))
       return this.individualID2OWLIndividual.get(individualID);

@@ -1,9 +1,7 @@
 package org.swrlapi.parser;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
+import checkers.nullness.quals.NonNull;
+import checkers.nullness.quals.Nullable;
 import org.semanticweb.owlapi.model.SWRLAtom;
 import org.semanticweb.owlapi.model.SWRLBuiltInAtom;
 import org.semanticweb.owlapi.model.SWRLClassAtom;
@@ -16,6 +14,10 @@ import org.semanticweb.owlapi.model.SWRLRule;
 import org.semanticweb.owlapi.model.SWRLSameIndividualAtom;
 import org.semanticweb.owlapi.model.SWRLVariable;
 import org.swrlapi.core.SWRLAPIOWLOntology;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * A basic SWRL and SQWRL parser. It provides in interactive parsing mode for incomplete rules and queries and provides
@@ -47,9 +49,9 @@ public class SWRLParser
   private static final String SAME_AS_PREDICATE = "sameAs";
   private static final String DIFFERENT_FROM_PREDICATE = "differentFrom";
 
-  private final SWRLParserSupport swrlParserSupport;
+  @NonNull private final SWRLParserSupport swrlParserSupport;
 
-  public SWRLParser(SWRLAPIOWLOntology swrlapiOWLOntology)
+  public SWRLParser(@NonNull SWRLAPIOWLOntology swrlapiOWLOntology)
   {
     this.swrlParserSupport = new SWRLParserSupport(swrlapiOWLOntology);
   }
@@ -62,7 +64,7 @@ public class SWRLParser
    * @return The parsed rule
    * @throws SWRLParseException If an error occurs during parsing
    */
-  public SWRLRule parseSWRLRule(String ruleText, boolean interactiveParseOnly, String ruleName, String comment)
+  @Nullable public SWRLRule parseSWRLRule(@NonNull String ruleText, boolean interactiveParseOnly, String ruleName, String comment)
       throws SWRLParseException
   {
     SWRLTokenizer tokenizer = new SWRLTokenizer(ruleText.trim(), interactiveParseOnly);
@@ -133,7 +135,7 @@ public class SWRLParser
    * @param ruleText The rule text
    * @return True if the rule is valid but possibly incomplete
    */
-  public boolean isSWRLRuleCorrectButPossiblyIncomplete(String ruleText)
+  public boolean isSWRLRuleCorrectButPossiblyIncomplete(@NonNull String ruleText)
   {
     try {
       parseSWRLRule(ruleText, true, "", "");
@@ -152,7 +154,7 @@ public class SWRLParser
    * @param ruleText The rule text
    * @return True is the rule is correct and complete
    */
-  public boolean isSWRLRuleCorrectAndComplete(String ruleText)
+  public boolean isSWRLRuleCorrectAndComplete(@NonNull String ruleText)
   {
     try {
       parseSWRLRule(ruleText, false, "", "");
@@ -162,7 +164,7 @@ public class SWRLParser
     }
   }
 
-  private SWRLAtom parseSWRLAtom(String shortName, SWRLTokenizer tokenizer, boolean isInHead) throws SWRLParseException
+  @NonNull private SWRLAtom parseSWRLAtom(@NonNull String shortName, @NonNull SWRLTokenizer tokenizer, boolean isInHead) throws SWRLParseException
   {
     if (shortName.equalsIgnoreCase(SAME_AS_PREDICATE)) {
       tokenizer.checkAndSkipLParen("Expecting parentheses-enclosed arguments for same individual atom");
@@ -186,7 +188,7 @@ public class SWRLParser
       throw generateEndOfRuleException("Invalid SWRL atom predicate '" + shortName + "'", tokenizer);
   }
 
-  private SWRLClassAtom parseSWRLClassAtomArguments(String shortName, SWRLTokenizer tokenizer, boolean isInHead)
+  @Nullable private SWRLClassAtom parseSWRLClassAtomArguments(@NonNull String shortName, @NonNull SWRLTokenizer tokenizer, boolean isInHead)
       throws SWRLParseException
   {
     SWRLIArgument iArgument = parseSWRLIArgument(tokenizer, isInHead);
@@ -196,7 +198,7 @@ public class SWRLParser
     return !tokenizer.isInteractiveParseOnly() ? this.swrlParserSupport.getSWRLClassAtom(shortName, iArgument) : null;
   }
 
-  private SWRLObjectPropertyAtom parseSWRLObjectPropertyAtomArguments(String shortName, SWRLTokenizer tokenizer,
+  @Nullable private SWRLObjectPropertyAtom parseSWRLObjectPropertyAtomArguments(@NonNull String shortName, @NonNull SWRLTokenizer tokenizer,
       boolean isInHead) throws SWRLParseException
   {
     SWRLIArgument iArgument1 = parseSWRLIArgument(tokenizer, isInHead);
@@ -209,7 +211,7 @@ public class SWRLParser
         iArgument1, iArgument2) : null;
   }
 
-  private SWRLDataPropertyAtom parseSWRLDataPropertyAtomArguments(String shortName, SWRLTokenizer tokenizer,
+  @Nullable private SWRLDataPropertyAtom parseSWRLDataPropertyAtomArguments(@NonNull String shortName, @NonNull SWRLTokenizer tokenizer,
       boolean isInHead) throws SWRLParseException
   {
     SWRLIArgument iArgument = parseSWRLIArgument(tokenizer, isInHead);
@@ -222,7 +224,7 @@ public class SWRLParser
         dArgument) : null;
   }
 
-  private SWRLBuiltInAtom parseSWRLBuiltinAtomArguments(String builtInPrefixedName, SWRLTokenizer tokenizer,
+  @Nullable private SWRLBuiltInAtom parseSWRLBuiltinAtomArguments(@NonNull String builtInPrefixedName, @NonNull SWRLTokenizer tokenizer,
       boolean isInHead) throws SWRLParseException
   {
     List<SWRLDArgument> dArgumentList = parseSWRLDArgumentList(tokenizer, isInHead); // Swallows ')'
@@ -231,7 +233,7 @@ public class SWRLParser
         dArgumentList) : null;
   }
 
-  private SWRLSameIndividualAtom parseSWRLSameAsAtomArguments(SWRLTokenizer tokenizer, boolean isInHead)
+  @Nullable private SWRLSameIndividualAtom parseSWRLSameAsAtomArguments(@NonNull SWRLTokenizer tokenizer, boolean isInHead)
       throws SWRLParseException
   {
     SWRLIArgument iArgument1 = parseSWRLIArgument(tokenizer, isInHead);
@@ -243,7 +245,7 @@ public class SWRLParser
         iArgument2);
   }
 
-  private SWRLDifferentIndividualsAtom parseSWRLDifferentFromAtomArguments(SWRLTokenizer tokenizer, boolean isInHead)
+  @Nullable private SWRLDifferentIndividualsAtom parseSWRLDifferentFromAtomArguments(@NonNull SWRLTokenizer tokenizer, boolean isInHead)
       throws SWRLParseException
   {
     SWRLIArgument iArgument1 = parseSWRLIArgument(tokenizer, isInHead);
@@ -256,7 +258,7 @@ public class SWRLParser
         iArgument1, iArgument2);
   }
 
-  private SWRLVariable parseSWRLVariable(SWRLTokenizer tokenizer, boolean isInHead) throws SWRLParseException
+  @Nullable private SWRLVariable parseSWRLVariable(@NonNull SWRLTokenizer tokenizer, boolean isInHead) throws SWRLParseException
   {
     SWRLToken token = tokenizer.getToken(SWRLToken.SWRLTokenType.SHORTNAME, "Expecting variable name after ?");
     String variableName = token.getValue();
@@ -272,7 +274,7 @@ public class SWRLParser
     return !tokenizer.isInteractiveParseOnly() ? this.swrlParserSupport.getSWRLVariable(variableName) : null;
   }
 
-  private SWRLIArgument parseSWRLIArgument(SWRLTokenizer tokenizer, boolean isInHead) throws SWRLParseException
+  @Nullable private SWRLIArgument parseSWRLIArgument(@NonNull SWRLTokenizer tokenizer, boolean isInHead) throws SWRLParseException
   { // Parse a SWRL variable or an OWL named individual
     SWRLToken token = tokenizer.getToken("Expecting variable or OWL individual name");
 
@@ -289,7 +291,7 @@ public class SWRLParser
       throw new SWRLParseException("Expecting variable or OWL individual name, got '" + token.getValue() + "'");
   }
 
-  private SWRLDArgument parseSWRLDArgument(SWRLTokenizer tokenizer, boolean isInHead, boolean isInBuiltIn)
+  @Nullable private SWRLDArgument parseSWRLDArgument(@NonNull SWRLTokenizer tokenizer, boolean isInHead, boolean isInBuiltIn)
       throws SWRLParseException
   { // Parse a SWRL variable or an OWL literal; if we are processing built-in arguments we also allow OWL entity names
     String message = isInBuiltIn ? "Expecting variable, literal or OWL entity name for built-in atom argument"
@@ -314,7 +316,7 @@ public class SWRLParser
       throw new SWRLParseException("Expecting variable or OWL literal, got '" + token.getValue() + "'");
   }
 
-  private SWRLDArgument parseLiteralSWRLDArgument(SWRLTokenizer tokenizer, String literalValue)
+  @Nullable private SWRLDArgument parseLiteralSWRLDArgument(@NonNull SWRLTokenizer tokenizer, String literalValue)
       throws SWRLParseException
   {
     if (tokenizer.peekToken("String may be qualified with datatype").isAnd()) {
@@ -334,7 +336,8 @@ public class SWRLParser
           : null;
   }
 
-  private SWRLDArgument parseShortNameSWRLDArgument(SWRLTokenizer tokenizer, boolean isInBuiltIn, String shortName)
+  @Nullable private SWRLDArgument parseShortNameSWRLDArgument(
+    @NonNull SWRLTokenizer tokenizer, boolean isInBuiltIn, @NonNull String shortName)
       throws SWRLParseException
   {
     // We allow the values "true" and "false" and interpret them as OWL literals of type xsd:boolean.
@@ -369,7 +372,7 @@ public class SWRLParser
     }
   }
 
-  private List<SWRLDArgument> parseSWRLDArgumentList(SWRLTokenizer tokenizer, boolean isInHead)
+  @Nullable private List<SWRLDArgument> parseSWRLDArgumentList(@NonNull SWRLTokenizer tokenizer, boolean isInHead)
       throws SWRLParseException
   { // Parse an argument list that can contain variables, OWL named entities, and literals
     List<SWRLDArgument> dArguments = !tokenizer.isInteractiveParseOnly() ? new ArrayList<>() : null;
@@ -392,7 +395,7 @@ public class SWRLParser
     return dArguments;
   }
 
-  private SWRLParseException generateEndOfRuleException(String message, SWRLTokenizer tokenizer)
+  @NonNull private SWRLParseException generateEndOfRuleException(String message, @NonNull SWRLTokenizer tokenizer)
   {
     if (tokenizer.hasMoreTokens() || !tokenizer.isInteractiveParseOnly())
       return new SWRLParseException(message);

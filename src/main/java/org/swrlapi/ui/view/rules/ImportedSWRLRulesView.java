@@ -1,28 +1,25 @@
 package org.swrlapi.ui.view.rules;
 
-import java.awt.BorderLayout;
-import java.util.Set;
-
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JViewport;
-import javax.swing.table.AbstractTableModel;
-
+import checkers.nullness.quals.NonNull;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.core.SWRLRuleRenderer;
 import org.swrlapi.ui.view.SWRLAPIView;
 
+import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
+import java.awt.*;
+import java.util.Set;
+
 public class ImportedSWRLRulesView extends JPanel implements SWRLAPIView
 {
   private static final long serialVersionUID = 1L;
 
-  private final SWRLRuleEngine swrlRuleEngine;
-  private final SWRLRuleRenderer swrlRulePrinter;
-  private final SWRLRulesTableModel swrlRulesTableModel;
+  @NonNull private final SWRLRuleEngine swrlRuleEngine;
+  @NonNull private final SWRLRuleRenderer swrlRulePrinter;
+  @NonNull private final SWRLRulesTableModel swrlRulesTableModel;
 
-  public ImportedSWRLRulesView(SWRLRuleEngine ruleEngine)
+  public ImportedSWRLRulesView(@NonNull SWRLRuleEngine ruleEngine)
   {
     this.swrlRuleEngine = ruleEngine;
     this.swrlRulesTableModel = new SWRLRulesTableModel();
@@ -65,7 +62,7 @@ public class ImportedSWRLRulesView extends JPanel implements SWRLAPIView
       return 1;
     }
 
-    @Override
+    @NonNull @Override
     public Object getValueAt(int row, int column)
     {
       if (row < 0 || row >= getRowCount())

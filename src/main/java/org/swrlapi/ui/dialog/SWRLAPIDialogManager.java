@@ -1,18 +1,18 @@
 package org.swrlapi.ui.dialog;
 
-import java.awt.Component;
+import checkers.nullness.quals.NonNull;
 
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * Provides a set of standard dialogs.
  */
 public interface SWRLAPIDialogManager
 {
-  JDialog getSWRLRuleEditorDialog(Component parent);
+  @NonNull JDialog getSWRLRuleEditorDialog(Component parent);
 
-  JDialog getSWRLRuleEditorDialog(Component parent, String ruleName, String ruleText, String comment);
+  @NonNull JDialog getSWRLRuleEditorDialog(Component parent, String ruleName, String ruleText, String comment);
 
   int showConfirmCancelDialog(Component parent, String message, String title);
 
@@ -24,7 +24,7 @@ public interface SWRLAPIDialogManager
 
   void showMessageDialog(Component parent, String message, String title);
 
-  JFileChooser createFileChooser(String title, String fileDescription, String fileExtension);
+  @NonNull JFileChooser createFileChooser(String title, String fileDescription, String fileExtension);
 
-  JFileChooser createSaveFileChooser(String title, String fileDescription, String fileExtension, final boolean overwrite);
+  @NonNull JFileChooser createSaveFileChooser(String title, String fileDescription, String fileExtension, final boolean overwrite);
 }

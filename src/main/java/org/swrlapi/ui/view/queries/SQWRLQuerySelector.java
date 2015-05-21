@@ -1,5 +1,6 @@
 package org.swrlapi.ui.view.queries;
 
+import checkers.nullness.quals.NonNull;
 import org.swrlapi.ui.view.SWRLRulesTableView;
 
 /**
@@ -10,14 +11,14 @@ import org.swrlapi.ui.view.SWRLRulesTableView;
  */
 class SQWRLQuerySelector
 {
-  private final SWRLRulesTableView swrlRulesTableView;
+  @NonNull private final SWRLRulesTableView swrlRulesTableView;
 
-  public SQWRLQuerySelector(SWRLRulesTableView swrlRulesTableView)
+  public SQWRLQuerySelector(@NonNull SWRLRulesTableView swrlRulesTableView)
   {
     this.swrlRulesTableView = swrlRulesTableView;
   }
 
-  public String getSelectedQueryName()
+  @NonNull public String getSelectedQueryName()
   {
     return this.swrlRulesTableView.getSelectedSWRLRuleName();
   }

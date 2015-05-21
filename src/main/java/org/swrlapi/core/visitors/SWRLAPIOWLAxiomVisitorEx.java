@@ -1,6 +1,40 @@
 package org.swrlapi.core.visitors;
 
-import org.semanticweb.owlapi.model.*;
+import checkers.nullness.quals.NonNull;
+import org.semanticweb.owlapi.model.OWLAsymmetricObjectPropertyAxiom;
+import org.semanticweb.owlapi.model.OWLClassAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLDataPropertyDomainAxiom;
+import org.semanticweb.owlapi.model.OWLDataPropertyRangeAxiom;
+import org.semanticweb.owlapi.model.OWLDatatypeDefinitionAxiom;
+import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
+import org.semanticweb.owlapi.model.OWLDifferentIndividualsAxiom;
+import org.semanticweb.owlapi.model.OWLDisjointClassesAxiom;
+import org.semanticweb.owlapi.model.OWLDisjointDataPropertiesAxiom;
+import org.semanticweb.owlapi.model.OWLDisjointObjectPropertiesAxiom;
+import org.semanticweb.owlapi.model.OWLDisjointUnionAxiom;
+import org.semanticweb.owlapi.model.OWLEquivalentClassesAxiom;
+import org.semanticweb.owlapi.model.OWLEquivalentDataPropertiesAxiom;
+import org.semanticweb.owlapi.model.OWLEquivalentObjectPropertiesAxiom;
+import org.semanticweb.owlapi.model.OWLFunctionalDataPropertyAxiom;
+import org.semanticweb.owlapi.model.OWLFunctionalObjectPropertyAxiom;
+import org.semanticweb.owlapi.model.OWLHasKeyAxiom;
+import org.semanticweb.owlapi.model.OWLInverseFunctionalObjectPropertyAxiom;
+import org.semanticweb.owlapi.model.OWLInverseObjectPropertiesAxiom;
+import org.semanticweb.owlapi.model.OWLIrreflexiveObjectPropertyAxiom;
+import org.semanticweb.owlapi.model.OWLNegativeDataPropertyAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLNegativeObjectPropertyAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLObjectPropertyDomainAxiom;
+import org.semanticweb.owlapi.model.OWLObjectPropertyRangeAxiom;
+import org.semanticweb.owlapi.model.OWLReflexiveObjectPropertyAxiom;
+import org.semanticweb.owlapi.model.OWLSameIndividualAxiom;
+import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
+import org.semanticweb.owlapi.model.OWLSubDataPropertyOfAxiom;
+import org.semanticweb.owlapi.model.OWLSubObjectPropertyOfAxiom;
+import org.semanticweb.owlapi.model.OWLSubPropertyChainOfAxiom;
+import org.semanticweb.owlapi.model.OWLSymmetricObjectPropertyAxiom;
+import org.semanticweb.owlapi.model.OWLTransitiveObjectPropertyAxiom;
 import org.swrlapi.core.SWRLAPIRule;
 
 /**
@@ -13,73 +47,73 @@ import org.swrlapi.core.SWRLAPIRule;
  */
 public interface SWRLAPIOWLAxiomVisitorEx<T>
 {
-  T visit(SWRLAPIRule swrlapiRule);
+  @NonNull T visit(@NonNull SWRLAPIRule swrlapiRule);
 
-  T visit(OWLDeclarationAxiom axiom);
+  @NonNull T visit(@NonNull OWLDeclarationAxiom axiom);
 
-  T visit(OWLSubClassOfAxiom owlSubClassOfAxiom);
+  @NonNull T visit(@NonNull OWLSubClassOfAxiom owlSubClassOfAxiom);
 
-  T visit(OWLNegativeObjectPropertyAssertionAxiom owlNegativeObjectPropertyAssertionAxiom);
+  @NonNull T visit(@NonNull OWLNegativeObjectPropertyAssertionAxiom owlNegativeObjectPropertyAssertionAxiom);
 
-  T visit(OWLAsymmetricObjectPropertyAxiom owlAsymmetricObjectPropertyAxiom);
+  @NonNull T visit(@NonNull OWLAsymmetricObjectPropertyAxiom owlAsymmetricObjectPropertyAxiom);
 
-  T visit(OWLReflexiveObjectPropertyAxiom owlReflexiveObjectPropertyAxiom);
+  @NonNull T visit(@NonNull OWLReflexiveObjectPropertyAxiom owlReflexiveObjectPropertyAxiom);
 
-  T visit(OWLDisjointClassesAxiom owlDisjointClassesAxiom);
+  @NonNull T visit(@NonNull OWLDisjointClassesAxiom owlDisjointClassesAxiom);
 
-  T visit(OWLDataPropertyDomainAxiom owlDataPropertyDomainAxiom);
+  @NonNull T visit(@NonNull OWLDataPropertyDomainAxiom owlDataPropertyDomainAxiom);
 
-  T visit(OWLObjectPropertyDomainAxiom owlObjectPropertyDomainAxiom);
+  @NonNull T visit(@NonNull OWLObjectPropertyDomainAxiom owlObjectPropertyDomainAxiom);
 
-  T visit(OWLEquivalentObjectPropertiesAxiom owlEquivalentObjectPropertiesAxiom);
+  @NonNull T visit(@NonNull OWLEquivalentObjectPropertiesAxiom owlEquivalentObjectPropertiesAxiom);
 
-  T visit(OWLNegativeDataPropertyAssertionAxiom owlNegativeDataPropertyAssertionAxiom);
+  @NonNull T visit(@NonNull OWLNegativeDataPropertyAssertionAxiom owlNegativeDataPropertyAssertionAxiom);
 
-  T visit(OWLDifferentIndividualsAxiom owlDifferentIndividualsAxiom);
+  @NonNull T visit(@NonNull OWLDifferentIndividualsAxiom owlDifferentIndividualsAxiom);
 
-  T visit(OWLDisjointDataPropertiesAxiom owlDisjointDataPropertiesAxiom);
+  @NonNull T visit(@NonNull OWLDisjointDataPropertiesAxiom owlDisjointDataPropertiesAxiom);
 
-  T visit(OWLDisjointObjectPropertiesAxiom owlDisjointObjectPropertiesAxiom);
+  @NonNull T visit(@NonNull OWLDisjointObjectPropertiesAxiom owlDisjointObjectPropertiesAxiom);
 
-  T visit(OWLObjectPropertyRangeAxiom owlObjectPropertyRangeAxiom);
+  @NonNull T visit(@NonNull OWLObjectPropertyRangeAxiom owlObjectPropertyRangeAxiom);
 
-  T visit(OWLObjectPropertyAssertionAxiom owlObjectPropertyAssertionAxiom);
+  @NonNull T visit(@NonNull OWLObjectPropertyAssertionAxiom owlObjectPropertyAssertionAxiom);
 
-  T visit(OWLFunctionalObjectPropertyAxiom owlFunctionalObjectPropertyAxiom);
+  @NonNull T visit(@NonNull OWLFunctionalObjectPropertyAxiom owlFunctionalObjectPropertyAxiom);
 
-  T visit(OWLSubObjectPropertyOfAxiom owlSubObjectPropertyOfAxiom);
+  @NonNull T visit(@NonNull OWLSubObjectPropertyOfAxiom owlSubObjectPropertyOfAxiom);
 
-  T visit(OWLDisjointUnionAxiom owlDisjointUnionAxiom);
+  @NonNull T visit(@NonNull OWLDisjointUnionAxiom owlDisjointUnionAxiom);
 
-  T visit(OWLSymmetricObjectPropertyAxiom owlSymmetricObjectPropertyAxiom);
+  @NonNull T visit(@NonNull OWLSymmetricObjectPropertyAxiom owlSymmetricObjectPropertyAxiom);
 
-  T visit(OWLDataPropertyRangeAxiom owlDataPropertyRangeAxiom);
+  @NonNull T visit(@NonNull OWLDataPropertyRangeAxiom owlDataPropertyRangeAxiom);
 
-  T visit(OWLFunctionalDataPropertyAxiom owlFunctionalDataPropertyAxiom);
+  @NonNull T visit(@NonNull OWLFunctionalDataPropertyAxiom owlFunctionalDataPropertyAxiom);
 
-  T visit(OWLEquivalentDataPropertiesAxiom owlEquivalentDataPropertiesAxiom);
+  @NonNull T visit(@NonNull OWLEquivalentDataPropertiesAxiom owlEquivalentDataPropertiesAxiom);
 
-  T visit(OWLClassAssertionAxiom owlClassAssertionAxiom);
+  @NonNull T visit(@NonNull OWLClassAssertionAxiom owlClassAssertionAxiom);
 
-  T visit(OWLEquivalentClassesAxiom owlEquivalentClassesAxiom);
+  @NonNull T visit(@NonNull OWLEquivalentClassesAxiom owlEquivalentClassesAxiom);
 
-  T visit(OWLDataPropertyAssertionAxiom owlDataPropertyAssertionAxiom);
+  @NonNull T visit(@NonNull OWLDataPropertyAssertionAxiom owlDataPropertyAssertionAxiom);
 
-  T visit(OWLTransitiveObjectPropertyAxiom owlTransitiveObjectPropertyAxiom);
+  @NonNull T visit(@NonNull OWLTransitiveObjectPropertyAxiom owlTransitiveObjectPropertyAxiom);
 
-  T visit(OWLIrreflexiveObjectPropertyAxiom owlIrreflexiveObjectPropertyAxiom);
+  @NonNull T visit(@NonNull OWLIrreflexiveObjectPropertyAxiom owlIrreflexiveObjectPropertyAxiom);
 
-  T visit(OWLSubDataPropertyOfAxiom owlSubDataPropertyOfAxiom);
+  @NonNull T visit(@NonNull OWLSubDataPropertyOfAxiom owlSubDataPropertyOfAxiom);
 
-  T visit(OWLInverseFunctionalObjectPropertyAxiom owlInverseFunctionalObjectPropertyAxiom);
+  @NonNull T visit(@NonNull OWLInverseFunctionalObjectPropertyAxiom owlInverseFunctionalObjectPropertyAxiom);
 
-  T visit(OWLSameIndividualAxiom owlSameIndividualAxiom);
+  @NonNull T visit(@NonNull OWLSameIndividualAxiom owlSameIndividualAxiom);
 
-  T visit(OWLSubPropertyChainOfAxiom owlSubPropertyChainOfAxiom);
+  @NonNull T visit(@NonNull OWLSubPropertyChainOfAxiom owlSubPropertyChainOfAxiom);
 
-  T visit(OWLInverseObjectPropertiesAxiom owlInverseObjectPropertiesAxiom);
+  @NonNull T visit(@NonNull OWLInverseObjectPropertiesAxiom owlInverseObjectPropertiesAxiom);
 
-  T visit(OWLHasKeyAxiom owlHasKeyAxiom);
+  @NonNull T visit(@NonNull OWLHasKeyAxiom owlHasKeyAxiom);
 
-  T visit(OWLDatatypeDefinitionAxiom owlDatatypeDefinitionAxiom);
+  @NonNull T visit(@NonNull OWLDatatypeDefinitionAxiom owlDatatypeDefinitionAxiom);
 }

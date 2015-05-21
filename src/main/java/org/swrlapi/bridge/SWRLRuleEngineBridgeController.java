@@ -1,8 +1,9 @@
 package org.swrlapi.bridge;
 
-import java.util.Set;
-
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLAxiom;
+
+import java.util.Set;
 
 /**
  * This interface provides access methods to retrieve knowledge inferred by a target rule engine implementation after it
@@ -21,5 +22,5 @@ public interface SWRLRuleEngineBridgeController
   /**
    * @return A set of inferred OWL axioms
    */
-  Set<OWLAxiom> getInferredOWLAxioms();
+  @NonNull Set<OWLAxiom> getInferredOWLAxioms();
 }

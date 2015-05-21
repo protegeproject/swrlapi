@@ -1,9 +1,10 @@
 package org.swrlapi.factory;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLOntology;
+import org.swrlapi.bridge.SWRLBridge;
 import org.swrlapi.bridge.TargetSWRLRuleEngine;
 import org.swrlapi.core.SWRLAPIOWLOntology;
-import org.swrlapi.bridge.SWRLBridge;
 import org.swrlapi.core.SWRLRuleAndQueryEngineFactory;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.core.SWRLRuleEngineManager;
@@ -18,7 +19,7 @@ import java.util.Optional;
 
 public class DefaultSWRLRuleAndQueryEngineFactory implements SWRLRuleAndQueryEngineFactory
 {
-  private final SWRLRuleEngineManager ruleEngineManager;
+  @NonNull private final SWRLRuleEngineManager ruleEngineManager;
 
   public DefaultSWRLRuleAndQueryEngineFactory()
   {
@@ -35,8 +36,8 @@ public class DefaultSWRLRuleAndQueryEngineFactory implements SWRLRuleAndQueryEng
     // log.info("Rule engine '" + ruleEngineName + "' registered with the SWRLAPI rule engine manager.");
   }
 
-  @Override
-  public SWRLRuleEngine createSWRLRuleEngine(OWLOntology owlOntology)
+  @NonNull @Override
+  public SWRLRuleEngine createSWRLRuleEngine(@NonNull OWLOntology owlOntology)
   {
     if (this.ruleEngineManager.hasRegisteredRuleEngines()) {
       Optional<String> ruleEngineName = this.ruleEngineManager.getAnyRegisteredRuleEngineName();
@@ -48,8 +49,8 @@ public class DefaultSWRLRuleAndQueryEngineFactory implements SWRLRuleAndQueryEng
       throw new NoRegisteredSWRLRuleEnginesException();
   }
 
-  @Override
-  public SWRLRuleEngine createSWRLRuleEngine(String ruleEngineName, OWLOntology owlOntology)
+  @NonNull @Override
+  public SWRLRuleEngine createSWRLRuleEngine(@NonNull String ruleEngineName, @NonNull OWLOntology owlOntology)
   {
     if (this.ruleEngineManager.isRuleEngineRegistered(ruleEngineName)) {
       try {
@@ -70,8 +71,8 @@ public class DefaultSWRLRuleAndQueryEngineFactory implements SWRLRuleAndQueryEng
       throw new InvalidSWRLRuleEngineNameException(ruleEngineName);
   }
 
-  @Override
-  public SQWRLQueryEngine createSQWRLQueryEngine(OWLOntology owlOntology)
+  @NonNull @Override
+  public SQWRLQueryEngine createSQWRLQueryEngine(@NonNull OWLOntology owlOntology)
   {
     Optional<String> ruleEngineName = this.ruleEngineManager.getAnyRegisteredRuleEngineName();
     if (ruleEngineName.isPresent())
@@ -80,8 +81,8 @@ public class DefaultSWRLRuleAndQueryEngineFactory implements SWRLRuleAndQueryEng
       throw new NoRegisteredSWRLRuleEnginesException();
   }
 
-  @Override
-  public SQWRLQueryEngine createSQWRLQueryEngine(String queryEngineName, OWLOntology owlOntology)
+  @NonNull @Override
+  public SQWRLQueryEngine createSQWRLQueryEngine(@NonNull String queryEngineName, @NonNull OWLOntology owlOntology)
   {
     if (this.ruleEngineManager.isRuleEngineRegistered(queryEngineName)) {
       try {
@@ -116,7 +117,7 @@ public class DefaultSWRLRuleAndQueryEngineFactory implements SWRLRuleAndQueryEng
         SWRLRuleEngineManager.TargetSWRLRuleEngineCreator.class);
   }
 
-  private <T> Optional<T> createClass(String className, Class<T> interfaceClass)
+  private <T> Optional<T> createClass(@NonNull String className, @NonNull Class<T> interfaceClass)
   {
     try {
       Class<? extends T> clazz = Class.forName(className).asSubclass(interfaceClass);
@@ -130,7 +131,7 @@ public class DefaultSWRLRuleAndQueryEngineFactory implements SWRLRuleAndQueryEng
     }
   }
 
-  private <T> Optional<T> createInstance(Class<? extends T> classToCreate)
+  private <T> Optional<T> createInstance(@NonNull Class<? extends T> classToCreate)
   {
     try {
       Constructor<? extends T> constructor = classToCreate.getDeclaredConstructor();

@@ -1,5 +1,7 @@
 package org.swrlapi.builtins.arguments;
 
+import checkers.nullness.quals.NonNull;
+import checkers.nullness.quals.Nullable;
 import org.semanticweb.owlapi.model.SWRLDArgument;
 
 /**
@@ -62,22 +64,22 @@ public interface SWRLBuiltInArgument extends SWRLDArgument
   /**
    * @return The argument as a SWRL variable built-in argument
    */
-  SWRLVariableBuiltInArgument asVariable();
+  @NonNull SWRLVariableBuiltInArgument asVariable();
 
   /**
    * @return The argument as a SWRL multi-value variable built-in argument
    */
-  SWRLMultiValueVariableBuiltInArgument asMultiValueVariable();
+  @NonNull SWRLMultiValueVariableBuiltInArgument asMultiValueVariable();
 
   /**
    * @return The argument as a SWRL literal built-in argument
    */
-  SWRLLiteralBuiltInArgument asSWRLLiteralBuiltInArgument();
+  @NonNull SWRLLiteralBuiltInArgument asSWRLLiteralBuiltInArgument();
 
   /**
    * @return The argument as a SWRL named built-in argument
    */
-  SWRLNamedBuiltInArgument asSWRLNamedBuiltInArgument();
+  @NonNull SWRLNamedBuiltInArgument asSWRLNamedBuiltInArgument();
 
   /**
    * @return True if the argument is a variable and was bound
@@ -87,22 +89,22 @@ public interface SWRLBuiltInArgument extends SWRLDArgument
   /**
    * @return The bound variable name
    */
-  String getBoundVariableName();
+  @Nullable String getBoundVariableName();
 
   /**
    * @param boundVariableName The variable name that the built-in argument is bound to
    */
-  void setBoundVariableName(String boundVariableName);
+  void setBoundVariableName(@NonNull String boundVariableName);
 
   /**
    * @param visitor A visitor
    */
-  void accept(SWRLBuiltInArgumentVisitor visitor);
+  void accept(@NonNull SWRLBuiltInArgumentVisitor visitor);
 
   /**
    * @param <T> Type returned by the visitor
    * @param visitor A visitor
    * @return A result generate by the visitor
    */
-  <T> T accept(SWRLBuiltInArgumentVisitorEx<T> visitor);
+  @NonNull <T> T accept(@NonNull SWRLBuiltInArgumentVisitorEx<T> visitor);
 }

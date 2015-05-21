@@ -1,5 +1,6 @@
 package org.swrlapi.ui.action;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 import org.swrlapi.ui.dialog.SWRLAPIDialogManager;
 import org.swrlapi.ui.model.FileBackedOWLOntologyModel;
@@ -10,30 +11,31 @@ import java.awt.event.ActionListener;
 
 public class SaveAction implements ActionListener
 {
-	private final Component parent;
-	private final SWRLAPIDialogManager dialogManager;
-	private final FileBackedOWLOntologyModel ontologyModel;
+  @NonNull private final Component parent;
+  @NonNull private final SWRLAPIDialogManager dialogManager;
+  @NonNull private final FileBackedOWLOntologyModel ontologyModel;
 
-	public static final String TITLE = "Save";
+  public static final String TITLE = "Save";
 
-	public SaveAction(Component parent, FileBackedOWLOntologyModel ontologyModel, SWRLAPIDialogManager dialogManager)
-	{
-		this.parent = parent;
-		this.dialogManager = dialogManager;
-		this.ontologyModel = ontologyModel;
-	}
+  public SaveAction(@NonNull Component parent, @NonNull FileBackedOWLOntologyModel ontologyModel,
+    @NonNull SWRLAPIDialogManager dialogManager)
+  {
+    this.parent = parent;
+    this.dialogManager = dialogManager;
+    this.ontologyModel = ontologyModel;
+  }
 
-	@Override public void actionPerformed(ActionEvent e)
-	{
-		save();
-	}
+  @Override public void actionPerformed(@NonNull ActionEvent e)
+  {
+    save();
+  }
 
-	public void save()
-	{
-		try {
-			this.ontologyModel.save();
-		} catch (OWLOntologyStorageException e) {
-			this.dialogManager.showErrorMessageDialog(this.parent, e.getMessage(), "Error");
-		}
-	}
+  public void save()
+  {
+    try {
+      this.ontologyModel.save();
+    } catch (OWLOntologyStorageException e) {
+      this.dialogManager.showErrorMessageDialog(this.parent, e.getMessage(), "Error");
+    }
+  }
 }

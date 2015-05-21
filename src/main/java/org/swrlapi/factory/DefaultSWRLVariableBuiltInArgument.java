@@ -1,5 +1,7 @@
 package org.swrlapi.factory;
 
+import checkers.nullness.quals.NonNull;
+import checkers.nullness.quals.Nullable;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLObject;
@@ -17,7 +19,6 @@ import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 
-import javax.annotation.Nonnull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,10 +30,10 @@ class DefaultSWRLVariableBuiltInArgument extends DefaultSWRLBuiltInArgument impl
   private final IRI iri;
   private final String variablePrefixedName;
 
-  private SWRLBuiltInArgument builtInResult; // Used to store result of binding for unbound arguments
+  @Nullable private SWRLBuiltInArgument builtInResult; // Used to store result of binding for unbound arguments
   private boolean isBound;
 
-  public DefaultSWRLVariableBuiltInArgument(IRI iri, String variablePrefixedName)
+  public DefaultSWRLVariableBuiltInArgument(@NonNull IRI iri, @NonNull String variablePrefixedName)
   {
     this.iri = iri;
     this.variablePrefixedName = variablePrefixedName;
@@ -40,75 +41,64 @@ class DefaultSWRLVariableBuiltInArgument extends DefaultSWRLBuiltInArgument impl
     this.isBound = true;
   }
 
-  @Override
-  public IRI getIRI()
+  @NonNull @Override public IRI getIRI()
   {
     return this.iri;
   }
 
-  @Override
-  public boolean isVariable()
+  @Override public boolean isVariable()
   {
     return true;
   }
 
-  @Override
-  public boolean isMultiValueVariable()
+  @Override public boolean isMultiValueVariable()
   {
     return false;
   }
 
-  @Override
-  public boolean isLiteral()
+  @Override public boolean isLiteral()
   {
     return false;
   }
 
-  @Override
-  public boolean isNamed()
+  @Override public boolean isNamed()
   {
     return false;
   }
 
-  @Override
-  public SWRLVariableBuiltInArgument asVariable()
+  @NonNull @Override public SWRLVariableBuiltInArgument asVariable()
   {
     return this;
   }
 
-  @Override
-  public SWRLMultiValueVariableBuiltInArgument asMultiValueVariable()
+  @NonNull @Override public SWRLMultiValueVariableBuiltInArgument asMultiValueVariable()
   {
     throw new SWRLAPIException("not a SWRLMultiVariableBuiltInArgument");
   }
 
-  @Override
-  public SWRLLiteralBuiltInArgument asSWRLLiteralBuiltInArgument()
+  @NonNull @Override public SWRLLiteralBuiltInArgument asSWRLLiteralBuiltInArgument()
   {
     throw new SWRLAPIException("Not a SWRLLiteralBuiltInArgument");
   }
 
-  @Override
-  public SWRLNamedBuiltInArgument asSWRLNamedBuiltInArgument()
+  @NonNull @Override public SWRLNamedBuiltInArgument asSWRLNamedBuiltInArgument()
   {
     throw new SWRLAPIException("Not a SWRLNamedBuiltInArgument");
   }
 
-  @Override
-  public String getVariablePrefixedName()
+  @Override public String getVariablePrefixedName()
   {
     return this.variablePrefixedName;
   }
 
-  @Override
-  public String getVariableName()
+  @NonNull @Override public String getVariableName()
   {
-    return this.variablePrefixedName.startsWith(":") ? this.variablePrefixedName.substring(1)
-        : this.variablePrefixedName;
+    return this.variablePrefixedName.startsWith(":") ?
+      this.variablePrefixedName.substring(1) :
+      this.variablePrefixedName;
   }
 
-  @Override
-  public void setBuiltInResult(SWRLBuiltInArgument builtInResult) throws SWRLBuiltInException
+  @Override public void setBuiltInResult(SWRLBuiltInArgument builtInResult) throws SWRLBuiltInException
   {
     if (!isUnbound())
       throw new SWRLBuiltInException("attempt to bind value to bound argument " + this.toString());
@@ -118,85 +108,72 @@ class DefaultSWRLVariableBuiltInArgument extends DefaultSWRLBuiltInArgument impl
     this.builtInResult = builtInResult;
   }
 
-  @Override
-  public SWRLBuiltInArgument getBuiltInResult()
+  @Nullable @Override public SWRLBuiltInArgument getBuiltInResult()
   {
     return this.builtInResult;
   }
 
-  @Override
-  public boolean hasBuiltInResult()
+  @Override public boolean hasBuiltInResult()
   {
     return this.builtInResult != null;
   }
 
-  @Override
-  public boolean isUnbound()
+  @Override public boolean isUnbound()
   {
     return !this.isBound;
   }
 
-  @Override
-  public boolean isBound()
+  @Override public boolean isBound()
   {
     return this.isBound;
   }
 
-  @Override
-  public void setUnbound()
+  @Override public void setUnbound()
   {
     this.isBound = false;
   }
 
-  @Override
-  public void setBound()
+  @Override public void setBound()
   {
     this.isBound = true;
   }
 
-  @Override
-  public <T> T accept(SWRLBuiltInArgumentVisitorEx<T> visitor)
+  @Override public <T> T accept(@NonNull SWRLBuiltInArgumentVisitorEx<T> visitor)
   {
     return visitor.visit(this);
   }
 
-  @Override
-  public void accept(SWRLBuiltInArgumentVisitor visitor)
+  @Override public void accept(@NonNull SWRLBuiltInArgumentVisitor visitor)
   {
     visitor.visit(this);
   }
 
-  @Override
-  public void accept(SWRLObjectVisitor visitor)
+  @Override public void accept(@NonNull SWRLObjectVisitor visitor)
   {
     visitor.visit(this);
   }
 
-  @Override
-  public <O> O accept(SWRLObjectVisitorEx<O> visitor)
+  @NonNull @Override public <O> O accept(@NonNull SWRLObjectVisitorEx<O> visitor)
   {
     return visitor.visit(this);
   }
 
-  @Override
-  public void accept(OWLObjectVisitor visitor)
+  @Override public void accept(@NonNull OWLObjectVisitor visitor)
   {
     visitor.visit(this);
   }
 
-  @Override
-  public <O> O accept(OWLObjectVisitorEx<O> visitor)
+  @NonNull @Override public <O> O accept(@NonNull OWLObjectVisitorEx<O> visitor)
   {
     return visitor.visit(this);
   }
 
-  private int compareTo(SWRLVariableBuiltInArgument o)
+  private int compareTo(@NonNull SWRLVariableBuiltInArgument o)
   {
     return this.getIRI().compareTo(o.getIRI());
   }
 
-  @Override
-  public int compareTo(OWLObject o)
+  @Override public int compareTo(@NonNull OWLObject o)
   {
     if (!(o instanceof SWRLVariableBuiltInArgument))
       return -1;
@@ -206,21 +183,18 @@ class DefaultSWRLVariableBuiltInArgument extends DefaultSWRLBuiltInArgument impl
     return compareTo(other);
   }
 
-  @Override
-  public boolean equals(Object obj)
+  @Override public boolean equals(@Nullable Object obj)
   {
     if (this == obj)
       return true;
     if ((obj == null) || (obj.getClass() != this.getClass()))
       return false;
     DefaultSWRLVariableBuiltInArgument impl = (DefaultSWRLVariableBuiltInArgument)obj;
-    return super.equals(impl)
-        && ((this.builtInResult == impl.builtInResult) || (this.builtInResult != null && this.builtInResult
-            .equals(impl.builtInResult)) && this.isBound == impl.isBound);
+    return super.equals(impl) && ((this.builtInResult == impl.builtInResult)
+      || (this.builtInResult != null && this.builtInResult.equals(impl.builtInResult)) && this.isBound == impl.isBound);
   }
 
-  @Override
-  public int hashCode()
+  @Override public int hashCode()
   {
     int hash = 78;
     hash = hash + (null == this.builtInResult ? 0 : this.builtInResult.hashCode());
@@ -228,9 +202,7 @@ class DefaultSWRLVariableBuiltInArgument extends DefaultSWRLBuiltInArgument impl
     return hash;
   }
 
-  @Nonnull
-  @Override
-  public Set<OWLAnnotationProperty> getAnnotationPropertiesInSignature()
+  @NonNull @Override public Set<OWLAnnotationProperty> getAnnotationPropertiesInSignature()
   {
     return new HashSet<>(); // TODO Implement getAnnotationPropertiesInSignature
   }

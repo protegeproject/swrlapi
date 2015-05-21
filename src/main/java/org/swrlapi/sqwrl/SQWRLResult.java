@@ -1,5 +1,6 @@
 package org.swrlapi.sqwrl;
 
+import checkers.nullness.quals.NonNull;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
@@ -32,7 +33,7 @@ public interface SQWRLResult
    * @return The result column names
    * @throws SQWRLException If an error occurs during processing If an error occurs during processing
    */
-  List<String> getColumnNames() throws SQWRLException;
+  @NonNull List<String> getColumnNames() throws SQWRLException;
 
   /**
    * @param columnIndex A column index A column index
@@ -71,84 +72,84 @@ public interface SQWRLResult
    * @return A class result value
    * @throws SQWRLException If an error occurs during processing If an error occurs during processing
    */
-  SQWRLClassResultValue getClass(String columnName) throws SQWRLException;
+  @NonNull SQWRLClassResultValue getClass(String columnName) throws SQWRLException;
 
   /**
    * @param columnIndex A column index
    * @return A class result value
    * @throws SQWRLException If an error occurs during processing If an error occurs during processing
    */
-  SQWRLClassResultValue getClass(int columnIndex) throws SQWRLException;
+  @NonNull SQWRLClassResultValue getClass(int columnIndex) throws SQWRLException;
 
   /**
    * @param columnName A column name A column name
    * @return An individual result value
    * @throws SQWRLException If an error occurs during processing If an error occurs during processing
    */
-  SQWRLIndividualResultValue getIndividual(String columnName) throws SQWRLException;
+  @NonNull SQWRLIndividualResultValue getIndividual(String columnName) throws SQWRLException;
 
   /**
    * @param columnIndex A column index
    * @return An individual result value
    * @throws SQWRLException If an error occurs during processing If an error occurs during processing
    */
-  SQWRLIndividualResultValue getIndividual(int columnIndex) throws SQWRLException;
+  @NonNull SQWRLIndividualResultValue getIndividual(int columnIndex) throws SQWRLException;
 
   /**
    * @param columnName A column name A column name
    * @return An object property result value
    * @throws SQWRLException If an error occurs during processing
    */
-  SQWRLObjectPropertyResultValue getObjectProperty(String columnName) throws SQWRLException;
+  @NonNull SQWRLObjectPropertyResultValue getObjectProperty(String columnName) throws SQWRLException;
 
   /**
    * @param columnIndex A column index
    * @return An object property result value
    * @throws SQWRLException If an error occurs during processing
    */
-  SQWRLObjectPropertyResultValue getObjectProperty(int columnIndex) throws SQWRLException;
+  @NonNull SQWRLObjectPropertyResultValue getObjectProperty(int columnIndex) throws SQWRLException;
 
   /**
    * @param columnName A column name A column name
    * @return A data property result value
    * @throws SQWRLException If an error occurs during processing
    */
-  SQWRLDataPropertyResultValue getDataProperty(String columnName) throws SQWRLException;
+  @NonNull SQWRLDataPropertyResultValue getDataProperty(String columnName) throws SQWRLException;
 
   /**
    * @param columnIndex A column index
    * @return A data property result value
    * @throws SQWRLException If an error occurs during processing
    */
-  SQWRLDataPropertyResultValue getDataProperty(int columnIndex) throws SQWRLException;
+  @NonNull SQWRLDataPropertyResultValue getDataProperty(int columnIndex) throws SQWRLException;
 
   /**
    * @param columnName A column name A column name
    * @return An annotation property result value
    * @throws SQWRLException If an error occurs during processing
    */
-  SQWRLAnnotationPropertyResultValue getAnnotationProperty(String columnName) throws SQWRLException;
+  @NonNull SQWRLAnnotationPropertyResultValue getAnnotationProperty(String columnName) throws SQWRLException;
 
   /**
    * @param columnIndex A column index
    * @return An annotation property result value
    * @throws SQWRLException If an error occurs during processing
    */
-  SQWRLAnnotationPropertyResultValue getAnnotationProperty(int columnIndex) throws SQWRLException;
+  @NonNull SQWRLAnnotationPropertyResultValue getAnnotationProperty(int columnIndex) throws SQWRLException;
 
   /**
    * @param columnName A column name A column name
    * @return A literal result value
    * @throws SQWRLException If an error occurs during processing
    */
-  SQWRLLiteralResultValue getLiteral(String columnName) throws SQWRLException;
+  @NonNull SQWRLLiteralResultValue getLiteral(String columnName) throws SQWRLException;
 
   /**
    * @param columnIndex A column index
    * @return A literal result value
    * @throws SQWRLException If an error occurs during processing
    */
-  SQWRLLiteralResultValue getLiteral(int columnIndex) throws SQWRLException;
+  @NonNull SQWRLLiteralResultValue getLiteral(int columnIndex) throws SQWRLException;
 
   /**
    * @param columnName A column name A column name
@@ -238,21 +239,21 @@ public interface SQWRLResult
    * @return A list of SQWRL result values
    * @throws SQWRLException If an error occurs during processing
    */
-  List<SQWRLResultValue> getRow() throws SQWRLException;
+  @NonNull List<SQWRLResultValue> getRow() throws SQWRLException;
 
   /**
    * @param columnName A column name
    * @return The SQWRL result value
    * @throws SQWRLException If an error occurs during processing
    */
-  SQWRLResultValue getValue(String columnName) throws SQWRLException;
+  @NonNull SQWRLResultValue getValue(String columnName) throws SQWRLException;
 
   /**
    * @param columnIndex A column index
    * @return The SQWRL result value
    * @throws SQWRLException If an error occurs during processing
    */
-  SQWRLResultValue getValue(int columnIndex) throws SQWRLException;
+  @NonNull SQWRLResultValue getValue(int columnIndex) throws SQWRLException;
 
   /**
    * @param columnIndex The 0-based column index
@@ -260,19 +261,19 @@ public interface SQWRLResult
    * @return The SQWRL result value
    * @throws SQWRLException If an error occurs during processing
    */
-  SQWRLResultValue getValue(int columnIndex, int rowIndex) throws SQWRLException;
+  @NonNull SQWRLResultValue getValue(int columnIndex, int rowIndex) throws SQWRLException;
 
   /**
    * @param columnName A column name
    * @return A list of SQWRL result values
    * @throws SQWRLException If an error occurs during processing
    */
-  List<SQWRLResultValue> getColumn(String columnName) throws SQWRLException;
+  @NonNull List<SQWRLResultValue> getColumn(String columnName) throws SQWRLException;
 
   /**
    * @param columnIndex A column index
    * @return A list of SQWRL result values
    * @throws SQWRLException If an error occurs during processing
    */
-  List<SQWRLResultValue> getColumn(int columnIndex) throws SQWRLException;
+  @NonNull List<SQWRLResultValue> getColumn(int columnIndex) throws SQWRLException;
 }

@@ -1,5 +1,6 @@
 package org.swrlapi.factory;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.parameters.Imports;
@@ -18,9 +19,9 @@ import java.util.stream.Collectors;
  */
 class DefaultSWRLAutoCompleter implements SWRLAutoCompleter
 {
-  private final List<String> shortForms;
+  @NonNull private final List<String> shortForms;
 
-  public DefaultSWRLAutoCompleter(SWRLAPIOWLOntology swrlapiowlOntology)
+  public DefaultSWRLAutoCompleter(@NonNull SWRLAPIOWLOntology swrlapiowlOntology)
   {
     DefaultPrefixManager prefixManager = swrlapiowlOntology.getPrefixManager();
     this.shortForms = new ArrayList<>();
@@ -50,8 +51,8 @@ class DefaultSWRLAutoCompleter implements SWRLAutoCompleter
     Collections.sort(this.shortForms);
   }
 
-  @Override
-  public List<String> getCompletions(String prefix)
+  @NonNull @Override
+  public List<String> getCompletions(@NonNull String prefix)
   { // TODO Look at - not very efficient
     List<String> completions = this.shortForms.stream().filter(shortForm -> shortForm.startsWith(prefix))
         .collect(Collectors.toList());

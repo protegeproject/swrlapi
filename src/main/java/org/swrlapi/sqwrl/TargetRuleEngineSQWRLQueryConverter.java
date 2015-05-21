@@ -1,5 +1,6 @@
 package org.swrlapi.sqwrl;
 
+import checkers.nullness.quals.NonNull;
 import org.swrlapi.bridge.converters.TargetRuleEngineConverter;
 import org.swrlapi.exceptions.TargetSWRLRuleEngineException;
 
@@ -14,5 +15,5 @@ public interface TargetRuleEngineSQWRLQueryConverter extends TargetRuleEngineCon
    * @param query A SQWRL query
    * @throws TargetSWRLRuleEngineException If an error occurs in the target rule engine
    */
-  void convert(SQWRLQuery query) throws TargetSWRLRuleEngineException;
+  void convert(@NonNull SQWRLQuery query) throws TargetSWRLRuleEngineException;
 }

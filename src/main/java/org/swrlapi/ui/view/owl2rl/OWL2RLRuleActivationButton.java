@@ -1,13 +1,13 @@
 package org.swrlapi.ui.view.owl2rl;
 
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JCheckBox;
-
+import checkers.nullness.quals.NonNull;
 import org.swrlapi.owl2rl.OWL2RLNames;
 import org.swrlapi.ui.model.OWL2RLModel;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class OWL2RLRuleActivationButton extends JCheckBox implements ActionListener
 {
@@ -16,17 +16,20 @@ public class OWL2RLRuleActivationButton extends JCheckBox implements ActionListe
   private static final int TOOLTIP_PREFERRED_WIDTH = 160;
   private static final int TOOLTIP_PREFERRED_HEIGHT = 30;
 
-  private final OWL2RLModel owl2RLModel;
+  @NonNull private final OWL2RLModel owl2RLModel;
   private final OWL2RLNames.OWL2RLRule rule;
 
-  public OWL2RLRuleActivationButton(OWL2RLModel owl2RLModel, OWL2RLNames.OWL2RLRule rule)
+  public OWL2RLRuleActivationButton(@NonNull OWL2RLModel owl2RLModel, OWL2RLNames.OWL2RLRule rule)
   {
     super(rule.toString());
 
     this.owl2RLModel = owl2RLModel;
     this.rule = rule;
 
-    initialize();
+    setPreferredSize(new Dimension(TOOLTIP_PREFERRED_WIDTH, TOOLTIP_PREFERRED_HEIGHT));
+    setToolTipText("Click to enable or disable OWL 2 RL rule " + this.rule.toString() + ".");
+    addActionListener(this);
+    update();
   }
 
   public void update()
@@ -58,15 +61,7 @@ public class OWL2RLRuleActivationButton extends JCheckBox implements ActionListe
     getOWL2RLModel().updateView();
   }
 
-  private void initialize()
-  {
-    setPreferredSize(new Dimension(TOOLTIP_PREFERRED_WIDTH, TOOLTIP_PREFERRED_HEIGHT));
-    setToolTipText("Click to enable or disable OWL 2 RL rule " + this.rule.toString() + ".");
-    addActionListener(this);
-    update();
-  }
-
-  private OWL2RLModel getOWL2RLModel()
+  @NonNull private OWL2RLModel getOWL2RLModel()
   {
     return this.owl2RLModel;
   }

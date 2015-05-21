@@ -1,11 +1,12 @@
 package org.swrlapi.sqwrl;
 
-import java.util.List;
-import java.util.Set;
-
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.SWRLAtom;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * Represents a SQWRL query in the SWRLAPI. A {@link org.swrlapi.core.SWRLAPIOntologyProcessor} can be used to extract
@@ -43,14 +44,14 @@ public interface SQWRLQuery
   /**
    * @return A list of SWRL atoms
    */
-  List<SWRLAtom> getHeadAtoms();
+  @NonNull List<SWRLAtom> getHeadAtoms();
 
   /**
    * @return A list of SWRL atoms
    */
-  List<SWRLAtom> getBodyAtoms();
+  @NonNull List<SWRLAtom> getBodyAtoms();
 
-  SQWRLResult getSQWRLResult() throws SQWRLException;
+  @NonNull SQWRLResult getSQWRLResult() throws SQWRLException;
 
   /**
    * @return True if the query uses SQWRL collections
@@ -60,21 +61,21 @@ public interface SQWRLQuery
   /**
    * @return A list of SWRL atoms
    */
-  List<SWRLAtom> getSQWRLPhase1BodyAtoms();
+  @NonNull List<SWRLAtom> getSQWRLPhase1BodyAtoms();
 
   /**
    * @return A list of SWRL atoms
    */
-  List<SWRLAtom> getSQWRLPhase2BodyAtoms();
+  @NonNull List<SWRLAtom> getSQWRLPhase2BodyAtoms();
 
   /**
    * @param builtInNames A set of built-in names
    * @return A list of built-in atoms
    */
-  List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromBody(Set<String> builtInNames);
+  @NonNull List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromBody(Set<String> builtInNames);
 
   /**
    * @return A SQWRL result generator
    */
-  SQWRLResultGenerator getSQWRLResultGenerator();
+  @NonNull SQWRLResultGenerator getSQWRLResultGenerator();
 }

@@ -1,5 +1,6 @@
 package org.swrlapi.builtins;
 
+import checkers.nullness.quals.NonNull;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLBuiltInLibraryException;
 
@@ -16,19 +17,19 @@ public interface SWRLBuiltInContext
    * @return The invoking bridge
    * @throws SWRLBuiltInLibraryException If the method is called outside of a built-in invocation context
    */
-  SWRLBuiltInBridge getBuiltInBridge() throws SWRLBuiltInLibraryException;
+  @NonNull SWRLBuiltInBridge getBuiltInBridge() throws SWRLBuiltInLibraryException;
 
   /**
    * @param bridge The associated SWRL rule engine bridge
    * @throws SWRLBuiltInLibraryException If the method is called outside of a built-in invocation context
    */
-  void invokeResetMethod(SWRLBuiltInBridge bridge) throws SWRLBuiltInLibraryException;
+  void invokeResetMethod(@NonNull SWRLBuiltInBridge bridge) throws SWRLBuiltInLibraryException;
 
   /**
    * @return The invoking rule name
    * @throws SWRLBuiltInLibraryException If the method is called outside of a built-in invocation context
    */
-  String getInvokingRuleName() throws SWRLBuiltInLibraryException;
+  @NonNull String getInvokingRuleName() throws SWRLBuiltInLibraryException;
 
   /**
    * @return The index of the invoking built-in

@@ -1,5 +1,7 @@
 package org.swrlapi.parser;
 
+import checkers.nullness.quals.NonNull;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StreamTokenizer;
@@ -20,17 +22,17 @@ import java.util.Set;
  */
 class SWRLTokenizer
 {
-  private static final char wordChars[] = { ':', '_', '/', '#' };
-  private static final char ordinaryChars[] = { '-', '.', '^', '<', '>', '(', ')', '?' };
+  @NonNull private static final char wordChars[] = { ':', '_', '/', '#' };
+  @NonNull private static final char ordinaryChars[] = { '-', '.', '^', '<', '>', '(', ')', '?' };
 
-  private final MyStreamTokenizer tokenizer;
+  @NonNull private final MyStreamTokenizer tokenizer;
 
-  private final Set<String> swrlVariables;
+  @NonNull private final Set<String> swrlVariables;
+  @NonNull private final List<SWRLToken> tokens;
   private final boolean interactiveParseOnly;
-  private final List<SWRLToken> tokens;
   private int tokenPosition;
 
-  public SWRLTokenizer(String input, boolean interactiveParseOnly) throws SWRLParseException
+  public SWRLTokenizer(@NonNull String input, boolean interactiveParseOnly) throws SWRLParseException
   {
     this.tokenizer = new MyStreamTokenizer(new StringReader(input));
 
@@ -168,7 +170,7 @@ class SWRLTokenizer
       throw generateEndOfRuleException(unexpectedTokenMessage);
   }
 
-  private List<SWRLToken> generateTokens() throws SWRLParseException
+  @NonNull private List<SWRLToken> generateTokens() throws SWRLParseException
   {
     List<SWRLToken> tokens = new ArrayList<>();
     SWRLToken token = generateToken();
@@ -179,7 +181,7 @@ class SWRLTokenizer
     return tokens;
   }
 
-  private SWRLToken generateToken() throws SWRLParseException
+  @NonNull private SWRLToken generateToken() throws SWRLParseException
   {
     try {
       return convertToken2SWRLToken(this.tokenizer.nextToken());
@@ -188,7 +190,7 @@ class SWRLTokenizer
     }
   }
 
-  private SWRLToken convertToken2SWRLToken(int tokenType) throws SWRLParseException, IOException
+  @NonNull private SWRLToken convertToken2SWRLToken(int tokenType) throws SWRLParseException, IOException
   {
     boolean negativeNumeric = false;
 
@@ -281,7 +283,7 @@ class SWRLTokenizer
 
   }
 
-  private SWRLParseException generateEndOfRuleException(String message)
+  @NonNull private SWRLParseException generateEndOfRuleException(String message)
   {
     if (!this.isInteractiveParseOnly())
       return new SWRLParseException(message);
@@ -289,7 +291,7 @@ class SWRLTokenizer
       return new SWRLIncompleteRuleException(message);
   }
 
-  private boolean isInt(String s)
+  private boolean isInt(@NonNull String s)
   {
     try {
       Integer.parseInt(s);
@@ -301,7 +303,7 @@ class SWRLTokenizer
 
   private class MyStreamTokenizer extends StreamTokenizer
   {
-    public MyStreamTokenizer(Reader r)
+    public MyStreamTokenizer(@NonNull Reader r)
     {
       super(r);
     }

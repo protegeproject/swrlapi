@@ -1,8 +1,6 @@
 package org.swrlapi.factory;
 
-import java.io.File;
-import java.util.List;
-
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLException;
 import org.semanticweb.owlapi.model.OWLOntology;
@@ -12,79 +10,75 @@ import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 import org.swrlapi.ui.model.FileBackedOWLOntologyModel;
 import org.swrlapi.ui.model.SWRLRuleEngineModel;
 
+import java.io.File;
+import java.util.List;
+
 class DefaultFileBackedOWLOntologyModel implements FileBackedOWLOntologyModel, OWLOntologyChangeListener
 {
-	private final OWLOntology ontology;
-	private final SWRLRuleEngineModel swrlRuleEngineModel;
-	private File file;
-	private boolean hasOntologyChanged;
+  @NonNull private final OWLOntology ontology;
+  @NonNull private final SWRLRuleEngineModel swrlRuleEngineModel;
+  @NonNull private File file;
+  @NonNull private boolean hasOntologyChanged;
 
-	public DefaultFileBackedOWLOntologyModel(OWLOntology ontology, SWRLRuleEngineModel swrlRuleEngineModel, File file)
-	{
-		this.ontology = ontology;
-		this.swrlRuleEngineModel = swrlRuleEngineModel;
-		this.file = file;
-		this.hasOntologyChanged = false;
+  public DefaultFileBackedOWLOntologyModel(@NonNull OWLOntology ontology,
+    @NonNull SWRLRuleEngineModel swrlRuleEngineModel, @NonNull File file)
+  {
+    this.ontology = ontology;
+    this.swrlRuleEngineModel = swrlRuleEngineModel;
+    this.file = file;
+    this.hasOntologyChanged = false;
 
-		this.ontology.getOWLOntologyManager().addOntologyChangeListener(this);
-	}
+    this.ontology.getOWLOntologyManager().addOntologyChangeListener(this);
+  }
 
-	@Override
-	public OWLOntology getOWLOntology()
-	{
-		return this.ontology;
-	}
+  @NonNull @Override public OWLOntology getOWLOntology()
+  {
+    return this.ontology;
+  }
 
-	@Override
-	public SWRLRuleEngineModel getSWRLRuleEngineModel()
-	{
-		return this.swrlRuleEngineModel;
-	}
-	@Override
-	public File getBackingFile()
-	{
-		return this.file;
-	}
+  @NonNull @Override public SWRLRuleEngineModel getSWRLRuleEngineModel()
+  {
+    return this.swrlRuleEngineModel;
+  }
 
-	@Override
-	public void save() throws OWLOntologyStorageException
-	{
-		this.ontology.getOWLOntologyManager().saveOntology(ontology, IRI.create(this.file.toURI()));
+  @NonNull @Override public File getBackingFile()
+  {
+    return this.file;
+  }
 
-		resetOntologyChanged();
-	}
+  @Override public void save() throws OWLOntologyStorageException
+  {
+    this.ontology.getOWLOntologyManager().saveOntology(ontology, IRI.create(this.file.toURI()));
 
-	@Override
-	public void saveAs(File newFile) throws OWLOntologyStorageException
-	{
-		this.ontology.getOWLOntologyManager().saveOntology(ontology, IRI.create(newFile.toURI()));
+    resetOntologyChanged();
+  }
 
-		this.file = newFile;
+  @Override public void saveAs(@NonNull File newFile) throws OWLOntologyStorageException
+  {
+    this.ontology.getOWLOntologyManager().saveOntology(ontology, IRI.create(newFile.toURI()));
 
-		resetOntologyChanged();
-	}
+    this.file = newFile;
 
-	@Override
-	public boolean hasOntologyChanged()
-	{
-		return this.hasOntologyChanged;
-	}
+    resetOntologyChanged();
+  }
 
-	@Override
-	public void resetOntologyChanged()
-	{
-		this.hasOntologyChanged = false;
-	}
+  @Override public boolean hasOntologyChanged()
+  {
+    return this.hasOntologyChanged;
+  }
 
-	@Override
-	public void ontologiesChanged(List<? extends OWLOntologyChange> var1) throws OWLException
-	{
-		this.hasOntologyChanged = true;
-	}
+  @Override public void resetOntologyChanged()
+  {
+    this.hasOntologyChanged = false;
+  }
 
-	@Override
-	public void updateView()
-	{
-	  this.swrlRuleEngineModel.updateView();
-	}
+  @Override public void ontologiesChanged(@NonNull List<? extends OWLOntologyChange> var1) throws OWLException
+  {
+    this.hasOntologyChanged = true;
+  }
+
+  @Override public void updateView()
+  {
+    this.swrlRuleEngineModel.updateView();
+  }
 }

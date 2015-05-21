@@ -1,5 +1,6 @@
 package org.swrlapi.core.resolvers;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.SWRLVariable;
@@ -8,7 +9,6 @@ import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
-import org.swrlapi.exceptions.SWRLAPIInternalException;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -25,19 +25,19 @@ import java.util.Set;
  */
 public class IRIResolver
 {
-  private final DefaultPrefixManager prefixManager;
+  @NonNull private final DefaultPrefixManager prefixManager;
 
-  private final Map<String, IRI> prefixedName2IRI;
-  private final Map<IRI, String> iri2PrefixedNameCache;
-  private final Set<String> variablePrefixedNames;
-  private final Set<String> classPrefixedNames;
-  private final Set<String> namedIndividualPrefixedNames;
-  private final Set<String> objectPropertyPrefixedNames;
-  private final Set<String> dataPropertyPrefixedNames;
-  private final Set<String> annotationPropertyPrefixedNames;
-  private final Set<String> datatypePrefixedNames;
+  @NonNull private final Map<String, IRI> prefixedName2IRI;
+  @NonNull private final Map<IRI, String> iri2PrefixedNameCache;
+  @NonNull private final Set<String> variablePrefixedNames;
+  @NonNull private final Set<String> classPrefixedNames;
+  @NonNull private final Set<String> namedIndividualPrefixedNames;
+  @NonNull private final Set<String> objectPropertyPrefixedNames;
+  @NonNull private final Set<String> dataPropertyPrefixedNames;
+  @NonNull private final Set<String> annotationPropertyPrefixedNames;
+  @NonNull private final Set<String> datatypePrefixedNames;
 
-  public IRIResolver(DefaultPrefixManager prefixManager)
+  public IRIResolver(@NonNull DefaultPrefixManager prefixManager)
   {
     this.prefixManager = prefixManager;
 
@@ -65,7 +65,13 @@ public class IRIResolver
     this.datatypePrefixedNames.clear();
   }
 
-  public String iri2PrefixedName(IRI iri)
+  /**
+   *
+   * @param iri An IRI
+   * @return The prefixed form of the IRI
+   * @throws IllegalArgumentException If the IRI cannot be resolved to a prefixed name
+   */
+  @NonNull public String iri2PrefixedName(@NonNull IRI iri)
   {
     if (this.iri2PrefixedNameCache.containsKey(iri))
       return this.iri2PrefixedNameCache.get(iri);
@@ -74,11 +80,17 @@ public class IRIResolver
       if (prefixedName != null)
         return prefixedName;
       else
-        throw new SWRLAPIInternalException("could not find prefixed name for IRI " + iri);
+        throw new IllegalArgumentException("could not find prefixed name for IRI " + iri);
     }
   }
 
-  public IRI prefixedName2IRI(String prefixedName)
+  /**
+   *
+   * @param prefixedName A prefixed name
+   * @return The IRI resolved from the prefixed name
+   * @throws IllegalArgumentException If the prefixed name cannot be resolved
+   */
+  @NonNull public IRI prefixedName2IRI(@NonNull String prefixedName)
   {
     if (this.prefixedName2IRI.containsKey(prefixedName))
       return this.prefixedName2IRI.get(prefixedName);
@@ -86,12 +98,12 @@ public class IRIResolver
       try {
         return this.prefixManager.getIRI(prefixedName);
       } catch (RuntimeException e) {
-        throw new SWRLAPIInternalException("could not find IRI for prefixed name " + prefixedName);
+        throw new IllegalArgumentException("could not find IRI for prefixed name " + prefixedName);
       }
     }
   }
 
-  public void recordSWRLVariable(SWRLVariable variable)
+  public void recordSWRLVariable(@NonNull SWRLVariable variable)
   {
     IRI iri = variable.getIRI();
     String variablePrefixedName = iri2PrefixedName(iri);
@@ -99,7 +111,7 @@ public class IRIResolver
     this.variablePrefixedNames.add(variablePrefixedName);
   }
 
-  public void recordOWLClass(OWLEntity cls)
+  public void recordOWLClass(@NonNull OWLEntity cls)
   {
     IRI iri = cls.getIRI();
     String prefixedName = iri2PrefixedName(iri);
@@ -109,7 +121,7 @@ public class IRIResolver
     this.classPrefixedNames.add(prefixedName);
   }
 
-  public void recordOWLNamedIndividual(OWLEntity individual)
+  public void recordOWLNamedIndividual(@NonNull OWLEntity individual)
   {
     IRI iri = individual.getIRI();
     String prefixedName = iri2PrefixedName(iri);
@@ -119,7 +131,7 @@ public class IRIResolver
     this.namedIndividualPrefixedNames.add(prefixedName);
   }
 
-  public void recordOWLObjectProperty(OWLEntity property)
+  public void recordOWLObjectProperty(@NonNull OWLEntity property)
   {
     IRI iri = property.getIRI();
     String prefixedName = iri2PrefixedName(iri);
@@ -129,7 +141,7 @@ public class IRIResolver
     this.objectPropertyPrefixedNames.add(prefixedName);
   }
 
-  public void recordOWLDataProperty(OWLEntity property)
+  public void recordOWLDataProperty(@NonNull OWLEntity property)
   {
     IRI iri = property.getIRI();
     String prefixedName = iri2PrefixedName(iri);
@@ -139,7 +151,7 @@ public class IRIResolver
     this.dataPropertyPrefixedNames.add(prefixedName);
   }
 
-  public void recordOWLAnnotationProperty(OWLEntity property)
+  public void recordOWLAnnotationProperty(@NonNull OWLEntity property)
   {
     IRI iri = property.getIRI();
     String prefixedName = iri2PrefixedName(iri);
@@ -149,7 +161,7 @@ public class IRIResolver
     this.annotationPropertyPrefixedNames.add(prefixedName);
   }
 
-  public void recordOWLDatatype(OWLEntity datatype)
+  public void recordOWLDatatype(@NonNull OWLEntity datatype)
   {
     IRI iri = datatype.getIRI();
     String prefixedName = iri2PrefixedName(iri);
@@ -159,7 +171,7 @@ public class IRIResolver
     this.datatypePrefixedNames.add(prefixedName);
   }
 
-  public void record(SWRLClassBuiltInArgument classArgument)
+  public void record(@NonNull SWRLClassBuiltInArgument classArgument)
   {
     IRI iri = classArgument.getIRI();
     String prefixedName = iri2PrefixedName(iri);
@@ -168,7 +180,7 @@ public class IRIResolver
     this.classPrefixedNames.add(prefixedName);
   }
 
-  public void record(SWRLNamedIndividualBuiltInArgument individualArgument)
+  public void record(@NonNull SWRLNamedIndividualBuiltInArgument individualArgument)
   {
     IRI iri = individualArgument.getIRI();
     String prefixedName = iri2PrefixedName(iri);
@@ -177,7 +189,7 @@ public class IRIResolver
     this.namedIndividualPrefixedNames.add(prefixedName);
   }
 
-  public void record(SWRLObjectPropertyBuiltInArgument propertyArgument)
+  public void record(@NonNull SWRLObjectPropertyBuiltInArgument propertyArgument)
   {
     IRI iri = propertyArgument.getIRI();
     String prefixedName = iri2PrefixedName(iri);
@@ -186,7 +198,7 @@ public class IRIResolver
     this.objectPropertyPrefixedNames.add(prefixedName);
   }
 
-  public void record(SWRLDataPropertyBuiltInArgument propertyArgument)
+  public void record(@NonNull SWRLDataPropertyBuiltInArgument propertyArgument)
   {
     IRI iri = propertyArgument.getIRI();
     String prefixedName = iri2PrefixedName(iri);

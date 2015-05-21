@@ -1,5 +1,6 @@
 package org.swrlapi.ui.model;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLOntology;
 
 /**
@@ -12,13 +13,13 @@ public interface OWLOntologyModel extends SWRLAPIModel
 	/**
 	 * @return The underlying OWL ontology
 	 */
-	OWLOntology getOWLOntology();
+	@NonNull OWLOntology getOWLOntology();
 
 	/**
 	 *
 	 * @return An associated SWRL rule engine model
 	 */
-	SWRLRuleEngineModel getSWRLRuleEngineModel();
+	@NonNull SWRLRuleEngineModel getSWRLRuleEngineModel();
 
 	/**
 	 * @return True if the ontology has changed since construction or the last call to {@link #resetOntologyChanged()}.

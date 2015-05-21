@@ -1,5 +1,6 @@
 package org.swrlapi.bridge.converters;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.SWRLIndividualArgument;
 import org.semanticweb.owlapi.model.SWRLLiteralArgument;
 import org.semanticweb.owlapi.model.SWRLVariable;
@@ -23,27 +24,27 @@ import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
  */
 public interface TargetRuleEngineSWRLAtomArgumentConverter<T> extends TargetRuleEngineConverter
 {
-  T convert(SWRLVariable argument);
+  @NonNull T convert(@NonNull SWRLVariable argument);
 
-  T convert(SWRLLiteralArgument argument);
+  @NonNull T convert(@NonNull SWRLLiteralArgument argument);
 
-  T convert(SWRLIndividualArgument argument);
+  @NonNull T convert(@NonNull SWRLIndividualArgument argument);
 
-  T convert(SWRLVariableBuiltInArgument argument);
+  @NonNull T convert(@NonNull SWRLVariableBuiltInArgument argument);
 
-  T convert(SWRLClassBuiltInArgument argument);
+  @NonNull T convert(@NonNull SWRLClassBuiltInArgument argument);
 
-  T convert(SWRLNamedIndividualBuiltInArgument argument);
+  @NonNull T convert(@NonNull SWRLNamedIndividualBuiltInArgument argument);
 
-  T convert(SWRLObjectPropertyBuiltInArgument argument);
+  @NonNull T convert(@NonNull SWRLObjectPropertyBuiltInArgument argument);
 
-  T convert(SWRLDataPropertyBuiltInArgument argument);
+  @NonNull T convert(@NonNull SWRLDataPropertyBuiltInArgument argument);
 
-  T convert(SWRLAnnotationPropertyBuiltInArgument argument);
+  @NonNull T convert(@NonNull SWRLAnnotationPropertyBuiltInArgument argument);
 
-  T convert(SWRLDatatypeBuiltInArgument argument);
+  @NonNull T convert(@NonNull SWRLDatatypeBuiltInArgument argument);
 
-  T convert(SWRLLiteralBuiltInArgument argument);
+  @NonNull T convert(@NonNull SWRLLiteralBuiltInArgument argument);
 
-  T convert(SQWRLCollectionVariableBuiltInArgument argument);
+  @NonNull T convert(@NonNull SQWRLCollectionVariableBuiltInArgument argument);
 }

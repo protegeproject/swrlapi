@@ -1,5 +1,6 @@
 package org.swrlapi.ui.view.rules;
 
+import checkers.nullness.quals.NonNull;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.ui.view.SWRLAPIView;
 
@@ -11,10 +12,10 @@ public class AssertedOWLAxiomsView extends JPanel implements SWRLAPIView
 {
   private static final long serialVersionUID = 1L;
 
-  private final SWRLRuleEngine ruleEngine;
-  private final AssertedAxiomsTableModel assertedAxiomsTableModel;
+  @NonNull private final SWRLRuleEngine ruleEngine;
+  @NonNull private final AssertedAxiomsTableModel assertedAxiomsTableModel;
 
-  public AssertedOWLAxiomsView(SWRLRuleEngine ruleEngine)
+  public AssertedOWLAxiomsView(@NonNull SWRLRuleEngine ruleEngine)
   {
     this.ruleEngine = ruleEngine;
     this.assertedAxiomsTableModel = new AssertedAxiomsTableModel();

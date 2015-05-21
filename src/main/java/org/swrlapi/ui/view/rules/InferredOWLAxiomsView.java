@@ -1,24 +1,21 @@
 package org.swrlapi.ui.view.rules;
 
-import java.awt.BorderLayout;
-
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JViewport;
-import javax.swing.table.AbstractTableModel;
-
+import checkers.nullness.quals.NonNull;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.ui.view.SWRLAPIView;
+
+import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
+import java.awt.*;
 
 public class InferredOWLAxiomsView extends JPanel implements SWRLAPIView
 {
   private static final long serialVersionUID = 1L;
 
-  private final SWRLRuleEngine ruleEngine;
-  private final InferredAxiomsTableModel inferredAxiomsTableModel;
+  @NonNull private final SWRLRuleEngine ruleEngine;
+  @NonNull private final InferredAxiomsTableModel inferredAxiomsTableModel;
 
-  public InferredOWLAxiomsView(SWRLRuleEngine ruleEngine)
+  public InferredOWLAxiomsView(@NonNull SWRLRuleEngine ruleEngine)
   {
     this.ruleEngine = ruleEngine;
     this.inferredAxiomsTableModel = new InferredAxiomsTableModel();

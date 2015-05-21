@@ -1,5 +1,6 @@
 package org.swrlapi.sqwrl;
 
+import checkers.nullness.quals.NonNull;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.values.SQWRLResultValue;
 
@@ -18,20 +19,20 @@ public interface SQWRLResultGenerator
    * @param columnNames A list of column names
    * @throws SQWRLException If an error occurs during column addition
    */
-  void addColumns(List<String> columnNames) throws SQWRLException;
+  void addColumns(@NonNull List<String> columnNames) throws SQWRLException;
 
   /**
    * @param columnName A column name
    * @throws SQWRLException If an error occurs during column addition
    */
-  void addColumn(String columnName) throws SQWRLException;
+  void addColumn(@NonNull String columnName) throws SQWRLException;
 
   /**
    * @param columnName A column name
    * @param aggregateFunctionName The name of an aggregate function
    * @throws SQWRLException If an error occurs during column addition
    */
-  void addAggregateColumn(String columnName, String aggregateFunctionName) throws SQWRLException;
+  void addAggregateColumn(@NonNull String columnName, @NonNull String aggregateFunctionName) throws SQWRLException;
 
   /**
    * @param orderedColumnIndex The 0-based index of an order column
@@ -59,7 +60,7 @@ public interface SQWRLResultGenerator
    * @param columnName The name of a column
    * @throws SQWRLException If an error occurs during display name addition
    */
-  void addColumnDisplayName(String columnName) throws SQWRLException;
+  void addColumnDisplayName(@NonNull String columnName) throws SQWRLException;
 
   /**
    * @return The current number of result columns
@@ -85,7 +86,7 @@ public interface SQWRLResultGenerator
    * @param resultValues A list of SQWRL result values
    * @throws SQWRLException If an error occurs during row addition
    */
-  void addRow(List<SQWRLResultValue> resultValues) throws SQWRLException;
+  void addRow(@NonNull List<SQWRLResultValue> resultValues) throws SQWRLException;
 
   /**
    * Open a row for incremental cell addition
@@ -98,7 +99,7 @@ public interface SQWRLResultGenerator
    * @param value A cell value
    * @throws SQWRLException If an error occurs adding the cell
    */
-  void addCell(SQWRLResultValue value) throws SQWRLException;
+  void addCell(@NonNull SQWRLResultValue value) throws SQWRLException;
 
   /**
    * @throws SQWRLException If an error occurs during row closing

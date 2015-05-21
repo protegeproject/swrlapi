@@ -1,5 +1,6 @@
 package org.swrlapi.core;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.swrlapi.core.xsd.XSDDate;
@@ -26,33 +27,33 @@ import java.util.List;
  */
 public interface OWLLiteralFactory
 {
-  OWLLiteral getOWLLiteral(byte b);
+  @NonNull OWLLiteral getOWLLiteral(byte b);
 
-  OWLLiteral getOWLLiteral(short s);
+  @NonNull OWLLiteral getOWLLiteral(short s);
 
-  OWLLiteral getOWLLiteral(int value);
+  @NonNull OWLLiteral getOWLLiteral(int value);
 
-  OWLLiteral getOWLLiteral(long value);
+  @NonNull OWLLiteral getOWLLiteral(long value);
 
-  OWLLiteral getOWLLiteral(float value);
+  @NonNull OWLLiteral getOWLLiteral(float value);
 
-  OWLLiteral getOWLLiteral(double value);
+  @NonNull OWLLiteral getOWLLiteral(double value);
 
-  OWLLiteral getOWLLiteral(String value);
+  @NonNull OWLLiteral getOWLLiteral(String value);
 
-  OWLLiteral getOWLLiteral(boolean value);
+  @NonNull OWLLiteral getOWLLiteral(boolean value);
 
-  OWLLiteral getOWLLiteral(URI uri);
+  @NonNull OWLLiteral getOWLLiteral(@NonNull URI uri);
 
-  OWLLiteral getOWLLiteral(XSDDate date);
+  @NonNull OWLLiteral getOWLLiteral(@NonNull XSDDate date);
 
-  OWLLiteral getOWLLiteral(XSDTime time);
+  @NonNull OWLLiteral getOWLLiteral(@NonNull XSDTime time);
 
-  OWLLiteral getOWLLiteral(XSDDateTime datetime);
+  @NonNull OWLLiteral getOWLLiteral(@NonNull XSDDateTime datetime);
 
-  OWLLiteral getOWLLiteral(XSDDuration duration);
+  @NonNull OWLLiteral getOWLLiteral(@NonNull XSDDuration duration);
 
-  OWLLiteral getOWLLiteral(String literal, OWLDatatype datatype);
+  @NonNull OWLLiteral getOWLLiteral(@NonNull String literal, @NonNull OWLDatatype datatype);
 
-  OWLLiteral createLeastNarrowNumericOWLLiteral(double value, List<OWLLiteral> inputLiterals);
+  @NonNull OWLLiteral createLeastNarrowNumericOWLLiteral(double value, @NonNull List<OWLLiteral> inputLiterals);
 }

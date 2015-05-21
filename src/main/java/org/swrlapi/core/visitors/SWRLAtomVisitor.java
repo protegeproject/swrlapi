@@ -1,6 +1,12 @@
 package org.swrlapi.core.visitors;
 
-import org.semanticweb.owlapi.model.*;
+import checkers.nullness.quals.NonNull;
+import org.semanticweb.owlapi.model.SWRLClassAtom;
+import org.semanticweb.owlapi.model.SWRLDataPropertyAtom;
+import org.semanticweb.owlapi.model.SWRLDataRangeAtom;
+import org.semanticweb.owlapi.model.SWRLDifferentIndividualsAtom;
+import org.semanticweb.owlapi.model.SWRLObjectPropertyAtom;
+import org.semanticweb.owlapi.model.SWRLSameIndividualAtom;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
 
 /**
@@ -8,17 +14,17 @@ import org.swrlapi.core.SWRLAPIBuiltInAtom;
  */
 public interface SWRLAtomVisitor
 {
-  void visit(SWRLClassAtom atom);
+  void visit(@NonNull SWRLClassAtom atom);
 
-  void visit(SWRLObjectPropertyAtom atom);
+  void visit(@NonNull SWRLObjectPropertyAtom atom);
 
-  void visit(SWRLDataPropertyAtom atom);
+  void visit(@NonNull SWRLDataPropertyAtom atom);
 
-  void visit(SWRLSameIndividualAtom atom);
+  void visit(@NonNull SWRLSameIndividualAtom atom);
 
-  void visit(SWRLDifferentIndividualsAtom atom);
+  void visit(@NonNull SWRLDifferentIndividualsAtom atom);
 
-  void visit(SWRLDataRangeAtom atom);
+  void visit(@NonNull SWRLDataRangeAtom atom);
 
-  void visit(SWRLAPIBuiltInAtom atom);
+  void visit(@NonNull SWRLAPIBuiltInAtom atom);
 }

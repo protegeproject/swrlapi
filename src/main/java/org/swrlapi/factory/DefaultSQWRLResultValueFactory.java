@@ -1,5 +1,6 @@
 package org.swrlapi.factory;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
@@ -29,193 +30,193 @@ import java.util.stream.Collectors;
 
 public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
 {
-  private final IRIResolver iriResolver;
-  private final OWLLiteralFactory owlLiteralFactory;
+  @NonNull private final IRIResolver iriResolver;
+  @NonNull private final OWLLiteralFactory owlLiteralFactory;
 
-  public DefaultSQWRLResultValueFactory(IRIResolver iriResolver)
+  public DefaultSQWRLResultValueFactory(@NonNull IRIResolver iriResolver)
   {
     this.iriResolver = iriResolver;
     this.owlLiteralFactory = SWRLAPIFactory.getOWLLiteralFactory();
   }
 
-  @Override
-  public SQWRLClassResultValue getClassValue(SWRLClassBuiltInArgument classArgument)
+  @NonNull @Override
+  public SQWRLClassResultValue getClassValue(@NonNull SWRLClassBuiltInArgument classArgument)
   {
     return getClassValue(classArgument.getIRI());
   }
 
-  @Override
-  public SQWRLClassResultValue getClassValue(IRI classIRI)
+  @NonNull @Override
+  public SQWRLClassResultValue getClassValue(@NonNull IRI classIRI)
   {
     String prefixedName = getIRIResolver().iri2PrefixedName(classIRI);
 
     return new DefaultSQWRLClassResultValue(classIRI, prefixedName);
   }
 
-  @Override
-  public SQWRLIndividualResultValue getIndividualValue(SWRLNamedIndividualBuiltInArgument individualArgument)
+  @NonNull @Override
+  public SQWRLIndividualResultValue getIndividualValue(@NonNull SWRLNamedIndividualBuiltInArgument individualArgument)
   {
     String prefixedName = getIRIResolver().iri2PrefixedName(individualArgument.getIRI());
 
     return new DefaultSQWRLIndividualResultValue(individualArgument.getIRI(), prefixedName);
   }
 
-  @Override
-  public SQWRLIndividualResultValue getIndividualValue(IRI individualIRI)
+  @NonNull @Override
+  public SQWRLIndividualResultValue getIndividualValue(@NonNull IRI individualIRI)
   {
     String prefixedName = getIRIResolver().iri2PrefixedName(individualIRI);
 
     return new DefaultSQWRLIndividualResultValue(individualIRI, prefixedName);
   }
 
-  @Override
-  public SQWRLObjectPropertyResultValue getObjectPropertyValue(SWRLObjectPropertyBuiltInArgument objectPropertyArgument)
+  @NonNull @Override
+  public SQWRLObjectPropertyResultValue getObjectPropertyValue(@NonNull SWRLObjectPropertyBuiltInArgument objectPropertyArgument)
   {
     return getObjectPropertyValue(objectPropertyArgument.getIRI());
   }
 
-  @Override
-  public SQWRLObjectPropertyResultValue getObjectPropertyValue(IRI propertyIRI)
+  @NonNull @Override
+  public SQWRLObjectPropertyResultValue getObjectPropertyValue(@NonNull IRI propertyIRI)
   {
     String prefixedName = getIRIResolver().iri2PrefixedName(propertyIRI);
 
     return new DefaultSQWRLObjectPropertyResultValue(propertyIRI, prefixedName);
   }
 
-  @Override
-  public SQWRLDataPropertyResultValue getDataPropertyValue(SWRLDataPropertyBuiltInArgument dataPropertyArgument)
+  @NonNull @Override
+  public SQWRLDataPropertyResultValue getDataPropertyValue(@NonNull SWRLDataPropertyBuiltInArgument dataPropertyArgument)
   {
     String prefixedName = getIRIResolver().iri2PrefixedName(dataPropertyArgument.getIRI());
 
     return new DefaultSQWRLDataPropertyResultValue(dataPropertyArgument.getIRI(), prefixedName);
   }
 
-  @Override
-  public SQWRLDataPropertyResultValue getDataPropertyValue(IRI propertyIRI)
+  @NonNull @Override
+  public SQWRLDataPropertyResultValue getDataPropertyValue(@NonNull IRI propertyIRI)
   {
     String prefixedName = getIRIResolver().iri2PrefixedName(propertyIRI);
 
     return new DefaultSQWRLDataPropertyResultValue(propertyIRI, prefixedName);
   }
 
-  @Override
+  @NonNull @Override
   public SQWRLAnnotationPropertyResultValue getAnnotationPropertyValue(
-      SWRLAnnotationPropertyBuiltInArgument annotationPropertyArgument)
+      @NonNull SWRLAnnotationPropertyBuiltInArgument annotationPropertyArgument)
   {
     String prefixedName = getIRIResolver().iri2PrefixedName(annotationPropertyArgument.getIRI());
 
     return new DefaultSQWRLAnnotationPropertyResultValue(annotationPropertyArgument.getIRI(), prefixedName);
   }
 
-  @Override
-  public SQWRLAnnotationPropertyResultValue getAnnotationPropertyValue(IRI propertyIRI)
+  @NonNull @Override
+  public SQWRLAnnotationPropertyResultValue getAnnotationPropertyValue(@NonNull IRI propertyIRI)
   {
     String prefixedName = getIRIResolver().iri2PrefixedName(propertyIRI);
 
     return new DefaultSQWRLAnnotationPropertyResultValue(propertyIRI, prefixedName);
   }
 
-  @Override
+  @NonNull @Override
   public SQWRLLiteralResultValue getLiteralValue(byte b)
   {
     return new DefaultSQWRLLiteralResultValue(getOWLLiteralFactory().getOWLLiteral(b),
         XSDVocabulary.BYTE.getPrefixedName());
   }
 
-  @Override
+  @NonNull @Override
   public SQWRLLiteralResultValue getLiteralValue(short s)
   {
     return new DefaultSQWRLLiteralResultValue(getOWLLiteralFactory().getOWLLiteral(s),
         XSDVocabulary.SHORT.getPrefixedName());
   }
 
-  @Override
+  @NonNull @Override
   public SQWRLLiteralResultValue getLiteralValue(int i)
   {
     return new DefaultSQWRLLiteralResultValue(getOWLLiteralFactory().getOWLLiteral(i), XSDVocabulary.INT.getPrefixedName());
   }
 
-  @Override
+  @NonNull @Override
   public SQWRLLiteralResultValue getLiteralValue(long l)
   {
     return new DefaultSQWRLLiteralResultValue(getOWLLiteralFactory().getOWLLiteral(l),
         XSDVocabulary.LONG.getPrefixedName());
   }
 
-  @Override
+  @NonNull @Override
   public SQWRLLiteralResultValue getLiteralValue(float f)
   {
     return new DefaultSQWRLLiteralResultValue(getOWLLiteralFactory().getOWLLiteral(f),
         XSDVocabulary.FLOAT.getPrefixedName());
   }
 
-  @Override
+  @NonNull @Override
   public SQWRLLiteralResultValue getLiteralValue(double d)
   {
     return new DefaultSQWRLLiteralResultValue(getOWLLiteralFactory().getOWLLiteral(d),
         XSDVocabulary.DOUBLE.getPrefixedName());
   }
 
-  @Override
-  public SQWRLLiteralResultValue getLiteralValue(String s)
+  @NonNull @Override
+  public SQWRLLiteralResultValue getLiteralValue(@NonNull String s)
   {
     return new DefaultSQWRLLiteralResultValue(getOWLLiteralFactory().getOWLLiteral(s),
         XSDVocabulary.STRING.getPrefixedName());
   }
 
-  @Override
+  @NonNull @Override
   public SQWRLLiteralResultValue getLiteralValue(boolean b)
   {
     return new DefaultSQWRLLiteralResultValue(getOWLLiteralFactory().getOWLLiteral(b),
         XSDVocabulary.BOOLEAN.getPrefixedName());
   }
 
-  @Override
-  public SQWRLLiteralResultValue getLiteralValue(URI uri)
+  @NonNull @Override
+  public SQWRLLiteralResultValue getLiteralValue(@NonNull URI uri)
   {
     return new DefaultSQWRLLiteralResultValue(getOWLLiteralFactory().getOWLLiteral(uri),
         XSDVocabulary.ANY_URI.getPrefixedName());
   }
 
-  @Override
-  public SQWRLLiteralResultValue getLiteralValue(XSDTime time)
+  @NonNull @Override
+  public SQWRLLiteralResultValue getLiteralValue(@NonNull XSDTime time)
   {
     return new DefaultSQWRLLiteralResultValue(getOWLLiteralFactory().getOWLLiteral(time),
         XSDVocabulary.TIME.getPrefixedName());
   }
 
-  @Override
-  public SQWRLLiteralResultValue getLiteralValue(XSDDate date)
+  @NonNull @Override
+  public SQWRLLiteralResultValue getLiteralValue(@NonNull XSDDate date)
   {
     return new DefaultSQWRLLiteralResultValue(getOWLLiteralFactory().getOWLLiteral(date),
         XSDVocabulary.DATE.getPrefixedName());
   }
 
-  @Override
-  public SQWRLLiteralResultValue getLiteralValue(XSDDateTime dateTime)
+  @NonNull @Override
+  public SQWRLLiteralResultValue getLiteralValue(@NonNull XSDDateTime dateTime)
   {
     return new DefaultSQWRLLiteralResultValue(getOWLLiteralFactory().getOWLLiteral(dateTime),
         XSDVocabulary.DATE_TIME.getPrefixedName());
   }
 
-  @Override
-  public SQWRLLiteralResultValue getLiteralValue(XSDDuration duration)
+  @NonNull @Override
+  public SQWRLLiteralResultValue getLiteralValue(@NonNull XSDDuration duration)
   {
     return new DefaultSQWRLLiteralResultValue(getOWLLiteralFactory().getOWLLiteral(duration),
         XSDVocabulary.DURATION.getPrefixedName());
   }
 
-  @Override
-  public SQWRLLiteralResultValue getLiteralValue(OWLLiteral literal)
+  @NonNull @Override
+  public SQWRLLiteralResultValue getLiteralValue(@NonNull OWLLiteral literal)
   {
     IRI datatypeIRI = literal.getDatatype().getIRI();
 
     return new DefaultSQWRLLiteralResultValue(literal, getIRIResolver().iri2PrefixedName(datatypeIRI));
   }
 
-  @Override
+  @NonNull @Override
   public SQWRLLiteralResultValue createLeastNarrowNumericLiteralValue(double value,
-      List<SQWRLLiteralResultValue> inputResultValues)
+      @NonNull List<SQWRLLiteralResultValue> inputResultValues)
   {
     List<OWLLiteral> numericLiterals = inputResultValues.stream().filter(Literal::isNumeric)
         .map(Literal::getOWLLiteral).collect(Collectors.toList());
@@ -225,12 +226,12 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
     return getLiteralValue(literal);
   }
 
-  private OWLLiteralFactory getOWLLiteralFactory()
+  @NonNull private OWLLiteralFactory getOWLLiteralFactory()
   {
     return this.owlLiteralFactory;
   }
 
-  private IRIResolver getIRIResolver()
+  @NonNull private IRIResolver getIRIResolver()
   {
     return this.iriResolver;
   }

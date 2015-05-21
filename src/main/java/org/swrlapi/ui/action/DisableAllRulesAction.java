@@ -1,8 +1,9 @@
 package org.swrlapi.ui.action;
 
-import java.awt.event.ActionEvent;
+import checkers.nullness.quals.NonNull;
 
-import javax.swing.AbstractAction;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
 
 public class DisableAllRulesAction extends AbstractAction
 {
@@ -14,7 +15,7 @@ public class DisableAllRulesAction extends AbstractAction
   }
 
   @Override
-  public void actionPerformed(ActionEvent e)
+  public void actionPerformed(@NonNull ActionEvent e)
   {
   }
 }

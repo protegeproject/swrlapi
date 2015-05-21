@@ -1,8 +1,6 @@
 package org.swrlapi.builtins.arguments;
 
-import java.net.URI;
-import java.util.List;
-
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLClass;
@@ -16,9 +14,12 @@ import org.swrlapi.core.xsd.XSDDateTime;
 import org.swrlapi.core.xsd.XSDDuration;
 import org.swrlapi.core.xsd.XSDTime;
 
+import java.net.URI;
+import java.util.List;
+
 /**
  * Factory for creating {@link SWRLBuiltInArgument} objects.
- * 
+ *
  * @see org.swrlapi.builtins.arguments.SWRLBuiltInArgument
  */
 public interface SWRLBuiltInArgumentFactory
@@ -27,155 +28,156 @@ public interface SWRLBuiltInArgumentFactory
    * @param variableIRI The IRI of a SWRL variable
    * @return A built-in argument
    */
-  SWRLVariableBuiltInArgument getVariableBuiltInArgument(IRI variableIRI);
+  @NonNull SWRLVariableBuiltInArgument getVariableBuiltInArgument(@NonNull IRI variableIRI);
 
   /**
    * @param variableIRI The IRI of a SWRL variable
    * @return A variable built-in argument
    */
-  SWRLVariableBuiltInArgument getUnboundVariableBuiltInArgument(IRI variableIRI);
+  @NonNull SWRLVariableBuiltInArgument getUnboundVariableBuiltInArgument(@NonNull IRI variableIRI);
 
   /**
    * @param cls An OWL class
    * @return A built-in argument
    */
-  SWRLClassBuiltInArgument getClassBuiltInArgument(OWLClass cls);
+  @NonNull SWRLClassBuiltInArgument getClassBuiltInArgument(@NonNull OWLClass cls);
 
   /**
    * @param individual An OWL individual
    * @return A built-in argument
    */
-  SWRLNamedIndividualBuiltInArgument getNamedIndividualBuiltInArgument(OWLNamedIndividual individual);
+  @NonNull SWRLNamedIndividualBuiltInArgument getNamedIndividualBuiltInArgument(@NonNull OWLNamedIndividual individual);
 
   /**
    * @param property An OWL object property
    * @return A built-in argument
    */
-  SWRLObjectPropertyBuiltInArgument getObjectPropertyBuiltInArgument(OWLObjectProperty property);
+  @NonNull SWRLObjectPropertyBuiltInArgument getObjectPropertyBuiltInArgument(@NonNull OWLObjectProperty property);
 
   /**
    * @param property An OWL data property
    * @return A built-in argument
    */
-  SWRLDataPropertyBuiltInArgument getDataPropertyBuiltInArgument(OWLDataProperty property);
+  @NonNull SWRLDataPropertyBuiltInArgument getDataPropertyBuiltInArgument(@NonNull OWLDataProperty property);
 
   /**
    * @param property An OWL annotation property
    * @return A built-in argument
    */
-  SWRLAnnotationPropertyBuiltInArgument getAnnotationPropertyBuiltInArgument(OWLAnnotationProperty property);
+  @NonNull SWRLAnnotationPropertyBuiltInArgument getAnnotationPropertyBuiltInArgument(
+    @NonNull OWLAnnotationProperty property);
 
   /**
    * @param datatype An OWL datatype
    * @return A built-in argument
    */
-  SWRLDatatypeBuiltInArgument getDatatypeBuiltInArgument(OWLDatatype datatype);
+  @NonNull SWRLDatatypeBuiltInArgument getDatatypeBuiltInArgument(@NonNull OWLDatatype datatype);
 
   /**
    * @param literal An OWL literal
    * @return A built-in argument
    */
-  SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(OWLLiteral literal);
+  @NonNull SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(@NonNull OWLLiteral literal);
 
   /**
    * @param s A string
    * @return A literal built-in argument
    */
-  SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(String s);
+  @NonNull SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(@NonNull String s);
 
   /**
    * @param b A boolean
    * @return A literal built-in argument
    */
-  SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(boolean b);
+  @NonNull SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(boolean b);
 
   /**
    * @param s A String
    * @return A literal built-in argument
    */
-  SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(short s);
+  @NonNull SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(short s);
 
   /**
    * @param i An int
    * @return A literal built-in argument
    */
-  SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(int i);
+  @NonNull SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(int i);
 
   /**
    * @param l A long
    * @return A literal built-in argument
    */
-  SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(long l);
+  @NonNull SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(long l);
 
   /**
    * @param f A float
    * @return A literal built-in argument
    */
-  SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(float f);
+  @NonNull SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(float f);
 
   /**
    * @param d A double
    * @return A literal built-in argument
    */
-  SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(double d);
+  @NonNull SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(double d);
 
   /**
    * @param b A byte
    * @return A literal built-in argument
    */
-  SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(byte b);
+  @NonNull SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(byte b);
 
   /**
    * @param iri An IRI
    * @return A literal built-in argument
    */
-  SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(URI iri);
+  @NonNull SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(@NonNull URI iri);
 
   /**
    * @param date A date
    * @return A literal built-in argument
    */
-  SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(XSDDate date);
+  @NonNull SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(@NonNull XSDDate date);
 
   /**
    * @param time A time
    * @return A literal built-in argument
    */
-  SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(XSDTime time);
+  @NonNull SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(@NonNull XSDTime time);
 
   /**
    * @param datetime A datetime
    * @return A literal built-in argument
    */
-  SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(XSDDateTime datetime);
+  @NonNull SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(@NonNull XSDDateTime datetime);
 
   /**
    * @param duration A duration
    * @return A literal built-in argument
    */
-  SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(XSDDuration duration);
+  @NonNull SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(@NonNull XSDDuration duration);
 
   /**
    * @param variableIRI The IRI of a SWRL variable
    * @return A built-in argument
    */
-  SWRLMultiValueVariableBuiltInArgument getMultiValueVariableBuiltInArgument(IRI variableIRI);
+  @NonNull SWRLMultiValueVariableBuiltInArgument getMultiValueVariableBuiltInArgument(@NonNull IRI variableIRI);
 
   /**
    * @param variableIRI The IRI of a SWRL variable
-   * @param arguments Built-in arguments
+   * @param arguments   Built-in arguments
    * @return A built-in argument
    */
-  SWRLMultiValueVariableBuiltInArgument getMultiValueVariableBuiltInArgument(IRI variableIRI,
-      List<SWRLBuiltInArgument> arguments);
+  @NonNull SWRLMultiValueVariableBuiltInArgument getMultiValueVariableBuiltInArgument(@NonNull IRI variableIRI,
+    @NonNull List<SWRLBuiltInArgument> arguments);
 
   /**
-   * @param variableIRI The IRI of a SWRL variable
-   * @param queryName The name of the query containing the collection
+   * @param variableIRI    The IRI of a SWRL variable
+   * @param queryName      The name of the query containing the collection
    * @param collectionName The name of the collection
-   * @param collectionID The collection ID
+   * @param collectionID   The collection ID
    * @return A built-in argument
    */
-  SQWRLCollectionVariableBuiltInArgument getSQWRLCollectionVariableBuiltInArgument(IRI variableIRI, String queryName,
-      String collectionName, String collectionID);
+  @NonNull SQWRLCollectionVariableBuiltInArgument getSQWRLCollectionVariableBuiltInArgument(@NonNull IRI variableIRI,
+    @NonNull String queryName, @NonNull String collectionName, @NonNull String collectionID);
 }

@@ -1,5 +1,7 @@
 package org.swrlapi.builtins.temporal;
 
+import checkers.nullness.quals.NonNull;
+
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
@@ -11,27 +13,26 @@ import java.text.SimpleDateFormat;
  */
 class XSDDateTimeStringProcessor extends DatetimeStringProcessor
 {
-  private static final SimpleDateFormat _dateFormat = new SimpleDateFormat("y-M-d'T'h:m:s.S");
-  private static final String _delimiters = "-:.TZ";
+  @NonNull private static final SimpleDateFormat _dateFormat = new SimpleDateFormat("y-M-d'T'h:m:s.S");
+  @NonNull private static final String _delimiters = "-:.TZ";
 
   // The number of tokens (including delimeters) necessary to strip a datetime to a specified granularity.
-  private static final int[] _gTokenIndex = { 1, 3, 5, 7, 9, 11, 13 }; // 1=YEARS, 3=MONTHS etc.
+  @NonNull private static final int[] _gTokenIndex = { 1, 3, 5, 7, 9, 11, 13 }; // 1=YEARS, 3=MONTHS etc.
 
   // Strings to pad a partially specified datetime.
-  private static final String _datetimeRoundDownPadding[] = { "-01-01T00:00:00.000", "-01T00:00:00.000",
-      "T00:00:00.000", ":00:00.000", ":00.000", ".000", "" };
+  @NonNull private static final String _datetimeRoundDownPadding[] = { "-01-01T00:00:00.000", "-01T00:00:00.000",
+    "T00:00:00.000", ":00:00.000", ":00.000", ".000", "" };
 
   // Day-in-month must be dealt with separately.
-  private static final String _datetimeRoundUpPadding[] = { "-12-31T23:59:59.999", "", "T23:59:59.999", ":59:59.999",
-      ":59.999", ".999", "" };
+  @NonNull private static final String _datetimeRoundUpPadding[] = { "-12-31T23:59:59.999", "", "T23:59:59.999",
+    ":59:59.999", ":59.999", ".999", "" };
 
   public XSDDateTimeStringProcessor()
   {
     super(_dateFormat, _delimiters, _gTokenIndex, _datetimeRoundDownPadding, _datetimeRoundUpPadding);
   }
 
-  @Override
-  protected String constructDatetimeStringFromMillisecondsFrom1970Count(long millisecondsFrom1970)
+  @NonNull @Override protected String constructDatetimeStringFromMillisecondsFrom1970Count(long millisecondsFrom1970)
   {
     Timestamp ts = new Timestamp(millisecondsFrom1970);
 

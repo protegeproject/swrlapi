@@ -1,5 +1,6 @@
 package org.swrlapi.bridge.converters;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLDataComplementOf;
 import org.semanticweb.owlapi.model.OWLDataIntersectionOf;
 import org.semanticweb.owlapi.model.OWLDataOneOf;
@@ -12,15 +13,15 @@ import org.semanticweb.owlapi.model.OWLDatatypeRestriction;
  */
 public interface TargetRuleEngineOWLDataRangeConverter<TR> extends TargetRuleEngineConverter
 {
-  TR convert(OWLDatatype range);
+  @NonNull TR convert(@NonNull OWLDatatype range);
 
-  TR convert(OWLDataOneOf range);
+  @NonNull TR convert(@NonNull OWLDataOneOf range);
 
-  TR convert(OWLDataComplementOf range);
+  @NonNull TR convert(@NonNull OWLDataComplementOf range);
 
-  TR convert(OWLDataIntersectionOf range);
+  @NonNull TR convert(@NonNull OWLDataIntersectionOf range);
 
-  TR convert(OWLDataUnionOf range);
+  @NonNull TR convert(@NonNull OWLDataUnionOf range);
 
-  TR convert(OWLDatatypeRestriction range);
+  @NonNull TR convert(@NonNull OWLDatatypeRestriction range);
 }

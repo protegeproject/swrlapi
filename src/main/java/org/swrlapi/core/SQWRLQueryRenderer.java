@@ -1,5 +1,6 @@
 package org.swrlapi.core;
 
+import checkers.nullness.quals.NonNull;
 import org.swrlapi.core.visitors.SWRLAPIEntityVisitorEx;
 import org.swrlapi.sqwrl.SQWRLQuery;
 
@@ -17,5 +18,5 @@ public interface SQWRLQueryRenderer extends SWRLAPIEntityVisitorEx<String>
    * @param query The query to render
    * @return A query rendering
    */
-  String renderSQWRLQuery(SQWRLQuery query);
+  @NonNull String renderSQWRLQuery(SQWRLQuery query);
 }

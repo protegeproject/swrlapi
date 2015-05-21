@@ -1,5 +1,6 @@
 package org.swrlapi.bridge;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import org.swrlapi.exceptions.TargetSWRLRuleEngineException;
@@ -60,14 +61,14 @@ public interface TargetSWRLRuleEngine
    *
    * @return The name of the target rule engine
    */
-  String getName();
+  @NonNull String getName();
 
   /**
    * Return version information of the target rule engine.
    *
    * @return The version of the target rule engine
    */
-  String getVersion();
+  @NonNull String getVersion();
 
   /**
    *
@@ -79,12 +80,12 @@ public interface TargetSWRLRuleEngine
    *
    * @return An OWL reasoner
    */
-  OWLReasoner getOWLReasoner();
+  @NonNull OWLReasoner getOWLReasoner();
 
   /**
    * Get the underlying OWL 2 RL reasoner provided by the rule engine.
    *
    * @return The underlying OWL 2 RL-based rule engine
    */
-  OWL2RLEngine getOWL2RLEngine();
+  @NonNull OWL2RLEngine getOWL2RLEngine();
 }

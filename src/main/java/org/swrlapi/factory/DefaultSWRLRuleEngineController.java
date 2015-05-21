@@ -1,14 +1,15 @@
 package org.swrlapi.factory;
 
+import checkers.nullness.quals.NonNull;
 import org.swrlapi.ui.controller.SWRLRuleEngineController;
 import org.swrlapi.ui.model.SWRLRuleEngineModel;
 
 public class DefaultSWRLRuleEngineController implements SWRLRuleEngineController
 {
   // private final SWRLAPIApplicationView applicationView;
-  private final SWRLRuleEngineModel ruleEngineModel;
+  @NonNull private final SWRLRuleEngineModel ruleEngineModel;
 
-  public DefaultSWRLRuleEngineController(SWRLRuleEngineModel ruleEngineModel)
+  public DefaultSWRLRuleEngineController(@NonNull SWRLRuleEngineModel ruleEngineModel)
   {
     this.ruleEngineModel = ruleEngineModel;
   }
@@ -21,7 +22,7 @@ public class DefaultSWRLRuleEngineController implements SWRLRuleEngineController
   /**
    * @return The application model associated with the controller
    */
-  @Override
+  @NonNull @Override
   public SWRLRuleEngineModel getSWRLRuleEngineModel()
   {
     return this.ruleEngineModel;

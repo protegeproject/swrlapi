@@ -1,5 +1,7 @@
 package org.swrlapi.factory;
 
+import checkers.nullness.quals.NonNull;
+import checkers.nullness.quals.Nullable;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.swrlapi.core.OWLLiteralComparator;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
@@ -73,50 +75,50 @@ class DefaultSQWRLLiteralResultValue extends DefaultLiteral implements SQWRLLite
     return true;
   }
 
-  @Override
+  @NonNull @Override
   public SQWRLClassResultValue asEntityResult() throws SQWRLException
   {
     throw new SQWRLException(getClass().getName() + " is not a " + SQWRLEntityResultValue.class.getName());
   }
 
-  @Override
+  @NonNull @Override
   public SQWRLClassResultValue asClassResult() throws SQWRLException
   {
     throw new SQWRLException(getClass().getName() + " is not a " + SQWRLClassResultValue.class.getName());
   }
 
-  @Override
+  @NonNull @Override
   public SQWRLIndividualResultValue asIndividualResult() throws SQWRLException
   {
     throw new SQWRLException(getClass().getName() + " is not a " + SQWRLIndividualResultValue.class.getName());
   }
 
-  @Override
+  @NonNull @Override
   public SQWRLObjectPropertyResultValue asObjectPropertyResult() throws SQWRLException
   {
     throw new SQWRLException(getClass().getName() + " is not an " + SQWRLObjectPropertyResultValue.class.getName());
   }
 
-  @Override
+  @NonNull @Override
   public SQWRLDataPropertyResultValue asDataPropertyResult() throws SQWRLException
   {
     throw new SQWRLException(getClass().getName() + " is not an " + SQWRLDataPropertyResultValue.class.getName());
   }
 
-  @Override
+  @NonNull @Override
   public SQWRLAnnotationPropertyResultValue asAnnotationPropertyResult() throws SQWRLException
   {
     throw new SQWRLException(getClass().getName() + " is not an " + SQWRLAnnotationPropertyResultValue.class.getName());
   }
 
-  @Override
+  @NonNull @Override
   public SQWRLLiteralResultValue asLiteralResult()
   {
     return this;
   }
 
   @Override
-  public boolean equals(Object obj)
+  public boolean equals(@Nullable Object obj)
   {
     if (this == obj)
       return true;
@@ -136,7 +138,7 @@ class DefaultSQWRLLiteralResultValue extends DefaultLiteral implements SQWRLLite
   }
 
   @Override
-  public int compareTo(SQWRLLiteralResultValue o)
+  public int compareTo(@NonNull SQWRLLiteralResultValue o)
   {
     if (o == null)
       throw new NullPointerException();

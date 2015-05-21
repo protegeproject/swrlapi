@@ -1,5 +1,6 @@
 package org.swrlapi.builtins.arguments;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 
 /**
@@ -12,5 +13,5 @@ public interface SWRLObjectPropertyBuiltInArgument extends SWRLNamedBuiltInArgum
   /**
    * @return An OWL object property
    */
-  OWLObjectProperty getOWLObjectProperty();
+  @NonNull OWLObjectProperty getOWLObjectProperty();
 }

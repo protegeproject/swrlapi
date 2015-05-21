@@ -1,19 +1,24 @@
 package org.swrlapi.core.xsd;
 
+import checkers.nullness.quals.NonNull;
+import checkers.nullness.quals.Nullable;
+import org.apache.axis.types.Time;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
+
+import java.util.Date;
 
 public class XSDTime extends XSDType<XSDTime>
 {
-  private final org.apache.axis.types.Time time;
+  private final @NonNull Time time;
 
-  public XSDTime(String content)
+  public XSDTime(@NonNull String content)
   {
     super(content, XSDVocabulary.TIME.getIRI());
 
     this.time = XSDTimeUtil.xsdTimeString2AxisTime(content);
   }
 
-  public XSDTime(java.util.Date date)
+  public XSDTime(@NonNull Date date)
   {
     super(XSDTimeUtil.utilDate2XSDTimeString(date), XSDVocabulary.TIME.getIRI());
 
@@ -29,12 +34,12 @@ public class XSDTime extends XSDType<XSDTime>
       throw new IllegalArgumentException("invalid xsd:Time '" + getContent() + "'");
   }
 
-  @Override public String getContent()
+  @NonNull @Override public String getContent()
   {
     return this.content;
   }
 
-  @Override public boolean equals(Object o)
+  @Override public boolean equals(@Nullable Object o)
   {
     if (this == o)
       return true;
@@ -54,7 +59,7 @@ public class XSDTime extends XSDType<XSDTime>
     return code;
   }
 
-  @Override public int compareTo(XSDTime o)
+  @Override public int compareTo(@NonNull XSDTime o)
   {
     if (o == null)
       throw new NullPointerException();

@@ -1,39 +1,41 @@
 package org.swrlapi.factory;
 
+import checkers.nullness.quals.NonNull;
+import checkers.nullness.quals.Nullable;
 import org.semanticweb.owlapi.model.IRI;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
 import org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue;
+import org.swrlapi.sqwrl.values.SQWRLEntityResultValue;
 import org.swrlapi.sqwrl.values.SQWRLIndividualResultValue;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
-import org.swrlapi.sqwrl.values.SQWRLEntityResultValue;
 import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
 
 abstract class DefaultSQWRLEntityResultValue implements SQWRLEntityResultValue
 {
-  private final IRI iri;
-  private final String prefixedName;
+  @NonNull private final IRI iri;
+  @NonNull private final String prefixedName;
 
-  DefaultSQWRLEntityResultValue(IRI iri, String prefixedName)
+  DefaultSQWRLEntityResultValue(@NonNull IRI iri, @NonNull String prefixedName)
   {
     this.iri = iri;
     this.prefixedName = prefixedName;
   }
 
-  @Override
+  @NonNull @Override
   public IRI getIRI()
   {
     return this.iri;
   }
 
-  @Override
+  @NonNull @Override
   public String getPrefixedName()
   {
     return this.prefixedName;
   }
 
-  @Override
+  @NonNull @Override
   public String getShortName()
   {
     return this.prefixedName.startsWith(":") ? this.prefixedName.substring(1) : this.prefixedName;
@@ -81,50 +83,50 @@ abstract class DefaultSQWRLEntityResultValue implements SQWRLEntityResultValue
     return false;
   }
 
-  @Override
+  @NonNull @Override
   public SQWRLEntityResultValue asEntityResult() throws SQWRLException
   {
     return this;
   }
 
-  @Override
+  @NonNull @Override
   public SQWRLClassResultValue asClassResult() throws SQWRLException
   {
     throw new SQWRLException(getClass().getName() + " is not a " + SQWRLClassResultValue.class.getName());
   }
 
-  @Override
+  @NonNull @Override
   public SQWRLIndividualResultValue asIndividualResult() throws SQWRLException
   {
     throw new SQWRLException(getClass().getName() + " is not a " + SQWRLIndividualResultValue.class.getName());
   }
 
-  @Override
+  @NonNull @Override
   public SQWRLObjectPropertyResultValue asObjectPropertyResult() throws SQWRLException
   {
     throw new SQWRLException(getClass().getName() + " is not an " + SQWRLObjectPropertyResultValue.class.getName());
   }
 
-  @Override
+  @NonNull @Override
   public SQWRLDataPropertyResultValue asDataPropertyResult() throws SQWRLException
   {
     throw new SQWRLException(getClass().getName() + " is not an " + SQWRLDataPropertyResultValue.class.getName());
   }
 
-  @Override
+  @NonNull @Override
   public SQWRLAnnotationPropertyResultValue asAnnotationPropertyResult() throws SQWRLException
   {
     throw new SQWRLException(getClass().getName() + " is not an " + SQWRLAnnotationPropertyResultValue.class.getName());
   }
 
-  @Override
+  @NonNull @Override
   public SQWRLLiteralResultValue asLiteralResult() throws SQWRLException
   {
     throw new SQWRLException(getClass().getName() + " is not a " + SQWRLLiteralResultValue.class.getName());
   }
 
   @Override
-  public boolean equals(Object obj)
+  public boolean equals(@Nullable Object obj)
   {
     if (this == obj)
       return true;
@@ -144,7 +146,7 @@ abstract class DefaultSQWRLEntityResultValue implements SQWRLEntityResultValue
   }
 
   @Override
-  public int compareTo(SQWRLEntityResultValue o)
+  public int compareTo(@NonNull SQWRLEntityResultValue o)
   {
     if (o == null)
       throw new NullPointerException();
@@ -152,7 +154,7 @@ abstract class DefaultSQWRLEntityResultValue implements SQWRLEntityResultValue
     return this.iri.compareTo(o.getIRI());
   }
 
-  @Override
+  @NonNull @Override
   public String toString()
   {
     return this.prefixedName;

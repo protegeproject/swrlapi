@@ -1,5 +1,7 @@
 package org.swrlapi.builtins.temporal;
 
+import checkers.nullness.quals.NonNull;
+
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.StringTokenizer;
@@ -10,21 +12,24 @@ import java.util.StringTokenizer;
  */
 abstract class DatetimeStringProcessor
 {
-  private final SimpleDateFormat dateFormat;
-  private final String delimiters;
+  @NonNull private final SimpleDateFormat dateFormat;
+  @NonNull private final String delimiters;
+
   // The number of tokens (including delimeters) necessary to strip a datetime to the specified granularity
-  private final int[] gTokenIndex;
-  private final String datetimeRoundDownPadding[], datetimeRoundUpPadding[]; // Padding for a partially specified datetime
+  @NonNull private final int[] gTokenIndex;
+
+  @NonNull private final String datetimeRoundDownPadding[]; // Padding for a partially specified datetime
+  @NonNull private final String datetimeRoundUpPadding[]; // Padding for a partially specified datetime
 
   /**
-   * @param dateFormat A date format
-   * @param delimiters Delimiters
-   * @param gTokenIndex Indices of granularity tokens
+   * @param dateFormat               A date format
+   * @param delimiters               Delimiters
+   * @param gTokenIndex              Indices of granularity tokens
    * @param datetimeRoundDownPadding Padding for rounding down
-   * @param datetimeRoundUpPadding  Padding for rounding up
+   * @param datetimeRoundUpPadding   Padding for rounding up
    */
-  DatetimeStringProcessor(SimpleDateFormat dateFormat, String delimiters, int gTokenIndex[],
-    String datetimeRoundDownPadding[], String datetimeRoundUpPadding[])
+  DatetimeStringProcessor(@NonNull SimpleDateFormat dateFormat, @NonNull String delimiters, @NonNull int gTokenIndex[],
+    @NonNull String datetimeRoundDownPadding[], @NonNull String datetimeRoundUpPadding[])
   {
     this.dateFormat = dateFormat;
     this.delimiters = delimiters;
@@ -33,13 +38,13 @@ abstract class DatetimeStringProcessor
     this.datetimeRoundDownPadding = datetimeRoundDownPadding.clone();
   }
 
-  protected abstract String constructDatetimeStringFromMillisecondsFrom1970Count(long milliseconds);
+  @NonNull protected abstract String constructDatetimeStringFromMillisecondsFrom1970Count(long milliseconds);
 
   /**
    * Take a granule count (from the beginning of calendar time, i.e., January 1st 1 C.E) at any granularity and convert
    * it to a datetime string.
    */
-  public String granuleCount2DatetimeString(long granuleCount, int granularity) throws TemporalException
+  @NonNull public String granuleCount2DatetimeString(long granuleCount, int granularity) throws TemporalException
   {
     Temporal.checkGranularity(granularity);
 
@@ -47,7 +52,8 @@ abstract class DatetimeStringProcessor
 
     // The java.sql.Timestamp constructor will correctly deal with negative milliseconds.
 
-    return constructDatetimeStringFromMillisecondsFrom1970Count(granuleCountInMilliSeconds - Temporal.MillisecondsTo1970); // Call subclass.
+    return constructDatetimeStringFromMillisecondsFrom1970Count(
+      granuleCountInMilliSeconds - Temporal.MillisecondsTo1970); // Call subclass.
   }
 
   /**
@@ -56,8 +62,8 @@ abstract class DatetimeStringProcessor
    * Converting the JDBC datetime '1988-02-03 10:10:11.433' to a granularity of MONTHS will produce '1988-02-01
    * 00:00:00.000'.
    */
-  public String expressDatetimeStringAtGranularity(String datetimeString, int granularity, boolean roundUp)
-    throws TemporalException
+  @NonNull public String expressDatetimeStringAtGranularity(@NonNull String datetimeString, int granularity,
+    boolean roundUp) throws TemporalException
   {
     String localDatetimeString = stripDatetimeString(datetimeString, granularity); // Also checks granularity for
     // sanity.
@@ -65,12 +71,13 @@ abstract class DatetimeStringProcessor
     return padDatetimeString(localDatetimeString, roundUp);
   }
 
-  public String expressDatetimeStringAtGranularity(String datetimeString, int granularity) throws TemporalException
+  @NonNull public String expressDatetimeStringAtGranularity(@NonNull String datetimeString, int granularity)
+    throws TemporalException
   {
     return expressDatetimeStringAtGranularity(datetimeString, granularity, false);
   }
 
-  private void checkDatetimeString(String datetimeString) throws TemporalException
+  private void checkDatetimeString(@NonNull String datetimeString) throws TemporalException
   {
     String localDatetimeString = datetimeString.trim();
     java.util.Date date = this.dateFormat.parse(localDatetimeString, new ParsePosition(0));
@@ -85,7 +92,7 @@ abstract class DatetimeStringProcessor
    * '1988-02-01T00:00:00.000' when rounded down at any granularity finer than 'days'; the JDBC datetime '1988-1-1
    * 12:10' is converted to '1988-1-1 12:59:59.999' when rounded up at a granularity of hours.
    */
-  public String normalizeDatetimeString(String datetimeString, int granularity, boolean roundUp)
+  @NonNull public String normalizeDatetimeString(@NonNull String datetimeString, int granularity, boolean roundUp)
     throws TemporalException
   {
     String localDatetimeString = stripDatetimeString(datetimeString.trim(), granularity);
@@ -96,12 +103,12 @@ abstract class DatetimeStringProcessor
     return normalizedDatetimeString;
   }
 
-  public String normalizeDatetimeString(String datetime, int granularity) throws TemporalException
+  @NonNull public String normalizeDatetimeString(@NonNull String datetime, int granularity) throws TemporalException
   {
     return normalizeDatetimeString(datetime, granularity, false);
   }
 
-  public String normalizeDatetimeString(String datetime) throws TemporalException
+  @NonNull public String normalizeDatetimeString(@NonNull String datetime) throws TemporalException
   {
     return normalizeDatetimeString(datetime, Temporal.FINEST, false);
   }
@@ -111,9 +118,10 @@ abstract class DatetimeStringProcessor
    * e.g., the JDBC datetime '1988-10-10 12' becomes '1988-10-10 12:59:59:999' when rounded up and '1988-10-10
    * 12:00:00.000' when rounded down.
    */
-  private String padDatetimeString(String datetimeString, boolean roundUp) throws TemporalException
+  @NonNull private String padDatetimeString(@NonNull String datetimeString, boolean roundUp) throws TemporalException
   {
-    StringTokenizer tokenizer = new StringTokenizer(datetimeString.trim(), this.delimiters); // Do not count delimiters as tokens.
+    StringTokenizer tokenizer = new StringTokenizer(datetimeString.trim(),
+      this.delimiters); // Do not count delimiters as tokens.
     int numberOfTokens = tokenizer.countTokens();
 
     if (numberOfTokens == 0)
@@ -145,13 +153,14 @@ abstract class DatetimeStringProcessor
    * that is coarser than the requested granularity, then we just return the original datetime string, e.g, '1999-02-01'
    * expressed with a granularity of MINUTES is '1999-02-01'.
    */
-  public String stripDatetimeString(String datetimeString, int granularity) throws TemporalException
+  @NonNull public String stripDatetimeString(@NonNull String datetimeString, int granularity) throws TemporalException
   {
     String strippedDatetimeString = "";
 
     Temporal.checkGranularity(granularity);
 
-    StringTokenizer tokenizer = new StringTokenizer(datetimeString, this.delimiters, true); // Return all tokens including delimiters.
+    StringTokenizer tokenizer = new StringTokenizer(datetimeString, this.delimiters,
+      true); // Return all tokens including delimiters.
     int numberOfTokens = tokenizer.countTokens();
 
     if (numberOfTokens == 0)
@@ -177,7 +186,7 @@ abstract class DatetimeStringProcessor
    * Get the finest specified granularity of a datetime. For example, the finest granularity specified in the string
    * '1999-02' is months.
    */
-  public int getFinestSpecifiedGranularity(String datetimeString) throws TemporalException
+  public int getFinestSpecifiedGranularity(@NonNull String datetimeString) throws TemporalException
   {
     StringTokenizer tokenizer = new StringTokenizer(datetimeString, this.delimiters, true); // Return all tokens
     // including delimiters.
@@ -197,42 +206,42 @@ abstract class DatetimeStringProcessor
     return granularity;
   }
 
-  public int getYears(String datetimeString) throws TemporalException
+  public int getYears(@NonNull String datetimeString) throws TemporalException
   {
     return getTimeComponent(datetimeString, Temporal.YEARS);
   }
 
-  public int getMonths(String datetimeString) throws TemporalException
+  public int getMonths(@NonNull String datetimeString) throws TemporalException
   {
     return getTimeComponent(datetimeString, Temporal.MONTHS);
   }
 
-  public int getDays(String datetimeString) throws TemporalException
+  public int getDays(@NonNull String datetimeString) throws TemporalException
   {
     return getTimeComponent(datetimeString, Temporal.DAYS);
   }
 
-  public int getHours(String datetimeString) throws TemporalException
+  public int getHours(@NonNull String datetimeString) throws TemporalException
   {
     return getTimeComponent(datetimeString, Temporal.HOURS);
   }
 
-  public int getMinutes(String datetimeString) throws TemporalException
+  public int getMinutes(@NonNull String datetimeString) throws TemporalException
   {
     return getTimeComponent(datetimeString, Temporal.MINUTES);
   }
 
-  public int getSeconds(String datetimeString) throws TemporalException
+  public int getSeconds(@NonNull String datetimeString) throws TemporalException
   {
     return getTimeComponent(datetimeString, Temporal.SECONDS);
   }
 
-  public int getMilliseconds(String datetimeString) throws TemporalException
+  public int getMilliseconds(@NonNull String datetimeString) throws TemporalException
   {
     return getTimeComponent(datetimeString, Temporal.MILLISECONDS);
   }
 
-  private int getTimeComponent(String datetimeString, int granularity) throws TemporalException
+  private int getTimeComponent(@NonNull String datetimeString, int granularity) throws TemporalException
   {
     StringTokenizer tokenizer;
     int result = -1;

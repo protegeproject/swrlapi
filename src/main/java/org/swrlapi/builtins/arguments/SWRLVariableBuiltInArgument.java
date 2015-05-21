@@ -1,5 +1,7 @@
 package org.swrlapi.builtins.arguments;
 
+import checkers.nullness.quals.NonNull;
+import checkers.nullness.quals.Nullable;
 import org.semanticweb.owlapi.model.SWRLVariable;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 
@@ -13,12 +15,12 @@ public interface SWRLVariableBuiltInArgument extends SWRLBuiltInArgument, SWRLVa
   /**
    * @return The prefixed name of the variable
    */
-  String getVariablePrefixedName();
+  @NonNull String getVariablePrefixedName();
 
   /**
    * @return The name of the variable stripped of a ":" if it is a local prefixed name
    */
-  String getVariableName();
+  @NonNull String getVariableName();
 
   @Override
   boolean isVariable();
@@ -31,7 +33,7 @@ public interface SWRLVariableBuiltInArgument extends SWRLBuiltInArgument, SWRLVa
   /**
    * @return A SWRL built-in result
    */
-  SWRLBuiltInArgument getBuiltInResult();
+  @Nullable SWRLBuiltInArgument getBuiltInResult();
 
   /**
    * @param builtInResult A SWRL built-in result

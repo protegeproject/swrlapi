@@ -1,5 +1,6 @@
 package org.swrlapi.factory;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.swrlapi.core.Literal;
 import org.swrlapi.core.LiteralFactory;
@@ -13,92 +14,92 @@ import java.net.URI;
 
 class DefaultLiteralFactory implements LiteralFactory
 {
-  private final OWLLiteralFactory owlLiteralFactory;
+  @NonNull private final OWLLiteralFactory owlLiteralFactory;
 
   public DefaultLiteralFactory()
   {
     this.owlLiteralFactory = SWRLAPIFactory.getOWLLiteralFactory();
   }
 
-  @Override
+  @NonNull @Override
   public Literal getLiteral(byte b)
   {
     return SWRLAPIFactory.getLiteral(getOWLLiteralFactory().getOWLLiteral(b));
   }
 
-  @Override
+  @NonNull @Override
   public Literal getLiteral(short s)
   {
     return SWRLAPIFactory.getLiteral(getOWLLiteralFactory().getOWLLiteral(s));
   }
 
-  @Override
+  @NonNull @Override
   public Literal getLiteral(float value)
   {
     return SWRLAPIFactory.getLiteral(getOWLLiteralFactory().getOWLLiteral(value));
   }
 
-  @Override
+  @NonNull @Override
   public Literal getLiteral(int value)
   {
     return SWRLAPIFactory.getLiteral(getOWLLiteralFactory().getOWLLiteral(value));
   }
 
-  @Override
+  @NonNull @Override
   public Literal getLiteral(double value)
   {
     return SWRLAPIFactory.getLiteral(getOWLLiteralFactory().getOWLLiteral(value));
   }
 
-  @Override
+  @NonNull @Override
   public Literal getLiteral(String value)
   {
     return SWRLAPIFactory.getLiteral(getOWLLiteralFactory().getOWLLiteral(value));
   }
 
-  @Override
+  @NonNull @Override
   public Literal getLiteral(boolean value)
   {
     return SWRLAPIFactory.getLiteral(getOWLLiteralFactory().getOWLLiteral(value));
   }
 
-  @Override
-  public Literal getLiteral(URI uri)
+  @NonNull @Override
+  public Literal getLiteral(@NonNull URI uri)
   {
     return SWRLAPIFactory.getLiteral(getOWLLiteralFactory().getOWLLiteral(uri));
   }
 
-  @Override
-  public Literal getLiteral(XSDDate date)
+  @NonNull @Override
+  public Literal getLiteral(@NonNull XSDDate date)
   {
     return SWRLAPIFactory.getLiteral(getOWLLiteralFactory().getOWLLiteral(date));
   }
 
-  @Override
-  public Literal getLiteral(XSDTime time)
+  @NonNull @Override
+  public Literal getLiteral(@NonNull XSDTime time)
   {
     return SWRLAPIFactory.getLiteral(getOWLLiteralFactory().getOWLLiteral(time));
   }
 
-  @Override
-  public Literal getLiteral(XSDDateTime datetime)
+  @NonNull @Override
+  public Literal getLiteral(@NonNull XSDDateTime datetime)
   {
     return SWRLAPIFactory.getLiteral(getOWLLiteralFactory().getOWLLiteral(datetime));
   }
 
-  @Override
-  public Literal getLiteral(XSDDuration duration)
+  @NonNull @Override
+  public Literal getLiteral(@NonNull XSDDuration duration)
   {
     return SWRLAPIFactory.getLiteral(getOWLLiteralFactory().getOWLLiteral(duration));
   }
 
-  @Override
-  public Literal getLiteral(OWLLiteral literal)
+  @NonNull @Override
+  public Literal getLiteral(@NonNull OWLLiteral literal)
   {
     return SWRLAPIFactory.getLiteral(literal);
   }
 
-  private OWLLiteralFactory getOWLLiteralFactory()
+  @NonNull private OWLLiteralFactory getOWLLiteralFactory()
   {
     return this.owlLiteralFactory;
   }

@@ -1,5 +1,7 @@
 package org.swrlapi.factory;
 
+import checkers.nullness.quals.NonNull;
+import checkers.nullness.quals.Nullable;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
@@ -123,11 +125,12 @@ class DefaultLiteral implements Literal
     return isString() || isTime() || isDate() || isDateTime() || isDuration();
   }
 
-  @Override
+  @NonNull @Override
   public String getString() throws LiteralException
   {
     if (!isString())
       throw new LiteralException("cannot convert value of type " + this.literal.getDatatype() + " to String");
+
     return getOWLLiteral().getLiteral();
   }
 
@@ -260,7 +263,7 @@ class DefaultLiteral implements Literal
     }
   }
 
-  @Override
+  @NonNull @Override
   public URI getAnyURI() throws LiteralException
   {
     try {
@@ -274,7 +277,7 @@ class DefaultLiteral implements Literal
     }
   }
 
-  @Override
+  @NonNull @Override
   public XSDTime getTime() throws LiteralException
   {
     if (!isTime())
@@ -283,7 +286,7 @@ class DefaultLiteral implements Literal
     return new XSDTime(this.literal.getLiteral());
   }
 
-  @Override
+  @NonNull @Override
   public XSDDate getDate() throws LiteralException
   {
     if (!isDate())
@@ -292,7 +295,7 @@ class DefaultLiteral implements Literal
     return new XSDDate(this.literal.getLiteral());
   }
 
-  @Override
+  @NonNull @Override
   public XSDDateTime getDateTime() throws LiteralException
   {
     if (!isDateTime())
@@ -301,7 +304,7 @@ class DefaultLiteral implements Literal
     return new XSDDateTime(this.literal.getLiteral());
   }
 
-  @Override
+  @NonNull @Override
   public XSDDuration getDuration() throws LiteralException
   {
     if (!isDuration())
@@ -310,25 +313,25 @@ class DefaultLiteral implements Literal
     return new XSDDuration(this.literal.getLiteral());
   }
 
-  @Override
+  @NonNull @Override
   public String getValue()
   {
     return this.literal.getLiteral();
   }
 
-  @Override
+  @NonNull @Override
   public OWLDatatype getOWLDatatype()
   {
     return this.literal.getDatatype();
   }
 
-  @Override
+  @NonNull @Override
   public String toString()
   {
     return this.literal.toString();
   }
 
-  @Override
+  @NonNull @Override
   public String toQuotedString()
   {
     // Escape non-escaped double quote characters; for humans: [^\\]" -> \\"
@@ -336,7 +339,7 @@ class DefaultLiteral implements Literal
   }
 
   @Override
-  public boolean equals(Object obj)
+  public boolean equals(@Nullable Object obj)
   {
     if (this == obj)
       return true;

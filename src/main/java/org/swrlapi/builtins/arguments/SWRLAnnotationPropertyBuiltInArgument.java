@@ -1,5 +1,6 @@
 package org.swrlapi.builtins.arguments;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 
 /**
@@ -12,5 +13,5 @@ public interface SWRLAnnotationPropertyBuiltInArgument extends SWRLNamedBuiltInA
   /**
    * @return An OWL annotation property
    */
-  OWLAnnotationProperty getOWLAnnotationProperty();
+  @NonNull OWLAnnotationProperty getOWLAnnotationProperty();
 }

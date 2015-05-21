@@ -1,5 +1,7 @@
 package org.swrlapi.owl2rl;
 
+import checkers.nullness.quals.NonNull;
+
 import java.util.List;
 import java.util.Set;
 
@@ -32,7 +34,7 @@ public interface OWL2RLEngine extends OWL2RLNames
   /**
    * @return A list of OWL 2 RL rule tables
    */
-  List<OWL2RLRuleTable> getRuleTables();
+  @NonNull List<OWL2RLRuleTable> getRuleTables();
 
   /**
    * @return The number of OWL 2 RL rules
@@ -47,7 +49,7 @@ public interface OWL2RLEngine extends OWL2RLNames
   /**
    * @return A list of OWL 2 RL rules
    */
-  List<OWL2RLRule> getRules();
+  @NonNull List<OWL2RLRule> getRules();
 
   /**
    * @param table An OWL 2 RL rule table
@@ -73,7 +75,7 @@ public interface OWL2RLEngine extends OWL2RLNames
   /**
    * @return A list of OWL 2 RL rules
    */
-  Set<OWL2RLRule> getSwitchableRules();
+  @NonNull Set<OWL2RLRule> getSwitchableRules();
 
   /**
    * Enable all OWL 2 RL rules
@@ -135,10 +137,10 @@ public interface OWL2RLEngine extends OWL2RLNames
    * @param rule An OWL 2 RL rule
    * @return The status of the rule
    */
-  OWL2RLRuleStatus getRuleStatus(OWL2RLRule rule);
+  @NonNull OWL2RLRuleStatus getRuleStatus(OWL2RLRule rule);
 
   /**
    * @return An OWL 2 RL persistence layer
    */
-  OWL2RLPersistenceLayer getOWL2RLPersistenceLayer();
+  @NonNull OWL2RLPersistenceLayer getOWL2RLPersistenceLayer();
 }

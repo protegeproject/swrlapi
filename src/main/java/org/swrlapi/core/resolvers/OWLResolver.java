@@ -1,16 +1,17 @@
 package org.swrlapi.core.resolvers;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 
 public class OWLResolver
 {
-  private final OWLClassExpressionResolver owlClassExpressionResolver;
-  private final OWLIndividualResolver owlIndividualExpressionResolver;
-  private final OWLObjectPropertyExpressionResolver owlObjectPropertyExpressionResolver;
-  private final OWLDataPropertyExpressionResolver owlDataPropertyExpressionResolver;
-  private final OWLDataRangeResolver owlDataRangeResolver;
+  @NonNull private final OWLClassExpressionResolver owlClassExpressionResolver;
+  @NonNull private final OWLIndividualResolver owlIndividualExpressionResolver;
+  @NonNull private final OWLObjectPropertyExpressionResolver owlObjectPropertyExpressionResolver;
+  @NonNull private final OWLDataPropertyExpressionResolver owlDataPropertyExpressionResolver;
+  @NonNull private final OWLDataRangeResolver owlDataRangeResolver;
 
-  public OWLResolver(OWLDataFactory owlDataFactory)
+  public OWLResolver(@NonNull OWLDataFactory owlDataFactory)
   {
     this.owlClassExpressionResolver = new OWLClassExpressionResolver(owlDataFactory);
     this.owlIndividualExpressionResolver = new OWLIndividualResolver();
@@ -19,27 +20,27 @@ public class OWLResolver
     this.owlDataRangeResolver = new OWLDataRangeResolver();
   }
 
-  public OWLClassExpressionResolver getOWLClassExpressionResolver()
+  @NonNull public OWLClassExpressionResolver getOWLClassExpressionResolver()
   {
     return this.owlClassExpressionResolver;
   }
 
-  public OWLIndividualResolver getOWLIndividualExpressionResolver()
+  @NonNull public OWLIndividualResolver getOWLIndividualExpressionResolver()
   {
     return this.owlIndividualExpressionResolver;
   }
 
-  public OWLObjectPropertyExpressionResolver getOWLObjectPropertyExpressionResolver()
+  @NonNull public OWLObjectPropertyExpressionResolver getOWLObjectPropertyExpressionResolver()
   {
     return this.owlObjectPropertyExpressionResolver;
   }
 
-  public OWLDataPropertyExpressionResolver getOWLDataPropertyExpressionResolver()
+  @NonNull public OWLDataPropertyExpressionResolver getOWLDataPropertyExpressionResolver()
   {
     return this.owlDataPropertyExpressionResolver;
   }
 
-  public OWLDataRangeResolver getOWLDataRangeResolver()
+  @NonNull public OWLDataRangeResolver getOWLDataRangeResolver()
   {
     return this.owlDataRangeResolver;
   }

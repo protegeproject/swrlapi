@@ -1,10 +1,6 @@
 package org.swrlapi.test;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.StringTokenizer;
-
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.swrlapi.core.SQWRLQueryRenderer;
 import org.swrlapi.sqwrl.SQWRLQuery;
@@ -15,15 +11,20 @@ import org.swrlapi.sqwrl.values.SQWRLEntityResultValue;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLResultValue;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.StringTokenizer;
+
 /**
  * Individually execute all SQWRL queries in an ontology and compare the generated result with the expected result
  * stored in the <code>rdfs:comment</code> annotation associated with each query.
  */
 public class SWRLAPIRegressionTester
 {
-  private final SQWRLQueryEngine sqwrlQueryEngine;
+  @NonNull private final SQWRLQueryEngine sqwrlQueryEngine;
 
-  public SWRLAPIRegressionTester(SQWRLQueryEngine sqwrlQueryEngine)
+  public SWRLAPIRegressionTester(@NonNull SQWRLQueryEngine sqwrlQueryEngine)
   {
     this.sqwrlQueryEngine = sqwrlQueryEngine;
   }
@@ -85,7 +86,7 @@ public class SWRLAPIRegressionTester
     }
   }
 
-  private boolean compare(SQWRLResult result, String expectedResultString) throws SQWRLException
+  private boolean compare(@NonNull SQWRLResult result, @NonNull String expectedResultString) throws SQWRLException
   {
     StringTokenizer resultTokenizer = new StringTokenizer(expectedResultString, "\n");
 
@@ -107,15 +108,14 @@ public class SWRLAPIRegressionTester
         if (resultValue instanceof SQWRLEntityResultValue) {
           SQWRLEntityResultValue entityResultValue = (SQWRLEntityResultValue)resultValue;
           if (!entityResultValue.getPrefixedName().equals(testValueString)) {
-            System.out.print("Named objects unequal - " + entityResultValue.getPrefixedName() + " != "
-                + testValueString);
+            System.out
+              .print("Named objects unequal - " + entityResultValue.getPrefixedName() + " != " + testValueString);
             return false;
           }
         } else if (resultValue instanceof SQWRLLiteralResultValue) {
           SQWRLLiteralResultValue literalResultValue = (SQWRLLiteralResultValue)resultValue;
           String actualRawLiteral = literalResultValue.getValue();
-          @SuppressWarnings("unused")
-          OWLDatatype datatype = literalResultValue.getOWLDatatype();
+          @SuppressWarnings("unused") OWLDatatype datatype = literalResultValue.getOWLDatatype();
           String actualDatatypePrefixedName = "XXX"; // TODO
           String testRawLiteral = testValueString.substring(1, testValueString.indexOf("^^") - 1);
           String testDatatypePrefixedName = testValueString.substring(testValueString.indexOf("^^") + 2);

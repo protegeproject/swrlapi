@@ -1,5 +1,6 @@
 package org.swrlapi.builtins.arguments;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 
 /**
@@ -12,5 +13,5 @@ public interface SWRLNamedIndividualBuiltInArgument extends SWRLNamedBuiltInArgu
   /**
    * @return An OWL named individual
    */
-  OWLNamedIndividual getOWLNamedIndividual();
+  @NonNull OWLNamedIndividual getOWLNamedIndividual();
 }

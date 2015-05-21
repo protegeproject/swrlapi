@@ -1,5 +1,6 @@
 package org.swrlapi.factory;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLClass;
@@ -26,14 +27,14 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
 {
   private static final long serialVersionUID = 1L;
 
-  private final IRIResolver iriResolver;
-  private final OWLLiteralFactory owlLiteralFactory;
-  private final OWLDatatypeFactory owlDatatypeFactory;
-  private final LiteralFactory literalFactory;
-  private final SWRLBuiltInArgumentFactory swrlBuiltInArgumentFactory;
-  private final SQWRLResultValueFactory sqwrlResultValueFactory;
+  @NonNull private final IRIResolver iriResolver;
+  @NonNull private final OWLLiteralFactory owlLiteralFactory;
+  @NonNull private final OWLDatatypeFactory owlDatatypeFactory;
+  @NonNull private final LiteralFactory literalFactory;
+  @NonNull private final SWRLBuiltInArgumentFactory swrlBuiltInArgumentFactory;
+  @NonNull private final SQWRLResultValueFactory sqwrlResultValueFactory;
 
-  public DefaultSWRLAPIOWLDataFactory(SWRLAPIOWLOntology swrlapiOWLOntology)
+  public DefaultSWRLAPIOWLDataFactory(@NonNull SWRLAPIOWLOntology swrlapiOWLOntology)
   {
     this.iriResolver = swrlapiOWLOntology.getIRIResolver();
     this.owlDatatypeFactory = SWRLAPIFactory.createOWLDatatypeFactory();
@@ -43,86 +44,86 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
     this.sqwrlResultValueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(swrlapiOWLOntology);
   }
 
-  @Override
+  @NonNull @Override
   public SWRLBuiltInArgumentFactory getSWRLBuiltInArgumentFactory()
   {
     return this.swrlBuiltInArgumentFactory;
   }
 
-  @Override
-  public SWRLAPIBuiltInAtom getSWRLAPIBuiltInAtom(String ruleName, IRI builtInIRI, String builtInPrefixedName,
-      List<SWRLBuiltInArgument> arguments)
+  @NonNull @Override
+  public SWRLAPIBuiltInAtom getSWRLAPIBuiltInAtom(String ruleName, @NonNull IRI builtInIRI, String builtInPrefixedName,
+      @NonNull List<SWRLBuiltInArgument> arguments)
   {
     return SWRLAPIFactory.getSWRLAPIBuiltInAtom(ruleName, builtInIRI, builtInPrefixedName, arguments);
   }
 
-  @Override
+  @NonNull @Override
   public SQWRLResultValueFactory getSQWRLResultValueFactory()
   {
     return this.sqwrlResultValueFactory;
   }
 
-  @Override
-  public OWLDeclarationAxiom getOWLClassDeclarationAxiom(OWLClass cls)
+  @NonNull @Override
+  public OWLDeclarationAxiom getOWLClassDeclarationAxiom(@NonNull OWLClass cls)
   {
     return getOWLDeclarationAxiom(cls);
   }
 
-  @Override
+  @NonNull @Override
   public OWLDeclarationAxiom getOWLIndividualDeclarationAxiom(OWLNamedIndividual individual)
   {
     return getOWLDeclarationAxiom(individual);
   }
 
-  @Override
-  public OWLDeclarationAxiom getOWLObjectPropertyDeclarationAxiom(OWLObjectProperty property)
+  @NonNull @Override
+  public OWLDeclarationAxiom getOWLObjectPropertyDeclarationAxiom(@NonNull OWLObjectProperty property)
   {
     return getOWLDeclarationAxiom(property);
   }
 
-  @Override
-  public OWLDeclarationAxiom getOWLDataPropertyDeclarationAxiom(OWLDataProperty property)
+  @NonNull @Override
+  public OWLDeclarationAxiom getOWLDataPropertyDeclarationAxiom(@NonNull OWLDataProperty property)
   {
     return getOWLDeclarationAxiom(property);
   }
 
-  @Override
-  public OWLDeclarationAxiom getOWLAnnotationPropertyDeclarationAxiom(OWLAnnotationProperty property)
+  @NonNull @Override
+  public OWLDeclarationAxiom getOWLAnnotationPropertyDeclarationAxiom(@NonNull OWLAnnotationProperty property)
   {
     return getOWLDeclarationAxiom(property);
   }
 
-  @Override
-  public OWLDeclarationAxiom getOWLDatatypeDeclarationAxiom(OWLDatatype datatype)
+  @NonNull @Override
+  public OWLDeclarationAxiom getOWLDatatypeDeclarationAxiom(@NonNull OWLDatatype datatype)
   {
     return getOWLDeclarationAxiom(datatype);
   }
 
-  @Override
+  @NonNull @Override
   public OWLDatatypeFactory getOWLDatatypeFactory()
   {
     return this.owlDatatypeFactory;
   }
 
-  @Override
+  @NonNull @Override
   public OWLLiteralFactory getOWLLiteralFactory()
   {
     return this.owlLiteralFactory;
   }
 
-  @Override
+  @NonNull @Override
   public LiteralFactory getLiteralFactory()
   {
     return this.literalFactory;
   }
 
-  @Override
+  @NonNull @Override
   public IRIResolver getIRIResolver()
   {
     return this.iriResolver;
   }
 
-  @Override
+  @NonNull @Override
   public OWLClass getInjectedOWLClass()
   {
     // TODO Implement getInjectedOWLClass
@@ -133,7 +134,7 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
     return getOWLClass(iri);
   }
 
-  @Override
+  @NonNull @Override
   public OWLNamedIndividual getInjectedOWLNamedIndividual()
   {
     // TODO Implement getInjectedOWLNamedIndividual

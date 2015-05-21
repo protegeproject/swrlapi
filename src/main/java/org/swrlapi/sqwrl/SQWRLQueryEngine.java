@@ -1,5 +1,6 @@
 package org.swrlapi.sqwrl;
 
+import checkers.nullness.quals.NonNull;
 import org.swrlapi.core.SQWRLQueryRenderer;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.exceptions.SWRLRuleEngineException;
@@ -81,7 +82,7 @@ public interface SQWRLQueryEngine extends SWRLRuleEngine
   /**
    * @return A SQWRL query renderer
    */
-  SQWRLQueryRenderer createSQWRLQueryRenderer();
+  @NonNull SQWRLQueryRenderer createSQWRLQueryRenderer();
 
   /**
    * Load specific query, all enabled rules, and relevant knowledge from OWL. All existing bridge rules and knowledge

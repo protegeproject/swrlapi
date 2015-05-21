@@ -1,20 +1,21 @@
 package org.swrlapi.ui.view.rules;
 
-import javax.swing.Icon;
-import javax.swing.JTabbedPane;
-
-import org.swrlapi.factory.SWRLAPIFactory;
+import checkers.nullness.quals.NonNull;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.exceptions.SWRLAPIException;
+import org.swrlapi.factory.SWRLAPIFactory;
 import org.swrlapi.ui.model.SWRLRuleEngineModel;
 import org.swrlapi.ui.view.SWRLAPIView;
 import org.swrlapi.ui.view.owl2rl.OWL2RLRuleTablesView;
+
+import javax.swing.*;
 
 public class SWRLRuleExecutionView extends JTabbedPane implements SWRLAPIView
 {
   private static final long serialVersionUID = 1L;
 
-  public SWRLRuleExecutionView(SWRLRuleEngineModel ruleEngineModel, Icon ruleEngineIcon) throws SWRLAPIException
+  public SWRLRuleExecutionView(@NonNull SWRLRuleEngineModel ruleEngineModel, @NonNull Icon ruleEngineIcon)
+    throws SWRLAPIException
   {
     SWRLRuleEngine swrlRuleEngine = ruleEngineModel.getSWRLRuleEngine();
     Icon owl2RLIcon = SWRLAPIFactory.getOWL2RLReasonerIcon();
@@ -30,8 +31,7 @@ public class SWRLRuleExecutionView extends JTabbedPane implements SWRLAPIView
     addTab("OWL 2 RL", owl2RLIcon, new OWL2RLRuleTablesView(swrlRuleEngine.getOWL2RLEngine()), "OWL 2 RL Tab");
   }
 
-  @Override
-  public void update()
+  @Override public void update()
   {
     validate();
   }

@@ -1,21 +1,23 @@
 package org.swrlapi.core.xsd;
 
+import checkers.nullness.quals.NonNull;
+import checkers.nullness.quals.Nullable;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
 
 import java.util.Date;
 
 public class XSDDate extends XSDType<XSDDate>
 {
-  private final Date date;
+  @NonNull private final Date date;
 
-  public XSDDate(String content)
+  public XSDDate(@NonNull String content)
   {
     super(content, XSDVocabulary.DATE.getIRI());
 
     this.date = XSDTimeUtil.xsdDateString2Date(content);
   }
 
-  public XSDDate(java.util.Date date)
+  public XSDDate(@NonNull Date date)
   {
     super(XSDTimeUtil.utilDate2XSDDateString(date), XSDVocabulary.DATE.getIRI());
 
@@ -32,36 +34,31 @@ public class XSDDate extends XSDType<XSDDate>
       throw new IllegalArgumentException("invalid xsd:Date '" + getContent() + "'");
   }
 
-  @Override
+  @NonNull @Override
   public String getContent()
   {
     return this.content;
   }
 
-  @Override
-  public boolean equals(Object o)
+  @Override public boolean equals(@Nullable Object o)
   {
     if (this == o)
       return true;
-
-    if (!(o instanceof XSDDate))
+    if (o == null || getClass() != o.getClass())
       return false;
 
-    XSDDate otherDate = (XSDDate)o;
+    XSDDate xsdDate = (XSDDate)o;
 
-    return this.date != null && otherDate.date != null && this.date.equals(otherDate.date);
+    return !(date != null ? !date.equals(xsdDate.date) : xsdDate.date != null);
   }
 
-  @Override
-  public int hashCode()
+  @Override public int hashCode()
   {
-    int code = 56;
-    code += this.date.hashCode();
-    return code;
+    return date != null ? date.hashCode() : 0;
   }
 
   @Override
-  public int compareTo(XSDDate o)
+  public int compareTo(@NonNull XSDDate o)
   {
     if (o == null)
       throw new NullPointerException();

@@ -1,5 +1,6 @@
 package org.swrlapi.factory;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor;
@@ -12,70 +13,62 @@ import java.util.List;
 /**
  * A class used to bind multiple arguments to a built-in argument
  */
-class DefaultSWRLMultiValueVariableBuiltInArgument extends DefaultSWRLVariableBuiltInArgument implements
-    SWRLMultiValueVariableBuiltInArgument
+class DefaultSWRLMultiValueVariableBuiltInArgument extends DefaultSWRLVariableBuiltInArgument
+  implements SWRLMultiValueVariableBuiltInArgument
 {
   private static final long serialVersionUID = 1L;
 
-  private List<SWRLBuiltInArgument> arguments;
+  @NonNull private List<SWRLBuiltInArgument> arguments;
 
-  public DefaultSWRLMultiValueVariableBuiltInArgument(IRI variableIRI, String variablePrefixedName)
+  public DefaultSWRLMultiValueVariableBuiltInArgument(@NonNull IRI variableIRI, @NonNull String variablePrefixedName)
   {
     super(variableIRI, variablePrefixedName);
     this.arguments = new ArrayList<>();
   }
 
-  public DefaultSWRLMultiValueVariableBuiltInArgument(IRI variableIRI, String variablePrefixedName,
-    List<SWRLBuiltInArgument> arguments)
+  public DefaultSWRLMultiValueVariableBuiltInArgument(@NonNull IRI variableIRI, @NonNull String variablePrefixedName,
+    @NonNull List<SWRLBuiltInArgument> arguments)
   {
     super(variableIRI, variablePrefixedName);
     this.arguments = arguments;
   }
 
-  @Override
-  public SWRLMultiValueVariableBuiltInArgument asMultiValueVariable()
+  @NonNull @Override public SWRLMultiValueVariableBuiltInArgument asMultiValueVariable()
   {
     return this;
   }
 
-  @Override
-  public void addArgument(SWRLBuiltInArgument argument)
+  @Override public void addArgument(SWRLBuiltInArgument argument)
   {
     this.arguments.add(argument);
   }
 
-  @Override
-  public void setArguments(List<SWRLBuiltInArgument> arguments)
+  @Override public void setArguments(List<SWRLBuiltInArgument> arguments)
   {
     this.arguments = arguments;
   }
 
-  @Override
-  public List<SWRLBuiltInArgument> getArguments()
+  @NonNull @Override public List<SWRLBuiltInArgument> getArguments()
   {
     return this.arguments;
   }
 
-  @Override
-  public int getNumberOfArguments()
+  @Override public int getNumberOfArguments()
   {
     return this.arguments.size();
   }
 
-  @Override
-  public boolean hasNoArguments()
+  @Override public boolean hasNoArguments()
   {
     return this.arguments.size() == 0;
   }
 
-  @Override
-  public <T> T accept(SWRLBuiltInArgumentVisitorEx<T> visitor)
+  @NonNull @Override public <T> T accept(@NonNull SWRLBuiltInArgumentVisitorEx<T> visitor)
   {
     return visitor.visit(this);
   }
 
-  @Override
-  public void accept(SWRLBuiltInArgumentVisitor visitor)
+  @Override public void accept(@NonNull SWRLBuiltInArgumentVisitor visitor)
   {
     visitor.visit(this);
   }

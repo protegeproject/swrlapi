@@ -1,5 +1,6 @@
 package org.swrlapi.ui.model;
 
+import checkers.nullness.quals.NonNull;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 
 public interface SQWRLQueryEngineModel extends SWRLRuleEngineModel
@@ -7,5 +8,5 @@ public interface SQWRLQueryEngineModel extends SWRLRuleEngineModel
   /**
    * @return A SQWRL query engine
    */
-  SQWRLQueryEngine getSQWRLQueryEngine();
+  @NonNull SQWRLQueryEngine getSQWRLQueryEngine();
 }

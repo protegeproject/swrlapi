@@ -1,5 +1,6 @@
 package org.swrlapi.factory;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLClass;
@@ -32,17 +33,16 @@ import java.util.List;
 
 class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFactory
 {
-  private final IRIResolver iriResolver;
-  private final OWLLiteralFactory owlLiteralFactory;
+  @NonNull private final IRIResolver iriResolver;
+  @NonNull private final OWLLiteralFactory owlLiteralFactory;
 
-  public DefaultSWRLBuiltInArgumentFactory(IRIResolver iriResolver)
+  public DefaultSWRLBuiltInArgumentFactory(@NonNull IRIResolver iriResolver)
   {
     this.iriResolver = iriResolver;
     this.owlLiteralFactory = SWRLAPIFactory.getOWLLiteralFactory();
   }
 
-  @Override
-  public SWRLVariableBuiltInArgument getUnboundVariableBuiltInArgument(IRI variableIRI)
+  @NonNull @Override public SWRLVariableBuiltInArgument getUnboundVariableBuiltInArgument(@NonNull IRI variableIRI)
   {
     String variablePrefixedName = getIRIResolver().iri2PrefixedName(variableIRI);
     SWRLVariableBuiltInArgument argument = new DefaultSWRLVariableBuiltInArgument(variableIRI, variablePrefixedName);
@@ -50,161 +50,143 @@ class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFactory
     return argument;
   }
 
-  @Override
-  public SWRLVariableBuiltInArgument getVariableBuiltInArgument(IRI variableIRI)
+  @NonNull @Override public SWRLVariableBuiltInArgument getVariableBuiltInArgument(@NonNull IRI variableIRI)
   {
     String variablePrefixedName = getIRIResolver().iri2PrefixedName(variableIRI);
     return new DefaultSWRLVariableBuiltInArgument(variableIRI, variablePrefixedName);
   }
 
-  @Override
-  public SWRLClassBuiltInArgument getClassBuiltInArgument(OWLClass cls)
+  @NonNull @Override public SWRLClassBuiltInArgument getClassBuiltInArgument(OWLClass cls)
   {
     return new DefaultSWRLClassBuiltInArgument(cls);
   }
 
-  @Override
-  public SWRLObjectPropertyBuiltInArgument getObjectPropertyBuiltInArgument(OWLObjectProperty property)
+  @NonNull @Override public SWRLObjectPropertyBuiltInArgument getObjectPropertyBuiltInArgument(
+    @NonNull OWLObjectProperty property)
   {
     return new DefaultSWRLObjectPropertyBuiltInArgument(property);
   }
 
-  @Override
-  public SWRLDataPropertyBuiltInArgument getDataPropertyBuiltInArgument(OWLDataProperty property)
+  @NonNull @Override public SWRLDataPropertyBuiltInArgument getDataPropertyBuiltInArgument(
+    @NonNull OWLDataProperty property)
   {
     return new DefaultSWRLDataPropertyBuiltInArgument(property);
   }
 
-  @Override
-  public SWRLAnnotationPropertyBuiltInArgument getAnnotationPropertyBuiltInArgument(OWLAnnotationProperty property)
+  @NonNull @Override public SWRLAnnotationPropertyBuiltInArgument getAnnotationPropertyBuiltInArgument(
+    @NonNull OWLAnnotationProperty property)
   {
     return new DefaultDefaultSWRLAnnotationPropertyBuiltInArgument(property);
   }
 
-  @Override
-  public SWRLDatatypeBuiltInArgument getDatatypeBuiltInArgument(OWLDatatype datatype)
+  @NonNull @Override public SWRLDatatypeBuiltInArgument getDatatypeBuiltInArgument(@NonNull OWLDatatype datatype)
   {
     return new DefaultSWRLDatatypeBuiltInArgument(datatype);
   }
 
-  @Override
-  public SWRLNamedIndividualBuiltInArgument getNamedIndividualBuiltInArgument(OWLNamedIndividual individual)
+  @NonNull @Override public SWRLNamedIndividualBuiltInArgument getNamedIndividualBuiltInArgument(
+    @NonNull OWLNamedIndividual individual)
   {
     return new DefaultSWRLNamedIndividualBuiltInArgument(individual);
   }
 
-  @Override
-  public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(OWLLiteral literal)
+  @NonNull @Override public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(@NonNull OWLLiteral literal)
   {
     return new DefaultSWRLLiteralBuiltInArgument(literal);
   }
 
-  @Override
-  public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(String s)
+  @NonNull @Override public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(@NonNull String s)
   {
     return new DefaultSWRLLiteralBuiltInArgument(getOWLLiteralFactory().getOWLLiteral(s));
   }
 
-  @Override
-  public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(boolean b)
+  @NonNull @Override public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(boolean b)
   {
     return new DefaultSWRLLiteralBuiltInArgument(getOWLLiteralFactory().getOWLLiteral(b));
   }
 
-  @Override
-  public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(short s)
+  @NonNull @Override public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(short s)
   {
     return new DefaultSWRLLiteralBuiltInArgument(getOWLLiteralFactory().getOWLLiteral(s));
   }
 
-  @Override
-  public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(int i)
+  @NonNull @Override public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(int i)
   {
     return new DefaultSWRLLiteralBuiltInArgument(getOWLLiteralFactory().getOWLLiteral(i));
   }
 
-  @Override
-  public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(long l)
+  @NonNull @Override public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(long l)
   {
     return new DefaultSWRLLiteralBuiltInArgument(getOWLLiteralFactory().getOWLLiteral(l));
   }
 
-  @Override
-  public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(float f)
+  @NonNull @Override public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(float f)
   {
     return new DefaultSWRLLiteralBuiltInArgument(getOWLLiteralFactory().getOWLLiteral(f));
   }
 
-  @Override
-  public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(double d)
+  @NonNull @Override public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(double d)
   {
     return new DefaultSWRLLiteralBuiltInArgument(getOWLLiteralFactory().getOWLLiteral(d));
   }
 
-  @Override
-  public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(byte b)
+  @NonNull @Override public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(byte b)
   {
     return new DefaultSWRLLiteralBuiltInArgument(getOWLLiteralFactory().getOWLLiteral(b));
   }
 
-  @Override
-  public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(URI uri)
+  @NonNull @Override public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(@NonNull URI uri)
   {
     return new DefaultSWRLLiteralBuiltInArgument(getOWLLiteralFactory().getOWLLiteral(uri));
   }
 
-  @Override
-  public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(XSDDate date)
+  @NonNull @Override public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(@NonNull XSDDate date)
   {
     return new DefaultSWRLLiteralBuiltInArgument(getOWLLiteralFactory().getOWLLiteral(date));
   }
 
-  @Override
-  public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(XSDTime time)
+  @NonNull @Override public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(@NonNull XSDTime time)
   {
     return new DefaultSWRLLiteralBuiltInArgument(getOWLLiteralFactory().getOWLLiteral(time));
   }
 
-  @Override
-  public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(XSDDateTime datetime)
+  @NonNull @Override public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(@NonNull XSDDateTime datetime)
   {
     return new DefaultSWRLLiteralBuiltInArgument(getOWLLiteralFactory().getOWLLiteral(datetime));
   }
 
-  @Override
-  public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(XSDDuration duration)
+  @NonNull @Override public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(@NonNull XSDDuration duration)
   {
     return new DefaultSWRLLiteralBuiltInArgument(getOWLLiteralFactory().getOWLLiteral(duration));
   }
 
-  @Override
-  public SWRLMultiValueVariableBuiltInArgument getMultiValueVariableBuiltInArgument(IRI variableIRI)
+  @NonNull @Override public SWRLMultiValueVariableBuiltInArgument getMultiValueVariableBuiltInArgument(
+    @NonNull IRI variableIRI)
   {
     String variablePrefixedName = getIRIResolver().iri2PrefixedName(variableIRI);
 
     return new DefaultSWRLMultiValueVariableBuiltInArgument(variableIRI, variablePrefixedName);
   }
 
-  @Override
-  public SWRLMultiValueVariableBuiltInArgument getMultiValueVariableBuiltInArgument(IRI variableIRI,
-      List<SWRLBuiltInArgument> arguments)
+  @NonNull @Override public SWRLMultiValueVariableBuiltInArgument getMultiValueVariableBuiltInArgument(
+    @NonNull IRI variableIRI, List<SWRLBuiltInArgument> arguments)
   {
     String variablePrefixedName = getIRIResolver().iri2PrefixedName(variableIRI);
 
     return new DefaultSWRLMultiValueVariableBuiltInArgument(variableIRI, variablePrefixedName, arguments);
   }
 
-  @Override
-  public SQWRLCollectionVariableBuiltInArgument getSQWRLCollectionVariableBuiltInArgument(IRI variableIRI,
-      String queryName, String collectionName, String collectionGroupID)
+  @NonNull @Override public SQWRLCollectionVariableBuiltInArgument getSQWRLCollectionVariableBuiltInArgument(
+    @NonNull IRI variableIRI, @NonNull String queryName, @NonNull String collectionName,
+    @NonNull String collectionGroupID)
   {
     String variablePrefixedName = getIRIResolver().iri2PrefixedName(variableIRI);
 
-    return new DefaultSQWRLCollectionVariableBuiltInArgument(variableIRI, variablePrefixedName, queryName, collectionName,
-        collectionGroupID);
+    return new DefaultSQWRLCollectionVariableBuiltInArgument(variableIRI, variablePrefixedName, queryName,
+      collectionName, collectionGroupID);
   }
 
-  private OWLLiteralFactory getOWLLiteralFactory()
+  @NonNull private OWLLiteralFactory getOWLLiteralFactory()
   {
     return this.owlLiteralFactory;
   }

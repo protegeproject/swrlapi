@@ -1,7 +1,6 @@
 package org.swrlapi.core;
 
-import java.util.Set;
-
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.SWRLRule;
 import org.swrlapi.exceptions.SWRLRuleException;
@@ -9,6 +8,8 @@ import org.swrlapi.sqwrl.SQWRLQuery;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
+
+import java.util.Set;
 
 /**
  * This interface defines a processor that processes a SWRLAPI-based OWL ontology (represented by the interface
@@ -42,11 +43,11 @@ public interface SWRLAPIOntologyProcessor
 
   void addSWRLRule(SWRLAPIRule rule, SWRLRule owlapiRule);
 
-  SWRLAPIRule getSWRLRule(String ruleName) throws SWRLRuleException;
+  @NonNull SWRLAPIRule getSWRLRule(String ruleName) throws SWRLRuleException;
 
-  String getComment(SWRLRule rule);
+  @NonNull String getComment(SWRLRule rule);
 
-  String getRuleName(SWRLRule rule);
+  @NonNull String getRuleName(SWRLRule rule);
 
   boolean getIsActive(SWRLRule rule);
 
@@ -54,23 +55,23 @@ public interface SWRLAPIOntologyProcessor
 
   // SQWRL query-related methods
 
-  SQWRLQuery createSWRLQueryFromSWRLRule(SWRLAPIRule rule) throws SQWRLException;
+  @NonNull SQWRLQuery createSWRLQueryFromSWRLRule(SWRLAPIRule rule) throws SQWRLException;
 
   int getNumberOfSQWRLQueries();
 
-  Set<String> getSQWRLQueryNames();
+  @NonNull Set<String> getSQWRLQueryNames();
 
-  SQWRLQuery getSQWRLQuery(String queryName) throws SQWRLException;
+  @NonNull SQWRLQuery getSQWRLQuery(String queryName) throws SQWRLException;
 
-  Set<SQWRLQuery> getSQWRLQueries();
+  @NonNull Set<SQWRLQuery> getSQWRLQueries();
 
-  SQWRLResult getSQWRLResult(String queryName) throws SQWRLException;
+  @NonNull SQWRLResult getSQWRLResult(String queryName) throws SQWRLException;
 
-  SQWRLResultGenerator getSQWRLResultGenerator(String queryName) throws SQWRLException;
+  @NonNull SQWRLResultGenerator getSQWRLResultGenerator(String queryName) throws SQWRLException;
 
   // OWL axiom-releated methods
 
-  Set<OWLAxiom> getOWLAxioms();
+  @NonNull Set<OWLAxiom> getOWLAxioms();
 
   int getNumberOfOWLAxioms();
 

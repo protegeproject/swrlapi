@@ -1,5 +1,6 @@
 package org.swrlapi.core;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.swrlapi.core.xsd.XSDDate;
@@ -57,32 +58,32 @@ public interface Literal
 
   double getDouble() throws LiteralException;
 
-  String getString() throws LiteralException;
+  @NonNull String getString() throws LiteralException;
 
   boolean getBoolean() throws LiteralException;
 
-  URI getAnyURI() throws LiteralException;
+  @NonNull URI getAnyURI() throws LiteralException;
 
-  XSDTime getTime() throws LiteralException;
+  @NonNull XSDTime getTime() throws LiteralException;
 
-  XSDDate getDate() throws LiteralException;
+  @NonNull XSDDate getDate() throws LiteralException;
 
-  XSDDateTime getDateTime() throws LiteralException;
+  @NonNull XSDDateTime getDateTime() throws LiteralException;
 
-  XSDDuration getDuration() throws LiteralException;
+  @NonNull XSDDuration getDuration() throws LiteralException;
 
-  String getValue();
+  @NonNull String getValue();
 
   boolean isComparable();
 
   boolean isQuotableType();
 
-  @Override
+  @NonNull @Override
   String toString();
 
-  String toQuotedString();
+  @NonNull String toQuotedString();
 
-  OWLLiteral getOWLLiteral();
+  @NonNull OWLLiteral getOWLLiteral();
 
-  OWLDatatype getOWLDatatype();
+  @NonNull OWLDatatype getOWLDatatype();
 }

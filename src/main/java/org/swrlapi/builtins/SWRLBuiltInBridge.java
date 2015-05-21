@@ -1,7 +1,6 @@
 package org.swrlapi.builtins;
 
-import java.util.List;
-
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
@@ -11,6 +10,8 @@ import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
+
+import java.util.List;
 
 /**
  * The SWRL Built-in Bridge defines the methods seen by SWRL built-in implementations at run time.
@@ -35,7 +36,7 @@ public interface SWRLBuiltInBridge
    * @return A SQWRL result generator
    * @throws SQWRLException If the query name is invalid
    */
-  SQWRLResultGenerator getSQWRLResultGenerator(String queryName) throws SQWRLException;
+  @NonNull SQWRLResultGenerator getSQWRLResultGenerator(String queryName) throws SQWRLException;
 
   /**
    * This call can be used by built-ins to create OWL axioms (which they can inject into the bridge using the
@@ -43,7 +44,7 @@ public interface SWRLBuiltInBridge
    *
    * @return A SWRLAPI-based OWL data factory
    */
-  SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory();
+  @NonNull SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory();
 
   /**
    * All named objects are recorded by a {@link org.swrlapi.core.resolvers.IRIResolver}. If a built-in injects a named
@@ -51,7 +52,7 @@ public interface SWRLBuiltInBridge
    *
    * @return An IRI resolver
    */
-  IRIResolver getIRIResolver();
+  @NonNull IRIResolver getIRIResolver();
 
   /**
    * This call can be used by built-ins to access the current active ontology. In general, built-ins should not directly
@@ -61,7 +62,7 @@ public interface SWRLBuiltInBridge
    *
    * @return A SWRLAPI-based OWL ontology
    */
-  SWRLAPIOWLOntology getSWRLAPIOWLOntology();
+  @NonNull SWRLAPIOWLOntology getSWRLAPIOWLOntology();
 
   /**
    * This call can be used by built-ins to invoke another built-in. Unless you really know what you are doing its use
@@ -75,6 +76,6 @@ public interface SWRLBuiltInBridge
    * @return A list of built-in argument bindings
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  List<List<SWRLBuiltInArgument>> invokeSWRLBuiltIn(String ruleName, String builtInName, int builtInIndex,
+  @NonNull List<List<SWRLBuiltInArgument>> invokeSWRLBuiltIn(String ruleName, String builtInName, int builtInIndex,
       boolean isInConsequent, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 }

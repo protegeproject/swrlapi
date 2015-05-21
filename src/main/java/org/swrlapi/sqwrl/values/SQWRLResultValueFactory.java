@@ -1,8 +1,6 @@
 package org.swrlapi.sqwrl.values;
 
-import java.net.URI;
-import java.util.List;
-
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument;
@@ -15,6 +13,9 @@ import org.swrlapi.core.xsd.XSDDateTime;
 import org.swrlapi.core.xsd.XSDDuration;
 import org.swrlapi.core.xsd.XSDTime;
 
+import java.net.URI;
+import java.util.List;
+
 /**
  * A factory for creating {@link org.swrlapi.sqwrl.values.SQWRLResultValue} objects.
  *
@@ -22,55 +23,56 @@ import org.swrlapi.core.xsd.XSDTime;
  */
 public interface SQWRLResultValueFactory
 {
-  SQWRLClassResultValue getClassValue(SWRLClassBuiltInArgument classArgument);
+  @NonNull SQWRLClassResultValue getClassValue(@NonNull SWRLClassBuiltInArgument classArgument);
 
-  SQWRLClassResultValue getClassValue(IRI classIRI);
+  @NonNull SQWRLClassResultValue getClassValue(@NonNull IRI classIRI);
 
-  SQWRLIndividualResultValue getIndividualValue(SWRLNamedIndividualBuiltInArgument individualArgument);
+  @NonNull SQWRLIndividualResultValue getIndividualValue(@NonNull SWRLNamedIndividualBuiltInArgument individualArgument);
 
-  SQWRLIndividualResultValue getIndividualValue(IRI individualIRI);
+  @NonNull SQWRLIndividualResultValue getIndividualValue(@NonNull IRI individualIRI);
 
-  SQWRLObjectPropertyResultValue getObjectPropertyValue(SWRLObjectPropertyBuiltInArgument objectPropertyArgument);
+  @NonNull SQWRLObjectPropertyResultValue getObjectPropertyValue(
+    SWRLObjectPropertyBuiltInArgument objectPropertyArgument);
 
-  SQWRLObjectPropertyResultValue getObjectPropertyValue(IRI propertyIRI);
+  @NonNull SQWRLObjectPropertyResultValue getObjectPropertyValue(@NonNull IRI propertyIRI);
 
-  SQWRLDataPropertyResultValue getDataPropertyValue(SWRLDataPropertyBuiltInArgument dataPropertyArgument);
+  @NonNull SQWRLDataPropertyResultValue getDataPropertyValue(@NonNull SWRLDataPropertyBuiltInArgument dataPropertyArgument);
 
-  SQWRLDataPropertyResultValue getDataPropertyValue(IRI propertyIRI);
+  @NonNull SQWRLDataPropertyResultValue getDataPropertyValue(@NonNull IRI propertyIRI);
 
-  SQWRLAnnotationPropertyResultValue getAnnotationPropertyValue(
-      SWRLAnnotationPropertyBuiltInArgument dataPropertyArgument);
+  @NonNull SQWRLAnnotationPropertyResultValue getAnnotationPropertyValue(
+    SWRLAnnotationPropertyBuiltInArgument dataPropertyArgument);
 
-  SQWRLAnnotationPropertyResultValue getAnnotationPropertyValue(IRI propertyIRI);
+  @NonNull SQWRLAnnotationPropertyResultValue getAnnotationPropertyValue(IRI propertyIRI);
 
-  SQWRLLiteralResultValue getLiteralValue(byte b);
+  @NonNull SQWRLLiteralResultValue getLiteralValue(byte b);
 
-  SQWRLLiteralResultValue getLiteralValue(short s);
+  @NonNull SQWRLLiteralResultValue getLiteralValue(short s);
 
-  SQWRLLiteralResultValue getLiteralValue(int i);
+  @NonNull SQWRLLiteralResultValue getLiteralValue(int i);
 
-  SQWRLLiteralResultValue getLiteralValue(long l);
+  @NonNull SQWRLLiteralResultValue getLiteralValue(long l);
 
-  SQWRLLiteralResultValue getLiteralValue(float f);
+  @NonNull SQWRLLiteralResultValue getLiteralValue(float f);
 
-  SQWRLLiteralResultValue getLiteralValue(double d);
+  @NonNull SQWRLLiteralResultValue getLiteralValue(double d);
 
-  SQWRLLiteralResultValue getLiteralValue(String s);
+  @NonNull SQWRLLiteralResultValue getLiteralValue(@NonNull String s);
 
-  SQWRLLiteralResultValue getLiteralValue(boolean b);
+  @NonNull SQWRLLiteralResultValue getLiteralValue(boolean b);
 
-  SQWRLLiteralResultValue getLiteralValue(URI uri);
+  @NonNull SQWRLLiteralResultValue getLiteralValue(@NonNull URI uri);
 
-  SQWRLLiteralResultValue getLiteralValue(XSDTime time);
+  @NonNull SQWRLLiteralResultValue getLiteralValue(@NonNull XSDTime time);
 
-  SQWRLLiteralResultValue getLiteralValue(XSDDate date);
+  @NonNull SQWRLLiteralResultValue getLiteralValue(@NonNull XSDDate date);
 
-  SQWRLLiteralResultValue getLiteralValue(XSDDateTime dateTime);
+  @NonNull SQWRLLiteralResultValue getLiteralValue(@NonNull XSDDateTime dateTime);
 
-  SQWRLLiteralResultValue getLiteralValue(XSDDuration duration);
+  @NonNull SQWRLLiteralResultValue getLiteralValue(@NonNull XSDDuration duration);
 
-  SQWRLLiteralResultValue getLiteralValue(OWLLiteral literal);
+  @NonNull SQWRLLiteralResultValue getLiteralValue(@NonNull OWLLiteral literal);
 
-  SQWRLLiteralResultValue createLeastNarrowNumericLiteralValue(double value,
-      List<SQWRLLiteralResultValue> inputResultValues);
+  @NonNull SQWRLLiteralResultValue createLeastNarrowNumericLiteralValue(double value,
+    @NonNull List<SQWRLLiteralResultValue> inputResultValues);
 }

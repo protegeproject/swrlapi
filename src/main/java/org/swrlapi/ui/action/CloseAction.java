@@ -1,5 +1,6 @@
 package org.swrlapi.ui.action;
 
+import checkers.nullness.quals.NonNull;
 import org.swrlapi.ui.dialog.SWRLAPIDialogManager;
 
 import java.awt.*;
@@ -8,19 +9,19 @@ import java.awt.event.ActionListener;
 
 public class CloseAction implements ActionListener
 {
-  private final Component parent;
-  private final SWRLAPIDialogManager dialogManager;
+  @NonNull private final Component parent;
+  @NonNull private final SWRLAPIDialogManager dialogManager;
 
   public static final String TITLE = "Close";
   private static final String MESSAGE = "Do you really want to close the ontology?";
 
-  public CloseAction(Component parent, SWRLAPIDialogManager dialogManager)
+  public CloseAction(@NonNull Component parent, @NonNull SWRLAPIDialogManager dialogManager)
   {
     this.parent = parent;
     this.dialogManager = dialogManager;
   }
 
-  @Override public void actionPerformed(ActionEvent e)
+  @Override public void actionPerformed(@NonNull ActionEvent e)
   {
     confirmClose();
   }

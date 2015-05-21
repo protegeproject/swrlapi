@@ -1,5 +1,7 @@
 package org.swrlapi.ui.dialog;
 
+import checkers.nullness.quals.NonNull;
+
 import javax.swing.filechooser.FileFilter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,10 +17,10 @@ import java.util.List;
  */
 public class ExtensionFilter extends FileFilter
 {
-  private final List<String> _extensions;
-  private final String _description;
+  @NonNull private final List<String> _extensions;
+  @NonNull private final String _description;
 
-  public ExtensionFilter(Iterator<String> extensions, String description)
+  public ExtensionFilter(@NonNull Iterator<String> extensions, @NonNull String description)
   {
     this._extensions = new ArrayList<>();
     while (extensions.hasNext()) {
@@ -31,7 +33,7 @@ public class ExtensionFilter extends FileFilter
     this._description = description;
   }
 
-  public ExtensionFilter(String extension, String description)
+  public ExtensionFilter(@NonNull String extension, @NonNull String description)
   {
     this(Collections.singleton(extension).iterator(), description);
   }
@@ -52,7 +54,7 @@ public class ExtensionFilter extends FileFilter
     }
   }
 
-  @Override
+  @NonNull @Override
   public String getDescription()
   {
     String text;

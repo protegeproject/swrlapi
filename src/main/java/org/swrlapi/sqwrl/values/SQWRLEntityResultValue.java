@@ -1,5 +1,6 @@
 package org.swrlapi.sqwrl.values;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 
 /**
@@ -22,5 +23,5 @@ public interface SQWRLEntityResultValue extends SQWRLResultValue, Comparable<SQW
   /**
    * @return The short name of the entity
    */
-  String getShortName();
+  @NonNull String getShortName();
 }

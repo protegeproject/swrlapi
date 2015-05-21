@@ -1,5 +1,7 @@
 package org.swrlapi.builtins.temporal;
 
+import checkers.nullness.quals.NonNull;
+
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -10,13 +12,13 @@ import java.util.List;
  */
 class Instant
 {
-  private Temporal temporal;
+  @NonNull private Temporal temporal;
   private long granuleCount; // Granule count since 1 C.E.
   private int granularity;
 
   private final long granuleCountArray[] = new long[Temporal.NUMBER_OF_GRANULARITIES];
 
-  public Instant(Temporal temporal, long granuleCount, int granularity)
+  public Instant(@NonNull Temporal temporal, long granuleCount, int granularity)
   {
     this.temporal = temporal;
     this.granuleCount = granuleCount;
@@ -25,12 +27,12 @@ class Instant
     clearGranuleCountArray();
   }
 
-  public Instant(Temporal temporal, Timestamp timestamp) throws TemporalException
+  public Instant(@NonNull Temporal temporal, @NonNull Timestamp timestamp) throws TemporalException
   {
     this(temporal, timestamp, Temporal.FINEST);
   }
 
-  public Instant(Temporal temporal, Timestamp timestamp, int granularity) throws TemporalException
+  public Instant(@NonNull Temporal temporal, @NonNull Timestamp timestamp, int granularity) throws TemporalException
   {
     this.temporal = temporal;
     this.granuleCount = temporal.sqlTimestamp2GranuleCount(timestamp, granularity);
@@ -40,12 +42,12 @@ class Instant
     clearGranuleCountArray();
   }
 
-  public Instant(Temporal temporal, java.util.Date date) throws TemporalException
+  public Instant(@NonNull Temporal temporal, java.util.Date date) throws TemporalException
   {
     this(temporal, date, Temporal.FINEST);
   }
 
-  public Instant(Temporal temporal, java.util.Date date, int granularity) throws TemporalException
+  public Instant(@NonNull Temporal temporal, java.util.Date date, int granularity) throws TemporalException
   {
     this.temporal = temporal;
     this.granuleCount = Temporal.utilDate2GranuleCount(date, granularity);
@@ -54,12 +56,12 @@ class Instant
     clearGranuleCountArray();
   }
 
-  public Instant(Temporal temporal, java.sql.Date date) throws TemporalException
+  public Instant(@NonNull Temporal temporal, java.sql.Date date) throws TemporalException
   {
     this(temporal, date, Temporal.FINEST);
   }
 
-  public Instant(Temporal temporal, java.sql.Date date, int granularity) throws TemporalException
+  public Instant(@NonNull Temporal temporal, java.sql.Date date, int granularity) throws TemporalException
   {
     this.temporal = temporal;
     this.granuleCount = Temporal.sqlDate2GranuleCount(date, granularity);
@@ -68,31 +70,31 @@ class Instant
     clearGranuleCountArray();
   }
 
-  public Instant(Temporal temporal, String datetimeString, int granularity) throws TemporalException
+  public Instant(@NonNull Temporal temporal, @NonNull String datetimeString, int granularity) throws TemporalException
   {
     this(temporal, datetimeString, granularity, false);
   }
 
-  public Instant(Temporal temporal, String datetimeString, int granularity, boolean roundUp) throws TemporalException
+  public Instant(@NonNull Temporal temporal, @NonNull String datetimeString, int granularity, boolean roundUp) throws TemporalException
   {
     initialize(temporal, datetimeString, granularity, roundUp);
 
     clearGranuleCountArray();
   }
 
-  public Instant(Temporal temporal, String datetimeString) throws TemporalException
+  public Instant(@NonNull Temporal temporal, @NonNull String datetimeString) throws TemporalException
   {
     this(temporal, datetimeString, false);
   }
 
-  public Instant(Temporal temporal, String datetimeString, boolean roundUp) throws TemporalException
+  public Instant(@NonNull Temporal temporal, @NonNull String datetimeString, boolean roundUp) throws TemporalException
   {
     initialize(temporal, datetimeString, Temporal.FINEST, roundUp);
 
     clearGranuleCountArray();
   }
 
-  public Instant(Temporal temporal, Instant instant) throws TemporalException
+  public Instant(@NonNull Temporal temporal, @NonNull Instant instant) throws TemporalException
   {
     this(temporal, instant.getGranuleCount(instant.getGranularity()), instant.getGranularity());
   }
@@ -144,12 +146,12 @@ class Instant
     return resultGranuleCount;
   }
 
-  public String getDatetimeString() throws TemporalException
+  @NonNull public String getDatetimeString() throws TemporalException
   {
     return getDatetimeString(Temporal.FINEST);
   }
 
-  public String getDatetimeString(int g) throws TemporalException
+  @NonNull public String getDatetimeString(int g) throws TemporalException
   {
     long localGranuleCount = getGranuleCount(g);
 
@@ -185,12 +187,12 @@ class Instant
     return (this.granuleCount == 0);
   }
 
-  public String toString(int g) throws TemporalException
+  @NonNull public String toString(int g) throws TemporalException
   {
     return getDatetimeString(g);
   }
 
-  @Override
+  @NonNull @Override
   public String toString()
   {
     try {
@@ -222,37 +224,37 @@ class Instant
     clearGranuleCountArray();
   }
 
-  public long duration(Instant i2, int g) throws TemporalException
+  public long duration(@NonNull Instant i2, int g) throws TemporalException
   {
     return java.lang.Math.abs(getGranuleCount(g) - i2.getGranuleCount(g));
   }
 
-  public boolean before(Instant i2, int g) throws TemporalException
+  public boolean before(@NonNull Instant i2, int g) throws TemporalException
   {
     return getGranuleCount(g) < i2.getGranuleCount(g);
   }
 
-  public boolean after(Instant i2, int g) throws TemporalException
+  public boolean after(@NonNull Instant i2, int g) throws TemporalException
   {
     return getGranuleCount(g) > i2.getGranuleCount(g);
   }
 
-  public boolean equals(Instant i2, int g) throws TemporalException
+  public boolean equals(@NonNull Instant i2, int g) throws TemporalException
   {
     return getGranuleCount(g) == i2.getGranuleCount(g);
   }
 
-  public boolean meets(Instant i2, int g) throws TemporalException
+  public boolean meets(@NonNull Instant i2, int g) throws TemporalException
   {
     return (((getGranuleCount(g) + 1) == i2.getGranuleCount(g)) || (getGranuleCount(g) == i2.getGranuleCount(g)));
   }
 
-  public boolean met_by(Instant i2, int g) throws TemporalException
+  public boolean met_by(@NonNull Instant i2, int g) throws TemporalException
   {
     return i2.meets(this, g);
   }
 
-  public boolean adjacent(Instant i2, int g) throws TemporalException
+  public boolean adjacent(@NonNull Instant i2, int g) throws TemporalException
   {
     return (meets(i2, g) || met_by(i2, g));
   }
@@ -264,7 +266,7 @@ class Instant
     return false; // Instants cannot overlap.
   }
 
-  public boolean overlapped_by(Instant i2, int g) throws TemporalException
+  public boolean overlapped_by(@NonNull Instant i2, int g) throws TemporalException
   {
     return i2.overlaps(this, g);
   }
@@ -290,7 +292,7 @@ class Instant
     return false; // One instant cannot start another
   }
 
-  public boolean started_by(Instant i2, int g) throws TemporalException
+  public boolean started_by(@NonNull Instant i2, int g) throws TemporalException
   {
     return i2.starts(this, g);
   }
@@ -302,13 +304,13 @@ class Instant
     return false; // One instant cannot finish another
   }
 
-  public boolean finished_by(Instant i2, int g) throws TemporalException
+  public boolean finished_by(@NonNull Instant i2, int g) throws TemporalException
   {
     return i2.finishes(this, g);
   }
 
   // Take a list of instants and remove duplicate identical elements.
-  public List<Instant> coalesce(List<Instant> instants, int g) throws TemporalException
+  @NonNull public List<Instant> coalesce(@NonNull List<Instant> instants, int g) throws TemporalException
   {
     Instant i1, i2;
     List<Instant> resultList = new ArrayList<>();
@@ -335,7 +337,7 @@ class Instant
     return resultList;
   }
 
-  private void initialize(Temporal t, String datetimeString, int g, boolean roundUp) throws TemporalException
+  private void initialize(@NonNull Temporal t, @NonNull String datetimeString, int g, boolean roundUp) throws TemporalException
   {
     String localDatetimeString;
 

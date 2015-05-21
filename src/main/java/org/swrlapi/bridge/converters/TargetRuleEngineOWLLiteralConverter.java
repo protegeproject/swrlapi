@@ -1,5 +1,6 @@
 package org.swrlapi.bridge.converters;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLLiteral;
 
 /**
@@ -10,5 +11,5 @@ import org.semanticweb.owlapi.model.OWLLiteral;
  */
 public interface TargetRuleEngineOWLLiteralConverter<T> extends TargetRuleEngineConverter
 {
-  T convert(OWLLiteral literal);
+  @NonNull T convert(@NonNull OWLLiteral literal);
 }

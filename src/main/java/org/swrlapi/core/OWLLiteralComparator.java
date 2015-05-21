@@ -1,5 +1,6 @@
 package org.swrlapi.core;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
 import org.swrlapi.core.xsd.XSDDate;
@@ -19,12 +20,12 @@ import java.util.Comparator;
  */
 public final class OWLLiteralComparator implements Comparator<OWLLiteral>
 {
-  private static final Comparator<String> naturalOrderComparator = NaturalOrderComparator.NUMERICAL_ORDER;
+  @NonNull private static final Comparator<String> naturalOrderComparator = NaturalOrderComparator.NUMERICAL_ORDER;
 
-  public static final Comparator<OWLLiteral> COMPARATOR = new OWLLiteralComparator();
+  @NonNull public static final Comparator<OWLLiteral> COMPARATOR = new OWLLiteralComparator();
 
   @Override
-  public int compare(OWLLiteral l1, OWLLiteral l2)
+  public int compare(@NonNull OWLLiteral l1, @NonNull OWLLiteral l2)
   {
     int diff = l1.getDatatype().compareTo(l2.getDatatype());
     if (diff != 0)
@@ -39,7 +40,7 @@ public final class OWLLiteralComparator implements Comparator<OWLLiteral>
     return diff;
   }
 
-  private int compareOWLLiterals(OWLLiteral l1, OWLLiteral l2)
+  private int compareOWLLiterals(@NonNull OWLLiteral l1, @NonNull OWLLiteral l2)
   {
     try {
       if (allNumeric(l1, l2)) {
@@ -113,12 +114,12 @@ public final class OWLLiteralComparator implements Comparator<OWLLiteral>
     }
   }
 
-  private boolean identicalTypes(OWLLiteral literal1, OWLLiteral literal2)
+  private boolean identicalTypes(@NonNull OWLLiteral literal1, @NonNull OWLLiteral literal2)
   {
     return literal1.getDatatype().getIRI().equals(literal2.getDatatype().getIRI());
   }
 
-  private boolean allNumeric(OWLLiteral... literals)
+  private boolean allNumeric(@NonNull OWLLiteral... literals)
   {
     for (OWLLiteral literal : literals)
       if (!isNumeric(literal))
@@ -126,7 +127,7 @@ public final class OWLLiteralComparator implements Comparator<OWLLiteral>
     return true;
   }
 
-  private boolean isNumeric(OWLLiteral literal)
+  private boolean isNumeric(@NonNull OWLLiteral literal)
   {
     return literal.getDatatype().getIRI().equals(XSDVocabulary.BYTE.getIRI())
         || literal.getDatatype().getIRI().equals(XSDVocabulary.SHORT.getIRI())

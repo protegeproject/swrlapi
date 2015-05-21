@@ -1,5 +1,6 @@
 package org.swrlapi.builtins.arguments;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.SWRLVariable;
@@ -17,6 +18,6 @@ import org.semanticweb.owlapi.model.SWRLVariable;
  */
 public interface SWRLNamedBuiltInArgument extends SWRLBuiltInArgument, SWRLVariable
 {
-  @Override
+  @NonNull @Override
   IRI getIRI();
 }

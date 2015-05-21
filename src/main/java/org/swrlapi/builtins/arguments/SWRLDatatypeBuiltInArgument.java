@@ -1,5 +1,6 @@
 package org.swrlapi.builtins.arguments;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLDatatype;
 
 /**
@@ -12,5 +13,5 @@ public interface SWRLDatatypeBuiltInArgument extends SWRLNamedBuiltInArgument
   /**
    * @return An OWL datatype
    */
-  OWLDatatype getOWLDatatype();
+  @NonNull OWLDatatype getOWLDatatype();
 }

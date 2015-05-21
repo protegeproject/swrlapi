@@ -1,5 +1,6 @@
 package org.swrlapi.core.visitors;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.SWRLIndividualArgument;
 import org.semanticweb.owlapi.model.SWRLLiteralArgument;
 import org.semanticweb.owlapi.model.SWRLVariable;
@@ -9,9 +10,9 @@ import org.semanticweb.owlapi.model.SWRLVariable;
  */
 public interface SWRLArgumentVisitor
 {
-  void visit(SWRLVariable swrlVariable);
+  void visit(@NonNull SWRLVariable swrlVariable);
 
-  void visit(SWRLIndividualArgument swrlIndividualArgument);
+  void visit(@NonNull SWRLIndividualArgument swrlIndividualArgument);
 
-  void visit(SWRLLiteralArgument swrlLiteralArgument);
+  void visit(@NonNull SWRLLiteralArgument swrlLiteralArgument);
 }

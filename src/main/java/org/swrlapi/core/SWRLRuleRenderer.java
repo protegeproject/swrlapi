@@ -1,5 +1,6 @@
 package org.swrlapi.core;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.SWRLRule;
 import org.swrlapi.core.visitors.SWRLAPIEntityVisitorEx;
 
@@ -17,5 +18,5 @@ public interface SWRLRuleRenderer extends SWRLAPIEntityVisitorEx<String>
    * @param rule A SWRL rule
    * @return A text rendering of the rule
    */
-  String renderSWRLRule(SWRLRule rule);
+  @NonNull String renderSWRLRule(SWRLRule rule);
 }

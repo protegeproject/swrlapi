@@ -1,7 +1,6 @@
 package org.swrlapi.core;
 
-import java.util.Set;
-
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLDataFactory;
@@ -18,10 +17,12 @@ import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.ui.model.SWRLAutoCompleter;
 
+import java.util.Set;
+
 /**
  * Wraps the OWLAPI's {@link org.semanticweb.owlapi.model.OWLOntology} class with additional functionality used by the
  * SWRLAPI. Primarily it provides methods for dealing with SWRL rules and SQWRL queries.
- * 
+ * <p>
  * The {@link org.swrlapi.core.SWRLAPIRule} class provides an equivalent wrapping of the OWLAPI's
  * {@link org.semanticweb.owlapi.model.SWRLRule}. The SWRLAPI also provides a range of types extending the OWLAPI's
  * {@link org.semanticweb.owlapi.model.SWRLDArgument} interface to define arguments to built-in atoms. This extension
@@ -43,50 +44,53 @@ public interface SWRLAPIOWLOntology
 {
   // Methods for handling SWRL Rules
 
-  Set<SWRLAPIRule> getSWRLRules();
+  @NonNull Set<SWRLAPIRule> getSWRLRules();
 
-  SWRLAPIRule getSWRLRule(String ruleName) throws SWRLRuleException;
+  @NonNull SWRLAPIRule getSWRLRule(@NonNull String ruleName) throws SWRLRuleException;
 
-  SWRLAPIRule createSWRLRule(String ruleName, String rule) throws SWRLParseException;
+  @NonNull SWRLAPIRule createSWRLRule(String ruleName, String rule) throws SWRLParseException;
 
-  SWRLAPIRule createSWRLRule(String ruleName, String rule, String comment, boolean isActive) throws SWRLParseException;
+  @NonNull SWRLAPIRule createSWRLRule(String ruleName, String rule, String comment, boolean isActive)
+    throws SWRLParseException;
 
-  void deleteSWRLRule(String ruleName);
+  void deleteSWRLRule(@NonNull String ruleName);
 
-  boolean isSWRLBuiltIn(IRI iri); // The SWRLAPI provides built-ins beyond the core set defined in the SWRL submission.
+  boolean isSWRLBuiltIn(
+    @NonNull IRI iri); // The SWRLAPI provides built-ins beyond the core set defined in the SWRL submission.
 
-  void addSWRLBuiltIn(IRI iri);
+  void addSWRLBuiltIn(@NonNull IRI iri);
 
-  Set<IRI> getSWRLBuiltInIRIs();
+  @NonNull Set<IRI> getSWRLBuiltInIRIs();
 
-  SWRLParser createSWRLParser();
+  @NonNull SWRLParser createSWRLParser();
 
-  SWRLAutoCompleter createSWRLAutoCompleter();
+  @NonNull SWRLAutoCompleter createSWRLAutoCompleter();
 
-  SWRLRuleRenderer createSWRLRuleRenderer();
+  @NonNull SWRLRuleRenderer createSWRLRuleRenderer();
 
   // Methods for handling SQWRL Queries
 
-  SQWRLQuery createSQWRLQuery(String queryName, String query) throws SWRLParseException, SQWRLException;
+  @NonNull SQWRLQuery createSQWRLQuery(@NonNull String queryName, @NonNull String query)
+    throws SWRLParseException, SQWRLException;
 
-  SQWRLQuery createSQWRLQuery(String queryName, String query, String comment, boolean isActive)
-      throws SWRLParseException, SQWRLException;
+  @NonNull SQWRLQuery createSQWRLQuery(@NonNull String queryName, @NonNull String query, @NonNull String comment,
+    boolean isActive) throws SWRLParseException, SQWRLException;
 
-  SQWRLQuery getSQWRLQuery(String queryName) throws SQWRLException;
+  @NonNull SQWRLQuery getSQWRLQuery(@NonNull String queryName) throws SQWRLException;
 
-  SQWRLResult getSQWRLResult(String queryName) throws SQWRLException;
+  @NonNull SQWRLResult getSQWRLResult(@NonNull String queryName) throws SQWRLException;
 
   int getNumberOfSQWRLQueries();
 
-  Set<String> getSQWRLQueryNames();
+  @NonNull Set<String> getSQWRLQueryNames();
 
-  Set<SQWRLQuery> getSQWRLQueries();
+  @NonNull Set<SQWRLQuery> getSQWRLQueries();
 
-  SQWRLResultGenerator getSQWRLResultGenerator(String queryName) throws SQWRLException;
+  @NonNull SQWRLResultGenerator getSQWRLResultGenerator(@NonNull String queryName) throws SQWRLException;
 
-  SQWRLResultGenerator createSQWRLResultGenerator();
+  @NonNull SQWRLResultGenerator createSQWRLResultGenerator();
 
-  SQWRLQueryRenderer createSQWRLQueryRenderer();
+  @NonNull SQWRLQueryRenderer createSQWRLQueryRenderer();
 
   // Process methods
 
@@ -108,7 +112,7 @@ public interface SWRLAPIOWLOntology
 
   boolean hasAssertedOWLAxiom(OWLAxiom axiom);
 
-  Set<OWLAxiom> getOWLAxioms();
+  @NonNull Set<OWLAxiom> getOWLAxioms();
 
   int getNumberOfSWRLRules();
 
@@ -124,15 +128,15 @@ public interface SWRLAPIOWLOntology
 
   // Utility methods
 
-  SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory();
+  @NonNull SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory();
 
-  IRIResolver getIRIResolver();
+  @NonNull IRIResolver getIRIResolver();
 
-  OWLOntologyManager getOWLOntologyManager();
+  @NonNull OWLOntologyManager getOWLOntologyManager();
 
-  DefaultPrefixManager getPrefixManager();
+  @NonNull DefaultPrefixManager getPrefixManager();
 
-  OWLOntology getOWLOntology();
+  @NonNull OWLOntology getOWLOntology();
 
-  OWLDataFactory getOWLDataFactory();
+  @NonNull OWLDataFactory getOWLDataFactory();
 }

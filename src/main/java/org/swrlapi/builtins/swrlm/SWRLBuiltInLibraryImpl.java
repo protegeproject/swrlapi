@@ -1,11 +1,13 @@
 package org.swrlapi.builtins.swrlm;
 
-import java.util.List;
-
+import checkers.nullness.quals.NonNull;
+import checkers.nullness.quals.Nullable;
 import org.nfunk.jep.JEP;
 import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.exceptions.SWRLBuiltInException;
+
+import java.util.List;
 
 /**
  * Implementations library for SWRL mathematical built-ins.
@@ -14,7 +16,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 {
   private static final String SWRLMLibraryName = "SWRLAPIMathematicalBuiltIns";
 
-  private JEP jep = null;
+  @Nullable private JEP jep = null;
 
   public SWRLBuiltInLibraryImpl()
   {
@@ -35,7 +37,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean sqrt(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean sqrt(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsAtLeast(2, arguments.size());
 
@@ -58,7 +60,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean log(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean log(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsAtLeast(2, arguments.size());
 
@@ -82,7 +84,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean eval(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean eval(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsAtLeast(2, arguments.size());
 
@@ -120,7 +122,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   }
 
   // See. http://www.singularsys.com/jep/doc/javadoc/org/nfunk/jep/JEP.html for JEP API
-  private JEP getJEP()
+  @NonNull private JEP getJEP()
   {
     if (this.jep == null) {
       this.jep = new JEP();

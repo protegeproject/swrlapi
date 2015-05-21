@@ -1,6 +1,7 @@
 package org.swrlapi.core.visitors;
 
-import org.semanticweb.owlapi.model.*;
+import checkers.nullness.quals.NonNull;
+import org.semanticweb.owlapi.model.OWLAxiomVisitor;
 import org.swrlapi.core.SWRLAPIRule;
 
 /**
@@ -13,5 +14,5 @@ import org.swrlapi.core.SWRLAPIRule;
  */
 public interface SWRLAPIOWLAxiomVisitor extends OWLAxiomVisitor
 {
-  void visit(SWRLAPIRule swrlapiRule);
+  void visit(@NonNull SWRLAPIRule swrlapiRule);
 }

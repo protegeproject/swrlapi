@@ -48,12 +48,14 @@
  */
 package org.swrlapi.factory;
 
+import checkers.nullness.quals.NonNull;
+
 import java.util.Comparator;
 
 public final class NaturalOrderComparator<T> implements Comparator<T>
 {
-  public static final Comparator<String> NUMERICAL_ORDER = new NaturalOrderComparator<>(false);
-  public static final Comparator<String> CASE_INSENSITIVE_NUMERICAL_ORDER = new NaturalOrderComparator<>(true);
+  @NonNull public static final Comparator<String> NUMERICAL_ORDER = new NaturalOrderComparator<>(false);
+  @NonNull public static final Comparator<String> CASE_INSENSITIVE_NUMERICAL_ORDER = new NaturalOrderComparator<>(true);
 
   private final boolean caseInsensitive;
 
@@ -62,7 +64,7 @@ public final class NaturalOrderComparator<T> implements Comparator<T>
     this.caseInsensitive = caseInsensitive;
   }
 
-  private int compareRight(String a, String b)
+  private int compareRight(@NonNull String a, @NonNull String b)
   {
     int bias = 0;
     int ia = 0;
@@ -96,7 +98,7 @@ public final class NaturalOrderComparator<T> implements Comparator<T>
   }
 
   @Override
-  public int compare(T o1, T o2)
+  public int compare(@NonNull T o1, @NonNull T o2)
   {
     String a = o1.toString();
     String b = o2.toString();
@@ -170,7 +172,7 @@ public final class NaturalOrderComparator<T> implements Comparator<T>
     }
   }
 
-  private char charAt(String s, int i)
+  private char charAt(@NonNull String s, int i)
   {
     if (i >= s.length()) {
       return 0;

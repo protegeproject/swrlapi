@@ -1,5 +1,6 @@
 package org.swrlapi.ui.action;
 
+import checkers.nullness.quals.NonNull;
 import org.swrlapi.ui.dialog.SWRLAPIDialogManager;
 import org.swrlapi.ui.model.FileBackedOWLOntologyModel;
 
@@ -11,35 +12,36 @@ import java.io.File;
 
 public class OpenAction implements ActionListener
 {
-	private final Component parent;
-	private final SWRLAPIDialogManager dialogManager;
-	private final FileBackedOWLOntologyModel ontologyModel;
+  @NonNull private final Component parent;
+  @NonNull private final SWRLAPIDialogManager dialogManager;
+  @NonNull private final FileBackedOWLOntologyModel ontologyModel;
 
-	public static final String TITLE = "Open";
-	private static final String MESSAGE = "Open Ontology";
-	private static final String EXTENSION = "owl";
+  public static final String TITLE = "Open";
+  private static final String MESSAGE = "Open Ontology";
+  private static final String EXTENSION = "owl";
 
-	public OpenAction(Component parent, FileBackedOWLOntologyModel ontologyModel, SWRLAPIDialogManager dialogManager)
-	{
-		this.parent = parent;
-		this.dialogManager = dialogManager;
-		this.ontologyModel = ontologyModel;
-	}
+  public OpenAction(@NonNull Component parent, @NonNull FileBackedOWLOntologyModel ontologyModel,
+    @NonNull SWRLAPIDialogManager dialogManager)
+  {
+    this.parent = parent;
+    this.dialogManager = dialogManager;
+    this.ontologyModel = ontologyModel;
+  }
 
-	@Override public void actionPerformed(ActionEvent e)
-	{
-		open();
-	}
+  @Override public void actionPerformed(ActionEvent e)
+  {
+    open();
+  }
 
-	public void open()
-	{
-		JFileChooser fileChooser = this.dialogManager.createFileChooser(TITLE, MESSAGE, EXTENSION);
+  public void open()
+  {
+    JFileChooser fileChooser = this.dialogManager.createFileChooser(TITLE, MESSAGE, EXTENSION);
 
-		if (fileChooser.showOpenDialog(this.parent) == JFileChooser.APPROVE_OPTION) {
-			File file = fileChooser.getSelectedFile();
-			String fileName = file.getAbsolutePath();
+    if (fileChooser.showOpenDialog(this.parent) == JFileChooser.APPROVE_OPTION) {
+      File file = fileChooser.getSelectedFile();
+      String fileName = file.getAbsolutePath();
 
-			//https://github.com/owlcs/owlapi/blob/version4/contract/src/test/java/org/semanticweb/owlapi/examples/Examples.java#L167
-		}
-	}
+      //https://github.com/owlcs/owlapi/blob/version4/contract/src/test/java/org/semanticweb/owlapi/examples/Examples.java#L167
+    }
+  }
 }

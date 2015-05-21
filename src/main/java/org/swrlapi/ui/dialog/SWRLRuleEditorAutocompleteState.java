@@ -1,16 +1,18 @@
 package org.swrlapi.ui.dialog;
 
+import checkers.nullness.quals.NonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
 class SWRLRuleEditorAutoCompleteState
 {
+  @NonNull private final String prefix;
+  @NonNull private final List<String> expansions;
   private final int textPosition;
-  private final String prefix;
-  private final List<String> expansions;
   private int expansionIndex;
 
-  public SWRLRuleEditorAutoCompleteState(int textPosition, String prefix, List<String> expansions)
+  public SWRLRuleEditorAutoCompleteState(int textPosition, @NonNull String prefix, @NonNull List<String> expansions)
   {
     this.textPosition = textPosition;
     this.prefix = prefix;
@@ -23,12 +25,12 @@ class SWRLRuleEditorAutoCompleteState
     return this.textPosition;
   }
 
-  public String getPrefix()
+  @NonNull public String getPrefix()
   {
     return this.prefix;
   }
 
-  public String getCurrentExpansion()
+  @NonNull public String getCurrentExpansion()
   {
     if (!this.expansions.isEmpty()) {
       return this.expansions.get(this.expansionIndex);
@@ -36,7 +38,7 @@ class SWRLRuleEditorAutoCompleteState
       return "";
   }
 
-  public String getNextExpansion()
+  @NonNull public String getNextExpansion()
   {
     if (!this.expansions.isEmpty()) {
       this.expansionIndex++;

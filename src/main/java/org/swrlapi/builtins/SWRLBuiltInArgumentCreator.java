@@ -1,5 +1,6 @@
 package org.swrlapi.builtins;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLClass;
@@ -37,143 +38,144 @@ public interface SWRLBuiltInArgumentCreator
    * @param cls An OWL class
    * @return A class built-in argument
    */
-  SWRLClassBuiltInArgument createClassBuiltInArgument(OWLClass cls);
+  @NonNull SWRLClassBuiltInArgument createClassBuiltInArgument(@NonNull OWLClass cls);
 
   /**
    * @param individual An OWL individual
    * @return An individual built-in argument
    */
-  SWRLNamedIndividualBuiltInArgument createIndividualBuiltInArgument(OWLNamedIndividual individual);
+  @NonNull SWRLNamedIndividualBuiltInArgument createIndividualBuiltInArgument(@NonNull OWLNamedIndividual individual);
 
   /**
    * @param property An OWL object property
    * @return An object property built-in argument
    */
-  SWRLObjectPropertyBuiltInArgument createObjectPropertyBuiltInArgument(OWLObjectProperty property);
+  @NonNull SWRLObjectPropertyBuiltInArgument createObjectPropertyBuiltInArgument(@NonNull OWLObjectProperty property);
 
   /**
    * @param property An OWL data property
    * @return A data property built-in argument
    */
-  SWRLDataPropertyBuiltInArgument createDataPropertyBuiltInArgument(OWLDataProperty property);
+  @NonNull SWRLDataPropertyBuiltInArgument createDataPropertyBuiltInArgument(@NonNull OWLDataProperty property);
 
   /**
    * @param property An OWL annotation property
    * @return An annotation property built-in argument
    */
-  SWRLAnnotationPropertyBuiltInArgument createAnnotationPropertyBuiltInArgument(OWLAnnotationProperty property);
+  @NonNull SWRLAnnotationPropertyBuiltInArgument createAnnotationPropertyBuiltInArgument(
+    @NonNull OWLAnnotationProperty property);
 
   /**
    * @param datatype An OWL datatype
    * @return An datatype built-in argument
    */
-  SWRLDatatypeBuiltInArgument createDatatypeBuiltInArgument(OWLDatatype datatype);
+  @NonNull SWRLDatatypeBuiltInArgument createDatatypeBuiltInArgument(@NonNull OWLDatatype datatype);
 
   /**
    * @param s A string
    * @return A literal built-in argument
    */
-  SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(String s);
+  @NonNull SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(@NonNull String s);
 
   /**
    * @param b A Boolean
    * @return A literal built-in argument
    */
-  SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(boolean b);
+  @NonNull SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(boolean b);
 
   /**
    * @param b A byte
    * @return A literal built-in argument
    */
-  SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(byte b);
+  @NonNull SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(byte b);
 
   /**
    * @param s A short
    * @return A literal built-in argument
    */
-  SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(short s);
+  @NonNull SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(short s);
 
   /**
    * @param i An int
    * @return A literal built-in argument
    */
-  SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(int i);
+  @NonNull SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(int i);
 
   /**
    * @param l A long
    * @return A literal built-in argument
    */
-  SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(long l);
+  @NonNull SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(long l);
 
   /**
    * @param f A float
    * @return A literal built-in argument
    */
-  SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(float f);
+  @NonNull SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(float f);
 
   /**
    * @param d A double
    * @return A literal built-in argument
    */
-  SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(double d);
+  @NonNull SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(double d);
 
   /**
    * @param uri A URI
    * @return A literal built-in argument
    */
-  SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(URI uri);
+  @NonNull SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(@NonNull URI uri);
 
   /**
    * @param date A date
    * @return A literal built-in argument
    */
-  SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(XSDDate date);
+  @NonNull SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(@NonNull XSDDate date);
 
   /**
    * @param time A time
    * @return A literal built-in argument
    */
-  SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(XSDTime time);
+  @NonNull SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(@NonNull XSDTime time);
 
   /**
    * @param datetime A datetime
    * @return A literal built-in argument
    */
-  SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(XSDDateTime datetime);
+  @NonNull SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(@NonNull XSDDateTime datetime);
 
   /**
    * @param duration A duration
    * @return A literal built-in argument
    */
-  SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(XSDDuration duration);
+  @NonNull SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(@NonNull XSDDuration duration);
 
   /**
    * @param literal An OWL literal
    * @return A literal built-in argument
    */
-  SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(OWLLiteral literal);
+  @NonNull SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(@NonNull OWLLiteral literal);
 
   /**
    * @param variableIRI The IRI of a variable
    * @return A multi-variable built-in argument
    */
-  SWRLMultiValueVariableBuiltInArgument createSWRLMultiValueVariableBuiltInArgument(IRI variableIRI);
+  @NonNull SWRLMultiValueVariableBuiltInArgument createSWRLMultiValueVariableBuiltInArgument(@NonNull IRI variableIRI);
 
   /**
    * @param variableIRI The IRI of a variable
-   * @param arguments A list of built-in arguments
+   * @param arguments   A list of built-in arguments
    * @return A multi-variable built-in argument
    */
-  SWRLMultiValueVariableBuiltInArgument createSWRLMultiValueVariableBuiltInArgument(IRI variableIRI,
-      List<SWRLBuiltInArgument> arguments);
+  @NonNull SWRLMultiValueVariableBuiltInArgument createSWRLMultiValueVariableBuiltInArgument(@NonNull IRI variableIRI,
+    @NonNull List<SWRLBuiltInArgument> arguments);
 
   /**
-   * @param variableIRI The IRI of a variable
-   * @param queryName A SQWRL query name
-   * @param collectionName The name of a collection
+   * @param variableIRI       The IRI of a variable
+   * @param queryName         A SQWRL query name
+   * @param collectionName    The name of a collection
    * @param collectionGroupID The group ID of the collection
    * @return A collection variable built-in argument
    */
-  SQWRLCollectionVariableBuiltInArgument createSQWRLCollectionVariableBuiltInArgument(IRI variableIRI, String queryName,
-      String collectionName, String collectionGroupID);
+  @NonNull SQWRLCollectionVariableBuiltInArgument createSQWRLCollectionVariableBuiltInArgument(@NonNull IRI variableIRI,
+    @NonNull String queryName, @NonNull String collectionName, @NonNull String collectionGroupID);
 }

@@ -1,5 +1,6 @@
 package org.swrlapi.owl2rl;
 
+import checkers.nullness.quals.NonNull;
 import org.swrlapi.factory.DefaultOWL2RLPersistenceLayer;
 
 import java.util.Set;
@@ -15,12 +16,12 @@ public interface OWL2RLPersistenceLayer
   /**
    * @return The enabled OWL 2 RL rules
    */
-  Set<OWL2RLNames.OWL2RLRule> getEnabledRules();
+  @NonNull Set<OWL2RLNames.OWL2RLRule> getEnabledRules();
 
   /**
    * @param rules The OWL 2 RL rule to enable
    */
-  void setEnabledRules(Set<OWL2RLNames.OWL2RLRule> rules);
+  void setEnabledRules(@NonNull Set<OWL2RLNames.OWL2RLRule> rules);
 
   /**
    * @param rule The OWL 2 RL rule to disable
@@ -30,7 +31,7 @@ public interface OWL2RLPersistenceLayer
   /**
    * @param rules The OWL 2 RL rules to disable
    */
-  void setDisabledRules(Set<OWL2RLNames.OWL2RLRule> rules);
+  void setDisabledRules(@NonNull Set<OWL2RLNames.OWL2RLRule> rules);
 
   /**
    * Disable all rules

@@ -1,5 +1,6 @@
 package org.swrlapi.ui.model;
 
+import checkers.nullness.quals.NonNull;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.core.SWRLRuleRenderer;
 import org.swrlapi.parser.SWRLParser;
@@ -15,28 +16,28 @@ public interface SWRLRuleEngineModel extends SWRLAPIModel
   /**
    * @return A SWRL rule engine
    */
-  SWRLRuleEngine getSWRLRuleEngine();
+  @NonNull SWRLRuleEngine getSWRLRuleEngine();
 
   /**
    * @return A SWRL parser
    */
-  SWRLParser getSWRLParser();
+  @NonNull SWRLParser getSWRLParser();
 
   /**
    * @return A SWRL auto-completer
    */
-  SWRLAutoCompleter getSWRLAutoCompleter();
+  @NonNull SWRLAutoCompleter getSWRLAutoCompleter();
 
   /**
    *
    * @return A SWRL rule renderer
    */
-  SWRLRuleRenderer getSWRLRuleRenderer();
+  @NonNull SWRLRuleRenderer getSWRLRuleRenderer();
 
   /**
    * @return A SWRL rules table model
    */
-  SWRLRulesTableModel getSWRLRulesTableModel();
+  @NonNull SWRLRulesTableModel getSWRLRulesTableModel();
 
   /**
    * @return True if the rules in the underlying ontology have been modified since the last call to

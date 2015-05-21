@@ -1,5 +1,6 @@
 package org.swrlapi.bridge.converters;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLDatatype;
@@ -11,13 +12,13 @@ import org.semanticweb.owlapi.model.OWLObjectProperty;
  */
 public interface TargetRuleEngineOWLDeclarationAxiomConverter extends TargetRuleEngineConverter
 {
-  void convert(OWLClass cls);
+  void convert(@NonNull OWLClass cls);
 
-  void convert(OWLNamedIndividual individual);
+  void convert(@NonNull OWLNamedIndividual individual);
 
-  void convert(OWLObjectProperty property);
+  void convert(@NonNull OWLObjectProperty property);
 
-  void convert(OWLDataProperty property);
+  void convert(@NonNull OWLDataProperty property);
 
-  void convert(OWLDatatype datatype);
+  void convert(@NonNull OWLDatatype datatype);
 }

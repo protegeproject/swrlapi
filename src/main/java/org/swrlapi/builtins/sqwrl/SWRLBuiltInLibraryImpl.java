@@ -1,5 +1,6 @@
 package org.swrlapi.builtins.sqwrl;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.SWRLArgument;
 import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
@@ -46,14 +47,14 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * A collection can be uniquely identified by its query name and collection name. A unique key is generated from this
    * combination. If a collection is grouped, each group will be have a unique key generated.
    */
-  private final Map<String, Map<String, Collection<SWRLBuiltInArgument>>> collectionsMap;
+  @NonNull private final Map<String, Map<String, Collection<SWRLBuiltInArgument>>> collectionsMap;
 
   /**
    * A map of collection keys to group size (which will be 0 for ungrouped collections)
    */
-  private final Map<String, Integer> collectionGroupElementNumbersMap;
+  @NonNull private final Map<String, Integer> collectionGroupElementNumbersMap;
 
-  private final Set<String> setKeys, bagKeys;
+  @NonNull private final Set<String> setKeys, bagKeys;
 
   public SWRLBuiltInLibraryImpl()
   {
@@ -78,7 +79,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean select(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean select(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatInConsequent();
     checkForUnboundArguments(arguments);
@@ -135,7 +136,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean selectDistinct(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean selectDistinct(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatInConsequent();
 
@@ -147,7 +148,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean count(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean count(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatInConsequent();
     checkForUnboundArguments(arguments);
@@ -199,7 +200,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean countDistinct(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean countDistinct(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   { // This built-in is preprocessed by SWRLProcessor so there is nothing to do here
     checkThatInConsequent();
     return count(arguments);
@@ -212,7 +213,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean columnNames(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean columnNames(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatInConsequent();
     return true;
@@ -225,7 +226,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean orderBy(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean orderBy(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatInConsequent();
     return true;
@@ -238,7 +239,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean orderByDescending(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean orderByDescending(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatInConsequent();
     return true;
@@ -251,7 +252,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean limit(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean limit(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatInConsequent();
     return true;
@@ -268,7 +269,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean makeSet(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean makeSet(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatInAntecedent();
     checkForUnboundNonFirstArguments(arguments);
@@ -304,7 +305,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean makeBag(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean makeBag(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatInAntecedent();
     checkForUnboundNonFirstArguments(arguments);
@@ -343,7 +344,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean groupBy(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean groupBy(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatInAntecedent();
 
@@ -361,7 +362,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean isEmpty(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean isEmpty(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatInAntecedent();
 
@@ -377,7 +378,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notEmpty(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notEmpty(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatInAntecedent();
 
@@ -389,7 +390,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean size(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean size(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatInAntecedent();
 
@@ -405,7 +406,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean element(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean element(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatInAntecedent();
 
@@ -422,7 +423,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notElement(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notElement(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatInAntecedent();
 
@@ -434,7 +435,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean min(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean min(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     final int resultArgumentNumber = 0, numberOfConsequentArguments = 1;
 
@@ -470,7 +471,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean max(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean max(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     final int resultArgumentNumber = 0, numberOfConsequentArguments = 1;
 
@@ -506,7 +507,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean sum(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean sum(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     final int resultArgumentNumber = 0, sourceCollectionArgumentNumber = 1;
     final int numberOfCoreAntecedentArguments = 2, numberOfConsequentArguments = 1;
@@ -547,7 +548,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
           value = getArgumentAsADouble(element);
           sumValue += value;
         }
-        SWRLBuiltInArgument resultArgument = createLeastNarrowNumericLiteralBuiltInArgument(sumValue, new ArrayList<>(collection));
+        SWRLBuiltInArgument resultArgument = createLeastNarrowNumericLiteralBuiltInArgument(sumValue,
+          new ArrayList<>(collection));
 
         return processResultArgument(arguments, resultArgumentNumber, resultArgument);
       }
@@ -559,7 +561,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean avg(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean avg(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     final int resultArgumentNumber = 0, sourceCollectionArgumentNumber = 1, numberOfCoreAntecedentArguments = 2;
     final int numberOfConsequentArguments = 1;
@@ -600,7 +602,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
           sumValue += value;
         }
         double avgValue = sumValue / collection.size();
-        SWRLBuiltInArgument resultArgument = createLeastNarrowNumericLiteralBuiltInArgument(avgValue, new ArrayList<>(collection));
+        SWRLBuiltInArgument resultArgument = createLeastNarrowNumericLiteralBuiltInArgument(avgValue,
+          new ArrayList<>(collection));
 
         return processResultArgument(arguments, resultArgumentNumber, resultArgument);
       }
@@ -612,7 +615,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean median(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean median(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     final int resultArgumentNumber = 0, sourceCollectionArgumentNumber = 1;
     final int numberOfCoreAntecedentArguments = 2, numberOfConsequentArguments = 1;
@@ -664,7 +667,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
           medianValue = (valueArray[middle - 1] + valueArray[middle]) / 2;
 
         SWRLBuiltInArgument resultArgument = createLeastNarrowNumericLiteralBuiltInArgument(medianValue,
-            new ArrayList<>(collection));
+          new ArrayList<>(collection));
 
         return processResultArgument(arguments, resultArgumentNumber, resultArgument);
       }
@@ -676,7 +679,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean nth(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean nth(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     final int resultArgumentNumber = 0, sourceCollectionArgumentNumber = 1, nArgumentNumber = 2, numberOfCoreArguments = 3;
 
@@ -703,7 +706,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean greatest(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean greatest(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     final int resultArgumentNumber = 0, sourceCollectionArgumentNumber = 1, numberOfCoreArguments = 2;
 
@@ -726,7 +729,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean nthGreatest(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean nthGreatest(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     final int resultArgumentNumber = 0, sourceCollectionArgumentNumber = 1, nArgumentNumber = 2, numberOfCoreArguments = 3;
 
@@ -750,7 +753,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean least(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean least(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatInAntecedent();
 
@@ -782,7 +785,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notNthGreatest(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notNthGreatest(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     final int resultCollectionArgumentNumber = 0, sourceCollectionArgumentNumber = 1, nArgumentNumber = 2, numberOfCoreArguments = 3;
 
@@ -806,7 +809,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean nthSlice(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean nthSlice(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     final int resultCollectionArgumentNumber = 0, sourceCollectionArgumentNumber = 1, nArgumentNumber = 2, sliceSizeArgumentNumber = 3, numberOfCoreArguments = 4;
 
@@ -836,7 +839,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notNthSlice(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notNthSlice(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     final int resultCollectionArgumentNumber = 0, sourceCollectionArgumentNumber = 1, nArgumentNumber = 2, sliceSizeArgumentNumber = 3, numberOfCoreArguments = 4;
 
@@ -867,7 +870,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean nthGreatestSlice(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean nthGreatestSlice(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     final int resultCollectionArgumentNumber = 0, sourceCollectionArgumentNumber = 1, nArgumentNumber = 2, sliceSizeArgumentNumber = 3, numberOfCoreArguments = 4;
 
@@ -899,7 +902,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notNthGreatestSlice(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notNthGreatestSlice(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     final int resultCollectionArgumentNumber = 0, sourceCollectionArgumentNumber = 1, nArgumentNumber = 2, sliceSizeArgumentNumber = 3, numberOfCoreArguments = 4;
 
@@ -930,7 +933,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notNth(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notNth(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     final int resultCollectionArgumentNumber = 0, sourceCollectionArgumentNumber = 1, nArgumentNumber = 2, numberOfCoreArguments = 3;
 
@@ -954,7 +957,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notGreatest(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notGreatest(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     final int resultCollectionArgumentNumber = 0, sourceCollectionArgumentNumber = 1, numberOfCoreArguments = 2;
 
@@ -977,7 +980,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean greatestN(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean greatestN(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     final int resultCollectionArgumentNumber = 0, sourceCollectionArgumentNumber = 1, nArgumentNumber = 2, numberOfCoreArguments = 3;
 
@@ -1007,7 +1010,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notGreatestN(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notGreatestN(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     final int resultCollectionArgumentNumber = 0, sourceCollectionArgumentNumber = 1, nArgumentNumber = 2, numberOfCoreArguments = 3;
 
@@ -1037,7 +1040,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notLeast(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notLeast(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     final int resultCollectionArgumentNumber = 0, sourceCollectionArgumentNumber = 1, numberOfCoreArguments = 2;
 
@@ -1061,7 +1064,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean leastN(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean leastN(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     final int resultCollectionArgumentNumber = 0, sourceCollectionArgumentNumber = 1, nArgumentNumber = 2, numberOfCoreArguments = 3;
 
@@ -1086,7 +1089,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notLeastN(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notLeastN(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     final int resultCollectionArgumentNumber = 0, sourceCollectionArgumentNumber = 1, nArgumentNumber = 2, numberOfCoreArguments = 3;
 
@@ -1117,7 +1120,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean intersects(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean intersects(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatInAntecedent();
 
@@ -1143,7 +1146,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notIntersects(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notIntersects(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatInAntecedent();
 
@@ -1155,7 +1158,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean contains(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean contains(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatInAntecedent();
 
@@ -1181,7 +1184,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notContains(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notContains(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatInAntecedent();
 
@@ -1193,7 +1196,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean equal(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean equal(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatInAntecedent();
 
@@ -1223,7 +1226,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notEqual(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notEqual(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatInAntecedent();
 
@@ -1241,7 +1244,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean intersection(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean intersection(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatInAntecedent();
 
@@ -1286,7 +1289,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean append(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean append(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatInAntecedent();
 
@@ -1331,7 +1334,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean union(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean union(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatInAntecedent();
 
@@ -1376,7 +1379,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean difference(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean difference(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatInAntecedent();
 
@@ -1427,7 +1430,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean nthLast(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean nthLast(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return nthGreatest(arguments);
   }
@@ -1437,7 +1440,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notNthLast(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notNthLast(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return notNthGreatest(arguments);
   }
@@ -1447,7 +1450,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean nthLastSlice(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean nthLastSlice(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return nthGreatestSlice(arguments);
   }
@@ -1457,7 +1460,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notNthLastSlice(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notNthLastSlice(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return notNthGreatestSlice(arguments);
   }
@@ -1467,7 +1470,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean last(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean last(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return greatest(arguments);
   }
@@ -1477,7 +1480,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notLast(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notLast(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return notGreatest(arguments);
   }
@@ -1487,7 +1490,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean lastN(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean lastN(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return greatestN(arguments);
   }
@@ -1497,7 +1500,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notLastN(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notLastN(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return notGreatestN(arguments);
   }
@@ -1507,7 +1510,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean first(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean first(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return least(arguments);
   }
@@ -1517,7 +1520,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notFirst(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notFirst(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return notLeast(arguments);
   }
@@ -1527,7 +1530,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean firstN(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean firstN(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return leastN(arguments);
   }
@@ -1537,7 +1540,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notFirstN(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notFirstN(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return notLeastN(arguments);
   }
@@ -1548,7 +1551,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * *******************************************************************************************************************
    */
 
-  private String getCollectionGroupKeyInMake(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  @NonNull private String getCollectionGroupKeyInMake(@NonNull List<SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException
   {
     // The collection is the first argument, the element is the second; subsequent arguments (if any) are group elements
     final int collectionArgumentNumber = 0, numberOfCoreArguments = 2;
@@ -1593,7 +1597,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     }
   }
 
-  private String getCollectionGroupKeyInSingleCollectionOperation(List<SWRLBuiltInArgument> arguments,
+  private String getCollectionGroupKeyInSingleCollectionOperation(@NonNull List<SWRLBuiltInArgument> arguments,
     int coreNumberOfArguments) throws SWRLBuiltInException
   {
     String queryName = getInvokingRuleName();
@@ -1607,7 +1611,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       return "";
   }
 
-  private String getCollectionGroupKeyInMultiOperandCollectionOperation(List<SWRLBuiltInArgument> arguments,
+  private String getCollectionGroupKeyInMultiOperandCollectionOperation(@NonNull List<SWRLBuiltInArgument> arguments,
     int collectionArgumentNumber, int coreNumberOfArguments, int groupArgumentOffset,
     int numberOfRelevantGroupArguments) throws SWRLBuiltInException
   {
@@ -1623,12 +1627,12 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     if (numberOfRelevantGroupArguments != 0) // Is a grouped collection
       return createInvocationPattern(getBuiltInBridge(), queryName, 0, false, arguments
         .subList(coreNumberOfArguments + groupArgumentOffset,
-            coreNumberOfArguments + groupArgumentOffset + numberOfRelevantGroupArguments));
+          coreNumberOfArguments + groupArgumentOffset + numberOfRelevantGroupArguments));
     else
       return "";
   }
 
-  private boolean processSingleOperandCollectionOperationListResult(List<SWRLBuiltInArgument> arguments,
+  private boolean processSingleOperandCollectionOperationListResult(@NonNull List<SWRLBuiltInArgument> arguments,
     int resultCollectionArgumentNumber, int sourceCollectionArgumentNumber, int numberOfCoreArguments,
     Collection<SWRLBuiltInArgument> resultList) throws SWRLBuiltInException
   {
@@ -1651,7 +1655,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       resultCollectionGroupKey, resultList);
   }
 
-  private boolean processListResultArgument(List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+  private boolean processListResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
     String resultListName, String resultListID, Collection<SWRLBuiltInArgument> resultList) throws SWRLBuiltInException
   {
     checkArgumentNumber(resultArgumentNumber, arguments);
@@ -1689,8 +1693,9 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       throw new SWRLBuiltInException("may only be applied to collections with comparable elements");
   }
 
-  private Collection<SWRLBuiltInArgument> getCollectionInSingleCollectionOperation(List<SWRLBuiltInArgument> arguments,
-    int sourceCollectionArgumentNumber, int coreNumberOfArguments) throws SWRLBuiltInException
+  private Collection<SWRLBuiltInArgument> getCollectionInSingleCollectionOperation(
+    @NonNull List<SWRLBuiltInArgument> arguments, int sourceCollectionArgumentNumber, int coreNumberOfArguments)
+    throws SWRLBuiltInException
   {
     String queryName = getInvokingRuleName();
     String collectionName = getCollectionName(arguments, sourceCollectionArgumentNumber);
@@ -1699,8 +1704,9 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     return getCollection(queryName, collectionName, collectionGroupKey);
   }
 
-  private List<SWRLBuiltInArgument> getSortedListInSingleOperandCollectionOperation(List<SWRLBuiltInArgument> arguments,
-    int sourceCollectionArgumentNumber, int coreNumberOfArguments) throws SWRLBuiltInException
+  @NonNull private List<SWRLBuiltInArgument> getSortedListInSingleOperandCollectionOperation(
+    @NonNull List<SWRLBuiltInArgument> arguments, int sourceCollectionArgumentNumber, int coreNumberOfArguments)
+    throws SWRLBuiltInException
   {
     String queryName = getInvokingRuleName();
     String collectionName = getCollectionName(arguments, sourceCollectionArgumentNumber);
@@ -1711,8 +1717,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
   // We do not cache because only one built-in will typically perform an operation on a particular collection per query.
   // Note: currently implementations may modify the returned collection.
-  private List<SWRLBuiltInArgument> getSortedList(String queryName, String collectionName, String collectionGroupKey)
-    throws SWRLBuiltInException
+  @NonNull private List<SWRLBuiltInArgument> getSortedList(String queryName, String collectionName,
+    String collectionGroupKey) throws SWRLBuiltInException
   {
     Collection<SWRLBuiltInArgument> collection = getCollection(queryName, collectionName, collectionGroupKey);
     List<SWRLBuiltInArgument> result = new ArrayList<>(collection);
@@ -1721,8 +1727,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     return result;
   }
 
-  private List<SWRLBuiltInArgument> createBag(String queryName, String collectionName, String collectionGroupKey)
-    throws SWRLBuiltInException
+  @NonNull private List<SWRLBuiltInArgument> createBag(String queryName, String collectionName,
+    String collectionGroupKey) throws SWRLBuiltInException
   {
     List<SWRLBuiltInArgument> bag = new ArrayList<>();
 
@@ -1731,8 +1737,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     return bag;
   }
 
-  private Set<SWRLBuiltInArgument> createSet(String queryName, String collectionName, String collectionGroupKey)
-    throws SWRLBuiltInException
+  @NonNull private Set<SWRLBuiltInArgument> createSet(String queryName, String collectionName,
+    String collectionGroupKey) throws SWRLBuiltInException
   {
     Set<SWRLBuiltInArgument> set = new HashSet<>();
 
@@ -1741,7 +1747,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     return set;
   }
 
-  private String getCollectionName(List<SWRLBuiltInArgument> arguments, int collectionArgumentNumber)
+  @NonNull private String getCollectionName(@NonNull List<SWRLBuiltInArgument> arguments, int collectionArgumentNumber)
     throws SWRLBuiltInException
   {
     return getVariablePrefixedName(collectionArgumentNumber, arguments);
@@ -1845,19 +1851,20 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     return (collection instanceof Set<?>);
   }
 
-  private String createCollectionKey(String queryName, String collectionName)
+  @NonNull private String createCollectionKey(String queryName, String collectionName)
   {
     return queryName + ":" + collectionName;
   }
 
-  @SuppressWarnings("unused") private Collection<SWRLBuiltInArgument> ungroupCollection(String queryName,
+  @NonNull @SuppressWarnings("unused") private Collection<SWRLBuiltInArgument> ungroupCollection(String queryName,
     String collectionName) throws SWRLBuiltInException
   {
     if (!isCollectionRecorded(queryName, collectionName))
       throw new SWRLBuiltInException(collectionName + " in query " + queryName + " is not a collection");
     else {
-      Collection<SWRLBuiltInArgument> ungroupedCollection = isSet(queryName, collectionName) ? new HashSet<>() :
-          new ArrayList<>();
+      Collection<SWRLBuiltInArgument> ungroupedCollection = isSet(queryName, collectionName) ?
+        new HashSet<>() :
+        new ArrayList<>();
       String collectionKey = createCollectionKey(queryName, collectionName);
 
       for (String collectionGroupKey : this.collectionsMap.get(collectionKey).keySet()) {

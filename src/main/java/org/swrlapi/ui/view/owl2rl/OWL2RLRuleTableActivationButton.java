@@ -1,5 +1,6 @@
 package org.swrlapi.ui.view.owl2rl;
 
+import checkers.nullness.quals.NonNull;
 import org.swrlapi.owl2rl.OWL2RLNames;
 import org.swrlapi.ui.model.OWL2RLModel;
 
@@ -19,17 +20,21 @@ public class OWL2RLRuleTableActivationButton extends JCheckBox implements Action
   private static final int TOOLTIP_PREFERRED_WIDTH = 160;
   private static final int TOOLTIP_PREFERRED_HEIGHT = 30;
 
-  private final OWL2RLModel owl2RLModel;
+  @NonNull private final OWL2RLModel owl2RLModel;
   private final OWL2RLNames.OWL2RLRuleTable ruleTable;
 
-  public OWL2RLRuleTableActivationButton(OWL2RLModel owl2RLModel, OWL2RLNames.OWL2RLRuleTable ruleTable)
+  public OWL2RLRuleTableActivationButton(@NonNull OWL2RLModel owl2RLModel, OWL2RLNames.OWL2RLRuleTable ruleTable)
   {
     super(ruleTable.toString());
 
     this.owl2RLModel = owl2RLModel;
     this.ruleTable = ruleTable;
 
-    initialize();
+    setPreferredSize(new Dimension(TOOLTIP_PREFERRED_WIDTH, TOOLTIP_PREFERRED_HEIGHT));
+    setToolTipText("Click to enable or disable OWL 2 RL ruleTable " + this.ruleTable.toString() + ".");
+    setEnabled(this.owl2RLModel.getOWL2RLEngine().hasSwitchableRules(this.ruleTable));
+    setSelected(this.owl2RLModel.getOWL2RLEngine().hasEnabledRules(this.ruleTable));
+    addActionListener(this);
   }
 
   public void update()
@@ -48,16 +53,7 @@ public class OWL2RLRuleTableActivationButton extends JCheckBox implements Action
     getOWL2RLModel().updateView();
   }
 
-  private void initialize()
-  {
-    setPreferredSize(new Dimension(TOOLTIP_PREFERRED_WIDTH, TOOLTIP_PREFERRED_HEIGHT));
-    setToolTipText("Click to enable or disable OWL 2 RL ruleTable " + this.ruleTable.toString() + ".");
-    setEnabled(getOWL2RLModel().getOWL2RLEngine().hasSwitchableRules(this.ruleTable));
-    setSelected(getOWL2RLModel().getOWL2RLEngine().hasEnabledRules(this.ruleTable));
-    addActionListener(this);
-  }
-
-  private OWL2RLModel getOWL2RLModel()
+  @NonNull private OWL2RLModel getOWL2RLModel()
   {
     return this.owl2RLModel;
   }

@@ -1,10 +1,11 @@
 package org.swrlapi.core;
 
-import java.util.List;
-import java.util.Set;
-
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.SWRLAtom;
 import org.semanticweb.owlapi.model.SWRLRule;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * SWRLAPI representation of a SWRL rule. It specializes the OWLAPI's {@link org.semanticweb.owlapi.model.SWRLRule} to
@@ -51,7 +52,7 @@ public interface SWRLAPIRule extends SWRLRule
   /**
    * @return A list of SWRL atoms
    */
-  List<SWRLAtom> getHeadAtoms();
+  @NonNull List<SWRLAtom> getHeadAtoms();
 
   /**
    * @return A list of SWRL atoms
@@ -62,11 +63,11 @@ public interface SWRLAPIRule extends SWRLRule
    * @param builtInNames A set of built-in names
    * @return A list of built-in atoms
    */
-  List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromHead(Set<String> builtInNames);
+  @NonNull List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromHead(Set<String> builtInNames);
 
   /**
    * @param builtInNames A set of built-in names
    * @return A list of built-in atoms
    */
-  List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromBody(Set<String> builtInNames);
+  @NonNull List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromBody(Set<String> builtInNames);
 }

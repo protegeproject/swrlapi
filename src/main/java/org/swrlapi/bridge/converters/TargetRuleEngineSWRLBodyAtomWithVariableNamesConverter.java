@@ -1,7 +1,6 @@
 package org.swrlapi.bridge.converters;
 
-import java.util.Set;
-
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.SWRLClassAtom;
 import org.semanticweb.owlapi.model.SWRLDataPropertyAtom;
 import org.semanticweb.owlapi.model.SWRLDataRangeAtom;
@@ -9,6 +8,8 @@ import org.semanticweb.owlapi.model.SWRLDifferentIndividualsAtom;
 import org.semanticweb.owlapi.model.SWRLObjectPropertyAtom;
 import org.semanticweb.owlapi.model.SWRLSameIndividualAtom;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
+
+import java.util.Set;
 
 /**
  * This interface describes methods that can be implemented by a target rule engine to convert SWRL body atoms to native
@@ -22,17 +23,21 @@ import org.swrlapi.core.SWRLAPIBuiltInAtom;
  */
 public interface TargetRuleEngineSWRLBodyAtomWithVariableNamesConverter<T> extends TargetRuleEngineConverter
 {
-  T convert(SWRLClassAtom atom, Set<String> previouslyEncounteredVariablePrefixedNames);
+  @NonNull T convert(@NonNull SWRLClassAtom atom, @NonNull Set<String> previouslyEncounteredVariablePrefixedNames);
 
-  T convert(SWRLDataPropertyAtom atom, Set<String> previouslyEncounteredVariablePrefixedNames);
+  @NonNull T convert(@NonNull SWRLDataPropertyAtom atom,
+    @NonNull Set<String> previouslyEncounteredVariablePrefixedNames);
 
-  T convert(SWRLObjectPropertyAtom atom, Set<String> previouslyEncounteredVariablePrefixedNames);
+  @NonNull T convert(@NonNull SWRLObjectPropertyAtom atom,
+    @NonNull Set<String> previouslyEncounteredVariablePrefixedNames);
 
-  T convert(SWRLSameIndividualAtom atom, Set<String> previouslyEncounteredVariablePrefixedNames);
+  @NonNull T convert(@NonNull SWRLSameIndividualAtom atom,
+    @NonNull Set<String> previouslyEncounteredVariablePrefixedNames);
 
-  T convert(SWRLDifferentIndividualsAtom atom, Set<String> previouslyEncounteredVariablePrefixedNames);
+  @NonNull T convert(@NonNull SWRLDifferentIndividualsAtom atom,
+    @NonNull Set<String> previouslyEncounteredVariablePrefixedNames);
 
-  T convert(SWRLAPIBuiltInAtom atom, Set<String> previouslyEncounteredVariablePrefixedNames);
+  @NonNull T convert(@NonNull SWRLAPIBuiltInAtom atom, @NonNull Set<String> previouslyEncounteredVariablePrefixedNames);
 
-  T convert(SWRLDataRangeAtom atom, Set<String> previouslyEncounteredVariablePrefixedNames);
+  @NonNull T convert(@NonNull SWRLDataRangeAtom atom, @NonNull Set<String> previouslyEncounteredVariablePrefixedNames);
 }

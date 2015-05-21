@@ -1,5 +1,7 @@
 package org.swrlapi.factory;
 
+import checkers.nullness.quals.NonNull;
+import checkers.nullness.quals.Nullable;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLObject;
@@ -16,7 +18,6 @@ import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.core.OWLLiteralComparator;
 import org.swrlapi.exceptions.SWRLAPIException;
 
-import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Set;
@@ -34,7 +35,7 @@ class DefaultSWRLLiteralBuiltInArgument extends DefaultSWRLBuiltInArgument imple
     this.literal = literal;
   }
 
-  @Override public OWLLiteral getLiteral()
+  @NonNull @Override public OWLLiteral getLiteral()
   {
     return this.literal;
   }
@@ -59,27 +60,27 @@ class DefaultSWRLLiteralBuiltInArgument extends DefaultSWRLBuiltInArgument imple
     return true;
   }
 
-  @Override public SWRLVariableBuiltInArgument asVariable()
+  @NonNull @Override public SWRLVariableBuiltInArgument asVariable()
   {
     throw new SWRLAPIException("Not a SWRLVariableBuiltInArgument");
   }
 
-  @Override public SWRLMultiValueVariableBuiltInArgument asMultiValueVariable()
+  @NonNull @Override public SWRLMultiValueVariableBuiltInArgument asMultiValueVariable()
   {
     throw new SWRLAPIException("Not a SWRLMultiVariableBuiltInArgument");
   }
 
-  @Override public SWRLLiteralBuiltInArgument asSWRLLiteralBuiltInArgument()
+  @NonNull @Override public SWRLLiteralBuiltInArgument asSWRLLiteralBuiltInArgument()
   {
     return this;
   }
 
-  @Override public SWRLNamedBuiltInArgument asSWRLNamedBuiltInArgument()
+  @NonNull @Override public SWRLNamedBuiltInArgument asSWRLNamedBuiltInArgument()
   {
     throw new SWRLAPIException("Not a SWRLNamedBuiltInArgument");
   }
 
-  @Override public boolean equals(Object o)
+  @Override public boolean equals(@Nullable Object o)
   {
     if (this == o) {
       return true;
@@ -99,7 +100,7 @@ class DefaultSWRLLiteralBuiltInArgument extends DefaultSWRLBuiltInArgument imple
     return this.literal.hashCode();
   }
 
-  @Override public int compareTo(OWLObject o)
+  @Override public int compareTo(@NonNull OWLObject o)
   {
     if (o == null)
       throw new NullPointerException();
@@ -112,42 +113,42 @@ class DefaultSWRLLiteralBuiltInArgument extends DefaultSWRLBuiltInArgument imple
     return owlLiteralComparator.compare(this.getLiteral(), other.getLiteral());
   }
 
-  @Override public void accept(SWRLObjectVisitor visitor)
+  @Override public void accept(@NonNull SWRLObjectVisitor visitor)
   {
     visitor.visit(this);
   }
 
-  @Override public <O> O accept(SWRLObjectVisitorEx<O> visitor)
+  @NonNull @Override public <O> O accept(@NonNull SWRLObjectVisitorEx<O> visitor)
   {
     return visitor.visit(this);
   }
 
-  @Override public void accept(OWLObjectVisitor visitor)
+  @Override public void accept(@NonNull OWLObjectVisitor visitor)
   {
     visitor.visit(this);
   }
 
-  @Override public <O> O accept(OWLObjectVisitorEx<O> visitor)
+  @NonNull @Override public <O> O accept(@NonNull OWLObjectVisitorEx<O> visitor)
   {
     return visitor.visit(this);
   }
 
-  @Override public <T> T accept(SWRLBuiltInArgumentVisitorEx<T> visitor)
+  @Override public <T> T accept(@NonNull SWRLBuiltInArgumentVisitorEx<T> visitor)
   {
     return visitor.visit(this);
   }
 
-  @Override public void accept(SWRLBuiltInArgumentVisitor visitor)
+  @Override public void accept(@NonNull SWRLBuiltInArgumentVisitor visitor)
   {
     visitor.visit(this);
   }
 
-  @Override public String toString()
+  @NonNull @Override public String toString()
   {
     return this.literal.getLiteral();
   }
 
-  @Nonnull @Override public Set<OWLAnnotationProperty> getAnnotationPropertiesInSignature()
+  @NonNull @Override public Set<OWLAnnotationProperty> getAnnotationPropertiesInSignature()
   {
     return Collections.emptySet(); // TODO Implement getAnnotationPropertiesInSignature
   }

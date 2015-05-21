@@ -1,5 +1,6 @@
 package org.swrlapi.bridge.converters;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.SWRLClassAtom;
 import org.semanticweb.owlapi.model.SWRLDataPropertyAtom;
 import org.semanticweb.owlapi.model.SWRLDataRangeAtom;
@@ -18,17 +19,17 @@ import org.swrlapi.core.SWRLAPIBuiltInAtom;
  */
 public interface TargetRuleEngineSWRLHeadAtomConverter<T> extends TargetRuleEngineConverter
 {
-  T convert(SWRLClassAtom atom);
+  @NonNull T convert(@NonNull SWRLClassAtom atom);
 
-  T convert(SWRLDataPropertyAtom atom);
+  @NonNull T convert(@NonNull SWRLDataPropertyAtom atom);
 
-  T convert(SWRLObjectPropertyAtom atom);
+  @NonNull T convert(@NonNull SWRLObjectPropertyAtom atom);
 
-  T convert(SWRLSameIndividualAtom atom);
+  @NonNull T convert(@NonNull SWRLSameIndividualAtom atom);
 
-  T convert(SWRLDifferentIndividualsAtom atom);
+  @NonNull T convert(@NonNull SWRLDifferentIndividualsAtom atom);
 
-  T convert(SWRLAPIBuiltInAtom atom);
+  @NonNull T convert(@NonNull SWRLAPIBuiltInAtom atom);
 
-  T convert(SWRLDataRangeAtom atom);
+  @NonNull T convert(@NonNull SWRLDataRangeAtom atom);
 }

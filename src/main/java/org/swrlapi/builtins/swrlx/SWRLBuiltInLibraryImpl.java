@@ -1,15 +1,16 @@
 package org.swrlapi.builtins.swrlx;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.exceptions.SWRLBuiltInException;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Implementations library for SWRL Extensions built-ins.
@@ -18,8 +19,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 {
   private static final String SWRLXLibraryName = "SWRLExtensionsBuiltIns";
 
-  private final Map<String, OWLClass> classInvocationMap;
-  private final Map<String, OWLNamedIndividual> individualInvocationMap;
+  @NonNull private final Map<String, OWLClass> classInvocationMap;
+  @NonNull private final Map<String, OWLNamedIndividual> individualInvocationMap;
 
   public SWRLBuiltInLibraryImpl()
   {
@@ -44,7 +45,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean makeOWLClass(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean makeOWLClass(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsAtLeast(2, arguments.size());
 
@@ -77,7 +78,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  private boolean makeOWLIndividual(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  private boolean makeOWLIndividual(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsAtLeast(2, arguments.size());
 
@@ -104,19 +105,19 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   }
 
   // For backwards compatability
-  public boolean makeOWLThing(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean makeOWLThing(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return makeOWLIndividual(arguments);
   }
 
   // For backwards compatability
-  public boolean createOWLThing(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean createOWLThing(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return makeOWLIndividual(arguments);
   }
 
   // TODO: check for invocations to swrlx built-ins, which will cause blocking
-  public boolean invokeSWRLBuiltIn(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean invokeSWRLBuiltIn(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsAtLeast(2, arguments.size());
 

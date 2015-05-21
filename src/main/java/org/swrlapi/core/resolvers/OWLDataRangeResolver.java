@@ -1,10 +1,10 @@
 package org.swrlapi.core.resolvers;
 
+import checkers.nullness.quals.NonNull;
+import org.semanticweb.owlapi.model.OWLDataRange;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import org.semanticweb.owlapi.model.OWLDataRange;
-import org.swrlapi.exceptions.SWRLAPIInternalException;
 
 /**
  * This class is used to keep track of data ranges, typically by a rule engine implementation. OWL 2 RL-based reasoners,
@@ -17,12 +17,11 @@ import org.swrlapi.exceptions.SWRLAPIInternalException;
  */
 public class OWLDataRangeResolver
 {
-  private final Map<String, OWLDataRange> dataRangeMap;
+  @NonNull private final Map<String, OWLDataRange> dataRangeMap;
 
   public OWLDataRangeResolver()
   {
     this.dataRangeMap = new HashMap<>();
-    reset();
   }
 
   public void reset()
@@ -30,16 +29,16 @@ public class OWLDataRangeResolver
     this.dataRangeMap.clear();
   }
 
-  public void recordOWLDataRange(String dataRangeID, OWLDataRange dataRange)
+  public void recordOWLDataRange(@NonNull String dataRangeID, @NonNull OWLDataRange dataRange)
   {
     this.dataRangeMap.put(dataRangeID, dataRange);
   }
 
-  public OWLDataRange resolveOWLDataRange(String dataRangeID)
+  @NonNull public OWLDataRange resolveOWLDataRange(@NonNull String dataRangeID)
   {
     if (this.dataRangeMap.containsKey(dataRangeID))
       return this.dataRangeMap.get(dataRangeID);
     else
-      throw new SWRLAPIInternalException("no data range found with ID " + dataRangeID);
+      throw new IllegalArgumentException("no data range found with ID " + dataRangeID);
   }
 }

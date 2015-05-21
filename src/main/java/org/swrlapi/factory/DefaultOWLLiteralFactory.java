@@ -1,5 +1,6 @@
 package org.swrlapi.factory;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
@@ -17,100 +18,100 @@ import java.util.List;
 
 public class DefaultOWLLiteralFactory implements OWLLiteralFactory
 {
-  private final OWLDatatypeFactory datatypeFactory;
+  @NonNull private final OWLDatatypeFactory datatypeFactory;
 
   public DefaultOWLLiteralFactory()
   {
     this.datatypeFactory = SWRLAPIFactory.getOWLDatatypeFactory();
   }
 
-  @Override
+  @NonNull @Override
   public OWLLiteral getOWLLiteral(byte b)
   {
     return new OWLLiteralImpl("" + b, "", getOWLDatatypeFactory().getByteDatatype());
   }
 
-  @Override
+  @NonNull @Override
   public OWLLiteral getOWLLiteral(short s)
   {
     return new OWLLiteralImpl("" + s, "", getOWLDatatypeFactory().getShortDatatype());
   }
 
-  @Override
+  @NonNull @Override
   public OWLLiteral getOWLLiteral(int i)
   {
     return new OWLLiteralImpl("" + i, "", getOWLDatatypeFactory().getIntDatatype());
   }
 
-  @Override
+  @NonNull @Override
   public OWLLiteral getOWLLiteral(long l)
   {
     return new OWLLiteralImpl("" + l, "", getOWLDatatypeFactory().getLongDatatype());
   }
 
-  @Override
+  @NonNull @Override
   public OWLLiteral getOWLLiteral(float f)
   {
     return new OWLLiteralImpl("" + f, "", getOWLDatatypeFactory().getFloatDatatype());
   }
 
-  @Override
+  @NonNull @Override
   public OWLLiteral getOWLLiteral(double d)
   {
     return new OWLLiteralImpl("" + d, "", getOWLDatatypeFactory().getDoubleDatatype());
   }
 
-  @Override
-  public OWLLiteral getOWLLiteral(String s)
+  @NonNull @Override
+  public OWLLiteral getOWLLiteral(@NonNull String s)
   {
     return new OWLLiteralImpl(s, "", getOWLDatatypeFactory().getStringDatatype());
   }
 
-  @Override
+  @NonNull @Override
   public OWLLiteral getOWLLiteral(boolean b)
   {
     return new OWLLiteralImpl("" + b, "", getOWLDatatypeFactory().getBooleanDatatype());
   }
 
-  @Override
+  @NonNull @Override
   public OWLLiteral getOWLLiteral(URI uri)
   {
     return new OWLLiteralImpl("" + uri, "", getOWLDatatypeFactory().getURIDatatype());
   }
 
-  @Override
-  public OWLLiteral getOWLLiteral(XSDDate date)
+  @NonNull @Override
+  public OWLLiteral getOWLLiteral(@NonNull XSDDate date)
   {
     return new OWLLiteralImpl(date.getContent(), "", getOWLDatatypeFactory().getDateDatatype());
   }
 
-  @Override
-  public OWLLiteral getOWLLiteral(XSDTime time)
+  @NonNull @Override
+  public OWLLiteral getOWLLiteral(@NonNull XSDTime time)
   {
     return new OWLLiteralImpl(time.getContent(), "", getOWLDatatypeFactory().getTimeDatatype());
   }
 
-  @Override
-  public OWLLiteral getOWLLiteral(XSDDateTime datetime)
+  @NonNull @Override
+  public OWLLiteral getOWLLiteral(@NonNull XSDDateTime datetime)
   {
     return new OWLLiteralImpl(datetime.getContent(), "", getOWLDatatypeFactory().getDateTimeDatatype());
   }
 
-  @Override
-  public OWLLiteral getOWLLiteral(XSDDuration duration)
+  @NonNull @Override
+  public OWLLiteral getOWLLiteral(@NonNull XSDDuration duration)
   {
     return new OWLLiteralImpl(duration.getContent(), "", getOWLDatatypeFactory().getDurationDatatype());
   }
 
-  @Override
-  public OWLLiteral getOWLLiteral(String literal, OWLDatatype datatype)
+  @NonNull @Override
+  public OWLLiteral getOWLLiteral(@NonNull String literal, @NonNull OWLDatatype datatype)
   {
     validateOWLLiteral(literal, datatype);
     return new OWLLiteralImpl(literal, "", datatype);
   }
 
-  @Override
-  public OWLLiteral createLeastNarrowNumericOWLLiteral(double value, List<OWLLiteral> inputLiterals)
+  @NonNull @Override
+  public OWLLiteral createLeastNarrowNumericOWLLiteral(double value, @NonNull List<OWLLiteral> inputLiterals)
   {
     if (isWidestNumericLiteralAByte(inputLiterals))
       return getOWLLiteral((byte)value);
@@ -126,7 +127,7 @@ public class DefaultOWLLiteralFactory implements OWLLiteralFactory
       return getOWLLiteral(value);
   }
 
-  private boolean isWidestNumericLiteralAByte(List<OWLLiteral> literals)
+  private boolean isWidestNumericLiteralAByte(@NonNull List<OWLLiteral> literals)
   {
     for (OWLLiteral literal : literals)
       if (isShort(literal) || isInt(literal) || isLong(literal) || isFloat(literal) || isDouble(literal))
@@ -134,7 +135,7 @@ public class DefaultOWLLiteralFactory implements OWLLiteralFactory
     return true;
   }
 
-  private boolean isWidestNumericLiteralAShort(List<OWLLiteral> literals)
+  private boolean isWidestNumericLiteralAShort(@NonNull List<OWLLiteral> literals)
   {
     for (OWLLiteral literal : literals)
       if (isInt(literal) || isLong(literal) || isFloat(literal) || isDouble(literal))
@@ -142,7 +143,7 @@ public class DefaultOWLLiteralFactory implements OWLLiteralFactory
     return true;
   }
 
-  private boolean isWidestNumericLiteralAnInt(List<OWLLiteral> literals)
+  private boolean isWidestNumericLiteralAnInt(@NonNull List<OWLLiteral> literals)
   {
     for (OWLLiteral literal : literals)
       if (isLong(literal) || isFloat(literal) || isDouble(literal))
@@ -150,7 +151,7 @@ public class DefaultOWLLiteralFactory implements OWLLiteralFactory
     return true;
   }
 
-  private boolean isWidestNumericLiteralALong(List<OWLLiteral> literals)
+  private boolean isWidestNumericLiteralALong(@NonNull List<OWLLiteral> literals)
   {
     for (OWLLiteral literal : literals)
       if (isFloat(literal) || isDouble(literal))
@@ -158,7 +159,7 @@ public class DefaultOWLLiteralFactory implements OWLLiteralFactory
     return true;
   }
 
-  private boolean isWidestNumericLiteralAFloat(List<OWLLiteral> literals)
+  private boolean isWidestNumericLiteralAFloat(@NonNull List<OWLLiteral> literals)
   {
     for (OWLLiteral literal : literals)
       if (isDouble(literal))
@@ -166,38 +167,38 @@ public class DefaultOWLLiteralFactory implements OWLLiteralFactory
     return true;
   }
 
-  private boolean isShort(OWLLiteral literal)
+  private boolean isShort(@NonNull OWLLiteral literal)
   {
     return literal.getDatatype().getIRI().equals(XSDVocabulary.SHORT.getIRI());
   }
 
-  private boolean isInt(OWLLiteral literal)
+  private boolean isInt(@NonNull OWLLiteral literal)
   {
     return literal.getDatatype().getIRI().equals(XSDVocabulary.INT.getIRI());
   }
 
-  private boolean isLong(OWLLiteral literal)
+  private boolean isLong(@NonNull OWLLiteral literal)
   {
     return literal.getDatatype().getIRI().equals(XSDVocabulary.LONG.getIRI());
   }
 
-  private boolean isFloat(OWLLiteral literal)
+  private boolean isFloat(@NonNull OWLLiteral literal)
   {
     return literal.getDatatype().isFloat();
   }
 
-  private boolean isDouble(OWLLiteral literal)
+  private boolean isDouble(@NonNull OWLLiteral literal)
   {
     return literal.getDatatype().isDouble();
   }
 
-  private void validateOWLLiteral(String literal, OWLDatatype datatype)
+  private void validateOWLLiteral(@NonNull String literal, @NonNull OWLDatatype datatype)
   {
     if (!OWLLiteralValidator.isValid(literal, datatype))
       throw new RuntimeException("literal value " + literal + " is not a valid " + datatype.getIRI());
   }
 
-  private OWLDatatypeFactory getOWLDatatypeFactory()
+  @NonNull private OWLDatatypeFactory getOWLDatatypeFactory()
   {
     return this.datatypeFactory;
   }

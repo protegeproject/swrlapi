@@ -1,5 +1,6 @@
 package org.swrlapi.core;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
@@ -61,7 +62,7 @@ public interface SWRLRuleEngine
   /**
    * @return A collection of SWRL rules
    */
-  Set<SWRLAPIRule> getSWRLRules();
+  @NonNull Set<SWRLAPIRule> getSWRLRules();
 
   /**
    * @param ruleName The name of the rule
@@ -76,7 +77,7 @@ public interface SWRLRuleEngine
    * @return A SWRL rule
    * @throws SWRLParseException If an error occurs during parsing
    */
-  SWRLAPIRule createSWRLRule(String ruleName, String rule) throws SWRLParseException;
+  @NonNull SWRLAPIRule createSWRLRule(String ruleName, String rule) throws SWRLParseException;
 
   /**
    * @param ruleName The name of the rule
@@ -86,7 +87,7 @@ public interface SWRLRuleEngine
    * @return A SWRL rule
    * @throws SWRLParseException If an error occurs during parsing
    */
-  SWRLAPIRule createSWRLRule(String ruleName, String rule, String comment, boolean isActive) throws SWRLParseException;
+  @NonNull SWRLAPIRule createSWRLRule(String ruleName, String rule, String comment, boolean isActive) throws SWRLParseException;
 
   /**
    * @param ruleName The name of a rule
@@ -107,22 +108,22 @@ public interface SWRLRuleEngine
   /**
    * @return The IRIs of all SWRL built-ins
    */
-  Set<IRI> getSWRLBuiltInIRIs();
+  @NonNull Set<IRI> getSWRLBuiltInIRIs();
 
   /**
    * @return A SWRL parser
    */
-  SWRLParser createSWRLParser();
+  @NonNull SWRLParser createSWRLParser();
 
   /**
    * @return A SWRL rule auto-completer
    */
-  SWRLAutoCompleter createSWRLAutoCompleter();
+  @NonNull SWRLAutoCompleter createSWRLAutoCompleter();
 
   /**
    * @return A SWRL rule renderer
    */
-  SWRLRuleRenderer createSWRLRuleRenderer();
+  @NonNull SWRLRuleRenderer createSWRLRuleRenderer();
 
   /**
    * Get the underlying OWL 2 RL reasoner used by the rule and query engine.
@@ -167,12 +168,12 @@ public interface SWRLRuleEngine
   /**
    * @return A collection of OWL axioms
    */
-  Set<OWLAxiom> getInferredOWLAxioms();
+  @NonNull Set<OWLAxiom> getInferredOWLAxioms();
 
   /**
    * @return A collection of OWL axioms
    */
-  Set<OWLAxiom> getInjectedOWLAxioms();
+  @NonNull Set<OWLAxiom> getInjectedOWLAxioms();
 
   /**
    * @return The number of imported SWRL rules

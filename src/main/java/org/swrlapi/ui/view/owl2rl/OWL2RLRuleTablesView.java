@@ -1,5 +1,6 @@
 package org.swrlapi.ui.view.owl2rl;
 
+import checkers.nullness.quals.NonNull;
 import org.swrlapi.owl2rl.OWL2RLEngine;
 import org.swrlapi.owl2rl.OWL2RLNames;
 import org.swrlapi.ui.model.OWL2RLModel;
@@ -13,17 +14,23 @@ public class OWL2RLRuleTablesView extends JTabbedPane implements SWRLAPIView
 {
   private static final long serialVersionUID = 1L;
 
-  private final OWL2RLModel owl2RLModel;
-  private final OWL2RLControlView owl2RLControlView;
-  private final List<OWL2RLRuleTableView> owl2RLTableViews;
+  @NonNull private final OWL2RLModel owl2RLModel;
+  @NonNull private final OWL2RLControlView owl2RLControlView;
+  @NonNull private final List<OWL2RLRuleTableView> owl2RLTableViews;
 
-  public OWL2RLRuleTablesView(OWL2RLEngine owl2RLEngine)
+  public OWL2RLRuleTablesView(@NonNull OWL2RLEngine owl2RLEngine)
   {
     this.owl2RLModel = new OWL2RLModel(this, owl2RLEngine);
     this.owl2RLTableViews = new ArrayList<>();
     this.owl2RLControlView = new OWL2RLControlView(this.owl2RLModel);
 
-    initialize();
+    addTab("OWL2RL Control", this.owl2RLControlView);
+
+    for (OWL2RLNames.OWL2RLRuleTable ruleTable : this.owl2RLModel.getOWL2RLEngine().getRuleTables()) {
+      OWL2RLRuleTableView owl2RLTableView = new OWL2RLRuleTableView(getOWL2RLModel(), ruleTable);
+      this.owl2RLTableViews.add(owl2RLTableView);
+      addTab(ruleTable.toString(), owl2RLTableView);
+    }
   }
 
   @Override
@@ -34,18 +41,7 @@ public class OWL2RLRuleTablesView extends JTabbedPane implements SWRLAPIView
     this.owl2RLControlView.update();
   }
 
-  private void initialize()
-  {
-    addTab("OWL2RL Control", this.owl2RLControlView);
-
-    for (OWL2RLNames.OWL2RLRuleTable ruleTable : getOWL2RLModel().getOWL2RLEngine().getRuleTables()) {
-      OWL2RLRuleTableView owl2RLTableView = new OWL2RLRuleTableView(getOWL2RLModel(), ruleTable);
-      this.owl2RLTableViews.add(owl2RLTableView);
-      addTab(ruleTable.toString(), owl2RLTableView);
-    }
-  }
-
-  private OWL2RLModel getOWL2RLModel()
+  @NonNull private OWL2RLModel getOWL2RLModel()
   {
     return this.owl2RLModel;
   }

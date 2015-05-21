@@ -1,5 +1,6 @@
 package org.swrlapi.core;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDatatype;
 
@@ -10,31 +11,31 @@ import org.semanticweb.owlapi.model.OWLDatatype;
  */
 public interface OWLDatatypeFactory
 {
-  OWLDatatype getOWLDatatype(IRI iri);
+  @NonNull OWLDatatype getOWLDatatype(@NonNull IRI iri);
 
-  OWLDatatype getByteDatatype();
+  @NonNull OWLDatatype getByteDatatype();
 
-  OWLDatatype getShortDatatype();
+  @NonNull OWLDatatype getShortDatatype();
 
-  OWLDatatype getDoubleDatatype();
+  @NonNull OWLDatatype getDoubleDatatype();
 
-  OWLDatatype getFloatDatatype();
+  @NonNull OWLDatatype getFloatDatatype();
 
-  OWLDatatype getIntDatatype();
+  @NonNull OWLDatatype getIntDatatype();
 
-  OWLDatatype getLongDatatype();
+  @NonNull OWLDatatype getLongDatatype();
 
-  OWLDatatype getStringDatatype();
+  @NonNull OWLDatatype getStringDatatype();
 
-  OWLDatatype getBooleanDatatype();
+  @NonNull OWLDatatype getBooleanDatatype();
 
-  OWLDatatype getURIDatatype();
+  @NonNull OWLDatatype getURIDatatype();
 
-  OWLDatatype getDateDatatype();
+  @NonNull OWLDatatype getDateDatatype();
 
-  OWLDatatype getTimeDatatype();
+  @NonNull OWLDatatype getTimeDatatype();
 
-  OWLDatatype getDateTimeDatatype();
+  @NonNull OWLDatatype getDateTimeDatatype();
 
-  OWLDatatype getDurationDatatype();
+  @NonNull OWLDatatype getDurationDatatype();
 }

@@ -1,30 +1,31 @@
 package org.swrlapi.core.xsd;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 
 /**
- * Base class the the small set of XSD types provided by the SWRLAPI.
+ * Base class for the small set of temporal XSD types provided by the SWRLAPI.
  */
-public abstract class XSDType<T> implements Comparable<T>
+abstract class XSDType<T> implements Comparable<T>
 {
-  protected final String content;
-  private final IRI iri;
+  @NonNull protected final String content;
+  @NonNull private final IRI iri;
 
-  protected XSDType(String content, IRI iri)
+  protected XSDType(@NonNull String content, @NonNull IRI iri)
   {
     this.content = content;
     this.iri = iri;
   }
 
-  public abstract String getContent();
+  @NonNull public abstract String getContent();
 
-  @Override
+  @NonNull @Override
   public String toString()
   {
     return this.content;
   }
 
-  public IRI getIRI()
+  @NonNull public IRI getIRI()
   {
     return this.iri;
   }

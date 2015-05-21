@@ -1,5 +1,7 @@
 package org.swrlapi.builtins.temporal;
 
+import checkers.nullness.quals.NonNull;
+
 import java.sql.Timestamp;
 import java.util.GregorianCalendar;
 
@@ -84,7 +86,7 @@ class Temporal
       31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30, // to December
       365 };
 
-  private final GregorianCalendar gc;
+  @NonNull private final GregorianCalendar gc;
 
   /**
    * @param datetimeStringProcessor A datetime string processor
@@ -100,7 +102,7 @@ class Temporal
    * @param nowDatetimeString A string containing an updated 'now' datetime
    * @throws TemporalException If an error occurs during processing
    */
-  public void setNow(String nowDatetimeString) throws TemporalException
+  public void setNow(@NonNull String nowDatetimeString) throws TemporalException
   {
     this.nowGranuleCountInMillis = datetimeString2GranuleCount(nowDatetimeString, MILLISECONDS);
   }
@@ -116,7 +118,7 @@ class Temporal
    * @param granularity A granularity
    * @throws TemporalException If the specified granularity is invalid
    */
-  public void checkGranularity(String granularity) throws TemporalException
+  public void checkGranularity(@NonNull String granularity) throws TemporalException
   {
     getIntegerGranularityRepresentation(granularity); // Will throw an exception if it cannot convert the granularity.
   }
@@ -136,7 +138,7 @@ class Temporal
    * @return The integer representation of the granularity
    * @throws TemporalException If an error occurs during processing
    */
-  public static int getIntegerGranularityRepresentation(String granularity) throws TemporalException
+  public static int getIntegerGranularityRepresentation(@NonNull String granularity) throws TemporalException
   {
     if (granularity.length() == 0 || granularity.equalsIgnoreCase("finest"))
       return FINEST;
@@ -177,7 +179,7 @@ class Temporal
   /**
    * * Take a java.sql.Timestamp and return the number of granules at the specified granularity since 1 C.E.
    */
-  public long sqlTimestamp2GranuleCount(Timestamp timestamp, int granularity) throws TemporalException
+  public long sqlTimestamp2GranuleCount(@NonNull Timestamp timestamp, int granularity) throws TemporalException
   {
     long granuleCountInMillis = timestamp.getTime() + MillisecondsTo1970;
 
@@ -188,7 +190,7 @@ class Temporal
    * Take a full specification datetime string (i.e., all components including milliseconds have a value) and return the
    * number of granules at the specified granularity since 1 C.E.
    */
-  public long datetimeString2GranuleCount(String datetimeString, int granularity) throws TemporalException
+  public long datetimeString2GranuleCount(@NonNull String datetimeString, int granularity) throws TemporalException
   {
     checkGranularity(granularity);
 
@@ -476,27 +478,27 @@ class Temporal
   }
 
   // Take a datetime string and convert it to a java.sql.Date object at the specified granularity.
-  private java.sql.Date datetimeString2SQLDate(String datetimeString, int granularity) throws TemporalException
+  private java.sql.Date datetimeString2SQLDate(@NonNull String datetimeString, int granularity) throws TemporalException
   {
     checkGranularity(granularity);
 
     return granuleCount2SQLDate(datetimeString2GranuleCount(datetimeString, granularity), granularity);
   }
 
-  private java.sql.Date datetimeString2SQLDate(String datetimeString) throws TemporalException
+  private java.sql.Date datetimeString2SQLDate(@NonNull String datetimeString) throws TemporalException
   {
     return datetimeString2SQLDate(datetimeString, FINEST);
   }
 
   // Take a datetime string and convert it to a java.util.Date object at the specified granularity.
-  private java.util.Date datetimeString2UtilDate(String datetimeString, int granularity) throws TemporalException
+  private java.util.Date datetimeString2UtilDate(@NonNull String datetimeString, int granularity) throws TemporalException
   {
     checkGranularity(granularity);
 
     return granuleCount2UtilDate(datetimeString2GranuleCount(datetimeString, granularity), granularity);
   }
 
-  public java.util.Date datetimeString2UtilDate(String datetimeString) throws TemporalException
+  public java.util.Date datetimeString2UtilDate(@NonNull String datetimeString) throws TemporalException
   {
     return datetimeString2UtilDate(datetimeString, FINEST);
   }
@@ -506,34 +508,34 @@ class Temporal
     return granuleCount2DatetimeString(this.nowGranuleCountInMillis, FINEST);
   }
 
-  public String normalizeDatetimeString(String datetimeString, int granularity, boolean roundUp)
+  @NonNull public String normalizeDatetimeString(@NonNull String datetimeString, int granularity, boolean roundUp)
       throws TemporalException
   {
     return getDatetimeStringProcessor().normalizeDatetimeString(datetimeString, granularity, roundUp);
   }
 
-  public String normalizeDatetimeString(String datetimeString, int granularity) throws TemporalException
+  @NonNull public String normalizeDatetimeString(@NonNull String datetimeString, int granularity) throws TemporalException
   {
     return normalizeDatetimeString(datetimeString, granularity, false);
   }
 
-  public String stripDatetimeString(String datetimeString, int granularity) throws TemporalException
+  @NonNull public String stripDatetimeString(@NonNull String datetimeString, int granularity) throws TemporalException
   {
     return getDatetimeStringProcessor().stripDatetimeString(datetimeString, granularity);
   }
 
-  private String expressDatetimeStringAtGranularity(String datetimeString, int granularity, boolean roundUp)
+  private String expressDatetimeStringAtGranularity(@NonNull String datetimeString, int granularity, boolean roundUp)
       throws TemporalException
   {
     return getDatetimeStringProcessor().expressDatetimeStringAtGranularity(datetimeString, granularity, roundUp);
   }
 
-  public String expressDatetimeStringAtGranularity(String datetimeString, int granularity) throws TemporalException
+  @NonNull public String expressDatetimeStringAtGranularity(@NonNull String datetimeString, int granularity) throws TemporalException
   {
     return expressDatetimeStringAtGranularity(datetimeString, granularity, false);
   }
 
-  public String addGranuleCount(String datetimeString, long granuleCount, int granularity) throws TemporalException
+  public String addGranuleCount(@NonNull String datetimeString, long granuleCount, int granularity) throws TemporalException
   {
     checkGranularity(granularity);
 
@@ -542,7 +544,7 @@ class Temporal
     return granuleCount2DatetimeString(resultGranuleCount, granularity);
   }
 
-  public String subtractGranuleCount(String datetimeString, long granuleCount, int granularity)
+  public String subtractGranuleCount(@NonNull String datetimeString, long granuleCount, int granularity)
       throws TemporalException
   {
     checkGranularity(granularity);

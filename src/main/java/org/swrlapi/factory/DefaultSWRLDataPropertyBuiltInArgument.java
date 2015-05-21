@@ -1,5 +1,6 @@
 package org.swrlapi.factory;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
@@ -10,25 +11,25 @@ class DefaultSWRLDataPropertyBuiltInArgument extends DefaultSWRLNamedBuiltInArgu
 {
   private static final long serialVersionUID = 1L;
 
-  public DefaultSWRLDataPropertyBuiltInArgument(OWLDataProperty property)
+  public DefaultSWRLDataPropertyBuiltInArgument(@NonNull OWLDataProperty property)
   {
     super(property);
   }
 
-  @Override
+  @NonNull @Override
   public OWLDataProperty getOWLDataProperty()
   {
     return getOWLEntity().asOWLDataProperty();
   }
 
-  @Override
-  public <T> T accept(SWRLBuiltInArgumentVisitorEx<T> visitor)
+  @NonNull @Override
+  public <T> T accept(@NonNull SWRLBuiltInArgumentVisitorEx<T> visitor)
   {
     return visitor.visit(this);
   }
 
   @Override
-  public void accept(SWRLBuiltInArgumentVisitor visitor)
+  public void accept(@NonNull SWRLBuiltInArgumentVisitor visitor)
   {
     visitor.visit(this);
   }

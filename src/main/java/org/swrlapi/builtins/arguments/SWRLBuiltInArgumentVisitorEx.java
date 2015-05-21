@@ -1,28 +1,30 @@
 package org.swrlapi.builtins.arguments;
 
+import checkers.nullness.quals.NonNull;
+
 /**
  * @see org.swrlapi.builtins.arguments.SWRLBuiltInArgument
  * @see org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor
  */
 public interface SWRLBuiltInArgumentVisitorEx<T>
 {
-  T visit(SWRLClassBuiltInArgument argument);
+  @NonNull T visit(@NonNull SWRLClassBuiltInArgument argument);
 
-  T visit(SWRLNamedIndividualBuiltInArgument argument);
+  @NonNull T visit(@NonNull SWRLNamedIndividualBuiltInArgument argument);
 
-  T visit(SWRLObjectPropertyBuiltInArgument argument);
+  @NonNull T visit(@NonNull SWRLObjectPropertyBuiltInArgument argument);
 
-  T visit(SWRLDataPropertyBuiltInArgument argument);
+  @NonNull T visit(@NonNull SWRLDataPropertyBuiltInArgument argument);
 
-  T visit(SWRLAnnotationPropertyBuiltInArgument argument);
+  @NonNull T visit(@NonNull SWRLAnnotationPropertyBuiltInArgument argument);
 
-  T visit(SWRLDatatypeBuiltInArgument argument);
+  @NonNull T visit(@NonNull SWRLDatatypeBuiltInArgument argument);
 
-  T visit(SWRLLiteralBuiltInArgument argument);
+  @NonNull T visit(@NonNull SWRLLiteralBuiltInArgument argument);
 
-  T visit(SWRLVariableBuiltInArgument argument);
+  @NonNull T visit(@NonNull SWRLVariableBuiltInArgument argument);
 
-  T visit(SWRLMultiValueVariableBuiltInArgument argument);
+  @NonNull T visit(@NonNull SWRLMultiValueVariableBuiltInArgument argument);
 
-  T visit(SQWRLCollectionVariableBuiltInArgument argument);
+  @NonNull T visit(@NonNull SQWRLCollectionVariableBuiltInArgument argument);
 }

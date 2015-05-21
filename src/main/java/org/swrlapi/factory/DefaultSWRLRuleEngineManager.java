@@ -1,5 +1,6 @@
 package org.swrlapi.factory;
 
+import checkers.nullness.quals.NonNull;
 import org.swrlapi.core.SWRLRuleEngineManager;
 
 import java.util.HashMap;
@@ -9,7 +10,7 @@ import java.util.Set;
 
 class DefaultSWRLRuleEngineManager implements SWRLRuleEngineManager
 {
-  private final Map<String, TargetSWRLRuleEngineCreator> registeredSWRLRuleEngines;
+  @NonNull private final Map<String, TargetSWRLRuleEngineCreator> registeredSWRLRuleEngines;
 
   public DefaultSWRLRuleEngineManager()
   {
@@ -17,7 +18,7 @@ class DefaultSWRLRuleEngineManager implements SWRLRuleEngineManager
   }
 
   @Override
-  public void registerRuleEngine(TargetSWRLRuleEngineCreator ruleEngineCreator)
+  public void registerRuleEngine(@NonNull TargetSWRLRuleEngineCreator ruleEngineCreator)
   {
     String ruleEngineName = ruleEngineCreator.getRuleEngineName();
 
@@ -29,7 +30,7 @@ class DefaultSWRLRuleEngineManager implements SWRLRuleEngineManager
   }
 
   @Override
-  public boolean isRuleEngineRegistered(String ruleEngineName)
+  public boolean isRuleEngineRegistered(@NonNull String ruleEngineName)
   {
     return this.registeredSWRLRuleEngines.containsKey(ruleEngineName);
   }
@@ -50,12 +51,12 @@ class DefaultSWRLRuleEngineManager implements SWRLRuleEngineManager
   }
 
   @Override
-  public SWRLRuleEngineManager.TargetSWRLRuleEngineCreator getRegisteredRuleEngineCreator(String ruleEngineName)
+  public SWRLRuleEngineManager.TargetSWRLRuleEngineCreator getRegisteredRuleEngineCreator(@NonNull String ruleEngineName)
   {
     return this.registeredSWRLRuleEngines.get(ruleEngineName);
   }
 
-  @Override
+  @NonNull @Override
   public Set<String> getRegisteredRuleEngineNames()
   {
     return this.registeredSWRLRuleEngines.keySet();

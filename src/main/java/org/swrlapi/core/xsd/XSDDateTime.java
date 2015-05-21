@@ -1,21 +1,23 @@
 package org.swrlapi.core.xsd;
 
+import checkers.nullness.quals.NonNull;
+import checkers.nullness.quals.Nullable;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
 
 import java.util.Date;
 
 public class XSDDateTime extends XSDType<XSDDateTime>
 {
-  private final Date datetime;
+  @NonNull private final Date datetime;
 
-  public XSDDateTime(String content)
+  public XSDDateTime(@NonNull String content)
   {
     super(content, XSDVocabulary.DATE_TIME.getIRI());
 
     this.datetime = XSDTimeUtil.xsdDateTimeString2Date(getContent());
   }
 
-  public XSDDateTime(java.util.Date datetime)
+  public XSDDateTime(@NonNull Date datetime)
   {
     super(XSDTimeUtil.utilDate2XSDDateTimeString(datetime), XSDVocabulary.DATE_TIME.getIRI());
 
@@ -32,14 +34,14 @@ public class XSDDateTime extends XSDType<XSDDateTime>
       throw new IllegalArgumentException("invalid xsd:DateTime " + getContent());
   }
 
-  @Override
+  @NonNull @Override
   public String getContent()
   {
     return this.content;
   }
 
   @Override
-  public boolean equals(Object o)
+  public boolean equals(@Nullable Object o)
   {
     if (this == o)
       return true;
@@ -61,7 +63,7 @@ public class XSDDateTime extends XSDType<XSDDateTime>
   }
 
   @Override
-  public int compareTo(XSDDateTime o)
+  public int compareTo(@NonNull XSDDateTime o)
   {
     if (o == null)
       throw new NullPointerException();

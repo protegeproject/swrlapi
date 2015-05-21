@@ -1,5 +1,7 @@
 package org.swrlapi.factory;
 
+import checkers.nullness.quals.NonNull;
+import checkers.nullness.quals.Nullable;
 import org.swrlapi.ui.dialog.ExtensionFilter;
 import org.swrlapi.ui.dialog.SWRLAPIDialogManager;
 import org.swrlapi.ui.dialog.SWRLRuleEditorDialog;
@@ -11,23 +13,22 @@ import java.io.File;
 
 public class DefaultSWRLAPIDialogManager implements SWRLAPIDialogManager
 {
-  private final SWRLRuleEditorDialog swrlRuleEditorDialog;
-  private File lastDirectory = null;
+  @NonNull private final SWRLRuleEditorDialog swrlRuleEditorDialog;
+  @Nullable private File lastDirectory = null;
 
-  public DefaultSWRLAPIDialogManager(SWRLRuleEngineModel swrlRuleEngineModel)
+  public DefaultSWRLAPIDialogManager(@NonNull SWRLRuleEngineModel swrlRuleEngineModel)
   {
     this.swrlRuleEditorDialog = new SWRLRuleEditorDialog(swrlRuleEngineModel, this);
   }
 
-  @Override
-  public JDialog getSWRLRuleEditorDialog(Component parent)
+  @NonNull @Override public JDialog getSWRLRuleEditorDialog(@NonNull Component parent)
   {
     this.swrlRuleEditorDialog.setLocationRelativeTo(parent);
     return this.swrlRuleEditorDialog;
   }
 
-  @Override
-  public JDialog getSWRLRuleEditorDialog(Component parent, String ruleName, String ruleText, String comment)
+  @NonNull @Override public JDialog getSWRLRuleEditorDialog(@NonNull Component parent, @NonNull String ruleName,
+    @NonNull String ruleText, @NonNull String comment)
   {
     this.swrlRuleEditorDialog.setLocationRelativeTo(parent);
     this.swrlRuleEditorDialog.enableEditMode(ruleName, ruleText, comment);
@@ -35,26 +36,25 @@ public class DefaultSWRLAPIDialogManager implements SWRLAPIDialogManager
     return this.swrlRuleEditorDialog;
   }
 
-  @Override
-  public int showConfirmCancelDialog(Component parent, String message, String title)
+  @Override public int showConfirmCancelDialog(@NonNull Component parent, @NonNull String message,
+    @NonNull String title)
   {
     return JOptionPane.showConfirmDialog(parent, message, title, JOptionPane.YES_NO_CANCEL_OPTION);
   }
 
-  @Override
-  public boolean showConfirmDialog(Component parent, String message, String title)
+  @Override public boolean showConfirmDialog(@NonNull Component parent, @NonNull String message, @NonNull String title)
   {
     return JOptionPane.showConfirmDialog(parent, message, title, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
   }
 
-  @Override
-  public void showErrorMessageDialog(Component parent, String message, String title)
+  @Override public void showErrorMessageDialog(@NonNull Component parent, @NonNull String message,
+    @NonNull String title)
   {
     JOptionPane.showMessageDialog(parent, message, title, JOptionPane.ERROR_MESSAGE);
   }
 
-  @Override
-  public String showInputDialog(Component parent, String message, String initialValue)
+  @Override public String showInputDialog(@NonNull Component parent, @NonNull String message,
+    @NonNull String initialValue)
   {
     if (initialValue == null) {
       initialValue = "";
@@ -62,20 +62,19 @@ public class DefaultSWRLAPIDialogManager implements SWRLAPIDialogManager
     return JOptionPane.showInputDialog(parent, message, initialValue);
   }
 
-  @Override
-  public void showMessageDialog(Component parent, String message, String title)
+  @Override public void showMessageDialog(@NonNull Component parent, @NonNull String message, @NonNull String title)
   {
     JOptionPane.showMessageDialog(parent, message, title, JOptionPane.INFORMATION_MESSAGE);
   }
 
-  @Override
-  public JFileChooser createFileChooser(String title, String fileDescription, String fileExtension)
+  @NonNull @Override public JFileChooser createFileChooser(@NonNull String title, @NonNull String fileDescription,
+    @Nullable String fileExtension)
   {
-    JFileChooser chooser = new JFileChooser(this.lastDirectory) {
+    JFileChooser chooser = new JFileChooser(this.lastDirectory)
+    {
       private static final long serialVersionUID = 1L;
 
-      @Override
-      public int showDialog(Component c, String s)
+      @Override public int showDialog(Component c, String s)
       {
         int rval = super.showDialog(c, s);
         if (rval == APPROVE_OPTION) {
@@ -85,6 +84,7 @@ public class DefaultSWRLAPIDialogManager implements SWRLAPIDialogManager
       }
     };
     chooser.setDialogTitle(title);
+
     if (fileExtension == null) {
       chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
     } else if (fileExtension.length() > 0) {
@@ -93,15 +93,14 @@ public class DefaultSWRLAPIDialogManager implements SWRLAPIDialogManager
     return chooser;
   }
 
-  @Override
-  public JFileChooser createSaveFileChooser(String title, String fileDescription, String fileExtension,
-      final boolean overwrite)
+  @NonNull @Override public JFileChooser createSaveFileChooser(@NonNull String title, @NonNull String fileDescription,
+    @Nullable String fileExtension, final boolean overwrite)
   {
-    JFileChooser chooser = new JFileChooser(this.lastDirectory) {
+    JFileChooser chooser = new JFileChooser(this.lastDirectory)
+    {
       private static final long serialVersionUID = 1L;
 
-      @Override
-      public int showDialog(Component c, String s)
+      @Override public int showDialog(Component c, String s)
       {
         int rval = super.showDialog(c, s);
         if (rval == APPROVE_OPTION) {
@@ -110,8 +109,7 @@ public class DefaultSWRLAPIDialogManager implements SWRLAPIDialogManager
         return rval;
       }
 
-      @Override
-      public void approveSelection()
+      @Override public void approveSelection()
       {
         if (!overwrite) {
           return;
@@ -122,8 +120,8 @@ public class DefaultSWRLAPIDialogManager implements SWRLAPIDialogManager
         if (f.exists()) {
           String msg = "The file '" + f.getName() + "' already exists!\nDo you want to replace it?";
           String title = getDialogTitle();
-          int option = JOptionPane.showConfirmDialog(this, msg, title, JOptionPane.YES_NO_OPTION,
-              JOptionPane.WARNING_MESSAGE);
+          int option = JOptionPane
+            .showConfirmDialog(this, msg, title, JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
           if (option == JOptionPane.NO_OPTION) {
             return;
           }

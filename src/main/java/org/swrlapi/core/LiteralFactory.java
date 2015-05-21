@@ -1,5 +1,6 @@
 package org.swrlapi.core;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.swrlapi.core.xsd.XSDDate;
 import org.swrlapi.core.xsd.XSDDateTime;
@@ -17,29 +18,29 @@ import java.net.URI;
  */
 public interface LiteralFactory
 {
-  Literal getLiteral(byte b);
+  @NonNull Literal getLiteral(byte b);
 
-  Literal getLiteral(short s);
+  @NonNull Literal getLiteral(short s);
 
-  Literal getLiteral(int value);
+  @NonNull Literal getLiteral(int value);
 
-  Literal getLiteral(float value);
+  @NonNull Literal getLiteral(float value);
 
-  Literal getLiteral(double value);
+  @NonNull Literal getLiteral(double value);
 
-  Literal getLiteral(String value);
+  @NonNull Literal getLiteral(String value);
 
-  Literal getLiteral(boolean value);
+  @NonNull Literal getLiteral(boolean value);
 
-  Literal getLiteral(URI uri);
+  @NonNull Literal getLiteral(@NonNull URI uri);
 
-  Literal getLiteral(XSDDate date);
+  @NonNull Literal getLiteral(@NonNull XSDDate date);
 
-  Literal getLiteral(XSDTime time);
+  @NonNull Literal getLiteral(@NonNull XSDTime time);
 
-  Literal getLiteral(XSDDateTime datetime);
+  @NonNull Literal getLiteral(@NonNull XSDDateTime datetime);
 
-  Literal getLiteral(XSDDuration duration);
+  @NonNull Literal getLiteral(@NonNull XSDDuration duration);
 
-  Literal getLiteral(OWLLiteral literal);
+  @NonNull Literal getLiteral(@NonNull OWLLiteral literal);
 }

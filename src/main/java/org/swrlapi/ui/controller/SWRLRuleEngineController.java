@@ -1,5 +1,6 @@
 package org.swrlapi.ui.controller;
 
+import checkers.nullness.quals.NonNull;
 import org.swrlapi.ui.model.SWRLRuleEngineModel;
 
 /**
@@ -13,5 +14,5 @@ public interface SWRLRuleEngineController
   /**
    * @return The rule engine model associated with the controller
    */
-  SWRLRuleEngineModel getSWRLRuleEngineModel();
+  @NonNull SWRLRuleEngineModel getSWRLRuleEngineModel();
 }

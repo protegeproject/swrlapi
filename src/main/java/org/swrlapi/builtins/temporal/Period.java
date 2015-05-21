@@ -1,5 +1,8 @@
 package org.swrlapi.builtins.temporal;
 
+import checkers.nullness.quals.NonNull;
+import checkers.nullness.quals.Nullable;
+
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -11,21 +14,21 @@ import java.util.List;
 public class Period
 {
   // Both instants will have the same granularity so we do not store the granularity separately.
-  private Instant startInstant, finishInstant;
-  private Temporal temporal;
+  @NonNull private Instant startInstant, finishInstant;
+  @NonNull private Temporal temporal;
 
-  public Period(Temporal temporal, long startGranuleCount, long finishGranuleCount, int granularity)
-      throws TemporalException
+  public Period(@NonNull Temporal temporal, long startGranuleCount, long finishGranuleCount, int granularity)
+    throws TemporalException
   {
     this.temporal = temporal;
     this.startInstant = new Instant(temporal, startGranuleCount, granularity);
     this.finishInstant = new Instant(temporal, finishGranuleCount, granularity);
 
-    orderCheck(); // Throws exception if start is after finish.
+    orderCheck(this.startInstant, this.finishInstant); // Throws exception if start is after finish.
   }
 
-  public Period(Temporal temporal, String startDatetime, String finishDatetime, int granularity)
-      throws TemporalException
+  public Period(@NonNull Temporal temporal, @NonNull String startDatetime, @NonNull String finishDatetime,
+    int granularity) throws TemporalException
   {
     this.temporal = temporal;
 
@@ -34,45 +37,51 @@ public class Period
     this.startInstant = new Instant(temporal, startDatetime, granularity, false);
     this.finishInstant = new Instant(temporal, finishDatetime, granularity, false);
 
-    orderCheck(); // Throws exception if start is after finish.
+    orderCheck(this.startInstant, this.finishInstant); // Throws exception if start is after finish.
   }
 
-  public Period(Temporal temporal, String startDatetime, String finishDatetime) throws TemporalException
+  public Period(@NonNull Temporal temporal, @NonNull String startDatetime, @NonNull String finishDatetime)
+    throws TemporalException
   {
     this(temporal, startDatetime, finishDatetime, Temporal.FINEST);
   }
 
-  public Period(Temporal temporal, Period period) throws TemporalException
+  public Period(@NonNull Temporal temporal, @NonNull Period period) throws TemporalException
   {
-    this(temporal, period.getStartGranuleCount(period.getGranularity()), period.getFinishGranuleCount(period
-        .getGranularity()), period.getGranularity());
+    this(temporal, period.getStartGranuleCount(period.getGranularity()),
+      period.getFinishGranuleCount(period.getGranularity()), period.getGranularity());
   }
 
-  public Period(Temporal temporal, Instant instant, int granularity) throws TemporalException
+  public Period(@NonNull Temporal temporal, @NonNull Instant instant, int granularity) throws TemporalException
   {
     this(temporal, instant, instant, granularity);
   }
 
-  public Period(Temporal temporal, Instant instant) throws TemporalException
+  public Period(@NonNull Temporal temporal, @NonNull Instant instant) throws TemporalException
   {
     this(temporal, instant, instant, instant.getGranularity());
   }
 
-  public Period(Temporal temporal, Instant startInstant, Instant finishInstant, int granularity)
-      throws TemporalException
+  public Period(@NonNull Temporal temporal, @NonNull Instant startInstant, @NonNull Instant finishInstant,
+    int granularity) throws TemporalException
   {
+    this.temporal = temporal;
+
     this.startInstant = new Instant(temporal, startInstant);
     this.finishInstant = new Instant(temporal, finishInstant);
 
     this.startInstant.setGranularity(granularity);
     this.finishInstant.setGranularity(granularity);
 
-    orderCheck();
+    orderCheck(this.startInstant, this.finishInstant); // Throws exception if start is after finish.
   }
 
-  public Period(Temporal temporal, Instant startInstant, Instant finishInstant) throws TemporalException
+  public Period(@NonNull Temporal temporal, @NonNull Instant startInstant, @NonNull Instant finishInstant)
+    throws TemporalException
   {
     int granularity;
+
+    this.temporal = temporal;
 
     this.startInstant = new Instant(temporal, startInstant);
     this.finishInstant = new Instant(temporal, finishInstant);
@@ -86,226 +95,232 @@ public class Period
     this.startInstant.setGranularity(granularity);
     this.finishInstant.setGranularity(granularity);
 
-    orderCheck();
+    orderCheck(this.startInstant, this.finishInstant); // Throws exception if start is after finish.
   }
 
-  public Period(Temporal temporal, Timestamp startTimestamp, Timestamp finishTimestamp, int granularity)
-      throws TemporalException
+  public Period(@NonNull Temporal temporal, @NonNull Timestamp startTimestamp, @NonNull Timestamp finishTimestamp,
+    int granularity) throws TemporalException
   {
+    this.temporal = temporal;
     this.startInstant = new Instant(temporal, startTimestamp, granularity);
     this.finishInstant = new Instant(temporal, finishTimestamp, granularity);
 
-    orderCheck();
+    orderCheck(this.startInstant, this.finishInstant); // Throws exception if start is after finish.
   }
 
-  public Period(Temporal temporal, Timestamp startTimestamp, Timestamp finishTimestamp) throws TemporalException
+  public Period(@NonNull Temporal temporal, @NonNull Timestamp startTimestamp, @NonNull Timestamp finishTimestamp)
+    throws TemporalException
   {
     this(temporal, startTimestamp, finishTimestamp, Temporal.FINEST);
   }
 
-  public Period(Temporal temporal, java.util.Date startDate, java.util.Date finishDate, int granularity)
-      throws TemporalException
+  public Period(@NonNull Temporal temporal, java.util.@NonNull Date startDate, java.util.@NonNull Date finishDate,
+    int granularity) throws TemporalException
   {
+    this.temporal = temporal;
     this.startInstant = new Instant(temporal, startDate, granularity);
     this.finishInstant = new Instant(temporal, finishDate, granularity);
 
-    orderCheck();
+    orderCheck(this.startInstant, this.finishInstant); // Throws exception if start is after finish.
   }
 
-  public Period(Temporal temporal, java.util.Date startDate, java.util.Date finishDate) throws TemporalException
+  public Period(@NonNull Temporal temporal, java.util.@NonNull Date startDate, java.util.@NonNull Date finishDate)
+    throws TemporalException
   {
     this(temporal, startDate, finishDate, Temporal.FINEST);
   }
 
-  public Period(Temporal temporal, java.sql.Date startDate, java.sql.Date finishDate, int granularity)
-      throws TemporalException
+  public Period(@NonNull Temporal temporal, java.sql.@NonNull Date startDate, java.sql.@NonNull Date finishDate,
+    int granularity) throws TemporalException
   {
+    this.temporal = temporal;
     this.startInstant = new Instant(temporal, startDate, granularity);
     this.finishInstant = new Instant(temporal, finishDate, granularity);
 
-    orderCheck();
+    orderCheck(this.startInstant, this.finishInstant); // Throws exception if start is after finish.
   }
 
-  public Period(Temporal temporal, java.sql.Date startDate, java.sql.Date finishDate) throws TemporalException
+  public Period(@NonNull Temporal temporal, java.sql.@NonNull Date startDate, java.sql.@NonNull Date finishDate)
+    throws TemporalException
   {
     this(temporal, startDate, finishDate, Temporal.FINEST);
   }
 
   // Temporal predicates
 
-  public boolean before(Period p2, int granularity) throws TemporalException
+  public boolean before(@NonNull Period p2, int granularity) throws TemporalException
   {
     return getFinishGranuleCount(granularity) < p2.getStartGranuleCount(granularity);
   }
 
-  public boolean before(Period p2) throws TemporalException
+  public boolean before(@NonNull Period p2) throws TemporalException
   {
     return getFinishGranuleCount(Temporal.FINEST) < p2.getStartGranuleCount(Temporal.FINEST);
   }
 
-  public boolean starts_before(Period p2, int granularity) throws TemporalException
+  public boolean starts_before(@NonNull Period p2, int granularity) throws TemporalException
   {
     return getStartGranuleCount(granularity) < p2.getStartGranuleCount(granularity);
   }
 
-  public boolean starts_after(Period p2, int granularity) throws TemporalException
+  public boolean starts_after(@NonNull Period p2, int granularity) throws TemporalException
   {
     return getStartGranuleCount(granularity) > p2.getFinishGranuleCount(granularity);
   }
 
-  public boolean starts_after(Period p2) throws TemporalException
+  public boolean starts_after(@NonNull Period p2) throws TemporalException
   {
     return getStartGranuleCount(Temporal.FINEST) > p2.getFinishGranuleCount(Temporal.FINEST);
   }
 
-  public boolean after(Period p2, int granularity) throws TemporalException
+  public boolean after(@NonNull Period p2, int granularity) throws TemporalException
   {
     return getStartGranuleCount(granularity) > p2.getFinishGranuleCount(granularity);
   }
 
-  public boolean equals(Period p2, int granularity) throws TemporalException
+  public boolean equals(@NonNull Period p2, int granularity) throws TemporalException
   {
-    return ((getStartGranuleCount(granularity) == p2.getStartGranuleCount(granularity) && (getFinishGranuleCount(granularity) == p2
-        .getFinishGranuleCount(granularity))));
+    return ((getStartGranuleCount(granularity) == p2.getStartGranuleCount(granularity) && (
+      getFinishGranuleCount(granularity) == p2.getFinishGranuleCount(granularity))));
   }
 
-  public boolean meets(Period p2) throws TemporalException
+  public boolean meets(@NonNull Period p2) throws TemporalException
   {
     return meets(p2, Temporal.FINEST);
   }
 
-  public boolean meets(Period p2, int granularity) throws TemporalException
+  public boolean meets(@NonNull Period p2, int granularity) throws TemporalException
   {
     return ((getFinishGranuleCount(granularity) + 1) == p2.getStartGranuleCount(granularity));
   }
 
-  public boolean met_by(Period p2) throws TemporalException
+  public boolean met_by(@NonNull Period p2) throws TemporalException
   {
     return met_by(p2, Temporal.FINEST);
   }
 
-  public boolean met_by(Period p2, int granularity) throws TemporalException
+  public boolean met_by(@NonNull Period p2, int granularity) throws TemporalException
   {
     return p2.meets(this, granularity);
   }
 
-  public boolean overlaps(Period p2) throws TemporalException
+  public boolean overlaps(@NonNull Period p2) throws TemporalException
   {
     return overlaps(p2, Temporal.FINEST);
   }
 
-  public boolean overlaps(Period p2, int granularity) throws TemporalException
+  public boolean overlaps(@NonNull Period p2, int granularity) throws TemporalException
   {
-    return ((getStartGranuleCount(granularity) <= p2.getStartGranuleCount(granularity))
-        && (getFinishGranuleCount(granularity) <= p2.getFinishGranuleCount(granularity)) && (getFinishGranuleCount(granularity) >= p2
-        .getStartGranuleCount(granularity)));
+    return ((getStartGranuleCount(granularity) <= p2.getStartGranuleCount(granularity)) && (
+      getFinishGranuleCount(granularity) <= p2.getFinishGranuleCount(granularity)) && (
+      getFinishGranuleCount(granularity) >= p2.getStartGranuleCount(granularity)));
 
   }
 
-  public boolean overlapped_by(Period p2) throws TemporalException
+  public boolean overlapped_by(@NonNull Period p2) throws TemporalException
   {
     return overlapped_by(p2, Temporal.FINEST);
   }
 
-  public boolean overlapped_by(Period p2, int granularity) throws TemporalException
+  public boolean overlapped_by(@NonNull Period p2, int granularity) throws TemporalException
   {
     return p2.overlaps(this, granularity);
   }
 
-  public boolean during(Period p2) throws TemporalException
+  public boolean during(@NonNull Period p2) throws TemporalException
   {
     return during(p2, Temporal.FINEST);
   }
 
-  public boolean during(Period p2, int granularity) throws TemporalException
+  public boolean during(@NonNull Period p2, int granularity) throws TemporalException
   {
     return p2.contains(this, granularity) && !p2.equals(this, granularity);
   }
 
-  public boolean contains(Period p2) throws TemporalException
+  public boolean contains(@NonNull Period p2) throws TemporalException
   {
     return contains(p2, Temporal.FINEST);
   }
 
-  public boolean contains(Period p2, int granularity) throws TemporalException
+  public boolean contains(@NonNull Period p2, int granularity) throws TemporalException
   {
-    return (((p2.getStartGranuleCount(granularity) > getStartGranuleCount(granularity)) || (p2
-        .getStartGranuleCount(granularity) == getStartGranuleCount(granularity))) && ((p2
-        .getFinishGranuleCount(granularity) < getFinishGranuleCount(granularity)) || (p2
-        .getFinishGranuleCount(granularity) == getFinishGranuleCount(granularity))));
+    return (((p2.getStartGranuleCount(granularity) > getStartGranuleCount(granularity)) || (
+      p2.getStartGranuleCount(granularity) == getStartGranuleCount(granularity))) && (
+      (p2.getFinishGranuleCount(granularity) < getFinishGranuleCount(granularity)) || (
+        p2.getFinishGranuleCount(granularity) == getFinishGranuleCount(granularity))));
 
   }
 
-  public boolean starts(Period p2) throws TemporalException
+  public boolean starts(@NonNull Period p2) throws TemporalException
   {
     return starts(p2, Temporal.FINEST);
   }
 
-  public boolean starts(Period p2, int granularity) throws TemporalException
+  public boolean starts(@NonNull Period p2, int granularity) throws TemporalException
   {
-    return ((getStartGranuleCount(granularity) == p2.getStartGranuleCount(granularity)) && (getFinishGranuleCount(granularity) < p2
-        .getFinishGranuleCount(granularity)));
+    return ((getStartGranuleCount(granularity) == p2.getStartGranuleCount(granularity)) && (
+      getFinishGranuleCount(granularity) < p2.getFinishGranuleCount(granularity)));
 
   }
 
-  public boolean started_by(Period p2) throws TemporalException
+  public boolean started_by(@NonNull Period p2) throws TemporalException
   {
     return started_by(p2, Temporal.FINEST);
   }
 
-  public boolean started_by(Period p2, int granularity) throws TemporalException
+  public boolean started_by(@NonNull Period p2, int granularity) throws TemporalException
   {
     return p2.starts(this, granularity);
   }
 
-  public boolean finishes(Period p2) throws TemporalException
+  public boolean finishes(@NonNull Period p2) throws TemporalException
   {
     return finishes(p2, Temporal.FINEST);
   }
 
-  public boolean finishes(Period p2, int granularity) throws TemporalException
+  public boolean finishes(@NonNull Period p2, int granularity) throws TemporalException
   {
-    return ((getStartGranuleCount(granularity) < p2.getStartGranuleCount(granularity)) && (getFinishGranuleCount(granularity) == p2
-        .getFinishGranuleCount(granularity)));
+    return ((getStartGranuleCount(granularity) < p2.getStartGranuleCount(granularity)) && (
+      getFinishGranuleCount(granularity) == p2.getFinishGranuleCount(granularity)));
 
   }
 
-  public boolean finished_by(Period p2) throws TemporalException
+  public boolean finished_by(@NonNull Period p2) throws TemporalException
   {
     return finished_by(p2, Temporal.FINEST);
   }
 
-  public boolean finished_by(Period p2, int granularity) throws TemporalException
+  public boolean finished_by(@NonNull Period p2, int granularity) throws TemporalException
   {
     return p2.finishes(this, granularity);
   }
 
-  public boolean adjacent(Period p2) throws TemporalException
+  public boolean adjacent(@NonNull Period p2) throws TemporalException
   {
     return adjacent(p2, Temporal.FINEST);
   }
 
-  public boolean adjacent(Period p2, int granularity) throws TemporalException
+  public boolean adjacent(@NonNull Period p2, int granularity) throws TemporalException
   {
     return (meets(p2, granularity) || met_by(p2, granularity));
   }
 
-  public boolean intersects(Period p2) throws TemporalException
+  public boolean intersects(@NonNull Period p2) throws TemporalException
   {
     return intersects(p2, Temporal.FINEST);
   }
 
-  public boolean intersects(Period p2, int granularity) throws TemporalException
+  public boolean intersects(@NonNull Period p2, int granularity) throws TemporalException
   {
     return (intersection(p2, granularity) != null);
   }
 
-  public Period intersection(Period p2) throws TemporalException
+  @Nullable public Period intersection(@NonNull Period p2) throws TemporalException
   {
     return intersection(p2, Temporal.FINEST);
   }
 
-  public Period intersection(Period p2, int granularity) throws TemporalException
+  @Nullable public Period intersection(@NonNull Period p2, int granularity) throws TemporalException
   {
     Period result;
 
@@ -340,19 +355,20 @@ public class Period
     return result;
   }
 
-  public Period merge(Period p2) throws TemporalException
+  @NonNull public Period merge(@NonNull Period p2) throws TemporalException
   {
     return merge(p2, Temporal.FINEST);
   }
 
-  public Period merge(Period p2, int granularity) throws TemporalException
+  @NonNull public Period merge(@NonNull Period p2, int granularity) throws TemporalException
   {
     Instant resultStartInstant, resultFinishInstant;
     Period result;
 
     if ((intersection(p2, granularity) == null) && (!adjacent(p2, granularity)))
-      throw new TemporalException("start must be before or equal to the finish in a period: ('" + toString(granularity)
-          + "'), ('" + p2.toString(granularity) + "')");
+      throw new TemporalException(
+        "start must be before or equal to the finish in a period: ('" + toString(granularity) + "'), ('" + p2
+          .toString(granularity) + "')");
 
     if (this.startInstant.before(p2.getStartInstant(), granularity))
       resultStartInstant = this.startInstant;
@@ -369,11 +385,12 @@ public class Period
     return result;
   }
 
-  private void orderCheck() throws TemporalException
+  private static void orderCheck(@NonNull Instant startInstant, @NonNull Instant finishInstant) throws TemporalException
   {
-    if (this.startInstant.after(this.finishInstant, Temporal.FINEST))
-      throw new TemporalException("start must be before or equal to finish in a period: ("
-          + this.startInstant.toString(Temporal.FINEST) + ", " + this.finishInstant.toString(Temporal.FINEST) + ")");
+    if (startInstant.after(finishInstant, Temporal.FINEST))
+      throw new TemporalException(
+        "start must be before or equal to finish in a period: (" + startInstant.toString(Temporal.FINEST) + ", "
+          + finishInstant.toString(Temporal.FINEST) + ")");
   }
 
   public long duration(int granularity) throws TemporalException
@@ -386,7 +403,7 @@ public class Period
   // other, producing a new period list.
 
   // This routine modifies the periods list that it has been passed so this list should not be used again.
-  public List<Period> coalesce(List<Period> periods, int granularity) throws TemporalException
+  @NonNull public List<Period> coalesce(@NonNull List<Period> periods, int granularity) throws TemporalException
   {
     Iterator<Period> iterator;
     Period p1, p2;
@@ -454,7 +471,7 @@ public class Period
     this.finishInstant.subtractGranuleCount(granuleCount, granularity);
   }
 
-  public Period coalesce(Period p2, int granularity) throws TemporalException
+  @Nullable public Period coalesce(@NonNull Period p2, int granularity) throws TemporalException
   {
     Period result = null;
 
@@ -464,14 +481,14 @@ public class Period
     return result;
   }
 
-  public void setStartInstant(Instant instant) throws TemporalException
+  public void setStartInstant(@NonNull Instant instant) throws TemporalException
   {
     this.startInstant = new Instant(this.temporal, instant);
     // Both instants must share same granularity.
     this.finishInstant.setGranularity(instant.getGranularity());
   }
 
-  public void setFinishInstant(Instant instant) throws TemporalException
+  public void setFinishInstant(@NonNull Instant instant) throws TemporalException
   {
     this.finishInstant = new Instant(this.temporal, instant);
     // Both instants must share same granularity.
@@ -543,13 +560,12 @@ public class Period
     return this.startInstant.equals(this.finishInstant, Temporal.FINEST);
   }
 
-  public String toString(int granularity) throws TemporalException
+  @NonNull public String toString(int granularity) throws TemporalException
   {
     return "(" + this.startInstant.toString(granularity) + ", " + this.finishInstant.toString(granularity) + ")";
   }
 
-  @Override
-  public String toString()
+  @NonNull @Override public String toString()
   {
     try {
       return toString(Temporal.FINEST);
@@ -566,7 +582,8 @@ public class Period
   // We do not have to signal 'now' as an invalid start time value here because it is an allowed value. The orderCheck()
   // method will check
   // for the invalid ordering of timestamps that a 'now' value *could* generate.
-  private void semanticCheck(String startDatetime, String finishDatetime) throws TemporalException
+  private static void semanticCheck(@NonNull String startDatetime, @NonNull String finishDatetime)
+    throws TemporalException
   {
     if (startDatetime.equals("+"))
       throw new TemporalException("'+' cannot be used at the start of a period");

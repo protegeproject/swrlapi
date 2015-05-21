@@ -1,5 +1,6 @@
 package org.swrlapi.factory;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotation;
@@ -82,18 +83,18 @@ class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 {
   private final SWRLAPIOWLOntology swrlapiOWLOntology;
 
-  private final Map<String, SWRLAPIRule> swrlRules; // SWRL rules include SQWRL queries
-  private final Map<String, SQWRLQuery> sqwrlQueries;
+  @NonNull private final Map<String, SWRLAPIRule> swrlRules; // SWRL rules include SQWRL queries
+  @NonNull private final Map<String, SQWRLQuery> sqwrlQueries;
 
-  private final Set<OWLAxiom> assertedOWLAxioms; // All asserted OWL axioms extracted from the supplied ontology
+  @NonNull private final Set<OWLAxiom> assertedOWLAxioms; // All asserted OWL axioms extracted from the supplied ontology
 
-  private final Map<IRI, OWLDeclarationAxiom> owlClassDeclarationAxioms;
-  private final Map<IRI, OWLDeclarationAxiom> owlIndividualDeclarationAxioms;
-  private final Map<IRI, OWLDeclarationAxiom> owlObjectPropertyDeclarationAxioms;
-  private final Map<IRI, OWLDeclarationAxiom> owlDataPropertyDeclarationAxioms;
-  private final Map<IRI, OWLDeclarationAxiom> owlAnnotationPropertyDeclarationAxioms;
+  @NonNull private final Map<IRI, OWLDeclarationAxiom> owlClassDeclarationAxioms;
+  @NonNull private final Map<IRI, OWLDeclarationAxiom> owlIndividualDeclarationAxioms;
+  @NonNull private final Map<IRI, OWLDeclarationAxiom> owlObjectPropertyDeclarationAxioms;
+  @NonNull private final Map<IRI, OWLDeclarationAxiom> owlDataPropertyDeclarationAxioms;
+  @NonNull private final Map<IRI, OWLDeclarationAxiom> owlAnnotationPropertyDeclarationAxioms;
 
-  public DefaultSWRLAPIOntologyProcessor(SWRLAPIOWLOntology swrlapiOWLOntology)
+  public DefaultSWRLAPIOntologyProcessor(@NonNull SWRLAPIOWLOntology swrlapiOWLOntology)
   {
     this.swrlapiOWLOntology = swrlapiOWLOntology;
 
@@ -109,8 +110,7 @@ class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
     this.owlAnnotationPropertyDeclarationAxioms = new HashMap<>();
   }
 
-  @Override
-  public void reset()
+  @Override public void reset()
   {
     this.swrlRules.clear();
     this.sqwrlQueries.clear();
@@ -126,8 +126,7 @@ class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
     this.owlAnnotationPropertyDeclarationAxioms.clear();
   }
 
-  @Override
-  public void processOntology() throws SQWRLException
+  @Override public void processOntology() throws SQWRLException
   {
     reset();
 
@@ -135,8 +134,7 @@ class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
     processOWLAxioms();
   }
 
-  @Override
-  public SQWRLQuery getSQWRLQuery(String queryName) throws SQWRLException
+  @NonNull @Override public SQWRLQuery getSQWRLQuery(@NonNull String queryName) throws SQWRLException
   {
     if (!this.sqwrlQueries.containsKey(queryName))
       throw new SQWRLInvalidQueryNameException("invalid SQWRL query name " + queryName);
@@ -144,8 +142,7 @@ class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
     return this.sqwrlQueries.get(queryName);
   }
 
-  @Override
-  public SWRLAPIRule getSWRLRule(String ruleName) throws SWRLRuleException
+  @NonNull @Override public SWRLAPIRule getSWRLRule(@NonNull String ruleName) throws SWRLRuleException
   {
     if (!this.swrlRules.containsKey(ruleName))
       throw new SWRLRuleException("invalid rule name " + ruleName);
@@ -153,8 +150,7 @@ class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
     return this.swrlRules.get(ruleName);
   }
 
-  @Override
-  public void deleteSWRLRule(String ruleName)
+  @Override public void deleteSWRLRule(@NonNull String ruleName)
   {
     if (this.swrlRules.containsKey(ruleName)) {
       SWRLAPIRule rule = this.swrlRules.get(ruleName);
@@ -171,8 +167,7 @@ class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
       this.swrlapiOWLOntology.getOWLOntologyManager().removeAxiom(this.swrlapiOWLOntology.getOWLOntology(), owlapiRule);
   }
 
-  @Override
-  public void addSWRLRule(SWRLAPIRule swrlapiRule, SWRLRule owlapiRule)
+  @Override public void addSWRLRule(@NonNull SWRLAPIRule swrlapiRule, @NonNull SWRLRule owlapiRule)
   {
     String ruleName = swrlapiRule.getRuleName();
 
@@ -181,74 +176,62 @@ class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
     this.swrlapiOWLOntology.getOWLOntologyManager().addAxiom(this.swrlapiOWLOntology.getOWLOntology(), owlapiRule);
   }
 
-  @Override
-  public int getNumberOfSWRLRules()
+  @Override public int getNumberOfSWRLRules()
   {
     return this.swrlRules.values().size();
   }
 
-  @Override
-  public int getNumberOfSQWRLQueries()
+  @Override public int getNumberOfSQWRLQueries()
   {
     return this.sqwrlQueries.values().size();
   }
 
-  @Override
-  public Set<String> getSQWRLQueryNames()
+  @NonNull @Override public Set<String> getSQWRLQueryNames()
   {
     return new HashSet<>(this.sqwrlQueries.keySet());
   }
 
-  @Override
-  public int getNumberOfOWLClassDeclarationAxioms()
+  @Override public int getNumberOfOWLClassDeclarationAxioms()
   {
     return this.owlClassDeclarationAxioms.values().size();
   }
 
-  @Override
-  public int getNumberOfOWLIndividualDeclarationAxioms()
+  @Override public int getNumberOfOWLIndividualDeclarationAxioms()
   {
     return this.owlIndividualDeclarationAxioms.values().size();
   }
 
-  @Override
-  public int getNumberOfOWLObjectPropertyDeclarationAxioms()
+  @Override public int getNumberOfOWLObjectPropertyDeclarationAxioms()
   {
     return this.owlObjectPropertyDeclarationAxioms.size();
   }
 
-  @Override
-  public int getNumberOfOWLDataPropertyDeclarationAxioms()
+  @Override public int getNumberOfOWLDataPropertyDeclarationAxioms()
   {
     return this.owlDataPropertyDeclarationAxioms.size();
   }
 
-  @Override
-  public int getNumberOfOWLAxioms()
+  @Override public int getNumberOfOWLAxioms()
   {
     return this.assertedOWLAxioms.size();
   }
 
-  @Override
-  public Set<SQWRLQuery> getSQWRLQueries()
+  @NonNull @Override public Set<SQWRLQuery> getSQWRLQueries()
   {
     return new HashSet<>(this.sqwrlQueries.values());
   }
 
-  @Override
-  public Set<OWLAxiom> getOWLAxioms()
+  @NonNull @Override public Set<OWLAxiom> getOWLAxioms()
   {
     return Collections.unmodifiableSet(this.assertedOWLAxioms);
   }
 
-  @Override
-  public boolean hasAssertedOWLAxiom(OWLAxiom axiom)
+  @Override public boolean hasAssertedOWLAxiom(@NonNull OWLAxiom axiom)
   {
     return this.assertedOWLAxioms.contains(axiom);
   }
 
-  @Override
-  public SQWRLQuery createSWRLQueryFromSWRLRule(SWRLAPIRule rule) throws SQWRLException
+  @NonNull @Override public SQWRLQuery createSWRLQueryFromSWRLRule(@NonNull SWRLAPIRule rule) throws SQWRLException
   {
     String queryName = rule.getRuleName();
     boolean active = rule.isActive();
@@ -264,8 +247,7 @@ class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
   /**
    * Get the results from a previously executed SQWRL query.
    */
-  @Override
-  public SQWRLResult getSQWRLResult(String queryName) throws SQWRLException
+  @NonNull @Override public SQWRLResult getSQWRLResult(@NonNull String queryName) throws SQWRLException
   {
     if (!this.sqwrlQueries.containsKey(queryName))
       throw new SQWRLInvalidQueryNameException(queryName);
@@ -276,8 +258,8 @@ class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
   /**
    * Get the result generator for a SQWRL query.
    */
-  @Override
-  public SQWRLResultGenerator getSQWRLResultGenerator(String queryName) throws SQWRLException
+  @NonNull @Override public SQWRLResultGenerator getSQWRLResultGenerator(@NonNull String queryName)
+    throws SQWRLException
   {
     if (!this.sqwrlQueries.containsKey(queryName))
       throw new SQWRLInvalidQueryNameException(queryName);
@@ -285,11 +267,10 @@ class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
     return this.sqwrlQueries.get(queryName).getSQWRLResultGenerator();
   }
 
-  @Override
-  public String getRuleName(SWRLRule owlapiRule)
+  @NonNull @Override public String getRuleName(@NonNull SWRLRule owlapiRule)
   {
-    OWLAnnotationProperty labelAnnotation = getOWLDataFactory().getOWLAnnotationProperty(
-        OWLRDFVocabulary.RDFS_LABEL.getIRI());
+    OWLAnnotationProperty labelAnnotation = getOWLDataFactory()
+      .getOWLAnnotationProperty(OWLRDFVocabulary.RDFS_LABEL.getIRI());
 
     for (OWLAnnotation annotation : owlapiRule.getAnnotations(labelAnnotation)) {
       if (annotation.getValue() instanceof OWLLiteral) {
@@ -301,11 +282,10 @@ class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
     return "";
   }
 
-  @Override
-  public boolean getIsActive(SWRLRule owlapiRule)
+  @Override public boolean getIsActive(@NonNull SWRLRule owlapiRule)
   {
-    OWLAnnotationProperty enabledAnnotationProperty = getOWLDataFactory().getOWLAnnotationProperty(
-        IRI.create("http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"));
+    OWLAnnotationProperty enabledAnnotationProperty = getOWLDataFactory()
+      .getOWLAnnotationProperty(IRI.create("http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"));
 
     for (OWLAnnotation annotation : owlapiRule.getAnnotations(enabledAnnotationProperty)) {
       if (annotation.getValue() instanceof OWLLiteral) {
@@ -317,11 +297,10 @@ class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
     return true;
   }
 
-  @Override
-  public String getComment(SWRLRule owlapiRule)
+  @NonNull @Override public String getComment(@NonNull SWRLRule owlapiRule)
   {
-    OWLAnnotationProperty commentAnnotationProperty = getOWLDataFactory().getOWLAnnotationProperty(
-        OWLRDFVocabulary.RDFS_COMMENT.getIRI());
+    OWLAnnotationProperty commentAnnotationProperty = getOWLDataFactory()
+      .getOWLAnnotationProperty(OWLRDFVocabulary.RDFS_COMMENT.getIRI());
 
     for (OWLAnnotation annotation : owlapiRule.getAnnotations(commentAnnotationProperty)) {
       if (annotation.getValue() instanceof OWLLiteral) {
@@ -332,7 +311,7 @@ class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
     return "";
   }
 
-  private SWRLRule findRuleNamed(String ruleName)
+  private SWRLRule findRuleNamed(@NonNull String ruleName)
   { // TODO Not efficient - probably a better way
     for (SWRLRule owlapiRule : getOWLOntology().getAxioms(AxiomType.SWRL_RULE, Imports.INCLUDED)) {
       if (ruleName.equals(getRuleName(owlapiRule)))
@@ -341,14 +320,12 @@ class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
     return null;
   }
 
-  @SuppressWarnings("unused")
-  private Set<String> getSWRLRuleNames()
+  @NonNull @SuppressWarnings("unused") private Set<String> getSWRLRuleNames()
   {
     return new HashSet<>(this.swrlRules.keySet());
   }
 
-  @SuppressWarnings("unused")
-  private Set<SWRLAPIRule> getSWRLRules()
+  @NonNull @SuppressWarnings("unused") private Set<SWRLAPIRule> getSWRLRules()
   {
     return new HashSet<>(this.swrlRules.values());
   }
@@ -401,7 +378,7 @@ class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
       processSWRLRuleOrSQWRLQuery(ruleOrQuery);
   }
 
-  private void processSWRLRuleOrSQWRLQuery(SWRLAPIRule ruleOrQuery) throws SQWRLException
+  private void processSWRLRuleOrSQWRLQuery(@NonNull SWRLAPIRule ruleOrQuery) throws SQWRLException
   {
     if (ruleOrQuery.isSQWRLQuery()) {
       createSWRLQueryFromSWRLRule(ruleOrQuery);
@@ -687,7 +664,7 @@ class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
     this.assertedOWLAxioms.addAll(axioms);
   }
 
-  private void generateOWLClassDeclarationAxiom(OWLClass cls)
+  private void generateOWLClassDeclarationAxiom(@NonNull OWLClass cls)
   {
     if (!this.owlClassDeclarationAxioms.containsKey(cls.getIRI())) {
       OWLDeclarationAxiom axiom = getSWRLAPIOWLDataFactory().getOWLClassDeclarationAxiom(cls);
@@ -697,7 +674,7 @@ class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
     }
   }
 
-  private void generateOWLClassDeclarationAxiomIfNecessary(OWLClassExpression classExpression)
+  private void generateOWLClassDeclarationAxiomIfNecessary(@NonNull OWLClassExpression classExpression)
   {
     if (classExpression instanceof OWLClass) {
       OWLClass cls = (OWLClass)classExpression;
@@ -705,19 +682,20 @@ class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
     }
   }
 
-  private void generateOWLIndividualDeclarationAxiomIfNecessary(OWLIndividual individual)
+  private void generateOWLIndividualDeclarationAxiomIfNecessary(@NonNull OWLIndividual individual)
   {
-    if (individual.isNamed()
-        && !this.owlIndividualDeclarationAxioms.containsKey(individual.asOWLNamedIndividual().getIRI())) {
-      OWLDeclarationAxiom axiom = getSWRLAPIOWLDataFactory().getOWLIndividualDeclarationAxiom(
-          individual.asOWLNamedIndividual());
+    if (individual.isNamed() && !this.owlIndividualDeclarationAxioms
+      .containsKey(individual.asOWLNamedIndividual().getIRI())) {
+      OWLDeclarationAxiom axiom = getSWRLAPIOWLDataFactory()
+        .getOWLIndividualDeclarationAxiom(individual.asOWLNamedIndividual());
       this.owlIndividualDeclarationAxioms.put(individual.asOWLNamedIndividual().getIRI(), axiom);
       this.assertedOWLAxioms.add(axiom);
       recordOWLNamedIndividual(individual.asOWLNamedIndividual());
     }
   }
 
-  private void generateOWLObjectPropertyDeclarationAxiomIfNecessary(OWLObjectPropertyExpression propertyExpression)
+  private void generateOWLObjectPropertyDeclarationAxiomIfNecessary(
+    @NonNull OWLObjectPropertyExpression propertyExpression)
   {
     if (propertyExpression instanceof OWLObjectProperty) {
       OWLObjectProperty property = (OWLObjectProperty)propertyExpression;
@@ -730,7 +708,7 @@ class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
     }
   }
 
-  private void generateOWLDataPropertyDeclarationAxiomIfNecessary(OWLDataPropertyExpression propertyExpression)
+  private void generateOWLDataPropertyDeclarationAxiomIfNecessary(@NonNull OWLDataPropertyExpression propertyExpression)
   {
     if (propertyExpression instanceof OWLDataProperty) {
       OWLDataProperty property = (OWLDataProperty)propertyExpression;
@@ -743,317 +721,303 @@ class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
     }
   }
 
-  private Set<OWLSameIndividualAxiom> getOWLSameIndividualAxioms()
+  @NonNull private Set<OWLSameIndividualAxiom> getOWLSameIndividualAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.SAME_INDIVIDUAL, Imports.INCLUDED);
   }
 
-  private Set<OWLDifferentIndividualsAxiom> getOWLDifferentIndividualsAxioms()
+  @NonNull private Set<OWLDifferentIndividualsAxiom> getOWLDifferentIndividualsAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.DIFFERENT_INDIVIDUALS, Imports.INCLUDED);
   }
 
-  private Set<OWLSubObjectPropertyOfAxiom> getOWLSubObjectPropertyOfAxioms()
+  @NonNull private Set<OWLSubObjectPropertyOfAxiom> getOWLSubObjectPropertyOfAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.SUB_OBJECT_PROPERTY, Imports.INCLUDED);
   }
 
-  private Set<OWLSubDataPropertyOfAxiom> getOWLSubDataPropertyOfAxioms()
+  @NonNull private Set<OWLSubDataPropertyOfAxiom> getOWLSubDataPropertyOfAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.SUB_DATA_PROPERTY, Imports.INCLUDED);
   }
 
-  private Set<OWLEquivalentClassesAxiom> getOWLEquivalentClassesAxioms()
+  @NonNull private Set<OWLEquivalentClassesAxiom> getOWLEquivalentClassesAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.EQUIVALENT_CLASSES, Imports.INCLUDED);
   }
 
-  private Set<OWLClassAssertionAxiom> getOWLClassAssertionAxioms()
+  @NonNull private Set<OWLClassAssertionAxiom> getOWLClassAssertionAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.CLASS_ASSERTION, Imports.INCLUDED);
   }
 
-  private Set<OWLObjectPropertyAssertionAxiom> getOWLObjectPropertyAssertionAxioms()
+  @NonNull private Set<OWLObjectPropertyAssertionAxiom> getOWLObjectPropertyAssertionAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.OBJECT_PROPERTY_ASSERTION, Imports.INCLUDED);
   }
 
-  private Set<OWLDataPropertyAssertionAxiom> getOWLDataPropertyAssertionAxioms()
+  @NonNull private Set<OWLDataPropertyAssertionAxiom> getOWLDataPropertyAssertionAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.DATA_PROPERTY_ASSERTION, Imports.INCLUDED);
   }
 
-  private Set<OWLSubClassOfAxiom> getOWLSubClassOfAxioms()
+  @NonNull private Set<OWLSubClassOfAxiom> getOWLSubClassOfAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.SUBCLASS_OF, Imports.INCLUDED);
   }
 
-  @SuppressWarnings("unused")
-  private Set<OWLDisjointClassesAxiom> getOWLDisjointClassesAxioms()
+  @NonNull @SuppressWarnings("unused") private Set<OWLDisjointClassesAxiom> getOWLDisjointClassesAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.DISJOINT_CLASSES, Imports.INCLUDED);
   }
 
-  private Set<OWLEquivalentDataPropertiesAxiom> getOWLEquivalentDataPropertiesAxioms()
+  @NonNull private Set<OWLEquivalentDataPropertiesAxiom> getOWLEquivalentDataPropertiesAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.EQUIVALENT_DATA_PROPERTIES, Imports.INCLUDED);
   }
 
-  private Set<OWLEquivalentObjectPropertiesAxiom> getOWLEquivalentObjectPropertiesAxioms()
+  @NonNull private Set<OWLEquivalentObjectPropertiesAxiom> getOWLEquivalentObjectPropertiesAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.EQUIVALENT_OBJECT_PROPERTIES, Imports.INCLUDED);
   }
 
-  private Set<OWLDisjointDataPropertiesAxiom> getOWLDisjointDataPropertiesAxioms()
+  @NonNull private Set<OWLDisjointDataPropertiesAxiom> getOWLDisjointDataPropertiesAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.DISJOINT_DATA_PROPERTIES, Imports.INCLUDED);
   }
 
-  private Set<OWLDisjointObjectPropertiesAxiom> getOWLDisjointObjectPropertiesAxioms()
+  @NonNull private Set<OWLDisjointObjectPropertiesAxiom> getOWLDisjointObjectPropertiesAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.DISJOINT_OBJECT_PROPERTIES, Imports.INCLUDED);
   }
 
-  private Set<OWLObjectPropertyDomainAxiom> getOWLObjectPropertyDomainAxioms()
+  @NonNull private Set<OWLObjectPropertyDomainAxiom> getOWLObjectPropertyDomainAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.OBJECT_PROPERTY_DOMAIN, Imports.INCLUDED);
   }
 
-  private Set<OWLDataPropertyDomainAxiom> getOWLDataPropertyDomainAxioms()
+  @NonNull private Set<OWLDataPropertyDomainAxiom> getOWLDataPropertyDomainAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.DATA_PROPERTY_DOMAIN, Imports.INCLUDED);
   }
 
-  private Set<OWLObjectPropertyRangeAxiom> getOWLObjectPropertyRangeAxioms()
+  @NonNull private Set<OWLObjectPropertyRangeAxiom> getOWLObjectPropertyRangeAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.OBJECT_PROPERTY_RANGE, Imports.INCLUDED);
   }
 
-  private Set<OWLDataPropertyRangeAxiom> getOWLDataPropertyRangeAxioms()
+  @NonNull private Set<OWLDataPropertyRangeAxiom> getOWLDataPropertyRangeAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.DATA_PROPERTY_RANGE, Imports.INCLUDED);
   }
 
-  private Set<OWLFunctionalObjectPropertyAxiom> getOWLFunctionalObjectPropertyAxioms()
+  @NonNull private Set<OWLFunctionalObjectPropertyAxiom> getOWLFunctionalObjectPropertyAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.FUNCTIONAL_OBJECT_PROPERTY, Imports.INCLUDED);
   }
 
-  private Set<OWLFunctionalDataPropertyAxiom> getOWLFunctionalDataPropertyAxioms()
+  @NonNull private Set<OWLFunctionalDataPropertyAxiom> getOWLFunctionalDataPropertyAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.FUNCTIONAL_DATA_PROPERTY, Imports.INCLUDED);
   }
 
-  private Set<OWLIrreflexiveObjectPropertyAxiom> getOWLIrreflexiveObjectPropertyAxioms()
+  @NonNull private Set<OWLIrreflexiveObjectPropertyAxiom> getOWLIrreflexiveObjectPropertyAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.IRREFLEXIVE_OBJECT_PROPERTY, Imports.INCLUDED);
   }
 
-  private Set<OWLInverseFunctionalObjectPropertyAxiom> getOWLInverseFunctionalObjectPropertyAxioms()
+  @NonNull private Set<OWLInverseFunctionalObjectPropertyAxiom> getOWLInverseFunctionalObjectPropertyAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.INVERSE_FUNCTIONAL_OBJECT_PROPERTY, Imports.INCLUDED);
   }
 
-  private Set<OWLTransitiveObjectPropertyAxiom> getOWLTransitiveObjectPropertyAxioms()
+  @NonNull private Set<OWLTransitiveObjectPropertyAxiom> getOWLTransitiveObjectPropertyAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.TRANSITIVE_OBJECT_PROPERTY, Imports.INCLUDED);
   }
 
-  private Set<OWLSymmetricObjectPropertyAxiom> getOWLSymmetricObjectPropertyAxioms()
+  @NonNull private Set<OWLSymmetricObjectPropertyAxiom> getOWLSymmetricObjectPropertyAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.SYMMETRIC_OBJECT_PROPERTY, Imports.INCLUDED);
   }
 
-  private Set<OWLAsymmetricObjectPropertyAxiom> getOWLAsymmetricObjectPropertyAxioms()
+  @NonNull private Set<OWLAsymmetricObjectPropertyAxiom> getOWLAsymmetricObjectPropertyAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.ASYMMETRIC_OBJECT_PROPERTY, Imports.INCLUDED);
   }
 
-  private Set<OWLInverseObjectPropertiesAxiom> getOWLInverseObjectPropertiesAxioms()
+  @NonNull private Set<OWLInverseObjectPropertiesAxiom> getOWLInverseObjectPropertiesAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.INVERSE_OBJECT_PROPERTIES, Imports.INCLUDED);
   }
 
-  @SuppressWarnings("unused")
-  private Set<OWLNegativeDataPropertyAssertionAxiom> getOWLNegativeDataPropertyAssertionAxioms()
+  @NonNull @SuppressWarnings("unused") private Set<OWLNegativeDataPropertyAssertionAxiom> getOWLNegativeDataPropertyAssertionAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.NEGATIVE_DATA_PROPERTY_ASSERTION, Imports.INCLUDED);
   }
 
-  @SuppressWarnings("unused")
-  private Set<OWLNegativeObjectPropertyAssertionAxiom> getOWLNegativeObjectPropertyAssertionAxioms()
+  @NonNull @SuppressWarnings("unused") private Set<OWLNegativeObjectPropertyAssertionAxiom> getOWLNegativeObjectPropertyAssertionAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.NEGATIVE_OBJECT_PROPERTY_ASSERTION, Imports.INCLUDED);
   }
 
-  @SuppressWarnings("unused")
-  private Set<OWLReflexiveObjectPropertyAxiom> getOWLReflexiveObjectPropertyAxioms()
+  @NonNull @SuppressWarnings("unused") private Set<OWLReflexiveObjectPropertyAxiom> getOWLReflexiveObjectPropertyAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.REFLEXIVE_OBJECT_PROPERTY, Imports.INCLUDED);
   }
 
-  @SuppressWarnings("unused")
-  private Set<OWLDisjointUnionAxiom> getOWLDisjointUnionAxioms()
+  @NonNull @SuppressWarnings("unused") private Set<OWLDisjointUnionAxiom> getOWLDisjointUnionAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.DISJOINT_UNION, Imports.INCLUDED);
   }
 
-  @SuppressWarnings("unused")
-  private Set<OWLAnnotationAssertionAxiom> getOWLAnnotationAssertionAxioms()
+  @NonNull @SuppressWarnings("unused") private Set<OWLAnnotationAssertionAxiom> getOWLAnnotationAssertionAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.ANNOTATION_ASSERTION, Imports.INCLUDED);
   }
 
-  @SuppressWarnings("unused")
-  private Set<OWLSubPropertyChainOfAxiom> getOWLSubPropertyChainOfAxioms()
+  @NonNull @SuppressWarnings("unused") private Set<OWLSubPropertyChainOfAxiom> getOWLSubPropertyChainOfAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.SUB_PROPERTY_CHAIN_OF, Imports.INCLUDED);
   }
 
-  @SuppressWarnings("unused")
-  private Set<OWLHasKeyAxiom> getOWLHasKeyAxioms()
+  @NonNull @SuppressWarnings("unused") private Set<OWLHasKeyAxiom> getOWLHasKeyAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.HAS_KEY, Imports.INCLUDED);
   }
 
-  @SuppressWarnings("unused")
-  private Set<OWLDatatypeDefinitionAxiom> getOWLDatatypeDefinitionAxioms()
+  @NonNull @SuppressWarnings("unused") private Set<OWLDatatypeDefinitionAxiom> getOWLDatatypeDefinitionAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.DATATYPE_DEFINITION, Imports.INCLUDED);
   }
 
-  @SuppressWarnings("unused")
-  private Set<OWLAnnotationPropertyRangeAxiom> getOWLAnnotationPropertyRangeAxioms()
+  @NonNull @SuppressWarnings("unused") private Set<OWLAnnotationPropertyRangeAxiom> getOWLAnnotationPropertyRangeAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.ANNOTATION_PROPERTY_RANGE, Imports.INCLUDED);
   }
 
-  @SuppressWarnings("unused")
-  private Set<OWLAnnotationPropertyDomainAxiom> getOWLAnnotationPropertyDomainAxioms()
+  @NonNull @SuppressWarnings("unused") private Set<OWLAnnotationPropertyDomainAxiom> getOWLAnnotationPropertyDomainAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.ANNOTATION_PROPERTY_DOMAIN, Imports.INCLUDED);
   }
 
-  @SuppressWarnings("unused")
-  private Set<OWLSubAnnotationPropertyOfAxiom> getOWLSubAnnotationPropertyOfAxioms()
+  @NonNull @SuppressWarnings("unused") private Set<OWLSubAnnotationPropertyOfAxiom> getOWLSubAnnotationPropertyOfAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.SUB_ANNOTATION_PROPERTY_OF, Imports.INCLUDED);
   }
 
-  private Set<OWLDeclarationAxiom> getOWLClassDeclarationAxioms()
+  @NonNull private Set<OWLDeclarationAxiom> getOWLClassDeclarationAxioms()
   {
     Set<OWLDeclarationAxiom> owlClassDeclarationAxioms = getOWLOntology()
-        .getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream()
-        .filter(owlDeclarationAxiom -> owlDeclarationAxiom.getEntity().isOWLClass()).collect(Collectors.toSet());
+      .getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream()
+      .filter(owlDeclarationAxiom -> owlDeclarationAxiom.getEntity().isOWLClass()).collect(Collectors.toSet());
 
     return owlClassDeclarationAxioms;
   }
 
-  private Set<OWLDeclarationAxiom> getOWLIndividualDeclarationAxioms()
+  @NonNull private Set<OWLDeclarationAxiom> getOWLIndividualDeclarationAxioms()
   {
     Set<OWLDeclarationAxiom> owlIndividualDeclarationAxioms = getOWLOntology()
-        .getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream()
-        .filter(owlDeclarationAxiom -> owlDeclarationAxiom.getEntity().isOWLNamedIndividual())
-        .collect(Collectors.toSet());
+      .getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream()
+      .filter(owlDeclarationAxiom -> owlDeclarationAxiom.getEntity().isOWLNamedIndividual())
+      .collect(Collectors.toSet());
 
     return owlIndividualDeclarationAxioms;
   }
 
-  private Set<OWLDeclarationAxiom> getOWLObjectPropertyDeclarationAxioms()
+  @NonNull private Set<OWLDeclarationAxiom> getOWLObjectPropertyDeclarationAxioms()
   {
     Set<OWLDeclarationAxiom> owlObjectPropertyDeclarationAxioms = getOWLOntology()
-        .getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream()
-        .filter(owlDeclarationAxiom -> owlDeclarationAxiom.getEntity().isOWLObjectProperty())
-        .collect(Collectors.toSet());
+      .getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream()
+      .filter(owlDeclarationAxiom -> owlDeclarationAxiom.getEntity().isOWLObjectProperty()).collect(Collectors.toSet());
 
     return owlObjectPropertyDeclarationAxioms;
   }
 
-  private Set<OWLDeclarationAxiom> getOWLDataPropertyDeclarationAxioms()
+  @NonNull private Set<OWLDeclarationAxiom> getOWLDataPropertyDeclarationAxioms()
   {
     Set<OWLDeclarationAxiom> owlDataPropertyDeclarationAxioms = getOWLOntology()
-        .getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream()
-        .filter(owlDeclarationAxiom -> owlDeclarationAxiom.getEntity().isOWLDataProperty()).collect(Collectors.toSet());
+      .getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream()
+      .filter(owlDeclarationAxiom -> owlDeclarationAxiom.getEntity().isOWLDataProperty()).collect(Collectors.toSet());
 
     return owlDataPropertyDeclarationAxioms;
   }
 
-  private Set<OWLDeclarationAxiom> getOWLAnnotationPropertyDeclarationAxioms()
+  @NonNull private Set<OWLDeclarationAxiom> getOWLAnnotationPropertyDeclarationAxioms()
   {
     Set<OWLDeclarationAxiom> owlAnnotationPropertyDeclarationAxioms = getOWLOntology()
-        .getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream()
-        .filter(owlDeclarationAxiom -> owlDeclarationAxiom.getEntity().isOWLAnnotationProperty())
-        .collect(Collectors.toSet());
+      .getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream()
+      .filter(owlDeclarationAxiom -> owlDeclarationAxiom.getEntity().isOWLAnnotationProperty())
+      .collect(Collectors.toSet());
 
     return owlAnnotationPropertyDeclarationAxioms;
   }
 
-  @SuppressWarnings("unused")
-  private Set<OWLDeclarationAxiom> getOWLDatatypeDeclarationAxioms()
+  @NonNull @SuppressWarnings("unused") private Set<OWLDeclarationAxiom> getOWLDatatypeDeclarationAxioms()
   {
     Set<OWLDeclarationAxiom> owlDatatypeDeclarationAxioms = getOWLOntology()
-        .getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream()
-        .filter(owlDeclarationAxiom -> owlDeclarationAxiom.getEntity().isOWLDatatype()).collect(Collectors.toSet());
+      .getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream()
+      .filter(owlDeclarationAxiom -> owlDeclarationAxiom.getEntity().isOWLDatatype()).collect(Collectors.toSet());
 
     return owlDatatypeDeclarationAxioms;
   }
 
-  private void recordOWLClass(OWLEntity cls)
+  private void recordOWLClass(@NonNull OWLEntity cls)
   {
     getIRIResolver().recordOWLClass(cls);
   }
 
-  private void recordOWLNamedIndividual(OWLEntity individual)
+  private void recordOWLNamedIndividual(@NonNull OWLEntity individual)
   {
     getIRIResolver().recordOWLNamedIndividual(individual);
   }
 
-  private void recordOWLObjectProperty(OWLEntity property)
+  private void recordOWLObjectProperty(@NonNull OWLEntity property)
   {
     getIRIResolver().recordOWLObjectProperty(property);
   }
 
-  private void recordOWLDataProperty(OWLEntity property)
+  private void recordOWLDataProperty(@NonNull OWLEntity property)
   {
     getIRIResolver().recordOWLDataProperty(property);
   }
 
-  private void recordOWLAnnotationProperty(OWLEntity property)
+  private void recordOWLAnnotationProperty(@NonNull OWLEntity property)
   {
     getIRIResolver().recordOWLAnnotationProperty(property);
   }
 
-  private OWLOntology getOWLOntology()
+  @NonNull private OWLOntology getOWLOntology()
   {
     return getSWRLAPIOWLOntology().getOWLOntology();
   }
 
-  private IRIResolver getIRIResolver()
+  @NonNull private IRIResolver getIRIResolver()
   {
     return getSWRLAPIOWLOntology().getIRIResolver();
   }
 
-  private SWRLAPIOWLOntology getSWRLAPIOWLOntology()
+  @NonNull private SWRLAPIOWLOntology getSWRLAPIOWLOntology()
   {
     return this.swrlapiOWLOntology;
   }
 
-  private SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory()
+  @NonNull private SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory()
   {
     return getSWRLAPIOWLOntology().getSWRLAPIOWLDataFactory();
   }
 
-  private OWLDataFactory getOWLDataFactory()
+  @NonNull private OWLDataFactory getOWLDataFactory()
   {
     return getSWRLAPIOWLOntology().getOWLDataFactory();
   }
 
-  private LiteralFactory getLiteralFactory()
+  @NonNull private LiteralFactory getLiteralFactory()
   {
     return getSWRLAPIOWLDataFactory().getLiteralFactory();
   }
 
-  private SQWRLResultValueFactory getSQWRLResultValueFactory()
+  @NonNull private SQWRLResultValueFactory getSQWRLResultValueFactory()
   {
     return getSWRLAPIOWLDataFactory().getSQWRLResultValueFactory();
   }

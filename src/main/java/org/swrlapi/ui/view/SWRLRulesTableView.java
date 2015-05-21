@@ -1,5 +1,6 @@
 package org.swrlapi.ui.view;
 
+import checkers.nullness.quals.NonNull;
 import org.swrlapi.ui.action.DisableAllRulesAction;
 import org.swrlapi.ui.action.EnableAllRulesAction;
 import org.swrlapi.ui.dialog.SWRLAPIDialogManager;
@@ -15,7 +16,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 /**
- * Provides a model for graphical display or SWRL rules or SQWRL queries.
+ * Provides a model for graphical display of SWRL rules or SQWRL queries.
  *
  * @see org.swrlapi.ui.model.SWRLRulesTableModel
  */
@@ -32,17 +33,18 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
   private static final int COMMENT_COLUMN_PREFERRED_WIDTH = 200;
   private static final int COMMENT_COLUMN_MAX_WIDTH = 300;
 
-  private final SWRLRuleEngineModel swrlRuleEngineModel;
-  private final SWRLAPIDialogManager applicationDialogManager;
-  private final SWRLRulesTableModel swrlRulesTableModel;
-  private final JTable swrlRulesTable;
+  @NonNull private final SWRLRuleEngineModel swrlRuleEngineModel;
+  @NonNull private final SWRLAPIDialogManager dialogManager;
+  @NonNull private final SWRLRulesTableModel swrlRulesTableModel;
+  @NonNull private final JTable swrlRulesTable;
 
   private JButton editButton, deleteButton;
 
-  public SWRLRulesTableView(SWRLRuleEngineModel swrlRuleEngineModel, SWRLAPIDialogManager dialogManager)
+  public SWRLRulesTableView(@NonNull SWRLRuleEngineModel swrlRuleEngineModel,
+    @NonNull SWRLAPIDialogManager dialogManager)
   {
     this.swrlRuleEngineModel = swrlRuleEngineModel;
-    this.applicationDialogManager = dialogManager;
+    this.dialogManager = dialogManager;
     this.swrlRulesTableModel = swrlRuleEngineModel.getSWRLRulesTableModel();
     this.swrlRulesTable = new JTable(this.swrlRulesTableModel);
     this.swrlRulesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -54,14 +56,13 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
     createPopupMenu();
   }
 
-  @Override
-  public void update()
+  @Override public void update()
   {
     this.swrlRulesTableModel.fireTableDataChanged();
     validate();
   }
 
-  public String getSelectedSWRLRuleName()
+  @NonNull public String getSelectedSWRLRuleName()
   {
     int selectedRow = this.swrlRulesTable.getSelectedRow();
 
@@ -71,7 +72,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
       return "";
   }
 
-  private String getSelectedSWRLRuleText()
+  @NonNull private String getSelectedSWRLRuleText()
   {
     int selectedRow = this.swrlRulesTable.getSelectedRow();
 
@@ -81,7 +82,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
       return "";
   }
 
-  private String getSelectedSWRLRuleComment()
+  @NonNull private String getSelectedSWRLRuleComment()
   {
     int selectedRow = this.swrlRulesTable.getSelectedRow();
 
@@ -107,9 +108,9 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 
   private void addTableListeners()
   {
-    this.swrlRulesTable.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mouseClicked(MouseEvent e)
+    this.swrlRulesTable.addMouseListener(new MouseAdapter()
+    {
+      @Override public void mouseClicked(@NonNull MouseEvent e)
       {
         if (e.getClickCount() == 2) {
           if (e.getSource() == SWRLRulesTableView.this.swrlRulesTable) {
@@ -120,11 +121,11 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
     });
 
     this.swrlRulesTable.getSelectionModel().addListSelectionListener(e -> {
-			if (hasSelectedRule())
-				enableEditAndDelete();
-			else
-				disableEditAndDelete();
-		});
+      if (hasSelectedRule())
+        enableEditAndDelete();
+      else
+        disableEditAndDelete();
+    });
   }
 
   private void editSelectedSWRLRule()
@@ -134,7 +135,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
       String ruleText = getSelectedSWRLRuleText();
       String ruleComment = getSelectedSWRLRuleComment();
 
-      this.applicationDialogManager.getSWRLRuleEditorDialog(this, ruleName, ruleText, ruleComment).setVisible(true);
+      this.dialogManager.getSWRLRuleEditorDialog(this, ruleName, ruleText, ruleComment).setVisible(true);
     }
   }
 
@@ -189,18 +190,17 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
     return this.swrlRulesTable.getSelectedRow() != -1;
   }
 
-  private SWRLRuleEngineModel getSWRLRuleEngineModel()
+  @NonNull private SWRLRuleEngineModel getSWRLRuleEngineModel()
   {
     return this.swrlRuleEngineModel;
   }
 
   private abstract class ActionListenerBase implements ActionListener
   {
-    protected final SWRLAPIDialogManager applicationDialogManager;
+    @NonNull protected final SWRLAPIDialogManager applicationDialogManager;
+    @NonNull protected final Component parent;
 
-    protected final Component parent;
-
-    protected ActionListenerBase(Component parent, SWRLAPIDialogManager applicationDialogManager)
+    protected ActionListenerBase(@NonNull Component parent, @NonNull SWRLAPIDialogManager applicationDialogManager)
     {
       this.parent = parent;
       this.applicationDialogManager = applicationDialogManager;
@@ -209,13 +209,12 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 
   private class NewSWRLRuleActionListener extends ActionListenerBase
   {
-    public NewSWRLRuleActionListener(Component parent, SWRLAPIDialogManager applicationDialogManager)
+    public NewSWRLRuleActionListener(@NonNull Component parent, @NonNull SWRLAPIDialogManager applicationDialogManager)
     {
       super(parent, applicationDialogManager);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e)
+    @Override public void actionPerformed(@NonNull ActionEvent e)
     {
       this.applicationDialogManager.getSWRLRuleEditorDialog(this.parent).setVisible(true);
     }
@@ -223,13 +222,12 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 
   private class EditSWRLRuleActionListener extends ActionListenerBase
   {
-    public EditSWRLRuleActionListener(Component parent, SWRLAPIDialogManager applicationDialogManager)
+    public EditSWRLRuleActionListener(@NonNull Component parent, @NonNull SWRLAPIDialogManager applicationDialogManager)
     {
       super(parent, applicationDialogManager);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e)
+    @Override public void actionPerformed(@NonNull ActionEvent e)
     {
       editSelectedSWRLRule();
     }
@@ -237,13 +235,12 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 
   private class DeleteSWRLRuleActionListener extends ActionListenerBase
   {
-    public DeleteSWRLRuleActionListener(Component parent, SWRLAPIDialogManager applicationDialogManager)
+    public DeleteSWRLRuleActionListener(@NonNull Component parent, @NonNull SWRLAPIDialogManager applicationDialogManager)
     {
       super(parent, applicationDialogManager);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e)
+    @Override public void actionPerformed(@NonNull ActionEvent e)
     {
       deleteSelectedSWRLRule();
     }
@@ -252,9 +249,8 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
     {
       String selectedRuleName = getSelectedSWRLRuleName();
 
-      if (SWRLRulesTableView.this.swrlRulesTableModel.hasSWRLRule(selectedRuleName)
-          && this.applicationDialogManager.showConfirmDialog(this.parent, "Do you really want to delete the rule?",
-              "Delete Rule")) {
+      if (SWRLRulesTableView.this.swrlRulesTableModel.hasSWRLRule(selectedRuleName) && this.applicationDialogManager
+        .showConfirmDialog(this.parent, "Do you really want to delete the rule?", "Delete Rule")) {
         SWRLRulesTableView.this.swrlRulesTableModel.removeSWRLRule(selectedRuleName);
         getSWRLRuleEngineModel().getSWRLRuleEngine().deleteSWRLRule(selectedRuleName);
       }
@@ -271,26 +267,24 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 
   private class PopupListener extends MouseAdapter
   {
-    final JPopupMenu popup;
+    @NonNull final JPopupMenu popup;
 
-    public PopupListener(JPopupMenu popupMenu)
+    public PopupListener(@NonNull JPopupMenu popupMenu)
     {
       this.popup = popupMenu;
     }
 
-    @Override
-    public void mousePressed(MouseEvent e)
+    @Override public void mousePressed(@NonNull MouseEvent e)
     {
       maybeShowPopup(e);
     }
 
-    @Override
-    public void mouseReleased(MouseEvent e)
+    @Override public void mouseReleased(@NonNull MouseEvent e)
     {
       maybeShowPopup(e);
     }
 
-    private void maybeShowPopup(MouseEvent e)
+    private void maybeShowPopup(@NonNull MouseEvent e)
     {
       if (e.isPopupTrigger())
         this.popup.show(e.getComponent(), e.getX(), e.getY());

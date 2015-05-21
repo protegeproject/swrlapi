@@ -1,11 +1,12 @@
 package org.swrlapi.factory;
 
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
 
 class DefaultSQWRLClassResultValue extends DefaultSQWRLEntityResultValue implements SQWRLClassResultValue
 {
-  public DefaultSQWRLClassResultValue(IRI classIRI, String prefixedName)
+  public DefaultSQWRLClassResultValue(@NonNull IRI classIRI, @NonNull String prefixedName)
   {
     super(classIRI, prefixedName);
   }

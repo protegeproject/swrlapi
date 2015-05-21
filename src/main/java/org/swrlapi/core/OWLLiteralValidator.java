@@ -1,7 +1,6 @@
 package org.swrlapi.core;
 
-import java.net.URI;
-
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
 import org.swrlapi.core.xsd.XSDDate;
@@ -9,12 +8,14 @@ import org.swrlapi.core.xsd.XSDDateTime;
 import org.swrlapi.core.xsd.XSDDuration;
 import org.swrlapi.core.xsd.XSDTime;
 
+import java.net.URI;
+
 /**
  * A basic OWL literal validator that deals with a set of core datatypes
  */
 public class OWLLiteralValidator
 {
-  public static boolean isValid(String literal, OWLDatatype datatype)
+  public static boolean isValid(@NonNull String literal, @NonNull OWLDatatype datatype)
   {
     try {
       if (datatype.getIRI().equals(XSDVocabulary.BYTE.getIRI())) {
