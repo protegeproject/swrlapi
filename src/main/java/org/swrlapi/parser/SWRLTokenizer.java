@@ -81,7 +81,7 @@ class SWRLTokenizer
       throw generateEndOfRuleException(unexpectedTokenMessage);
   }
 
-  public SWRLToken getToken(String noTokenMessage) throws SWRLParseException
+  @NonNull public SWRLToken getToken(String noTokenMessage) throws SWRLParseException
   {
     if (hasMoreTokens())
       return getToken();
@@ -94,7 +94,7 @@ class SWRLTokenizer
     return this.tokenPosition < this.tokens.size();
   }
 
-  public SWRLToken peekToken(String message) throws SWRLParseException
+  @NonNull public SWRLToken peekToken(@NonNull String message) throws SWRLParseException
   {
     if (this.tokenPosition < this.tokens.size())
       return this.tokens.get(this.tokenPosition);
@@ -115,12 +115,12 @@ class SWRLTokenizer
     return this.interactiveParseOnly;
   }
 
-  public boolean hasVariable(String variableName)
+  public boolean hasVariable(@NonNull String variableName)
   {
     return this.swrlVariables.contains(variableName);
   }
 
-  public void addVariable(String variableName)
+  public void addVariable(@NonNull String variableName)
   {
     this.swrlVariables.add(variableName);
   }
@@ -131,12 +131,12 @@ class SWRLTokenizer
     checkAndSkipToken(SWRLToken.SWRLTokenType.LPAREN, unexpectedTokenMessage);
   }
 
-  public void checkAndSkipRParen(String unexpectedTokenMessage) throws SWRLParseException
+  public void checkAndSkipRParen(@NonNull String unexpectedTokenMessage) throws SWRLParseException
   {
     checkAndSkipToken(SWRLToken.SWRLTokenType.RPAREN, unexpectedTokenMessage);
   }
 
-  public void checkAndSkipComma(String unexpectedTokenMessage) throws SWRLParseException
+  public void checkAndSkipComma(@NonNull String unexpectedTokenMessage) throws SWRLParseException
   {
     checkAndSkipToken(SWRLToken.SWRLTokenType.COMMA, unexpectedTokenMessage);
   }
@@ -150,7 +150,7 @@ class SWRLTokenizer
     return false;
   }
 
-  private SWRLToken getToken() throws SWRLParseException
+  @NonNull private SWRLToken getToken() throws SWRLParseException
   {
     if (this.tokenPosition < this.tokens.size())
       return this.tokens.get(this.tokenPosition++);
@@ -158,7 +158,7 @@ class SWRLTokenizer
       throw generateEndOfRuleException("Incomplete rule!");
   }
 
-  private void checkAndSkipToken(SWRLToken.SWRLTokenType tokenType, String unexpectedTokenMessage)
+  private void checkAndSkipToken(SWRLToken.SWRLTokenType tokenType, @NonNull String unexpectedTokenMessage)
     throws SWRLParseException
   {
     if (hasMoreTokens()) {
@@ -283,7 +283,7 @@ class SWRLTokenizer
 
   }
 
-  @NonNull private SWRLParseException generateEndOfRuleException(String message)
+  @NonNull private SWRLParseException generateEndOfRuleException(@NonNull String message)
   {
     if (!this.isInteractiveParseOnly())
       return new SWRLParseException(message);

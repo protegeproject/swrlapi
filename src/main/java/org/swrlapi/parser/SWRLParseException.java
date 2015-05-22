@@ -1,5 +1,7 @@
 package org.swrlapi.parser;
 
+import checkers.nullness.quals.NonNull;
+
 /**
  * @see org.swrlapi.parser.SWRLParser
  */
@@ -12,7 +14,7 @@ public class SWRLParseException extends Exception
     super();
   }
 
-  public SWRLParseException(String s)
+  public SWRLParseException(@NonNull String s)
   {
     super(s);
   }

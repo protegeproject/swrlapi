@@ -111,14 +111,14 @@ class SWRLToken
     IRI("IRI"), STRING("quoted string"), FLOAT("float"), INT("int"), TYPE_QUAL("^^"), AND("^"), IMP("->"), RING("."), LPAREN(
         "("), RPAREN(")"), COMMA(","), QUESTION("?"), END_OF_INPUT("end");
 
-    private final String name;
+    @NonNull private final String name;
 
-    SWRLTokenType(String name)
+    SWRLTokenType(@NonNull String name)
     {
       this.name = name;
     }
 
-    public String getName()
+    @NonNull public String getName()
     {
       return this.name;
     }
