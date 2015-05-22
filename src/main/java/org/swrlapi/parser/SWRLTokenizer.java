@@ -81,7 +81,7 @@ class SWRLTokenizer
       throw generateEndOfRuleException(unexpectedTokenMessage);
   }
 
-  @NonNull public SWRLToken getToken(String noTokenMessage) throws SWRLParseException
+  @NonNull public SWRLToken getToken(@NonNull String noTokenMessage) throws SWRLParseException
   {
     if (hasMoreTokens())
       return getToken();
@@ -126,7 +126,7 @@ class SWRLTokenizer
   }
 
 
-  public void checkAndSkipLParen(String unexpectedTokenMessage) throws SWRLParseException
+  public void checkAndSkipLParen(@NonNull String unexpectedTokenMessage) throws SWRLParseException
   {
     checkAndSkipToken(SWRLToken.SWRLTokenType.LPAREN, unexpectedTokenMessage);
   }

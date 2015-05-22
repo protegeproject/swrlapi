@@ -66,7 +66,6 @@ public class IRIResolver
   }
 
   /**
-   *
    * @param iri An IRI
    * @return The prefixed form of the IRI
    * @throws IllegalArgumentException If the IRI cannot be resolved to a prefixed name
@@ -85,7 +84,6 @@ public class IRIResolver
   }
 
   /**
-   *
    * @param prefixedName A prefixed name
    * @return The IRI resolved from the prefixed name
    * @throws IllegalArgumentException If the prefixed name cannot be resolved
@@ -207,38 +205,37 @@ public class IRIResolver
     this.dataPropertyPrefixedNames.add(prefixedName);
   }
 
-
-  public boolean isOWLClass(String prefixedName)
+  public boolean isOWLClass(@NonNull String prefixedName)
   {
     return this.classPrefixedNames.contains(prefixedName);
   }
 
-  public boolean isOWLNamedIndividual(String prefixedName)
+  public boolean isOWLNamedIndividual(@NonNull String prefixedName)
   {
     return this.namedIndividualPrefixedNames.contains(prefixedName);
   }
 
-  public boolean isOWLObjectProperty(String prefixedName)
+  public boolean isOWLObjectProperty(@NonNull String prefixedName)
   {
     return this.objectPropertyPrefixedNames.contains(prefixedName);
   }
 
-  public boolean isOWLDataProperty(String prefixedName)
+  public boolean isOWLDataProperty(@NonNull String prefixedName)
   {
     return this.dataPropertyPrefixedNames.contains(prefixedName);
   }
 
-  public boolean isOWLAnnotationProperty(String prefixedName)
+  public boolean isOWLAnnotationProperty(@NonNull String prefixedName)
   {
     return this.annotationPropertyPrefixedNames.contains(prefixedName);
   }
 
-  public boolean isOWLDatatype(String prefixedName)
+  public boolean isOWLDatatype(@NonNull String prefixedName)
   {
     return this.datatypePrefixedNames.contains(prefixedName);
   }
 
-  private void recordPrefixedName2IRIMapping(String prefixedName, IRI iri)
+  private void recordPrefixedName2IRIMapping(@NonNull String prefixedName, @NonNull IRI iri)
   {
     if (!this.prefixedName2IRI.containsKey(prefixedName)) {
       this.prefixedName2IRI.put(prefixedName, iri);

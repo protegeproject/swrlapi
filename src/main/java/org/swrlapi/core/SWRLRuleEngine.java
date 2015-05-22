@@ -69,7 +69,7 @@ public interface SWRLRuleEngine
    * @return A SWRL rule
    * @throws SWRLRuleException If the rule of the specified name does not exist
    */
-  SWRLAPIRule getSWRLRule(String ruleName) throws SWRLRuleException;
+  SWRLAPIRule getSWRLRule(@NonNull String ruleName) throws SWRLRuleException;
 
   /**
    * @param ruleName The name of the rule
@@ -77,7 +77,7 @@ public interface SWRLRuleEngine
    * @return A SWRL rule
    * @throws SWRLParseException If an error occurs during parsing
    */
-  @NonNull SWRLAPIRule createSWRLRule(String ruleName, String rule) throws SWRLParseException;
+  @NonNull SWRLAPIRule createSWRLRule(@NonNull String ruleName, @NonNull String rule) throws SWRLParseException;
 
   /**
    * @param ruleName The name of the rule
@@ -87,23 +87,24 @@ public interface SWRLRuleEngine
    * @return A SWRL rule
    * @throws SWRLParseException If an error occurs during parsing
    */
-  @NonNull SWRLAPIRule createSWRLRule(String ruleName, String rule, String comment, boolean isActive) throws SWRLParseException;
+  @NonNull SWRLAPIRule createSWRLRule(@NonNull String ruleName, @NonNull String rule, @NonNull String comment,
+    boolean isActive) throws SWRLParseException;
 
   /**
    * @param ruleName The name of a rule
    */
-  void deleteSWRLRule(String ruleName);
+  void deleteSWRLRule(@NonNull String ruleName);
 
   /**
    * @param iri An IRI
    * @return True if the IRI is a built-in
    */
-  boolean isSWRLBuiltIn(IRI iri);
+  boolean isSWRLBuiltIn(@NonNull IRI iri);
 
   /**
    * @param iri The IRI of a built-in
    */
-  void addSWRLBuiltIn(IRI iri);
+  void addSWRLBuiltIn(@NonNull IRI iri);
 
   /**
    * @return The IRIs of all SWRL built-ins
@@ -130,40 +131,40 @@ public interface SWRLRuleEngine
    *
    * @return An OWL 2 RL engine
    */
-  OWL2RLEngine getOWL2RLEngine();
+  @NonNull OWL2RLEngine getOWL2RLEngine();
 
   /**
    * Get the name of the native rule engine implementing this SWRL rule engine.
    *
    * @return A rule engine name
    */
-  String getRuleEngineName();
+  @NonNull String getRuleEngineName();
 
   /**
    * Get the version of the native rule engine implementing this SWRL rule engine.
    *
    * @return A rule engine version
    */
-  String getRuleEngineVersion();
+  @NonNull String getRuleEngineVersion();
 
   /**
    * A rule engine must also define an {@link org.semanticweb.owlapi.reasoner.OWLReasoner}.
    *
    * @return An OWL reasoner
    */
-  OWLReasoner getOWLReasoner();
+  @NonNull OWLReasoner getOWLReasoner();
 
   /**
    * @return The rule engine's icon
    */
-  Icon getRuleEngineIcon();
+  @NonNull Icon getRuleEngineIcon();
 
   // The following are convenience methods to display rule engine activity
 
   /**
    * @return A collection of OWL axioms
    */
-  Set<OWLAxiom> getAssertedOWLAxioms();
+  @NonNull Set<OWLAxiom> getAssertedOWLAxioms();
 
   /**
    * @return A collection of OWL axioms

@@ -77,7 +77,7 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
    * Load named SQWRL query, all enabled SWRL rules, and all relevant knowledge from OWL into bridge. All existing
    * bridge rules and knowledge will first be cleared and the associated rule engine will be reset.
    */
-  @Override public void importSQWRLQueryAndOWLAxioms(String queryName) throws SWRLRuleEngineException
+  @Override public void importSQWRLQueryAndOWLAxioms(@NonNull String queryName) throws SWRLRuleEngineException
   {
     reset();
 
@@ -293,7 +293,7 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
     return this.swrlapiOWLOntology.getSWRLRules();
   }
 
-  @Override public SWRLAPIRule getSWRLRule(String ruleName) throws SWRLRuleException
+  @Override public SWRLAPIRule getSWRLRule(@NonNull String ruleName) throws SWRLRuleException
   {
     return this.swrlapiOWLOntology.getSWRLRule(ruleName);
   }

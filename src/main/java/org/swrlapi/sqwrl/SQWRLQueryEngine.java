@@ -20,14 +20,15 @@ public interface SQWRLQueryEngine extends SWRLRuleEngine
 {
   /**
    * Create and run a SQWRL query. The query will be created and added to the associated ontology.
-   * 
+   *
    * @param queryName The name of the query
    * @param queryText The query
    * @return The result of the query
    * @throws SWRLParseException If a parsing error occurs during processing
-   * @throws SQWRLException If a SQWRL-specific error occurs during processing
+   * @throws SQWRLException     If a SQWRL-specific error occurs during processing
    */
-  SQWRLResult runSQWRLQuery(String queryName, String queryText) throws SWRLParseException, SQWRLException;
+  @NonNull SQWRLResult runSQWRLQuery(@NonNull String queryName, @NonNull String queryText)
+    throws SWRLParseException, SQWRLException;
 
   /**
    * Create a SQWRL query.
@@ -35,19 +36,19 @@ public interface SQWRLQueryEngine extends SWRLRuleEngine
    * @param queryName The name of the query
    * @param queryText The query
    * @throws SWRLParseException If a parsing error occurs during processing
-   * @throws SQWRLException If a SQWRL-specific error occurs during processing
+   * @throws SQWRLException     If a SQWRL-specific error occurs during processing
    */
-  void createSQWRLQuery(String queryName, String queryText) throws SWRLParseException, SQWRLException;
+  void createSQWRLQuery(@NonNull String queryName, @NonNull String queryText) throws SWRLParseException, SQWRLException;
 
   /**
    * Run a named SQWRL query. SWRL rules will also be executed and any inferences produced by them will be available in
    * the query.
-   * 
+   *
    * @param queryName The name of the query
    * @return The result of the query
    * @throws SQWRLException If an exception occurs during processing
    */
-  SQWRLResult runSQWRLQuery(String queryName) throws SQWRLException;
+  @NonNull SQWRLResult runSQWRLQuery(@NonNull String queryName) throws SQWRLException;
 
   /**
    * Run all enabled SQWRL queries.
@@ -63,21 +64,21 @@ public interface SQWRLQueryEngine extends SWRLRuleEngine
    * @return The result of the query
    * @throws SQWRLException If an error occurs during processing
    */
-  SQWRLResult getSQWRLResult(String queryName) throws SQWRLException;
+  @NonNull SQWRLResult getSQWRLResult(@NonNull String queryName) throws SQWRLException;
 
   /**
    * Get all the enabled SQWRL queries in the ontology.
    *
    * @return A set of queries
    */
-  Set<SQWRLQuery> getSQWRLQueries();
+  @NonNull Set<SQWRLQuery> getSQWRLQueries();
 
   /**
    * Get the names of the enabled SQWRL queries in the ontology.
    *
    * @return The names of all SQWRL queries
    */
-  Set<String> getSQWRLQueryNames();
+  @NonNull Set<String> getSQWRLQueryNames();
 
   /**
    * @return A SQWRL query renderer
@@ -91,25 +92,24 @@ public interface SQWRLQueryEngine extends SWRLRuleEngine
    * @param queryName The name of the query
    * @throws SWRLRuleEngineException If an error occurs during inference
    */
-  void importSQWRLQueryAndOWLAxioms(String queryName) throws SWRLRuleEngineException;
+  void importSQWRLQueryAndOWLAxioms(@NonNull String queryName) throws SWRLRuleEngineException;
 
   /**
    * Returns the name of the underlying target query engine.
    *
    * @return The name of the target query engine
    */
-  String getQueryEngineName();
+  @NonNull String getQueryEngineName();
 
   /**
    * Returns the version number of the underlying target query engine.
    *
    * @return The version of the target query engine
    */
-  String getQueryEngineVersion();
+  @NonNull String getQueryEngineVersion();
 
   /**
-   *
    * @return An icon representing the query engine
    */
-  Icon getQueryEngineIcon();
+  @NonNull Icon getQueryEngineIcon();
 }

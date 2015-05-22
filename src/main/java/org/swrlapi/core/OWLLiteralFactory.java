@@ -39,7 +39,7 @@ public interface OWLLiteralFactory
 
   @NonNull OWLLiteral getOWLLiteral(double value);
 
-  @NonNull OWLLiteral getOWLLiteral(String value);
+  @NonNull OWLLiteral getOWLLiteral(@NonNull String value);
 
   @NonNull OWLLiteral getOWLLiteral(boolean value);
 

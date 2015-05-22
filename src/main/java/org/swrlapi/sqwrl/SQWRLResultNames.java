@@ -1,5 +1,6 @@
 package org.swrlapi.sqwrl;
 
+import checkers.nullness.quals.NonNull;
 import org.swrlapi.sqwrl.exceptions.SQWRLInvalidAggregateFunctionNameException;
 
 /**
@@ -24,7 +25,7 @@ public class SQWRLResultNames
    * @param aggregateFunctionName The name of a function
    * @throws SQWRLInvalidAggregateFunctionNameException If the function is not an aggregate function
    */
-  public static void checkAggregateFunctionName(String aggregateFunctionName)
+  public static void checkAggregateFunctionName(@NonNull String aggregateFunctionName)
       throws SQWRLInvalidAggregateFunctionNameException
   {
     boolean found = false;

@@ -1,5 +1,8 @@
 package org.swrlapi.exceptions;
 
+import checkers.nullness.quals.NonNull;
+import checkers.nullness.quals.Nullable;
+
 public class SWRLAPIException extends RuntimeException
 {
   private static final long serialVersionUID = 1L;
@@ -9,12 +12,12 @@ public class SWRLAPIException extends RuntimeException
     super();
   }
 
-  public SWRLAPIException(String message)
+  public SWRLAPIException(@NonNull String message)
   {
     super(message);
   }
 
-  public SWRLAPIException(String message, Throwable cause)
+  public SWRLAPIException(@NonNull String message, @Nullable Throwable cause)
   {
     super(message, cause);
   }

@@ -28,7 +28,7 @@ public interface LiteralFactory
 
   @NonNull Literal getLiteral(double value);
 
-  @NonNull Literal getLiteral(String value);
+  @NonNull Literal getLiteral(@NonNull String value);
 
   @NonNull Literal getLiteral(boolean value);
 

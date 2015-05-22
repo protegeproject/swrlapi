@@ -235,10 +235,10 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 
   private class SWRLRuleModel
   {
-    private final String ruleName, ruleText, comment;
+    @NonNull private final String ruleName, ruleText, comment;
     private boolean active;
 
-    public SWRLRuleModel(String ruleName, String ruleText, String comment)
+    public SWRLRuleModel(@NonNull String ruleName, @NonNull String ruleText, @NonNull String comment)
     {
       this.active = true;
       this.ruleText = ruleText;
@@ -256,17 +256,17 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
       return this.active;
     }
 
-    public String getRuleText()
+    @NonNull public String getRuleText()
     {
       return this.ruleText;
     }
 
-    public String getRuleName()
+    @NonNull public String getRuleName()
     {
       return this.ruleName;
     }
 
-    public String getComment()
+    @NonNull public String getComment()
     {
       return this.comment;
     }

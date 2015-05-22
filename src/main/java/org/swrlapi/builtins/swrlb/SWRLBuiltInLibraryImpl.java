@@ -1552,32 +1552,32 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     return new XSDDate(XSDTimeUtil.utilDate2XSDDateString(utilDate));
   }
 
-  @NonNull private XSDDate dateString2XSDDate(String date)
+  @NonNull private XSDDate dateString2XSDDate(@NonNull String date)
   {
     return new XSDDate(date);
   }
 
-  @NonNull private XSDDateTime utilDate2XSDDateTime(java.util.Date utilDate)
+  @NonNull private XSDDateTime utilDate2XSDDateTime(java.util.@NonNull Date utilDate)
   {
     return new XSDDateTime(XSDTimeUtil.utilDate2XSDDateTimeString(utilDate));
   }
 
-  @NonNull private XSDDateTime dateTimeString2XSDDateTime(String dateTime)
+  @NonNull private XSDDateTime dateTimeString2XSDDateTime(@NonNull String dateTime)
   {
     return new XSDDateTime(dateTime);
   }
 
-  @NonNull private XSDDuration axisDuration2XSDDuration(org.apache.axis.types.Duration duration)
+  @NonNull private XSDDuration axisDuration2XSDDuration(org.apache.axis.types.@NonNull Duration duration)
   {
     return new XSDDuration(duration.toString());
   }
 
-  @NonNull private XSDTime axisTime2XSDTime(org.apache.axis.types.Time time)
+  @NonNull private XSDTime axisTime2XSDTime(org.apache.axis.types.@NonNull Time time)
   {
     return new XSDTime(time.toString());
   }
 
-  @NonNull private XSDTime timeString2XSDTime(String time)
+  @NonNull private XSDTime timeString2XSDTime(@NonNull String time)
   {
     return new XSDTime(time);
   }

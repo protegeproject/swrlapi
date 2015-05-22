@@ -242,8 +242,8 @@ public abstract class SWRLBuiltInLibraryManager
     return result;
   }
 
-  private static Method resolveBuiltInMethod(String ruleName, @NonNull SWRLBuiltInLibrary library, String prefix,
-    @NonNull String builtInMethodName) throws UnresolvedSWRLBuiltInMethodException
+  private static Method resolveBuiltInMethod(@NonNull String ruleName, @NonNull SWRLBuiltInLibrary library,
+    @NonNull String prefix, @NonNull String builtInMethodName) throws UnresolvedSWRLBuiltInMethodException
   {
     String key = prefix + ":" + builtInMethodName;
 

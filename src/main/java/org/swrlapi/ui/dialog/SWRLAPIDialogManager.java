@@ -10,21 +10,24 @@ import java.awt.*;
  */
 public interface SWRLAPIDialogManager
 {
-  @NonNull JDialog getSWRLRuleEditorDialog(Component parent);
+  @NonNull JDialog getSWRLRuleEditorDialog(@NonNull Component parent);
 
-  @NonNull JDialog getSWRLRuleEditorDialog(Component parent, String ruleName, String ruleText, String comment);
+  @NonNull JDialog getSWRLRuleEditorDialog(@NonNull Component parent, @NonNull String ruleName,
+    @NonNull String ruleText, @NonNull String comment);
 
-  int showConfirmCancelDialog(Component parent, String message, String title);
+  int showConfirmCancelDialog(@NonNull Component parent, @NonNull String message, @NonNull String title);
 
-  boolean showConfirmDialog(Component parent, String message, String title);
+  boolean showConfirmDialog(@NonNull Component parent, @NonNull String message, @NonNull String title);
 
-  void showErrorMessageDialog(Component parent, String message, String title);
+  void showErrorMessageDialog(@NonNull Component parent, @NonNull String message, @NonNull String title);
 
-  String showInputDialog(Component parent, String message, String initialValue);
+  String showInputDialog(@NonNull Component parent, @NonNull String message, @NonNull String initialValue);
 
-  void showMessageDialog(Component parent, String message, String title);
+  void showMessageDialog(@NonNull Component parent, @NonNull String message, @NonNull String title);
 
-  @NonNull JFileChooser createFileChooser(String title, String fileDescription, String fileExtension);
+  @NonNull JFileChooser createFileChooser(@NonNull String title, @NonNull String fileDescription,
+    @NonNull String fileExtension);
 
-  @NonNull JFileChooser createSaveFileChooser(String title, String fileDescription, String fileExtension, final boolean overwrite);
+  @NonNull JFileChooser createSaveFileChooser(@NonNull String title, @NonNull String fileDescription,
+    @NonNull String fileExtension, final boolean overwrite);
 }

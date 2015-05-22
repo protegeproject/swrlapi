@@ -33,8 +33,8 @@ public interface SWRLAPIOWLDataFactory extends OWLDataFactory
 {
   @NonNull SWRLBuiltInArgumentFactory getSWRLBuiltInArgumentFactory();
 
-  @NonNull SWRLAPIBuiltInAtom getSWRLAPIBuiltInAtom(String ruleName, IRI builtInIRI, String builtInPrefixedName,
-      List<SWRLBuiltInArgument> arguments);
+  @NonNull SWRLAPIBuiltInAtom getSWRLAPIBuiltInAtom(@NonNull String ruleName, @NonNull IRI builtInIRI,
+    @NonNull String builtInPrefixedName, @NonNull List<SWRLBuiltInArgument> arguments);
 
   @NonNull OWLDatatypeFactory getOWLDatatypeFactory();
 
@@ -49,17 +49,17 @@ public interface SWRLAPIOWLDataFactory extends OWLDataFactory
   // We provide convenience methods for defining these declaration axioms, though we do not specialize the
   // OWLDeclarationAxiom itself.
 
-  @NonNull OWLDeclarationAxiom getOWLClassDeclarationAxiom(OWLClass individual);
+  @NonNull OWLDeclarationAxiom getOWLClassDeclarationAxiom(@NonNull OWLClass individual);
 
-  @NonNull OWLDeclarationAxiom getOWLIndividualDeclarationAxiom(OWLNamedIndividual individual);
+  @NonNull OWLDeclarationAxiom getOWLIndividualDeclarationAxiom(@NonNull OWLNamedIndividual individual);
 
-  @NonNull OWLDeclarationAxiom getOWLObjectPropertyDeclarationAxiom(OWLObjectProperty property);
+  @NonNull OWLDeclarationAxiom getOWLObjectPropertyDeclarationAxiom(@NonNull OWLObjectProperty property);
 
-  @NonNull OWLDeclarationAxiom getOWLDataPropertyDeclarationAxiom(OWLDataProperty property);
+  @NonNull OWLDeclarationAxiom getOWLDataPropertyDeclarationAxiom(@NonNull OWLDataProperty property);
 
-  @NonNull OWLDeclarationAxiom getOWLAnnotationPropertyDeclarationAxiom(OWLAnnotationProperty property);
+  @NonNull OWLDeclarationAxiom getOWLAnnotationPropertyDeclarationAxiom(@NonNull OWLAnnotationProperty property);
 
-  @NonNull OWLDeclarationAxiom getOWLDatatypeDeclarationAxiom(OWLDatatype datatype);
+  @NonNull OWLDeclarationAxiom getOWLDatatypeDeclarationAxiom(@NonNull OWLDatatype datatype);
 
   @NonNull OWLClass getInjectedOWLClass(); // Generate an OWL class with a unique IRI
 

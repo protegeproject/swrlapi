@@ -297,7 +297,7 @@ public class SWRLRuleEditorDialog extends JDialog
     }
   }
 
-  @NonNull private List<String> getExpansions(String prefix)
+  @NonNull private List<String> getExpansions(@NonNull String prefix)
   {
     List<String> expansions = new ArrayList<>();
 
@@ -309,14 +309,14 @@ public class SWRLRuleEditorDialog extends JDialog
 
   private class CancelSWRLRuleEditActionListener implements ActionListener
   {
-    private final Component parent;
+    @NonNull private final Component parent;
 
-    public CancelSWRLRuleEditActionListener(Component parent)
+    public CancelSWRLRuleEditActionListener(@NonNull Component parent)
     {
       this.parent = parent;
     }
 
-    @Override public void actionPerformed(ActionEvent e)
+    @Override public void actionPerformed(@NonNull ActionEvent e)
     {
       boolean okToQuit;
 
@@ -339,7 +339,7 @@ public class SWRLRuleEditorDialog extends JDialog
       this.parent = parent;
     }
 
-    @Override public void actionPerformed(ActionEvent e)
+    @Override public void actionPerformed(@NonNull ActionEvent e)
     {
       String ruleName = getRuleName();
       String ruleText = getRuleText();
@@ -422,7 +422,7 @@ public class SWRLRuleEditorDialog extends JDialog
     this.saveButton.setEnabled(true);
   }
 
-  private void setStatusText(String status)
+  private void setStatusText(@NonNull String status)
   {
     this.statusTextField.setText(status);
   }

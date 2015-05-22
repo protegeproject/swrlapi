@@ -107,7 +107,7 @@ public class SWRLRulesControlView extends JPanel implements SWRLAPIView
       this.console.setText("");
     }
 
-    protected void appendToConsole(String text)
+    protected void appendToConsole(@NonNull String text)
     {
       this.console.append(text);
     }
@@ -115,12 +115,13 @@ public class SWRLRulesControlView extends JPanel implements SWRLAPIView
 
   private class ImportActionListener extends ListenerBase implements ActionListener
   {
-    public ImportActionListener(SWRLRuleEngine ruleEngine, JTextArea console, SWRLRulesControlView controlPanel)
+    public ImportActionListener(@NonNull SWRLRuleEngine ruleEngine, @NonNull JTextArea console,
+      @NonNull SWRLRulesControlView controlPanel)
     {
       super(ruleEngine, console, controlPanel);
     }
 
-    @Override public void actionPerformed(ActionEvent event)
+    @Override public void actionPerformed(@NonNull ActionEvent event)
     {
       try {
         long startTime = System.currentTimeMillis();
@@ -159,7 +160,7 @@ public class SWRLRulesControlView extends JPanel implements SWRLAPIView
       super(ruleEngine, textArea, controlPanel);
     }
 
-    @Override public void actionPerformed(ActionEvent event)
+    @Override public void actionPerformed(@NonNull ActionEvent event)
     {
       displayRunResults();
     }
@@ -194,7 +195,7 @@ public class SWRLRulesControlView extends JPanel implements SWRLAPIView
       super(ruleEngine, textArea, controlPanel);
     }
 
-    @Override public void actionPerformed(ActionEvent event)
+    @Override public void actionPerformed(@NonNull ActionEvent event)
     {
       displayExportResults();
     }

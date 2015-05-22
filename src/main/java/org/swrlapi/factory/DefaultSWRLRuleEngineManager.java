@@ -63,7 +63,7 @@ class DefaultSWRLRuleEngineManager implements SWRLRuleEngineManager
   }
 
   @Override
-  public void unregisterSWRLRuleEngine(String ruleEngineName)
+  public void unregisterSWRLRuleEngine(@NonNull String ruleEngineName)
   {
     if (this.registeredSWRLRuleEngines.containsKey(ruleEngineName))
       this.registeredSWRLRuleEngines.remove(ruleEngineName);

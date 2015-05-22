@@ -1,15 +1,18 @@
 package org.swrlapi.exceptions;
 
+import checkers.nullness.quals.NonNull;
+import checkers.nullness.quals.Nullable;
+
 public class SWRLBuiltInBridgeException extends SWRLAPIException
 {
   private static final long serialVersionUID = 1L;
 
-  public SWRLBuiltInBridgeException(String message)
+  public SWRLBuiltInBridgeException(@NonNull String message)
   {
     super(message);
   }
 
-  public SWRLBuiltInBridgeException(String message, Throwable cause)
+  public SWRLBuiltInBridgeException(@NonNull String message, @Nullable Throwable cause)
   {
     super(message, cause);
   }

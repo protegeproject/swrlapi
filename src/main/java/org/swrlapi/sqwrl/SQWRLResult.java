@@ -72,7 +72,7 @@ public interface SQWRLResult
    * @return A class result value
    * @throws SQWRLException If an error occurs during processing If an error occurs during processing
    */
-  @NonNull SQWRLClassResultValue getClass(String columnName) throws SQWRLException;
+  @NonNull SQWRLClassResultValue getClass(@NonNull String columnName) throws SQWRLException;
 
   /**
    * @param columnIndex A column index
@@ -86,7 +86,7 @@ public interface SQWRLResult
    * @return An individual result value
    * @throws SQWRLException If an error occurs during processing If an error occurs during processing
    */
-  @NonNull SQWRLIndividualResultValue getIndividual(String columnName) throws SQWRLException;
+  @NonNull SQWRLIndividualResultValue getIndividual(@NonNull String columnName) throws SQWRLException;
 
   /**
    * @param columnIndex A column index
@@ -100,7 +100,7 @@ public interface SQWRLResult
    * @return An object property result value
    * @throws SQWRLException If an error occurs during processing
    */
-  @NonNull SQWRLObjectPropertyResultValue getObjectProperty(String columnName) throws SQWRLException;
+  @NonNull SQWRLObjectPropertyResultValue getObjectProperty(@NonNull String columnName) throws SQWRLException;
 
   /**
    * @param columnIndex A column index
@@ -114,7 +114,7 @@ public interface SQWRLResult
    * @return A data property result value
    * @throws SQWRLException If an error occurs during processing
    */
-  @NonNull SQWRLDataPropertyResultValue getDataProperty(String columnName) throws SQWRLException;
+  @NonNull SQWRLDataPropertyResultValue getDataProperty(@NonNull String columnName) throws SQWRLException;
 
   /**
    * @param columnIndex A column index
@@ -128,7 +128,7 @@ public interface SQWRLResult
    * @return An annotation property result value
    * @throws SQWRLException If an error occurs during processing
    */
-  @NonNull SQWRLAnnotationPropertyResultValue getAnnotationProperty(String columnName) throws SQWRLException;
+  @NonNull SQWRLAnnotationPropertyResultValue getAnnotationProperty(@NonNull String columnName) throws SQWRLException;
 
   /**
    * @param columnIndex A column index
@@ -142,7 +142,7 @@ public interface SQWRLResult
    * @return A literal result value
    * @throws SQWRLException If an error occurs during processing
    */
-  @NonNull SQWRLLiteralResultValue getLiteral(String columnName) throws SQWRLException;
+  @NonNull SQWRLLiteralResultValue getLiteral(@NonNull String columnName) throws SQWRLException;
 
   /**
    * @param columnIndex A column index
@@ -156,7 +156,7 @@ public interface SQWRLResult
    * @return True if the value of the specified column is a class
    * @throws SQWRLException If an error occurs during processing
    */
-  boolean hasClassValue(String columnName) throws SQWRLException;
+  boolean hasClassValue(@NonNull String columnName) throws SQWRLException;
 
   /**
    * @param columnIndex A column index
@@ -170,7 +170,7 @@ public interface SQWRLResult
    * @return True if the value of the specified column is an individual
    * @throws SQWRLException If an error occurs during processing
    */
-  boolean hasIndividualValue(String columnName) throws SQWRLException;
+  boolean hasIndividualValue(@NonNull String columnName) throws SQWRLException;
 
   /**
    * @param columnIndex A column index
@@ -184,7 +184,7 @@ public interface SQWRLResult
    * @return True if the value of the specified column is an object property
    * @throws SQWRLException If an error occurs during processing
    */
-  boolean hasObjectPropertyValue(String columnName) throws SQWRLException;
+  boolean hasObjectPropertyValue(@NonNull String columnName) throws SQWRLException;
 
   /**
    * @param columnIndex A column index
@@ -198,7 +198,7 @@ public interface SQWRLResult
    * @return True if the value of the specified column is a data property
    * @throws SQWRLException If an error occurs during processing
    */
-  boolean hasDataPropertyValue(String columnName) throws SQWRLException;
+  boolean hasDataPropertyValue(@NonNull String columnName) throws SQWRLException;
 
   /**
    * @param columnIndex A column index
@@ -212,7 +212,7 @@ public interface SQWRLResult
    * @return True if the value of the specified column is an annotation property
    * @throws SQWRLException If an error occurs during processing
    */
-  boolean hasAnnotationPropertyValue(String columnName) throws SQWRLException;
+  boolean hasAnnotationPropertyValue(@NonNull String columnName) throws SQWRLException;
 
   /**
    * @param columnIndex A column index
@@ -226,7 +226,7 @@ public interface SQWRLResult
    * @return True if the value of the specified column is a literal
    * @throws SQWRLException If an error occurs during processing
    */
-  boolean hasLiteralValue(String columnName) throws SQWRLException;
+  boolean hasLiteralValue(@NonNull String columnName) throws SQWRLException;
 
   /**
    * @param columnIndex A column index
@@ -246,7 +246,7 @@ public interface SQWRLResult
    * @return The SQWRL result value
    * @throws SQWRLException If an error occurs during processing
    */
-  @NonNull SQWRLResultValue getValue(String columnName) throws SQWRLException;
+  @NonNull SQWRLResultValue getValue(@NonNull String columnName) throws SQWRLException;
 
   /**
    * @param columnIndex A column index
@@ -268,7 +268,7 @@ public interface SQWRLResult
    * @return A list of SQWRL result values
    * @throws SQWRLException If an error occurs during processing
    */
-  @NonNull List<SQWRLResultValue> getColumn(String columnName) throws SQWRLException;
+  @NonNull List<SQWRLResultValue> getColumn(@NonNull String columnName) throws SQWRLException;
 
   /**
    * @param columnIndex A column index

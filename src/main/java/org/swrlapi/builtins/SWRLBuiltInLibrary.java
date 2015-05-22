@@ -63,7 +63,7 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
    * @return A unique pattern for the invocation
    * @throws SWRLBuiltInException If the parameters are invalid or if there is an error during pattern generation
    */
-  String createInvocationPattern(@NonNull SWRLBuiltInBridge invokingBridge, @NonNull String invokingRuleName,
+  @NonNull String createInvocationPattern(@NonNull SWRLBuiltInBridge invokingBridge, @NonNull String invokingRuleName,
     int invokingBuiltInIndex, boolean isInConsequent, @NonNull List<SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException;
 
@@ -80,5 +80,5 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
    * @return An IRI generated from the full name
    * @throws SWRLBuiltInException If an error occurs during IRI generation
    */
-  @NonNull IRI createIRI(String fullName) throws SWRLBuiltInException;
+  @NonNull IRI createIRI(@NonNull String fullName) throws SWRLBuiltInException;
 }

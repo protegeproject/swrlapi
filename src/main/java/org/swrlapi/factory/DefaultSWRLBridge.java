@@ -71,8 +71,8 @@ public class DefaultSWRLBridge implements SWRLBridge
    */
   @NonNull private TargetSWRLRuleEngine targetSWRLRuleEngine;
 
-  public DefaultSWRLBridge(@NonNull SWRLAPIOWLOntology swrlapiOWLOntology, @NonNull OWL2RLPersistenceLayer owl2RLPersistenceLayer)
-      throws SWRLBuiltInBridgeException
+  public DefaultSWRLBridge(@NonNull SWRLAPIOWLOntology swrlapiOWLOntology,
+    @NonNull OWL2RLPersistenceLayer owl2RLPersistenceLayer) throws SWRLBuiltInBridgeException
   {
     this.swrlapiOWLOntology = swrlapiOWLOntology;
     this.owl2RLPersistenceLayer = owl2RLPersistenceLayer;
@@ -89,14 +89,12 @@ public class DefaultSWRLBridge implements SWRLBridge
     reset();
   }
 
-  @Override
-  public void setTargetSWRLRuleEngine(@NonNull TargetSWRLRuleEngine targetSWRLRuleEngine)
+  @Override public void setTargetSWRLRuleEngine(@NonNull TargetSWRLRuleEngine targetSWRLRuleEngine)
   {
     this.targetSWRLRuleEngine = targetSWRLRuleEngine;
   }
 
-  @Override
-  public void reset() throws SWRLBuiltInBridgeException
+  @Override public void reset() throws SWRLBuiltInBridgeException
   {
     this.inferredOWLAxioms.clear();
     this.injectedOWLAxioms.clear();
@@ -104,8 +102,7 @@ public class DefaultSWRLBridge implements SWRLBridge
     SWRLBuiltInLibraryManager.invokeAllBuiltInLibrariesResetMethod(this);
   }
 
-  @Override
-  public boolean hasOntologyChanged()
+  @Override public boolean hasOntologyChanged()
   {
     return getSWRLAPIOWLOntology().hasOntologyChanged();
   }
@@ -114,8 +111,7 @@ public class DefaultSWRLBridge implements SWRLBridge
    * The inject methods can be used by SWRL built-ins to inject new axioms into a bridge, which will also reflect them
    * in the underlying engine.
    */
-  @Override
-  public void injectOWLAxiom(@NonNull OWLAxiom axiom) throws SWRLBuiltInBridgeException
+  @Override public void injectOWLAxiom(@NonNull OWLAxiom axiom) throws SWRLBuiltInBridgeException
   {
     if (!this.injectedOWLAxioms.contains(axiom)) {
       this.injectedOWLAxioms.add(axiom);
@@ -123,98 +119,85 @@ public class DefaultSWRLBridge implements SWRLBridge
     }
   }
 
-  @NonNull @Override
-  public IRIResolver getIRIResolver()
+  @NonNull @Override public IRIResolver getIRIResolver()
   {
     return this.swrlapiOWLOntology.getIRIResolver();
   }
 
-  @NonNull @Override
-  public OWLClassExpressionResolver getOWLClassExpressionResolver()
+  @NonNull @Override public OWLClassExpressionResolver getOWLClassExpressionResolver()
   {
     return this.owlClassExpressionResolver;
   }
 
-  @NonNull @Override
-  public OWLDataRangeResolver getOWLDataRangeResolver()
+  @NonNull @Override public OWLDataRangeResolver getOWLDataRangeResolver()
   {
     return this.owlDataRangeResolver;
   }
 
-  @NonNull @Override
-  public OWLObjectPropertyExpressionResolver getOWLObjectPropertyExpressionResolver()
+  @NonNull @Override public OWLObjectPropertyExpressionResolver getOWLObjectPropertyExpressionResolver()
   {
     return this.owlObjectPropertyExpressionResolver;
   }
 
-  @NonNull @Override
-  public OWLDataPropertyExpressionResolver getOWLDataPropertyExpressionResolver()
+  @NonNull @Override public OWLDataPropertyExpressionResolver getOWLDataPropertyExpressionResolver()
   {
     return this.owlDataPropertyExpressionResolver;
   }
 
-  @NonNull @Override
-  public OWLIndividualResolver getOWLIndividualResolver()
+  @NonNull @Override public OWLIndividualResolver getOWLIndividualResolver()
   {
     return this.owlIndividualResolver;
   }
 
-  @NonNull @Override
-  public OWL2RLPersistenceLayer getOWL2RLPersistenceLayer()
+  @NonNull @Override public OWL2RLPersistenceLayer getOWL2RLPersistenceLayer()
   {
     return this.owl2RLPersistenceLayer;
   }
 
-  @NonNull @Override
-  public Set<OWLAxiom> getInjectedOWLAxioms()
+  @NonNull @Override public Set<OWLAxiom> getInjectedOWLAxioms()
   {
     return new HashSet<>(this.injectedOWLAxioms);
   }
 
-  @Override
-  public int getNumberOfInjectedOWLAxioms()
+  @Override public int getNumberOfInjectedOWLAxioms()
   {
     return this.injectedOWLAxioms.size();
   }
 
-  @Override
-  public boolean isInjectedOWLAxiom(OWLAxiom axiom)
+  @Override public boolean isInjectedOWLAxiom(@NonNull OWLAxiom axiom)
   {
     return this.injectedOWLAxioms.contains(axiom);
   }
 
-  @NonNull @Override
-  public Set<OWLAxiom> getInferredOWLAxioms()
+  @NonNull @Override public Set<OWLAxiom> getInferredOWLAxioms()
   {
     return this.inferredOWLAxioms;
   }
 
-  @Override
-  public int getNumberOfInferredOWLAxioms()
+  @Override public int getNumberOfInferredOWLAxioms()
   {
     return this.inferredOWLAxioms.size();
   }
 
-  @Override
-  public void inferOWLAxiom(OWLAxiom axiom) throws SWRLRuleEngineBridgeException
+  @Override public void inferOWLAxiom(@NonNull OWLAxiom axiom) throws SWRLRuleEngineBridgeException
   {
     // Exclude already asserted axioms
     if (!this.inferredOWLAxioms.contains(axiom) && !this.swrlapiOWLOntology.hasAssertedOWLAxiom(axiom))
       this.inferredOWLAxioms.add(axiom);
   }
 
-  @NonNull @Override
-  public List<List<SWRLBuiltInArgument>> invokeSWRLBuiltIn(String ruleName, @NonNull String builtInName, int builtInIndex,
-      boolean isInConsequent, @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  @NonNull @Override public List<List<SWRLBuiltInArgument>> invokeSWRLBuiltIn(@NonNull String ruleName,
+    @NonNull String builtInName, int builtInIndex, boolean isInConsequent, @NonNull List<SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException
   {
-    return SWRLBuiltInLibraryManager.invokeSWRLBuiltIn(this, ruleName, builtInName, builtInIndex, isInConsequent,
-        arguments);
+    return SWRLBuiltInLibraryManager
+      .invokeSWRLBuiltIn(this, ruleName, builtInName, builtInIndex, isInConsequent, arguments);
   }
 
   public boolean isOWLClass(@NonNull IRI iri)
   {
-    return getOWLOntology().containsClassInSignature(iri, Imports.INCLUDED)
-        || iri.equals(OWLRDFVocabulary.OWL_THING.getIRI()) || iri.equals(OWLRDFVocabulary.OWL_NOTHING.getIRI());
+    return getOWLOntology().containsClassInSignature(iri, Imports.INCLUDED) || iri
+      .equals(OWLRDFVocabulary.OWL_THING.getIRI()) || iri.equals(OWLRDFVocabulary.OWL_NOTHING.getIRI());
   }
 
   public boolean isOWLObjectProperty(@NonNull IRI propertyIRI)
@@ -237,8 +220,8 @@ public class DefaultSWRLBridge implements SWRLBridge
     return this.swrlapiOWLOntology.getSQWRLResult(queryName);
   }
 
-  @NonNull @Override
-  public SQWRLResultGenerator getSQWRLResultGenerator(@NonNull String queryName) throws SQWRLException
+  @NonNull @Override public SQWRLResultGenerator getSQWRLResultGenerator(@NonNull String queryName)
+    throws SQWRLException
   {
     return this.swrlapiOWLOntology.getSQWRLResultGenerator(queryName);
   }
@@ -248,37 +231,32 @@ public class DefaultSWRLBridge implements SWRLBridge
     try {
       this.targetSWRLRuleEngine.defineOWLAxiom(axiom);
     } catch (TargetSWRLRuleEngineException e) {
-      throw new SWRLBuiltInBridgeException("error exporting OWL axiom " + axiom + " to target rule engine: "
-          + e.getMessage(), e);
+      throw new SWRLBuiltInBridgeException(
+        "error exporting OWL axiom " + axiom + " to target rule engine: " + e.getMessage(), e);
     }
   }
 
-  @NonNull @Override
-  public OWLLiteralFactory getOWLLiteralFactory()
+  @NonNull @Override public OWLLiteralFactory getOWLLiteralFactory()
   {
     return getSWRLAPIOWLDataFactory().getOWLLiteralFactory();
   }
 
-  @NonNull @Override
-  public OWLDatatypeFactory getOWLDatatypeFactory()
+  @NonNull @Override public OWLDatatypeFactory getOWLDatatypeFactory()
   {
     return getSWRLAPIOWLDataFactory().getOWLDatatypeFactory();
   }
 
-  @NonNull @Override
-  public SWRLBuiltInArgumentFactory getSWRLBuiltInArgumentFactory()
+  @NonNull @Override public SWRLBuiltInArgumentFactory getSWRLBuiltInArgumentFactory()
   {
     return getSWRLAPIOWLDataFactory().getSWRLBuiltInArgumentFactory();
   }
 
-  @NonNull @Override
-  public SWRLAPIOWLOntology getSWRLAPIOWLOntology()
+  @NonNull @Override public SWRLAPIOWLOntology getSWRLAPIOWLOntology()
   {
     return this.swrlapiOWLOntology;
   }
 
-  @NonNull @Override
-  public SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory()
+  @NonNull @Override public SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory()
   {
     return getSWRLAPIOWLOntology().getSWRLAPIOWLDataFactory();
   }

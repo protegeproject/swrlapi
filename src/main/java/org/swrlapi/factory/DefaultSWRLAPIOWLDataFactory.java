@@ -44,103 +44,90 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
     this.sqwrlResultValueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(swrlapiOWLOntology);
   }
 
-  @NonNull @Override
-  public SWRLBuiltInArgumentFactory getSWRLBuiltInArgumentFactory()
+  @NonNull @Override public SWRLBuiltInArgumentFactory getSWRLBuiltInArgumentFactory()
   {
     return this.swrlBuiltInArgumentFactory;
   }
 
-  @NonNull @Override
-  public SWRLAPIBuiltInAtom getSWRLAPIBuiltInAtom(String ruleName, @NonNull IRI builtInIRI, String builtInPrefixedName,
-      @NonNull List<SWRLBuiltInArgument> arguments)
+  @NonNull @Override public SWRLAPIBuiltInAtom getSWRLAPIBuiltInAtom(@NonNull String ruleName, @NonNull IRI builtInIRI,
+    @NonNull String builtInPrefixedName, @NonNull List<SWRLBuiltInArgument> arguments)
   {
     return SWRLAPIFactory.getSWRLAPIBuiltInAtom(ruleName, builtInIRI, builtInPrefixedName, arguments);
   }
 
-  @NonNull @Override
-  public SQWRLResultValueFactory getSQWRLResultValueFactory()
+  @NonNull @Override public SQWRLResultValueFactory getSQWRLResultValueFactory()
   {
     return this.sqwrlResultValueFactory;
   }
 
-  @NonNull @Override
-  public OWLDeclarationAxiom getOWLClassDeclarationAxiom(@NonNull OWLClass cls)
+  @NonNull @Override public OWLDeclarationAxiom getOWLClassDeclarationAxiom(@NonNull OWLClass cls)
   {
     return getOWLDeclarationAxiom(cls);
   }
 
-  @NonNull @Override
-  public OWLDeclarationAxiom getOWLIndividualDeclarationAxiom(OWLNamedIndividual individual)
+  @NonNull @Override public OWLDeclarationAxiom getOWLIndividualDeclarationAxiom(OWLNamedIndividual individual)
   {
     return getOWLDeclarationAxiom(individual);
   }
 
-  @NonNull @Override
-  public OWLDeclarationAxiom getOWLObjectPropertyDeclarationAxiom(@NonNull OWLObjectProperty property)
+  @NonNull @Override public OWLDeclarationAxiom getOWLObjectPropertyDeclarationAxiom(
+    @NonNull OWLObjectProperty property)
   {
     return getOWLDeclarationAxiom(property);
   }
 
-  @NonNull @Override
-  public OWLDeclarationAxiom getOWLDataPropertyDeclarationAxiom(@NonNull OWLDataProperty property)
+  @NonNull @Override public OWLDeclarationAxiom getOWLDataPropertyDeclarationAxiom(@NonNull OWLDataProperty property)
   {
     return getOWLDeclarationAxiom(property);
   }
 
-  @NonNull @Override
-  public OWLDeclarationAxiom getOWLAnnotationPropertyDeclarationAxiom(@NonNull OWLAnnotationProperty property)
+  @NonNull @Override public OWLDeclarationAxiom getOWLAnnotationPropertyDeclarationAxiom(
+    @NonNull OWLAnnotationProperty property)
   {
     return getOWLDeclarationAxiom(property);
   }
 
-  @NonNull @Override
-  public OWLDeclarationAxiom getOWLDatatypeDeclarationAxiom(@NonNull OWLDatatype datatype)
+  @NonNull @Override public OWLDeclarationAxiom getOWLDatatypeDeclarationAxiom(@NonNull OWLDatatype datatype)
   {
     return getOWLDeclarationAxiom(datatype);
   }
 
-  @NonNull @Override
-  public OWLDatatypeFactory getOWLDatatypeFactory()
+  @NonNull @Override public OWLDatatypeFactory getOWLDatatypeFactory()
   {
     return this.owlDatatypeFactory;
   }
 
-  @NonNull @Override
-  public OWLLiteralFactory getOWLLiteralFactory()
+  @NonNull @Override public OWLLiteralFactory getOWLLiteralFactory()
   {
     return this.owlLiteralFactory;
   }
 
-  @NonNull @Override
-  public LiteralFactory getLiteralFactory()
+  @NonNull @Override public LiteralFactory getLiteralFactory()
   {
     return this.literalFactory;
   }
 
-  @NonNull @Override
-  public IRIResolver getIRIResolver()
+  @NonNull @Override public IRIResolver getIRIResolver()
   {
     return this.iriResolver;
   }
 
-  @NonNull @Override
-  public OWLClass getInjectedOWLClass()
+  @NonNull @Override public OWLClass getInjectedOWLClass()
   {
     // TODO Implement getInjectedOWLClass
     IRI iri = IRI
-    // .create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + UUID.randomUUID().toString());
-        .create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + "fred");
+      // .create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + UUID.randomUUID().toString());
+      .create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + "fred");
 
     return getOWLClass(iri);
   }
 
-  @NonNull @Override
-  public OWLNamedIndividual getInjectedOWLNamedIndividual()
+  @NonNull @Override public OWLNamedIndividual getInjectedOWLNamedIndividual()
   {
     // TODO Implement getInjectedOWLNamedIndividual
     IRI iri = IRI
-    // .create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + UUID.randomUUID().toString());
-        .create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + "fred");
+      // .create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + UUID.randomUUID().toString());
+      .create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + "fred");
 
     return getOWLNamedIndividual(iri);
   }

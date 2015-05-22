@@ -305,7 +305,7 @@ public class SWRLAPIFactory
     return new DefaultSQWRLResultValueFactory(swrlapiOWLOntology.getIRIResolver());
   }
 
-  @NonNull public static SQWRLQuery getSQWRLQuery(String queryName, @NonNull List<SWRLAtom> bodyAtoms,
+  @NonNull public static SQWRLQuery getSQWRLQuery(@NonNull String queryName, @NonNull List<SWRLAtom> bodyAtoms,
     @NonNull List<SWRLAtom> headAtoms, boolean active, @NonNull String comment, @NonNull LiteralFactory literalFactory,
     @NonNull SQWRLResultValueFactory sqwrlResultValueFactory) throws SQWRLException
   {

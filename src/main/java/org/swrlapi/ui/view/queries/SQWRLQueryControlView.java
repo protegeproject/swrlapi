@@ -69,12 +69,12 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
     validate();
   }
 
-  public void appendToConsole(String text)
+  public void appendToConsole(@NonNull String text)
   {
     this.console.append(text);
   }
 
-  public void removeSQWRLResultView(String queryName)
+  public void removeSQWRLResultView(@NonNull String queryName)
   {
     if (this.sqwrlResultViews.containsKey(queryName)) {
       SQWRLResultView sqwrlResultView = this.sqwrlResultViews.get(queryName);
@@ -91,7 +91,7 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
     this.sqwrlResultViews.clear();
   }
 
-  @NonNull private JButton createButton(String text, String toolTipText, ActionListener listener)
+  @NonNull private JButton createButton(@NonNull String text, @NonNull String toolTipText, @NonNull ActionListener listener)
   {
     JButton button = new JButton(text);
 
@@ -113,10 +113,10 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
 
   private class ListenerBase
   {
-    protected final SQWRLQueryControlView sqwrlQueryControlView;
-    protected final JTextArea console;
+    @NonNull protected final SQWRLQueryControlView sqwrlQueryControlView;
+    @NonNull protected final JTextArea console;
 
-    public ListenerBase(JTextArea console, SQWRLQueryControlView sqwrlQueryControlView)
+    public ListenerBase(@NonNull JTextArea console, @NonNull SQWRLQueryControlView sqwrlQueryControlView)
     {
       this.console = console;
       this.sqwrlQueryControlView = sqwrlQueryControlView;
@@ -125,13 +125,13 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
 
   private class RunActionListener extends ListenerBase implements ActionListener
   {
-    public RunActionListener(JTextArea console, SQWRLQueryControlView sqwrlQueryControlView)
+    public RunActionListener(@NonNull JTextArea console, @NonNull SQWRLQueryControlView sqwrlQueryControlView)
     {
       super(console, sqwrlQueryControlView);
     }
 
     @Override
-    public void actionPerformed(ActionEvent event)
+    public void actionPerformed(@NonNull ActionEvent event)
     {
       runSQWRLQuery();
     }
@@ -176,7 +176,7 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
       }
     }
 
-    private void indicateEmptySQWRLResult(String queryName)
+    private void indicateEmptySQWRLResult(@NonNull String queryName)
     {
       appendToConsole("SQWRL query " + queryName + " did not generate any result.\n");
 
@@ -187,7 +187,7 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
       }
     }
 
-    private void displaySQWRLResult(String queryName, @NonNull SQWRLResult sqwrlResult, long startTime) throws SQWRLException
+    private void displaySQWRLResult(@NonNull String queryName, @NonNull SQWRLResult sqwrlResult, long startTime) throws SQWRLException
     {
       appendToConsole("See the " + queryName + " tab to review results of the SQWRL query.\n");
       appendToConsole("The query took " + (System.currentTimeMillis() - startTime) + " milliseconds. ");
@@ -213,7 +213,7 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
       this.sqwrlQueryControlView.getParent().validate();
     }
 
-    private void appendToConsole(String text)
+    private void appendToConsole(@NonNull String text)
     {
       this.console.append(text);
     }

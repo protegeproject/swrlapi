@@ -1656,7 +1656,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   }
 
   private boolean processListResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
-    String resultListName, String resultListID, Collection<SWRLBuiltInArgument> resultList) throws SWRLBuiltInException
+    @NonNull String resultListName, @NonNull String resultListID, @NonNull Collection<SWRLBuiltInArgument> resultList)
+    throws SWRLBuiltInException
   {
     checkArgumentNumber(resultArgumentNumber, arguments);
 
@@ -1677,12 +1678,12 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     }
   }
 
-  private SQWRLResultGenerator getSQWRLResultGenerator(String queryName) throws SWRLBuiltInException
+  private SQWRLResultGenerator getSQWRLResultGenerator(@NonNull String queryName) throws SWRLBuiltInException
   {
     return getBuiltInBridge().getSQWRLResultGenerator(queryName);
   }
 
-  private void checkThatElementIsComparable(SWRLBuiltInArgument argument) throws SWRLBuiltInException
+  private void checkThatElementIsComparable(@NonNull SWRLBuiltInArgument argument) throws SWRLBuiltInException
   {
     if (argument instanceof SWRLLiteralBuiltInArgument) {
       SWRLLiteralBuiltInArgument literalArgument = (SWRLLiteralBuiltInArgument)argument;
@@ -1717,8 +1718,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
   // We do not cache because only one built-in will typically perform an operation on a particular collection per query.
   // Note: currently implementations may modify the returned collection.
-  @NonNull private List<SWRLBuiltInArgument> getSortedList(String queryName, String collectionName,
-    String collectionGroupKey) throws SWRLBuiltInException
+  @NonNull private List<SWRLBuiltInArgument> getSortedList(@NonNull String queryName, @NonNull String collectionName,
+    @NonNull String collectionGroupKey) throws SWRLBuiltInException
   {
     Collection<SWRLBuiltInArgument> collection = getCollection(queryName, collectionName, collectionGroupKey);
     List<SWRLBuiltInArgument> result = new ArrayList<>(collection);
@@ -1727,8 +1728,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     return result;
   }
 
-  @NonNull private List<SWRLBuiltInArgument> createBag(String queryName, String collectionName,
-    String collectionGroupKey) throws SWRLBuiltInException
+  @NonNull private List<SWRLBuiltInArgument> createBag(@NonNull String queryName, @NonNull String collectionName,
+    @NonNull String collectionGroupKey) throws SWRLBuiltInException
   {
     List<SWRLBuiltInArgument> bag = new ArrayList<>();
 
@@ -1737,8 +1738,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     return bag;
   }
 
-  @NonNull private Set<SWRLBuiltInArgument> createSet(String queryName, String collectionName,
-    String collectionGroupKey) throws SWRLBuiltInException
+  @NonNull private Set<SWRLBuiltInArgument> createSet(@NonNull String queryName, @NonNull String collectionName,
+    @NonNull String collectionGroupKey) throws SWRLBuiltInException
   {
     Set<SWRLBuiltInArgument> set = new HashSet<>();
 
@@ -1753,7 +1754,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     return getVariablePrefixedName(collectionArgumentNumber, arguments);
   }
 
-  private int getNumberOfGroupElements(String queryName, String collectionName) throws SWRLBuiltInException
+  private int getNumberOfGroupElements(@NonNull String queryName, @NonNull String collectionName)
+    throws SWRLBuiltInException
   {
     String collectionKey = createCollectionKey(queryName, collectionName);
 
@@ -1766,8 +1768,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   }
 
   // An ungrouped collection will have a collectionGroupKey of the empty string so will not be partitioned.
-  private void recordCollection(String queryName, String collectionName, String collectionGroupKey,
-    Collection<SWRLBuiltInArgument> collection) throws SWRLBuiltInException
+  private void recordCollection(@NonNull String queryName, String collectionName, @NonNull String collectionGroupKey,
+    @NonNull Collection<SWRLBuiltInArgument> collection) throws SWRLBuiltInException
   {
     String collectionKey = createCollectionKey(queryName, collectionName);
 
@@ -1799,8 +1801,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     }
   }
 
-  private Collection<SWRLBuiltInArgument> getCollection(String queryName, String collectionName,
-    String collectionGroupKey) throws SWRLBuiltInException
+  @NonNull private Collection<SWRLBuiltInArgument> getCollection(@NonNull String queryName,
+    @NonNull String collectionName, @NonNull String collectionGroupKey) throws SWRLBuiltInException
   {
     String collectionKey = queryName + ":" + collectionName;
 
@@ -1812,7 +1814,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     return this.collectionsMap.get(collectionKey).get(collectionGroupKey);
   }
 
-  private boolean isCollection(String queryName, String collectionName, String collectionGroupKey)
+  private boolean isCollection(@NonNull String queryName, @NonNull String collectionName,
+    @NonNull String collectionGroupKey)
   {
     String collectionKey = createCollectionKey(queryName, collectionName);
 
@@ -1820,21 +1823,21 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       .containsKey(collectionGroupKey);
   }
 
-  private boolean isSet(String queryName, String collectionName)
+  private boolean isSet(@NonNull String queryName, @NonNull String collectionName)
   {
     String setKey = createCollectionKey(queryName, collectionName);
 
     return this.setKeys.contains(setKey);
   }
 
-  private boolean isBag(String queryName, String collectionName)
+  private boolean isBag(@NonNull String queryName, @NonNull String collectionName)
   {
     String bagKey = createCollectionKey(queryName, collectionName);
 
     return this.bagKeys.contains(bagKey);
   }
 
-  private boolean isCollectionRecorded(String queryName, String collectionName)
+  private boolean isCollectionRecorded(@NonNull String queryName, @NonNull String collectionName)
   {
     String collectionKey = createCollectionKey(queryName, collectionName);
 
@@ -1851,13 +1854,13 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     return (collection instanceof Set<?>);
   }
 
-  @NonNull private String createCollectionKey(String queryName, String collectionName)
+  @NonNull private String createCollectionKey(@NonNull String queryName, @NonNull String collectionName)
   {
     return queryName + ":" + collectionName;
   }
 
-  @NonNull @SuppressWarnings("unused") private Collection<SWRLBuiltInArgument> ungroupCollection(String queryName,
-    String collectionName) throws SWRLBuiltInException
+  @NonNull @SuppressWarnings("unused") private Collection<SWRLBuiltInArgument> ungroupCollection(
+    @NonNull String queryName, @NonNull String collectionName) throws SWRLBuiltInException
   {
     if (!isCollectionRecorded(queryName, collectionName))
       throw new SWRLBuiltInException(collectionName + " in query " + queryName + " is not a collection");
@@ -1867,7 +1870,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
         new ArrayList<>();
       String collectionKey = createCollectionKey(queryName, collectionName);
 
-      for (String collectionGroupKey : this.collectionsMap.get(collectionKey).keySet()) {
+      for (String collectionGroupKey:this.collectionsMap.get(collectionKey).keySet()){
         ungroupedCollection.addAll(this.collectionsMap.get(collectionKey).get(collectionGroupKey));
       }
       return ungroupedCollection;

@@ -131,7 +131,7 @@ public class SWRLAPIIntegrationTestBase
       SWRLAPITestUtil.declareOWLNamedIndividual(this.manager, this.ontology, this.namespace + localName);
   }
 
-  protected void declareOWLClassAssertion(String classLocalName, String individualLocalName)
+  protected void declareOWLClassAssertion(@NonNull String classLocalName, @NonNull String individualLocalName)
   {
     SWRLAPITestUtil.declareOWLClassAssertionAxiom(this.manager, this.ontology, this.namespace + classLocalName,
       this.namespace + individualLocalName);

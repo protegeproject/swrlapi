@@ -1,6 +1,7 @@
 package org.swrlapi.builtins;
 
 import checkers.nullness.quals.NonNull;
+import com.google.common.base.Strings;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLClass;
@@ -1277,7 +1278,7 @@ public abstract class AbstractSWRLBuiltInLibrary
       throw new SWRLBuiltInException("argument " + argument + " of unknown type " + argument.getClass());
   }
 
-  @Override public void checkForUnboundArguments(String ruleName, String builtInName,
+  @Override public void checkForUnboundArguments(@NonNull String ruleName, @NonNull String builtInName,
     @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     for (SWRLBuiltInArgument argument : arguments) {
@@ -1460,7 +1461,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     return getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(literal);
   }
 
-  @NonNull @Override public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(String s)
+  @NonNull @Override public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(@NonNull String s)
   {
     return getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(s);
   }

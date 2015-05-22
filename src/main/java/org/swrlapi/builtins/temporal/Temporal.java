@@ -155,7 +155,7 @@ class Temporal
     throw new TemporalException("invalid granularity '" + granularity + "'");
   }
 
-  public static boolean isValidGranularityString(String granularity)
+  public static boolean isValidGranularityString(@NonNull String granularity)
   {
     int i = 0;
     boolean found = false;
@@ -569,7 +569,7 @@ class Temporal
       throw new TemporalException("invalid granularity '" + granularity + "'");
   }
 
-  public static void throwInvalidDatetimeStringException(String datetimeString) throws TemporalException
+  public static void throwInvalidDatetimeStringException(@NonNull String datetimeString) throws TemporalException
   {
     throw new TemporalException("invalid datetime string: '" + datetimeString + "'");
   }

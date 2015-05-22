@@ -48,10 +48,10 @@ public interface SWRLAPIOWLOntology
 
   @NonNull SWRLAPIRule getSWRLRule(@NonNull String ruleName) throws SWRLRuleException;
 
-  @NonNull SWRLAPIRule createSWRLRule(String ruleName, String rule) throws SWRLParseException;
+  @NonNull SWRLAPIRule createSWRLRule(@NonNull String ruleName, @NonNull String rule) throws SWRLParseException;
 
-  @NonNull SWRLAPIRule createSWRLRule(String ruleName, String rule, String comment, boolean isActive)
-    throws SWRLParseException;
+  @NonNull SWRLAPIRule createSWRLRule(@NonNull String ruleName, @NonNull String rule, @NonNull String comment,
+    boolean isActive) throws SWRLParseException;
 
   void deleteSWRLRule(@NonNull String ruleName);
 

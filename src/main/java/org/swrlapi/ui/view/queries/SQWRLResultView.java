@@ -182,7 +182,8 @@ public class SQWRLResultView extends JPanel implements SWRLAPIView
     }
   }
 
-  @NonNull private JButton createButton(String text, String toolTipText, ActionListener listener)
+  @NonNull private JButton createButton(@NonNull String text, @NonNull String toolTipText,
+    @NonNull ActionListener listener)
   {
     JButton button = new JButton(text);
 

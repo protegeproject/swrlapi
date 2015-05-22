@@ -52,7 +52,7 @@ class DefaultLiteralFactory implements LiteralFactory
   }
 
   @NonNull @Override
-  public Literal getLiteral(String value)
+  public Literal getLiteral(@NonNull String value)
   {
     return SWRLAPIFactory.getLiteral(getOWLLiteralFactory().getOWLLiteral(value));
   }

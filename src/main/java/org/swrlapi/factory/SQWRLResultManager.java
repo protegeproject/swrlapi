@@ -185,7 +185,7 @@ class SQWRLResultManager implements SQWRLResult, SQWRLResultGenerator, Serializa
       addColumn(columnName);
   }
 
-  @Override public void addColumn(String columnName) throws SQWRLException
+  @Override public void addColumn(@NonNull String columnName) throws SQWRLException
   {
     throwExceptionIfAlreadyConfigured();
 
@@ -194,7 +194,8 @@ class SQWRLResultManager implements SQWRLResult, SQWRLResultGenerator, Serializa
     this.numberOfColumns++;
   }
 
-  @Override public void addAggregateColumn(String columnName, String aggregateFunctionName) throws SQWRLException
+  @Override public void addAggregateColumn(@NonNull String columnName, @NonNull String aggregateFunctionName)
+    throws SQWRLException
   {
     throwExceptionIfAlreadyConfigured();
 
@@ -426,7 +427,7 @@ class SQWRLResultManager implements SQWRLResult, SQWRLResultGenerator, Serializa
     return this.rows.get(this.currentRowIndex);
   }
 
-  @Override public SQWRLResultValue getValue(String columnName) throws SQWRLException
+  @Override public SQWRLResultValue getValue(@NonNull String columnName) throws SQWRLException
   {
     throwExceptionIfNotConfigured();
     throwExceptionIfNotPrepared();
@@ -463,7 +464,7 @@ class SQWRLResultManager implements SQWRLResult, SQWRLResultGenerator, Serializa
     return this.rows.get(rowIndex).get(columnIndex);
   }
 
-  @NonNull @Override public SQWRLIndividualResultValue getIndividual(String columnName) throws SQWRLException
+  @NonNull @Override public SQWRLIndividualResultValue getIndividual(@NonNull String columnName) throws SQWRLException
   {
     if (!hasIndividualValue(columnName))
       throw new SQWRLInvalidColumnTypeException("expecting ObjectValue type for column " + columnName);
@@ -475,14 +476,14 @@ class SQWRLResultManager implements SQWRLResult, SQWRLResultGenerator, Serializa
     return getIndividual(getColumnName(columnIndex));
   }
 
-  @NonNull @Override public SQWRLLiteralResultValue getLiteral(String columnName) throws SQWRLException
+  @NonNull @Override public SQWRLLiteralResultValue getLiteral(@NonNull String columnName) throws SQWRLException
   {
     if (!hasLiteralValue(columnName))
       throw new SQWRLInvalidColumnTypeException("expecting LiteralValue type for column " + columnName);
     return (SQWRLLiteralResultValue)getValue(columnName);
   }
 
-  @NonNull @Override public SQWRLClassResultValue getClass(String columnName) throws SQWRLException
+  @NonNull @Override public SQWRLClassResultValue getClass(@NonNull String columnName) throws SQWRLException
   {
     if (!hasClassValue(columnName))
       throw new SQWRLInvalidColumnTypeException("expecting ClassValue type for column " + columnName);
@@ -499,7 +500,8 @@ class SQWRLResultManager implements SQWRLResult, SQWRLResultGenerator, Serializa
     return getObjectProperty(getColumnName(columnIndex));
   }
 
-  @NonNull @Override public SQWRLObjectPropertyResultValue getObjectProperty(String columnName) throws SQWRLException
+  @NonNull @Override public SQWRLObjectPropertyResultValue getObjectProperty(@NonNull String columnName)
+    throws SQWRLException
   {
     if (!hasObjectPropertyValue(columnName))
       throw new SQWRLInvalidColumnTypeException("expecting OWL object property in column " + columnName);
@@ -511,7 +513,8 @@ class SQWRLResultManager implements SQWRLResult, SQWRLResultGenerator, Serializa
     return getDataProperty(getColumnName(columnIndex));
   }
 
-  @NonNull @Override public SQWRLDataPropertyResultValue getDataProperty(String columnName) throws SQWRLException
+  @NonNull @Override public SQWRLDataPropertyResultValue getDataProperty(@NonNull String columnName)
+    throws SQWRLException
   {
     if (!hasDataPropertyValue(columnName))
       throw new SQWRLInvalidColumnTypeException("expecting OWL data property in column " + columnName);
@@ -524,7 +527,7 @@ class SQWRLResultManager implements SQWRLResult, SQWRLResultGenerator, Serializa
     return getAnnotationProperty(getColumnName(columnIndex));
   }
 
-  @NonNull @Override public SQWRLAnnotationPropertyResultValue getAnnotationProperty(String columnName)
+  @NonNull @Override public SQWRLAnnotationPropertyResultValue getAnnotationProperty(@NonNull String columnName)
     throws SQWRLException
   {
     if (!hasAnnotationPropertyValue(columnName))
@@ -537,7 +540,7 @@ class SQWRLResultManager implements SQWRLResult, SQWRLResultGenerator, Serializa
     return getLiteral(getColumnName(columnIndex));
   }
 
-  @Override public List<SQWRLResultValue> getColumn(String columnName) throws SQWRLException
+  @Override public List<SQWRLResultValue> getColumn(@NonNull String columnName) throws SQWRLException
   {
     throwExceptionIfNotConfigured();
     throwExceptionIfNotPrepared();
@@ -552,7 +555,7 @@ class SQWRLResultManager implements SQWRLResult, SQWRLResultGenerator, Serializa
     return getColumn(getColumnName(columnIndex));
   }
 
-  @Override public boolean hasIndividualValue(String columnName) throws SQWRLException
+  @Override public boolean hasIndividualValue(@NonNull String columnName) throws SQWRLException
   {
     return getValue(columnName) instanceof SQWRLIndividualResultValue;
   }
@@ -562,7 +565,7 @@ class SQWRLResultManager implements SQWRLResult, SQWRLResultGenerator, Serializa
     return getValue(columnIndex) instanceof SQWRLIndividualResultValue;
   }
 
-  @Override public boolean hasLiteralValue(String columnName) throws SQWRLException
+  @Override public boolean hasLiteralValue(@NonNull String columnName) throws SQWRLException
   {
     return getValue(columnName) instanceof SQWRLLiteralResultValue;
   }
@@ -572,7 +575,7 @@ class SQWRLResultManager implements SQWRLResult, SQWRLResultGenerator, Serializa
     return getValue(columnIndex) instanceof SQWRLLiteralResultValue;
   }
 
-  @Override public boolean hasClassValue(String columnName) throws SQWRLException
+  @Override public boolean hasClassValue(@NonNull String columnName) throws SQWRLException
   {
     return getValue(columnName) instanceof SQWRLClassResultValue;
   }
@@ -582,7 +585,7 @@ class SQWRLResultManager implements SQWRLResult, SQWRLResultGenerator, Serializa
     return getValue(columnIndex) instanceof SQWRLClassResultValue;
   }
 
-  @Override public boolean hasObjectPropertyValue(String columnName) throws SQWRLException
+  @Override public boolean hasObjectPropertyValue(@NonNull String columnName) throws SQWRLException
   {
     return getValue(columnName) instanceof SQWRLObjectPropertyResultValue;
   }
@@ -592,7 +595,7 @@ class SQWRLResultManager implements SQWRLResult, SQWRLResultGenerator, Serializa
     return getValue(columnIndex) instanceof SQWRLObjectPropertyResultValue;
   }
 
-  @Override public boolean hasDataPropertyValue(String columnName) throws SQWRLException
+  @Override public boolean hasDataPropertyValue(@NonNull String columnName) throws SQWRLException
   {
     return getValue(columnName) instanceof SQWRLDataPropertyResultValue;
   }
@@ -602,7 +605,7 @@ class SQWRLResultManager implements SQWRLResult, SQWRLResultGenerator, Serializa
     return getValue(columnIndex) instanceof SQWRLDataPropertyResultValue;
   }
 
-  @Override public boolean hasAnnotationPropertyValue(String columnName) throws SQWRLException
+  @Override public boolean hasAnnotationPropertyValue(@NonNull String columnName) throws SQWRLException
   {
     return getValue(columnName) instanceof SQWRLAnnotationPropertyResultValue;
   }
@@ -612,7 +615,7 @@ class SQWRLResultManager implements SQWRLResult, SQWRLResultGenerator, Serializa
     return getValue(columnIndex) instanceof SQWRLPropertyResultValue;
   }
 
-  private int getColumnIndex(String columnName) throws SQWRLException
+  private int getColumnIndex(@NonNull String columnName) throws SQWRLException
   {
     checkColumnName(columnName);
 
@@ -979,7 +982,7 @@ class SQWRLResultManager implements SQWRLResult, SQWRLResultGenerator, Serializa
       throw new SQWRLResultStateException("attempt to modify prepared result");
   }
 
-  private void checkColumnName(String columnName) throws SQWRLInvalidColumnNameException
+  private void checkColumnName(@NonNull String columnName) throws SQWRLInvalidColumnNameException
   {
     if (!this.allColumnNames.contains(columnName) && !this.columnDisplayNames.contains(columnName))
       throw new SQWRLInvalidColumnNameException("invalid column name " + columnName);
@@ -989,7 +992,7 @@ class SQWRLResultManager implements SQWRLResult, SQWRLResultGenerator, Serializa
   {
     if (!this.isRowOpen)
       throw new SQWRLResultStateException("attempt to add data to an unopened row");
-  } // throwExceptionIfRowNotOpen
+  }
 
   private void throwExceptionIfRowOpen() throws SQWRLException
   {

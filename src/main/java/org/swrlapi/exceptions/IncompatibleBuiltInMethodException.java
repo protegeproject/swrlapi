@@ -1,12 +1,15 @@
 package org.swrlapi.exceptions;
 
+import checkers.nullness.quals.NonNull;
+
 public class IncompatibleBuiltInMethodException extends SWRLBuiltInException
 {
   private static final long serialVersionUID = 1L;
 
-  public IncompatibleBuiltInMethodException(String ruleName, String prefix, String builtInMethodName, String message)
+  public IncompatibleBuiltInMethodException(@NonNull String ruleName, @NonNull String prefix,
+    @NonNull String builtInMethodName, @NonNull String message)
   {
     super("incompatible Java method defined for built-in'" + prefix + ":" + builtInMethodName + "' (used in rule '"
-        + ruleName + "'): " + message);
+      + ruleName + "'): " + message);
   }
 }

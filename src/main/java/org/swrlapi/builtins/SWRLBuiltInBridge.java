@@ -26,7 +26,7 @@ public interface SWRLBuiltInBridge
    * @param axiom The axiom to inject
    * @throws SWRLBuiltInBridgeException If an error occurs during inhection
    */
-  void injectOWLAxiom(OWLAxiom axiom) throws SWRLBuiltInBridgeException;
+  void injectOWLAxiom(@NonNull OWLAxiom axiom) throws SWRLBuiltInBridgeException;
 
   /**
    * This call is used by the SQWRL built-in library to get the result generator for a SQWRL query that is currently
@@ -36,7 +36,7 @@ public interface SWRLBuiltInBridge
    * @return A SQWRL result generator
    * @throws SQWRLException If the query name is invalid
    */
-  @NonNull SQWRLResultGenerator getSQWRLResultGenerator(String queryName) throws SQWRLException;
+  @NonNull SQWRLResultGenerator getSQWRLResultGenerator(@NonNull String queryName) throws SQWRLException;
 
   /**
    * This call can be used by built-ins to create OWL axioms (which they can inject into the bridge using the
@@ -67,15 +67,15 @@ public interface SWRLBuiltInBridge
   /**
    * This call can be used by built-ins to invoke another built-in. Unless you really know what you are doing its use
    * should be avoided. It is currently used only by the swrlx built-in library.
-   * 
-   * @param ruleName The name of the invoking rule
-   * @param builtInName The name of the built-in to invoke
-   * @param builtInIndex The 0-based index of the built-in in the rule
+   *
+   * @param ruleName       The name of the invoking rule
+   * @param builtInName    The name of the built-in to invoke
+   * @param builtInIndex   The 0-based index of the built-in in the rule
    * @param isInConsequent True if the built-in is in the rule consequent
-   * @param arguments The built-in arguments
+   * @param arguments      The built-in arguments
    * @return A list of built-in argument bindings
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  @NonNull List<List<SWRLBuiltInArgument>> invokeSWRLBuiltIn(String ruleName, String builtInName, int builtInIndex,
-      boolean isInConsequent, List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+  @NonNull List<List<SWRLBuiltInArgument>> invokeSWRLBuiltIn(@NonNull String ruleName, @NonNull String builtInName,
+    int builtInIndex, boolean isInConsequent, @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 }

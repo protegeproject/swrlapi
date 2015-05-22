@@ -28,8 +28,8 @@ class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SWRLAPIBu
   private int builtInIndex = -1; // Index of this built-in atom in rule body; left-to-right, first built-in index is 0,
   // second in 1, and so on
 
-  public DefaultSWRLAPIBuiltInAtom(String ruleName, @NonNull IRI builtInIRI, @NonNull String builtInPrefixedName,
-    @NonNull List<SWRLBuiltInArgument> arguments)
+  public DefaultSWRLAPIBuiltInAtom(@NonNull String ruleName, @NonNull IRI builtInIRI,
+    @NonNull String builtInPrefixedName, @NonNull List<SWRLBuiltInArgument> arguments)
   {
     super(builtInIRI, new ArrayList<>(arguments));
     this.ruleName = ruleName;
@@ -48,7 +48,7 @@ class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SWRLAPIBu
     this.arguments = arguments;
   }
 
-  @NonNull   @Override public String getBuiltInPrefixedName()
+  @NonNull @Override public String getBuiltInPrefixedName()
   {
     return this.builtInPrefixedName;
   }

@@ -41,33 +41,33 @@ public interface SWRLAPIOntologyProcessor
 
   int getNumberOfSWRLRules();
 
-  void addSWRLRule(SWRLAPIRule rule, SWRLRule owlapiRule);
+  void addSWRLRule(@NonNull SWRLAPIRule rule, @NonNull SWRLRule owlapiRule);
 
-  @NonNull SWRLAPIRule getSWRLRule(String ruleName) throws SWRLRuleException;
+  @NonNull SWRLAPIRule getSWRLRule(@NonNull String ruleName) throws SWRLRuleException;
 
-  @NonNull String getComment(SWRLRule rule);
+  @NonNull String getComment(@NonNull SWRLRule rule);
 
-  @NonNull String getRuleName(SWRLRule rule);
+  @NonNull String getRuleName(@NonNull SWRLRule rule);
 
-  boolean getIsActive(SWRLRule rule);
+  boolean getIsActive(@NonNull SWRLRule rule);
 
-  void deleteSWRLRule(String ruleName);
+  void deleteSWRLRule(@NonNull String ruleName);
 
   // SQWRL query-related methods
 
-  @NonNull SQWRLQuery createSWRLQueryFromSWRLRule(SWRLAPIRule rule) throws SQWRLException;
+  @NonNull SQWRLQuery createSWRLQueryFromSWRLRule(@NonNull SWRLAPIRule rule) throws SQWRLException;
 
   int getNumberOfSQWRLQueries();
 
   @NonNull Set<String> getSQWRLQueryNames();
 
-  @NonNull SQWRLQuery getSQWRLQuery(String queryName) throws SQWRLException;
+  @NonNull SQWRLQuery getSQWRLQuery(@NonNull String queryName) throws SQWRLException;
 
   @NonNull Set<SQWRLQuery> getSQWRLQueries();
 
-  @NonNull SQWRLResult getSQWRLResult(String queryName) throws SQWRLException;
+  @NonNull SQWRLResult getSQWRLResult(@NonNull String queryName) throws SQWRLException;
 
-  @NonNull SQWRLResultGenerator getSQWRLResultGenerator(String queryName) throws SQWRLException;
+  @NonNull SQWRLResultGenerator getSQWRLResultGenerator(@NonNull String queryName) throws SQWRLException;
 
   // OWL axiom-releated methods
 
