@@ -55,18 +55,18 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   private static final String HasStartTimePropertyName = Namespace + "hasStartTime";
   private static final String HasFinishTimePropertyName = Namespace + "hasFinishTime";
 
-  private Temporal temporal;
+  @NonNull private final Temporal temporal;
 
   public SWRLBuiltInLibraryImpl()
   {
     super(TemporalLibraryName);
+
+    this.temporal = new Temporal(new XSDDateTimeStringProcessor());
+    this.temporal.setNow();
   }
 
   @Override public void reset() throws SWRLBuiltInLibraryException
   {
-    XSDDateTimeStringProcessor d = new XSDDateTimeStringProcessor();
-
-    this.temporal = new Temporal(d);
     this.temporal.setNow();
   }
 
@@ -824,7 +824,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     return subject.asOWLNamedIndividual().getIRI();
   }
 
-  private boolean isOWLIndividualOfType(IRI individualIRI, IRI classIRI) throws SWRLBuiltInLibraryException
+  private boolean isOWLIndividualOfType(@NonNull IRI individualIRI, @NonNull IRI classIRI)
+    throws SWRLBuiltInLibraryException
   {
     return true; // TODO Implement isOWLIndividualOfType
   }

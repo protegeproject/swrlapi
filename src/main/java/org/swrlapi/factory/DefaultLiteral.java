@@ -16,14 +16,14 @@ import java.net.URI;
 
 class DefaultLiteral implements Literal
 {
-  private final OWLLiteral literal;
+  @NonNull private final OWLLiteral literal;
 
-  public DefaultLiteral(OWLLiteral literal)
+  public DefaultLiteral(@NonNull OWLLiteral literal)
   {
     this.literal = literal;
   }
 
-  @Override
+  @NonNull @Override
   public OWLLiteral getOWLLiteral()
   {
     return this.literal;
@@ -310,6 +310,7 @@ class DefaultLiteral implements Literal
     if (!isDuration())
       throw new LiteralException("cannot convert value of type " + this.literal.getDatatype() + " to "
           + XSDVocabulary.DURATION.getPrefixedName());
+
     return new XSDDuration(this.literal.getLiteral());
   }
 

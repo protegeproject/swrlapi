@@ -1,6 +1,7 @@
 package org.swrlapi.parser;
 
 import checkers.nullness.quals.NonNull;
+import checkers.nullness.quals.Nullable;
 
 /**
  * Defines a basic token class used by the {@link org.swrlapi.parser.SWRLTokenizer} and
@@ -12,9 +13,9 @@ import checkers.nullness.quals.NonNull;
 class SWRLToken
 {
   @NonNull private final SWRLTokenType tokenType;
-  @NonNull private final String value;
+  @Nullable private final String value;
 
-  public SWRLToken(@NonNull SWRLTokenType tokenType, @NonNull String value)
+  public SWRLToken(@NonNull SWRLTokenType tokenType, @Nullable String value)
   {
     this.tokenType = tokenType;
     this.value = value;
@@ -25,7 +26,7 @@ class SWRLToken
     return this.tokenType;
   }
 
-  @NonNull public String getValue()
+  @Nullable public String getValue()
   {
     return this.value;
   }
