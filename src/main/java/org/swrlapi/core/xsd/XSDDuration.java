@@ -24,11 +24,6 @@ public class XSDDuration extends XSDType<XSDDuration>
       throw new IllegalArgumentException("invalid xsd:Duration: " + getContent());
   }
 
-  @NonNull @Override public String getContent()
-  {
-    return this.content;
-  }
-
   @Override public boolean equals(Object o)
   {
     if (this == o)

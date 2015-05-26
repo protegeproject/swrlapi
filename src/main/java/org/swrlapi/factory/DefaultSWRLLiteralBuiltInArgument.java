@@ -1,7 +1,9 @@
 package org.swrlapi.factory;
 
-import checkers.nullness.quals.NonNull;
-import checkers.nullness.quals.Nullable;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Set;
+
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLObject;
@@ -18,138 +20,165 @@ import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.core.OWLLiteralComparator;
 import org.swrlapi.exceptions.SWRLAPIException;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Set;
+import checkers.nullness.quals.NonNull;
+import checkers.nullness.quals.Nullable;
 
 class DefaultSWRLLiteralBuiltInArgument extends DefaultSWRLBuiltInArgument implements SWRLLiteralBuiltInArgument
 {
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  private static final Comparator<OWLLiteral> owlLiteralComparator = OWLLiteralComparator.COMPARATOR;
+	@NonNull
+	private static final Comparator<OWLLiteral> owlLiteralComparator = OWLLiteralComparator.COMPARATOR;
 
-  private final OWLLiteral literal;
+	@NonNull
+	private final OWLLiteral literal;
 
-  public DefaultSWRLLiteralBuiltInArgument(OWLLiteral literal)
-  {
-    this.literal = literal;
-  }
+	public DefaultSWRLLiteralBuiltInArgument(@NonNull OWLLiteral literal)
+	{
+		this.literal = literal;
+	}
 
-  @NonNull @Override public OWLLiteral getLiteral()
-  {
-    return this.literal;
-  }
+	@NonNull
+	@Override
+	public OWLLiteral getLiteral()
+	{
+		return this.literal;
+	}
 
-  @Override public boolean isVariable()
-  {
-    return false;
-  }
+	@Override
+	public boolean isVariable()
+	{
+		return false;
+	}
 
-  @Override public boolean isMultiValueVariable()
-  {
-    return false;
-  }
+	@Override
+	public boolean isMultiValueVariable()
+	{
+		return false;
+	}
 
-  public @Override boolean isLiteral()
-  {
-    return false;
-  }
+	public @Override boolean isLiteral()
+	{
+		return false;
+	}
 
-  public @Override boolean isNamed()
-  {
-    return true;
-  }
+	public @Override boolean isNamed()
+	{
+		return true;
+	}
 
-  @NonNull @Override public SWRLVariableBuiltInArgument asVariable()
-  {
-    throw new SWRLAPIException("Not a SWRLVariableBuiltInArgument");
-  }
+	@NonNull
+	@Override
+	public SWRLVariableBuiltInArgument asVariable()
+	{
+		throw new SWRLAPIException("Not a SWRLVariableBuiltInArgument");
+	}
 
-  @NonNull @Override public SWRLMultiValueVariableBuiltInArgument asMultiValueVariable()
-  {
-    throw new SWRLAPIException("Not a SWRLMultiVariableBuiltInArgument");
-  }
+	@NonNull
+	@Override
+	public SWRLMultiValueVariableBuiltInArgument asMultiValueVariable()
+	{
+		throw new SWRLAPIException("Not a SWRLMultiVariableBuiltInArgument");
+	}
 
-  @NonNull @Override public SWRLLiteralBuiltInArgument asSWRLLiteralBuiltInArgument()
-  {
-    return this;
-  }
+	@NonNull
+	@Override
+	public SWRLLiteralBuiltInArgument asSWRLLiteralBuiltInArgument()
+	{
+		return this;
+	}
 
-  @NonNull @Override public SWRLNamedBuiltInArgument asSWRLNamedBuiltInArgument()
-  {
-    throw new SWRLAPIException("Not a SWRLNamedBuiltInArgument");
-  }
+	@NonNull
+	@Override
+	public SWRLNamedBuiltInArgument asSWRLNamedBuiltInArgument()
+	{
+		throw new SWRLAPIException("Not a SWRLNamedBuiltInArgument");
+	}
 
-  @Override public boolean equals(@Nullable Object o)
-  {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
+	@Override
+	public boolean equals(@Nullable Object o)
+	{
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
 
-    DefaultSWRLLiteralBuiltInArgument that = (DefaultSWRLLiteralBuiltInArgument)o;
+		DefaultSWRLLiteralBuiltInArgument that = (DefaultSWRLLiteralBuiltInArgument)o;
 
-    return this.literal.equals(that.literal);
+		return this.literal.equals(that.literal);
+	}
 
-  }
+	@Override
+	public int hashCode()
+	{
+		return this.literal.hashCode();
+	}
 
-  @Override public int hashCode()
-  {
-    return this.literal.hashCode();
-  }
+	@Override
+	public int compareTo(@NonNull OWLObject o)
+	{
+		if (o == null)
+			throw new NullPointerException();
 
-  @Override public int compareTo(@NonNull OWLObject o)
-  {
-    if (o == null)
-      throw new NullPointerException();
+		if (!(o instanceof SWRLLiteralBuiltInArgument))
+			return -1;
 
-    if (!(o instanceof SWRLLiteralBuiltInArgument))
-      return -1;
+		SWRLLiteralBuiltInArgument other = (SWRLLiteralBuiltInArgument)o;
 
-    SWRLLiteralBuiltInArgument other = (SWRLLiteralBuiltInArgument)o;
+		return owlLiteralComparator.compare(this.getLiteral(), other.getLiteral());
+	}
 
-    return owlLiteralComparator.compare(this.getLiteral(), other.getLiteral());
-  }
+	@Override
+	public void accept(@NonNull SWRLObjectVisitor visitor)
+	{
+		visitor.visit(this);
+	}
 
-  @Override public void accept(@NonNull SWRLObjectVisitor visitor)
-  {
-    visitor.visit(this);
-  }
+	@NonNull
+	@Override
+	public <O> O accept(@NonNull SWRLObjectVisitorEx<O> visitor)
+	{
+		return visitor.visit(this);
+	}
 
-  @NonNull @Override public <O> O accept(@NonNull SWRLObjectVisitorEx<O> visitor)
-  {
-    return visitor.visit(this);
-  }
+	@Override
+	public void accept(@NonNull OWLObjectVisitor visitor)
+	{
+		visitor.visit(this);
+	}
 
-  @Override public void accept(@NonNull OWLObjectVisitor visitor)
-  {
-    visitor.visit(this);
-  }
+	@NonNull
+	@Override
+	public <O> O accept(@NonNull OWLObjectVisitorEx<O> visitor)
+	{
+		return visitor.visit(this);
+	}
 
-  @NonNull @Override public <O> O accept(@NonNull OWLObjectVisitorEx<O> visitor)
-  {
-    return visitor.visit(this);
-  }
+	@Override
+	public <T> T accept(@NonNull SWRLBuiltInArgumentVisitorEx<T> visitor)
+	{
+		return visitor.visit(this);
+	}
 
-  @Override public <T> T accept(@NonNull SWRLBuiltInArgumentVisitorEx<T> visitor)
-  {
-    return visitor.visit(this);
-  }
+	@Override
+	public void accept(@NonNull SWRLBuiltInArgumentVisitor visitor)
+	{
+		visitor.visit(this);
+	}
 
-  @Override public void accept(@NonNull SWRLBuiltInArgumentVisitor visitor)
-  {
-    visitor.visit(this);
-  }
+	@NonNull
+	@Override
+	public String toString()
+	{
+		return this.literal.getLiteral();
+	}
 
-  @NonNull @Override public String toString()
-  {
-    return this.literal.getLiteral();
-  }
-
-  @NonNull @Override public Set<OWLAnnotationProperty> getAnnotationPropertiesInSignature()
-  {
-    return Collections.emptySet(); // TODO Implement getAnnotationPropertiesInSignature
-  }
+	@NonNull
+	@Override
+	public Set<OWLAnnotationProperty> getAnnotationPropertiesInSignature()
+	{
+		return Collections.emptySet(); // TODO Implement getAnnotationPropertiesInSignature
+	}
 }

@@ -34,11 +34,6 @@ public class XSDTime extends XSDType<XSDTime>
       throw new IllegalArgumentException("invalid xsd:Time '" + getContent() + "'");
   }
 
-  @NonNull @Override public String getContent()
-  {
-    return this.content;
-  }
-
   @Override public boolean equals(@Nullable Object o)
   {
     if (this == o)

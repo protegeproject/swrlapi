@@ -214,7 +214,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 
   @NonNull private String generateRuleName(@NonNull Set<String> ruleNames)
   {
-    String ruleNamePrefix = "R";
+    final String ruleNamePrefix = "R";
     int ruleNumber = 1;
     String candidateRuleName = ruleNamePrefix + ruleNumber;
 
@@ -234,6 +234,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
       .getOWLAnnotation(getOWLDataFactory().getRDFSComment(), getOWLDataFactory().getOWLLiteral(""));
     // TODO Add isEnabled annotation to rule
     Set<OWLAnnotation> annotations = new HashSet<>();
+
     annotations.add(labelAnnotation);
     annotations.add(commentAnnotation);
 

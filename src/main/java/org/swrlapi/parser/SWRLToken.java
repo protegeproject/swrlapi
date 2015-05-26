@@ -13,9 +13,9 @@ import checkers.nullness.quals.Nullable;
 class SWRLToken
 {
   @NonNull private final SWRLTokenType tokenType;
-  @Nullable private final String value;
+  @NonNull private final String value;
 
-  public SWRLToken(@NonNull SWRLTokenType tokenType, @Nullable String value)
+  public SWRLToken(@NonNull SWRLTokenType tokenType, @NonNull String value)
   {
     this.tokenType = tokenType;
     this.value = value;
@@ -26,7 +26,7 @@ class SWRLToken
     return this.tokenType;
   }
 
-  @Nullable public String getValue()
+  @NonNull public String getValue()
   {
     return this.value;
   }

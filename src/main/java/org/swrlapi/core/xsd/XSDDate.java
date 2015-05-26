@@ -34,12 +34,6 @@ public class XSDDate extends XSDType<XSDDate>
       throw new IllegalArgumentException("invalid xsd:Date '" + getContent() + "'");
   }
 
-  @NonNull @Override
-  public String getContent()
-  {
-    return this.content;
-  }
-
   @Override public boolean equals(@Nullable Object o)
   {
     if (this == o)
