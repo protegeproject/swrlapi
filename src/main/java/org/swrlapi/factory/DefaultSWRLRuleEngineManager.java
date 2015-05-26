@@ -2,6 +2,7 @@ package org.swrlapi.factory;
 
 import checkers.nullness.quals.NonNull;
 import org.swrlapi.core.SWRLRuleEngineManager;
+import org.swrlapi.core.TargetSWRLRuleEngineCreator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,7 +52,7 @@ class DefaultSWRLRuleEngineManager implements SWRLRuleEngineManager
   }
 
   @Override
-  public SWRLRuleEngineManager.TargetSWRLRuleEngineCreator getRegisteredRuleEngineCreator(@NonNull String ruleEngineName)
+  public @NonNull TargetSWRLRuleEngineCreator getRegisteredRuleEngineCreator(@NonNull String ruleEngineName)
   {
     return this.registeredSWRLRuleEngines.get(ruleEngineName);
   }

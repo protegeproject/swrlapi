@@ -27,29 +27,24 @@ public class IRIResolver
 {
   @NonNull private final DefaultPrefixManager prefixManager;
 
-  @NonNull private final Map<String, IRI> prefixedName2IRI;
-  @NonNull private final Map<IRI, String> iri2PrefixedNameCache;
-  @NonNull private final Set<String> variablePrefixedNames;
-  @NonNull private final Set<String> classPrefixedNames;
-  @NonNull private final Set<String> namedIndividualPrefixedNames;
-  @NonNull private final Set<String> objectPropertyPrefixedNames;
-  @NonNull private final Set<String> dataPropertyPrefixedNames;
-  @NonNull private final Set<String> annotationPropertyPrefixedNames;
-  @NonNull private final Set<String> datatypePrefixedNames;
+  @NonNull private final Map<String, IRI> prefixedName2IRI = new HashMap<>();
+  @NonNull private final Map<IRI, String> iri2PrefixedNameCache = new HashMap<>();
+  @NonNull private final Set<String> variablePrefixedNames = new HashSet<>();
+  @NonNull private final Set<String> classPrefixedNames = new HashSet<>();
+  @NonNull private final Set<String> namedIndividualPrefixedNames = new HashSet<>();
+  @NonNull private final Set<String> objectPropertyPrefixedNames = new HashSet<>();
+  @NonNull private final Set<String> dataPropertyPrefixedNames = new HashSet<>();
+  @NonNull private final Set<String> annotationPropertyPrefixedNames = new HashSet<>();
+  @NonNull private final Set<String> datatypePrefixedNames = new HashSet<>();
+
+  public IRIResolver()
+  {
+    this.prefixManager = new DefaultPrefixManager();
+  }
 
   public IRIResolver(@NonNull DefaultPrefixManager prefixManager)
   {
     this.prefixManager = prefixManager;
-
-    this.prefixedName2IRI = new HashMap<>();
-    this.iri2PrefixedNameCache = new HashMap<>();
-    this.variablePrefixedNames = new HashSet<>();
-    this.classPrefixedNames = new HashSet<>();
-    this.namedIndividualPrefixedNames = new HashSet<>();
-    this.objectPropertyPrefixedNames = new HashSet<>();
-    this.dataPropertyPrefixedNames = new HashSet<>();
-    this.annotationPropertyPrefixedNames = new HashSet<>();
-    this.datatypePrefixedNames = new HashSet<>();
   }
 
   public void reset()

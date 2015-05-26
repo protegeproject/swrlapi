@@ -14,13 +14,13 @@ import org.swrlapi.sqwrl.SQWRLQueryEngine;
 public interface SWRLRuleAndQueryEngineFactory
 {
   /**
-   * Register a rule engine. The {@link SWRLRuleEngineManager.TargetSWRLRuleEngineCreator} interface specifies a
-   * {@link SWRLRuleEngineManager.TargetSWRLRuleEngineCreator#create(org.swrlapi.bridge.SWRLRuleEngineBridge)} method
+   * Register a rule engine. The {@link TargetSWRLRuleEngineCreator} interface specifies a
+   * {@link TargetSWRLRuleEngineCreator#create(org.swrlapi.bridge.SWRLRuleEngineBridge)} method
    * that returns an implementation of a {@link org.swrlapi.bridge.TargetSWRLRuleEngine}. *
    *
    * @param ruleEngineCreator A rule engine creator
    */
-  void registerRuleEngine(SWRLRuleEngineManager.TargetSWRLRuleEngineCreator ruleEngineCreator);
+  void registerRuleEngine(@NonNull TargetSWRLRuleEngineCreator ruleEngineCreator);
 
   /**
    * Create an instance of a rule engine.

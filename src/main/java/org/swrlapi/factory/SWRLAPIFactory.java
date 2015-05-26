@@ -32,6 +32,7 @@ import org.swrlapi.core.SWRLRuleAndQueryEngineFactory;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.core.SWRLRuleEngineManager;
 import org.swrlapi.core.SWRLRuleRenderer;
+import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
 import org.swrlapi.exceptions.SWRLRuleEngineException;
@@ -93,6 +94,86 @@ public class SWRLAPIFactory
     throws SWRLRuleEngineException
   {
     return swrlRuleAndQueryEngineFactory.createSQWRLQueryEngine(ontology);
+  }
+
+  /**
+   * Create an empty {@link org.swrlapi.core.SWRLAPIOWLOntology}.
+   *
+   * @return A SWRLAPI-based wrapper of an OWL ontology
+   */
+  @NonNull public static SWRLAPIOWLOntology createSWRLAPIOntology()
+  {
+    try {
+      OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
+      OWLOntology ontology = ontologyManager.createOntology();
+      DefaultPrefixManager prefixManager = new DefaultPrefixManager();
+
+      addDefaultPrefixes(ontology, prefixManager);
+      addSWRLAPIBuiltInOntologies(ontologyManager);
+
+      return createSWRLAPIOntology(ontology, prefixManager);
+    } catch (OWLOntologyCreationException e) {
+      throw new SWRLAPIException("Error creating OWL ontology", e);
+    }
+  }
+
+  /**
+   * @param ontology An OWLAPI-based ontology
+   * @return A SWRLAPI-based wrapper of an OWL ontology
+   */
+  @NonNull public static SWRLAPIOWLOntology createSWRLAPIOntology(@NonNull OWLOntology ontology)
+  {
+    DefaultPrefixManager prefixManager = new DefaultPrefixManager();
+
+    addDefaultPrefixes(ontology, prefixManager);
+    addSWRLAPIBuiltInOntologies(ontology.getOWLOntologyManager());
+
+    return new DefaultSWRLAPIOWLOntology(ontology, prefixManager);
+  }
+
+  /**
+   * Create a {@link org.swrlapi.core.SWRLAPIOWLOntology} from an OWLAPI-based
+   * {@link org.semanticweb.owlapi.model.OWLOntology}.
+   *
+   * @param ontology      An OWLAPI-based ontology
+   * @param prefixManager A prefix manager
+   * @return A SWRLAPI-based wrapper of an OWL ontology
+   */
+  @NonNull public static SWRLAPIOWLOntology createSWRLAPIOntology(@NonNull OWLOntology ontology,
+    @NonNull DefaultPrefixManager prefixManager)
+  {
+    if (ontology == null)
+      throw new SWRLAPIException("supplied OWL ontology is null");
+
+    if (prefixManager == null)
+      throw new SWRLAPIException("supplied prefix manager is null");
+
+    addDefaultPrefixes(ontology, prefixManager);
+    addSWRLAPIBuiltInOntologies(ontology.getOWLOntologyManager());
+
+    return new DefaultSWRLAPIOWLOntology(ontology, prefixManager);
+  }
+
+  /**
+   * Create a {@link org.swrlapi.core.SWRLAPIOWLOntology} from a file.
+   *
+   * @param owlFile A file containing an OWL ontology
+   * @return A SWRLAPI-based wrapper of an OWL ontology
+   */
+  @NonNull public static SWRLAPIOWLOntology createSWRLAPIOntology(@NonNull File owlFile)
+  {
+    if (owlFile == null)
+      throw new SWRLAPIException("supplied OWL file is null");
+
+    OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
+    OWLOntology ontology = createOWLOntology(ontologyManager, owlFile);
+
+    DefaultPrefixManager prefixManager = new DefaultPrefixManager();
+
+    addDefaultPrefixes(ontology, prefixManager);
+    addSWRLAPIBuiltInOntologies(ontologyManager);
+
+    return createSWRLAPIOntology(ontology, prefixManager);
   }
 
   /**
@@ -196,86 +277,6 @@ public class SWRLAPIFactory
   }
 
   /**
-   * Create an empty {@link org.swrlapi.core.SWRLAPIOWLOntology}.
-   *
-   * @return A SWRLAPI-based wrapper of an OWL ontology
-   */
-  @NonNull public static SWRLAPIOWLOntology createSWRLAPIOntology()
-  {
-    try {
-      OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
-      OWLOntology ontology = ontologyManager.createOntology();
-      DefaultPrefixManager prefixManager = new DefaultPrefixManager();
-
-      addDefaultPrefixes(ontology, prefixManager);
-      addSWRLAPIBuiltInOntologies(ontologyManager);
-
-      return createSWRLAPIOntology(ontology, prefixManager);
-    } catch (OWLOntologyCreationException e) {
-      throw new SWRLAPIException("Error creating OWL ontology", e);
-    }
-  }
-
-  /**
-   * @param ontology An OWLAPI-based ontology
-   * @return A SWRLAPI-based wrapper of an OWL ontology
-   */
-  @NonNull public static SWRLAPIOWLOntology createSWRLAPIOntology(@NonNull OWLOntology ontology)
-  {
-    DefaultPrefixManager prefixManager = new DefaultPrefixManager();
-
-    addDefaultPrefixes(ontology, prefixManager);
-    addSWRLAPIBuiltInOntologies(ontology.getOWLOntologyManager());
-
-    return new DefaultSWRLAPIOWLOntology(ontology, prefixManager);
-  }
-
-  /**
-   * Create a {@link org.swrlapi.core.SWRLAPIOWLOntology} from an OWLAPI-based
-   * {@link org.semanticweb.owlapi.model.OWLOntology}.
-   *
-   * @param ontology      An OWLAPI-based ontology
-   * @param prefixManager A prefix manager
-   * @return A SWRLAPI-based wrapper of an OWL ontology
-   */
-  @NonNull public static SWRLAPIOWLOntology createSWRLAPIOntology(@NonNull OWLOntology ontology,
-    @NonNull DefaultPrefixManager prefixManager)
-  {
-    if (ontology == null)
-      throw new SWRLAPIException("supplied OWL ontology is null");
-
-    if (prefixManager == null)
-      throw new SWRLAPIException("supplied prefix manager is null");
-
-    addDefaultPrefixes(ontology, prefixManager);
-    addSWRLAPIBuiltInOntologies(ontology.getOWLOntologyManager());
-
-    return new DefaultSWRLAPIOWLOntology(ontology, prefixManager);
-  }
-
-  /**
-   * Create a {@link org.swrlapi.core.SWRLAPIOWLOntology} from a file.
-   *
-   * @param owlFile A file containing an OWL ontology
-   * @return A SWRLAPI-based wrapper of an OWL ontology
-   */
-  @NonNull public static SWRLAPIOWLOntology createSWRLAPIOntology(@NonNull File owlFile)
-  {
-    if (owlFile == null)
-      throw new SWRLAPIException("supplied OWL file is null");
-
-    OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
-    OWLOntology ontology = createOWLOntology(ontologyManager, owlFile);
-
-    DefaultPrefixManager prefixManager = new DefaultPrefixManager();
-
-    addDefaultPrefixes(ontology, prefixManager);
-    addSWRLAPIBuiltInOntologies(ontologyManager);
-
-    return createSWRLAPIOntology(ontology, prefixManager);
-  }
-
-  /**
    * @param swrlapiOWLOntology A SWRLAPI-based OWL ontology
    * @return A SWRLAPI ontology processor
    */
@@ -286,23 +287,21 @@ public class SWRLAPIFactory
   }
 
   /**
-   * @param swrlapiOWLOntology A SWRLAPI-based OWL ontology
+   * @param iriResolver An IRI resolver
    * @return A SWRL built-in argument factory
    */
-  @NonNull public static SWRLBuiltInArgumentFactory createSWRLBuiltInArgumentFactory(
-    @NonNull SWRLAPIOWLOntology swrlapiOWLOntology)
+  @NonNull public static SWRLBuiltInArgumentFactory createSWRLBuiltInArgumentFactory(@NonNull IRIResolver iriResolver)
   {
-    return new DefaultSWRLBuiltInArgumentFactory(swrlapiOWLOntology.getIRIResolver());
+    return new DefaultSWRLBuiltInArgumentFactory(iriResolver);
   }
 
   /**
-   * @param swrlapiOWLOntology A SWRLAPI-based OWL ontology
+   * @param iriResolver An IRI resolver
    * @return A SQWRL result value factory
    */
-  @NonNull public static SQWRLResultValueFactory createSQWRLResultValueFactory(
-    @NonNull SWRLAPIOWLOntology swrlapiOWLOntology)
+  @NonNull public static SQWRLResultValueFactory createSQWRLResultValueFactory(@NonNull IRIResolver iriResolver)
   {
-    return new DefaultSQWRLResultValueFactory(swrlapiOWLOntology.getIRIResolver());
+    return new DefaultSQWRLResultValueFactory(iriResolver);
   }
 
   @NonNull public static SQWRLQuery getSQWRLQuery(@NonNull String queryName, @NonNull List<SWRLAtom> bodyAtoms,
@@ -527,7 +526,7 @@ public class SWRLAPIFactory
       ontologyManager.getIRIMappers().add(new SimpleIRIMapper(IRI.create(key), IRI.create(map.get(key))));
   }
 
-  private static OWLOntology createOWLOntology(@NonNull OWLOntologyManager ontologyManager, @NonNull File file)
+  @NonNull private static OWLOntology createOWLOntology(@NonNull OWLOntologyManager ontologyManager, @NonNull File file)
     throws SWRLAPIException
   {
     try {

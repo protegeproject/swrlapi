@@ -77,7 +77,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
     this.swrlBuiltInIRIs = new HashSet<>();
     this.swrlapiOWLDataFactory = SWRLAPIFactory.createSWRLAPIOWLDataFactory(this);
     this.swrlapiOntologyProcessor = SWRLAPIFactory.createSWRLAPIOntologyProcessor(this);
-    this.sqwrlResultValueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(this);
+    this.sqwrlResultValueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(this.iriResolver);
 
     addDefaultSWRLBuiltIns();
   }
