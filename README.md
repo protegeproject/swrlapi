@@ -12,8 +12,8 @@ A [Protégé-based](http://protege.stanford.edu/) [SWRLTab Plugin](https://githu
 
 To build this library you must have the following items installed:
 
-+ Apache's [Maven](http://maven.apache.org/index.html).
 + A tool for checking out a [Git](http://git-scm.com/) repository.
++ Apache's [Maven](http://maven.apache.org/index.html).
 
 #### Building
 
