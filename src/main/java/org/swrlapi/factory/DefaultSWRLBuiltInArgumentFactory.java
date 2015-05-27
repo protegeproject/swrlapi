@@ -36,6 +36,12 @@ class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFactory
   @NonNull private final IRIResolver iriResolver;
   @NonNull private final OWLLiteralFactory owlLiteralFactory;
 
+  public DefaultSWRLBuiltInArgumentFactory()
+  {
+    this.iriResolver = SWRLAPIFactory.getIRIResolver();
+    this.owlLiteralFactory = SWRLAPIFactory.getOWLLiteralFactory();
+  }
+
   public DefaultSWRLBuiltInArgumentFactory(@NonNull IRIResolver iriResolver)
   {
     this.iriResolver = iriResolver;

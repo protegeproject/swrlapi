@@ -34,9 +34,14 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
   @NonNull private final SWRLBuiltInArgumentFactory swrlBuiltInArgumentFactory;
   @NonNull private final SQWRLResultValueFactory sqwrlResultValueFactory;
 
-  public DefaultSWRLAPIOWLDataFactory(@NonNull SWRLAPIOWLOntology swrlapiOWLOntology)
+  public DefaultSWRLAPIOWLDataFactory()
   {
-    this.iriResolver = swrlapiOWLOntology.getIRIResolver();
+    this(new IRIResolver());
+  }
+
+  public DefaultSWRLAPIOWLDataFactory(@NonNull IRIResolver iriResolver)
+  {
+    this.iriResolver = iriResolver;
     this.owlDatatypeFactory = SWRLAPIFactory.createOWLDatatypeFactory();
     this.owlLiteralFactory = SWRLAPIFactory.createOWLLiteralFactory();
     this.literalFactory = SWRLAPIFactory.createLiteralFactory();

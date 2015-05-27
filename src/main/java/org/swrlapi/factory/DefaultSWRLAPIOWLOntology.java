@@ -75,7 +75,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
     this.iriResolver = new IRIResolver(this.prefixManager);
     this.swrlParser = new SWRLParser(this);
     this.swrlBuiltInIRIs = new HashSet<>();
-    this.swrlapiOWLDataFactory = SWRLAPIFactory.createSWRLAPIOWLDataFactory(this);
+    this.swrlapiOWLDataFactory = SWRLAPIFactory.createSWRLAPIOWLDataFactory(this.iriResolver);
     this.swrlapiOntologyProcessor = SWRLAPIFactory.createSWRLAPIOntologyProcessor(this);
     this.sqwrlResultValueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(this.iriResolver);
 
@@ -138,12 +138,12 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 
   @NonNull @Override public SWRLRuleRenderer createSWRLRuleRenderer()
   {
-    return SWRLAPIFactory.getSWRLRuleRenderer(this);
+    return SWRLAPIFactory.getSWRLRuleRenderer(this.getOWLOntology(), this.getPrefixManager());
   }
 
   @NonNull @Override public SQWRLQueryRenderer createSQWRLQueryRenderer()
   {
-    return SWRLAPIFactory.getSQWRLQueryRenderer(this);
+    return SWRLAPIFactory.getSQWRLQueryRenderer(this.getOWLOntology(), this.getPrefixManager());
   }
 
   @NonNull @Override public SQWRLQuery createSQWRLQuery(@NonNull String queryName, @NonNull String query)
