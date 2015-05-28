@@ -6,14 +6,14 @@ import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.swrlapi.bridge.SWRLRuleEngineBridge;
 import org.swrlapi.bridge.converters.TargetRuleEngineConverterBase;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
-import org.swrlapi.core.OWLDatatypeFactory;
-import org.swrlapi.core.OWLLiteralFactory;
-import org.swrlapi.core.SWRLAPIOWLDataFactory;
-import org.swrlapi.core.resolvers.IRIResolver;
-import org.swrlapi.core.resolvers.OWLClassExpressionResolver;
-import org.swrlapi.core.resolvers.OWLDataPropertyExpressionResolver;
-import org.swrlapi.core.resolvers.OWLDataRangeResolver;
-import org.swrlapi.core.resolvers.OWLObjectPropertyExpressionResolver;
+import org.swrlapi.factory.OWLDatatypeFactory;
+import org.swrlapi.factory.OWLLiteralFactory;
+import org.swrlapi.factory.SWRLAPIOWLDataFactory;
+import org.swrlapi.resolvers.IRIResolver;
+import org.swrlapi.resolvers.OWLClassExpressionResolver;
+import org.swrlapi.resolvers.OWLDataPropertyExpressionResolver;
+import org.swrlapi.resolvers.OWLDataRangeResolver;
+import org.swrlapi.resolvers.OWLObjectPropertyExpressionResolver;
 
 /**
  * This interface describes a set of methods that will be needed by a target rule engine to create OWLAPI

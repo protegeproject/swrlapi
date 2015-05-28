@@ -11,12 +11,8 @@ import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
-import org.swrlapi.core.LiteralFactory;
-import org.swrlapi.core.OWLDatatypeFactory;
-import org.swrlapi.core.OWLLiteralFactory;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
-import org.swrlapi.core.SWRLAPIOWLDataFactory;
-import org.swrlapi.core.resolvers.IRIResolver;
+import org.swrlapi.resolvers.IRIResolver;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 

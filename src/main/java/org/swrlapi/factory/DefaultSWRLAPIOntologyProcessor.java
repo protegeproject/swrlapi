@@ -64,12 +64,10 @@ import org.semanticweb.owlapi.model.OWLTransitiveObjectPropertyAxiom;
 import org.semanticweb.owlapi.model.SWRLRule;
 import org.semanticweb.owlapi.model.parameters.Imports;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
-import org.swrlapi.core.LiteralFactory;
-import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIOntologyProcessor;
 import org.swrlapi.core.SWRLAPIRule;
-import org.swrlapi.core.resolvers.IRIResolver;
+import org.swrlapi.resolvers.IRIResolver;
 import org.swrlapi.exceptions.SWRLRuleException;
 import org.swrlapi.sqwrl.SQWRLQuery;
 import org.swrlapi.sqwrl.SQWRLResult;
@@ -376,7 +374,7 @@ class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 
 	/**
 	 * Process currently supported OWL axioms. The processing consists of recording any OWL properties in the processed
-	 * axioms (with an instance of the {@link org.swrlapi.core.resolvers.IRIResolver} class) and generating declaration
+	 * axioms (with an instance of the {@link org.swrlapi.resolvers.IRIResolver} class) and generating declaration
 	 * axioms for these properties.
 	 * <p>
 	 * TODO The current approach is clunky. A better approach would be to walk the axioms with a visitor and record the

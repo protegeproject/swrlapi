@@ -5,11 +5,11 @@ import java.net.URI;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
-import org.swrlapi.core.Literal;
-import org.swrlapi.core.xsd.XSDDate;
-import org.swrlapi.core.xsd.XSDDateTime;
-import org.swrlapi.core.xsd.XSDDuration;
-import org.swrlapi.core.xsd.XSDTime;
+import org.swrlapi.literal.Literal;
+import org.swrlapi.literal.XSDDate;
+import org.swrlapi.literal.XSDDateTime;
+import org.swrlapi.literal.XSDDuration;
+import org.swrlapi.literal.XSDTime;
 import org.swrlapi.exceptions.LiteralException;
 
 import checkers.nullness.quals.NonNull;

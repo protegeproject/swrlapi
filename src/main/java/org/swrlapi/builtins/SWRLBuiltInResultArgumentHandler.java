@@ -4,10 +4,10 @@ import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
-import org.swrlapi.core.xsd.XSDDate;
-import org.swrlapi.core.xsd.XSDDateTime;
-import org.swrlapi.core.xsd.XSDDuration;
-import org.swrlapi.core.xsd.XSDTime;
+import org.swrlapi.literal.XSDDate;
+import org.swrlapi.literal.XSDDateTime;
+import org.swrlapi.literal.XSDDuration;
+import org.swrlapi.literal.XSDTime;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 
 import java.util.Collection;

@@ -2,7 +2,7 @@ package org.swrlapi.factory;
 
 import checkers.nullness.quals.NonNull;
 import org.swrlapi.core.SWRLRuleEngineManager;
-import org.swrlapi.core.TargetSWRLRuleEngineCreator;
+import org.swrlapi.bridge.TargetSWRLRuleEngineCreator;
 
 import java.util.HashMap;
 import java.util.Map;

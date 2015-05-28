@@ -4,7 +4,6 @@ import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
-import org.swrlapi.core.OWLDatatypeFactory;
 import uk.ac.manchester.cs.owl.owlapi.OWLDatatypeImpl;
 
 class DefaultOWLDatatypeFactory implements OWLDatatypeFactory

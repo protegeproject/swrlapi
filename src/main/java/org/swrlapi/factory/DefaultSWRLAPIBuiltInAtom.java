@@ -22,6 +22,7 @@ class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SWRLAPIBu
   @NonNull private final String ruleName;
   @NonNull private final IRI builtInIRI;
   @NonNull private final String builtInPrefixedName;
+
   @NonNull private List<SWRLBuiltInArgument> arguments;
   @NonNull private Set<String> pathVariablePrefixedNames = new HashSet<>();
   private boolean sqwrlCollectionResultsUsed = false;
@@ -35,7 +36,7 @@ class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SWRLAPIBu
     this.ruleName = ruleName;
     this.builtInIRI = builtInIRI;
     this.builtInPrefixedName = builtInPrefixedName;
-    this.arguments = arguments;
+    this.arguments = new ArrayList<>(arguments);
   }
 
   @NonNull @Override public String getRuleName()

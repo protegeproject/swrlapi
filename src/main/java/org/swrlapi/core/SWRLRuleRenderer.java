@@ -2,7 +2,7 @@ package org.swrlapi.core;
 
 import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.SWRLRule;
-import org.swrlapi.core.visitors.SWRLAPIEntityVisitorEx;
+import org.swrlapi.visitors.SWRLAPIEntityVisitorEx;
 
 /**
  * A renderer for {@link org.swrlapi.core.SWRLAPIRule} and {@link org.swrlapi.sqwrl.SQWRLQuery} objects.

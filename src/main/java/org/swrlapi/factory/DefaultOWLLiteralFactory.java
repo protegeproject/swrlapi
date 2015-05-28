@@ -4,13 +4,11 @@ import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
-import org.swrlapi.core.OWLDatatypeFactory;
-import org.swrlapi.core.OWLLiteralFactory;
-import org.swrlapi.core.OWLLiteralValidator;
-import org.swrlapi.core.xsd.XSDDate;
-import org.swrlapi.core.xsd.XSDDateTime;
-import org.swrlapi.core.xsd.XSDDuration;
-import org.swrlapi.core.xsd.XSDTime;
+import org.swrlapi.literal.OWLLiteralValidator;
+import org.swrlapi.literal.XSDDate;
+import org.swrlapi.literal.XSDDateTime;
+import org.swrlapi.literal.XSDDuration;
+import org.swrlapi.literal.XSDTime;
 import uk.ac.manchester.cs.owl.owlapi.OWLLiteralImpl;
 
 import java.net.URI;

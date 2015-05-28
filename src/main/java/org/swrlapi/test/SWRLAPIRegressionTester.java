@@ -2,7 +2,7 @@ package org.swrlapi.test;
 
 import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLDatatype;
-import org.swrlapi.core.SQWRLQueryRenderer;
+import org.swrlapi.sqwrl.SQWRLQueryRenderer;
 import org.swrlapi.sqwrl.SQWRLQuery;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.SQWRLResult;

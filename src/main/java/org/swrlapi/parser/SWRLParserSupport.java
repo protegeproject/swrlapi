@@ -35,8 +35,8 @@ import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDatatypeBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
-import org.swrlapi.core.OWLLiteralFactory;
-import org.swrlapi.core.SWRLAPIOWLDataFactory;
+import org.swrlapi.factory.OWLLiteralFactory;
+import org.swrlapi.factory.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 
 import java.util.HashSet;

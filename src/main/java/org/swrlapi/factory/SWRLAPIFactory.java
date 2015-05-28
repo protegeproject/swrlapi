@@ -14,21 +14,16 @@ import org.semanticweb.owlapi.util.SimpleIRIMapper;
 import org.swrlapi.bridge.SWRLBridge;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
-import org.swrlapi.core.Literal;
-import org.swrlapi.core.LiteralFactory;
-import org.swrlapi.core.OWLDatatypeFactory;
-import org.swrlapi.core.OWLLiteralFactory;
-import org.swrlapi.core.SQWRLQueryRenderer;
+import org.swrlapi.literal.Literal;
+import org.swrlapi.sqwrl.SQWRLQueryRenderer;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
-import org.swrlapi.core.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIOntologyProcessor;
 import org.swrlapi.core.SWRLAPIRule;
-import org.swrlapi.core.SWRLRuleAndQueryEngineFactory;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.core.SWRLRuleEngineManager;
 import org.swrlapi.core.SWRLRuleRenderer;
-import org.swrlapi.core.resolvers.IRIResolver;
+import org.swrlapi.resolvers.IRIResolver;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
 import org.swrlapi.exceptions.SWRLRuleEngineException;
@@ -56,10 +51,10 @@ import java.util.Map;
 /**
  * Factory for generating some of the core entities defined by the SWRLAPI.
  *
- * @see org.swrlapi.core.SWRLRuleAndQueryEngineFactory
+ * @see SWRLRuleAndQueryEngineFactory
  * @see org.swrlapi.sqwrl.values.SQWRLResultValueFactory
- * @see org.swrlapi.core.SWRLAPIOWLDataFactory
- * @see org.swrlapi.core.OWLDatatypeFactory
+ * @see SWRLAPIOWLDataFactory
+ * @see OWLDatatypeFactory
  */
 public class SWRLAPIFactory
 {

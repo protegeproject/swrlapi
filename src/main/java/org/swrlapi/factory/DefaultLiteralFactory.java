@@ -2,13 +2,11 @@ package org.swrlapi.factory;
 
 import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLLiteral;
-import org.swrlapi.core.Literal;
-import org.swrlapi.core.LiteralFactory;
-import org.swrlapi.core.OWLLiteralFactory;
-import org.swrlapi.core.xsd.XSDDate;
-import org.swrlapi.core.xsd.XSDDateTime;
-import org.swrlapi.core.xsd.XSDDuration;
-import org.swrlapi.core.xsd.XSDTime;
+import org.swrlapi.literal.Literal;
+import org.swrlapi.literal.XSDDate;
+import org.swrlapi.literal.XSDDateTime;
+import org.swrlapi.literal.XSDDuration;
+import org.swrlapi.literal.XSDTime;
 
 import java.net.URI;
 

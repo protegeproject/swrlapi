@@ -2,11 +2,11 @@ package org.swrlapi.bridge.converters;
 
 import checkers.nullness.quals.NonNull;
 import org.swrlapi.bridge.SWRLRuleEngineBridge;
-import org.swrlapi.core.resolvers.IRIResolver;
-import org.swrlapi.core.resolvers.OWLClassExpressionResolver;
-import org.swrlapi.core.resolvers.OWLDataPropertyExpressionResolver;
-import org.swrlapi.core.resolvers.OWLDataRangeResolver;
-import org.swrlapi.core.resolvers.OWLObjectPropertyExpressionResolver;
+import org.swrlapi.resolvers.IRIResolver;
+import org.swrlapi.resolvers.OWLClassExpressionResolver;
+import org.swrlapi.resolvers.OWLDataPropertyExpressionResolver;
+import org.swrlapi.resolvers.OWLDataRangeResolver;
+import org.swrlapi.resolvers.OWLObjectPropertyExpressionResolver;
 
 /**
  * This interface represents provides utility methods converters implemented by target rule engines to convert

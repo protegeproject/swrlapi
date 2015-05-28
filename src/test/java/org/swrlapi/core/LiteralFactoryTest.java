@@ -1,15 +1,19 @@
 package org.swrlapi.core;
 
-import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.swrlapi.literal.Literal;
+import org.swrlapi.factory.LiteralFactory;
 import org.swrlapi.factory.SWRLAPIFactory;
+
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertTrue;
 
 /**
  * @see LiteralFactory
  */
-public class LiteralFactoryTest extends TestCase
+public class LiteralFactoryTest
 {
   private LiteralFactory literalFactory;
 

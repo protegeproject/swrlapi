@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.factory.SWRLAPIFactory;
+import org.swrlapi.factory.SWRLAPIOWLDataFactory;
 
 /**
  * @see SWRLAPIOWLDataFactory

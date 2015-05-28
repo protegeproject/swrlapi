@@ -3,7 +3,7 @@ package org.swrlapi.factory;
 import checkers.nullness.quals.NonNull;
 import checkers.nullness.quals.Nullable;
 import org.semanticweb.owlapi.model.OWLLiteral;
-import org.swrlapi.core.OWLLiteralComparator;
+import org.swrlapi.literal.OWLLiteralComparator;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLClassResultValue;

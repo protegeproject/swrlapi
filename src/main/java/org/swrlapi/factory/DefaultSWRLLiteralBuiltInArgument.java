@@ -17,7 +17,7 @@ import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
-import org.swrlapi.core.OWLLiteralComparator;
+import org.swrlapi.literal.OWLLiteralComparator;
 import org.swrlapi.exceptions.SWRLAPIException;
 
 import checkers.nullness.quals.NonNull;

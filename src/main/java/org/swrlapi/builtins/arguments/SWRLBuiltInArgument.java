@@ -3,6 +3,7 @@ package org.swrlapi.builtins.arguments;
 import checkers.nullness.quals.NonNull;
 import checkers.nullness.quals.Nullable;
 import org.semanticweb.owlapi.model.SWRLDArgument;
+import org.swrlapi.factory.SWRLAPIOWLDataFactory;
 
 /**
  * Interface representing an argument to a SWRL built-in. It extends the OWLAPI's
@@ -19,7 +20,7 @@ import org.semanticweb.owlapi.model.SWRLDArgument;
  * Since an OWLAPI ontology (represented by the OWLAPI class {@link org.semanticweb.owlapi.model.OWLOntology}) or an OWL
  * data factory (represented by the OWLAPI class {@link org.semanticweb.owlapi.model.OWLDataFactory}), will not be aware
  * of these types a {@link org.swrlapi.core.SWRLAPIOWLOntology} (in conjunction with an
- * {@link org.swrlapi.core.SWRLAPIOWLDataFactory}) must be used to extract SWRLAPI SWRL rules.
+ * {@link SWRLAPIOWLDataFactory}) must be used to extract SWRLAPI SWRL rules.
  * <p>
  * Similarly, a SWRLAPI-aware parser is required to generate SWRLAPI rules from rule text.
  *

@@ -1,6 +1,7 @@
 package org.swrlapi.core;
 
 import checkers.nullness.quals.NonNull;
+import org.swrlapi.bridge.TargetSWRLRuleEngineCreator;
 
 import java.util.Optional;
 import java.util.Set;

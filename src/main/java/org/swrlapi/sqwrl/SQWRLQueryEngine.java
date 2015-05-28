@@ -1,7 +1,6 @@
 package org.swrlapi.sqwrl;
 
 import checkers.nullness.quals.NonNull;
-import org.swrlapi.core.SQWRLQueryRenderer;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.exceptions.SWRLRuleEngineException;
 import org.swrlapi.parser.SWRLParseException;

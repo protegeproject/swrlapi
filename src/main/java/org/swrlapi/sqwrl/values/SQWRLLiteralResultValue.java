@@ -1,6 +1,6 @@
 package org.swrlapi.sqwrl.values;
 
-import org.swrlapi.core.Literal;
+import org.swrlapi.literal.Literal;
 
 /**
  * Represents a literal result value provided by a {@link org.swrlapi.sqwrl.SQWRLResult}.
