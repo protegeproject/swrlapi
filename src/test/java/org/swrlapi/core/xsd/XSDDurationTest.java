@@ -6,7 +6,7 @@ import org.junit.Test;
 /**
  * @see XSDDuration
  */
-public class XSDDurationTest 
+public class XSDDurationTest
 {
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstruction()

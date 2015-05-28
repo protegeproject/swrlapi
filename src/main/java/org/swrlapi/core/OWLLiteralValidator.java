@@ -19,7 +19,7 @@ public class OWLLiteralValidator
   {
     try {
       if (datatype.getIRI().equals(XSDVocabulary.BYTE.getIRI())) {
-        Integer.parseInt(literal);
+        Byte.parseByte(literal);
         return true;
       } else if (datatype.getIRI().equals(XSDVocabulary.SHORT.getIRI())) {
         Short.parseShort(literal);

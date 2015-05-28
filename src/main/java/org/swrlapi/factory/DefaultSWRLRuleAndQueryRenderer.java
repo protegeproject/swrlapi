@@ -1,6 +1,7 @@
 package org.swrlapi.factory;
 
 import checkers.nullness.quals.NonNull;
+import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLClass;
@@ -67,9 +68,9 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
   @NonNull private final OWLOntology ontology;
   @NonNull private final DefaultPrefixManager prefixManager;
 
-  public DefaultSWRLRuleAndQueryRenderer(@NonNull OWLOntology owlOntology, DefaultPrefixManager prefixManager)
+  public DefaultSWRLRuleAndQueryRenderer(@NonNull OWLOntology ontology, DefaultPrefixManager prefixManager)
   {
-    this.ontology = owlOntology;
+    this.ontology = ontology;
     this.prefixManager = prefixManager;
   }
 
