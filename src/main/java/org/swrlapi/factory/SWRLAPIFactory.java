@@ -56,8 +56,6 @@ import java.util.Map;
 /**
  * Factory for generating some of the core entities defined by the SWRLAPI.
  *
- * @see org.swrlapi.core.SWRLAPIOWLOntology
- * @see org.swrlapi.core.SWRLAPIOntologyProcessor
  * @see org.swrlapi.core.SWRLRuleAndQueryEngineFactory
  * @see org.swrlapi.sqwrl.values.SQWRLResultValueFactory
  * @see org.swrlapi.core.SWRLAPIOWLDataFactory
@@ -93,18 +91,6 @@ public class SWRLAPIFactory
   }
 
   /**
-   * @param swrlapiOWLOntology     A SWRLAPI-based OWL ontology
-   * @param owl2RLPersistenceLayer An OWL 2 RL persistence layer
-   * @return A SWRL rule engine bridge
-   * @throws SWRLBuiltInBridgeException If an error occurs during rule engine bridge creation
-   */
-  @NonNull public static SWRLBridge createSWRLBridge(@NonNull SWRLAPIOWLOntology swrlapiOWLOntology,
-    @NonNull OWL2RLPersistenceLayer owl2RLPersistenceLayer) throws SWRLBuiltInBridgeException
-  {
-    return new DefaultSWRLBridge(swrlapiOWLOntology, owl2RLPersistenceLayer);
-  }
-
-  /**
    * @param ontology      An OWL ontology
    * @param prefixManager A prefix manager
    * @return A SWRL rule renderer
@@ -135,15 +121,6 @@ public class SWRLAPIFactory
   }
 
   /**
-   * @param swrlapiowlOntology A SWRLAPI-based OWL ontology
-   * @return A SWRL auto-completer
-   */
-  @NonNull public static SWRLAutoCompleter createSWRLAutoCompleter(@NonNull SWRLAPIOWLOntology swrlapiowlOntology)
-  {
-    return new DefaultSWRLAutoCompleter(swrlapiowlOntology);
-  }
-
-  /**
    * @param sqwrlResultValueFactory A SQWRL result value factory
    * @return A SQWRL result
    */
@@ -160,16 +137,6 @@ public class SWRLAPIFactory
   @NonNull public static OWL2RLPersistenceLayer createOWL2RLPersistenceLayer(@NonNull OWLOntology ontology)
   {
     return new DefaultOWL2RLPersistenceLayer(ontology);
-  }
-
-  /**
-   * @param swrlapiOWLOntology A SWRLAPI-based OWL ontology
-   * @return A SWRLAPI ontology processor
-   */
-  @NonNull public static SWRLAPIOntologyProcessor createSWRLAPIOntologyProcessor(
-    @NonNull SWRLAPIOWLOntology swrlapiOWLOntology)
-  {
-    return new DefaultSWRLAPIOntologyProcessor(swrlapiOWLOntology);
   }
 
   /**
@@ -416,6 +383,37 @@ public class SWRLAPIFactory
     addSWRLAPIBuiltInOntologies(ontology.getOWLOntologyManager());
 
     return new DefaultSWRLAPIOWLOntology(ontology, prefixManager);
+  }
+
+  /**
+   * @param swrlapiOWLOntology     A SWRLAPI-based OWL ontology
+   * @param owl2RLPersistenceLayer An OWL 2 RL persistence layer
+   * @return A SWRL rule engine bridge
+   * @throws SWRLBuiltInBridgeException If an error occurs during rule engine bridge creation
+   */
+  public static @NonNull SWRLBridge createSWRLBridge(@NonNull SWRLAPIOWLOntology swrlapiOWLOntology,
+    @NonNull OWL2RLPersistenceLayer owl2RLPersistenceLayer) throws SWRLBuiltInBridgeException
+  {
+    return new DefaultSWRLBridge(swrlapiOWLOntology, owl2RLPersistenceLayer);
+  }
+
+  /**
+   * @param swrlapiowlOntology A SWRLAPI-based OWL ontology
+   * @return A SWRL auto-completer
+   */
+  public static @NonNull SWRLAutoCompleter createSWRLAutoCompleter(@NonNull SWRLAPIOWLOntology swrlapiowlOntology)
+  {
+    return new DefaultSWRLAutoCompleter(swrlapiowlOntology);
+  }
+
+  /**
+   * @param swrlapiOWLOntology A SWRLAPI-based OWL ontology
+   * @return A SWRLAPI ontology processor
+   */
+  public static @NonNull SWRLAPIOntologyProcessor createSWRLAPIOntologyProcessor(
+    @NonNull SWRLAPIOWLOntology swrlapiOWLOntology)
+  {
+    return new DefaultSWRLAPIOntologyProcessor(swrlapiOWLOntology);
   }
 
   private static void addDefaultPrefixes(@NonNull OWLOntology ontology, @NonNull DefaultPrefixManager prefixManager)
