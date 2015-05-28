@@ -337,7 +337,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 
   @NonNull @Override public SQWRLResultGenerator createSQWRLResultGenerator()
   {
-    return SWRLAPIFactory.createSQWRLResultGenerator(this.sqwrlResultValueFactory);
+    return SWRLAPIFactory.createSQWRLResultGenerator(this.iriResolver);
   }
 
   @Override public void reset()

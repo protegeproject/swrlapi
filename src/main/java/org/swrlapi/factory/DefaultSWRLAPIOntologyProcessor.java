@@ -268,7 +268,7 @@ class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 		boolean active = rule.isActive();
 		String comment = rule.getComment();
 		SQWRLQuery query = SWRLAPIFactory.getSQWRLQuery(queryName, rule.getBodyAtoms(), rule.getHeadAtoms(), active,
-				comment, getLiteralFactory(), getSQWRLResultValueFactory());
+				comment, getLiteralFactory(), getIRIResolver());
 		this.sqwrlQueries.put(queryName, query);
 
 		return query;
@@ -1114,11 +1114,4 @@ class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 	{
 		return getSWRLAPIOWLDataFactory().getLiteralFactory();
 	}
-
-	@NonNull
-	private SQWRLResultValueFactory getSQWRLResultValueFactory()
-	{
-		return getSWRLAPIOWLDataFactory().getSQWRLResultValueFactory();
-	}
-
 }

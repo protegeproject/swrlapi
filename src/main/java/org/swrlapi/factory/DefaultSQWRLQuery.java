@@ -8,10 +8,12 @@ import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.literal.Literal;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
 import org.swrlapi.exceptions.SWRLBuiltInException;
+import org.swrlapi.resolvers.IRIResolver;
 import org.swrlapi.sqwrl.SQWRLNames;
 import org.swrlapi.sqwrl.SQWRLQuery;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
+import org.swrlapi.sqwrl.SQWRLResultManager;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 
@@ -29,7 +31,7 @@ class DefaultSQWRLQuery implements SQWRLQuery
   @NonNull private final String queryName;
   @NonNull private final List<SWRLAtom> bodyAtoms;
   @NonNull private final List<SWRLAtom> headAtoms;
-  private final @NonNull DefaultSQWRLResultManager sqwrlResult;
+  @NonNull private final SQWRLResultManager sqwrlResult;
   // Map of collection name to group arguments. Applies only to grouped collections.
   @NonNull private final Map<String, List<SWRLBuiltInArgument>> collectionGroupArgumentsMap;
   @NonNull private final LiteralFactory literalFactory;
@@ -39,14 +41,14 @@ class DefaultSQWRLQuery implements SQWRLQuery
 
   public DefaultSQWRLQuery(@NonNull String queryName, @NonNull List<SWRLAtom> bodyAtoms,
     @NonNull List<SWRLAtom> headAtoms, boolean active, @NonNull String comment, @NonNull LiteralFactory literalFactory,
-    @NonNull SQWRLResultValueFactory sqwrlResultValueFactory) throws SQWRLException
+    @NonNull IRIResolver iriResolver) throws SQWRLException
   {
     this.queryName = queryName;
     this.bodyAtoms = new ArrayList<>(bodyAtoms);
     this.headAtoms = new ArrayList<>(headAtoms);
     this.active = active;
     this.comment = comment;
-    this.sqwrlResult = SWRLAPIFactory.createSQWRLResultManager(sqwrlResultValueFactory);
+    this.sqwrlResult = SWRLAPIFactory.createSQWRLResultManager(iriResolver);
     this.collectionGroupArgumentsMap = new HashMap<>();
     this.literalFactory = literalFactory;
 

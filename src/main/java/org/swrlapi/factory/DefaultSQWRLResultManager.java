@@ -1,20 +1,8 @@
 package org.swrlapi.factory;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-
+import checkers.nullness.quals.NonNull;
 import org.swrlapi.exceptions.SWRLAPIInternalException;
-import org.swrlapi.sqwrl.SQWRLResult;
-import org.swrlapi.sqwrl.SQWRLResultGenerator;
+import org.swrlapi.resolvers.IRIResolver;
 import org.swrlapi.sqwrl.SQWRLResultManager;
 import org.swrlapi.sqwrl.SQWRLResultNames;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
@@ -35,104 +23,30 @@ import org.swrlapi.sqwrl.values.SQWRLPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLResultValue;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 
-import checkers.nullness.quals.NonNull;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-/**
- * This class implements the interfaces {@link org.swrlapi.sqwrl.SQWRLResult} and
- * {@link org.swrlapi.sqwrl.SQWRLResultGenerator}. It can be used to generate a result structure and populate it with
- * data; it can also be used to retrieve those data from the result.
- * <p>
- * This class operates in three phases:
- * <p>
- * (1) Configuration Phase: In this phase the structure of the result is defined. A newly created object will start in
- * this phase. In this phase the columns are defined; aggregation or ordering is also specified in this phase. This
- * phase is closed by a call to the {@link #configured()} method.
- * <p>
- * (2) Preparation Phase: In this phase data are added to the result. This phase is implicitly opened by the call to the
- * {@link #configured()} method. It is closed by a call to the {@link #prepared()} method.
- * <p>
- * A convenience method {@link #addColumns} that takes a list of column names is also supplied.
- * <p>
- * There is also a convenience method {@link #addRow}, which takes a list of {@link SQWRLResultValue} objects. This
- * method automatically does a row open and close. It is expecting the exact same number of list elements as there are
- * columns in the result.
- * <p>
- * The interface {@link org.swrlapi.sqwrl.SQWRLResultGenerator} defines the calls used in these two phases.
- * <p>
- * (3) Processing Phase: In this phase data may be retrieved from the result. This phase is implicitly opened by the
- * call to the {@link #prepared()} method.
- * <p>
- * The interface {@link org.swrlapi.sqwrl.SQWRLResult} defines the calls used in the processing phase.
- * <p>
- * An example configuration, data generation, and result retrieval is:
- * <p>
- * 
- * <pre>
- *SQWRLResultManager resultManager = SWRLAPIFactory.createSQWRLResultManager(...);
- * 
- * resultManager.addColumn(&quot;name&quot;);
- * resultManager.addAggregateColumn(&quot;average&quot;, SQWRLResultNames.AvgAggregateFunction);
- * resultManager.configured();
- * 
- * resultManager.openRow();
- * resultManager.addCell(valueFactory.getIndividualValue(&quot;Fred&quot;));
- * resultManager.addCell(valueFactory.getValue(27));
- * resultManager.closeRow();
- * resultManager.openRow();
- * resultManager.addCell(valueFactory.getIndividualValue(&quot;Joe&quot;));
- * resultManager.addCell(valueFactory.getLiteralValue(34));
- * resultManager.closeRow();
- * resultManager.openRow();
- * resultManager.addCell(valueFactory.getIndividualValue(&quot;Joe&quot;));
- * resultManager.addCell(valueFactory.getLiteralValue(21));
- * resultManager.closeRow();
- * resultManager.prepared();
- * </pre>
- * <p>
- * The result is now available for reading. The interface {@link org.swrlapi.sqwrl.SQWRLResult} defines the assessor
- * methods. A row consists of a list of objects defined by the interface
- * {@link org.swrlapi.sqwrl.values.SQWRLResultValue}.
- * <p>
- * The possible types of values are (1) {@link org.swrlapi.sqwrl.values.SQWRLLiteralResultValue}, representing literals;
- * (2) {@link org.swrlapi.sqwrl.values.SQWRLIndividualResultValue}, representing OWL individuals; (3)
- * {@link org.swrlapi.sqwrl.values.SQWRLClassResultValue}, representing OWL classes; (4)
- * {@link org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue}, representing OWL object properties, (5)
- * {@link org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue}, representing OWL data properties, and (6)
- * {@link org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue}, representing OWL annotation properties.
- * <p>
- * The following is an example of dealing with a {@link org.swrlapi.sqwrl.SQWRLResult}:
- * <p>
- * 
- * <pre>
- * SQWRLResult result = ...
- * 
- * while (result.next()) {
- * 	SQWRLIndividualResultValue nameValue = result.getIndividual(&quot;name&quot;);
- * 	SQWRLLiteralResultValue averageValue = result.createLiteral(&quot;average&quot;);
- * 	System.out.println(&quot;Name: &quot; + nameValue.getPrefixedName());
- * 	System.out.println(&quot;Average: &quot; + averageValue.getInt());
- * }
- * </pre>
- */
 class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 {
 	private static final long serialVersionUID = 1L;
 
-	@NonNull
-	private final SQWRLResultValueFactory sqwrlResultValueFactory;
+	@NonNull private final SQWRLResultValueFactory sqwrlResultValueFactory;
 
-	@NonNull
-	private final List<String> allColumnNames, columnDisplayNames;
-	@NonNull
-	private final List<Integer> selectedColumnIndexes, orderByColumnIndexes;
-	@NonNull
-	private final Map<Integer, String> aggregateColumnIndexes; // Map of (index, function) pairs
-	@NonNull
-	private List<List<SQWRLResultValue>> rows; // List of List of SQWRLResultValue objects.
-	@NonNull
-	private List<SQWRLResultValue> rowData; // List of SQWRLResultValue objects used when assembling a row.
-	@NonNull
-	private Map<String, List<SQWRLResultValue>> columnValuesMap; // Column name -> List<SQWRLResultValue>
+	@NonNull private final List<String> allColumnNames, columnDisplayNames;
+	@NonNull private final List<Integer> selectedColumnIndexes, orderByColumnIndexes;
+	@NonNull private final Map<Integer, String> aggregateColumnIndexes; // Map of (index, function) pairs
+	@NonNull private List<List<SQWRLResultValue>> rows; // List of List of SQWRLResultValue objects.
+	@NonNull private List<SQWRLResultValue> rowData; // List of SQWRLResultValue objects used when assembling a row.
+	@NonNull private Map<String, List<SQWRLResultValue>> columnValuesMap; // Column name -> List<SQWRLResultValue>
 
 	private int numberOfColumns, currentRowIndex, currentRowDataColumnIndex;
 	private boolean isConfigured, isPrepared, isRowOpen, isOrdered, isAscending, isDistinct, hasAggregates;
@@ -141,9 +55,14 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 	private boolean notLastSelection = false, nthSliceSelection = false, notNthSliceSelection = false;
 	private boolean nthLastSliceSelection = false, notNthLastSliceSelection = false;
 
-	public DefaultSQWRLResultManager(@NonNull SQWRLResultValueFactory sqwrlResultValueFactory)
+	public DefaultSQWRLResultManager()
 	{
-		this.sqwrlResultValueFactory = sqwrlResultValueFactory;
+		this(SWRLAPIFactory.createIRIResolver());
+	}
+
+	public DefaultSQWRLResultManager(@NonNull IRIResolver iriResolver)
+	{
+		this.sqwrlResultValueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(iriResolver);
 
 		this.isConfigured = false;
 		this.isPrepared = false;
@@ -165,45 +84,38 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 
 	// Configuration phase methods
 
-	@Override
-	public boolean isConfigured()
+	@Override public boolean isConfigured()
 	{
 		return this.isConfigured;
 	}
 
-	@Override
-	public boolean isRowOpen()
+	@Override public boolean isRowOpen()
 	{
 		return this.isRowOpen;
 	}
 
-	@Override
-	public boolean isPrepared()
+	@Override public boolean isPrepared()
 	{
 		return this.isPrepared;
 	}
 
-	@Override
-	public boolean isOrdered()
+	@Override public boolean isOrdered()
 	{
 		return this.isOrdered;
 	}
 
-	@Override
-	public boolean isOrderedAscending()
+	@Override public boolean isOrderedAscending()
 	{
 		return this.isAscending;
 	}
 
-	@Override
-	public void addColumns(@NonNull List<String> columnNames) throws SQWRLException
+	@Override public void addColumns(@NonNull List<String> columnNames) throws SQWRLException
 	{
 		for (String columnName : columnNames)
 			addColumn(columnName);
 	}
 
-	@Override
-	public void addColumn(@NonNull String columnName) throws SQWRLException
+	@Override public void addColumn(@NonNull String columnName) throws SQWRLException
 	{
 		throwExceptionIfAlreadyConfigured();
 
@@ -212,8 +124,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 		this.numberOfColumns++;
 	}
 
-	@Override
-	public void addAggregateColumn(@NonNull String columnName, @NonNull String aggregateFunctionName)
+	@Override public void addAggregateColumn(@NonNull String columnName, @NonNull String aggregateFunctionName)
 			throws SQWRLException
 	{
 		throwExceptionIfAlreadyConfigured();
@@ -225,8 +136,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 		this.numberOfColumns++;
 	}
 
-	@Override
-	public void addOrderByColumn(int orderedColumnIndex, boolean ascending) throws SQWRLException
+	@Override public void addOrderByColumn(int orderedColumnIndex, boolean ascending) throws SQWRLException
 	{
 		throwExceptionIfAlreadyConfigured();
 
@@ -248,8 +158,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 		this.orderByColumnIndexes.add(orderedColumnIndex);
 	}
 
-	@Override
-	public void addColumnDisplayName(@NonNull String columnName) throws SQWRLException
+	@Override public void addColumnDisplayName(@NonNull String columnName) throws SQWRLException
 	{
 		if (columnName.length() == 0 || columnName.indexOf(',') != -1)
 			throw new SQWRLException("invalid column name " + columnName + " - no commas or empty names allowed");
@@ -257,8 +166,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 		this.columnDisplayNames.add(columnName);
 	}
 
-	@Override
-	public void configured() throws SQWRLException
+	@Override public void configured() throws SQWRLException
 	{
 		throwExceptionIfAlreadyConfigured();
 
@@ -274,31 +182,26 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 
 	// Methods used to retrieve the result structure after the result has been configured
 
-	@Override
-	public void setIsDistinct()
+	@Override public void setIsDistinct()
 	{
 		this.isDistinct = true;
 	}
 
-	@Override
-	public int getNumberOfColumns() throws SQWRLException
+	@Override public int getNumberOfColumns() throws SQWRLException
 	{
 		throwExceptionIfNotConfigured();
 
 		return this.numberOfColumns;
 	}
 
-	@Override
-	public int getCurrentNumberOfColumns() throws SQWRLException
+	@Override public int getCurrentNumberOfColumns() throws SQWRLException
 	{
 		throwExceptionIfConfigured();
 
 		return this.numberOfColumns;
 	}
 
-	@NonNull
-	@Override
-	public List<String> getColumnNames() throws SQWRLException
+	@NonNull @Override public List<String> getColumnNames() throws SQWRLException
 	{
 		List<String> result = new ArrayList<>();
 
@@ -313,9 +216,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 		return Collections.unmodifiableList(result);
 	}
 
-	@NonNull
-	@Override
-	public String getColumnName(int columnIndex) throws SQWRLException
+	@NonNull @Override public String getColumnName(int columnIndex) throws SQWRLException
 	{
 		throwExceptionIfNotConfigured();
 		checkColumnIndex(columnIndex);
@@ -328,8 +229,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 
 	// Methods used to add data after result has been configured
 
-	@Override
-	public void addRow(@NonNull List<SQWRLResultValue> row) throws SQWRLException
+	@Override public void addRow(@NonNull List<SQWRLResultValue> row) throws SQWRLException
 	{
 		if (row.size() != getNumberOfColumns())
 			throw new SQWRLException("addRow expecting " + getNumberOfColumns() + ", got " + row.size() + " values");
@@ -340,8 +240,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 		closeRow();
 	}
 
-	@Override
-	public void openRow() throws SQWRLException
+	@Override public void openRow() throws SQWRLException
 	{
 		throwExceptionIfNotConfigured();
 		throwExceptionIfAlreadyPrepared();
@@ -352,8 +251,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 		this.isRowOpen = true;
 	}
 
-	@Override
-	public void addCell(SQWRLResultValue value) throws SQWRLException
+	@Override public void addCell(SQWRLResultValue value) throws SQWRLException
 	{
 		throwExceptionIfNotConfigured();
 		throwExceptionIfAlreadyPrepared();
@@ -362,13 +260,13 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 		if (this.currentRowDataColumnIndex == getNumberOfColumns())
 			throw new SQWRLResultStateException("attempt to add data beyond the end of a row");
 
-		if (this.aggregateColumnIndexes.containsKey(this.currentRowDataColumnIndex)
-				&& (!this.aggregateColumnIndexes.get(this.currentRowDataColumnIndex).equals(
-						SQWRLResultNames.CountAggregateFunction))
-				&& (!this.aggregateColumnIndexes.get(this.currentRowDataColumnIndex).equals(
-						SQWRLResultNames.CountDistinctAggregateFunction)) && (!isNumericValue(value)))
-			throw new SQWRLException("attempt to add non numeric value " + value
-					+ " to min, max, sum, or avg aggregate column " + this.allColumnNames.get(this.currentRowDataColumnIndex));
+		if (this.aggregateColumnIndexes.containsKey(this.currentRowDataColumnIndex) && (!this.aggregateColumnIndexes
+				.get(this.currentRowDataColumnIndex).equals(SQWRLResultNames.CountAggregateFunction))
+				&& (!this.aggregateColumnIndexes.get(this.currentRowDataColumnIndex)
+				.equals(SQWRLResultNames.CountDistinctAggregateFunction)) && (!isNumericValue(value)))
+			throw new SQWRLException(
+					"attempt to add non numeric value " + value + " to min, max, sum, or avg aggregate column "
+							+ this.allColumnNames.get(this.currentRowDataColumnIndex));
 		this.rowData.add(value);
 		this.currentRowDataColumnIndex++;
 
@@ -376,8 +274,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 			closeRow(); // Automatically close the row
 	}
 
-	@Override
-	public void closeRow() throws SQWRLException
+	@Override public void closeRow() throws SQWRLException
 	{ // Will ignore if row is already closed, assuming it was automatically closed in addCell
 		throwExceptionIfNotConfigured();
 		throwExceptionIfAlreadyPrepared();
@@ -388,8 +285,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 		this.isRowOpen = false;
 	}
 
-	@Override
-	public void prepared() throws SQWRLException
+	@Override public void prepared() throws SQWRLException
 	{
 		throwExceptionIfNotConfigured();
 		throwExceptionIfAlreadyPrepared();
@@ -420,8 +316,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 
 	// Methods used to retrieve data after result has been prepared
 
-	@Override
-	public int getNumberOfRows() throws SQWRLException
+	@Override public int getNumberOfRows() throws SQWRLException
 	{
 		throwExceptionIfNotConfigured();
 		throwExceptionIfNotPrepared();
@@ -429,14 +324,12 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 		return this.rows.size();
 	}
 
-	@Override
-	public boolean isEmpty() throws SQWRLException
+	@Override public boolean isEmpty() throws SQWRLException
 	{
 		return getNumberOfRows() == 0;
 	}
 
-	@Override
-	public void reset() throws SQWRLException
+	@Override public void reset() throws SQWRLException
 	{
 		throwExceptionIfNotConfigured();
 		throwExceptionIfNotPrepared();
@@ -445,8 +338,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 			this.currentRowIndex = -1;
 	}
 
-	@Override
-	public boolean next() throws SQWRLException
+	@Override public boolean next() throws SQWRLException
 	{
 		throwExceptionIfNotConfigured();
 		throwExceptionIfNotPrepared();
@@ -456,9 +348,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 		return this.currentRowIndex != -1 && this.currentRowIndex < getNumberOfRows();
 	}
 
-	@NonNull
-	@Override
-	public List<SQWRLResultValue> getRow() throws SQWRLException
+	@NonNull @Override public List<SQWRLResultValue> getRow() throws SQWRLException
 	{
 		throwExceptionIfNotConfigured();
 		throwExceptionIfNotPrepared();
@@ -467,8 +357,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 		return this.rows.get(this.currentRowIndex);
 	}
 
-	@Override
-	public SQWRLResultValue getValue(@NonNull String columnName) throws SQWRLException
+	@Override public SQWRLResultValue getValue(@NonNull String columnName) throws SQWRLException
 	{
 		throwExceptionIfNotConfigured();
 		throwExceptionIfNotPrepared();
@@ -481,8 +370,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 		return row.get(columnIndex);
 	}
 
-	@Override
-	public SQWRLResultValue getValue(int columnIndex) throws SQWRLException
+	@Override public SQWRLResultValue getValue(int columnIndex) throws SQWRLException
 	{
 		throwExceptionIfNotConfigured();
 		throwExceptionIfNotPrepared();
@@ -495,8 +383,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 		return row.get(columnIndex);
 	}
 
-	@Override
-	public SQWRLResultValue getValue(int columnIndex, int rowIndex) throws SQWRLException
+	@Override public SQWRLResultValue getValue(int columnIndex, int rowIndex) throws SQWRLException
 	{
 		throwExceptionIfNotConfigured();
 		throwExceptionIfNotPrepared();
@@ -507,104 +394,83 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 		return this.rows.get(rowIndex).get(columnIndex);
 	}
 
-	@NonNull
-	@Override
-	public SQWRLIndividualResultValue getIndividual(@NonNull String columnName) throws SQWRLException
+	@NonNull @Override public SQWRLIndividualResultValue getIndividual(@NonNull String columnName) throws SQWRLException
 	{
 		if (!hasIndividualValue(columnName))
 			throw new SQWRLInvalidColumnTypeException("expecting ObjectValue type for column " + columnName);
 		return (SQWRLIndividualResultValue)getValue(columnName);
 	}
 
-	@NonNull
-	@Override
-	public SQWRLIndividualResultValue getIndividual(int columnIndex) throws SQWRLException
+	@NonNull @Override public SQWRLIndividualResultValue getIndividual(int columnIndex) throws SQWRLException
 	{
 		return getIndividual(getColumnName(columnIndex));
 	}
 
-	@NonNull
-	@Override
-	public SQWRLLiteralResultValue getLiteral(@NonNull String columnName) throws SQWRLException
+	@NonNull @Override public SQWRLLiteralResultValue getLiteral(@NonNull String columnName) throws SQWRLException
 	{
 		if (!hasLiteralValue(columnName))
 			throw new SQWRLInvalidColumnTypeException("expecting LiteralValue type for column " + columnName);
 		return (SQWRLLiteralResultValue)getValue(columnName);
 	}
 
-	@NonNull
-	@Override
-	public SQWRLClassResultValue getClass(@NonNull String columnName) throws SQWRLException
+	@NonNull @Override public SQWRLClassResultValue getClass(@NonNull String columnName) throws SQWRLException
 	{
 		if (!hasClassValue(columnName))
 			throw new SQWRLInvalidColumnTypeException("expecting ClassValue type for column " + columnName);
 		return (SQWRLClassResultValue)getValue(columnName);
 	}
 
-	@NonNull
-	@Override
-	public SQWRLClassResultValue getClass(int columnIndex) throws SQWRLException
+	@NonNull @Override public SQWRLClassResultValue getClass(int columnIndex) throws SQWRLException
 	{
 		return getClass(getColumnName(columnIndex));
 	}
 
-	@NonNull
-	@Override
-	public SQWRLObjectPropertyResultValue getObjectProperty(int columnIndex) throws SQWRLException
+	@NonNull @Override public SQWRLObjectPropertyResultValue getObjectProperty(int columnIndex) throws SQWRLException
 	{
 		return getObjectProperty(getColumnName(columnIndex));
 	}
 
-	@NonNull
-	@Override
-	public SQWRLObjectPropertyResultValue getObjectProperty(@NonNull String columnName) throws SQWRLException
+	@NonNull @Override public SQWRLObjectPropertyResultValue getObjectProperty(@NonNull String columnName)
+			throws SQWRLException
 	{
 		if (!hasObjectPropertyValue(columnName))
 			throw new SQWRLInvalidColumnTypeException("expecting OWL object property in column " + columnName);
 		return (SQWRLObjectPropertyResultValue)getValue(columnName);
 	}
 
-	@NonNull
-	@Override
-	public SQWRLDataPropertyResultValue getDataProperty(int columnIndex) throws SQWRLException
+	@NonNull @Override public SQWRLDataPropertyResultValue getDataProperty(int columnIndex) throws SQWRLException
 	{
 		return getDataProperty(getColumnName(columnIndex));
 	}
 
-	@NonNull
-	@Override
-	public SQWRLDataPropertyResultValue getDataProperty(@NonNull String columnName) throws SQWRLException
+	@NonNull @Override public SQWRLDataPropertyResultValue getDataProperty(@NonNull String columnName)
+			throws SQWRLException
 	{
 		if (!hasDataPropertyValue(columnName))
 			throw new SQWRLInvalidColumnTypeException("expecting OWL data property in column " + columnName);
 		return (SQWRLDataPropertyResultValue)getValue(columnName);
 	}
 
-	@NonNull
-	@Override
-	public SQWRLAnnotationPropertyResultValue getAnnotationProperty(int columnIndex) throws SQWRLException
+	@NonNull @Override public SQWRLAnnotationPropertyResultValue getAnnotationProperty(int columnIndex)
+			throws SQWRLException
 	{
 		return getAnnotationProperty(getColumnName(columnIndex));
 	}
 
-	@NonNull
-	@Override
-	public SQWRLAnnotationPropertyResultValue getAnnotationProperty(@NonNull String columnName) throws SQWRLException
+	@NonNull @Override public SQWRLAnnotationPropertyResultValue getAnnotationProperty(@NonNull String columnName)
+			throws SQWRLException
 	{
 		if (!hasAnnotationPropertyValue(columnName))
 			throw new SQWRLInvalidColumnTypeException("expecting OWL data property in column " + columnName);
 		return (SQWRLAnnotationPropertyResultValue)getValue(columnName);
 	}
 
-	@NonNull
-	@Override
-	public SQWRLLiteralResultValue getLiteral(int columnIndex) throws SQWRLException
+	@NonNull @Override public SQWRLLiteralResultValue getLiteral(int columnIndex) throws SQWRLException
 	{
 		return getLiteral(getColumnName(columnIndex));
 	}
 
-	@Override
-	public List<SQWRLResultValue> getColumn(@NonNull String columnName) throws SQWRLException
+	@Override public List<SQWRLResultValue> getColumn(@NonNull String columnName) throws SQWRLException
 	{
 		throwExceptionIfNotConfigured();
 		throwExceptionIfNotPrepared();
@@ -614,82 +480,176 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 		return this.columnValuesMap.get(columnName);
 	}
 
-	@Override
-	public List<SQWRLResultValue> getColumn(int columnIndex) throws SQWRLException
+	@Override public List<SQWRLResultValue> getColumn(int columnIndex) throws SQWRLException
 	{
 		return getColumn(getColumnName(columnIndex));
 	}
 
-	@Override
-	public boolean hasIndividualValue(@NonNull String columnName) throws SQWRLException
+	@Override public boolean hasIndividualValue(@NonNull String columnName) throws SQWRLException
 	{
 		return getValue(columnName) instanceof SQWRLIndividualResultValue;
 	}
 
-	@Override
-	public boolean hasIndividualValue(int columnIndex) throws SQWRLException
+	@Override public boolean hasIndividualValue(int columnIndex) throws SQWRLException
 	{
 		return getValue(columnIndex) instanceof SQWRLIndividualResultValue;
 	}
 
-	@Override
-	public boolean hasLiteralValue(@NonNull String columnName) throws SQWRLException
+	@Override public boolean hasLiteralValue(@NonNull String columnName) throws SQWRLException
 	{
 		return getValue(columnName) instanceof SQWRLLiteralResultValue;
 	}
 
-	@Override
-	public boolean hasLiteralValue(int columnIndex) throws SQWRLException
+	@Override public boolean hasLiteralValue(int columnIndex) throws SQWRLException
 	{
 		return getValue(columnIndex) instanceof SQWRLLiteralResultValue;
 	}
 
-	@Override
-	public boolean hasClassValue(@NonNull String columnName) throws SQWRLException
+	@Override public boolean hasClassValue(@NonNull String columnName) throws SQWRLException
 	{
 		return getValue(columnName) instanceof SQWRLClassResultValue;
 	}
 
-	@Override
-	public boolean hasClassValue(int columnIndex) throws SQWRLException
+	@Override public boolean hasClassValue(int columnIndex) throws SQWRLException
 	{
 		return getValue(columnIndex) instanceof SQWRLClassResultValue;
 	}
 
-	@Override
-	public boolean hasObjectPropertyValue(@NonNull String columnName) throws SQWRLException
+	@Override public boolean hasObjectPropertyValue(@NonNull String columnName) throws SQWRLException
 	{
 		return getValue(columnName) instanceof SQWRLObjectPropertyResultValue;
 	}
 
-	@Override
-	public boolean hasObjectPropertyValue(int columnIndex) throws SQWRLException
+	@Override public boolean hasObjectPropertyValue(int columnIndex) throws SQWRLException
 	{
 		return getValue(columnIndex) instanceof SQWRLObjectPropertyResultValue;
 	}
 
-	@Override
-	public boolean hasDataPropertyValue(@NonNull String columnName) throws SQWRLException
+	@Override public boolean hasDataPropertyValue(@NonNull String columnName) throws SQWRLException
 	{
 		return getValue(columnName) instanceof SQWRLDataPropertyResultValue;
 	}
 
-	@Override
-	public boolean hasDataPropertyValue(int columnIndex) throws SQWRLException
+	@Override public boolean hasDataPropertyValue(int columnIndex) throws SQWRLException
 	{
 		return getValue(columnIndex) instanceof SQWRLDataPropertyResultValue;
 	}
 
-	@Override
-	public boolean hasAnnotationPropertyValue(@NonNull String columnName) throws SQWRLException
+	@Override public boolean hasAnnotationPropertyValue(@NonNull String columnName) throws SQWRLException
 	{
 		return getValue(columnName) instanceof SQWRLAnnotationPropertyResultValue;
 	}
 
-	@Override
-	public boolean hasAnnotationPropertyValue(int columnIndex) throws SQWRLException
+	@Override public boolean hasAnnotationPropertyValue(int columnIndex) throws SQWRLException
 	{
 		return getValue(columnIndex) instanceof SQWRLPropertyResultValue;
+	}
+
+	@Override
+	public void setLimit(int limit)
+	{
+		this.limit = limit;
+	}
+
+	@Override
+	public void setNth(int nth)
+	{
+		this.nth = nth;
+	}
+
+	@Override
+	public void setNotNth(int nth)
+	{
+		this.notNthSelection = true;
+		this.nth = nth;
+	}
+
+	@Override
+	public void setFirst()
+	{
+		this.firstSelection = true;
+		this.firstN = 1;
+	}
+
+	@Override
+	public void setFirst(int n)
+	{
+		this.firstSelection = true;
+		this.firstN = n;
+	}
+
+	@Override
+	public void setLast()
+	{
+		this.lastSelection = true;
+		this.lastN = 1;
+	}
+
+	@Override
+	public void setLast(int n)
+	{
+		this.lastSelection = true;
+		this.lastN = n;
+	}
+
+	@Override
+	public void setNotFirst()
+	{
+		this.notFirstSelection = true;
+		this.firstN = 1;
+	}
+
+	@Override
+	public void setNotFirst(int n)
+	{
+		this.notFirstSelection = true;
+		this.firstN = n;
+	}
+
+	@Override
+	public void setNotLast()
+	{
+		this.notLastSelection = true;
+		this.lastN = 1;
+	}
+
+	@Override
+	public void setNotLast(int n)
+	{
+		this.notLastSelection = true;
+		this.lastN = n;
+	}
+
+	@Override
+	public void setNthSlice(int n, int sliceSize)
+	{
+		this.nthSliceSelection = true;
+		this.firstN = n;
+		this.sliceSize = sliceSize;
+	}
+
+	@Override
+	public void setNotNthSlice(int n, int sliceSize)
+	{
+		this.notNthSliceSelection = true;
+		this.firstN = n;
+		this.sliceSize = sliceSize;
+	}
+
+	@Override
+	public void setNthLastSlice(int n, int sliceSize)
+	{
+		this.nthLastSliceSelection = true;
+		this.lastN = n;
+		this.sliceSize = sliceSize;
+	}
+
+	@Override
+	public void setNotNthLastSlice(int n, int sliceSize)
+	{
+		this.notNthLastSliceSelection = true;
+		this.lastN = n;
+		this.sliceSize = sliceSize;
 	}
 
 	private int getColumnIndex(@NonNull String columnName) throws SQWRLException
@@ -703,8 +663,8 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 	}
 
 	// nth, firstN, etc. are 1-indexed
-	@NonNull
-	private List<List<SQWRLResultValue>> processSelectionOperators(@NonNull List<List<SQWRLResultValue>> sourceRows)
+	@NonNull private List<List<SQWRLResultValue>> processSelectionOperators(
+			@NonNull List<List<SQWRLResultValue>> sourceRows)
 	{
 		List<List<SQWRLResultValue>> processedRows = new ArrayList<>();
 		boolean hasSelection = false;
@@ -776,8 +736,9 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 				if (this.firstN < 1)
 					this.firstN = 1;
 				if (this.firstN <= sourceRows.size()) {
-					int finish = (this.firstN + this.sliceSize > sourceRows.size()) ? sourceRows.size() : this.firstN
-							+ this.sliceSize - 1;
+					int finish = (this.firstN + this.sliceSize > sourceRows.size()) ?
+							sourceRows.size() :
+							this.firstN + this.sliceSize - 1;
 					processedRows.addAll(sourceRows.subList(this.firstN - 1, finish));
 				}
 				hasSelection = true;
@@ -787,8 +748,9 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 				if (this.firstN < 1)
 					this.firstN = 1;
 				if (this.firstN <= sourceRows.size()) {
-					int finish = (this.firstN + this.sliceSize > sourceRows.size()) ? sourceRows.size() : this.firstN
-							+ this.sliceSize - 1;
+					int finish = (this.firstN + this.sliceSize > sourceRows.size()) ?
+							sourceRows.size() :
+							this.firstN + this.sliceSize - 1;
 					processedRows.addAll(sourceRows.subList(0, this.firstN - 1));
 					if (finish <= sourceRows.size())
 						processedRows.addAll(sourceRows.subList(finish, sourceRows.size()));
@@ -800,8 +762,9 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 			if (hasNthLastSliceSelection()) {
 				if (this.lastN < 1)
 					this.lastN = 1;
-				int finish = (this.lastN + this.sliceSize > sourceRows.size()) ? sourceRows.size() : this.lastN
-						+ this.sliceSize;
+				int finish = (this.lastN + this.sliceSize > sourceRows.size()) ?
+						sourceRows.size() :
+						this.lastN + this.sliceSize;
 				if (this.lastN <= sourceRows.size()) {
 					processedRows.addAll(sourceRows.subList(this.lastN, finish));
 				}
@@ -812,8 +775,9 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 				if (this.lastN <= sourceRows.size()) {
 					if (this.lastN < 1)
 						this.lastN = 1;
-					int finish = (this.lastN + this.sliceSize > sourceRows.size()) ? sourceRows.size() : this.lastN
-							+ this.sliceSize;
+					int finish = (this.lastN + this.sliceSize > sourceRows.size()) ?
+							sourceRows.size() :
+							this.lastN + this.sliceSize;
 					processedRows.addAll(sourceRows.subList(0, this.lastN));
 					if (finish <= sourceRows.size())
 						processedRows.addAll(sourceRows.subList(finish, sourceRows.size()));
@@ -827,99 +791,6 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 			return processedRows;
 		else
 			return sourceRows;
-	}
-
-	// nth, firstN, etc. are 1-indexed
-	public void setLimit(int limit)
-	{
-		this.limit = limit;
-	}
-
-	public void setNth(int nth)
-	{
-		this.nth = nth;
-	}
-
-	public void setNotNth(int nth)
-	{
-		this.notNthSelection = true;
-		this.nth = nth;
-	}
-
-	public void setFirst()
-	{
-		this.firstSelection = true;
-		this.firstN = 1;
-	}
-
-	public void setFirst(int n)
-	{
-		this.firstSelection = true;
-		this.firstN = n;
-	}
-
-	public void setLast()
-	{
-		this.lastSelection = true;
-		this.lastN = 1;
-	}
-
-	public void setLast(int n)
-	{
-		this.lastSelection = true;
-		this.lastN = n;
-	}
-
-	public void setNotFirst()
-	{
-		this.notFirstSelection = true;
-		this.firstN = 1;
-	}
-
-	public void setNotFirst(int n)
-	{
-		this.notFirstSelection = true;
-		this.firstN = n;
-	}
-
-	public void setNotLast()
-	{
-		this.notLastSelection = true;
-		this.lastN = 1;
-	}
-
-	public void setNotLast(int n)
-	{
-		this.notLastSelection = true;
-		this.lastN = n;
-	}
-
-	public void setNthSlice(int n, int sliceSize)
-	{
-		this.nthSliceSelection = true;
-		this.firstN = n;
-		this.sliceSize = sliceSize;
-	}
-
-	public void setNotNthSlice(int n, int sliceSize)
-	{
-		this.notNthSliceSelection = true;
-		this.firstN = n;
-		this.sliceSize = sliceSize;
-	}
-
-	public void setNthLastSlice(int n, int sliceSize)
-	{
-		this.nthLastSliceSelection = true;
-		this.lastN = n;
-		this.sliceSize = sliceSize;
-	}
-
-	public void setNotNthLastSlice(int n, int sliceSize)
-	{
-		this.notNthLastSliceSelection = true;
-		this.lastN = n;
-		this.sliceSize = sliceSize;
 	}
 
 	private boolean hasLimit()
@@ -996,14 +867,12 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 		}
 	}
 
-	@NonNull
-	@Override
-	public String toString()
+	@NonNull @Override public String toString()
 	{
-		String result = "[numberOfColumns: " + this.numberOfColumns + ", isConfigured: " + this.isConfigured
-				+ ", isPrepared: " + this.isPrepared + ", isRowOpen: " + this.isRowOpen + ", isOrdered: " + this.isOrdered
-				+ ", isAscending " + this.isAscending + ", isDistinct: " + this.isDistinct + ", hasAggregates: "
-				+ this.hasAggregates + "]\n";
+		String result =
+				"[numberOfColumns: " + this.numberOfColumns + ", isConfigured: " + this.isConfigured + ", isPrepared: "
+						+ this.isPrepared + ", isRowOpen: " + this.isRowOpen + ", isOrdered: " + this.isOrdered + ", isAscending "
+						+ this.isAscending + ", isDistinct: " + this.isDistinct + ", hasAggregates: " + this.hasAggregates + "]\n";
 
 		result += "[columnDisplayNames: ";
 		for (String columnDisplayName : this.columnDisplayNames)
@@ -1102,8 +971,8 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 	}
 
 	// TODO: fix - very inefficient
-	@NonNull
-	private List<List<SQWRLResultValue>> distinct(@NonNull List<List<SQWRLResultValue>> sourceRows) throws SQWRLException
+	@NonNull private List<List<SQWRLResultValue>> distinct(@NonNull List<List<SQWRLResultValue>> sourceRows)
+			throws SQWRLException
 	{
 		List<List<SQWRLResultValue>> localRows = new ArrayList<>(sourceRows);
 		List<List<SQWRLResultValue>> processedRows = new ArrayList<>();
@@ -1121,8 +990,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 		return processedRows;
 	}
 
-	@NonNull
-	private List<List<SQWRLResultValue>> aggregate(@NonNull List<List<SQWRLResultValue>> sourceRows)
+	@NonNull private List<List<SQWRLResultValue>> aggregate(@NonNull List<List<SQWRLResultValue>> sourceRows)
 			throws SQWRLException
 	{
 		List<List<SQWRLResultValue>> result = new ArrayList<>();
@@ -1203,9 +1071,8 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 		return result;
 	}
 
-	@NonNull
-	private List<List<SQWRLResultValue>> orderBy(@NonNull List<List<SQWRLResultValue>> sourceRows, boolean ascending)
-			throws SQWRLException
+	@NonNull private List<List<SQWRLResultValue>> orderBy(@NonNull List<List<SQWRLResultValue>> sourceRows,
+			boolean ascending) throws SQWRLException
 	{
 		List<List<SQWRLResultValue>> result = new ArrayList<>(sourceRows);
 		SQWRLResultRowComparator rowComparator = new SQWRLResultRowComparator(this.allColumnNames,
@@ -1220,8 +1087,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 		return result;
 	}
 
-	@NonNull
-	private SQWRLLiteralResultValue min(@NonNull List<SQWRLLiteralResultValue> columnValues, int columnIndex)
+	@NonNull private SQWRLLiteralResultValue min(@NonNull List<SQWRLLiteralResultValue> columnValues, int columnIndex)
 			throws SQWRLException
 	{
 		SQWRLLiteralResultValue result = null;
@@ -1233,9 +1099,10 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 		for (SQWRLLiteralResultValue value : columnValues) {
 
 			if (!isNumericValue(value))
-				throw new SQWRLException("attempt to use " + SQWRLResultNames.MinAggregateFunction
-						+ " aggregate on column with non numeric literal " + value + " with type " + value.getOWLDatatype()
-						+ "in (0-based) row " + rowIndex + ", column " + columnIndex);
+				throw new SQWRLException(
+						"attempt to use " + SQWRLResultNames.MinAggregateFunction + " aggregate on column with non numeric literal "
+								+ value + " with type " + value.getOWLDatatype() + "in (0-based) row " + rowIndex + ", column "
+								+ columnIndex);
 
 			if (result == null)
 				result = value;
@@ -1247,8 +1114,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 		return result;
 	}
 
-	@NonNull
-	private SQWRLLiteralResultValue max(@NonNull List<SQWRLLiteralResultValue> columnValues, int columnIndex)
+	@NonNull private SQWRLLiteralResultValue max(@NonNull List<SQWRLLiteralResultValue> columnValues, int columnIndex)
 			throws SQWRLException
 	{
 		SQWRLLiteralResultValue result = null;
@@ -1260,9 +1126,9 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 		for (SQWRLLiteralResultValue value : columnValues) {
 
 			if (!isNumericValue(value))
-				throw new SQWRLException("attempt to use " + SQWRLResultNames.MaxAggregateFunction
-						+ " aggregate with non numeric literal " + value + " with type " + value.getOWLDatatype()
-						+ "in (0-based) row " + rowIndex + ", column " + columnIndex);
+				throw new SQWRLException(
+						"attempt to use " + SQWRLResultNames.MaxAggregateFunction + " aggregate with non numeric literal " + value
+								+ " with type " + value.getOWLDatatype() + "in (0-based) row " + rowIndex + ", column " + columnIndex);
 
 			if (result == null)
 				result = value;
@@ -1274,8 +1140,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 		return result;
 	}
 
-	@NonNull
-	private SQWRLLiteralResultValue sum(@NonNull List<SQWRLLiteralResultValue> columnValues, int columnIndex)
+	@NonNull private SQWRLLiteralResultValue sum(@NonNull List<SQWRLLiteralResultValue> columnValues, int columnIndex)
 			throws SQWRLException
 	{
 		double sum = 0;
@@ -1287,9 +1152,9 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 		for (SQWRLLiteralResultValue value : columnValues) {
 
 			if (!isNumericValue(value))
-				throw new SQWRLException("attempt to use " + SQWRLResultNames.SumAggregateFunction
-						+ " aggregate  on non numeric value: " + value + " with type " + value.getOWLDatatype()
-						+ " in (0-based) row " + rowIndex + ", column " + columnIndex);
+				throw new SQWRLException(
+						"attempt to use " + SQWRLResultNames.SumAggregateFunction + " aggregate  on non numeric value: " + value
+								+ " with type " + value.getOWLDatatype() + " in (0-based) row " + rowIndex + ", column " + columnIndex);
 
 			double d = value.getDouble();
 
@@ -1299,8 +1164,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 		return getSQWRLResultValueFactory().createLeastNarrowNumericLiteralValue(sum, columnValues);
 	}
 
-	@NonNull
-	private SQWRLLiteralResultValue avg(@NonNull List<SQWRLLiteralResultValue> columnValues, int columnIndex)
+	@NonNull private SQWRLLiteralResultValue avg(@NonNull List<SQWRLLiteralResultValue> columnValues, int columnIndex)
 			throws SQWRLException
 	{
 		double sum = 0;
@@ -1313,9 +1177,10 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 		for (SQWRLLiteralResultValue value : columnValues) {
 
 			if (!isNumericValue(value))
-				throw new SQWRLException("attempt to use " + SQWRLResultNames.AvgAggregateFunction
-						+ " aggregate on column with non literal value " + value + " with type " + value.getOWLDatatype()
-						+ " in (0-based) row " + rowIndex + ", column " + columnIndex);
+				throw new SQWRLException(
+						"attempt to use " + SQWRLResultNames.AvgAggregateFunction + " aggregate on column with non literal value "
+								+ value + " with type " + value.getOWLDatatype() + " in (0-based) row " + rowIndex + ", column "
+								+ columnIndex);
 
 			double d = value.getDouble();
 
@@ -1328,8 +1193,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 		return getSQWRLResultValueFactory().createLeastNarrowNumericLiteralValue(avgValue, columnValues);
 	}
 
-	@NonNull
-	private SQWRLLiteralResultValue median(@NonNull List<SQWRLLiteralResultValue> columnValues, int columnIndex)
+	@NonNull private SQWRLLiteralResultValue median(@NonNull List<SQWRLLiteralResultValue> columnValues, int columnIndex)
 			throws SQWRLException
 	{
 		double[] valueArray = new double[columnValues.size()];
@@ -1357,14 +1221,12 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 		return getSQWRLResultValueFactory().createLeastNarrowNumericLiteralValue(medianValue, columnValues);
 	}
 
-	@NonNull
-	private SQWRLLiteralResultValue count(@NonNull List<SQWRLResultValue> columnValues)
+	@NonNull private SQWRLLiteralResultValue count(@NonNull List<SQWRLResultValue> columnValues)
 	{
 		return getSQWRLResultValueFactory().getLiteralValue(columnValues.size());
 	}
 
-	@NonNull
-	private SQWRLLiteralResultValue countDistinct(@NonNull List<SQWRLResultValue> columnValues)
+	@NonNull private SQWRLLiteralResultValue countDistinct(@NonNull List<SQWRLResultValue> columnValues)
 	{
 		Set<SQWRLResultValue> distinctValues = new HashSet<>(columnValues);
 
@@ -1391,10 +1253,8 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 
 	private static class SQWRLResultRowComparator implements Comparator<List<SQWRLResultValue>>
 	{
-		@NonNull
-		private final List<Integer> orderByColumnIndexes;
-		@NonNull
-		private final boolean ascending;
+		@NonNull private final List<Integer> orderByColumnIndexes;
+		@NonNull private final boolean ascending;
 
 		public SQWRLResultRowComparator(@NonNull List<String> allColumnNames, @NonNull List<Integer> orderByColumnIndexes,
 				boolean ascending)
@@ -1408,12 +1268,11 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 			this.ascending = ascending;
 			this.orderByColumnIndexes = new ArrayList<>();
 
-			this.orderByColumnIndexes.addAll(allColumnNames.stream().map(allColumnNames::indexOf)
-					.collect(Collectors.toList()));
+			this.orderByColumnIndexes
+					.addAll(allColumnNames.stream().map(allColumnNames::indexOf).collect(Collectors.toList()));
 		}
 
-		@Override
-		public int compare(@NonNull List<SQWRLResultValue> row1, @NonNull List<SQWRLResultValue> row2)
+		@Override public int compare(@NonNull List<SQWRLResultValue> row1, @NonNull List<SQWRLResultValue> row2)
 		{
 			for (Integer columnIndex : this.orderByColumnIndexes) {
 				SQWRLResultValue value1 = row1.get(columnIndex);
@@ -1426,11 +1285,12 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 					else if (value1.isEntity() && value2.isEntity())
 						diff = value1.asEntityResult().compareTo(value2.asEntityResult());
 					else
-						throw new SWRLAPIInternalException("attempt to compare a " + value1.getClass().getName() + " with a "
-								+ value2.getClass().getName());
+						throw new SWRLAPIInternalException(
+								"attempt to compare a " + value1.getClass().getName() + " with a " + value2.getClass().getName());
 				} catch (SQWRLException e) {
-					throw new SWRLAPIInternalException("internal error comparing " + value1.getClass().getName() + " with a "
-							+ value2.getClass().getName() + ": " + e.getMessage());
+					throw new SWRLAPIInternalException(
+							"internal error comparing " + value1.getClass().getName() + " with a " + value2.getClass().getName()
+									+ ": " + e.getMessage());
 				}
 				if (diff != 0) {
 					if (this.ascending)
@@ -1443,9 +1303,8 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 		}
 	}
 
-	@NonNull
-	private List<SQWRLLiteralResultValue> convert2LiteralResultValues(@NonNull List<SQWRLResultValue> columnValues,
-			int columnIndex) throws SQWRLException
+	@NonNull private List<SQWRLLiteralResultValue> convert2LiteralResultValues(
+			@NonNull List<SQWRLResultValue> columnValues, int columnIndex) throws SQWRLException
 	{
 		List<SQWRLLiteralResultValue> literalValues = new ArrayList<>();
 
@@ -1454,8 +1313,9 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 			if (value.isLiteral())
 				literalValues.add(value.asLiteralResult());
 			else
-				throw new SQWRLException("Found non literal value " + value + " in (0-based) row " + rowIndex + ", column "
-						+ columnIndex + " - expecting literal");
+				throw new SQWRLException(
+						"Found non literal value " + value + " in (0-based) row " + rowIndex + ", column " + columnIndex
+								+ " - expecting literal");
 			rowIndex++;
 		}
 		return literalValues;

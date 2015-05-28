@@ -31,6 +31,7 @@ import org.swrlapi.sqwrl.SQWRLQuery;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.SQWRLQueryRenderer;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
+import org.swrlapi.sqwrl.SQWRLResultManager;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 import org.swrlapi.ui.controller.SWRLRuleEngineController;
@@ -116,13 +117,12 @@ public class SWRLAPIFactory
 	}
 
 	/**
-	 * @param sqwrlResultValueFactory A SQWRL result value factory
+	 * @param iriResolver An IRI resolver
 	 * @return A SQWRL result
 	 */
-	public static @NonNull DefaultSQWRLResultManager createSQWRLResultManager(
-			@NonNull SQWRLResultValueFactory sqwrlResultValueFactory)
+	public static @NonNull SQWRLResultManager createSQWRLResultManager(@NonNull IRIResolver iriResolver)
 	{
-		return new DefaultSQWRLResultManager(sqwrlResultValueFactory);
+		return new DefaultSQWRLResultManager(iriResolver);
 	}
 
 	/**
@@ -162,11 +162,9 @@ public class SWRLAPIFactory
 
 	@NonNull public static SQWRLQuery getSQWRLQuery(@NonNull String queryName, @NonNull List<SWRLAtom> bodyAtoms,
 			@NonNull List<SWRLAtom> headAtoms, boolean active, @NonNull String comment,
-			@NonNull LiteralFactory literalFactory, @NonNull SQWRLResultValueFactory sqwrlResultValueFactory)
-			throws SQWRLException
+			@NonNull LiteralFactory literalFactory, @NonNull IRIResolver iriResolver) throws SQWRLException
 	{
-		return new DefaultSQWRLQuery(queryName, bodyAtoms, headAtoms, active, comment, literalFactory,
-				sqwrlResultValueFactory);
+		return new DefaultSQWRLQuery(queryName, bodyAtoms, headAtoms, active, comment, literalFactory, iriResolver);
 	}
 
 	/**
@@ -229,10 +227,9 @@ public class SWRLAPIFactory
 		return new DefaultSWRLRuleAndQueryEngineFactory();
 	}
 
-	@NonNull public static SQWRLResultGenerator createSQWRLResultGenerator(
-			SQWRLResultValueFactory sqwrlResultValueFactory)
+	@NonNull public static SQWRLResultGenerator createSQWRLResultGenerator(IRIResolver iriResolver)
 	{
-		return new DefaultSQWRLResultManager(sqwrlResultValueFactory);
+		return new DefaultSQWRLResultManager(iriResolver);
 	}
 
 	/**

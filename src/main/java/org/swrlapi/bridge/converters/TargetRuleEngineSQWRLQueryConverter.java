@@ -1,8 +1,9 @@
-package org.swrlapi.sqwrl;
+package org.swrlapi.bridge.converters;
 
 import checkers.nullness.quals.NonNull;
 import org.swrlapi.bridge.converters.TargetRuleEngineConverter;
 import org.swrlapi.exceptions.TargetSWRLRuleEngineException;
+import org.swrlapi.sqwrl.SQWRLQuery;
 
 /**
  * Interface for defining a native rule engine representation of a SQWRL query.
