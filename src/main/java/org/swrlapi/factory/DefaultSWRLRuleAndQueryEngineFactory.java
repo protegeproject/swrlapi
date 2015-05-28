@@ -24,7 +24,7 @@ public class DefaultSWRLRuleAndQueryEngineFactory implements SWRLRuleAndQueryEng
 
 	public DefaultSWRLRuleAndQueryEngineFactory()
 	{
-		this.ruleEngineManager = SWRLAPIFactory.getSWRLRuleEngineManager();
+		this.ruleEngineManager = SWRLAPIFactory.createSWRLRuleEngineManager();
 
 		tryToRegisterDroolsSWRLRuleEngine();
 	}
@@ -54,8 +54,8 @@ public class DefaultSWRLRuleAndQueryEngineFactory implements SWRLRuleAndQueryEng
 		if (this.ruleEngineManager.isRuleEngineRegistered(ruleEngineName)) {
 			try {
 				SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
-				OWL2RLPersistenceLayer owl2RLPersistenceLayer = SWRLAPIFactory.getOWL2RLPersistenceLayer(ontology);
-				SWRLBridge bridge = SWRLAPIFactory.getSWRLBridge(swrlapiOWLOntology, owl2RLPersistenceLayer);
+				OWL2RLPersistenceLayer owl2RLPersistenceLayer = SWRLAPIFactory.createOWL2RLPersistenceLayer(ontology);
+				SWRLBridge bridge = SWRLAPIFactory.createSWRLBridge(swrlapiOWLOntology, owl2RLPersistenceLayer);
 				TargetSWRLRuleEngine targetSWRLRuleEngine = this.ruleEngineManager
 						.getRegisteredRuleEngineCreator(ruleEngineName).create(bridge);
 
@@ -86,8 +86,8 @@ public class DefaultSWRLRuleAndQueryEngineFactory implements SWRLRuleAndQueryEng
 		if (this.ruleEngineManager.isRuleEngineRegistered(queryEngineName)) {
 			try {
 				SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
-				OWL2RLPersistenceLayer owl2RLPersistenceLayer = SWRLAPIFactory.getOWL2RLPersistenceLayer(ontology);
-				SWRLBridge bridge = SWRLAPIFactory.getSWRLBridge(swrlapiOWLOntology, owl2RLPersistenceLayer);
+				OWL2RLPersistenceLayer owl2RLPersistenceLayer = SWRLAPIFactory.createOWL2RLPersistenceLayer(ontology);
+				SWRLBridge bridge = SWRLAPIFactory.createSWRLBridge(swrlapiOWLOntology, owl2RLPersistenceLayer);
 				TargetSWRLRuleEngine targetSWRLRuleEngine = this.ruleEngineManager
 						.getRegisteredRuleEngineCreator(queryEngineName).create(bridge);
 

@@ -133,17 +133,17 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 
   @NonNull @Override public SWRLAutoCompleter createSWRLAutoCompleter()
   {
-    return SWRLAPIFactory.getSWRLAutoCompleter(this);
+    return SWRLAPIFactory.createSWRLAutoCompleter(this);
   }
 
   @NonNull @Override public SWRLRuleRenderer createSWRLRuleRenderer()
   {
-    return SWRLAPIFactory.getSWRLRuleRenderer(this.getOWLOntology(), this.getPrefixManager());
+    return SWRLAPIFactory.createSWRLRuleRenderer(this.getOWLOntology(), this.getPrefixManager());
   }
 
   @NonNull @Override public SQWRLQueryRenderer createSQWRLQueryRenderer()
   {
-    return SWRLAPIFactory.getSQWRLQueryRenderer(this.getOWLOntology(), this.getPrefixManager());
+    return SWRLAPIFactory.createSQWRLQueryRenderer(this.getOWLOntology(), this.getPrefixManager());
   }
 
   @NonNull @Override public SQWRLQuery createSQWRLQuery(@NonNull String queryName, @NonNull String query)
@@ -434,7 +434,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
       } else
         swrlapiHeadAtoms.add(atom); // Only built-in atoms are converted; other atoms remain the same
     }
-    return SWRLAPIFactory.getSWRLAPIRule(ruleName, swrlapiBodyAtoms, swrlapiHeadAtoms, comment, isActive);
+    return SWRLAPIFactory.createSWRLAPIRule(ruleName, swrlapiBodyAtoms, swrlapiHeadAtoms, comment, isActive);
   }
 
   /**

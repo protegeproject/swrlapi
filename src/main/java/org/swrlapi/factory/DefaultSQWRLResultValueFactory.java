@@ -36,7 +36,7 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
   public DefaultSQWRLResultValueFactory(@NonNull IRIResolver iriResolver)
   {
     this.iriResolver = iriResolver;
-    this.owlLiteralFactory = SWRLAPIFactory.getOWLLiteralFactory();
+    this.owlLiteralFactory = SWRLAPIFactory.createOWLLiteralFactory();
   }
 
   @NonNull @Override

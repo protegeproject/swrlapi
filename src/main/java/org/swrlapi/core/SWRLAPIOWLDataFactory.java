@@ -12,7 +12,6 @@ import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
-import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 
 import java.util.List;
@@ -43,8 +42,6 @@ public interface SWRLAPIOWLDataFactory extends OWLDataFactory
   @NonNull OWLLiteralFactory getOWLLiteralFactory();
 
   @NonNull LiteralFactory getLiteralFactory();
-
-  @NonNull IRIResolver getIRIResolver();
 
   // We provide convenience methods for defining these declaration axioms, though we do not specialize the
   // OWLDeclarationAxiom itself.

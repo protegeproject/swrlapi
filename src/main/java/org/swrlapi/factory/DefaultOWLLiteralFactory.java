@@ -22,7 +22,7 @@ public class DefaultOWLLiteralFactory implements OWLLiteralFactory
 
   public DefaultOWLLiteralFactory()
   {
-    this.datatypeFactory = SWRLAPIFactory.getOWLDatatypeFactory();
+    this.datatypeFactory = SWRLAPIFactory.createOWLDatatypeFactory();
   }
 
   @NonNull @Override

@@ -38,14 +38,14 @@ class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFactory
 
   public DefaultSWRLBuiltInArgumentFactory()
   {
-    this.iriResolver = SWRLAPIFactory.getIRIResolver();
-    this.owlLiteralFactory = SWRLAPIFactory.getOWLLiteralFactory();
+    this.iriResolver = SWRLAPIFactory.createIRIResolver();
+    this.owlLiteralFactory = SWRLAPIFactory.createOWLLiteralFactory();
   }
 
   public DefaultSWRLBuiltInArgumentFactory(@NonNull IRIResolver iriResolver)
   {
     this.iriResolver = iriResolver;
-    this.owlLiteralFactory = SWRLAPIFactory.getOWLLiteralFactory();
+    this.owlLiteralFactory = SWRLAPIFactory.createOWLLiteralFactory();
   }
 
   @NonNull @Override public SWRLVariableBuiltInArgument getUnboundVariableBuiltInArgument(@NonNull IRI variableIRI)

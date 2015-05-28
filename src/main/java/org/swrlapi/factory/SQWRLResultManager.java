@@ -107,7 +107,7 @@ import checkers.nullness.quals.NonNull;
  * 
  * while (result.next()) {
  * 	SQWRLIndividualResultValue nameValue = result.getIndividual(&quot;name&quot;);
- * 	SQWRLLiteralResultValue averageValue = result.getLiteral(&quot;average&quot;);
+ * 	SQWRLLiteralResultValue averageValue = result.createLiteral(&quot;average&quot;);
  * 	System.out.println(&quot;Name: &quot; + nameValue.getPrefixedName());
  * 	System.out.println(&quot;Average: &quot; + averageValue.getInt());
  * }

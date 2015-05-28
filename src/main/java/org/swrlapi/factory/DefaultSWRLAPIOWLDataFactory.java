@@ -16,7 +16,6 @@ import org.swrlapi.core.OWLDatatypeFactory;
 import org.swrlapi.core.OWLLiteralFactory;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
 import org.swrlapi.core.SWRLAPIOWLDataFactory;
-import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.resolvers.IRIResolver;
 import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
@@ -57,7 +56,7 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
   @NonNull @Override public SWRLAPIBuiltInAtom getSWRLAPIBuiltInAtom(@NonNull String ruleName, @NonNull IRI builtInIRI,
     @NonNull String builtInPrefixedName, @NonNull List<SWRLBuiltInArgument> arguments)
   {
-    return SWRLAPIFactory.getSWRLAPIBuiltInAtom(ruleName, builtInIRI, builtInPrefixedName, arguments);
+    return SWRLAPIFactory.createSWRLAPIBuiltInAtom(ruleName, builtInIRI, builtInPrefixedName, arguments);
   }
 
   @NonNull @Override public SQWRLResultValueFactory getSQWRLResultValueFactory()
@@ -110,11 +109,6 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
   @NonNull @Override public LiteralFactory getLiteralFactory()
   {
     return this.literalFactory;
-  }
-
-  @NonNull @Override public IRIResolver getIRIResolver()
-  {
-    return this.iriResolver;
   }
 
   @NonNull @Override public OWLClass getInjectedOWLClass()
