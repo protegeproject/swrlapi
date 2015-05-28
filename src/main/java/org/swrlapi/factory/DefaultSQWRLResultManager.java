@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import org.swrlapi.exceptions.SWRLAPIInternalException;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
+import org.swrlapi.sqwrl.SQWRLResultManager;
 import org.swrlapi.sqwrl.SQWRLResultNames;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.exceptions.SQWRLInvalidAggregateFunctionNameException;
@@ -67,7 +68,7 @@ import checkers.nullness.quals.NonNull;
  * <p>
  * 
  * <pre>
- * SQWRLResultManager resultManager = SWRLAPIFactory.createSQWRLResultManager(...);
+ *SQWRLResultManager resultManager = SWRLAPIFactory.createSQWRLResultManager(...);
  * 
  * resultManager.addColumn(&quot;name&quot;);
  * resultManager.addAggregateColumn(&quot;average&quot;, SQWRLResultNames.AvgAggregateFunction);
@@ -113,7 +114,7 @@ import checkers.nullness.quals.NonNull;
  * }
  * </pre>
  */
-class SQWRLResultManager implements SQWRLResult, SQWRLResultGenerator, Serializable
+class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 {
 	private static final long serialVersionUID = 1L;
 
@@ -140,7 +141,7 @@ class SQWRLResultManager implements SQWRLResult, SQWRLResultGenerator, Serializa
 	private boolean notLastSelection = false, nthSliceSelection = false, notNthSliceSelection = false;
 	private boolean nthLastSliceSelection = false, notNthLastSliceSelection = false;
 
-	public SQWRLResultManager(@NonNull SQWRLResultValueFactory sqwrlResultValueFactory)
+	public DefaultSQWRLResultManager(@NonNull SQWRLResultValueFactory sqwrlResultValueFactory)
 	{
 		this.sqwrlResultValueFactory = sqwrlResultValueFactory;
 
