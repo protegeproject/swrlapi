@@ -32,7 +32,9 @@ import org.swrlapi.sqwrl.values.SQWRLResultValue;
  * <p>
  * <p>
  * <pre>
- * SQWRLResultManager resultManager = SWRLAPIFactory.createSQWRLResultManager();
+ * DefaultPrefixManager prefixManager = new DefaultPrefixManager();
+ * IRIResolver iriResolver = SWRLAPIFactory.createIRIResolver(prefixManager);
+ * SQWRLResultManager resultManager = SWRLAPIFactory.createSQWRLResultManager(iriResolver);
  *
  * resultManager.addColumn(&quot;name&quot;);
  * resultManager.addAggregateColumn(&quot;average&quot;, SQWRLResultNames.AvgAggregateFunction);
@@ -40,7 +42,7 @@ import org.swrlapi.sqwrl.values.SQWRLResultValue;
  *
  * resultManager.openRow();
  * resultManager.addCell(valueFactory.getIndividualValue(&quot;Fred&quot;));
- * resultManager.addCell(valueFactory.getValue(27));
+ * resultManager.addCell(valueFactory.getLiteralValue(27));
  * resultManager.closeRow();
  * resultManager.openRow();
  * resultManager.addCell(valueFactory.getIndividualValue(&quot;Joe&quot;));
@@ -78,5 +80,5 @@ import org.swrlapi.sqwrl.values.SQWRLResultValue;
  * }
  * </pre>
  */
-public interface SQWRLResultManager extends SQWRLResult, SQWRLResultGenerator
+public interface SQWRLResultManager extends SQWRLResultGenerator, SQWRLResult
 {}

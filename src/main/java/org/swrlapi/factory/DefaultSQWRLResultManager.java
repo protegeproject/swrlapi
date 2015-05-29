@@ -892,13 +892,13 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 	private void throwExceptionIfConfigured() throws SQWRLException
 	{
 		if (isConfigured())
-			throw new SQWRLResultStateException("attempt to get pre-configuration data after configuration");
+			throw new SQWRLResultStateException("attempt to do pre-configuration operations after configuration");
 	}
 
 	private void throwExceptionIfNotConfigured() throws SQWRLException
 	{
 		if (!isConfigured())
-			throw new SQWRLResultStateException("attempt to add data to unconfigured result");
+			throw new SQWRLResultStateException("attempt to do post-configuration operations before configuration");
 	}
 
 	private void throwExceptionIfAtEndOfResult() throws SQWRLException

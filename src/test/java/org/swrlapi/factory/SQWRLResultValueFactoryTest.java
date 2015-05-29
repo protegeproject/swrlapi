@@ -39,7 +39,6 @@ public class SQWRLResultValueFactoryTest
 		dataFactory = ontologyManager.getOWLDataFactory();
 		ontology = ontologyManager.createOntology();
     prefixManager = new DefaultPrefixManager();
-
 		iriResolver = SWRLAPIFactory.createIRIResolver(prefixManager);
 		resultValueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(iriResolver);
 		builtInArgumentFactory = SWRLAPIFactory.createSWRLBuiltInArgumentFactory(iriResolver);
