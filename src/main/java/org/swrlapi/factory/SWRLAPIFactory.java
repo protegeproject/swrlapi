@@ -152,6 +152,14 @@ public class SWRLAPIFactory
 	}
 
 	/**
+	 * @return A SQWRL result value factory
+	 */
+	@NonNull public static SQWRLResultValueFactory createSQWRLResultValueFactory()
+	{
+		return new DefaultSQWRLResultValueFactory(SWRLAPIFactory.createIRIResolver());
+	}
+
+	/**
 	 * @param iriResolver An IRI resolver
 	 * @return A SQWRL result value factory
 	 */
@@ -350,7 +358,7 @@ public class SWRLAPIFactory
 		DefaultPrefixManager prefixManager = new DefaultPrefixManager();
 
 		addDefaultPrefixes(ontology, prefixManager);
-		addSWRLAPIBuiltInOntologies(ontology.getOWLOntologyManager());
+		addSWRLAPIBuiltInOntologies(ontology);
 
 		return new DefaultSWRLAPIOWLOntology(ontology, prefixManager);
 	}
@@ -373,7 +381,7 @@ public class SWRLAPIFactory
 			throw new SWRLAPIException("supplied prefix manager is null");
 
 		addDefaultPrefixes(ontology, prefixManager);
-		addSWRLAPIBuiltInOntologies(ontology.getOWLOntologyManager());
+		addSWRLAPIBuiltInOntologies(ontology);
 
 		return new DefaultSWRLAPIOWLOntology(ontology, prefixManager);
 	}
@@ -443,7 +451,7 @@ public class SWRLAPIFactory
 		prefixManager.setPrefix("swrla:", "http://swrl.stanford.edu/ontologies/3.3/swrla.owl#");
 	}
 
-	private static void addSWRLAPIBuiltInOntologies(@NonNull OWLOntologyManager ontologyManager)
+	private static void addSWRLAPIBuiltInOntologies(@NonNull OWLOntology ontology)
 	{
 		Map<String, String> map = new HashMap<>();
 
@@ -456,7 +464,8 @@ public class SWRLAPIFactory
 		map.put("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl", resourceName2File("owl/sqwrl.owl"));
 
 		for (String key : map.keySet())
-			ontologyManager.getIRIMappers().add(new SimpleIRIMapper(IRI.create(key), IRI.create(map.get(key))));
+			ontology.getOWLOntologyManager().getIRIMappers()
+					.add(new SimpleIRIMapper(IRI.create(key), IRI.create(map.get(key))));
 	}
 
 	@NonNull private static OWLOntology createOWLOntology(@NonNull OWLOntologyManager ontologyManager, @NonNull File file)

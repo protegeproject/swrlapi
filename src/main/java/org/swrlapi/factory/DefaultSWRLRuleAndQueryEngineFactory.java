@@ -35,12 +35,12 @@ public class DefaultSWRLRuleAndQueryEngineFactory implements SWRLRuleAndQueryEng
 		// log.info("Rule engine '" + ruleEngineName + "' registered with the SWRLAPI rule engine manager.");
 	}
 
-	@NonNull @Override public SWRLRuleEngine createSWRLRuleEngine(@NonNull OWLOntology owlOntology)
+	@NonNull @Override public SWRLRuleEngine createSWRLRuleEngine(@NonNull OWLOntology ontology)
 	{
 		if (this.ruleEngineManager.hasRegisteredRuleEngines()) {
 			Optional<String> ruleEngineName = this.ruleEngineManager.getAnyRegisteredRuleEngineName();
 			if (ruleEngineName.isPresent())
-				return createSWRLRuleEngine(ruleEngineName.get(), owlOntology);
+				return createSWRLRuleEngine(ruleEngineName.get(), ontology);
 			else
 				throw new NoRegisteredSWRLRuleEnginesException();
 		} else
