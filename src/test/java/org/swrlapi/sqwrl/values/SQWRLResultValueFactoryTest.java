@@ -49,12 +49,21 @@ public class SQWRLResultValueFactoryTest
 	}
 
 	@Test
-	public void testGetClassValue() throws Exception
+	public void testGetClassValueWithBuiltInArgument() throws Exception
 	{
 		IRI classIRI = IRI.create(TestNamespace + "AClass");
 		OWLClass cls = this.dataFactory.getOWLClass(classIRI);
 		SWRLClassBuiltInArgument classBuiltInArgument = this.builtInArgumentFactory.getClassBuiltInArgument(cls);
 		SQWRLClassResultValue value = this.resultValueFactory.getClassValue(classBuiltInArgument);
+
+		assertEquals(value.getIRI(), classIRI);
+	}
+
+	@Test
+	public void testGetClassValueWithIRI() throws Exception
+	{
+		IRI classIRI = IRI.create(TestNamespace + "AClass");
+		SQWRLClassResultValue value = this.resultValueFactory.getClassValue(classIRI);
 
 		assertEquals(value.getIRI(), classIRI);
 	}
