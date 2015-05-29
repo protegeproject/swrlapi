@@ -1,13 +1,10 @@
-package org.swrlapi.core;
+package org.swrlapi.factory;
 
 import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
-import org.swrlapi.factory.OWLDatatypeFactory;
-import org.swrlapi.factory.OWLLiteralFactory;
-import org.swrlapi.factory.SWRLAPIFactory;
 
 /**
  * @see OWLLiteralFactory

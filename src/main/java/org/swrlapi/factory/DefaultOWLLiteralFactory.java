@@ -14,7 +14,7 @@ import uk.ac.manchester.cs.owl.owlapi.OWLLiteralImpl;
 import java.net.URI;
 import java.util.List;
 
-public class DefaultOWLLiteralFactory implements OWLLiteralFactory
+class DefaultOWLLiteralFactory implements OWLLiteralFactory
 {
   @NonNull private final OWLDatatypeFactory datatypeFactory;
 

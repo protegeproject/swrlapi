@@ -11,12 +11,7 @@ import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
-import org.swrlapi.factory.LiteralFactory;
-import org.swrlapi.factory.OWLDatatypeFactory;
-import org.swrlapi.factory.OWLLiteralFactory;
-import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 
 import java.util.List;
 

@@ -74,7 +74,6 @@ import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.exceptions.SQWRLInvalidQueryNameException;
-import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 
 import checkers.nullness.quals.NonNull;
 

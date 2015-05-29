@@ -5,7 +5,7 @@ import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.swrlapi.bridge.SWRLRuleEngineBridge;
 import org.swrlapi.bridge.converters.TargetRuleEngineConverterBase;
-import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
+import org.swrlapi.factory.SWRLBuiltInArgumentFactory;
 import org.swrlapi.factory.OWLDatatypeFactory;
 import org.swrlapi.factory.OWLLiteralFactory;
 import org.swrlapi.factory.SWRLAPIOWLDataFactory;

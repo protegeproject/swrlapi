@@ -10,10 +10,8 @@ import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
 import org.swrlapi.resolvers.IRIResolver;
-import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 
 import java.util.List;

@@ -13,7 +13,6 @@ import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.semanticweb.owlapi.util.SimpleIRIMapper;
 import org.swrlapi.bridge.SWRLBridge;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIOntologyProcessor;
@@ -33,7 +32,6 @@ import org.swrlapi.sqwrl.SQWRLQueryRenderer;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.SQWRLResultManager;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
-import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 import org.swrlapi.ui.controller.SWRLRuleEngineController;
 import org.swrlapi.ui.dialog.SWRLAPIDialogManager;
 import org.swrlapi.ui.model.FileBackedOWLOntologyModel;
@@ -53,7 +51,7 @@ import java.util.Map;
  * Factory for generating some of the core entities defined by the SWRLAPI.
  *
  * @see SWRLRuleAndQueryEngineFactory
- * @see org.swrlapi.sqwrl.values.SQWRLResultValueFactory
+ * @see SQWRLResultValueFactory
  * @see SWRLAPIOWLDataFactory
  * @see OWLDatatypeFactory
  */

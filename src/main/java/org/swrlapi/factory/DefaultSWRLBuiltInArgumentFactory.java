@@ -12,7 +12,6 @@ import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.swrlapi.builtins.arguments.SQWRLCollectionVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDatatypeBuiltInArgument;

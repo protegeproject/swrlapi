@@ -1,4 +1,4 @@
-package org.swrlapi.sqwrl.values;
+package org.swrlapi.factory;
 
 import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.IRI;
@@ -12,6 +12,12 @@ import org.swrlapi.literal.XSDDate;
 import org.swrlapi.literal.XSDDateTime;
 import org.swrlapi.literal.XSDDuration;
 import org.swrlapi.literal.XSDTime;
+import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue;
+import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
+import org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue;
+import org.swrlapi.sqwrl.values.SQWRLIndividualResultValue;
+import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
+import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
 
 import java.net.URI;
 import java.util.List;

@@ -1,4 +1,4 @@
-package org.swrlapi.builtins.arguments;
+package org.swrlapi.factory;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,7 +10,7 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
-import org.swrlapi.factory.SWRLAPIFactory;
+import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.resolvers.IRIResolver;
 
 import static org.junit.Assert.assertEquals;

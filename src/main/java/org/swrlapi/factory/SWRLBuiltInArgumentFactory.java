@@ -1,4 +1,4 @@
-package org.swrlapi.builtins.arguments;
+package org.swrlapi.factory;
 
 import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.IRI;
@@ -9,6 +9,17 @@ import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.swrlapi.builtins.arguments.SQWRLCollectionVariableBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLDatatypeBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.literal.XSDDate;
 import org.swrlapi.literal.XSDDateTime;
 import org.swrlapi.literal.XSDDuration;

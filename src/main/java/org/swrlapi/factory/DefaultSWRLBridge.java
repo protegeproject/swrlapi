@@ -10,7 +10,6 @@ import org.swrlapi.bridge.SWRLBridge;
 import org.swrlapi.bridge.TargetSWRLRuleEngine;
 import org.swrlapi.builtins.SWRLBuiltInLibraryManager;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.resolvers.IRIResolver;
 import org.swrlapi.resolvers.OWLClassExpressionResolver;

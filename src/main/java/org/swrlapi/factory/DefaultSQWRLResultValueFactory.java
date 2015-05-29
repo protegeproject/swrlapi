@@ -21,7 +21,6 @@ import org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLIndividualResultValue;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
-import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 
 import java.net.URI;
 import java.util.List;

@@ -21,7 +21,6 @@ import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLResultValue;
-import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
 
 import java.io.Serializable;
 import java.util.ArrayList;

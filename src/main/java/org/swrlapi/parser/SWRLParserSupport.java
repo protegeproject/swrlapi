@@ -29,7 +29,7 @@ import org.semanticweb.owlapi.model.parameters.Imports;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
 import org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
+import org.swrlapi.factory.SWRLBuiltInArgumentFactory;
 import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDatatypeBuiltInArgument;

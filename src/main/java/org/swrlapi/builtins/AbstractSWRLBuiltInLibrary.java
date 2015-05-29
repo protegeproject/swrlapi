@@ -22,7 +22,7 @@ import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.swrlapi.builtins.arguments.SQWRLCollectionVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
+import org.swrlapi.factory.SWRLBuiltInArgumentFactory;
 import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDatatypeBuiltInArgument;
@@ -45,7 +45,7 @@ import org.swrlapi.exceptions.InvalidSWRLBuiltInArgumentNumberException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLBuiltInLibraryException;
 import org.swrlapi.exceptions.SWRLBuiltInMethodRuntimeException;
-import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
+import org.swrlapi.factory.SQWRLResultValueFactory;
 
 import checkers.nullness.quals.NonNull;
 import checkers.nullness.quals.Nullable;

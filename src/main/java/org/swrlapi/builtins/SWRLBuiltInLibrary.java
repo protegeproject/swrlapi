@@ -5,7 +5,7 @@ import org.semanticweb.owlapi.model.IRI;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLBuiltInLibraryException;
-import org.swrlapi.sqwrl.values.SQWRLResultValueFactory;
+import org.swrlapi.factory.SQWRLResultValueFactory;
 
 import java.lang.reflect.Method;
 import java.util.List;

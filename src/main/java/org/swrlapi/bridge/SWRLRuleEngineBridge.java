@@ -3,7 +3,7 @@ package org.swrlapi.bridge;
 import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentFactory;
+import org.swrlapi.factory.SWRLBuiltInArgumentFactory;
 import org.swrlapi.factory.OWLDatatypeFactory;
 import org.swrlapi.factory.OWLLiteralFactory;
 import org.swrlapi.factory.SWRLAPIOWLDataFactory;
