@@ -1,5 +1,6 @@
 package org.swrlapi.sqwrl;
 
+import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -14,6 +15,8 @@ import org.swrlapi.factory.SQWRLResultValueFactory;
 import org.swrlapi.factory.SWRLAPIFactory;
 import org.swrlapi.resolvers.IRIResolver;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
+import org.swrlapi.sqwrl.values.SQWRLIndividualResultValue;
+import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,141 +32,256 @@ import static org.junit.Assert.assertTrue;
  */
 public class SQWRLResultManagerTest
 {
-  private static final String TestPrefix = "test";
-  private static final String TestNamespace = "http://example.org#";
+	private static final String TestPrefix = "test:";
+	private static final String TestNamespace = "http://example.org#";
 
-  private OWLOntologyManager ontologyManager;
-  private OWLOntology ontology;
-  private DefaultPrefixManager prefixManager;
-  private IRIResolver iriResolver;
-  private SQWRLResultValueFactory valueFactory;
-  private SQWRLResultManager resultManager;
+	private OWLOntologyManager ontologyManager;
+	private OWLOntology ontology;
+	private DefaultPrefixManager prefixManager;
+	private IRIResolver iriResolver;
+	private SQWRLResultValueFactory valueFactory;
+	private SQWRLResultManager resultManager;
 
-  @Rule
-  public ExpectedException thrown = ExpectedException.none();
+	private IRI i1IRI = IRI.create(TestNamespace + "i1");
+	private String columnName = "c";
+	private String column1Name = "c1";
+	private String column2Name = "c2";
 
-  @Before
-  public void setUp() throws OWLOntologyCreationException
-  {
-    ontologyManager = OWLManager.createOWLOntologyManager();
-    ontology = ontologyManager.createOntology();
-    prefixManager = new DefaultPrefixManager();
-    iriResolver = SWRLAPIFactory.createIRIResolver(prefixManager);
-    valueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(iriResolver);
-    resultManager = SWRLAPIFactory.createSQWRLResultManager(iriResolver);
+	@Rule public ExpectedException thrown = ExpectedException.none();
 
-    prefixManager.setPrefix(TestPrefix, TestNamespace);
-  }
+	@Before public void setUp() throws OWLOntologyCreationException
+	{
+		ontologyManager = OWLManager.createOWLOntologyManager();
+		ontology = ontologyManager.createOntology();
+		prefixManager = new DefaultPrefixManager();
+		iriResolver = SWRLAPIFactory.createIRIResolver(prefixManager);
+		valueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(iriResolver);
+		resultManager = SWRLAPIFactory.createSQWRLResultManager(iriResolver);
 
-  @Test public void testAddColumns() throws Exception
-  {
-    List<String> columnNames = Stream.of("a", "b").collect(Collectors.toCollection(ArrayList::new));
-    resultManager.addColumns(columnNames);
-    resultManager.configured();
+		prefixManager.setPrefix(TestPrefix, TestNamespace);
+	}
 
-    assertEquals(columnNames, resultManager.getColumnNames());
-  }
+	@Test public void testAddColumns() throws Exception
+	{
+		List<String> columnNames = Stream.of("a", "b").collect(Collectors.toCollection(ArrayList::new));
+		resultManager.addColumns(columnNames);
+		resultManager.configured();
 
-  @Test public void testAddColumn() throws Exception
-  {
-    String columnName = "c1";
-    resultManager.addColumn(columnName);
-    resultManager.configured();
+		assertEquals(columnNames, resultManager.getColumnNames());
+	}
 
-    assertEquals(columnName, resultManager.getColumnName(0));
-  }
+	@Test public void testAddColumn() throws Exception
+	{
+		resultManager.addColumn(columnName);
+		resultManager.configured();
 
-  @Test public void testGetColumnNamesPreConfiguration() throws Exception
-  {
-    thrown.expect(SQWRLException.class);
-    thrown.expectMessage("attempt to do post-configuration operations before configuration");
+		assertEquals(columnName, resultManager.getColumnName(0));
+	}
 
-    resultManager.getColumnNames();
-  }
+	@Test public void testGetColumnNamesPreConfiguration() throws Exception
+	{
+		thrown.expect(SQWRLException.class);
+		thrown.expectMessage("attempt to do post-configuration operations before configuration");
 
-  @Test public void testGetColumnNamePreConfiguration() throws Exception
-  {
-    thrown.expect(SQWRLException.class);
-    thrown.expectMessage("attempt to do post-configuration operations before configuration");
+		resultManager.getColumnNames();
+	}
 
-    resultManager.getColumnName(0);
-  }
+	@Test public void testGetColumnNamePreConfiguration() throws Exception
+	{
+		thrown.expect(SQWRLException.class);
+		thrown.expectMessage("attempt to do post-configuration operations before configuration");
 
-  @Test public void testEmptyResult() throws Exception
-  {
-    resultManager.configured();
-    resultManager.prepared();
+		resultManager.getColumnName(0);
+	}
 
-    assertTrue(resultManager.isConfigured());
-    assertTrue(resultManager.isPrepared());
-    assertEquals(resultManager.getNumberOfColumns(), 0);
-    assertEquals(resultManager.getNumberOfRows(), 0);
-  }
+	@Test public void testEmptyResult() throws Exception
+	{
+		resultManager.configured();
+		resultManager.prepared();
 
-  @Test public void testPreparedWithoutConfigured() throws Exception
-  {
-    thrown.expect(SQWRLException.class);
-    thrown.expectMessage("attempt to do post-configuration operations before configuration");
+		assertTrue(resultManager.isConfigured());
+		assertTrue(resultManager.isPrepared());
+		assertEquals(resultManager.getNumberOfColumns(), 0);
+		assertEquals(resultManager.getNumberOfRows(), 0);
+	}
 
-    resultManager.prepared();
-  }
+	@Test public void testPreparedWithoutConfigured() throws Exception
+	{
+		thrown.expect(SQWRLException.class);
+		thrown.expectMessage("attempt to do post-configuration operations before configuration");
 
-  @Test public void testDoubleConfigured() throws Exception
-  {
-    thrown.expect(SQWRLException.class);
-    thrown.expectMessage("attempt to configure already configured result");
+		resultManager.prepared();
+	}
 
-    resultManager.configured();
-    resultManager.configured();
-  }
+	@Test public void testDoubleConfigured() throws Exception
+	{
+		thrown.expect(SQWRLException.class);
+		thrown.expectMessage("attempt to configure already configured result");
 
-  @Test public void testDoublePrepared() throws Exception
-  {
-    thrown.expect(SQWRLException.class);
-    thrown.expectMessage("attempt to modify prepared result");
+		resultManager.configured();
+		resultManager.configured();
+	}
 
-    resultManager.configured();
-    resultManager.prepared();
-    resultManager.prepared();
-  }
+	@Test public void testDoublePrepared() throws Exception
+	{
+		thrown.expect(SQWRLException.class);
+		thrown.expectMessage("attempt to modify prepared result");
 
-  @Test public void testInvalidOpenRow() throws Exception
-  {
-    thrown.expect(SQWRLException.class);
-    thrown.expectMessage("attempt to do post-configuration operations before configuration");
+		resultManager.configured();
+		resultManager.prepared();
+		resultManager.prepared();
+	}
 
-    resultManager.openRow();
-  }
+	@Test public void testInvalidOpenRow() throws Exception
+	{
+		thrown.expect(SQWRLException.class);
+		thrown.expectMessage("attempt to do post-configuration operations before configuration");
 
-  @Test public void testIsRowOpen() throws Exception
-  {
-    resultManager.configured();
-    resultManager.prepared();
+		resultManager.openRow();
+	}
 
-    assertFalse(resultManager.isRowOpen());
-  }
+	@Test public void testIsRowOpen() throws Exception
+	{
+		resultManager.configured();
+		resultManager.prepared();
 
-  @Test public void XXX() throws Exception
-  {
-    IRI i1 = IRI.create(TestNamespace + "i1");
-    IRI i2 = IRI.create(TestNamespace + "i2");
-    IRI i3 = IRI.create(TestNamespace + "i3");
+		assertFalse(resultManager.isRowOpen());
+	}
 
-    resultManager.addColumn("name");
-    resultManager.addAggregateColumn("average", SQWRLResultNames.AvgAggregateFunction);
-    resultManager.configured();
-    resultManager.openRow();
-    resultManager.addCell(valueFactory.getIndividualValue(i1));
-    resultManager.addCell(valueFactory.getLiteralValue(27));
-    resultManager.closeRow();
-    resultManager.openRow();
-    resultManager.addCell(valueFactory.getIndividualValue(i2));
-    resultManager.addCell(valueFactory.getLiteralValue(34));
-    resultManager.closeRow();
-    resultManager.openRow();
-    resultManager.addCell(valueFactory.getIndividualValue(i3));
-    resultManager.addCell(valueFactory.getLiteralValue(21));
-    resultManager.closeRow();
-    resultManager.prepared();
-  }
+	@Test public void testGetNumberOfColumns() throws Exception
+	{
+		String columnName = "c1";
+
+		resultManager.addColumn(columnName);
+
+		resultManager.configured();
+
+		resultManager.prepared();
+
+		assertEquals(resultManager.getNumberOfColumns(), 1);
+
+	}
+
+	@Test public void testGetNumberOfRows() throws Exception
+	{
+		resultManager.addColumn(columnName);
+
+		resultManager.configured();
+
+		resultManager.openRow();
+		resultManager.addCell(valueFactory.getLiteralValue(27));
+		resultManager.closeRow();
+
+		resultManager.prepared();
+
+		assertEquals(resultManager.getNumberOfColumns(), 1);
+		assertEquals(resultManager.getNumberOfRows(), 1);
+	}
+
+	@Test public void testGetLiteral() throws Exception
+	{
+		resultManager.addColumn(columnName);
+
+		resultManager.configured();
+
+		resultManager.openRow();
+		resultManager.addCell(valueFactory.getLiteralValue(27));
+		resultManager.closeRow();
+
+		resultManager.prepared();
+
+		assertEquals(resultManager.getNumberOfColumns(), 1);
+		assertEquals(resultManager.getNumberOfRows(), 1);
+
+		resultManager.next();
+
+		SQWRLLiteralResultValue cellValue = resultManager.getLiteral(columnName);
+
+		assertTrue(cellValue.isInt());
+		assertEquals(cellValue.getInt(), 27);
+	}
+
+	@Test public void testAvgAggregateFunction() throws Exception
+	{
+		resultManager.addColumn(column1Name);
+		resultManager.addAggregateColumn(column2Name, SQWRLResultNames.AvgAggregateFunction);
+
+		resultManager.configured();
+
+		resultManager.openRow();
+		resultManager.addCell(valueFactory.getIndividualValue(i1IRI));
+		resultManager.addCell(valueFactory.getLiteralValue(20));
+		resultManager.closeRow();
+		resultManager.openRow();
+		resultManager.addCell(valueFactory.getIndividualValue(i1IRI));
+		resultManager.addCell(valueFactory.getLiteralValue(30));
+		resultManager.closeRow();
+
+		resultManager.prepared();
+
+		assertEquals(resultManager.getNumberOfColumns(), 2);
+		assertEquals(resultManager.getNumberOfRows(), 1);
+
+		resultManager.next();
+
+		SQWRLLiteralResultValue literalValue = resultManager.getLiteral(column2Name);
+		assertTrue(literalValue.isInt());
+		assertEquals(literalValue.getInt(), 25);
+	}
+
+	@Test public void testMinAggregateFunction() throws Exception
+	{
+		resultManager.addColumn(column1Name);
+		resultManager.addAggregateColumn(column2Name, SQWRLResultNames.MinAggregateFunction);
+
+		resultManager.configured();
+
+		resultManager.openRow();
+		resultManager.addCell(valueFactory.getIndividualValue(i1IRI));
+		resultManager.addCell(valueFactory.getLiteralValue(20));
+		resultManager.closeRow();
+		resultManager.openRow();
+		resultManager.addCell(valueFactory.getIndividualValue(i1IRI));
+		resultManager.addCell(valueFactory.getLiteralValue(30));
+		resultManager.closeRow();
+
+		resultManager.prepared();
+
+		assertEquals(resultManager.getNumberOfColumns(), 2);
+		assertEquals(resultManager.getNumberOfRows(), 1);
+
+		resultManager.next();
+
+		SQWRLLiteralResultValue literalValue = resultManager.getLiteral(column2Name);
+		assertTrue(literalValue.isInt());
+		assertEquals(literalValue.getInt(), 20);
+	}
+
+	@Test public void testMaxAggregateFunction() throws Exception
+	{
+		resultManager.addColumn(column1Name);
+		resultManager.addAggregateColumn(column2Name, SQWRLResultNames.MaxAggregateFunction);
+
+		resultManager.configured();
+
+		resultManager.openRow();
+		resultManager.addCell(valueFactory.getIndividualValue(i1IRI));
+		resultManager.addCell(valueFactory.getLiteralValue(20));
+		resultManager.closeRow();
+		resultManager.openRow();
+		resultManager.addCell(valueFactory.getIndividualValue(i1IRI));
+		resultManager.addCell(valueFactory.getLiteralValue(30));
+		resultManager.closeRow();
+
+		resultManager.prepared();
+
+		assertEquals(resultManager.getNumberOfColumns(), 2);
+		assertEquals(resultManager.getNumberOfRows(), 1);
+
+		resultManager.next();
+
+		SQWRLLiteralResultValue literalValue = resultManager.getLiteral(column2Name);
+		assertTrue(literalValue.isInt());
+		assertEquals(literalValue.getInt(), 30);
+	}
 }
