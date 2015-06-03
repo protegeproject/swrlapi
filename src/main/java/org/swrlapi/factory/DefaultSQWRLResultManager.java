@@ -135,7 +135,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 		this.numberOfColumns++;
 	}
 
-	@Override public void addOrderByColumn(int orderedColumnIndex, boolean ascending) throws SQWRLException
+	@Override public void setOrderByColumn(int orderedColumnIndex, boolean ascending) throws SQWRLException
 	{
 		throwExceptionIfAlreadyConfigured();
 

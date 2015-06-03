@@ -32,6 +32,11 @@ import org.swrlapi.sqwrl.values.SQWRLResultValue;
  * <p>
  * <p>
  * <pre>
+ * private static final String TestPrefix = "test:";
+ * private static final String TestNamespace = "http://example.org#";
+ * private static final IRI i1IRI = IRI.create(TestNamespace + "i1");
+ * private static final IRI 21IRI = IRI.create(TestNamespace + "i2");
+ *
  * DefaultPrefixManager prefixManager = new DefaultPrefixManager();
  * IRIResolver iriResolver = SWRLAPIFactory.createIRIResolver(prefixManager);
  * SQWRLResultManager resultManager = SWRLAPIFactory.createSQWRLResultManager(iriResolver);
@@ -41,15 +46,15 @@ import org.swrlapi.sqwrl.values.SQWRLResultValue;
  * resultManager.configured();
  *
  * resultManager.openRow();
- * resultManager.addCell(valueFactory.getIndividualValue(&quot;Fred&quot;));
+ * resultManager.addCell(valueFactory.getIndividualValue(i1IRI));
  * resultManager.addCell(valueFactory.getLiteralValue(27));
  * resultManager.closeRow();
  * resultManager.openRow();
- * resultManager.addCell(valueFactory.getIndividualValue(&quot;Joe&quot;));
+ * resultManager.addCell(valueFactory.getIndividualValue(i2IRI));
  * resultManager.addCell(valueFactory.getLiteralValue(34));
  * resultManager.closeRow();
  * resultManager.openRow();
- * resultManager.addCell(valueFactory.getIndividualValue(&quot;Joe&quot;));
+ * resultManager.addCell(valueFactory.getIndividualValue(i2IRI));
  * resultManager.addCell(valueFactory.getLiteralValue(21));
  * resultManager.closeRow();
  * resultManager.prepared();

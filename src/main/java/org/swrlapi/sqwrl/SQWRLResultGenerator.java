@@ -37,9 +37,9 @@ public interface SQWRLResultGenerator
 	/**
 	 * @param orderedColumnIndex The 0-based index of an order column
 	 * @param ascending          Order ascending or descending
-	 * @throws SQWRLException If an error occurs during column addition
+	 * @throws SQWRLException If an error occurs during setting
 	 */
-	void addOrderByColumn(int orderedColumnIndex, boolean ascending) throws SQWRLException;
+	void setOrderByColumn(int orderedColumnIndex, boolean ascending) throws SQWRLException;
 
 	/**
 	 * @return True of the result is ordered
@@ -123,7 +123,7 @@ public interface SQWRLResultGenerator
 	 */
 	void prepared() throws SQWRLException;
 
-	// nth, firstN, etc. are 1-indexed
+	// nth, firstN, etc. are 1-based index
 	void setLimit(int limit);
 
 	void setNth(int nth);

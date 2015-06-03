@@ -1,6 +1,5 @@
 package org.swrlapi.sqwrl;
 
-import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -15,8 +14,11 @@ import org.swrlapi.factory.SQWRLResultValueFactory;
 import org.swrlapi.factory.SWRLAPIFactory;
 import org.swrlapi.resolvers.IRIResolver;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
+import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
+import org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLIndividualResultValue;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
+import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,20 +34,24 @@ import static org.junit.Assert.assertTrue;
  */
 public class SQWRLResultManagerTest
 {
-	private static final String TestPrefix = "test:";
-	private static final String TestNamespace = "http://example.org#";
-
-	private OWLOntologyManager ontologyManager;
+  private OWLOntologyManager ontologyManager;
 	private OWLOntology ontology;
 	private DefaultPrefixManager prefixManager;
 	private IRIResolver iriResolver;
 	private SQWRLResultValueFactory valueFactory;
 	private SQWRLResultManager resultManager;
 
-	private IRI i1IRI = IRI.create(TestNamespace + "i1");
-	private String columnName = "c";
-	private String column1Name = "c1";
-	private String column2Name = "c2";
+  private static final String TestPrefix = "test:";
+  private static final String TestNamespace = "http://example.org#";
+
+  private static final IRI c1IRI = IRI.create(TestNamespace + "c1");
+  private static final IRI i1IRI = IRI.create(TestNamespace + "i1");
+  private static final IRI p1IRI = IRI.create(TestNamespace + "p1");
+  private static final String c1PrefixedName = TestPrefix + "c1";
+  private static final String i1PrefixedName = TestPrefix + "i1";
+  private static final String p1PrefixedName = TestPrefix + "p1";
+  private static final String columnName = "c";
+	private static final String column1Name = "c1";
 
 	@Rule public ExpectedException thrown = ExpectedException.none();
 
@@ -150,8 +156,6 @@ public class SQWRLResultManagerTest
 
 	@Test public void testGetNumberOfColumns() throws Exception
 	{
-		String columnName = "c1";
-
 		resultManager.addColumn(columnName);
 
 		resultManager.configured();
@@ -172,13 +176,113 @@ public class SQWRLResultManagerTest
 		resultManager.addCell(valueFactory.getLiteralValue(27));
 		resultManager.closeRow();
 
+    resultManager.openRow();
+    resultManager.addCell(valueFactory.getLiteralValue(2));
+    resultManager.closeRow();
+
 		resultManager.prepared();
 
-		assertEquals(resultManager.getNumberOfColumns(), 1);
-		assertEquals(resultManager.getNumberOfRows(), 1);
+    assertEquals(resultManager.getNumberOfColumns(), 1);
+		assertEquals(resultManager.getNumberOfRows(), 2);
 	}
 
-	@Test public void testGetLiteral() throws Exception
+  @Test public void testGetClass() throws Exception
+  {
+    resultManager.addColumn(columnName);
+
+    resultManager.configured();
+
+    resultManager.openRow();
+    resultManager.addCell(valueFactory.getClassValue(c1IRI));
+    resultManager.closeRow();
+
+    resultManager.prepared();
+
+    assertEquals(resultManager.getNumberOfColumns(), 1);
+    assertEquals(resultManager.getNumberOfRows(), 1);
+
+    resultManager.next();
+
+    assertTrue(resultManager.hasClassValue(0));
+    assertTrue(resultManager.hasClassValue(columnName));
+
+    SQWRLClassResultValue value = resultManager.getClass(columnName);
+    assertEquals(value.getPrefixedName(), c1PrefixedName);
+  }
+
+  @Test public void testGetIndividual() throws Exception
+  {
+    resultManager.addColumn(columnName);
+
+    resultManager.configured();
+
+    resultManager.openRow();
+    resultManager.addCell(valueFactory.getIndividualValue(i1IRI));
+    resultManager.closeRow();
+
+    resultManager.prepared();
+
+    assertEquals(resultManager.getNumberOfColumns(), 1);
+    assertEquals(resultManager.getNumberOfRows(), 1);
+
+    resultManager.next();
+
+    assertTrue(resultManager.hasIndividualValue(0));
+    assertTrue(resultManager.hasIndividualValue(columnName));
+
+    SQWRLIndividualResultValue value = resultManager.getIndividual(columnName);
+    assertEquals(value.getPrefixedName(), i1PrefixedName);
+  }
+
+  @Test public void testGetObjectProperty() throws Exception
+  {
+    resultManager.addColumn(columnName);
+
+    resultManager.configured();
+
+    resultManager.openRow();
+    resultManager.addCell(valueFactory.getObjectPropertyValue(p1IRI));
+    resultManager.closeRow();
+
+    resultManager.prepared();
+
+    assertEquals(resultManager.getNumberOfColumns(), 1);
+    assertEquals(resultManager.getNumberOfRows(), 1);
+
+    resultManager.next();
+
+    assertTrue(resultManager.hasObjectPropertyValue(0));
+    assertTrue(resultManager.hasObjectPropertyValue(columnName));
+
+    SQWRLObjectPropertyResultValue value = resultManager.getObjectProperty(columnName);
+    assertEquals(value.getPrefixedName(), p1PrefixedName);
+  }
+
+  @Test public void testGetDataProperty() throws Exception
+  {
+    resultManager.addColumn(columnName);
+
+    resultManager.configured();
+
+    resultManager.openRow();
+    resultManager.addCell(valueFactory.getDataPropertyValue(p1IRI));
+    resultManager.closeRow();
+
+    resultManager.prepared();
+
+    assertEquals(resultManager.getNumberOfColumns(), 1);
+    assertEquals(resultManager.getNumberOfRows(), 1);
+
+    resultManager.next();
+
+    assertTrue(resultManager.hasDataPropertyValue(0));
+    assertTrue(resultManager.hasDataPropertyValue(columnName));
+
+    SQWRLDataPropertyResultValue value = resultManager.getDataProperty(columnName);
+    assertEquals(value.getPrefixedName(), p1PrefixedName);
+  }
+
+  @Test public void testGetLiteral() throws Exception
 	{
 		resultManager.addColumn(columnName);
 
@@ -195,93 +299,347 @@ public class SQWRLResultManagerTest
 
 		resultManager.next();
 
-		SQWRLLiteralResultValue cellValue = resultManager.getLiteral(columnName);
+    assertTrue(resultManager.hasLiteralValue(0));
+    assertTrue(resultManager.hasLiteralValue(columnName));
 
-		assertTrue(cellValue.isInt());
-		assertEquals(cellValue.getInt(), 27);
+    SQWRLLiteralResultValue value = resultManager.getLiteral(columnName);
+
+		assertTrue(value.isInt());
+		assertEquals(value.getInt(), 27);
 	}
 
 	@Test public void testAvgAggregateFunction() throws Exception
 	{
-		resultManager.addColumn(column1Name);
-		resultManager.addAggregateColumn(column2Name, SQWRLResultNames.AvgAggregateFunction);
+		resultManager.addAggregateColumn(column1Name, SQWRLResultNames.AvgAggregateFunction);
 
 		resultManager.configured();
 
 		resultManager.openRow();
-		resultManager.addCell(valueFactory.getIndividualValue(i1IRI));
 		resultManager.addCell(valueFactory.getLiteralValue(20));
 		resultManager.closeRow();
+
 		resultManager.openRow();
-		resultManager.addCell(valueFactory.getIndividualValue(i1IRI));
 		resultManager.addCell(valueFactory.getLiteralValue(30));
 		resultManager.closeRow();
 
 		resultManager.prepared();
 
-		assertEquals(resultManager.getNumberOfColumns(), 2);
+		assertEquals(resultManager.getNumberOfColumns(), 1);
 		assertEquals(resultManager.getNumberOfRows(), 1);
 
 		resultManager.next();
 
-		SQWRLLiteralResultValue literalValue = resultManager.getLiteral(column2Name);
-		assertTrue(literalValue.isInt());
-		assertEquals(literalValue.getInt(), 25);
+		SQWRLLiteralResultValue value = resultManager.getLiteral(column1Name);
+		assertTrue(value.isInt());
+		assertEquals(value.getInt(), 25);
 	}
 
 	@Test public void testMinAggregateFunction() throws Exception
 	{
-		resultManager.addColumn(column1Name);
-		resultManager.addAggregateColumn(column2Name, SQWRLResultNames.MinAggregateFunction);
+		resultManager.addAggregateColumn(column1Name, SQWRLResultNames.MinAggregateFunction);
 
 		resultManager.configured();
 
 		resultManager.openRow();
-		resultManager.addCell(valueFactory.getIndividualValue(i1IRI));
 		resultManager.addCell(valueFactory.getLiteralValue(20));
 		resultManager.closeRow();
+
 		resultManager.openRow();
-		resultManager.addCell(valueFactory.getIndividualValue(i1IRI));
 		resultManager.addCell(valueFactory.getLiteralValue(30));
 		resultManager.closeRow();
 
 		resultManager.prepared();
 
-		assertEquals(resultManager.getNumberOfColumns(), 2);
+		assertEquals(resultManager.getNumberOfColumns(), 1);
 		assertEquals(resultManager.getNumberOfRows(), 1);
 
 		resultManager.next();
 
-		SQWRLLiteralResultValue literalValue = resultManager.getLiteral(column2Name);
-		assertTrue(literalValue.isInt());
-		assertEquals(literalValue.getInt(), 20);
+		SQWRLLiteralResultValue value = resultManager.getLiteral(column1Name);
+		assertTrue(value.isInt());
+		assertEquals(value.getInt(), 20);
 	}
 
 	@Test public void testMaxAggregateFunction() throws Exception
 	{
-		resultManager.addColumn(column1Name);
-		resultManager.addAggregateColumn(column2Name, SQWRLResultNames.MaxAggregateFunction);
+		resultManager.addAggregateColumn(column1Name, SQWRLResultNames.MaxAggregateFunction);
 
 		resultManager.configured();
 
 		resultManager.openRow();
-		resultManager.addCell(valueFactory.getIndividualValue(i1IRI));
 		resultManager.addCell(valueFactory.getLiteralValue(20));
 		resultManager.closeRow();
+
 		resultManager.openRow();
-		resultManager.addCell(valueFactory.getIndividualValue(i1IRI));
 		resultManager.addCell(valueFactory.getLiteralValue(30));
 		resultManager.closeRow();
 
 		resultManager.prepared();
 
-		assertEquals(resultManager.getNumberOfColumns(), 2);
+		assertEquals(resultManager.getNumberOfColumns(), 1);
 		assertEquals(resultManager.getNumberOfRows(), 1);
 
 		resultManager.next();
 
-		SQWRLLiteralResultValue literalValue = resultManager.getLiteral(column2Name);
-		assertTrue(literalValue.isInt());
-		assertEquals(literalValue.getInt(), 30);
+		SQWRLLiteralResultValue value = resultManager.getLiteral(column1Name);
+		assertTrue(value.isInt());
+		assertEquals(value.getInt(), 30);
 	}
+
+  @Test public void testSumAggregateFunction() throws Exception
+  {
+    resultManager.addAggregateColumn(column1Name, SQWRLResultNames.SumAggregateFunction);
+
+    resultManager.configured();
+
+    resultManager.openRow();
+    resultManager.addCell(valueFactory.getLiteralValue(20));
+    resultManager.closeRow();
+
+    resultManager.openRow();
+    resultManager.addCell(valueFactory.getLiteralValue(30));
+    resultManager.closeRow();
+
+    resultManager.prepared();
+
+    assertEquals(resultManager.getNumberOfColumns(), 1);
+    assertEquals(resultManager.getNumberOfRows(), 1);
+
+    resultManager.next();
+
+    SQWRLLiteralResultValue value = resultManager.getLiteral(column1Name);
+    assertTrue(value.isInt());
+    assertEquals(value.getInt(), 50);
+  }
+
+  @Test public void testMedianAggregateFunction() throws Exception
+  {
+    resultManager.addAggregateColumn(column1Name, SQWRLResultNames.MedianAggregateFunction);
+
+    resultManager.configured();
+
+    resultManager.openRow();
+    resultManager.addCell(valueFactory.getLiteralValue(20));
+    resultManager.closeRow();
+
+    resultManager.openRow();
+    resultManager.addCell(valueFactory.getLiteralValue(40));
+    resultManager.closeRow();
+
+    resultManager.openRow();
+    resultManager.addCell(valueFactory.getLiteralValue(30));
+    resultManager.closeRow();
+
+    resultManager.prepared();
+
+    assertEquals(resultManager.getNumberOfColumns(), 1);
+    assertEquals(resultManager.getNumberOfRows(), 1);
+
+    resultManager.next();
+
+    SQWRLLiteralResultValue value = resultManager.getLiteral(column1Name);
+    assertTrue(value.isInt());
+    assertEquals(value.getInt(), 30);
+  }
+
+  @Test public void testCountAggregateFunction() throws Exception
+  {
+    resultManager.addAggregateColumn(column1Name, SQWRLResultNames.CountAggregateFunction);
+
+    resultManager.configured();
+
+    resultManager.openRow();
+    resultManager.addCell(valueFactory.getLiteralValue(20));
+    resultManager.closeRow();
+
+    resultManager.openRow();
+    resultManager.addCell(valueFactory.getLiteralValue(30));
+    resultManager.closeRow();
+
+    resultManager.prepared();
+
+    assertEquals(resultManager.getNumberOfColumns(), 1);
+    assertEquals(resultManager.getNumberOfRows(), 1);
+
+    resultManager.next();
+
+    SQWRLLiteralResultValue value = resultManager.getLiteral(column1Name);
+    assertTrue(value.isInt());
+    assertEquals(value.getInt(), 2);
+  }
+
+  @Test public void testCountDistinctAggregateFunction() throws Exception
+  {
+    resultManager.addAggregateColumn(column1Name, SQWRLResultNames.CountDistinctAggregateFunction);
+
+    resultManager.configured();
+
+    resultManager.openRow();
+    resultManager.addCell(valueFactory.getLiteralValue(20));
+    resultManager.closeRow();
+
+    resultManager.openRow();
+    resultManager.addCell(valueFactory.getLiteralValue(20));
+    resultManager.closeRow();
+
+    resultManager.prepared();
+
+    assertEquals(resultManager.getNumberOfColumns(), 1);
+    assertEquals(resultManager.getNumberOfRows(), 1);
+
+    resultManager.next();
+
+    SQWRLLiteralResultValue value = resultManager.getLiteral(column1Name);
+    assertTrue(value.isInt());
+    assertEquals(value.getInt(), 1);
+  }
+
+  @Test public void testSetIsDistinct() throws Exception
+  {
+    resultManager.addColumn(columnName);
+    resultManager.setIsDistinct();
+    resultManager.configured();
+
+    resultManager.openRow();
+    resultManager.addCell(valueFactory.getLiteralValue(20));
+    resultManager.closeRow();
+
+    resultManager.openRow();
+    resultManager.addCell(valueFactory.getLiteralValue(20));
+    resultManager.closeRow();
+
+    resultManager.prepared();
+
+    assertEquals(resultManager.getNumberOfColumns(), 1);
+    assertEquals(resultManager.getNumberOfRows(), 1);
+  }
+
+  @Test public void testSetOrderByColumnAscending() throws Exception
+  {
+    resultManager.addColumn(columnName);
+    resultManager.setOrderByColumn(0, true);
+
+    resultManager.configured();
+
+    resultManager.openRow();
+    resultManager.addCell(valueFactory.getLiteralValue(30));
+    resultManager.closeRow();
+
+    resultManager.openRow();
+    resultManager.addCell(valueFactory.getLiteralValue(20));
+    resultManager.closeRow();
+
+    resultManager.prepared();
+
+    assertEquals(resultManager.getNumberOfColumns(), 1);
+    assertEquals(resultManager.getNumberOfRows(), 2);
+
+    assertTrue(resultManager.isOrdered());
+    assertTrue(resultManager.isOrderedAscending());
+
+    resultManager.next();
+
+    SQWRLLiteralResultValue literal1Value = resultManager.getLiteral(0);
+    assertTrue(literal1Value.isInt());
+    assertEquals(literal1Value.getInt(), 20);
+
+    resultManager.next();
+
+    SQWRLLiteralResultValue literal2Value = resultManager.getLiteral(0);
+    assertTrue(literal2Value.isInt());
+    assertEquals(literal2Value.getInt(), 30);
+  }
+
+  @Test public void testSetOrderByColumnDescending() throws Exception
+  {
+    resultManager.addColumn(columnName);
+    resultManager.setOrderByColumn(0, false);
+
+    resultManager.configured();
+
+    resultManager.openRow();
+    resultManager.addCell(valueFactory.getLiteralValue(30));
+    resultManager.closeRow();
+
+    resultManager.openRow();
+    resultManager.addCell(valueFactory.getLiteralValue(20));
+    resultManager.closeRow();
+
+    resultManager.prepared();
+
+    assertEquals(resultManager.getNumberOfColumns(), 1);
+    assertEquals(resultManager.getNumberOfRows(), 2);
+
+    assertTrue(resultManager.isOrdered());
+    assertFalse(resultManager.isOrderedAscending());
+
+    resultManager.next();
+
+    SQWRLLiteralResultValue literal1Value = resultManager.getLiteral(0);
+    assertTrue(literal1Value.isInt());
+    assertEquals(literal1Value.getInt(), 30);
+
+    resultManager.next();
+
+    SQWRLLiteralResultValue literal2Value = resultManager.getLiteral(0);
+    assertTrue(literal2Value.isInt());
+    assertEquals(literal2Value.getInt(), 20);
+  }
+
+  @Test public void testSetLimit() throws Exception
+  {
+    resultManager.addColumn(columnName);
+    resultManager.setLimit(2);
+
+    resultManager.configured();
+
+    resultManager.openRow();
+    resultManager.addCell(valueFactory.getLiteralValue(20));
+    resultManager.closeRow();
+
+    resultManager.openRow();
+    resultManager.addCell(valueFactory.getLiteralValue(40));
+    resultManager.closeRow();
+
+    resultManager.openRow();
+    resultManager.addCell(valueFactory.getLiteralValue(30));
+    resultManager.closeRow();
+
+    resultManager.prepared();
+
+    assertEquals(resultManager.getNumberOfColumns(), 1);
+    assertEquals(resultManager.getNumberOfRows(), 2);
+  }
+
+  @Test public void testSetNth() throws Exception
+  {
+    resultManager.addColumn(columnName);
+    resultManager.setNth(2);
+
+    resultManager.configured();
+
+    resultManager.openRow();
+    resultManager.addCell(valueFactory.getLiteralValue(20));
+    resultManager.closeRow();
+
+    resultManager.openRow();
+    resultManager.addCell(valueFactory.getLiteralValue(40));
+    resultManager.closeRow();
+
+    resultManager.openRow();
+    resultManager.addCell(valueFactory.getLiteralValue(30));
+    resultManager.closeRow();
+
+    resultManager.prepared();
+
+    assertEquals(resultManager.getNumberOfColumns(), 1);
+    assertEquals(resultManager.getNumberOfRows(), 1);
+
+    resultManager.next();
+
+    SQWRLLiteralResultValue value = resultManager.getLiteral(0);
+    assertTrue(value.isInt());
+    assertEquals(value.getInt(), 40);
+  }
+
 }

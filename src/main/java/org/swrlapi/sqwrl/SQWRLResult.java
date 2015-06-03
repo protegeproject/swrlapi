@@ -1,7 +1,6 @@
 package org.swrlapi.sqwrl;
 
-import java.util.List;
-
+import checkers.nullness.quals.NonNull;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
@@ -11,7 +10,7 @@ import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLResultValue;
 
-import checkers.nullness.quals.NonNull;
+import java.util.List;
 
 /**
  * Interface that defines methods to process results from a SQWRL query.
@@ -65,8 +64,9 @@ public interface SQWRLResult
 	void reset() throws SQWRLException;
 
 	/**
-	 * @return Advance to the next row
-	 * @throws SQWRLException If we are at the end of the result
+	 * Advance to the next row
+	 * @return True if we are not at the end of the result
+	 * @throws SQWRLException If the result is not prepared
 	 */
 	boolean next() throws SQWRLException;
 

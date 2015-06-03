@@ -489,7 +489,7 @@ class DefaultSQWRLQuery implements SQWRLQuery
 
     if (selectedVariable2ColumnIndices.containsKey(variablePrefixedName)) {
       for (int selectedColumnIndex : selectedVariable2ColumnIndices.get(variablePrefixedName))
-        this.sqwrlResult.addOrderByColumn(selectedColumnIndex, true);
+        this.sqwrlResult.setOrderByColumn(selectedColumnIndex, true);
     } else
       throw new SQWRLException("variable ?" + variableName + " must be selected before it can be ordered");
   }
@@ -502,7 +502,7 @@ class DefaultSQWRLQuery implements SQWRLQuery
 
     if (selectedVariable2ColumnIndices.containsKey(variablePrefixedName)) {
       for (int selectedColumnIndex : selectedVariable2ColumnIndices.get(variablePrefixedName))
-        this.sqwrlResult.addOrderByColumn(selectedColumnIndex, false);
+        this.sqwrlResult.setOrderByColumn(selectedColumnIndex, false);
     } else
       throw new SQWRLException("variable ?" + variableName + " must be selected before it can be ordered");
   }
