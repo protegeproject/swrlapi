@@ -123,11 +123,18 @@ public interface SQWRLResultGenerator
 	 */
 	void prepared() throws SQWRLException;
 
-	// nth, firstN, etc. are 1-based index
 	void setLimit(int limit);
 
+	/**
+	 *
+	 * @param nth 1-based index
+	 */
 	void setNth(int nth);
 
+	/**
+	 *
+	 * @param nth 1-based index
+	 */
 	void setNotNth(int nth);
 
 	void setFirst();
@@ -146,11 +153,31 @@ public interface SQWRLResultGenerator
 
 	void setNotLast(int n);
 
-	void setNthSlice(int n, int sliceSize);
+	/**
+	 *
+	 * @param nth 1-based index
+	 * @param  sliceSize size of the slice
+	 */
+	void setNthSlice(int nth, int sliceSize);
 
-	void setNotNthSlice(int n, int sliceSize);
+	/**
+	 *
+	 * @param nth 1-based index
+	 * @param  sliceSize size of the slice
+	 */
+	void setNotNthSlice(int nth, int sliceSize);
 
-	void setNthLastSlice(int n, int sliceSize);
+	/**
+	 *
+	 * @param nth 1-based index
+	 * @param  sliceSize size of the slice
+	 */
+	void setNthLastSlice(int nth, int sliceSize);
 
-	void setNotNthLastSlice(int n, int sliceSize);
+	/**
+	 *
+	 * @param nth 1-based index
+	 * @param  sliceSize size of the slice
+	 */
+	void setNotNthLastSlice(int nth, int sliceSize);
 }

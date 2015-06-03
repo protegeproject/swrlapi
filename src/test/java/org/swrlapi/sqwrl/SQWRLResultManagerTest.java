@@ -589,6 +589,7 @@ public class SQWRLResultManagerTest
   @Test public void testSetLimit() throws Exception
   {
     resultManager.addColumn(columnName);
+
     resultManager.setLimit(2);
 
     resultManager.configured();
@@ -611,9 +612,10 @@ public class SQWRLResultManagerTest
     assertEquals(resultManager.getNumberOfRows(), 2);
   }
 
-  @Test public void testSetNth() throws Exception
+	@Test public void testSetNth() throws Exception
   {
     resultManager.addColumn(columnName);
+
     resultManager.setNth(2);
 
     resultManager.configured();
@@ -642,4 +644,248 @@ public class SQWRLResultManagerTest
     assertEquals(value.getInt(), 40);
   }
 
+	@Test public void testSetNotNth() throws Exception
+	{
+		resultManager.addColumn(columnName);
+
+		resultManager.setNotNth(2);
+
+		resultManager.configured();
+
+		resultManager.openRow();
+		resultManager.addCell(valueFactory.getLiteralValue(20));
+		resultManager.closeRow();
+
+		resultManager.openRow();
+		resultManager.addCell(valueFactory.getLiteralValue(40));
+		resultManager.closeRow();
+
+		resultManager.openRow();
+		resultManager.addCell(valueFactory.getLiteralValue(30));
+		resultManager.closeRow();
+
+		resultManager.prepared();
+
+		assertEquals(resultManager.getNumberOfColumns(), 1);
+		assertEquals(resultManager.getNumberOfRows(), 2);
+
+		resultManager.next();
+
+		assertTrue(resultManager.getLiteral(0).isInt());
+		assertEquals(resultManager.getLiteral(0).getInt(), 20);
+
+		resultManager.next();
+
+		assertTrue(resultManager.getLiteral(0).isInt());
+		assertEquals(resultManager.getLiteral(0).getInt(), 30);
+	}
+
+	@Test public void testSetFirst() throws Exception
+	{
+		resultManager.addColumn(columnName);
+
+		resultManager.setFirst();
+
+		resultManager.configured();
+
+		resultManager.openRow();
+		resultManager.addCell(valueFactory.getLiteralValue(20));
+		resultManager.closeRow();
+
+		resultManager.openRow();
+		resultManager.addCell(valueFactory.getLiteralValue(40));
+		resultManager.closeRow();
+
+		resultManager.openRow();
+		resultManager.addCell(valueFactory.getLiteralValue(30));
+		resultManager.closeRow();
+
+		resultManager.prepared();
+
+		assertEquals(resultManager.getNumberOfColumns(), 1);
+		assertEquals(resultManager.getNumberOfRows(), 1);
+
+		resultManager.next();
+
+		assertTrue(resultManager.getLiteral(0).isInt());
+		assertEquals(resultManager.getLiteral(0).getInt(), 20);
+	}
+
+	@Test public void testSetFirstN() throws Exception
+	{
+		resultManager.addColumn(columnName);
+
+		resultManager.setFirst(2);
+
+		resultManager.configured();
+
+		resultManager.openRow();
+		resultManager.addCell(valueFactory.getLiteralValue(20));
+		resultManager.closeRow();
+
+		resultManager.openRow();
+		resultManager.addCell(valueFactory.getLiteralValue(40));
+		resultManager.closeRow();
+
+		resultManager.openRow();
+		resultManager.addCell(valueFactory.getLiteralValue(30));
+		resultManager.closeRow();
+
+		resultManager.prepared();
+
+		assertEquals(resultManager.getNumberOfColumns(), 1);
+		assertEquals(resultManager.getNumberOfRows(), 2);
+
+		resultManager.next();
+
+		assertTrue(resultManager.getLiteral(0).isInt());
+		assertEquals(resultManager.getLiteral(0).getInt(), 20);
+
+		resultManager.next();
+
+		assertTrue(resultManager.getLiteral(0).isInt());
+		assertEquals(resultManager.getLiteral(0).getInt(), 40);
+	}
+
+	@Test public void testSetLastN() throws Exception
+	{
+		resultManager.addColumn(columnName);
+
+		resultManager.setLast(2);
+
+		resultManager.configured();
+
+		resultManager.openRow();
+		resultManager.addCell(valueFactory.getLiteralValue(20));
+		resultManager.closeRow();
+
+		resultManager.openRow();
+		resultManager.addCell(valueFactory.getLiteralValue(40));
+		resultManager.closeRow();
+
+		resultManager.openRow();
+		resultManager.addCell(valueFactory.getLiteralValue(30));
+		resultManager.closeRow();
+
+		resultManager.prepared();
+
+		assertEquals(resultManager.getNumberOfColumns(), 1);
+		assertEquals(resultManager.getNumberOfRows(), 2);
+
+		resultManager.next();
+
+		assertTrue(resultManager.getLiteral(0).isInt());
+		assertEquals(resultManager.getLiteral(0).getInt(), 40);
+
+		resultManager.next();
+
+		assertTrue(resultManager.getLiteral(0).isInt());
+		assertEquals(resultManager.getLiteral(0).getInt(), 30);
+	}
+
+	@Test public void testSetLast() throws Exception
+	{
+		resultManager.addColumn(columnName);
+
+		resultManager.setLast();
+
+		resultManager.configured();
+
+		resultManager.openRow();
+		resultManager.addCell(valueFactory.getLiteralValue(20));
+		resultManager.closeRow();
+
+		resultManager.openRow();
+		resultManager.addCell(valueFactory.getLiteralValue(40));
+		resultManager.closeRow();
+
+		resultManager.openRow();
+		resultManager.addCell(valueFactory.getLiteralValue(30));
+		resultManager.closeRow();
+
+		resultManager.prepared();
+
+		assertEquals(resultManager.getNumberOfColumns(), 1);
+		assertEquals(resultManager.getNumberOfRows(), 1);
+
+		resultManager.next();
+
+		assertTrue(resultManager.getLiteral(0).isInt());
+		assertEquals(resultManager.getLiteral(0).getInt(), 30);
+	}
+//	void setNotFirst();
+//	void setNotFirst(int n);
+//	void setNotLast();
+//	void setNotLast(int n);
+
+	@Test public void testNthSlice() throws Exception
+	{
+		resultManager.addColumn(columnName);
+
+		resultManager.setNthSlice(2, 2);
+
+		resultManager.configured();
+
+		resultManager.openRow();
+		resultManager.addCell(valueFactory.getLiteralValue(20));
+		resultManager.closeRow();
+
+		resultManager.openRow();
+		resultManager.addCell(valueFactory.getLiteralValue(40));
+		resultManager.closeRow();
+
+		resultManager.openRow();
+		resultManager.addCell(valueFactory.getLiteralValue(30));
+		resultManager.closeRow();
+
+		resultManager.prepared();
+
+		assertEquals(resultManager.getNumberOfColumns(), 1);
+		assertEquals(resultManager.getNumberOfRows(), 2);
+
+		resultManager.next();
+
+		assertTrue(resultManager.getLiteral(0).isInt());
+		assertEquals(resultManager.getLiteral(0).getInt(), 40);
+
+		resultManager.next();
+
+		assertTrue(resultManager.getLiteral(0).isInt());
+		assertEquals(resultManager.getLiteral(0).getInt(), 30);
+	}
+
+	@Test public void testNotNthSlice() throws Exception
+	{
+		resultManager.addColumn(columnName);
+
+		resultManager.setNotNthSlice(2, 2);
+
+		resultManager.configured();
+
+		resultManager.openRow();
+		resultManager.addCell(valueFactory.getLiteralValue(20));
+		resultManager.closeRow();
+
+		resultManager.openRow();
+		resultManager.addCell(valueFactory.getLiteralValue(40));
+		resultManager.closeRow();
+
+		resultManager.openRow();
+		resultManager.addCell(valueFactory.getLiteralValue(30));
+		resultManager.closeRow();
+
+		resultManager.prepared();
+
+		assertEquals(resultManager.getNumberOfColumns(), 1);
+		assertEquals(resultManager.getNumberOfRows(), 1);
+
+		resultManager.next();
+
+		assertTrue(resultManager.getLiteral(0).isInt());
+		assertEquals(resultManager.getLiteral(0).getInt(), 20);
+	}
+
+//	void setNthLastSlice(int nth, int sliceSize);
+//	void setNotNthLastSlice(int nth, int sliceSize);
+//
 }
