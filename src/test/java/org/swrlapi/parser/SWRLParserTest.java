@@ -1,4 +1,4 @@
-package org.swrlapi;
+package org.swrlapi.parser;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +16,7 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 
-public class SWRLParserTestCase extends SWRLAPIIntegrationTestBase
+public class SWRLParserTest extends SWRLAPIIntegrationTestBase
 {
   @Before
   public void setUp() throws OWLOntologyCreationException

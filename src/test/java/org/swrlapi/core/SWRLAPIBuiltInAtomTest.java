@@ -1,7 +1,7 @@
 package org.swrlapi.core;
 
-import junit.framework.TestCase;
 import org.junit.Before;
+import org.junit.Test;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
@@ -28,17 +28,17 @@ public class SWRLAPIBuiltInAtomTest
 		this.atom = SWRLAPIFactory.createSWRLAPIBuiltInAtom(ruleName, builtInIRI, builtInName, arguments);
 	}
 
-	public void testGetRuleName() throws Exception
+	@Test public void testGetRuleName() throws Exception
 	{
 		assertEquals(atom.getRuleName(), ruleName);
 	}
 
-	public void testGetBuiltInPrefixedName() throws Exception
+	@Test public void testGetBuiltInPrefixedName() throws Exception
 	{
 		assertEquals(atom.getBuiltInPrefixedName(), builtInName);
 	}
 
-	public void testGetBuiltInIRI() throws Exception
+	@Test public void testGetBuiltInIRI() throws Exception
 	{
 		assertEquals(atom.getBuiltInIRI(), builtInIRI);
 	}

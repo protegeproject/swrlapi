@@ -1,4 +1,4 @@
-package org.swrlapi.core;
+package org.swrlapi.literal;
 
 import org.junit.Test;
 import org.swrlapi.literal.OWLLiteralValidator;

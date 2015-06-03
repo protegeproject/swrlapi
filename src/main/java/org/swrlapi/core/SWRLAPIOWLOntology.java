@@ -41,104 +41,105 @@ import java.util.Set;
  *
  * @see org.swrlapi.core.SWRLAPIRule
  * @see org.swrlapi.sqwrl.SQWRLQuery
+ * @see org.semanticweb.owlapi.model.OWLOntology
  */
 public interface SWRLAPIOWLOntology
 {
-  // Methods for handling SWRL Rules
+	// Methods for handling SWRL Rules
 
-  @NonNull Set<SWRLAPIRule> getSWRLRules();
+	@NonNull Set<SWRLAPIRule> getSWRLRules();
 
-  @NonNull SWRLAPIRule getSWRLRule(@NonNull String ruleName) throws SWRLRuleException;
+	@NonNull SWRLAPIRule getSWRLRule(@NonNull String ruleName) throws SWRLRuleException;
 
-  @NonNull SWRLAPIRule createSWRLRule(@NonNull String ruleName, @NonNull String rule) throws SWRLParseException;
+	@NonNull SWRLAPIRule createSWRLRule(@NonNull String ruleName, @NonNull String rule) throws SWRLParseException;
 
-  @NonNull SWRLAPIRule createSWRLRule(@NonNull String ruleName, @NonNull String rule, @NonNull String comment,
-    boolean isActive) throws SWRLParseException;
+	@NonNull SWRLAPIRule createSWRLRule(@NonNull String ruleName, @NonNull String rule, @NonNull String comment,
+			boolean isActive) throws SWRLParseException;
 
-  void deleteSWRLRule(@NonNull String ruleName);
+	void deleteSWRLRule(@NonNull String ruleName);
 
-  boolean isSWRLBuiltIn(
-    @NonNull IRI iri); // The SWRLAPI provides built-ins beyond the core set defined in the SWRL submission.
+	boolean isSWRLBuiltIn(
+			@NonNull IRI iri); // The SWRLAPI provides built-ins beyond the core set defined in the SWRL submission.
 
-  void addSWRLBuiltIn(@NonNull IRI iri);
+	void addSWRLBuiltIn(@NonNull IRI iri);
 
-  @NonNull Set<IRI> getSWRLBuiltInIRIs();
+	@NonNull Set<IRI> getSWRLBuiltInIRIs();
 
-  @NonNull SWRLParser createSWRLParser();
+	@NonNull SWRLParser createSWRLParser();
 
-  @NonNull SWRLAutoCompleter createSWRLAutoCompleter();
+	@NonNull SWRLAutoCompleter createSWRLAutoCompleter();
 
-  @NonNull SWRLRuleRenderer createSWRLRuleRenderer();
+	@NonNull SWRLRuleRenderer createSWRLRuleRenderer();
 
-  // Methods for handling SQWRL Queries
+	// Methods for handling SQWRL Queries
 
-  @NonNull SQWRLQuery createSQWRLQuery(@NonNull String queryName, @NonNull String query)
-    throws SWRLParseException, SQWRLException;
+	@NonNull SQWRLQuery createSQWRLQuery(@NonNull String queryName, @NonNull String query)
+			throws SWRLParseException, SQWRLException;
 
-  @NonNull SQWRLQuery createSQWRLQuery(@NonNull String queryName, @NonNull String query, @NonNull String comment,
-    boolean isActive) throws SWRLParseException, SQWRLException;
+	@NonNull SQWRLQuery createSQWRLQuery(@NonNull String queryName, @NonNull String query, @NonNull String comment,
+			boolean isActive) throws SWRLParseException, SQWRLException;
 
-  @NonNull SQWRLQuery getSQWRLQuery(@NonNull String queryName) throws SQWRLException;
+	@NonNull SQWRLQuery getSQWRLQuery(@NonNull String queryName) throws SQWRLException;
 
-  @NonNull SQWRLResult getSQWRLResult(@NonNull String queryName) throws SQWRLException;
+	@NonNull SQWRLResult getSQWRLResult(@NonNull String queryName) throws SQWRLException;
 
-  int getNumberOfSQWRLQueries();
+	int getNumberOfSQWRLQueries();
 
-  @NonNull Set<String> getSQWRLQueryNames();
+	@NonNull Set<String> getSQWRLQueryNames();
 
-  @NonNull Set<SQWRLQuery> getSQWRLQueries();
+	@NonNull Set<SQWRLQuery> getSQWRLQueries();
 
-  @NonNull SQWRLResultGenerator getSQWRLResultGenerator(@NonNull String queryName) throws SQWRLException;
+	@NonNull SQWRLResultGenerator getSQWRLResultGenerator(@NonNull String queryName) throws SQWRLException;
 
-  @NonNull SQWRLResultGenerator createSQWRLResultGenerator();
+	@NonNull SQWRLResultGenerator createSQWRLResultGenerator();
 
-  @NonNull SQWRLQueryRenderer createSQWRLQueryRenderer();
+	@NonNull SQWRLQueryRenderer createSQWRLQueryRenderer();
 
-  // Process methods
+	// Process methods
 
-  void reset();
+	void reset();
 
-  void processOntology() throws SQWRLException;
+	void processOntology() throws SQWRLException;
 
-  // Optimization methods
+	// Optimization methods
 
-  void startBulkConversion(); // Can be used, for example, to switch off notification during bulk conversion.
+	void startBulkConversion(); // Can be used, for example, to switch off notification during bulk conversion.
 
-  void completeBulkConversion();
+	void completeBulkConversion();
 
-  boolean hasOntologyChanged();
+	boolean hasOntologyChanged();
 
-  void resetOntologyChanged();
+	void resetOntologyChanged();
 
-  // Axiom counting methods
+	// Axiom counting methods
 
-  boolean hasAssertedOWLAxiom(OWLAxiom axiom);
+	boolean hasAssertedOWLAxiom(OWLAxiom axiom);
 
-  @NonNull Set<OWLAxiom> getOWLAxioms();
+	@NonNull Set<OWLAxiom> getOWLAxioms();
 
-  int getNumberOfSWRLRules();
+	int getNumberOfSWRLRules();
 
-  int getNumberOfOWLAxioms();
+	int getNumberOfOWLAxioms();
 
-  int getNumberOfOWLClassDeclarationAxioms();
+	int getNumberOfOWLClassDeclarationAxioms();
 
-  int getNumberOfOWLIndividualDeclarationAxioms();
+	int getNumberOfOWLIndividualDeclarationAxioms();
 
-  int getNumberOfOWLObjectPropertyDeclarationAxioms();
+	int getNumberOfOWLObjectPropertyDeclarationAxioms();
 
-  int getNumberOfOWLDataPropertyDeclarationAxioms();
+	int getNumberOfOWLDataPropertyDeclarationAxioms();
 
-  // Utility methods
+	// Utility methods
 
-  @NonNull SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory();
+	@NonNull SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory();
 
-  @NonNull IRIResolver getIRIResolver();
+	@NonNull IRIResolver getIRIResolver();
 
-  @NonNull OWLOntologyManager getOWLOntologyManager();
+	@NonNull OWLOntologyManager getOWLOntologyManager();
 
-  @NonNull DefaultPrefixManager getPrefixManager();
+	@NonNull DefaultPrefixManager getPrefixManager();
 
-  @NonNull OWLOntology getOWLOntology();
+	@NonNull OWLOntology getOWLOntology();
 
-  @NonNull OWLDataFactory getOWLDataFactory();
+	@NonNull OWLDataFactory getOWLDataFactory();
 }

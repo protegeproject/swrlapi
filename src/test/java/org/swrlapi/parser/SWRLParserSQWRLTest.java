@@ -1,4 +1,4 @@
-package org.swrlapi;
+package org.swrlapi.parser;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -7,7 +7,7 @@ import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.test.SWRLAPIIntegrationTestBase;
 
-public class SWRLParserSQWRLTestCase extends SWRLAPIIntegrationTestBase
+public class SWRLParserSQWRLTest extends SWRLAPIIntegrationTestBase
 {
   @Before
   public void setUp() throws OWLOntologyCreationException
