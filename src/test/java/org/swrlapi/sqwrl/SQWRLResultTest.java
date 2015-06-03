@@ -13,26 +13,22 @@ import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.factory.SQWRLResultValueFactory;
 import org.swrlapi.factory.SWRLAPIFactory;
 import org.swrlapi.resolvers.IRIResolver;
-import org.swrlapi.sqwrl.exceptions.SQWRLException;
+import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
 import org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLIndividualResultValue;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
+ * @see SQWRLResult
  * @see SQWRLResultManager
  */
-public class SQWRLResultManagerTest
+public class SQWRLResultTest
 {
   private OWLOntologyManager ontologyManager;
 	private OWLOntology ontology;
@@ -67,39 +63,6 @@ public class SQWRLResultManagerTest
 		prefixManager.setPrefix(TestPrefix, TestNamespace);
 	}
 
-	@Test public void testAddColumns() throws Exception
-	{
-		List<String> columnNames = Stream.of("a", "b").collect(Collectors.toCollection(ArrayList::new));
-		resultManager.addColumns(columnNames);
-		resultManager.configured();
-
-		assertEquals(columnNames, resultManager.getColumnNames());
-	}
-
-	@Test public void testAddColumn() throws Exception
-	{
-		resultManager.addColumn(columnName);
-		resultManager.configured();
-
-		assertEquals(columnName, resultManager.getColumnName(0));
-	}
-
-	@Test public void testGetColumnNamesPreConfiguration() throws Exception
-	{
-		thrown.expect(SQWRLException.class);
-		thrown.expectMessage("attempt to do post-configuration operations before configuration");
-
-		resultManager.getColumnNames();
-	}
-
-	@Test public void testGetColumnNamePreConfiguration() throws Exception
-	{
-		thrown.expect(SQWRLException.class);
-		thrown.expectMessage("attempt to do post-configuration operations before configuration");
-
-		resultManager.getColumnName(0);
-	}
-
 	@Test public void testEmptyResult() throws Exception
 	{
 		resultManager.configured();
@@ -109,49 +72,6 @@ public class SQWRLResultManagerTest
 		assertTrue(resultManager.isPrepared());
 		assertEquals(resultManager.getNumberOfColumns(), 0);
 		assertEquals(resultManager.getNumberOfRows(), 0);
-	}
-
-	@Test public void testPreparedWithoutConfigured() throws Exception
-	{
-		thrown.expect(SQWRLException.class);
-		thrown.expectMessage("attempt to do post-configuration operations before configuration");
-
-		resultManager.prepared();
-	}
-
-	@Test public void testDoubleConfigured() throws Exception
-	{
-		thrown.expect(SQWRLException.class);
-		thrown.expectMessage("attempt to configure already configured result");
-
-		resultManager.configured();
-		resultManager.configured();
-	}
-
-	@Test public void testDoublePrepared() throws Exception
-	{
-		thrown.expect(SQWRLException.class);
-		thrown.expectMessage("attempt to modify prepared result");
-
-		resultManager.configured();
-		resultManager.prepared();
-		resultManager.prepared();
-	}
-
-	@Test public void testInvalidOpenRow() throws Exception
-	{
-		thrown.expect(SQWRLException.class);
-		thrown.expectMessage("attempt to do post-configuration operations before configuration");
-
-		resultManager.openRow();
-	}
-
-	@Test public void testIsRowOpen() throws Exception
-	{
-		resultManager.configured();
-		resultManager.prepared();
-
-		assertFalse(resultManager.isRowOpen());
 	}
 
 	@Test public void testGetNumberOfColumns() throws Exception
@@ -281,6 +201,30 @@ public class SQWRLResultManagerTest
     SQWRLDataPropertyResultValue value = resultManager.getDataProperty(columnName);
     assertEquals(value.getPrefixedName(), p1PrefixedName);
   }
+
+	@Test public void testGetAnnotationProperty() throws Exception
+	{
+		resultManager.addColumn(columnName);
+
+		resultManager.configured();
+
+		resultManager.openRow();
+		resultManager.addCell(valueFactory.getAnnotationPropertyValue(p1IRI));
+		resultManager.closeRow();
+
+		resultManager.prepared();
+
+		assertEquals(resultManager.getNumberOfColumns(), 1);
+		assertEquals(resultManager.getNumberOfRows(), 1);
+
+		resultManager.next();
+
+		assertTrue(resultManager.hasAnnotationPropertyValue(0));
+		assertTrue(resultManager.hasAnnotationPropertyValue(columnName));
+
+		SQWRLAnnotationPropertyResultValue value = resultManager.getAnnotationProperty(columnName);
+		assertEquals(value.getPrefixedName(), p1PrefixedName);
+	}
 
   @Test public void testGetLiteral() throws Exception
 	{
