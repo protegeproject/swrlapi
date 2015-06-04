@@ -67,7 +67,7 @@ import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIOntologyProcessor;
 import org.swrlapi.core.SWRLAPIRule;
-import org.swrlapi.resolvers.IRIResolver;
+import org.swrlapi.core.IRIResolver;
 import org.swrlapi.exceptions.SWRLRuleException;
 import org.swrlapi.sqwrl.SQWRLQuery;
 import org.swrlapi.sqwrl.SQWRLResult;
@@ -376,7 +376,7 @@ class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 	 * axioms (with an instance of the {@link DefaultIRIResolver} class) and generating declaration
 	 * axioms for these properties.
 	 * <p>
-	 * TODO The current approach is clunky. A better approach would be to walk the axioms with a visitor and record the
+	 * TODO The current approach is clunky. A better approach would be to walk the axioms with a visitor and recordOWLClassExpression the
 	 * properties and generate the declaration axioms.
 	 */
 	private void processOWLAxioms()

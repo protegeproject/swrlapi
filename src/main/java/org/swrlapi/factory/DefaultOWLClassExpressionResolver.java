@@ -4,12 +4,12 @@ import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
-import org.swrlapi.resolvers.OWLClassExpressionResolver;
+import org.swrlapi.bridge.resolvers.OWLClassExpressionResolver;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class DefaultOWLClassExpressionResolver implements OWLClassExpressionResolver
+class DefaultOWLClassExpressionResolver implements OWLClassExpressionResolver
 {
   @NonNull private final Map<String, OWLClassExpression> id2OWLClassExpression;
   @NonNull private final Map<OWLClassExpression, String> owlClassExpression2ID;
@@ -32,22 +32,23 @@ public class DefaultOWLClassExpressionResolver implements OWLClassExpressionReso
   {
     this.id2OWLClassExpression.clear();
     this.owlClassExpression2ID.clear();
-    record(OWLRDFVocabulary.OWL_THING.getPrefixedName(), getOWLDataFactory().getOWLThing());
-    record(OWLRDFVocabulary.OWL_NOTHING.getPrefixedName(), getOWLDataFactory().getOWLNothing());
+    recordOWLClassExpression(OWLRDFVocabulary.OWL_THING.getPrefixedName(), getOWLDataFactory().getOWLThing());
+    recordOWLClassExpression(OWLRDFVocabulary.OWL_NOTHING.getPrefixedName(), getOWLDataFactory().getOWLNothing());
   }
 
-  @Override public void record(@NonNull String classExpressionID, @NonNull OWLClassExpression classExpression)
+  @Override public void recordOWLClassExpression(@NonNull String classExpressionID,
+      @NonNull OWLClassExpression classExpression)
   {
     this.id2OWLClassExpression.put(classExpressionID, classExpression);
     this.owlClassExpression2ID.put(classExpression, classExpressionID);
   }
 
-  @Override public boolean records(@NonNull OWLClassExpression owlClassExpression)
+  @Override public boolean recordsOWLClassExpression(@NonNull OWLClassExpression owlClassExpression)
   {
     return this.owlClassExpression2ID.containsKey(owlClassExpression);
   }
 
-  @Override @NonNull public String resolve(@NonNull OWLClassExpression owlClassExpression)
+  @Override @NonNull public String resolveOWLClassExpression(@NonNull OWLClassExpression owlClassExpression)
   {
     if (this.owlClassExpression2ID.containsKey(owlClassExpression))
      return this.owlClassExpression2ID.get(owlClassExpression);
@@ -55,7 +56,7 @@ public class DefaultOWLClassExpressionResolver implements OWLClassExpressionReso
       throw new IllegalArgumentException("no ID found for class expression " + owlClassExpression);
   }
 
-  @Override @NonNull public OWLClassExpression resolve(@NonNull String classExpressionID)
+  @Override @NonNull public OWLClassExpression resolveOWLClassExpression(@NonNull String classExpressionID)
   {
     if (this.id2OWLClassExpression.containsKey(classExpressionID))
       return this.id2OWLClassExpression.get(classExpressionID);

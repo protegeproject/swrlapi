@@ -25,7 +25,7 @@ import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
 import org.swrlapi.exceptions.SWRLRuleEngineException;
 import org.swrlapi.literal.Literal;
 import org.swrlapi.owl2rl.OWL2RLPersistenceLayer;
-import org.swrlapi.resolvers.IRIResolver;
+import org.swrlapi.core.IRIResolver;
 import org.swrlapi.sqwrl.SQWRLQuery;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.SQWRLQueryRenderer;

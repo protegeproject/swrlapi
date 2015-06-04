@@ -2,19 +2,14 @@ package org.swrlapi.factory;
 
 import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLDataFactory;
-import org.swrlapi.factory.DefaultOWLClassExpressionResolver;
-import org.swrlapi.factory.DefaultOWLDataPropertyExpressionResolver;
-import org.swrlapi.factory.DefaultOWLDataRangeResolver;
-import org.swrlapi.factory.DefaultOWLIndividualResolver;
-import org.swrlapi.factory.DefaultOWLObjectPropertyExpressionResolver;
-import org.swrlapi.resolvers.OWLClassExpressionResolver;
-import org.swrlapi.resolvers.OWLDataPropertyExpressionResolver;
-import org.swrlapi.resolvers.OWLDataRangeResolver;
-import org.swrlapi.resolvers.OWLIndividualResolver;
-import org.swrlapi.resolvers.OWLObjectPropertyExpressionResolver;
-import org.swrlapi.resolvers.OWLResolver;
+import org.swrlapi.bridge.resolvers.OWLClassExpressionResolver;
+import org.swrlapi.bridge.resolvers.OWLDataPropertyExpressionResolver;
+import org.swrlapi.bridge.resolvers.OWLDataRangeResolver;
+import org.swrlapi.bridge.resolvers.OWLIndividualResolver;
+import org.swrlapi.bridge.resolvers.OWLObjectPropertyExpressionResolver;
+import org.swrlapi.bridge.resolvers.OWLObjectResolver;
 
-public class DefaultOWLResolver implements OWLResolver
+class DefaultOWLObjectResolver implements OWLObjectResolver
 {
   private final @NonNull OWLClassExpressionResolver owlClassExpressionResolver;
   private final @NonNull OWLIndividualResolver owlIndividualExpressionResolver;
@@ -22,7 +17,7 @@ public class DefaultOWLResolver implements OWLResolver
   private final @NonNull OWLDataPropertyExpressionResolver owlDataPropertyExpressionResolver;
   private final @NonNull OWLDataRangeResolver owlDataRangeResolver;
 
-  public DefaultOWLResolver(@NonNull OWLDataFactory owlDataFactory)
+  public DefaultOWLObjectResolver(@NonNull OWLDataFactory owlDataFactory)
   {
     this.owlClassExpressionResolver = new DefaultOWLClassExpressionResolver(owlDataFactory);
     this.owlIndividualExpressionResolver = new DefaultOWLIndividualResolver();

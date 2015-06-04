@@ -1,4 +1,4 @@
-package org.swrlapi.resolvers;
+package org.swrlapi.bridge.resolvers;
 
 import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLClassExpression;
@@ -16,17 +16,17 @@ public interface OWLClassExpressionResolver
 {
   void reset();
 
-  void record(@NonNull String classExpressionID, @NonNull OWLClassExpression classExpression);
+  void recordOWLClassExpression(@NonNull String classExpressionID, @NonNull OWLClassExpression classExpression);
 
-  boolean records(@NonNull OWLClassExpression owlClassExpression);
+  boolean recordsOWLClassExpression(@NonNull OWLClassExpression owlClassExpression);
 
   /**
    *
-   * @param owlClassExpression A class expression to resolve
+   * @param owlClassExpression A class expression to resolveOWLClassExpression
    * @return The ID of the resolved class expression
    * @throws IllegalArgumentException If the class expression cannot be resolved
    */
-  @NonNull String resolve(@NonNull OWLClassExpression owlClassExpression);
+  @NonNull String resolveOWLClassExpression(@NonNull OWLClassExpression owlClassExpression);
 
   /**
    *
@@ -34,5 +34,5 @@ public interface OWLClassExpressionResolver
    * @return The resolved class expression
    * @throws IllegalArgumentException If the class expression ID cannot be resolved
    */
-  @NonNull OWLClassExpression resolve(@NonNull String classExpressionID);
+  @NonNull OWLClassExpression resolveOWLClassExpression(@NonNull String classExpressionID);
 }

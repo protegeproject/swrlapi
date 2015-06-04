@@ -2,7 +2,7 @@ package org.swrlapi.factory;
 
 import checkers.nullness.quals.NonNull;
 import org.swrlapi.exceptions.SWRLAPIInternalException;
-import org.swrlapi.resolvers.IRIResolver;
+import org.swrlapi.core.IRIResolver;
 import org.swrlapi.sqwrl.SQWRLResultManager;
 import org.swrlapi.sqwrl.SQWRLResultNames;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;

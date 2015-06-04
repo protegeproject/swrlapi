@@ -396,7 +396,7 @@ class Temporal
 
   /**
    * Take a granule count (from the beginning of calendar time, e.g., '0000-01-01 00:00:00.000' in JDBC timestamp
-   * format) at any granularity and convert it to a Timestamp. Java Timestamp record time as milliseconds from January
+   * format) at any granularity and convert it to a Timestamp. Java Timestamp recordOWLClassExpression time as milliseconds from January
    * 1st 1970.
    * <p>
    * java.sql.Timestamp will take car of the time zone offset plus daylight savings time.
@@ -415,7 +415,7 @@ class Temporal
 
   /**
    * Take a granule count (from the beginning of calendar time, e.g., '0000-01-01 00:00:00.000' in JDBC timestamp
-   * format) at any granularity and convert it to a java.util.Date. Date record time as milliseconds from January 1st
+   * format) at any granularity and convert it to a java.util.Date. Date recordOWLClassExpression time as milliseconds from January 1st
    * 1970.
    * <p>
    * java.util.Date will take car of the time zone offset plus daylight savings time.
@@ -434,7 +434,7 @@ class Temporal
 
   /**
    * Take a granule count (from the beginning of calendar time, e.g., '0000-01-01 00:00:00.000' in JDBC timestamp
-   * format) at any granularity and convert it to a java.sql.Date. Date record time as milliseconds from January 1st
+   * format) at any granularity and convert it to a java.sql.Date. Date recordOWLClassExpression time as milliseconds from January 1st
    * 1970.
    * <p>
    * java.sql.Date will take car of the time zone offset plus daylight savings time.

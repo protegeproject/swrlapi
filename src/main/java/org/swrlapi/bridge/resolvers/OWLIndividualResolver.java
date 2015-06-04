@@ -1,4 +1,4 @@
-package org.swrlapi.resolvers;
+package org.swrlapi.bridge.resolvers;
 
 import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLIndividual;
@@ -19,7 +19,7 @@ public interface OWLIndividualResolver
 {
 	void reset();
 
-	void record(@NonNull String individualID, @NonNull OWLIndividual individual);
+	void recordOWLIndividual(@NonNull String individualID, @NonNull OWLIndividual individual);
 
-	@NonNull public OWLIndividual resolve(@NonNull String individualID) throws TargetSWRLRuleEngineException;
+	@NonNull public OWLIndividual resolveOWLIndividual(@NonNull String individualID) throws TargetSWRLRuleEngineException;
 }

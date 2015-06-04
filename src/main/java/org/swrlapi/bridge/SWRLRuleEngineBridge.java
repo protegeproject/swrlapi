@@ -8,15 +8,11 @@ import org.swrlapi.factory.OWLDatatypeFactory;
 import org.swrlapi.factory.OWLLiteralFactory;
 import org.swrlapi.factory.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLRuleEngine;
-import org.swrlapi.resolvers.IRIResolver;
-import org.swrlapi.resolvers.OWLClassExpressionResolver;
-import org.swrlapi.resolvers.OWLDataPropertyExpressionResolver;
-import org.swrlapi.resolvers.OWLDataRangeResolver;
-import org.swrlapi.resolvers.OWLIndividualResolver;
-import org.swrlapi.resolvers.OWLObjectPropertyExpressionResolver;
+import org.swrlapi.core.IRIResolver;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLRuleEngineBridgeException;
 import org.swrlapi.owl2rl.OWL2RLPersistenceLayer;
+import org.swrlapi.bridge.resolvers.OWLObjectResolver;
 
 import java.util.List;
 
@@ -100,39 +96,11 @@ public interface SWRLRuleEngineBridge
   @NonNull IRIResolver getIRIResolver();
 
   /**
-   * A class expression resolver can be used by a target rule engine to resolve OWL class expressions.
+   * An OWL object resolver can be used by a target rule engine to resolve OWL objects.
    *
-   * @return An OWL class expression resolver
+   * @return An OWL object resolver
    */
-  @NonNull OWLClassExpressionResolver getOWLClassExpressionResolver();
-
-  /**
-   * A class expression resolver can be used by a target rule engine to resolve OWL data ranges.
-   *
-   * @return An OWL data range resolver
-   */
-  @NonNull OWLDataRangeResolver getOWLDataRangeResolver();
-
-  /**
-   * An object property expression resolver can be used by a target rule engine to resolve OWL property expressions.
-   *
-   * @return An OWL object property expression resolver
-   */
-  @NonNull OWLObjectPropertyExpressionResolver getOWLObjectPropertyExpressionResolver();
-
-  /**
-   * A data property expression resolver can be used by a target rule engine to resolve OWL property expressions.
-   *
-   * @return An OWL data property expression resolver
-   */
-  @NonNull OWLDataPropertyExpressionResolver getOWLDataPropertyExpressionResolver();
-
-  /**
-   * An individual resolver can be used by a target rule engine to resolve OWL individuals.
-   *
-   * @return An OWL individual resolver
-   */
-  @NonNull OWLIndividualResolver getOWLIndividualResolver();
+  @NonNull OWLObjectResolver getOWLObjectResolver();
 
   /**
    * Get the underlying persistence layer for the OWL 2 RL reasoner used by the rule and query engine.

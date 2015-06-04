@@ -1,11 +1,8 @@
-package org.swrlapi.resolvers;
+package org.swrlapi.bridge.resolvers;
 
 import checkers.nullness.quals.NonNull;
 
-/**
- * Created by martin on 6/3/15.
- */
-public interface OWLResolver
+public interface OWLObjectResolver
 {
 	@NonNull OWLClassExpressionResolver getOWLClassExpressionResolver();
 

@@ -6,7 +6,7 @@ import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.factory.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.factory.DefaultIRIResolver;
-import org.swrlapi.resolvers.IRIResolver;
+import org.swrlapi.core.IRIResolver;
 import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
@@ -49,7 +49,7 @@ public interface SWRLBuiltInBridge
 
   /**
    * All named objects are recorded by a {@link DefaultIRIResolver}. If a built-in injects a named
-   * object it should also record it with this resolver.
+   * object it should also recordOWLClassExpression it with this resolver.
    *
    * @return An IRI resolver
    */

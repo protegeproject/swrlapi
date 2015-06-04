@@ -9,7 +9,7 @@ import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
-import org.swrlapi.resolvers.IRIResolver;
+import org.swrlapi.core.IRIResolver;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -147,7 +147,7 @@ public class DefaultIRIResolver implements IRIResolver
     this.datatypePrefixedNames.add(prefixedName);
   }
 
-  @Override public void record(@NonNull SWRLClassBuiltInArgument classArgument)
+  @Override public void recordOWLClass(@NonNull SWRLClassBuiltInArgument classArgument)
   {
     IRI iri = classArgument.getIRI();
     String prefixedName = iri2PrefixedName(iri);
@@ -156,7 +156,7 @@ public class DefaultIRIResolver implements IRIResolver
     this.classPrefixedNames.add(prefixedName);
   }
 
-  @Override public void record(@NonNull SWRLNamedIndividualBuiltInArgument individualArgument)
+  @Override public void recordOWLIndividual(@NonNull SWRLNamedIndividualBuiltInArgument individualArgument)
   {
     IRI iri = individualArgument.getIRI();
     String prefixedName = iri2PrefixedName(iri);
@@ -165,7 +165,7 @@ public class DefaultIRIResolver implements IRIResolver
     this.namedIndividualPrefixedNames.add(prefixedName);
   }
 
-  @Override public void record(@NonNull SWRLObjectPropertyBuiltInArgument propertyArgument)
+  @Override public void recordOWLObjectProperty(@NonNull SWRLObjectPropertyBuiltInArgument propertyArgument)
   {
     IRI iri = propertyArgument.getIRI();
     String prefixedName = iri2PrefixedName(iri);
@@ -174,7 +174,7 @@ public class DefaultIRIResolver implements IRIResolver
     this.objectPropertyPrefixedNames.add(prefixedName);
   }
 
-  @Override public void record(@NonNull SWRLDataPropertyBuiltInArgument propertyArgument)
+  @Override public void recordOWLDataProperty(@NonNull SWRLDataPropertyBuiltInArgument propertyArgument)
   {
     IRI iri = propertyArgument.getIRI();
     String prefixedName = iri2PrefixedName(iri);

@@ -1,8 +1,7 @@
-package org.swrlapi.resolvers;
+package org.swrlapi.bridge.resolvers;
 
 import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLDataPropertyExpression;
-import org.swrlapi.factory.DefaultOWLObjectPropertyExpressionResolver;
 
 /**
  * This class is used to keep track of OWL data property expressions, typically by a rule engine implementation. OWL 2
@@ -12,17 +11,17 @@ import org.swrlapi.factory.DefaultOWLObjectPropertyExpressionResolver;
  * tracked via an ID and recorded and retrieved using this class.
  *
  * @see org.semanticweb.owlapi.model.OWLDataPropertyExpression
- * @see DefaultOWLObjectPropertyExpressionResolver
  */
 public interface OWLDataPropertyExpressionResolver
 {
 	void reset();
 
-	void record(@NonNull String propertyExpressionID, @NonNull OWLDataPropertyExpression propertyExpression);
+	void recordOWLDataPropertyExpression(@NonNull String propertyExpressionID,
+			@NonNull OWLDataPropertyExpression propertyExpression);
 
-	boolean records(@NonNull OWLDataPropertyExpression propertyExpression);
+	boolean recordsOWLDataPropertyExpression(@NonNull OWLDataPropertyExpression propertyExpression);
 
-	@NonNull String resolve(@NonNull OWLDataPropertyExpression propertyExpression);
+	@NonNull String resolveOWLDataPropertyExpression(@NonNull OWLDataPropertyExpression propertyExpression);
 
-	@NonNull OWLDataPropertyExpression resolve(@NonNull String propertyExpressionID);
+	@NonNull OWLDataPropertyExpression resolveOWLDataPropertyExpression(@NonNull String propertyExpressionID);
 }

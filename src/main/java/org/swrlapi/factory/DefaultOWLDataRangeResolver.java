@@ -2,12 +2,12 @@ package org.swrlapi.factory;
 
 import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLDataRange;
-import org.swrlapi.resolvers.OWLDataRangeResolver;
+import org.swrlapi.bridge.resolvers.OWLDataRangeResolver;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class DefaultOWLDataRangeResolver implements OWLDataRangeResolver
+class DefaultOWLDataRangeResolver implements OWLDataRangeResolver
 {
   @NonNull private final Map<String, OWLDataRange> dataRangeMap;
 

@@ -1,4 +1,4 @@
-package org.swrlapi.resolvers;
+package org.swrlapi.core;
 
 import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.IRI;
@@ -11,7 +11,7 @@ import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
 
 /**
  * For simplicity, SWRL rule engine implementations will typically use the prefixed names of OWL named objects to name
- * their representation of those objects. A {@link org.swrlapi.core.SWRLAPIOntologyProcessor} will record all the OWL
+ * their representation of those objects. A {@link org.swrlapi.core.SWRLAPIOntologyProcessor} will recordOWLClassExpression all the OWL
  * named objects in an ontology together with their types. Rule engines can then use this class to determine the type of
  * OWL properties using their prefixed name and to map those prefixed names to and from IRIs if necessary.
  *
@@ -49,13 +49,13 @@ public interface IRIResolver
 
   void recordOWLDatatype(@NonNull OWLEntity datatype);
 
-  void record(@NonNull SWRLClassBuiltInArgument classArgument);
+  void recordOWLClass(@NonNull SWRLClassBuiltInArgument classArgument);
 
-  void record(@NonNull SWRLNamedIndividualBuiltInArgument individualArgument);
+  void recordOWLIndividual(@NonNull SWRLNamedIndividualBuiltInArgument individualArgument);
 
-  void record(@NonNull SWRLObjectPropertyBuiltInArgument propertyArgument);
+  void recordOWLObjectProperty(@NonNull SWRLObjectPropertyBuiltInArgument propertyArgument);
 
-  void record(@NonNull SWRLDataPropertyBuiltInArgument propertyArgument);
+  void recordOWLDataProperty(@NonNull SWRLDataPropertyBuiltInArgument propertyArgument);
 
   boolean isOWLClass(@NonNull String prefixedName);
 

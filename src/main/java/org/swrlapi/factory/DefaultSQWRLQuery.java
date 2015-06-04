@@ -8,7 +8,7 @@ import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.literal.Literal;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
 import org.swrlapi.exceptions.SWRLBuiltInException;
-import org.swrlapi.resolvers.IRIResolver;
+import org.swrlapi.core.IRIResolver;
 import org.swrlapi.sqwrl.SQWRLNames;
 import org.swrlapi.sqwrl.SQWRLQuery;
 import org.swrlapi.sqwrl.SQWRLResult;
@@ -207,7 +207,7 @@ class DefaultSQWRLQuery implements SQWRLQuery
 
   private void processSQWRLHeadBuiltIns() throws SQWRLException
   {
-    // A variable can be selected multiple times. We record its positions in case of a sqwrl:orderBy clause.
+    // A variable can be selected multiple times. We recordOWLClassExpression its positions in case of a sqwrl:orderBy clause.
     Map<String, List<Integer>> selectedVariable2ColumnIndices = new HashMap<>();
 
     assignBuiltInIndexes();
@@ -604,7 +604,7 @@ class DefaultSQWRLQuery implements SQWRLQuery
       });
 
       if (isSQWRLCollectionCreateOperation(builtInAtom)) {
-        // If a collection is created we need to record it and store necessary group arguments.
+        // If a collection is created we need to recordOWLClassExpression it and store necessary group arguments.
         String createdCollectionName = builtInAtom.getArgumentVariablePrefixedName(0); // The first argument is the
         // collection
         // name.
@@ -675,7 +675,7 @@ class DefaultSQWRLQuery implements SQWRLQuery
   }
 
   /**
-   * For every built-in atom, record the variables it depends from preceding atoms (directly and indirectly).
+   * For every built-in atom, recordOWLClassExpression the variables it depends from preceding atoms (directly and indirectly).
    */
   private void generateBuiltInAtomVariableDependencies()
   {

@@ -7,7 +7,6 @@ import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
-import org.swrlapi.resolvers.IRIResolver;
 import org.swrlapi.exceptions.SWRLRuleException;
 import org.swrlapi.factory.SWRLAPIOWLDataFactory;
 import org.swrlapi.parser.SWRLParseException;

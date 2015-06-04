@@ -2,12 +2,12 @@ package org.swrlapi.factory;
 
 import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLDataPropertyExpression;
-import org.swrlapi.resolvers.OWLDataPropertyExpressionResolver;
+import org.swrlapi.bridge.resolvers.OWLDataPropertyExpressionResolver;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class DefaultOWLDataPropertyExpressionResolver implements OWLDataPropertyExpressionResolver
+class DefaultOWLDataPropertyExpressionResolver implements OWLDataPropertyExpressionResolver
 {
   @NonNull private final Map<String, OWLDataPropertyExpression> id2OWLPropertyExpression;
   @NonNull private final Map<OWLDataPropertyExpression, String> owlPropertyExpression2ID;
@@ -24,19 +24,20 @@ public class DefaultOWLDataPropertyExpressionResolver implements OWLDataProperty
     this.owlPropertyExpression2ID.clear();
   }
 
-  @Override public void record(@NonNull String propertyExpressionID,
+  @Override public void recordOWLDataPropertyExpression(@NonNull String propertyExpressionID,
       @NonNull OWLDataPropertyExpression propertyExpression)
   {
     this.id2OWLPropertyExpression.put(propertyExpressionID, propertyExpression);
     this.owlPropertyExpression2ID.put(propertyExpression, propertyExpressionID);
   }
 
-  @Override public boolean records(@NonNull OWLDataPropertyExpression propertyExpression)
+  @Override public boolean recordsOWLDataPropertyExpression(@NonNull OWLDataPropertyExpression propertyExpression)
   {
     return this.owlPropertyExpression2ID.containsKey(propertyExpression);
   }
 
-  @Override @NonNull public String resolve(@NonNull OWLDataPropertyExpression propertyExpression)
+  @Override @NonNull public String resolveOWLDataPropertyExpression(
+      @NonNull OWLDataPropertyExpression propertyExpression)
   {
     if (this.owlPropertyExpression2ID.containsKey(propertyExpression))
       return this.owlPropertyExpression2ID.get(propertyExpression);
@@ -44,7 +45,8 @@ public class DefaultOWLDataPropertyExpressionResolver implements OWLDataProperty
       throw new IllegalArgumentException("no ID found for data property expression " + propertyExpression);
   }
 
-  @Override @NonNull public OWLDataPropertyExpression resolve(@NonNull String propertyExpressionID)
+  @Override @NonNull public OWLDataPropertyExpression resolveOWLDataPropertyExpression(
+      @NonNull String propertyExpressionID)
   {
     if (this.id2OWLPropertyExpression.containsKey(propertyExpressionID))
       return this.id2OWLPropertyExpression.get(propertyExpressionID);

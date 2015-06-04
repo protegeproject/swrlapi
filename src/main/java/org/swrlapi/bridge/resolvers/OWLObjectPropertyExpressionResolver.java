@@ -1,4 +1,4 @@
-package org.swrlapi.resolvers;
+package org.swrlapi.bridge.resolvers;
 
 import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
@@ -16,11 +16,12 @@ public interface OWLObjectPropertyExpressionResolver
 {
 	void reset();
 
-	void record(@NonNull String propertyExpressionID, @NonNull OWLObjectPropertyExpression propertyExpression);
+	void recordOWLObjectPropertyExpression(@NonNull String propertyExpressionID,
+			@NonNull OWLObjectPropertyExpression propertyExpression);
 
-	boolean records(@NonNull OWLObjectPropertyExpression propertyExpression);
+	boolean recordsOWLObjectPropertyExpression(@NonNull OWLObjectPropertyExpression propertyExpression);
 
-	@NonNull String resolve(@NonNull OWLObjectPropertyExpression propertyExpression);
+	@NonNull String resolveOWLObjectPropertyExpression(@NonNull OWLObjectPropertyExpression propertyExpression);
 
-	@NonNull OWLObjectPropertyExpression resolve(@NonNull String propertyExpressionID);
+	@NonNull OWLObjectPropertyExpression resolveOWLObjectPropertyExpression(@NonNull String propertyExpressionID);
 }

@@ -11,17 +11,13 @@ import org.swrlapi.bridge.TargetSWRLRuleEngine;
 import org.swrlapi.builtins.SWRLBuiltInLibraryManager;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.SWRLAPIOWLOntology;
-import org.swrlapi.resolvers.IRIResolver;
-import org.swrlapi.resolvers.OWLClassExpressionResolver;
-import org.swrlapi.resolvers.OWLDataPropertyExpressionResolver;
-import org.swrlapi.resolvers.OWLDataRangeResolver;
-import org.swrlapi.resolvers.OWLIndividualResolver;
-import org.swrlapi.resolvers.OWLObjectPropertyExpressionResolver;
+import org.swrlapi.core.IRIResolver;
 import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLRuleEngineBridgeException;
 import org.swrlapi.exceptions.TargetSWRLRuleEngineException;
 import org.swrlapi.owl2rl.OWL2RLPersistenceLayer;
+import org.swrlapi.bridge.resolvers.OWLObjectResolver;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
@@ -42,11 +38,7 @@ public class DefaultSWRLBridge implements SWRLBridge
 {
   @NonNull private final SWRLAPIOWLOntology swrlapiOWLOntology;
   @NonNull private final OWL2RLPersistenceLayer owl2RLPersistenceLayer;
-  @NonNull private final OWLClassExpressionResolver owlClassExpressionResolver;
-  @NonNull private final OWLDataRangeResolver owlDataRangeResolver;
-  @NonNull private final OWLDataPropertyExpressionResolver owlDataPropertyExpressionResolver;
-  @NonNull private final OWLObjectPropertyExpressionResolver owlObjectPropertyExpressionResolver;
-  @NonNull private final OWLIndividualResolver owlIndividualResolver;
+  private final @NonNull OWLObjectResolver owlObjectResolver;
 
   /**
    * OWL axioms inferred by a rule engine (via the {@link #inferOWLAxiom(org.semanticweb.owlapi.model.OWLAxiom)} call).
@@ -73,11 +65,7 @@ public class DefaultSWRLBridge implements SWRLBridge
     this.swrlapiOWLOntology = swrlapiOWLOntology;
     this.owl2RLPersistenceLayer = owl2RLPersistenceLayer;
     this.targetSWRLRuleEngine = null;
-    this.owlClassExpressionResolver = new DefaultOWLClassExpressionResolver(swrlapiOWLOntology.getOWLDataFactory());
-    this.owlDataRangeResolver = new DefaultOWLDataRangeResolver();
-    this.owlObjectPropertyExpressionResolver = new DefaultOWLObjectPropertyExpressionResolver();
-    this.owlDataPropertyExpressionResolver = new DefaultOWLDataPropertyExpressionResolver();
-    this.owlIndividualResolver = new DefaultOWLIndividualResolver();
+    this.owlObjectResolver = new DefaultOWLObjectResolver(swrlapiOWLOntology.getOWLDataFactory());
 
     this.inferredOWLAxioms = new HashSet<>();
     this.injectedOWLAxioms = new HashSet<>();
@@ -120,29 +108,9 @@ public class DefaultSWRLBridge implements SWRLBridge
     return this.swrlapiOWLOntology.getIRIResolver();
   }
 
-  @NonNull @Override public OWLClassExpressionResolver getOWLClassExpressionResolver()
+  @Override public @NonNull OWLObjectResolver getOWLObjectResolver()
   {
-    return this.owlClassExpressionResolver;
-  }
-
-  @NonNull @Override public OWLDataRangeResolver getOWLDataRangeResolver()
-  {
-    return this.owlDataRangeResolver;
-  }
-
-  @NonNull @Override public OWLObjectPropertyExpressionResolver getOWLObjectPropertyExpressionResolver()
-  {
-    return this.owlObjectPropertyExpressionResolver;
-  }
-
-  @NonNull @Override public OWLDataPropertyExpressionResolver getOWLDataPropertyExpressionResolver()
-  {
-    return this.owlDataPropertyExpressionResolver;
-  }
-
-  @NonNull @Override public OWLIndividualResolver getOWLIndividualResolver()
-  {
-    return this.owlIndividualResolver;
+    return this.owlObjectResolver;
   }
 
   @NonNull @Override public OWL2RLPersistenceLayer getOWL2RLPersistenceLayer()

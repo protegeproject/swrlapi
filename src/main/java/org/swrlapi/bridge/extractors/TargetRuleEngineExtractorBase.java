@@ -9,11 +9,11 @@ import org.swrlapi.factory.SWRLBuiltInArgumentFactory;
 import org.swrlapi.factory.OWLDatatypeFactory;
 import org.swrlapi.factory.OWLLiteralFactory;
 import org.swrlapi.factory.SWRLAPIOWLDataFactory;
-import org.swrlapi.resolvers.IRIResolver;
-import org.swrlapi.resolvers.OWLClassExpressionResolver;
-import org.swrlapi.resolvers.OWLDataPropertyExpressionResolver;
-import org.swrlapi.resolvers.OWLDataRangeResolver;
-import org.swrlapi.resolvers.OWLObjectPropertyExpressionResolver;
+import org.swrlapi.core.IRIResolver;
+import org.swrlapi.bridge.resolvers.OWLClassExpressionResolver;
+import org.swrlapi.bridge.resolvers.OWLDataPropertyExpressionResolver;
+import org.swrlapi.bridge.resolvers.OWLDataRangeResolver;
+import org.swrlapi.bridge.resolvers.OWLObjectPropertyExpressionResolver;
 
 /**
  * This interface describes a set of methods that will be needed by a target rule engine to create OWLAPI
@@ -60,22 +60,22 @@ public abstract class TargetRuleEngineExtractorBase implements TargetRuleEngineE
 
   @NonNull protected OWLClassExpressionResolver getOWLClassExpressionResolver()
   {
-    return getBridge().getOWLClassExpressionResolver();
+    return getBridge().getOWLObjectResolver().getOWLClassExpressionResolver();
   }
 
   @NonNull protected OWLObjectPropertyExpressionResolver getOWLObjectPropertyExpressionResolver()
   {
-    return getBridge().getOWLObjectPropertyExpressionResolver();
+    return getBridge().getOWLObjectResolver().getOWLObjectPropertyExpressionResolver();
   }
 
   @NonNull protected OWLDataPropertyExpressionResolver getOWLDataPropertyExpressionResolver()
   {
-    return getBridge().getOWLDataPropertyExpressionResolver();
+    return getBridge().getOWLObjectResolver().getOWLDataPropertyExpressionResolver();
   }
 
   @NonNull protected OWLDataRangeResolver getOWLDataRangeResolver()
   {
-    return getBridge().getOWLDataRangeResolver();
+    return getBridge().getOWLObjectResolver().getOWLDataRangeResolver();
   }
 
   @NonNull protected IRIResolver getIRIResolver()
