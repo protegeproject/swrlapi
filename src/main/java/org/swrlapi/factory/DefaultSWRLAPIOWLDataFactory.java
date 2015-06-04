@@ -29,7 +29,7 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
 
   public DefaultSWRLAPIOWLDataFactory()
   {
-    this(new IRIResolver());
+    this(new DefaultIRIResolver());
   }
 
   public DefaultSWRLAPIOWLDataFactory(@NonNull IRIResolver iriResolver)

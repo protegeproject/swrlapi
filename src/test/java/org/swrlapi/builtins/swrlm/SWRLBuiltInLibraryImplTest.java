@@ -2,6 +2,7 @@ package org.swrlapi.builtins.swrlm;
 
 import junit.framework.TestCase;
 import org.swrlapi.factory.SWRLBuiltInArgumentFactory;
+import org.swrlapi.factory.DefaultIRIResolver;
 import org.swrlapi.resolvers.IRIResolver;
 import org.swrlapi.factory.SWRLAPIFactory;
 
@@ -11,7 +12,7 @@ import org.swrlapi.factory.SWRLAPIFactory;
 public class SWRLBuiltInLibraryImplTest extends TestCase
 {
   private final SWRLBuiltInLibraryImpl libraryImpl = new SWRLBuiltInLibraryImpl();
-  private final IRIResolver iriResolver = new IRIResolver();
+  private final IRIResolver iriResolver = new DefaultIRIResolver();
   private final SWRLBuiltInArgumentFactory argumentFactory = SWRLAPIFactory
     .createSWRLBuiltInArgumentFactory(iriResolver);
 

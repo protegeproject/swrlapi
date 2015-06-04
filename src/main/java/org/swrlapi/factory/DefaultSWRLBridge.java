@@ -73,11 +73,11 @@ public class DefaultSWRLBridge implements SWRLBridge
     this.swrlapiOWLOntology = swrlapiOWLOntology;
     this.owl2RLPersistenceLayer = owl2RLPersistenceLayer;
     this.targetSWRLRuleEngine = null;
-    this.owlClassExpressionResolver = new OWLClassExpressionResolver(swrlapiOWLOntology.getOWLDataFactory());
-    this.owlDataRangeResolver = new OWLDataRangeResolver();
-    this.owlObjectPropertyExpressionResolver = new OWLObjectPropertyExpressionResolver();
-    this.owlDataPropertyExpressionResolver = new OWLDataPropertyExpressionResolver();
-    this.owlIndividualResolver = new OWLIndividualResolver();
+    this.owlClassExpressionResolver = new DefaultOWLClassExpressionResolver(swrlapiOWLOntology.getOWLDataFactory());
+    this.owlDataRangeResolver = new DefaultOWLDataRangeResolver();
+    this.owlObjectPropertyExpressionResolver = new DefaultOWLObjectPropertyExpressionResolver();
+    this.owlDataPropertyExpressionResolver = new DefaultOWLDataPropertyExpressionResolver();
+    this.owlIndividualResolver = new DefaultOWLIndividualResolver();
 
     this.inferredOWLAxioms = new HashSet<>();
     this.injectedOWLAxioms = new HashSet<>();

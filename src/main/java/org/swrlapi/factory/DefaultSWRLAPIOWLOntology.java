@@ -69,7 +69,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
   {
     this.ontology = ontology;
     this.prefixManager = prefixManager;
-    this.iriResolver = new IRIResolver(this.prefixManager);
+    this.iriResolver = new DefaultIRIResolver(this.prefixManager);
     this.swrlParser = new SWRLParser(this);
     this.swrlBuiltInIRIs = new HashSet<>();
     this.swrlapiOWLDataFactory = SWRLAPIFactory.createSWRLAPIOWLDataFactory(this.iriResolver);

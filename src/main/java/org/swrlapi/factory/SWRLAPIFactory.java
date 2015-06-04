@@ -320,7 +320,7 @@ public class SWRLAPIFactory
 	 */
 	@NonNull public static IRIResolver createIRIResolver()
 	{
-		return new IRIResolver();
+		return new DefaultIRIResolver();
 	}
 
 	/**
@@ -329,7 +329,7 @@ public class SWRLAPIFactory
 	 */
 	@NonNull public static IRIResolver createIRIResolver(@NonNull DefaultPrefixManager prefixManager)
 	{
-		return new IRIResolver(prefixManager);
+		return new DefaultIRIResolver(prefixManager);
 	}
 
 	@NonNull public static Literal createLiteral(OWLLiteral owlLiteral) { return new DefaultLiteral(owlLiteral); }

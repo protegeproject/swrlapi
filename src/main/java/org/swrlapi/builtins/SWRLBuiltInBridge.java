@@ -5,6 +5,7 @@ import org.semanticweb.owlapi.model.OWLAxiom;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.factory.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
+import org.swrlapi.factory.DefaultIRIResolver;
 import org.swrlapi.resolvers.IRIResolver;
 import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
@@ -47,7 +48,7 @@ public interface SWRLBuiltInBridge
   @NonNull SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory();
 
   /**
-   * All named objects are recorded by a {@link org.swrlapi.resolvers.IRIResolver}. If a built-in injects a named
+   * All named objects are recorded by a {@link DefaultIRIResolver}. If a built-in injects a named
    * object it should also record it with this resolver.
    *
    * @return An IRI resolver

@@ -373,7 +373,7 @@ class DefaultSWRLAPIOntologyProcessor implements SWRLAPIOntologyProcessor
 
 	/**
 	 * Process currently supported OWL axioms. The processing consists of recording any OWL properties in the processed
-	 * axioms (with an instance of the {@link org.swrlapi.resolvers.IRIResolver} class) and generating declaration
+	 * axioms (with an instance of the {@link DefaultIRIResolver} class) and generating declaration
 	 * axioms for these properties.
 	 * <p>
 	 * TODO The current approach is clunky. A better approach would be to walk the axioms with a visitor and record the
