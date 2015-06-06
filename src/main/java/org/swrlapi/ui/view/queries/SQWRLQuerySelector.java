@@ -3,6 +3,8 @@ package org.swrlapi.ui.view.queries;
 import checkers.nullness.quals.NonNull;
 import org.swrlapi.ui.view.SWRLRulesTableView;
 
+import java.util.Optional;
+
 /**
  * Selector used to communicate the selected SQWRL query between views.
  *
@@ -18,7 +20,7 @@ class SQWRLQuerySelector
     this.swrlRulesTableView = swrlRulesTableView;
   }
 
-  @NonNull public String getSelectedQueryName()
+  public Optional<String> getSelectedQueryName()
   {
     return this.swrlRulesTableView.getSelectedSWRLRuleName();
   }

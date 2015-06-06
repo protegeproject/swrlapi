@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Optional;
 
 /**
  * Provides a model for graphical display of SWRL rules or SQWRL queries.
@@ -49,9 +50,10 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
     this.swrlRulesTable = new JTable(this.swrlRulesTableModel);
     this.swrlRulesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
+    this.swrlRulesTableModel.setView(this);
+
     addTableListeners();
     setPreferredColumnWidths();
-    this.swrlRulesTableModel.setView(this);
     createComponents(dialogManager);
     createPopupMenu();
   }
@@ -62,34 +64,34 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
     validate();
   }
 
-  @NonNull public String getSelectedSWRLRuleName()
+  public Optional<String> getSelectedSWRLRuleName()
   {
     int selectedRow = this.swrlRulesTable.getSelectedRow();
 
     if (selectedRow != -1)
-      return this.swrlRulesTableModel.getSWRLRuleNameByIndex(selectedRow);
+      return Optional.of(this.swrlRulesTableModel.getSWRLRuleNameByIndex(selectedRow));
     else
-      return "";
+      return Optional.empty();
   }
 
-  @NonNull private String getSelectedSWRLRuleText()
+  private Optional<String> getSelectedSWRLRuleText()
   {
     int selectedRow = this.swrlRulesTable.getSelectedRow();
 
     if (selectedRow != -1)
-      return this.swrlRulesTableModel.getSWRLRuleTextByIndex(selectedRow);
+      return Optional.of(this.swrlRulesTableModel.getSWRLRuleTextByIndex(selectedRow));
     else
-      return "";
+      return Optional.empty();
   }
 
-  @NonNull private String getSelectedSWRLRuleComment()
+  private Optional<String> getSelectedSWRLRuleComment()
   {
     int selectedRow = this.swrlRulesTable.getSelectedRow();
 
     if (selectedRow != -1)
-      return this.swrlRulesTableModel.getSWRLRuleCommentByIndex(selectedRow);
+      return Optional.of(this.swrlRulesTableModel.getSWRLRuleCommentByIndex(selectedRow));
     else
-      return "";
+      return Optional.empty();
   }
 
   private void setPreferredColumnWidths()
@@ -131,15 +133,15 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
   private void editSelectedSWRLRule()
   {
     if (this.swrlRulesTable.getSelectedRow() != -1) {
-      String ruleName = getSelectedSWRLRuleName();
-      String ruleText = getSelectedSWRLRuleText();
-      String ruleComment = getSelectedSWRLRuleComment();
+      String ruleName = getSelectedSWRLRuleName().get();
+      String ruleText = getSelectedSWRLRuleText().get();
+      String ruleComment = getSelectedSWRLRuleComment().get();
 
       this.dialogManager.getSWRLRuleEditorDialog(this, ruleName, ruleText, ruleComment).setVisible(true);
     }
   }
 
-  private void createComponents(SWRLAPIDialogManager applicationDialogManager)
+  private void createComponents(SWRLAPIDialogManager dialogManager)
   {
     JScrollPane scrollPane = new JScrollPane(this.swrlRulesTable);
     JViewport viewport = scrollPane.getViewport();
@@ -155,15 +157,15 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
     headingPanel.add(buttonPanel, BorderLayout.EAST);
 
     JButton newButton = new JButton("New");
-    newButton.addActionListener(new NewSWRLRuleActionListener(this, applicationDialogManager));
+    newButton.addActionListener(new NewSWRLRuleActionListener(this, dialogManager));
     buttonPanel.add(newButton, BorderLayout.WEST);
 
     this.editButton = new JButton("Edit");
-    this.editButton.addActionListener(new EditSWRLRuleActionListener(this, applicationDialogManager));
+    this.editButton.addActionListener(new EditSWRLRuleActionListener(this, dialogManager));
     buttonPanel.add(this.editButton, BorderLayout.CENTER);
 
     this.deleteButton = new JButton("Delete");
-    this.deleteButton.addActionListener(new DeleteSWRLRuleActionListener(this, applicationDialogManager));
+    this.deleteButton.addActionListener(new DeleteSWRLRuleActionListener(this, dialogManager));
     buttonPanel.add(this.deleteButton, BorderLayout.EAST);
 
     disableEditAndDelete(); // Will get enabled by listener on rule table if a rule is selected
@@ -247,13 +249,15 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 
     private void deleteSelectedSWRLRule()
     {
-      String selectedRuleName = getSelectedSWRLRuleName();
+      Optional<String> selectedRuleName = getSelectedSWRLRuleName();
 
-      if (SWRLRulesTableView.this.swrlRulesTableModel.hasSWRLRule(selectedRuleName) && this.applicationDialogManager
-        .showConfirmDialog(this.parent, "Do you really want to delete the rule?", "Delete Rule")) {
-        SWRLRulesTableView.this.swrlRulesTableModel.removeSWRLRule(selectedRuleName);
-        getSWRLRuleEngineModel().getSWRLRuleEngine().deleteSWRLRule(selectedRuleName);
-      }
+			if (selectedRuleName.isPresent()) {
+				if (SWRLRulesTableView.this.swrlRulesTableModel.hasSWRLRule(selectedRuleName.get()) && this.applicationDialogManager
+						.showConfirmDialog(this.parent, "Do you really want to delete the rule?", "Delete Rule")) {
+					SWRLRulesTableView.this.swrlRulesTableModel.removeSWRLRule(selectedRuleName.get());
+					getSWRLRuleEngineModel().getSWRLRuleEngine().deleteSWRLRule(selectedRuleName.get());
+				}
+			}
     }
   }
 
