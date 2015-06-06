@@ -26,9 +26,9 @@ public class SWRLRulesView extends JSplitPane implements SWRLAPIView
   @NonNull private final SWRLRuleExecutionView ruleExecutionView;
 
   public SWRLRulesView(@NonNull SWRLRuleEngineModel swrlRuleEngineModel,
-    @NonNull SWRLAPIDialogManager applicationDialogManager, @NonNull Icon ruleEngineIcon) throws SWRLAPIException
+    @NonNull SWRLAPIDialogManager dialogManager, @NonNull Icon ruleEngineIcon) throws SWRLAPIException
   {
-    this.ruleTablesView = new SWRLRulesTableView(swrlRuleEngineModel, applicationDialogManager);
+    this.ruleTablesView = new SWRLRulesTableView(swrlRuleEngineModel, dialogManager);
     this.ruleExecutionView = new SWRLRuleExecutionView(swrlRuleEngineModel, ruleEngineIcon);
 
     setOrientation(JSplitPane.VERTICAL_SPLIT);

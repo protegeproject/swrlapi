@@ -75,7 +75,7 @@ class DefaultOWLObjectResolver implements OWLObjectResolver
 
   @Override public @NonNull String resolveOWLObjectPropertyExpression(@NonNull OWLObjectPropertyExpression propertyExpression)
   {
-    return resolveOWLObjectPropertyExpression(propertyExpression);
+    return this.owlObjectPropertyExpressionResolver.resolveOWLObjectPropertyExpression(propertyExpression);
   }
 
   @Override public @NonNull OWLObjectPropertyExpression resolveOWLObjectPropertyExpression(@NonNull String propertyExpressionID)
