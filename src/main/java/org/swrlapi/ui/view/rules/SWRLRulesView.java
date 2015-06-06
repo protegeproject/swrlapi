@@ -6,6 +6,7 @@ import org.swrlapi.ui.dialog.SWRLAPIDialogManager;
 import org.swrlapi.ui.model.SWRLRuleEngineModel;
 import org.swrlapi.ui.view.SWRLAPIView;
 import org.swrlapi.ui.view.SWRLRulesTableView;
+import org.swrlapi.ui.view.queries.SQWRLQueriesView;
 
 import javax.swing.*;
 
@@ -13,7 +14,7 @@ import javax.swing.*;
  * Component that presents a SWRL editor and rule execution graphical interface. It can be used to embed SWRL rule
  * editing and execution into an application.
  *
- * @see org.swrlapi.ui.view.queries.SWRLAPIQueriesView
+ * @see SQWRLQueriesView
  */
 public class SWRLRulesView extends JSplitPane implements SWRLAPIView
 {

@@ -5,6 +5,7 @@ import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.swrlapi.bridge.SWRLRuleEngineBridge;
 import org.swrlapi.bridge.converters.TargetRuleEngineConverterBase;
+import org.swrlapi.bridge.resolvers.OWLObjectResolver;
 import org.swrlapi.factory.SWRLBuiltInArgumentFactory;
 import org.swrlapi.factory.OWLDatatypeFactory;
 import org.swrlapi.factory.OWLLiteralFactory;
@@ -58,34 +59,15 @@ public abstract class TargetRuleEngineExtractorBase implements TargetRuleEngineE
     return getBridge().getOWLLiteralFactory();
   }
 
-  @NonNull protected OWLClassExpressionResolver getOWLClassExpressionResolver()
-  {
-    return getBridge().getOWLObjectResolver().getOWLClassExpressionResolver();
-  }
-
-  @NonNull protected OWLObjectPropertyExpressionResolver getOWLObjectPropertyExpressionResolver()
-  {
-    return getBridge().getOWLObjectResolver().getOWLObjectPropertyExpressionResolver();
-  }
-
-  @NonNull protected OWLDataPropertyExpressionResolver getOWLDataPropertyExpressionResolver()
-  {
-    return getBridge().getOWLObjectResolver().getOWLDataPropertyExpressionResolver();
-  }
-
-  @NonNull protected OWLDataRangeResolver getOWLDataRangeResolver()
-  {
-    return getBridge().getOWLObjectResolver().getOWLDataRangeResolver();
-  }
-
   @NonNull protected IRIResolver getIRIResolver()
   {
     return getBridge().getIRIResolver();
   }
 
-  @NonNull protected IRI prefixedName2IRI(@NonNull String prefixedName)
+
+  protected @NonNull OWLObjectResolver getOWLObjectResolver()
   {
-    return getIRIResolver().prefixedName2IRI(prefixedName);
+    return getBridge().getOWLObjectResolver();
   }
 
   @NonNull private SWRLRuleEngineBridge getBridge()

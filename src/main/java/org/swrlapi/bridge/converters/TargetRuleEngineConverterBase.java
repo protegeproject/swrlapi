@@ -2,6 +2,7 @@ package org.swrlapi.bridge.converters;
 
 import checkers.nullness.quals.NonNull;
 import org.swrlapi.bridge.SWRLRuleEngineBridge;
+import org.swrlapi.bridge.resolvers.OWLObjectResolver;
 import org.swrlapi.core.IRIResolver;
 import org.swrlapi.bridge.resolvers.OWLClassExpressionResolver;
 import org.swrlapi.bridge.resolvers.OWLDataPropertyExpressionResolver;
@@ -26,24 +27,9 @@ public abstract class TargetRuleEngineConverterBase implements TargetRuleEngineC
     return getBridge().getIRIResolver();
   }
 
-  @NonNull protected OWLClassExpressionResolver getOWLClassExpressionResolver()
+  protected @NonNull OWLObjectResolver getOWLObjectResolver()
   {
-    return getBridge().getOWLObjectResolver().getOWLClassExpressionResolver();
-  }
-
-  @NonNull protected OWLDataRangeResolver getOWLDataRangeResolver()
-  {
-    return getBridge().getOWLObjectResolver().getOWLDataRangeResolver();
-  }
-
-  @NonNull protected OWLDataPropertyExpressionResolver getOWLDataPropertyExpressionResolver()
-  {
-    return getBridge().getOWLObjectResolver().getOWLDataPropertyExpressionResolver();
-  }
-
-  @NonNull protected OWLObjectPropertyExpressionResolver getOWLObjectPropertyExpressionResolver()
-  {
-    return getBridge().getOWLObjectResolver().getOWLObjectPropertyExpressionResolver();
+    return getBridge().getOWLObjectResolver();
   }
 
   @NonNull protected SWRLRuleEngineBridge getBridge()

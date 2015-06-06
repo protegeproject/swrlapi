@@ -15,7 +15,7 @@ import javax.swing.*;
  *
  * @see org.swrlapi.ui.view.rules.SWRLRulesView
  */
-public class SWRLAPIQueriesView extends JSplitPane implements SWRLAPIView
+public class SQWRLQueriesView extends JSplitPane implements SWRLAPIView
 {
   private static final long serialVersionUID = 1L;
 
@@ -24,8 +24,8 @@ public class SWRLAPIQueriesView extends JSplitPane implements SWRLAPIView
   @NonNull private final SWRLRulesTableView swrlRulesTableView;
   @NonNull private final SQWRLQueryExecutionView sqwrlQueryExecutionView;
 
-  public SWRLAPIQueriesView(@NonNull SQWRLQueryEngineModel sqwrlQueryEngineModel,
-    @NonNull SWRLAPIDialogManager applicationDialogManager, @NonNull Icon queryEngineIcon) throws SWRLAPIException
+  public SQWRLQueriesView(@NonNull SQWRLQueryEngineModel sqwrlQueryEngineModel,
+      @NonNull SWRLAPIDialogManager applicationDialogManager, @NonNull Icon queryEngineIcon) throws SWRLAPIException
   {
     this.swrlRulesTableView = new SWRLRulesTableView(sqwrlQueryEngineModel, applicationDialogManager);
     this.sqwrlQueryExecutionView = new SQWRLQueryExecutionView(sqwrlQueryEngineModel, queryEngineIcon,
