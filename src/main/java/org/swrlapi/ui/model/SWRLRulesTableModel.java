@@ -120,7 +120,7 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
     addSWRLRule(ruleName, ruleText, comment);
   }
 
-  public void addSWRLRule(@NonNull String ruleName, @NonNull String ruleText, @NonNull String comment)
+  private void addSWRLRule(@NonNull String ruleName, @NonNull String ruleText, @NonNull String comment)
   {
     SWRLRuleModel swrlRuleModel = new SWRLRuleModel(ruleName, ruleText, comment);
 
