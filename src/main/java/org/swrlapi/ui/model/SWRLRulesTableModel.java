@@ -111,33 +111,6 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
     return this.swrlRuleModels.containsKey(ruleName);
   }
 
-  public void addSWRLRule(@NonNull SWRLAPIRule swrlRule)
-  {
-    String ruleName = swrlRule.getRuleName();
-    String ruleText = swrlRule.accept(this.swrlRuleRenderer);
-    String comment = swrlRule.getComment();
-
-    addSWRLRule(ruleName, ruleText, comment);
-  }
-
-  private void addSWRLRule(@NonNull String ruleName, @NonNull String ruleText, @NonNull String comment)
-  {
-    SWRLRuleModel swrlRuleModel = new SWRLRuleModel(ruleName, ruleText, comment);
-
-    if (!this.swrlRuleModels.containsKey(ruleName))
-      this.swrlRuleModels.put(ruleName, swrlRuleModel);
-    this.isModified = true;
-    updateView();
-  }
-
-  public void removeSWRLRule(@NonNull String ruleName)
-  {
-    if (this.swrlRuleModels.containsKey(ruleName))
-      this.swrlRuleModels.remove(ruleName);
-    this.isModified = true;
-    updateView();
-  }
-
   public boolean hasBeenModified()
   {
     return this.isModified;

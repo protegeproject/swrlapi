@@ -46,6 +46,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Factory for generating some of the core entities defined by the SWRLAPI.
@@ -282,7 +283,7 @@ public class SWRLAPIFactory
 	 * @return An ontology model
 	 */
 	@NonNull public static FileBackedOWLOntologyModel createFileBackedOWLOntologyModel(@NonNull OWLOntology ontology,
-			@NonNull SWRLRuleEngineModel swrlRuleEngineModel, @NonNull File file)
+			@NonNull SWRLRuleEngineModel swrlRuleEngineModel, Optional<File> file)
 	{
 		return new DefaultFileBackedOWLOntologyModel(ontology, swrlRuleEngineModel, file);
 	}

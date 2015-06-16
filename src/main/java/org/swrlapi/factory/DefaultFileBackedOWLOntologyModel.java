@@ -12,16 +12,17 @@ import org.swrlapi.ui.model.SWRLRuleEngineModel;
 
 import java.io.File;
 import java.util.List;
+import java.util.Optional;
 
 class DefaultFileBackedOWLOntologyModel implements FileBackedOWLOntologyModel, OWLOntologyChangeListener
 {
   @NonNull private final OWLOntology ontology;
   @NonNull private final SWRLRuleEngineModel swrlRuleEngineModel;
-  @NonNull private File file;
+  @NonNull private Optional<File> file;
   @NonNull private boolean hasOntologyChanged;
 
   public DefaultFileBackedOWLOntologyModel(@NonNull OWLOntology ontology,
-    @NonNull SWRLRuleEngineModel swrlRuleEngineModel, @NonNull File file)
+    @NonNull SWRLRuleEngineModel swrlRuleEngineModel, Optional<File> file)
   {
     this.ontology = ontology;
     this.swrlRuleEngineModel = swrlRuleEngineModel;
@@ -41,23 +42,15 @@ class DefaultFileBackedOWLOntologyModel implements FileBackedOWLOntologyModel, O
     return this.swrlRuleEngineModel;
   }
 
-  @NonNull @Override public File getBackingFile()
+  @Override public void setBackingFile(Optional<File> file)
   {
-    return this.file;
+    this.file = file;
   }
 
   @Override public void save() throws OWLOntologyStorageException
   {
-    this.ontology.getOWLOntologyManager().saveOntology(ontology, IRI.create(this.file.toURI()));
-
-    resetOntologyChanged();
-  }
-
-  @Override public void saveAs(@NonNull File newFile) throws OWLOntologyStorageException
-  {
-    this.ontology.getOWLOntologyManager().saveOntology(ontology, IRI.create(newFile.toURI()));
-
-    this.file = newFile;
+    if (this.file.isPresent())
+      this.ontology.getOWLOntologyManager().saveOntology(ontology, IRI.create(this.file.get().toURI()));
 
     resetOntologyChanged();
   }

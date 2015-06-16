@@ -4,6 +4,7 @@ import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 
 import java.io.File;
+import java.util.Optional;
 
 /**
  * Describes a model that can be used to build an MVC-based GUI that uses a file-backed OWL ontology.
@@ -11,20 +12,13 @@ import java.io.File;
 public interface FileBackedOWLOntologyModel extends OWLOntologyModel
 {
 	/**
-	 * @return The file containing the OWL ontology
+	 * @param file The (optional) backing file
 	 */
-	@NonNull File getBackingFile();
+	void setBackingFile(Optional<File> file);
 
 	/**
 	 *
 	 * @throws OWLOntologyStorageException If an error occurs during saving
 	 */
 	void save() throws OWLOntologyStorageException;
-
-	/**
-	 *
-	 * @param file The file to save; updates the current backing file if save is successful
-	 * @throws OWLOntologyStorageException If an error occurs during saving
-	 */
-	void saveAs(@NonNull File file) throws OWLOntologyStorageException;
 }

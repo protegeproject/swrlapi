@@ -452,13 +452,13 @@ public class SWRLRuleEditorDialog extends JDialog
     if (swrlapiRule.isSQWRLQuery())
       getSWRLRuleEngine().createSWRLRule(ruleName, rule, comment, isActive);
 
-    getSWRLRulesTableModel().addSWRLRule(swrlapiRule);
+    getSWRLRulesTableModel().updateView();
   }
 
   private void deleteSWRLRule(@NonNull String ruleName)
   {
-    getSWRLRulesTableModel().removeSWRLRule(ruleName);
     this.swrlRuleEngineModel.getSWRLRuleEngine().deleteSWRLRule(ruleName);
+    getSWRLRulesTableModel().updateView();
   }
 
   @NonNull private SWRLRuleEngine getSWRLRuleEngine()

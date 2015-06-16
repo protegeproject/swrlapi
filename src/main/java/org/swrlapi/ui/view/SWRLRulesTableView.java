@@ -254,8 +254,8 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 			if (selectedRuleName.isPresent()) {
 				if (SWRLRulesTableView.this.swrlRulesTableModel.hasSWRLRule(selectedRuleName.get()) && this.dialogManager
 						.showConfirmDialog(this.parent, "Do you really want to delete the rule?", "Delete Rule")) {
-					SWRLRulesTableView.this.swrlRulesTableModel.removeSWRLRule(selectedRuleName.get());
 					getSWRLRuleEngineModel().getSWRLRuleEngine().deleteSWRLRule(selectedRuleName.get());
+					getSWRLRuleEngineModel().updateView();
 				}
 			}
 		}
