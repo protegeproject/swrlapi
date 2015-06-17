@@ -198,7 +198,7 @@ public class SWRLParser
 	{
 		Optional<? extends SWRLIArgument> iArgument = parseSWRLIArgument(tokenizer, isInHead);
 
-		tokenizer.checkAndSkipRParen("Expecting closing parenthesis for argument for class atom " + shortName);
+		tokenizer.checkAndSkipRParen("Expecting closing parenthesis after argument for class atom " + shortName);
 
 		return !tokenizer.isInteractiveParseOnly() ? Optional.of(this.swrlParserSupport.getSWRLClassAtom(shortName,
 				iArgument.get())) : Optional.<SWRLClassAtom> empty();
@@ -333,11 +333,10 @@ public class SWRLParser
 			throw generateEndOfRuleException("Partial datatype qualifier - add '^' to complete", tokenizer);
 		} else if (tokenizer.peekToken("String may be qualified with datatype").isTypeQualifier()) {
 			tokenizer.skipToken(); // Skip the peeked token
-			SWRLToken datatypeToken = tokenizer.getToken(SWRLToken.SWRLTokenType.SHORTNAME,
-					"Expecting quotation-enclosed datatype after ^^");
+			SWRLToken datatypeToken = tokenizer.getToken(SWRLToken.SWRLTokenType.SHORTNAME, "Expecting datatype after ^^");
 			String datatype = datatypeToken.getValue();
 			if (datatype.length() == 0)
-				throw generateEndOfRuleException("Empty datatype qualifier - must supply a datatype", tokenizer);
+				throw generateEndOfRuleException("Empty datatype qualifier - must supply a datatype after ^^", tokenizer);
 			return !tokenizer.isInteractiveParseOnly() ? Optional.of(this.swrlParserSupport.getSWRLLiteralArgument(
 					literalValue, datatype)) : Optional.empty();
 		} else
