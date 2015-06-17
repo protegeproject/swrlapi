@@ -9,9 +9,7 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
-import org.swrlapi.factory.SQWRLResultValueFactory;
 import org.swrlapi.factory.SWRLAPIFactory;
-import org.swrlapi.core.IRIResolver;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
 import java.util.ArrayList;
@@ -32,8 +30,6 @@ public class SQWRLResultGeneratorTest
 	private OWLOntologyManager ontologyManager;
 	private OWLOntology ontology;
 	private DefaultPrefixManager prefixManager;
-	private IRIResolver iriResolver;
-	private SQWRLResultValueFactory valueFactory;
 	private SQWRLResultManager resultManager;
 
 	private static final String TestPrefix = "test:";
@@ -48,9 +44,7 @@ public class SQWRLResultGeneratorTest
 		ontologyManager = OWLManager.createOWLOntologyManager();
 		ontology = ontologyManager.createOntology();
 		prefixManager = new DefaultPrefixManager();
-		iriResolver = SWRLAPIFactory.createIRIResolver(prefixManager);
-		valueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(iriResolver);
-		resultManager = SWRLAPIFactory.createSQWRLResultManager(iriResolver);
+		resultManager = SWRLAPIFactory.createSQWRLResultManager(prefixManager);
 
 		prefixManager.setPrefix(TestPrefix, TestNamespace);
 	}

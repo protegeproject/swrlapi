@@ -1,6 +1,7 @@
 package org.swrlapi.factory;
 
 import checkers.nullness.quals.NonNull;
+import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.exceptions.SWRLAPIInternalException;
 import org.swrlapi.core.IRIResolver;
 import org.swrlapi.sqwrl.SQWRLResultManager;
@@ -55,9 +56,9 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
   private boolean notLastSelection = false, nthSliceSelection = false, notNthSliceSelection = false;
   private boolean nthLastSliceSelection = false, notNthLastSliceSelection = false;
 
-  public DefaultSQWRLResultManager()
+  public DefaultSQWRLResultManager(DefaultPrefixManager prefixManager)
   {
-    this(SWRLAPIFactory.createIRIResolver());
+    this(SWRLAPIFactory.createIRIResolver(prefixManager));
   }
 
   public DefaultSQWRLResultManager(@NonNull IRIResolver iriResolver)

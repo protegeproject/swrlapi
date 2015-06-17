@@ -1,7 +1,6 @@
 package org.swrlapi.ui.dialog;
 
 import checkers.nullness.quals.NonNull;
-import checkers.nullness.quals.Nullable;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.parser.SWRLIncompleteRuleException;
@@ -23,6 +22,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Modal dialog providing a SWRL rule and SQWRL query editor.
@@ -68,7 +68,7 @@ public class SWRLRuleEditorDialog extends JDialog
   private JTextArea ruleTextTextArea;
 
   @NonNull private final SWRLAutoCompleter autoCompleter;
-  @Nullable private SWRLRuleEditorAutoCompleteState autoCompleteState = null; // Non null if in auto-complete mode
+  private Optional<SWRLRuleEditorAutoCompleteState> autoCompleteState = Optional.empty(); // Present if auto-complete
   private boolean editMode = false;
 
   public SWRLRuleEditorDialog(@NonNull SWRLRuleEngineModel swrlRuleEngineModel,
@@ -227,10 +227,10 @@ public class SWRLRuleEditorDialog extends JDialog
         }
       }
     } else { // Already in auto-complete mode
-      int textPosition = this.autoCompleteState.getTextPosition();
-      String prefix = this.autoCompleteState.getPrefix();
-      String currentExpansion = this.autoCompleteState.getCurrentExpansion();
-      String nextExpansion = this.autoCompleteState.getNextExpansion();
+      int textPosition = this.autoCompleteState.get().getTextPosition();
+      String prefix = this.autoCompleteState.get().getPrefix();
+      String currentExpansion = this.autoCompleteState.get().getCurrentExpansion();
+      String nextExpansion = this.autoCompleteState.get().getNextExpansion();
 
       replaceExpansion(textPosition, prefix, currentExpansion, nextExpansion);
     }
@@ -243,7 +243,7 @@ public class SWRLRuleEditorDialog extends JDialog
 
   private void enableAutoCompleteMode(@NonNull SWRLRuleEditorAutoCompleteState autoCompleteState)
   {
-    this.autoCompleteState = autoCompleteState;
+    this.autoCompleteState = Optional.of(autoCompleteState);
   }
 
   private void disableAutoCompleteModeIfNecessary()
@@ -260,9 +260,9 @@ public class SWRLRuleEditorDialog extends JDialog
   private void cancelAutoCompleteIfNecessary()
   {
     if (isInAutoCompleteMode()) {
-      int textPosition = this.autoCompleteState.getTextPosition();
-      String prefix = this.autoCompleteState.getPrefix();
-      String currentExpansion = this.autoCompleteState.getCurrentExpansion();
+      int textPosition = this.autoCompleteState.get().getTextPosition();
+      String prefix = this.autoCompleteState.get().getPrefix();
+      String currentExpansion = this.autoCompleteState.get().getCurrentExpansion();
 
       replaceExpansion(textPosition, prefix, currentExpansion, "");
       disableAutoCompleteMode();

@@ -115,16 +115,25 @@ public class SWRLAPIFactory
 		return new DefaultSWRLRuleAndQueryRenderer(ontology, prefixManager);
 	}
 
-	/**
-	 * @param iriResolver An IRI resolver
-	 * @return A SQWRL result
-	 */
-	public static @NonNull SQWRLResultManager createSQWRLResultManager(@NonNull IRIResolver iriResolver)
-	{
-		return new DefaultSQWRLResultManager(iriResolver);
-	}
+  /**
+   * @param iriResolver An IRI resolver
+   * @return A SQWRL result
+   */
+  public static @NonNull SQWRLResultManager createSQWRLResultManager(@NonNull IRIResolver iriResolver)
+  {
+    return new DefaultSQWRLResultManager(iriResolver);
+  }
 
-	/**
+  /**
+   * @param prefixManager A prefix manager
+   * @return A SQWRL result
+   */
+  public static @NonNull SQWRLResultManager createSQWRLResultManager(@NonNull DefaultPrefixManager prefixManager)
+  {
+    return new DefaultSQWRLResultManager(prefixManager);
+  }
+
+  /**
 	 * @param ontology An OWL ontology
 	 * @return An OWL 2 RL persistence layer
 	 */
@@ -234,6 +243,21 @@ public class SWRLAPIFactory
 		return new DefaultSWRLRuleAndQueryEngineFactory();
 	}
 
+	/**
+	 *
+	 * @param prefixManager A prefix manager
+	 * @return A SQWRL result generator
+	 */
+	@NonNull public static SQWRLResultGenerator createSQWRLResultGenerator(DefaultPrefixManager prefixManager)
+	{
+		return new DefaultSQWRLResultManager(prefixManager);
+	}
+
+	/**
+	 *
+	 * @param iriResolver An IRI resolver
+	 * @return A SQWRL result generator
+	 */
 	@NonNull public static SQWRLResultGenerator createSQWRLResultGenerator(IRIResolver iriResolver)
 	{
 		return new DefaultSQWRLResultManager(iriResolver);

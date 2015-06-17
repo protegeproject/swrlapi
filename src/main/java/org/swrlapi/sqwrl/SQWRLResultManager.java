@@ -38,8 +38,9 @@ import org.swrlapi.sqwrl.values.SQWRLResultValue;
  * private static final IRI 21IRI = IRI.create(TestNamespace + "i2");
  *
  * DefaultPrefixManager prefixManager = new DefaultPrefixManager();
- * IRIResolver iriResolver = SWRLAPIFactory.createIRIResolver(prefixManager);
- * SQWRLResultManager resultManager = SWRLAPIFactory.createSQWRLResultManager(iriResolver);
+ * SQWRLResultManager resultManager = SWRLAPIFactory.createSQWRLResultManager(prefixManager);
+ *
+ * prefixManager.setPrefix(TestPrefix, TestNamespace);
  *
  * resultManager.addColumn(&quot;name&quot;);
  * resultManager.addAggregateColumn(&quot;average&quot;, SQWRLResultNames.AvgAggregateFunction);

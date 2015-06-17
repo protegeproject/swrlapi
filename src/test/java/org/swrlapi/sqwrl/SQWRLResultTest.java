@@ -34,8 +34,8 @@ public class SQWRLResultTest
 	private OWLOntology ontology;
 	private DefaultPrefixManager prefixManager;
 	private IRIResolver iriResolver;
-	private SQWRLResultValueFactory valueFactory;
 	private SQWRLResultManager resultManager;
+  private SQWRLResultValueFactory valueFactory;
 
   private static final String TestPrefix = "test:";
   private static final String TestNamespace = "http://example.org#";
@@ -57,10 +57,11 @@ public class SQWRLResultTest
 		ontology = ontologyManager.createOntology();
 		prefixManager = new DefaultPrefixManager();
 		iriResolver = SWRLAPIFactory.createIRIResolver(prefixManager);
-		valueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(iriResolver);
-		resultManager = SWRLAPIFactory.createSQWRLResultManager(iriResolver);
+		resultManager = SWRLAPIFactory.createSQWRLResultManager(prefixManager);
 
-		prefixManager.setPrefix(TestPrefix, TestNamespace);
+    valueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(iriResolver);
+
+    prefixManager.setPrefix(TestPrefix, TestNamespace);
 	}
 
 	@Test public void testEmptyResult() throws Exception
@@ -83,7 +84,6 @@ public class SQWRLResultTest
 		resultManager.prepared();
 
 		assertEquals(resultManager.getNumberOfColumns(), 1);
-
 	}
 
 	@Test public void testGetNumberOfRows() throws Exception
