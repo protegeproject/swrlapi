@@ -1,21 +1,19 @@
 package org.swrlapi.ui.model;
 
+import checkers.nullness.quals.NonNull;
+import checkers.nullness.quals.Nullable;
+import org.swrlapi.core.SWRLAPIRule;
+import org.swrlapi.core.SWRLRuleEngine;
+import org.swrlapi.core.SWRLRuleRenderer;
+import org.swrlapi.ui.view.SWRLAPIView;
+
+import javax.swing.table.AbstractTableModel;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
-
-import javax.swing.table.AbstractTableModel;
-
-import org.swrlapi.core.SWRLAPIRule;
-import org.swrlapi.core.SWRLRuleEngine;
-import org.swrlapi.core.SWRLRuleRenderer;
-import org.swrlapi.ui.view.SWRLAPIView;
-
-import checkers.nullness.quals.NonNull;
-import checkers.nullness.quals.Nullable;
 
 /**
  * This class models a list of SWRL rules or SQWRL queries in an ontology for tabular display.
@@ -218,6 +216,8 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 
 	private void updateRuleModels()
 	{
+		this.swrlRuleModels.clear();
+
 		for (SWRLAPIRule swrlapiRule : this.swrlRuleEngine.getSWRLRules()) {
 			String ruleName = swrlapiRule.getRuleName();
 			String ruleText = swrlRuleRenderer.renderSWRLRule(swrlapiRule);
