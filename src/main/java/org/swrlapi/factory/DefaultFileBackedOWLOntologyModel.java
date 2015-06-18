@@ -42,9 +42,14 @@ class DefaultFileBackedOWLOntologyModel implements FileBackedOWLOntologyModel, O
     return this.swrlRuleEngineModel;
   }
 
-  @Override public void setBackingFile(Optional<File> file)
+  @Override public void setBackingFile(@NonNull File file)
   {
-    this.file = file;
+    this.file = Optional.of(file);
+  }
+
+  @Override public void clearBackingFile()
+  {
+    this.file = Optional.empty();
   }
 
   @Override public void save() throws OWLOntologyStorageException

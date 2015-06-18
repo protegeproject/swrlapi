@@ -12,9 +12,11 @@ import java.util.Optional;
 public interface FileBackedOWLOntologyModel extends OWLOntologyModel
 {
 	/**
-	 * @param file The (optional) backing file
+	 * @param file The backing file
 	 */
-	void setBackingFile(Optional<File> file);
+	void setBackingFile(@NonNull File file);
+
+	void clearBackingFile();
 
 	/**
 	 *

@@ -43,7 +43,7 @@ public class SaveAsAction implements ActionListener
       File file = fileChooser.getSelectedFile();
 
       try {
-        this.ontologyModel.setBackingFile(Optional.of(file));
+        this.ontologyModel.setBackingFile(file);
         this.ontologyModel.save();
       } catch (OWLOntologyStorageException e) {
         this.dialogManager.showErrorMessageDialog(this.parent, e.getMessage(), "Error");
