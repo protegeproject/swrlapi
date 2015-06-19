@@ -19,7 +19,7 @@ class DefaultFileBackedOWLOntologyModel implements FileBackedOWLOntologyModel, O
   @NonNull private Optional<File> file;
   @NonNull private final OWLOntology ontology;
   @NonNull private final SWRLRuleEngineModel swrlRuleEngineModel;
-  @NonNull private final boolean hasOntologyChanged;
+  @NonNull private boolean hasOntologyChanged;
 
   public DefaultFileBackedOWLOntologyModel(@NonNull OWLOntology ontology,
     @NonNull SWRLRuleEngineModel swrlRuleEngineModel, Optional<File> file)
