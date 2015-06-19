@@ -10,8 +10,8 @@ import org.swrlapi.ui.model.SWRLRulesTableModel;
 
 public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel
 {
-  @NonNull private final SWRLRulesTableModel swrlRulesTableModel;
   @NonNull private final SWRLRuleEngine ruleEngine;
+  @NonNull private final SWRLRulesTableModel swrlRulesTableModel;
   @NonNull private final SWRLParser swrlParser;
   @NonNull private final SWRLRuleRenderer swrlRuleRenderer;
   @NonNull private final SWRLAutoCompleter swrlAutoCompleter;

@@ -16,10 +16,10 @@ import java.util.Optional;
 
 class DefaultFileBackedOWLOntologyModel implements FileBackedOWLOntologyModel, OWLOntologyChangeListener
 {
+  @NonNull private Optional<File> file;
   @NonNull private final OWLOntology ontology;
   @NonNull private final SWRLRuleEngineModel swrlRuleEngineModel;
-  @NonNull private Optional<File> file;
-  @NonNull private boolean hasOntologyChanged;
+  @NonNull private final boolean hasOntologyChanged;
 
   public DefaultFileBackedOWLOntologyModel(@NonNull OWLOntology ontology,
     @NonNull SWRLRuleEngineModel swrlRuleEngineModel, Optional<File> file)
@@ -30,16 +30,6 @@ class DefaultFileBackedOWLOntologyModel implements FileBackedOWLOntologyModel, O
     this.hasOntologyChanged = false;
 
     this.ontology.getOWLOntologyManager().addOntologyChangeListener(this);
-  }
-
-  @NonNull @Override public OWLOntology getOWLOntology()
-  {
-    return this.ontology;
-  }
-
-  @NonNull @Override public SWRLRuleEngineModel getSWRLRuleEngineModel()
-  {
-    return this.swrlRuleEngineModel;
   }
 
   @Override public void setBackingFile(@NonNull File file)
@@ -58,6 +48,16 @@ class DefaultFileBackedOWLOntologyModel implements FileBackedOWLOntologyModel, O
       this.ontology.getOWLOntologyManager().saveOntology(ontology, IRI.create(this.file.get().toURI()));
 
     resetOntologyChanged();
+  }
+
+  @NonNull @Override public OWLOntology getOWLOntology()
+  {
+    return this.ontology;
+  }
+
+  @NonNull @Override public SWRLRuleEngineModel getSWRLRuleEngineModel()
+  {
+    return this.swrlRuleEngineModel;
   }
 
   @Override public boolean hasOntologyChanged()
