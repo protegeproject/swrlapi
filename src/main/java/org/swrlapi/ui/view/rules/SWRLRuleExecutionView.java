@@ -4,6 +4,7 @@ import checkers.nullness.quals.NonNull;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.factory.SWRLAPIFactory;
+import org.swrlapi.ui.model.OWLOntologyModel;
 import org.swrlapi.ui.model.SWRLRuleEngineModel;
 import org.swrlapi.ui.view.SWRLAPIView;
 import org.swrlapi.ui.view.owl2rl.OWL2RLRuleTablesView;
@@ -14,21 +15,22 @@ public class SWRLRuleExecutionView extends JTabbedPane implements SWRLAPIView
 {
   private static final long serialVersionUID = 1L;
 
-  public SWRLRuleExecutionView(@NonNull SWRLRuleEngineModel ruleEngineModel, @NonNull Icon ruleEngineIcon)
+  public SWRLRuleExecutionView(@NonNull SWRLRuleEngineModel swrlRuleEngineModel)
     throws SWRLAPIException
   {
-    SWRLRuleEngine swrlRuleEngine = ruleEngineModel.getSWRLRuleEngine();
+    SWRLRuleEngine swrlRuleEngine = swrlRuleEngineModel.getSWRLRuleEngine();
+    Icon ruleEngineIcon = swrlRuleEngine.getRuleEngineIcon();
     Icon owl2RLIcon = SWRLAPIFactory.getOWL2RLReasonerIcon();
 
-    addTab("Control", ruleEngineIcon, new SWRLRulesControlView(swrlRuleEngine), "Control Tab");
+    addTab("Control", ruleEngineIcon, new SWRLRulesControlView(swrlRuleEngineModel), "Control Tab");
 
-    addTab("Rules", ruleEngineIcon, new ImportedSWRLRulesView(swrlRuleEngine), "Rules Tab");
+    addTab("Rules", ruleEngineIcon, new ImportedSWRLRulesView(swrlRuleEngineModel), "Rules Tab");
 
-    addTab("Asserted Axioms", ruleEngineIcon, new AssertedOWLAxiomsView(swrlRuleEngine), "Asserted OWL Axioms Tab");
+    addTab("Asserted Axioms", ruleEngineIcon, new AssertedOWLAxiomsView(swrlRuleEngineModel), "Asserted OWL Axioms Tab");
 
-    addTab("Inferred Axioms", owl2RLIcon, new InferredOWLAxiomsView(swrlRuleEngine), "Inferred OWL Axioms Tab");
+    addTab("Inferred Axioms", owl2RLIcon, new InferredOWLAxiomsView(swrlRuleEngineModel), "Inferred OWL Axioms Tab");
 
-    addTab("OWL 2 RL", owl2RLIcon, new OWL2RLRuleTablesView(swrlRuleEngine.getOWL2RLEngine()), "OWL 2 RL Tab");
+    addTab("OWL 2 RL", owl2RLIcon, new OWL2RLRuleTablesView(swrlRuleEngineModel.getOWL2RLModel()), "OWL 2 RL Tab");
   }
 
   @Override public void update()

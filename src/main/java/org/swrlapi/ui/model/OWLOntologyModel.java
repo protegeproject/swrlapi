@@ -22,6 +22,12 @@ public interface OWLOntologyModel extends SWRLAPIModel
 	@NonNull SWRLRuleEngineModel getSWRLRuleEngineModel();
 
 	/**
+	 *
+	 * @return An associated SQWRL query engine model
+	 */
+	@NonNull SQWRLQueryEngineModel getSQWRLQueryEngineModel();
+
+	/**
 	 * @return True if the ontology has changed since construction or the last call to {@link #resetOntologyChanged()}.
 	 */
 	boolean hasOntologyChanged();

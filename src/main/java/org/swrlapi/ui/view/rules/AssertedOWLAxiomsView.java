@@ -2,6 +2,7 @@ package org.swrlapi.ui.view.rules;
 
 import checkers.nullness.quals.NonNull;
 import org.swrlapi.core.SWRLRuleEngine;
+import org.swrlapi.ui.model.SWRLRuleEngineModel;
 import org.swrlapi.ui.view.SWRLAPIView;
 
 import javax.swing.*;
@@ -12,12 +13,12 @@ public class AssertedOWLAxiomsView extends JPanel implements SWRLAPIView
 {
   private static final long serialVersionUID = 1L;
 
-  @NonNull private final SWRLRuleEngine ruleEngine;
+  @NonNull private final SWRLRuleEngineModel ruleEngineModel;
   @NonNull private final AssertedAxiomsTableModel assertedAxiomsTableModel;
 
-  public AssertedOWLAxiomsView(@NonNull SWRLRuleEngine ruleEngine)
+  public AssertedOWLAxiomsView(@NonNull SWRLRuleEngineModel ruleEngineModel)
   {
-    this.ruleEngine = ruleEngine;
+    this.ruleEngineModel = ruleEngineModel;
     this.assertedAxiomsTableModel = new AssertedAxiomsTableModel();
     JTable table = new JTable(this.assertedAxiomsTableModel);
 
@@ -43,6 +44,8 @@ public class AssertedOWLAxiomsView extends JPanel implements SWRLAPIView
     validate();
   }
 
+  @NonNull private SWRLRuleEngine getSWRLRuleEngine() { return this.ruleEngineModel.getSWRLRuleEngine(); }
+
   private class AssertedAxiomsTableModel extends AbstractTableModel
   {
     private static final long serialVersionUID = 1L;
@@ -50,7 +53,7 @@ public class AssertedOWLAxiomsView extends JPanel implements SWRLAPIView
     @Override
     public int getRowCount()
     {
-      return AssertedOWLAxiomsView.this.ruleEngine.getNumberOfAssertedOWLAxioms();
+      return AssertedOWLAxiomsView.this.getSWRLRuleEngine().getNumberOfAssertedOWLAxioms();
     }
 
     @Override
@@ -65,7 +68,7 @@ public class AssertedOWLAxiomsView extends JPanel implements SWRLAPIView
       if (row < 0 || row >= getRowCount())
         return "OUT OF BOUNDS";
       else
-        return AssertedOWLAxiomsView.this.ruleEngine.getAssertedOWLAxioms().toArray()[row];
+        return AssertedOWLAxiomsView.this.getSWRLRuleEngine().getAssertedOWLAxioms().toArray()[row];
     }
   }
 }

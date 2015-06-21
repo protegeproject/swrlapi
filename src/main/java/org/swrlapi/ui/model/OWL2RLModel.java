@@ -4,6 +4,8 @@ import checkers.nullness.quals.NonNull;
 import org.swrlapi.owl2rl.OWL2RLEngine;
 import org.swrlapi.ui.view.owl2rl.OWL2RLRuleTablesView;
 
+import java.util.Optional;
+
 /**
  * A model that reflects the rules in an OWL 2 RL rule table.
  *
@@ -12,18 +14,17 @@ import org.swrlapi.ui.view.owl2rl.OWL2RLRuleTablesView;
  */
 public class OWL2RLModel implements SWRLAPIModel
 {
-  @NonNull private final OWL2RLRuleTablesView owl2RLRuleTablesView;
   @NonNull private final OWL2RLEngine owl2RLEngine;
+  private Optional<OWL2RLRuleTablesView> view = Optional.empty();
 
-  public OWL2RLModel(@NonNull OWL2RLRuleTablesView owl2RLRuleTablesView, @NonNull OWL2RLEngine owl2RLEngine)
+  public OWL2RLModel(@NonNull OWL2RLEngine owl2RLEngine)
   {
-    this.owl2RLRuleTablesView = owl2RLRuleTablesView;
     this.owl2RLEngine = owl2RLEngine;
   }
 
-  @NonNull public OWL2RLRuleTablesView getOWL2RLRuleTablesView()
+  public void setView(@NonNull OWL2RLRuleTablesView view)
   {
-    return this.owl2RLRuleTablesView;
+    this.view = Optional.of(view);
   }
 
   @NonNull public OWL2RLEngine getOWL2RLEngine()
@@ -34,6 +35,7 @@ public class OWL2RLModel implements SWRLAPIModel
   @Override
   public void updateView()
   {
-    this.owl2RLRuleTablesView.update();
+    if (view.isPresent())
+      this.view.get().update();
   }
 }

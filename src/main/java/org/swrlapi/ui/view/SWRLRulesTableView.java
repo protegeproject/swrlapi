@@ -4,6 +4,7 @@ import checkers.nullness.quals.NonNull;
 import org.swrlapi.ui.action.DisableAllRulesAction;
 import org.swrlapi.ui.action.EnableAllRulesAction;
 import org.swrlapi.ui.dialog.SWRLAPIDialogManager;
+import org.swrlapi.ui.model.OWLOntologyModel;
 import org.swrlapi.ui.model.SWRLRuleEngineModel;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
 
@@ -36,7 +37,6 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 
 	@NonNull private final SWRLRuleEngineModel swrlRuleEngineModel;
 	@NonNull private final SWRLAPIDialogManager dialogManager;
-	@NonNull private final SWRLRulesTableModel swrlRulesTableModel;
 	@NonNull private final JTable swrlRulesTable;
 
 	private JButton editButton, deleteButton;
@@ -46,11 +46,10 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 	{
 		this.swrlRuleEngineModel = swrlRuleEngineModel;
 		this.dialogManager = dialogManager;
-		this.swrlRulesTableModel = swrlRuleEngineModel.getSWRLRulesTableModel();
-		this.swrlRulesTable = new JTable(this.swrlRulesTableModel);
+		this.swrlRulesTable = new JTable(this.swrlRuleEngineModel.getSWRLRulesTableModel());
 		this.swrlRulesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-		this.swrlRulesTableModel.setView(this);
+		this.swrlRuleEngineModel.getSWRLRulesTableModel().setView(this);
 
 		addTableListeners();
 		setPreferredColumnWidths();
@@ -60,7 +59,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 
 	@Override public void update()
 	{
-		this.swrlRulesTableModel.fireTableDataChanged();
+		getSWRLRulesTableModel().fireTableDataChanged();
 		validate();
 	}
 
@@ -69,7 +68,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 		int selectedRow = this.swrlRulesTable.getSelectedRow();
 
 		if (selectedRow != -1)
-			return Optional.of(this.swrlRulesTableModel.getSWRLRuleNameByIndex(selectedRow));
+			return Optional.of(getSWRLRulesTableModel().getSWRLRuleNameByIndex(selectedRow));
 		else
 			return Optional.empty();
 	}
@@ -79,7 +78,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 		int selectedRow = this.swrlRulesTable.getSelectedRow();
 
 		if (selectedRow != -1)
-			return Optional.of(this.swrlRulesTableModel.getSWRLRuleTextByIndex(selectedRow));
+			return Optional.of(getSWRLRulesTableModel().getSWRLRuleTextByIndex(selectedRow));
 		else
 			return Optional.empty();
 	}
@@ -89,7 +88,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 		int selectedRow = this.swrlRulesTable.getSelectedRow();
 
 		if (selectedRow != -1)
-			return Optional.of(this.swrlRulesTableModel.getSWRLRuleCommentByIndex(selectedRow));
+			return Optional.of(getSWRLRulesTableModel().getSWRLRuleCommentByIndex(selectedRow));
 		else
 			return Optional.empty();
 	}
@@ -192,6 +191,11 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 		return this.swrlRulesTable.getSelectedRow() != -1;
 	}
 
+	@NonNull private SWRLRulesTableModel getSWRLRulesTableModel()
+	{
+		return this.swrlRuleEngineModel.getSWRLRulesTableModel();
+	}
+
 	@NonNull private SWRLRuleEngineModel getSWRLRuleEngineModel()
 	{
 		return this.swrlRuleEngineModel;
@@ -252,7 +256,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 			Optional<String> selectedRuleName = getSelectedSWRLRuleName();
 
 			if (selectedRuleName.isPresent()) {
-				if (SWRLRulesTableView.this.swrlRulesTableModel.hasSWRLRule(selectedRuleName.get()) && this.dialogManager
+				if (SWRLRulesTableView.this.getSWRLRulesTableModel().hasSWRLRule(selectedRuleName.get()) && this.dialogManager
 						.showConfirmDialog(this.parent, "Do you really want to delete the rule?", "Delete Rule")) {
 					getSWRLRuleEngineModel().getSWRLRuleEngine().deleteSWRLRule(selectedRuleName.get());
 					getSWRLRuleEngineModel().updateView();
@@ -271,7 +275,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 
 	private class PopupListener extends MouseAdapter
 	{
-		@NonNull final JPopupMenu popup;
+		@NonNull private final JPopupMenu popup;
 
 		public PopupListener(@NonNull JPopupMenu popupMenu)
 		{

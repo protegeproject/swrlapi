@@ -41,7 +41,7 @@ public class OpenAction implements ActionListener
       File file = fileChooser.getSelectedFile();
       String fileName = file.getAbsolutePath();
 
-      this.ontologyModel.setBackingFile(file);
+      this.ontologyModel.changeBackingFile(file);
 
       //https://github.com/owlcs/owlapi/blob/version4/contract/src/test/java/org/semanticweb/owlapi/examples/Examples.java#L167
     }

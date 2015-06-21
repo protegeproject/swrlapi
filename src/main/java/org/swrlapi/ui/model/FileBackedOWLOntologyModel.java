@@ -14,7 +14,7 @@ public interface FileBackedOWLOntologyModel extends OWLOntologyModel
 	/**
 	 * @param file The backing file
 	 */
-	void setBackingFile(@NonNull File file);
+	void changeBackingFile(@NonNull File file);
 
 	void clearBackingFile();
 

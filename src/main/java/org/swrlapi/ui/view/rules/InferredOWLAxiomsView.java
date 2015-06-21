@@ -2,6 +2,7 @@ package org.swrlapi.ui.view.rules;
 
 import checkers.nullness.quals.NonNull;
 import org.swrlapi.core.SWRLRuleEngine;
+import org.swrlapi.ui.model.SWRLRuleEngineModel;
 import org.swrlapi.ui.view.SWRLAPIView;
 
 import javax.swing.*;
@@ -12,12 +13,12 @@ public class InferredOWLAxiomsView extends JPanel implements SWRLAPIView
 {
   private static final long serialVersionUID = 1L;
 
-  @NonNull private final SWRLRuleEngine ruleEngine;
+  @NonNull private final SWRLRuleEngineModel ruleEngineModel;
   @NonNull private final InferredAxiomsTableModel inferredAxiomsTableModel;
 
-  public InferredOWLAxiomsView(@NonNull SWRLRuleEngine ruleEngine)
+  public InferredOWLAxiomsView(@NonNull SWRLRuleEngineModel ruleEngineModel)
   {
-    this.ruleEngine = ruleEngine;
+    this.ruleEngineModel = ruleEngineModel;
     this.inferredAxiomsTableModel = new InferredAxiomsTableModel();
 
     JTable inferredAxiomsTable = new JTable(this.inferredAxiomsTableModel);
@@ -41,6 +42,11 @@ public class InferredOWLAxiomsView extends JPanel implements SWRLAPIView
     validate();
   }
 
+  @NonNull private SWRLRuleEngine getSWRLRuleEngine()
+  {
+    return this.ruleEngineModel.getSWRLRuleEngine();
+  }
+
   private class InferredAxiomsTableModel extends AbstractTableModel
   {
     private static final long serialVersionUID = 1L;
@@ -48,7 +54,7 @@ public class InferredOWLAxiomsView extends JPanel implements SWRLAPIView
     @Override
     public int getRowCount()
     {
-      return InferredOWLAxiomsView.this.ruleEngine.getNumberOfInferredOWLAxioms();
+      return InferredOWLAxiomsView.this.getSWRLRuleEngine().getNumberOfInferredOWLAxioms();
     }
 
     @Override
@@ -63,7 +69,7 @@ public class InferredOWLAxiomsView extends JPanel implements SWRLAPIView
       if (row < 0 || row >= getRowCount())
         return "OUT OF BOUNDS";
       else {
-        return InferredOWLAxiomsView.this.ruleEngine.getInferredOWLAxioms().toArray()[row];
+        return InferredOWLAxiomsView.this.getSWRLRuleEngine().getInferredOWLAxioms().toArray()[row];
       }
     }
   }

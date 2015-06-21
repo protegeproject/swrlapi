@@ -4,6 +4,7 @@ import checkers.nullness.quals.NonNull;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.core.SWRLRuleRenderer;
+import org.swrlapi.ui.model.SWRLRuleEngineModel;
 import org.swrlapi.ui.view.SWRLAPIView;
 
 import javax.swing.*;
@@ -15,16 +16,14 @@ public class ImportedSWRLRulesView extends JPanel implements SWRLAPIView
 {
   private static final long serialVersionUID = 1L;
 
-  @NonNull private final SWRLRuleEngine swrlRuleEngine;
-  @NonNull private final SWRLRuleRenderer swrlRulePrinter;
+  @NonNull private final SWRLRuleEngineModel swrlRuleEngineModel;
   @NonNull private final SWRLRulesTableModel swrlRulesTableModel;
 
-  public ImportedSWRLRulesView(@NonNull SWRLRuleEngine ruleEngine)
+  public ImportedSWRLRulesView(@NonNull SWRLRuleEngineModel ruleEngineModel)
   {
-    this.swrlRuleEngine = ruleEngine;
+    this.swrlRuleEngineModel = ruleEngineModel;
     this.swrlRulesTableModel = new SWRLRulesTableModel();
     JTable swrlRulesTable = new JTable(this.swrlRulesTableModel);
-    this.swrlRulePrinter = ruleEngine.createSWRLRuleRenderer();
 
     JScrollPane scrollPane = new JScrollPane(swrlRulesTable);
     JViewport viewPort = scrollPane.getViewport();
@@ -46,6 +45,16 @@ public class ImportedSWRLRulesView extends JPanel implements SWRLAPIView
     validate();
   }
 
+  @NonNull private SWRLRuleEngine getSWRLRuleEngine()
+  {
+    return this.swrlRuleEngineModel.getSWRLRuleEngine();
+  }
+
+  @NonNull private SWRLRuleRenderer getSWRLRuleRenderer()
+  {
+    return this.swrlRuleEngineModel.getSWRLRuleRenderer();
+  }
+
   private class SWRLRulesTableModel extends AbstractTableModel
   {
     private static final long serialVersionUID = 1L;
@@ -53,7 +62,7 @@ public class ImportedSWRLRulesView extends JPanel implements SWRLAPIView
     @Override
     public int getRowCount()
     {
-      return ImportedSWRLRulesView.this.swrlRuleEngine.getNumberOfImportedSWRLRules();
+      return ImportedSWRLRulesView.this.getSWRLRuleEngine().getNumberOfImportedSWRLRules();
     }
 
     @Override
@@ -68,10 +77,10 @@ public class ImportedSWRLRulesView extends JPanel implements SWRLAPIView
       if (row < 0 || row >= getRowCount())
         return "OUT OF BOUNDS!";
       else {
-        Set<SWRLAPIRule> swrlRules = ImportedSWRLRulesView.this.swrlRuleEngine.getSWRLRules();
+        Set<SWRLAPIRule> swrlRules = ImportedSWRLRulesView.this.getSWRLRuleEngine().getSWRLRules();
         SWRLAPIRule[] swrlRuleArray = swrlRules.toArray(new SWRLAPIRule[swrlRules.size()]);
         SWRLAPIRule swrlRule = swrlRuleArray[row];
-        return swrlRule.accept(ImportedSWRLRulesView.this.swrlRulePrinter);
+        return swrlRule.accept(ImportedSWRLRulesView.this.getSWRLRuleRenderer());
       }
     }
   }

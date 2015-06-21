@@ -35,6 +35,7 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.ui.controller.SWRLRuleEngineController;
 import org.swrlapi.ui.dialog.SWRLAPIDialogManager;
 import org.swrlapi.ui.model.FileBackedOWLOntologyModel;
+import org.swrlapi.ui.model.OWL2RLModel;
 import org.swrlapi.ui.model.SQWRLQueryEngineModel;
 import org.swrlapi.ui.model.SWRLAutoCompleter;
 import org.swrlapi.ui.model.SWRLRuleEngineModel;
@@ -115,25 +116,25 @@ public class SWRLAPIFactory
 		return new DefaultSWRLRuleAndQueryRenderer(ontology, prefixManager);
 	}
 
-  /**
-   * @param iriResolver An IRI resolver
-   * @return A SQWRL result
-   */
-  public static @NonNull SQWRLResultManager createSQWRLResultManager(@NonNull IRIResolver iriResolver)
-  {
-    return new DefaultSQWRLResultManager(iriResolver);
-  }
+	/**
+	 * @param iriResolver An IRI resolver
+	 * @return A SQWRL result
+	 */
+	public static @NonNull SQWRLResultManager createSQWRLResultManager(@NonNull IRIResolver iriResolver)
+	{
+		return new DefaultSQWRLResultManager(iriResolver);
+	}
 
-  /**
-   * @param prefixManager A prefix manager
-   * @return A SQWRL result
-   */
-  public static @NonNull SQWRLResultManager createSQWRLResultManager(@NonNull DefaultPrefixManager prefixManager)
-  {
-    return new DefaultSQWRLResultManager(prefixManager);
-  }
+	/**
+	 * @param prefixManager A prefix manager
+	 * @return A SQWRL result
+	 */
+	public static @NonNull SQWRLResultManager createSQWRLResultManager(@NonNull DefaultPrefixManager prefixManager)
+	{
+		return new DefaultSQWRLResultManager(prefixManager);
+	}
 
-  /**
+	/**
 	 * @param ontology An OWL ontology
 	 * @return An OWL 2 RL persistence layer
 	 */
@@ -211,6 +212,11 @@ public class SWRLAPIFactory
 		return new SWRLRulesTableModel(swrlRuleEngine, swrlRuleRenderer);
 	}
 
+	@NonNull public static OWL2RLModel createOWL2RLModel(@NonNull SWRLRuleEngine swrlRuleEngine)
+	{
+		return new OWL2RLModel(swrlRuleEngine.getOWL2RLEngine());
+	}
+
 	/**
 	 * @return A SWRLAPI-based literal factory
 	 */
@@ -244,7 +250,6 @@ public class SWRLAPIFactory
 	}
 
 	/**
-	 *
 	 * @param prefixManager A prefix manager
 	 * @return A SQWRL result generator
 	 */
@@ -254,7 +259,6 @@ public class SWRLAPIFactory
 	}
 
 	/**
-	 *
 	 * @param iriResolver An IRI resolver
 	 * @return A SQWRL result generator
 	 */
@@ -282,11 +286,21 @@ public class SWRLAPIFactory
 	}
 
 	/**
+	 * @param ontology An OWL ontology
+	 * @return A SQWRL query engine model
+	 */
+	@NonNull public static SQWRLQueryEngineModel createSQWRLQueryEngineModel(@NonNull OWLOntology ontology)
+	{
+		SQWRLQueryEngine queryEngine = createSQWRLQueryEngine(ontology);
+		return new DefaultSQWRLQueryEngineModel(queryEngine);
+	}
+
+	/**
 	 * @param swrlRuleEngineModel A SWRL rule engine model
 	 * @return A SWRL rule engine controller
 	 */
 	@NonNull public static SWRLRuleEngineController createSWRLRuleEngineController(
-			SWRLRuleEngineModel swrlRuleEngineModel)
+			@NonNull SWRLRuleEngineModel swrlRuleEngineModel)
 	{
 		return new DefaultSWRLRuleEngineController(swrlRuleEngineModel);
 	}
@@ -301,15 +315,13 @@ public class SWRLAPIFactory
 	}
 
 	/**
-	 * @param ontology            An OWL ontology
-	 * @param swrlRuleEngineModel A SWRL rule engine model
-	 * @param file                The file containing it
+	 * @param file Optional file containing an OWL ontology
 	 * @return An ontology model
 	 */
 	@NonNull public static FileBackedOWLOntologyModel createFileBackedOWLOntologyModel(@NonNull OWLOntology ontology,
-			@NonNull SWRLRuleEngineModel swrlRuleEngineModel, Optional<File> file)
+			@NonNull SQWRLQueryEngineModel queryEngineModel, Optional<File> file) throws OWLOntologyCreationException
 	{
-		return new DefaultFileBackedOWLOntologyModel(ontology, swrlRuleEngineModel, file);
+		return new DefaultFileBackedOWLOntologyModel(ontology, queryEngineModel, file);
 	}
 
 	/**

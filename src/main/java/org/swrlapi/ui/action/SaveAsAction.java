@@ -10,7 +10,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.Optional;
 
 public class SaveAsAction implements ActionListener
 {
@@ -43,7 +42,7 @@ public class SaveAsAction implements ActionListener
       File file = fileChooser.getSelectedFile();
 
       try {
-        this.ontologyModel.setBackingFile(file);
+        this.ontologyModel.changeBackingFile(file);
         this.ontologyModel.save();
       } catch (OWLOntologyStorageException e) {
         this.dialogManager.showErrorMessageDialog(this.parent, e.getMessage(), "Error");

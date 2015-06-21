@@ -3,6 +3,7 @@ package org.swrlapi.ui.view.queries;
 import checkers.nullness.quals.NonNull;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.ui.dialog.SWRLAPIDialogManager;
+import org.swrlapi.ui.model.OWLOntologyModel;
 import org.swrlapi.ui.model.SQWRLQueryEngineModel;
 import org.swrlapi.ui.view.SWRLAPIView;
 import org.swrlapi.ui.view.SWRLRulesTableView;
@@ -24,11 +25,11 @@ public class SQWRLQueriesView extends JSplitPane implements SWRLAPIView
 	@NonNull private final SWRLRulesTableView swrlRulesTableView;
 	@NonNull private final SQWRLQueryExecutionView sqwrlQueryExecutionView;
 
-	public SQWRLQueriesView(@NonNull SQWRLQueryEngineModel sqwrlQueryEngineModel,
-			@NonNull SWRLAPIDialogManager dialogManager, @NonNull Icon queryEngineIcon) throws SWRLAPIException
+	public SQWRLQueriesView(@NonNull SQWRLQueryEngineModel queryEngineModel, @NonNull SWRLAPIDialogManager dialogManager)
+			throws SWRLAPIException
 	{
-		this.swrlRulesTableView = new SWRLRulesTableView(sqwrlQueryEngineModel, dialogManager);
-		this.sqwrlQueryExecutionView = new SQWRLQueryExecutionView(sqwrlQueryEngineModel, queryEngineIcon,
+		this.swrlRulesTableView = new SWRLRulesTableView(queryEngineModel, dialogManager);
+		this.sqwrlQueryExecutionView = new SQWRLQueryExecutionView(queryEngineModel,
 				new SQWRLQuerySelector(this.swrlRulesTableView));
 
 		setOrientation(JSplitPane.VERTICAL_SPLIT);

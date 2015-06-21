@@ -33,12 +33,9 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 
 	public static final int NUMBER_OF_COLUMNS = 4;
 
-	@NonNull
-	private final SWRLRuleEngine swrlRuleEngine;
-	@NonNull
-	private final SWRLRuleRenderer swrlRuleRenderer;
-	@NonNull
-	private final SortedMap<String, SWRLRuleModel> swrlRuleModels; // rule name -> SWRLRuleModel
+	@NonNull private final SWRLRuleEngine swrlRuleEngine;
+	@NonNull private final SWRLRuleRenderer swrlRuleRenderer;
+	@NonNull private final SortedMap<String, SWRLRuleModel> swrlRuleModels; // rule name -> SWRLRuleModel
 
 	private Optional<SWRLAPIView> view = Optional.empty();
 	private boolean isModified = false;
@@ -56,14 +53,12 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 		updateRuleModels();
 	}
 
-	@NonNull
-	public Set<SWRLRuleModel> getSWRLRuleModels()
+	@NonNull public Set<SWRLRuleModel> getSWRLRuleModels()
 	{
 		return new HashSet<>(this.swrlRuleModels.values());
 	}
 
-	@NonNull
-	public Set<SWRLRuleModel> getSWRLRuleModels(boolean isActiveFlag)
+	@NonNull public Set<SWRLRuleModel> getSWRLRuleModels(boolean isActiveFlag)
 	{
 		return this.swrlRuleModels.values().stream().filter(swrlRuleModel -> swrlRuleModel.isActive() == isActiveFlag)
 				.collect(Collectors.toSet());
@@ -74,8 +69,7 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 		return !this.swrlRuleModels.isEmpty();
 	}
 
-	@NonNull
-	public String getSWRLRuleNameByIndex(int ruleIndex)
+	@NonNull public String getSWRLRuleNameByIndex(int ruleIndex)
 	{
 		Optional<SWRLRuleModel> swrlRuleModel = getSWRLRuleModelByIndex(ruleIndex);
 
@@ -85,8 +79,7 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 			return "<INVALID_INDEX>";
 	}
 
-	@NonNull
-	public String getSWRLRuleTextByIndex(int ruleIndex)
+	@NonNull public String getSWRLRuleTextByIndex(int ruleIndex)
 	{
 		Optional<SWRLRuleModel> swrlRuleModel = getSWRLRuleModelByIndex(ruleIndex);
 
@@ -96,8 +89,7 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 			return "<INVALID_INDEX>";
 	}
 
-	@NonNull
-	public String getSWRLRuleCommentByIndex(int ruleIndex)
+	@NonNull public String getSWRLRuleCommentByIndex(int ruleIndex)
 	{
 		Optional<SWRLRuleModel> swrlRuleModel = getSWRLRuleModelByIndex(ruleIndex);
 
@@ -122,21 +114,17 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 		this.isModified = false;
 	}
 
-	@Override
-	public int getRowCount()
+	@Override public int getRowCount()
 	{
 		return this.swrlRuleModels.size();
 	}
 
-	@Override
-	public int getColumnCount()
+	@Override public int getColumnCount()
 	{
 		return NUMBER_OF_COLUMNS;
 	}
 
-	@NonNull
-	@Override
-	public String getColumnName(int column)
+	@NonNull @Override public String getColumnName(int column)
 	{
 		if (column == RULE_NAME_COLUMN)
 			return "Name";
@@ -150,9 +138,7 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 			return "";
 	}
 
-	@Nullable
-	@Override
-	public Object getValueAt(int row, int column)
+	@Nullable @Override public Object getValueAt(int row, int column)
 	{
 		Object result = null;
 
@@ -171,14 +157,12 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 		return result;
 	}
 
-	@Override
-	public boolean isCellEditable(int rowIndex, int columnIndex)
+	@Override public boolean isCellEditable(int rowIndex, int columnIndex)
 	{
 		return columnIndex == ACTIVE_COLUMN;
 	}
 
-	@Override
-	public Class<?> getColumnClass(int columnIndex)
+	@Override public Class<?> getColumnClass(int columnIndex)
 	{
 		if (columnIndex == ACTIVE_COLUMN) {
 			return Boolean.class;
@@ -187,8 +171,7 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 		}
 	}
 
-	@Override
-	public void setValueAt(Object aValue, int rowIndex, int columnIndex)
+	@Override public void setValueAt(Object aValue, int rowIndex, int columnIndex)
 	{
 		if (columnIndex == ACTIVE_COLUMN) {
 			((SWRLRuleModel)this.swrlRuleModels.values().toArray()[rowIndex]).setActive((Boolean)aValue);
@@ -197,8 +180,7 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 		}
 	}
 
-	@Override
-	public void updateView()
+	@Override public void updateView()
 	{
 		if (this.view.isPresent()) {
 			updateRuleModels();
@@ -229,8 +211,7 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 
 	private class SWRLRuleModel
 	{
-		@NonNull
-		private final String ruleName, ruleText, comment;
+		@NonNull private final String ruleName, ruleText, comment;
 		private boolean active;
 
 		public SWRLRuleModel(@NonNull String ruleName, @NonNull String ruleText, @NonNull String comment)
@@ -251,27 +232,22 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 			return this.active;
 		}
 
-		@NonNull
-		public String getRuleText()
+		@NonNull public String getRuleText()
 		{
 			return this.ruleText;
 		}
 
-		@NonNull
-		public String getRuleName()
+		@NonNull public String getRuleName()
 		{
 			return this.ruleName;
 		}
 
-		@NonNull
-		public String getComment()
+		@NonNull public String getComment()
 		{
 			return this.comment;
 		}
 
-		@NonNull
-		@Override
-		public String toString()
+		@NonNull @Override public String toString()
 		{
 			return "(ruleName: " + this.ruleName + ", ruleText: " + this.ruleText + ", comment: " + this.comment
 					+ ", active: " + this.active + ")";

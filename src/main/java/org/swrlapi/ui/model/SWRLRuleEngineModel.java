@@ -40,6 +40,12 @@ public interface SWRLRuleEngineModel extends SWRLAPIModel
   @NonNull SWRLRulesTableModel getSWRLRulesTableModel();
 
   /**
+   *
+   * @return An OWL 2 RL model
+   */
+  @NonNull OWL2RLModel getOWL2RLModel();
+
+  /**
    * @return True if the rules in the underlying ontology have been modified since the last call to
    *         {@link SWRLRuleEngineModel#clearSWRLRulesModified()}.
    */

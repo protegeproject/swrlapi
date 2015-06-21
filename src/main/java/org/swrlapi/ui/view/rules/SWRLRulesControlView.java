@@ -3,6 +3,7 @@ package org.swrlapi.ui.view.rules;
 import checkers.nullness.quals.NonNull;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.exceptions.SWRLRuleEngineException;
+import org.swrlapi.ui.model.SWRLRuleEngineModel;
 import org.swrlapi.ui.view.SWRLAPIView;
 
 import javax.swing.*;
@@ -21,14 +22,14 @@ public class SWRLRulesControlView extends JPanel implements SWRLAPIView
   private static final int CONSOLE_ROWS = 10;
   private static final int CONSOLE_COLUMNS = 80;
 
-  @NonNull private final SWRLRuleEngine swrlRuleEngine;
+  private final @NonNull SWRLRuleEngineModel swrlRuleEngineModel;
 
-  public SWRLRulesControlView(@NonNull SWRLRuleEngine swrlRuleEngine)
+  public SWRLRulesControlView(@NonNull SWRLRuleEngineModel swrlRuleEngineModel)
   {
-    String ruleEngineName = swrlRuleEngine.getRuleEngineName();
-    String ruleEngineVersion = swrlRuleEngine.getRuleEngineVersion();
+    this.swrlRuleEngineModel = swrlRuleEngineModel;
 
-    this.swrlRuleEngine = swrlRuleEngine;
+    String ruleEngineName = this.swrlRuleEngineModel.getSWRLRuleEngine().getRuleEngineName();
+    String ruleEngineVersion = this.swrlRuleEngineModel.getSWRLRuleEngine().getRuleEngineVersion();
 
     JTextArea console = createConsole();
     JScrollPane scrollPane = new JScrollPane(console);
@@ -39,13 +40,13 @@ public class SWRLRulesControlView extends JPanel implements SWRLAPIView
     JPanel buttonsPanel = new JPanel(new FlowLayout());
     JButton button = createButton("OWL+SWRL->" + ruleEngineName,
       "Translate SWRL rules and relevant OWL knowledge to rule engine",
-      new ImportActionListener(swrlRuleEngine, console, this));
+      new ImportActionListener(this.swrlRuleEngineModel, console, this));
     buttonsPanel.add(button);
     button = createButton("Run " + ruleEngineName, "Run the rule engine",
-      new RunActionListener(swrlRuleEngine, console, this));
+      new RunActionListener(this.swrlRuleEngineModel, console, this));
     buttonsPanel.add(button);
     button = createButton(ruleEngineName + "->OWL", "Translate asserted rule engine knowledge to OWL knowledge",
-      new ExportActionListener(this.swrlRuleEngine, console, this));
+      new ExportActionListener(this.swrlRuleEngineModel, console, this));
     buttonsPanel.add(button);
     add(BorderLayout.SOUTH, buttonsPanel);
 
@@ -88,19 +89,26 @@ public class SWRLRulesControlView extends JPanel implements SWRLAPIView
     return textArea;
   }
 
+  @NonNull private SWRLRuleEngine getSWRLRuleEngine()
+  {
+    return this.swrlRuleEngineModel.getSWRLRuleEngine();
+  }
+
   private class ListenerBase
   {
-    @NonNull protected final SWRLRuleEngine ruleEngine;
+    @NonNull protected final SWRLRuleEngineModel ruleEngineModel;
     @NonNull protected final JTextArea console;
     @NonNull protected final SWRLRulesControlView controlPanel;
 
-    public ListenerBase(@NonNull SWRLRuleEngine ruleEngine, @NonNull JTextArea console,
+    public ListenerBase(@NonNull SWRLRuleEngineModel ruleEngineModel, @NonNull JTextArea console,
       @NonNull SWRLRulesControlView controlPanel)
     {
-      this.ruleEngine = ruleEngine;
+      this.ruleEngineModel = ruleEngineModel;
       this.console = console;
       this.controlPanel = controlPanel;
     }
+
+    protected SWRLRuleEngine getSWRLRuleEngine() { return this.ruleEngineModel.getSWRLRuleEngine(); }
 
     protected void clearConsole()
     {
@@ -115,35 +123,35 @@ public class SWRLRulesControlView extends JPanel implements SWRLAPIView
 
   private class ImportActionListener extends ListenerBase implements ActionListener
   {
-    public ImportActionListener(@NonNull SWRLRuleEngine ruleEngine, @NonNull JTextArea console,
+    public ImportActionListener(@NonNull SWRLRuleEngineModel ruleEngineModel, @NonNull JTextArea console,
       @NonNull SWRLRulesControlView controlPanel)
     {
-      super(ruleEngine, console, controlPanel);
+      super(ruleEngineModel, console, controlPanel);
     }
 
     @Override public void actionPerformed(@NonNull ActionEvent event)
     {
       try {
         long startTime = System.currentTimeMillis();
-        this.ruleEngine.importAssertedOWLAxioms();
+        getSWRLRuleEngine().importAssertedOWLAxioms();
 
         clearConsole();
         appendToConsole("OWL axioms successfully transferred to rule engine.\n");
         appendToConsole(
-          "Number of SWRL rules exported to rule engine: " + this.ruleEngine.getNumberOfImportedSWRLRules() + "\n");
-        appendToConsole("Number of OWL class declarations exported to rule engine: " + this.ruleEngine
+          "Number of SWRL rules exported to rule engine: " + getSWRLRuleEngine().getNumberOfImportedSWRLRules() + "\n");
+        appendToConsole("Number of OWL class declarations exported to rule engine: " + getSWRLRuleEngine()
           .getNumberOfAssertedOWLClassDeclarationAxioms() + "\n");
-        appendToConsole("Number of OWL individual declarations exported to rule engine: " + this.ruleEngine
+        appendToConsole("Number of OWL individual declarations exported to rule engine: " + getSWRLRuleEngine()
           .getNumberOfAssertedOWLIndividualDeclarationsAxioms() + "\n");
-        appendToConsole("Number of OWL object property declarations exported to rule engine: " + this.ruleEngine
+        appendToConsole("Number of OWL object property declarations exported to rule engine: " + getSWRLRuleEngine()
           .getNumberOfAssertedOWLObjectPropertyDeclarationAxioms() + "\n");
-        appendToConsole("Number of OWL data property declarations exported to rule engine: " + this.ruleEngine
+        appendToConsole("Number of OWL data property declarations exported to rule engine: " + getSWRLRuleEngine()
           .getNumberOfAssertedOWLDataPropertyDeclarationAxioms() + "\n");
         appendToConsole(
-          "Total number of OWL axioms exported to rule engine: " + this.ruleEngine.getNumberOfAssertedOWLAxioms()
+          "Total number of OWL axioms exported to rule engine: " + getSWRLRuleEngine().getNumberOfAssertedOWLAxioms()
             + "\n");
         appendToConsole("The transfer took " + (System.currentTimeMillis() - startTime) + " millisecond(s).\n");
-        appendToConsole("Press the 'Run " + SWRLRulesControlView.this.swrlRuleEngine.getRuleEngineName()
+        appendToConsole("Press the 'Run " + SWRLRulesControlView.this.getSWRLRuleEngine().getRuleEngineName()
           + "' button to run the rule engine.\n");
       } catch (SWRLRuleEngineException e) {
         appendToConsole("Exception importing SWRL rules and OWL knowledge: " + e.toString() + "\n");
@@ -154,10 +162,10 @@ public class SWRLRulesControlView extends JPanel implements SWRLAPIView
 
   private class RunActionListener extends ListenerBase implements ActionListener
   {
-    public RunActionListener(@NonNull SWRLRuleEngine ruleEngine, @NonNull JTextArea textArea,
+    public RunActionListener(@NonNull SWRLRuleEngineModel ruleEngineModel, @NonNull JTextArea textArea,
       @NonNull SWRLRulesControlView controlPanel)
     {
-      super(ruleEngine, textArea, controlPanel);
+      super(ruleEngineModel, textArea, controlPanel);
     }
 
     @Override public void actionPerformed(@NonNull ActionEvent event)
@@ -169,16 +177,16 @@ public class SWRLRulesControlView extends JPanel implements SWRLAPIView
     {
       try {
         long startTime = System.currentTimeMillis();
-        this.ruleEngine.run();
+        getSWRLRuleEngine().run();
 
         appendToConsole("Successful execution of rule engine.\n");
-        appendToConsole("Number of inferred axioms: " + this.ruleEngine.getNumberOfInferredOWLAxioms() + "\n");
-        if (this.ruleEngine.getNumberOfInjectedOWLAxioms() != 0)
+        appendToConsole("Number of inferred axioms: " + getSWRLRuleEngine().getNumberOfInferredOWLAxioms() + "\n");
+        if (getSWRLRuleEngine().getNumberOfInjectedOWLAxioms() != 0)
           appendToConsole(
-            "Number of axioms injected by built-ins: " + this.ruleEngine.getNumberOfInjectedOWLAxioms() + "\n");
+            "Number of axioms injected by built-ins: " + getSWRLRuleEngine().getNumberOfInjectedOWLAxioms() + "\n");
         appendToConsole("The process took " + (System.currentTimeMillis() - startTime) + " millisecond(s).\n");
         appendToConsole("Look at the 'Inferred Axioms' tab to see the inferred axioms.\n");
-        appendToConsole("Press the '" + SWRLRulesControlView.this.swrlRuleEngine.getRuleEngineName()
+        appendToConsole("Press the '" + SWRLRulesControlView.this.getSWRLRuleEngine().getRuleEngineName()
           + "->OWL' button to translate the inferred axioms to OWL knowledge.\n");
       } catch (SWRLRuleEngineException e) {
         appendToConsole("Exception running rule engine: " + e.getMessage() + "\n");
@@ -189,10 +197,10 @@ public class SWRLRulesControlView extends JPanel implements SWRLAPIView
 
   private class ExportActionListener extends ListenerBase implements ActionListener
   {
-    public ExportActionListener(@NonNull SWRLRuleEngine ruleEngine, @NonNull JTextArea textArea,
+    public ExportActionListener(@NonNull SWRLRuleEngineModel ruleEngineModel, @NonNull JTextArea textArea,
       @NonNull SWRLRulesControlView controlPanel)
     {
-      super(ruleEngine, textArea, controlPanel);
+      super(ruleEngineModel, textArea, controlPanel);
     }
 
     @Override public void actionPerformed(@NonNull ActionEvent event)
@@ -204,7 +212,7 @@ public class SWRLRulesControlView extends JPanel implements SWRLAPIView
     {
       try {
         long startTime = System.currentTimeMillis();
-        this.ruleEngine.exportInferredOWLAxioms();
+        getSWRLRuleEngine().exportInferredOWLAxioms();
 
         appendToConsole("Successfully transferred inferred axioms to OWL model.\n");
         appendToConsole("The process took " + (System.currentTimeMillis() - startTime) + " millisecond(s).\n");

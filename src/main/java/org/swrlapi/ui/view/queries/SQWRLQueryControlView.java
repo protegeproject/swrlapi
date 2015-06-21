@@ -5,6 +5,7 @@ import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.exceptions.SQWRLInvalidQueryNameException;
+import org.swrlapi.ui.model.SQWRLQueryEngineModel;
 import org.swrlapi.ui.view.SWRLAPIView;
 
 import javax.swing.*;
@@ -30,17 +31,16 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
 	private static final int CONSOLE_COLUMNS = 80;
 	private static final int MAXIMUM_OPEN_RESULT_VIEWS = 12;
 
-	@NonNull private final SQWRLQueryEngine sqwrlQueryEngine;
+	@NonNull private final SQWRLQueryEngineModel queryEngineModel;
 	@NonNull private final SQWRLQuerySelector sqwrlQuerySelector;
 	@NonNull private final JTextArea console;
 	@NonNull private final Icon queryEngineIcon;
 	@NonNull private final Map<String, SQWRLResultView> sqwrlResultViews = new HashMap<>();
 
-	public SQWRLQueryControlView(@NonNull SQWRLQueryEngine sqwrlQueryEngine, SQWRLQuerySelector sqwrlQuerySelector,
-			@NonNull Icon queryEngineIcon)
+	public SQWRLQueryControlView(@NonNull SQWRLQueryEngineModel queryEngineModel, SQWRLQuerySelector sqwrlQuerySelector)
 	{
-		this.sqwrlQueryEngine = sqwrlQueryEngine;
-		this.queryEngineIcon = queryEngineIcon;
+		this.queryEngineModel = queryEngineModel;
+		this.queryEngineIcon = queryEngineModel.getSQWRLQueryEngine().getQueryEngineIcon();
 		this.sqwrlQuerySelector = sqwrlQuerySelector;
 
 		setLayout(new BorderLayout());
@@ -61,8 +61,9 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
 				"The SWRLAPI supports an OWL profile called OWL 2 RL and uses an OWL 2 RL-based reasoner to perform querying.\n");
 		appendToConsole("See the 'OWL 2 RL' subtab for more information on this reasoner.\n\n");
 		appendToConsole("Executing queries in this tab does not modify the ontology.\n\n");
-		appendToConsole("Using " + sqwrlQueryEngine.getRuleEngineName() + ", " + sqwrlQueryEngine.getRuleEngineVersion()
-				+ " for query execution.\n\n");
+		appendToConsole(
+				"Using " + this.queryEngineModel.getSQWRLQueryEngine().getRuleEngineName() + ", " + this.queryEngineModel
+						.getSQWRLQueryEngine().getRuleEngineVersion() + " for query execution.\n\n");
 	}
 
 	@Override public void update()
@@ -113,6 +114,11 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
 		return console;
 	}
 
+	@NonNull private SQWRLQueryEngine getSQWRLQueryEngine()
+	{
+		return this.queryEngineModel.getSQWRLQueryEngine();
+	}
+
 	private class ListenerBase
 	{
 		@NonNull protected final SQWRLQueryControlView sqwrlQueryControlView;
@@ -156,7 +162,7 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
 
 						if (queryName.isPresent()) {
 							long startTime = System.currentTimeMillis();
-							SQWRLResult sqwrlResult = SQWRLQueryControlView.this.sqwrlQueryEngine.runSQWRLQuery(queryName.get());
+							SQWRLResult sqwrlResult = SQWRLQueryControlView.this.getSQWRLQueryEngine().runSQWRLQuery(queryName.get());
 
 							if (sqwrlResult == null || sqwrlResult.getNumberOfRows() == 0)
 								indicateEmptySQWRLResult(queryName.get());
@@ -203,7 +209,7 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
 			if (SQWRLQueryControlView.this.sqwrlResultViews.containsKey(queryName)) // Existing result tab found
 				sqwrlResultView = SQWRLQueryControlView.this.sqwrlResultViews.get(queryName);
 			else { // Create new result tab
-				sqwrlResultView = new SQWRLResultView(SQWRLQueryControlView.this.sqwrlQueryEngine, queryName, sqwrlResult,
+				sqwrlResultView = new SQWRLResultView(SQWRLQueryControlView.this.queryEngineModel, queryName, sqwrlResult,
 						this.sqwrlQueryControlView);
 				SQWRLQueryControlView.this.sqwrlResultViews.put(queryName, sqwrlResultView);
 				((JTabbedPane)getParent()).addTab(queryName, SQWRLQueryControlView.this.queryEngineIcon, sqwrlResultView,
