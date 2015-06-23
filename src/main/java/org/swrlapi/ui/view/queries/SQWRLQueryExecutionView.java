@@ -1,11 +1,9 @@
 package org.swrlapi.ui.view.queries;
 
 import checkers.nullness.quals.NonNull;
-import org.openrdf.model.vocabulary.OWL;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.factory.SWRLAPIFactory;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
-import org.swrlapi.ui.model.OWLOntologyModel;
 import org.swrlapi.ui.model.SQWRLQueryEngineModel;
 import org.swrlapi.ui.view.SWRLAPIView;
 import org.swrlapi.ui.view.owl2rl.OWL2RLRuleTablesView;

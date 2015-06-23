@@ -7,7 +7,8 @@ import org.swrlapi.ui.action.QuitAction;
 import org.swrlapi.ui.action.SaveAction;
 import org.swrlapi.ui.action.SaveAsAction;
 import org.swrlapi.ui.dialog.SWRLAPIDialogManager;
-import org.swrlapi.ui.model.FileBackedOWLOntologyModel;
+import org.swrlapi.ui.model.FileBackedModel;
+import org.swrlapi.ui.model.FileBackedSWRLRuleEngineModel;
 
 import javax.swing.*;
 
@@ -19,7 +20,7 @@ public class SWRLAPIMenuManager
   private static final String FILE_MENU_TITLE = "File";
 
   public static void createApplicationMenus(@NonNull JFrame applicationFrame,
-    @NonNull FileBackedOWLOntologyModel ontologyModel, @NonNull SWRLAPIDialogManager dialogManager)
+    @NonNull FileBackedSWRLRuleEngineModel ruleEngineModel, @NonNull SWRLAPIDialogManager dialogManager)
   {
     JMenuBar menuBar = new JMenuBar();
 
@@ -31,9 +32,9 @@ public class SWRLAPIMenuManager
     JMenuItem closeItem = new JMenuItem(CloseAction.TITLE);
     JMenuItem quitItem = new JMenuItem(QuitAction.TITLE);
 
-    openItem.addActionListener(new OpenAction(applicationFrame, ontologyModel, dialogManager));
-    saveItem.addActionListener(new SaveAction(applicationFrame, ontologyModel, dialogManager));
-    saveAsItem.addActionListener(new SaveAsAction(applicationFrame, ontologyModel, dialogManager));
+    openItem.addActionListener(new OpenAction(applicationFrame, ruleEngineModel, dialogManager));
+    saveItem.addActionListener(new SaveAction(applicationFrame, ruleEngineModel, dialogManager));
+    saveAsItem.addActionListener(new SaveAsAction(applicationFrame, ruleEngineModel, dialogManager));
     closeItem.addActionListener(new CloseAction(applicationFrame, dialogManager));
     quitItem.addActionListener(new QuitAction(applicationFrame, dialogManager));
 

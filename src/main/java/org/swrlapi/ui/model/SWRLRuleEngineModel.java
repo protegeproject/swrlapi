@@ -1,6 +1,7 @@
 package org.swrlapi.ui.model;
 
 import checkers.nullness.quals.NonNull;
+import org.semanticweb.owlapi.model.OWLOntology;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.core.SWRLRuleRenderer;
 import org.swrlapi.parser.SWRLParser;
@@ -55,4 +56,19 @@ public interface SWRLRuleEngineModel extends SWRLAPIModel
    * Clear the modified status of SWRL rules. Used in conjunction with {@link #areSWRLRulesModified()}.
    */
   void clearSWRLRulesModified();
+
+  /**
+   * @return The underlying OWL ontology
+   */
+  @NonNull OWLOntology getOWLOntology();
+
+  /**
+   * @return True if the ontology has changed since construction or the last call to {@link #resetOntologyChanged()}.
+   */
+  boolean hasOntologyChanged();
+
+  /**
+   * Reset the ontology changed status
+   */
+  void resetOntologyChanged();
 }

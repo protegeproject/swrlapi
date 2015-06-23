@@ -2,7 +2,7 @@ package org.swrlapi.ui.action;
 
 import checkers.nullness.quals.NonNull;
 import org.swrlapi.ui.dialog.SWRLAPIDialogManager;
-import org.swrlapi.ui.model.FileBackedOWLOntologyModel;
+import org.swrlapi.ui.model.FileBackedModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,13 +14,13 @@ public class OpenAction implements ActionListener
 {
   @NonNull private final Component parent;
   @NonNull private final SWRLAPIDialogManager dialogManager;
-  @NonNull private final FileBackedOWLOntologyModel ontologyModel;
+  private final @NonNull FileBackedModel ontologyModel;
 
   public static final String TITLE = "Open";
   private static final String MESSAGE = "Open Ontology";
   private static final String EXTENSION = "owl";
 
-  public OpenAction(@NonNull Component parent, @NonNull FileBackedOWLOntologyModel ontologyModel,
+  public OpenAction(@NonNull Component parent, @NonNull FileBackedModel ontologyModel,
     @NonNull SWRLAPIDialogManager dialogManager)
   {
     this.parent = parent;

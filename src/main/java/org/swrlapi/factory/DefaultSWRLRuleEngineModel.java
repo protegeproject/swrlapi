@@ -1,6 +1,10 @@
 package org.swrlapi.factory;
 
 import checkers.nullness.quals.NonNull;
+import org.semanticweb.owlapi.model.OWLException;
+import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyChange;
+import org.semanticweb.owlapi.model.OWLOntologyChangeListener;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.core.SWRLRuleRenderer;
 import org.swrlapi.parser.SWRLParser;
@@ -9,23 +13,37 @@ import org.swrlapi.ui.model.SWRLAutoCompleter;
 import org.swrlapi.ui.model.SWRLRuleEngineModel;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
 
-public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel
+import java.util.List;
+
+public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel, OWLOntologyChangeListener
 {
+  @NonNull private final OWLOntology ontology;
   @NonNull private final SWRLRuleEngine ruleEngine;
   @NonNull private final SWRLRulesTableModel swrlRulesTableModel;
   @NonNull private final OWL2RLModel owl2RLModel;
   @NonNull private final SWRLParser swrlParser;
   @NonNull private final SWRLRuleRenderer swrlRuleRenderer;
   @NonNull private final SWRLAutoCompleter swrlAutoCompleter;
+  private boolean hasOntologyChanged;
 
-  public DefaultSWRLRuleEngineModel(@NonNull SWRLRuleEngine ruleEngine)
+  public DefaultSWRLRuleEngineModel(@NonNull OWLOntology ontology, @NonNull SWRLRuleEngine ruleEngine)
   {
+    this.ontology = ontology;
     this.ruleEngine = ruleEngine;
     this.swrlRuleRenderer = this.ruleEngine.createSWRLRuleRenderer();
     this.swrlRulesTableModel = SWRLAPIFactory.createSWRLRulesTableModel(ruleEngine, this.swrlRuleRenderer);
     this.owl2RLModel = SWRLAPIFactory.createOWL2RLModel(this.ruleEngine);
     this.swrlParser = this.ruleEngine.createSWRLParser();
     this.swrlAutoCompleter = this.ruleEngine.createSWRLAutoCompleter();
+
+    this.ontology.getOWLOntologyManager().addOntologyChangeListener(this);
+
+    this.hasOntologyChanged = false;
+  }
+
+  @NonNull @Override public OWLOntology getOWLOntology()
+  {
+    return this.ontology;
   }
 
   @NonNull @Override
@@ -76,6 +94,20 @@ public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel
     this.swrlRulesTableModel.clearModifiedStatus();
   }
 
+  @Override public boolean hasOntologyChanged()
+  {
+    return this.hasOntologyChanged;
+  }
+
+  @Override public void resetOntologyChanged()
+  {
+    this.hasOntologyChanged = false;
+  }
+
+  @Override public void ontologiesChanged(@NonNull List<? extends OWLOntologyChange> var1) throws OWLException
+  {
+    this.hasOntologyChanged = true;
+  }
 	@Override
 	public void updateView() { this.swrlRulesTableModel.updateView(); }
 }

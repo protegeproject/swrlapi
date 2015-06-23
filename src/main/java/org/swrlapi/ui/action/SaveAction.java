@@ -3,7 +3,7 @@ package org.swrlapi.ui.action;
 import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 import org.swrlapi.ui.dialog.SWRLAPIDialogManager;
-import org.swrlapi.ui.model.FileBackedOWLOntologyModel;
+import org.swrlapi.ui.model.FileBackedModel;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,11 +13,11 @@ public class SaveAction implements ActionListener
 {
   @NonNull private final Component parent;
   @NonNull private final SWRLAPIDialogManager dialogManager;
-  @NonNull private final FileBackedOWLOntologyModel ontologyModel;
+  private final @NonNull FileBackedModel ontologyModel;
 
   public static final String TITLE = "Save";
 
-  public SaveAction(@NonNull Component parent, @NonNull FileBackedOWLOntologyModel ontologyModel,
+  public SaveAction(@NonNull Component parent, @NonNull FileBackedModel ontologyModel,
     @NonNull SWRLAPIDialogManager dialogManager)
   {
     this.parent = parent;

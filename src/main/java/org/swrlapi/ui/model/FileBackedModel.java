@@ -6,10 +6,7 @@ import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 import java.io.File;
 import java.util.Optional;
 
-/**
- * Describes a model that can be used to build an MVC-based GUI that uses a file-backed OWL ontology.
- */
-public interface FileBackedOWLOntologyModel extends OWLOntologyModel
+public interface FileBackedModel
 {
 	/**
 	 * @param file The backing file

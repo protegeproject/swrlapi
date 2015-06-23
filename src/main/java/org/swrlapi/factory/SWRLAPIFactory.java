@@ -34,7 +34,9 @@ import org.swrlapi.sqwrl.SQWRLResultManager;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.ui.controller.SWRLRuleEngineController;
 import org.swrlapi.ui.dialog.SWRLAPIDialogManager;
-import org.swrlapi.ui.model.FileBackedOWLOntologyModel;
+import org.swrlapi.ui.model.FileBackedModel;
+import org.swrlapi.ui.model.FileBackedSQWRLQueryEngineModel;
+import org.swrlapi.ui.model.FileBackedSWRLRuleEngineModel;
 import org.swrlapi.ui.model.OWL2RLModel;
 import org.swrlapi.ui.model.SQWRLQueryEngineModel;
 import org.swrlapi.ui.model.SWRLAutoCompleter;
@@ -268,21 +270,47 @@ public class SWRLAPIFactory
 	}
 
 	/**
+	 * @param ontology An OWL ontology
 	 * @param ruleEngine A SWRL rule engine name
 	 * @return A SWRL rule engine model
 	 */
-	@NonNull public static SWRLRuleEngineModel createSWRLRuleEngineModel(@NonNull SWRLRuleEngine ruleEngine)
+	@NonNull public static SWRLRuleEngineModel createSWRLRuleEngineModel(@NonNull OWLOntology ontology,
+			@NonNull SWRLRuleEngine ruleEngine)
 	{
-		return new DefaultSWRLRuleEngineModel(ruleEngine);
+		return new DefaultSWRLRuleEngineModel(ontology, ruleEngine);
 	}
+
+	/**
+	 * @param ontology An OWL ontology
+	 * @param ruleEngine A SWRL rule engine
+	 * @return A file-backed SWRL rule engine model
+	 */
+	public static @NonNull FileBackedSWRLRuleEngineModel createFileBackedSWRLRuleEngineModel(@NonNull OWLOntology ontology,
+			@NonNull SWRLRuleEngine ruleEngine, Optional<File> file)
+	{
+		return new DefaultFileBackedSWRLRuleEngineModel(ontology, ruleEngine, file);
+	}
+
 
 	/**
 	 * @param queryEngine A SQWRL query engine
 	 * @return A SQWRL query engine model
 	 */
-	@NonNull public static SQWRLQueryEngineModel createSQWRLQueryEngineModel(@NonNull SQWRLQueryEngine queryEngine)
+	@NonNull public static SQWRLQueryEngineModel createSQWRLQueryEngineModel(@NonNull OWLOntology ontology,
+			@NonNull SQWRLQueryEngine queryEngine)
 	{
-		return new DefaultSQWRLQueryEngineModel(queryEngine);
+		return new DefaultSQWRLQueryEngineModel(ontology, queryEngine);
+	}
+
+	/**
+	 * @param ontology An OWL ontology
+	 * @param queryEngine A SQWRL query engine
+	 * @return A file-backed SQWRL query engine model
+	 */
+	public static @NonNull FileBackedSQWRLQueryEngineModel createFileBackedSQWRLQueryEngineModel(@NonNull OWLOntology ontology,
+			@NonNull SQWRLQueryEngine queryEngine, Optional<File> file)
+	{
+		return new DefaultFileBackedSQWRLQueryEngineModel(ontology, queryEngine, file);
 	}
 
 	/**
@@ -292,7 +320,7 @@ public class SWRLAPIFactory
 	@NonNull public static SQWRLQueryEngineModel createSQWRLQueryEngineModel(@NonNull OWLOntology ontology)
 	{
 		SQWRLQueryEngine queryEngine = createSQWRLQueryEngine(ontology);
-		return new DefaultSQWRLQueryEngineModel(queryEngine);
+		return new DefaultSQWRLQueryEngineModel(ontology, queryEngine);
 	}
 
 	/**
@@ -312,16 +340,6 @@ public class SWRLAPIFactory
 	@NonNull public static SWRLAPIDialogManager createDialogManager(@NonNull SWRLRuleEngineModel swrlRuleEngineModel)
 	{
 		return new DefaultSWRLAPIDialogManager(swrlRuleEngineModel);
-	}
-
-	/**
-	 * @param file Optional file containing an OWL ontology
-	 * @return An ontology model
-	 */
-	@NonNull public static FileBackedOWLOntologyModel createFileBackedOWLOntologyModel(@NonNull OWLOntology ontology,
-			@NonNull SQWRLQueryEngineModel queryEngineModel, Optional<File> file) throws OWLOntologyCreationException
-	{
-		return new DefaultFileBackedOWLOntologyModel(ontology, queryEngineModel, file);
 	}
 
 	/**

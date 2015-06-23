@@ -1,5 +1,6 @@
 package org.swrlapi.factory;
 
+import org.semanticweb.owlapi.model.OWLOntology;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.ui.model.SQWRLQueryEngineModel;
 
@@ -10,9 +11,9 @@ public class DefaultSQWRLQueryEngineModel extends DefaultSWRLRuleEngineModel imp
 	@NonNull
 	private final SQWRLQueryEngine queryEngine;
 
-	public DefaultSQWRLQueryEngineModel(@NonNull SQWRLQueryEngine sqwrlQueryEngine)
+	public DefaultSQWRLQueryEngineModel(@NonNull OWLOntology ontology, @NonNull SQWRLQueryEngine sqwrlQueryEngine)
 	{
-		super(sqwrlQueryEngine);
+		super(ontology, sqwrlQueryEngine);
 		this.queryEngine = sqwrlQueryEngine;
 	}
 
