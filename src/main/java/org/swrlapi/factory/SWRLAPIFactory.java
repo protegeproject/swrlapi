@@ -34,7 +34,6 @@ import org.swrlapi.sqwrl.SQWRLResultManager;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.ui.controller.SWRLRuleEngineController;
 import org.swrlapi.ui.dialog.SWRLAPIDialogManager;
-import org.swrlapi.ui.model.FileBackedModel;
 import org.swrlapi.ui.model.FileBackedSQWRLQueryEngineModel;
 import org.swrlapi.ui.model.FileBackedSWRLRuleEngineModel;
 import org.swrlapi.ui.model.OWL2RLModel;

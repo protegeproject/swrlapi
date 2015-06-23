@@ -1,18 +1,14 @@
 package org.swrlapi.ui.model;
 
 import checkers.nullness.quals.NonNull;
-import org.semanticweb.owlapi.model.OWLOntology;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.core.SWRLRuleRenderer;
 import org.swrlapi.parser.SWRLParser;
 
 /**
- * Provides a model that can be used to build a MVC-based GUI that uses a SWRL rule engine. Used in conjunction with a
- * {@link org.swrlapi.ui.controller.SWRLRuleEngineController}.
- *
- * @see org.swrlapi.ui.controller.SWRLRuleEngineController
+ * Provides a model that can be used to build an MVC-based GUI that uses a SWRL rule engine.
  */
-public interface SWRLRuleEngineModel extends SWRLAPIModel
+public interface SWRLRuleEngineModel extends OntologyModel
 {
   /**
    * @return A SWRL rule engine
@@ -30,7 +26,6 @@ public interface SWRLRuleEngineModel extends SWRLAPIModel
   @NonNull SWRLAutoCompleter getSWRLAutoCompleter();
 
   /**
-   *
    * @return A SWRL rule renderer
    */
   @NonNull SWRLRuleRenderer getSWRLRuleRenderer();
@@ -41,14 +36,13 @@ public interface SWRLRuleEngineModel extends SWRLAPIModel
   @NonNull SWRLRulesTableModel getSWRLRulesTableModel();
 
   /**
-   *
    * @return An OWL 2 RL model
    */
   @NonNull OWL2RLModel getOWL2RLModel();
 
   /**
    * @return True if the rules in the underlying ontology have been modified since the last call to
-   *         {@link SWRLRuleEngineModel#clearSWRLRulesModified()}.
+   * {@link SWRLRuleEngineModel#clearSWRLRulesModified()}.
    */
   boolean areSWRLRulesModified();
 
@@ -56,19 +50,4 @@ public interface SWRLRuleEngineModel extends SWRLAPIModel
    * Clear the modified status of SWRL rules. Used in conjunction with {@link #areSWRLRulesModified()}.
    */
   void clearSWRLRulesModified();
-
-  /**
-   * @return The underlying OWL ontology
-   */
-  @NonNull OWLOntology getOWLOntology();
-
-  /**
-   * @return True if the ontology has changed since construction or the last call to {@link #resetOntologyChanged()}.
-   */
-  boolean hasOntologyChanged();
-
-  /**
-   * Reset the ontology changed status
-   */
-  void resetOntologyChanged();
 }

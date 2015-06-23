@@ -1,0 +1,32 @@
+package org.swrlapi.ui.model;
+
+import checkers.nullness.quals.NonNull;
+import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyStorageException;
+
+import java.io.File;
+
+public interface FileBackedOntologyModel extends OntologyModel
+{
+  /**
+   * @param file A file containing an OWL ontology
+   * @throws OWLOntologyCreationException If an error occurs during opening
+   */
+  void open(@NonNull File file) throws OWLOntologyCreationException;
+
+  /**
+   * Close ontology; create an empty one
+   * @throws OWLOntologyCreationException If an error occurs during creation of an empty ontology
+   */
+  void close() throws OWLOntologyCreationException;
+
+  /**
+   * @throws OWLOntologyStorageException If an error occurs during saving
+   */
+  void save() throws OWLOntologyStorageException;
+
+  /**
+   * @param file The backing file
+   */
+  void saveAs(@NonNull File file) throws OWLOntologyStorageException;
+}

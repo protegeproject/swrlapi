@@ -3,7 +3,7 @@ package org.swrlapi.ui.action;
 import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 import org.swrlapi.ui.dialog.SWRLAPIDialogManager;
-import org.swrlapi.ui.model.FileBackedModel;
+import org.swrlapi.ui.model.FileBackedOntologyModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,13 +15,14 @@ public class SaveAsAction implements ActionListener
 {
   @NonNull private final Component parent;
   @NonNull private final SWRLAPIDialogManager dialogManager;
-  private final @NonNull FileBackedModel ontologyModel;
+  @NonNull private final FileBackedOntologyModel ontologyModel;
 
-  public static final String TITLE = "Save As";
+  public static final String SAVE_AS_TITLE = "Save As";
   private static final String MESSAGE = "Save Ontology";
   private static final String EXTENSON = "owl";
+  private static final String ERROR_TITLE = "Error";
 
-  public SaveAsAction(@NonNull Component parent, @NonNull FileBackedModel ontologyModel,
+  public SaveAsAction(@NonNull Component parent, @NonNull FileBackedOntologyModel ontologyModel,
     @NonNull SWRLAPIDialogManager dialogManager)
   {
     this.parent = parent;
@@ -36,16 +37,15 @@ public class SaveAsAction implements ActionListener
 
   public void saveAs()
   {
-    JFileChooser fileChooser = this.dialogManager.createSaveFileChooser(TITLE, MESSAGE, EXTENSON, true);
+    JFileChooser fileChooser = this.dialogManager.createSaveFileChooser(SAVE_AS_TITLE, MESSAGE, EXTENSON, true);
 
     if (fileChooser.showOpenDialog(this.parent) == JFileChooser.APPROVE_OPTION) {
       File file = fileChooser.getSelectedFile();
 
       try {
-        this.ontologyModel.changeBackingFile(file);
-        this.ontologyModel.save();
+        this.ontologyModel.saveAs(file);
       } catch (OWLOntologyStorageException e) {
-        this.dialogManager.showErrorMessageDialog(this.parent, e.getMessage(), "Error");
+        this.dialogManager.showErrorMessageDialog(this.parent, e.getMessage(), ERROR_TITLE);
       }
     }
   }
