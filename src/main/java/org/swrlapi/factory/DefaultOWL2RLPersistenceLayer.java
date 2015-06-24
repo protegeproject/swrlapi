@@ -1,26 +1,29 @@
 package org.swrlapi.factory;
 
-import checkers.nullness.quals.NonNull;
-import org.semanticweb.owlapi.model.OWLOntology;
-import org.swrlapi.core.SWRLAPIOWLOntology;
-import org.swrlapi.owl2rl.OWL2RLNames;
-import org.swrlapi.owl2rl.OWL2RLPersistenceLayer;
-
 import java.util.EnumSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.semanticweb.owlapi.model.OWLOntology;
+import org.swrlapi.owl2rl.OWL2RLNames;
+import org.swrlapi.owl2rl.OWL2RLPersistenceLayer;
+
+import checkers.nullness.quals.NonNull;
+
 // TODO Implement OWL 2 RL persistence layer
 public class DefaultOWL2RLPersistenceLayer implements OWL2RLPersistenceLayer
 {
-	@SuppressWarnings("unused") private final @NonNull OWLOntology ontology;
+	@SuppressWarnings("unused")
+	private final @NonNull OWLOntology ontology;
 
 	public DefaultOWL2RLPersistenceLayer(@NonNull OWLOntology ontology)
 	{
 		this.ontology = ontology;
 	}
 
-	@NonNull @Override public Set<OWL2RLNames.OWL2RLRule> getEnabledRules()
+	@NonNull
+	@Override
+	public Set<OWL2RLNames.OWL2RLRule> getEnabledRules()
 	{
 		Set<OWL2RLNames.OWL2RLRule> enabledRules = EnumSet.allOf(OWL2RLNames.OWL2RLRule.class).stream()
 				.filter(rule -> !isOWL2RLRuleDisabled(rule)).collect(Collectors.toSet());
@@ -30,7 +33,8 @@ public class DefaultOWL2RLPersistenceLayer implements OWL2RLPersistenceLayer
 		return enabledRules;
 	}
 
-	@Override public void setEnabledRules(@NonNull Set<OWL2RLNames.OWL2RLRule> rules)
+	@Override
+	public void setEnabledRules(@NonNull Set<OWL2RLNames.OWL2RLRule> rules)
 	{
 		// OWLIndividual p3OWLIndividual = getOWLModel().getOWLIndividual(OWL2RLNames.SWRLA_NAMESPACE +
 		// rule.toString());
@@ -45,20 +49,23 @@ public class DefaultOWL2RLPersistenceLayer implements OWL2RLPersistenceLayer
 			// if (p3OWLIndividual != null && p3OWLDataProperty != null) // Rather than setting value to true, we remove
 			// // property value so it will default to true
 			// p3OWLIndividual.removePropertyValue(p3OWLDataProperty, false);
-		});
+			});
 	}
 
-	@Override public void setDisabledRule(OWL2RLNames.OWL2RLRule rule)
+	@Override
+	public void setDisabledRule(OWL2RLNames.OWL2RLRule rule)
 	{
 		disableRule(rule);
 	}
 
-	@Override public void setDisabledRules(@NonNull Set<OWL2RLNames.OWL2RLRule> rules)
+	@Override
+	public void setDisabledRules(@NonNull Set<OWL2RLNames.OWL2RLRule> rules)
 	{
 		rules.forEach(this::disableRule);
 	}
 
-	@Override public void disableAll()
+	@Override
+	public void disableAll()
 	{
 		EnumSet.allOf(OWL2RLNames.OWL2RLRule.class).forEach(this::disableRule);
 	}
