@@ -62,4 +62,6 @@ public class DefaultFileBackedSWRLRuleEngineModel extends DefaultSWRLRuleEngineM
 
 		resetOntologyChanged();
 	}
+
+	@Override public boolean hasBackingFile() { return file.isPresent(); }
 }

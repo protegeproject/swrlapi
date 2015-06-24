@@ -61,4 +61,6 @@ public class DefaultFileBackedSQWRLQueryEngineModel extends DefaultSQWRLQueryEng
 
     resetOntologyChanged();
   }
+
+	@Override public boolean hasBackingFile() { return file.isPresent(); }
 }
