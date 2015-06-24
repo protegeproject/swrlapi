@@ -132,9 +132,9 @@ public class DefaultSWRLAPIDialogManager implements SWRLAPIDialogManager
 
     chooser.setDialogType(JFileChooser.SAVE_DIALOG);
     chooser.setDialogTitle(title);
+
     if (fileExtension != null) {
-      String text = fileDescription;
-      chooser.setFileFilter(new ExtensionFilter(fileExtension, text));
+      chooser.setFileFilter(new ExtensionFilter(fileExtension, fileDescription));
     }
     return chooser;
   }

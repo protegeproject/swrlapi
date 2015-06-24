@@ -18,8 +18,8 @@ public class SaveAsAction implements ActionListener
   @NonNull private final FileBackedOntologyModel ontologyModel;
 
   public static final String SAVE_AS_TITLE = "Save As";
-  private static final String MESSAGE = "Save Ontology";
-  private static final String EXTENSON = "owl";
+  private static final String FILE_DESCRIPTION = "OWL Ontology";
+  private static final String FILE_EXTENSION = "owl";
   private static final String ERROR_TITLE = "Error";
 
   public SaveAsAction(@NonNull Component parent, @NonNull FileBackedOntologyModel ontologyModel,
@@ -37,7 +37,8 @@ public class SaveAsAction implements ActionListener
 
   public void saveAs()
   {
-    JFileChooser fileChooser = this.dialogManager.createSaveFileChooser(SAVE_AS_TITLE, MESSAGE, EXTENSON, true);
+    JFileChooser fileChooser = this.dialogManager
+      .createSaveFileChooser(SAVE_AS_TITLE, FILE_DESCRIPTION, FILE_EXTENSION, true);
 
     if (fileChooser.showOpenDialog(this.parent) == JFileChooser.APPROVE_OPTION) {
       File file = fileChooser.getSelectedFile();

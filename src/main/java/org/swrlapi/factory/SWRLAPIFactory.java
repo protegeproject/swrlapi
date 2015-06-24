@@ -13,6 +13,7 @@ import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.semanticweb.owlapi.util.SimpleIRIMapper;
 import org.swrlapi.bridge.SWRLBridge;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
+import org.swrlapi.core.IRIResolver;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIOntologyProcessor;
@@ -24,8 +25,8 @@ import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
 import org.swrlapi.exceptions.SWRLRuleEngineException;
 import org.swrlapi.literal.Literal;
+import org.swrlapi.owl2rl.OWL2RLEngine;
 import org.swrlapi.owl2rl.OWL2RLPersistenceLayer;
-import org.swrlapi.core.IRIResolver;
 import org.swrlapi.sqwrl.SQWRLQuery;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.SQWRLQueryRenderer;
@@ -213,9 +214,9 @@ public class SWRLAPIFactory
 		return new SWRLRulesTableModel(swrlRuleEngine, swrlRuleRenderer);
 	}
 
-	@NonNull public static OWL2RLModel createOWL2RLModel(@NonNull SWRLRuleEngine swrlRuleEngine)
+	@NonNull public static OWL2RLModel createOWL2RLModel(@NonNull OWL2RLEngine owl2RLEngine)
 	{
-		return new OWL2RLModel(swrlRuleEngine.getOWL2RLEngine());
+		return new OWL2RLModel(owl2RLEngine);
 	}
 
 	/**

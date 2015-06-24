@@ -14,12 +14,18 @@ import java.util.Optional;
  */
 public class OWL2RLModel implements SWRLAPIModel
 {
-  @NonNull private final OWL2RLEngine owl2RLEngine;
+  @NonNull private OWL2RLEngine owl2RLEngine;
   private Optional<OWL2RLRuleTablesView> view = Optional.empty();
 
   public OWL2RLModel(@NonNull OWL2RLEngine owl2RLEngine)
   {
     this.owl2RLEngine = owl2RLEngine;
+  }
+
+  public void updateModel(@NonNull OWL2RLEngine owl2RLEngine)
+  {
+    this.owl2RLEngine = owl2RLEngine;
+    updateView();
   }
 
   public void setView(@NonNull OWL2RLRuleTablesView view)

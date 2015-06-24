@@ -33,24 +33,35 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 
 	public static final int NUMBER_OF_COLUMNS = 4;
 
-	@NonNull private final SWRLRuleEngine swrlRuleEngine;
-	@NonNull private final SWRLRuleRenderer swrlRuleRenderer;
+	@NonNull private SWRLRuleEngine swrlRuleEngine;
+	@NonNull private SWRLRuleRenderer swrlRuleRenderer;
 	@NonNull private final SortedMap<String, SWRLRuleModel> swrlRuleModels; // rule name -> SWRLRuleModel
+  private boolean isModified;
 
 	private Optional<SWRLAPIView> view = Optional.empty();
-	private boolean isModified = false;
 
 	public SWRLRulesTableModel(@NonNull SWRLRuleEngine swrlRuleEngine, @NonNull SWRLRuleRenderer swrlRuleRenderer)
 	{
 		this.swrlRuleEngine = swrlRuleEngine;
 		this.swrlRuleRenderer = swrlRuleRenderer;
 		this.swrlRuleModels = new TreeMap<>();
+		this.isModified = false;
 	}
 
 	public void setView(@NonNull SWRLAPIView view)
 	{
 		this.view = Optional.of(view);
 		updateRuleModels();
+	}
+
+	public void updateModel(SWRLRuleEngine swrlRuleEngine, SWRLRuleRenderer swrlRuleRenderer)
+	{
+		this.swrlRuleEngine = swrlRuleEngine;
+		this.swrlRuleRenderer = swrlRuleRenderer;
+    this.swrlRuleModels.clear();
+    this.isModified = false;
+
+    updateView();
 	}
 
 	@NonNull public Set<SWRLRuleModel> getSWRLRuleModels()

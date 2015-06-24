@@ -7,6 +7,7 @@ import org.semanticweb.owlapi.model.OWLOntologyChange;
 import org.semanticweb.owlapi.model.OWLOntologyChangeListener;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.core.SWRLRuleRenderer;
+import org.swrlapi.owl2rl.OWL2RLEngine;
 import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.ui.model.OWL2RLModel;
 import org.swrlapi.ui.model.SWRLAutoCompleter;
@@ -19,11 +20,14 @@ public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel, OWLOntol
 {
   @NonNull private OWLOntology ontology;
   @NonNull private SWRLRuleEngine ruleEngine;
-  @NonNull private SWRLRulesTableModel swrlRulesTableModel;
-  @NonNull private OWL2RLModel owl2RLModel;
   @NonNull private SWRLParser swrlParser;
   @NonNull private SWRLRuleRenderer swrlRuleRenderer;
   @NonNull private SWRLAutoCompleter swrlAutoCompleter;
+  @NonNull private OWL2RLEngine owl2RLEngine;
+
+  @NonNull private final SWRLRulesTableModel swrlRulesTableModel;
+  @NonNull private final OWL2RLModel owl2RLModel;
+
   private boolean hasOntologyChanged;
 
   public DefaultSWRLRuleEngineModel(@NonNull OWLOntology ontology, @NonNull SWRLRuleEngine ruleEngine)
@@ -31,10 +35,12 @@ public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel, OWLOntol
     this.ontology = ontology;
     this.ruleEngine = ruleEngine;
     this.swrlRuleRenderer = this.ruleEngine.createSWRLRuleRenderer();
-    this.swrlRulesTableModel = SWRLAPIFactory.createSWRLRulesTableModel(ruleEngine, this.swrlRuleRenderer);
-    this.owl2RLModel = SWRLAPIFactory.createOWL2RLModel(this.ruleEngine);
     this.swrlParser = this.ruleEngine.createSWRLParser();
     this.swrlAutoCompleter = this.ruleEngine.createSWRLAutoCompleter();
+    this.owl2RLEngine = this.ruleEngine.getOWL2RLEngine();
+
+    this.swrlRulesTableModel = SWRLAPIFactory.createSWRLRulesTableModel(ruleEngine, this.swrlRuleRenderer);
+    this.owl2RLModel = SWRLAPIFactory.createOWL2RLModel(owl2RLEngine);
 
     this.ontology.getOWLOntologyManager().addOntologyChangeListener(this);
 
@@ -46,10 +52,12 @@ public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel, OWLOntol
     this.ontology = ontology;
     this.ruleEngine = ruleEngine;
     this.swrlRuleRenderer = this.ruleEngine.createSWRLRuleRenderer();
-    this.swrlRulesTableModel = SWRLAPIFactory.createSWRLRulesTableModel(ruleEngine, this.swrlRuleRenderer);
-    this.owl2RLModel = SWRLAPIFactory.createOWL2RLModel(this.ruleEngine);
     this.swrlParser = this.ruleEngine.createSWRLParser();
     this.swrlAutoCompleter = this.ruleEngine.createSWRLAutoCompleter();
+    this.owl2RLEngine = this.ruleEngine.getOWL2RLEngine();
+
+    this.swrlRulesTableModel.updateModel(ruleEngine, this.swrlRuleRenderer);
+    this.owl2RLModel.updateModel(owl2RLEngine);
 
     this.hasOntologyChanged = false;
 
