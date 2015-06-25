@@ -1,10 +1,13 @@
 package org.swrlapi.factory;
 
 import checkers.nullness.quals.NonNull;
+import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.OWLException;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyChange;
 import org.semanticweb.owlapi.model.OWLOntologyChangeListener;
+import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.core.SWRLRuleRenderer;
 import org.swrlapi.owl2rl.OWL2RLEngine;
@@ -14,11 +17,13 @@ import org.swrlapi.ui.model.SWRLAutoCompleter;
 import org.swrlapi.ui.model.SWRLRuleEngineModel;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
 
+import java.io.File;
 import java.util.List;
 
 public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel, OWLOntologyChangeListener
 {
-  @NonNull private OWLOntology ontology;
+	@NonNull private final OWLOntologyManager ontologyManager;
+	@NonNull private OWLOntology ontology;
   @NonNull private SWRLRuleEngine ruleEngine;
   @NonNull private SWRLParser swrlParser;
   @NonNull private SWRLRuleRenderer swrlRuleRenderer;
@@ -32,7 +37,8 @@ public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel, OWLOntol
 
   public DefaultSWRLRuleEngineModel(@NonNull OWLOntology ontology, @NonNull SWRLRuleEngine ruleEngine)
   {
-    this.ontology = ontology;
+		this.ontologyManager = OWLManager.createOWLOntologyManager();
+		this.ontology = ontology;
     this.ruleEngine = ruleEngine;
     this.swrlRuleRenderer = this.ruleEngine.createSWRLRuleRenderer();
     this.swrlParser = this.ruleEngine.createSWRLParser();
@@ -64,7 +70,19 @@ public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel, OWLOntol
     updateView();
   }
 
-  @NonNull @Override public OWLOntology getOWLOntology()
+	@NonNull protected OWLOntology createOWLOntology() throws OWLOntologyCreationException
+	{
+		this.ontologyManager.removeOntology(this.ontology);
+		return this.ontologyManager.createOntology();
+	}
+
+	@NonNull protected OWLOntology createOWLOntology(File file) throws OWLOntologyCreationException
+	{
+		this.ontologyManager.removeOntology(this.ontology);
+		return this.ontologyManager.loadOntologyFromOntologyDocument(file);
+	}
+
+	@NonNull @Override public OWLOntology getOWLOntology()
   {
     return this.ontology;
   }

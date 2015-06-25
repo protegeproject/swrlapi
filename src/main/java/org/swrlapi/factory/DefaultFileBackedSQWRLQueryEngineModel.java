@@ -16,8 +16,6 @@ import java.util.Optional;
 public class DefaultFileBackedSQWRLQueryEngineModel extends DefaultSQWRLQueryEngineModel
   implements FileBackedSQWRLQueryEngineModel
 {
-  private final @NonNull OWLOntologyManager ontologyManager;
-
   private Optional<File> file;
 
   public DefaultFileBackedSQWRLQueryEngineModel(@NonNull OWLOntology ontology, @NonNull SQWRLQueryEngine queryEngine,
@@ -25,12 +23,11 @@ public class DefaultFileBackedSQWRLQueryEngineModel extends DefaultSQWRLQueryEng
   {
     super(ontology, queryEngine);
     this.file = file;
-    this.ontologyManager = OWLManager.createOWLOntologyManager();
   }
 
   @Override public void open(@NonNull File file) throws OWLOntologyCreationException
   {
-    OWLOntology ontology = ontologyManager.loadOntologyFromOntologyDocument(file);
+    OWLOntology ontology = createOWLOntology(file);
     SQWRLQueryEngine queryEngine = SWRLAPIFactory.createSQWRLQueryEngine(ontology);
 
     this.file = Optional.of(file);
@@ -47,7 +44,7 @@ public class DefaultFileBackedSQWRLQueryEngineModel extends DefaultSQWRLQueryEng
 
   @Override public void close() throws OWLOntologyCreationException
   {
-    OWLOntology ontology = ontologyManager.createOntology();
+    OWLOntology ontology = createOWLOntology();
     SQWRLQueryEngine queryEngine = SWRLAPIFactory.createSQWRLQueryEngine(ontology);
 
     this.file = Optional.empty();
