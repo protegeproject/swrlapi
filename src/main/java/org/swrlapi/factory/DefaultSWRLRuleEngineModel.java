@@ -78,7 +78,7 @@ public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel, OWLOntol
 		return this.ontologyManager.createOntology();
 	}
 
-	@NonNull protected void saveOWLOntology(File file) throws OWLOntologyStorageException
+	protected void saveOWLOntology(File file) throws OWLOntologyStorageException
 	{
 		this.getOWLOntology().getOWLOntologyManager().saveOntology(getOWLOntology(), IRI.create(file.toURI()));
 	}
