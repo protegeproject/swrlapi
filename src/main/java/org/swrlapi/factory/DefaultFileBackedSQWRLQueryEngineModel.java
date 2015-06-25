@@ -37,7 +37,8 @@ public class DefaultFileBackedSQWRLQueryEngineModel extends DefaultSQWRLQueryEng
   @Override public void saveAs(@NonNull File file) throws OWLOntologyStorageException
   {
     this.file = Optional.of(file);
-    this.getOWLOntology().getOWLOntologyManager().saveOntology(getOWLOntology(), IRI.create(this.file.get().toURI()));
+
+		saveOWLOntology(this.file.get());
 
     resetOntologyChanged();
   }
@@ -54,7 +55,7 @@ public class DefaultFileBackedSQWRLQueryEngineModel extends DefaultSQWRLQueryEng
   @Override public void save() throws OWLOntologyStorageException
   {
     if (this.file.isPresent())
-      this.getOWLOntology().getOWLOntologyManager().saveOntology(getOWLOntology(), IRI.create(this.file.get().toURI()));
+      saveOWLOntology(this.file.get());
 
     resetOntologyChanged();
   }
