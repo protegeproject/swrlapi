@@ -46,12 +46,6 @@ public interface SWRLAPIOntologyProcessor
 
   @NonNull SWRLAPIRule getSWRLRule(@NonNull String ruleName) throws SWRLRuleException;
 
-  @NonNull String getComment(@NonNull SWRLRule rule);
-
-  @NonNull String getRuleName(@NonNull SWRLRule rule);
-
-  boolean getIsActive(@NonNull SWRLRule rule);
-
   void deleteSWRLRule(@NonNull String ruleName);
 
   // SQWRL query-related methods

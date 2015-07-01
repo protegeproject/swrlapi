@@ -179,9 +179,9 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
     Set<String> ruleNames = new HashSet<>();
 
     for (SWRLRule owlapiRule : getOWLOntology().getAxioms(AxiomType.SWRL_RULE, Imports.INCLUDED)) {
-      String ruleName = this.swrlapiOntologyProcessor.getRuleName(owlapiRule);
-      boolean isActive = this.swrlapiOntologyProcessor.getIsActive(owlapiRule);
-      String comment = this.swrlapiOntologyProcessor.getComment(owlapiRule);
+      String ruleName = getRuleName(owlapiRule);
+      boolean isActive = getIsActive(owlapiRule);
+      String comment = getComment(owlapiRule);
 
       if (ruleName.isEmpty()) {
         unannotatedOWLAPIRules.add(owlapiRule);
@@ -205,11 +205,54 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
       // ontologyManager.removeAxiom(ontology, owlapiRule); // Remove the original annotated rule
       // ontologyManager.addAxiom(ontology, annotatedOWLAPIRule); // Replace with annotated rule
     }
-
     return swrlapiRules;
   }
 
-  @NonNull private String generateRuleName(@NonNull Set<String> ruleNames)
+	@NonNull public String getRuleName(@NonNull SWRLRule owlapiRule)
+	{
+		OWLAnnotationProperty labelAnnotation = getOWLDataFactory()
+				.getOWLAnnotationProperty(OWLRDFVocabulary.RDFS_LABEL.getIRI());
+
+		for (OWLAnnotation annotation : owlapiRule.getAnnotations(labelAnnotation)) {
+			if (annotation.getValue() instanceof OWLLiteral) {
+				OWLLiteral literal = (OWLLiteral)annotation.getValue();
+				return literal.getLiteral(); // TODO We just pick one for the moment
+			}
+		}
+		// TODO Also look for swrla#ruleName annotation
+		return "";
+	}
+
+	private boolean getIsActive(@NonNull SWRLRule owlapiRule)
+	{
+		OWLAnnotationProperty enabledAnnotationProperty = getOWLDataFactory()
+				.getOWLAnnotationProperty(IRI.create("http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"));
+
+		for (OWLAnnotation annotation : owlapiRule.getAnnotations(enabledAnnotationProperty)) {
+			if (annotation.getValue() instanceof OWLLiteral) {
+				OWLLiteral literal = (OWLLiteral)annotation.getValue();
+				if (literal.isBoolean())
+					return literal.parseBoolean();
+			}
+		}
+		return true;
+	}
+
+	@NonNull private String getComment(@NonNull SWRLRule owlapiRule)
+	{
+		OWLAnnotationProperty commentAnnotationProperty = getOWLDataFactory()
+				.getOWLAnnotationProperty(OWLRDFVocabulary.RDFS_COMMENT.getIRI());
+
+		for (OWLAnnotation annotation : owlapiRule.getAnnotations(commentAnnotationProperty)) {
+			if (annotation.getValue() instanceof OWLLiteral) {
+				OWLLiteral literal = (OWLLiteral)annotation.getValue();
+				return literal.getLiteral(); // TODO We just pick one for the moment
+			}
+		}
+		return "";
+	}
+
+	@NonNull private String generateRuleName(@NonNull Set<String> ruleNames)
   {
     final String ruleNamePrefix = "R";
     int ruleNumber = 1;
