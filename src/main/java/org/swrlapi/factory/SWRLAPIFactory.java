@@ -16,7 +16,6 @@ import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.IRIResolver;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
 import org.swrlapi.core.SWRLAPIOWLOntology;
-import org.swrlapi.core.SWRLAPIOntologyProcessor;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.core.SWRLRuleEngineManager;
@@ -458,16 +457,6 @@ public class SWRLAPIFactory
 	public static @NonNull SWRLAutoCompleter createSWRLAutoCompleter(@NonNull SWRLAPIOWLOntology swrlapiowlOntology)
 	{
 		return new DefaultSWRLAutoCompleter(swrlapiowlOntology);
-	}
-
-	/**
-	 * @param swrlapiOWLOntology A SWRLAPI-based OWL ontology
-	 * @return A SWRLAPI ontology processor
-	 */
-	public static @NonNull SWRLAPIOntologyProcessor createSWRLAPIOntologyProcessor(
-			@NonNull SWRLAPIOWLOntology swrlapiOWLOntology)
-	{
-		return new DefaultSWRLAPIOntologyProcessor(swrlapiOWLOntology);
 	}
 
 	private static void addDefaultPrefixes(@NonNull OWLOntology ontology, @NonNull DefaultPrefixManager prefixManager)

@@ -50,8 +50,22 @@ public interface SWRLAPIOWLOntology
 
   @NonNull SWRLAPIRule getSWRLRule(@NonNull String ruleName) throws SWRLRuleException;
 
+  /**
+   * @param ruleName The name of the rule
+   * @param rule     Rule text
+   * @return The rule representation
+   * @throws SWRLParseException If an error occurs during parsing
+   */
   @NonNull SWRLAPIRule createSWRLRule(@NonNull String ruleName, @NonNull String rule) throws SWRLParseException;
 
+  /**
+   * @param ruleName The name of the rule
+   * @param rule     Rule text
+   * @param comment  A comment associated with the rule
+   * @param isActive Is the rule active
+   * @return The rule representation
+   * @throws SWRLParseException If an error occurs during parsing
+   */
   @NonNull SWRLAPIRule createSWRLRule(@NonNull String ruleName, @NonNull String rule, @NonNull String comment,
     boolean isActive) throws SWRLParseException;
 
