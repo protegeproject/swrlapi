@@ -63,7 +63,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
   @NonNull private final Set<IRI> swrlBuiltInIRIs;
   @NonNull private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
   @NonNull private final SWRLAPIOntologyProcessor swrlapiOntologyProcessor;
-  @NonNull private final SQWRLResultValueFactory sqwrlResultValueFactory;
 
   public DefaultSWRLAPIOWLOntology(@NonNull OWLOntology ontology, @NonNull DefaultPrefixManager prefixManager)
   {
@@ -74,7 +73,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
     this.swrlBuiltInIRIs = new HashSet<>();
     this.swrlapiOWLDataFactory = SWRLAPIFactory.createSWRLAPIOWLDataFactory(this.iriResolver);
     this.swrlapiOntologyProcessor = SWRLAPIFactory.createSWRLAPIOntologyProcessor(this);
-    this.sqwrlResultValueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(this.iriResolver);
 
     addDefaultSWRLBuiltIns();
   }
