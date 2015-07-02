@@ -107,6 +107,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
   @NonNull private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
 
   @NonNull private final Map<String, SWRLAPIRule> swrlRules; // SWRL rules include SQWRL queries
+  @NonNull private final Map<String, SWRLRule> owlapiRules; // SWRL rules include SQWRL queries
   @NonNull private final Map<String, SQWRLQuery> sqwrlQueries;
 
   @NonNull private final Set<OWLAxiom> assertedOWLAxioms; // All asserted OWL axioms extracted from the supplied ontology
@@ -127,6 +128,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
     this.swrlapiOWLDataFactory = SWRLAPIFactory.createSWRLAPIOWLDataFactory(this.iriResolver);
 
     this.swrlRules = new HashMap<>();
+    this.owlapiRules = new HashMap<>();
     this.sqwrlQueries = new HashMap<>();
 
     this.assertedOWLAxioms = new HashSet<>();
@@ -151,6 +153,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
   @Override public void reset()
   {
     this.swrlRules.clear();
+    this.owlapiRules.clear();
     this.sqwrlQueries.clear();
 
     getIRIResolver().reset();
@@ -191,10 +194,10 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
     return createSQWRLQuery(queryName, query, "", true);
   }
 
-  @NonNull @Override public SQWRLQuery createSQWRLQuery(@NonNull String queryName, @NonNull String query,
+  @NonNull @Override public SQWRLQuery createSQWRLQuery(@NonNull String queryName, @NonNull String queryText,
     @NonNull String comment, boolean isActive) throws SWRLParseException, SQWRLException
   {
-    Optional<SWRLRule> owlapiRule = this.swrlParser.parseSWRLRule(query, false, queryName, comment);
+    Optional<SWRLRule> owlapiRule = this.swrlParser.parseSWRLRule(queryText, false, queryName, comment);
 
     if (owlapiRule.isPresent()) {
       SWRLAPIRule swrlapiRule = convertOWLAPIRule2SWRLAPIRule(owlapiRule.get(), queryName, comment, isActive);
@@ -202,7 +205,9 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
       addSWRLRule(swrlapiRule, owlapiRule.get()); // Adds rule to the underlying ontology
 
       if (swrlapiRule.isSQWRLQuery()) {
-        return createSWRLQueryFromSWRLRule(swrlapiRule);
+        SQWRLQuery query = createSQWRLQueryFromSWRLRule(swrlapiRule);
+        this.sqwrlQueries.put(queryName, query);
+        return query;
       } else
         throw new SWRLParseException(queryName + " is not a SQWRL query");
     } else
@@ -211,36 +216,37 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 
   @NonNull @Override public Set<SWRLAPIRule> getSWRLRules()
   {
-    Set<SWRLAPIRule> swrlapiRules = new HashSet<>();
+    return new HashSet<>(this.swrlRules.values());
+  }
+
+  private void processSWRLRulesAndSQWRLQueries() throws SQWRLException
+  {
     int ruleNameIndex = 0;
+
+    this.swrlRules.clear();
+    this.owlapiRules.clear();
+    this.sqwrlQueries.clear();
 
     for (SWRLRule owlapiRule : getOWLOntology().getAxioms(AxiomType.SWRL_RULE, Imports.INCLUDED)) {
       Optional<String> ruleName = getRuleName(owlapiRule);
       boolean isActive = getIsActive(owlapiRule);
       String comment = getComment(owlapiRule);
 
-      if (ruleName.isPresent()) {
-        SWRLAPIRule swrlapiRule = convertOWLAPIRule2SWRLAPIRule(owlapiRule, ruleName.get(), comment, isActive);
-        swrlapiRules.add(swrlapiRule);
-      } else {
-        String generatedRuleName = "R" + ++ruleNameIndex;
-        SWRLAPIRule swrlapiRule = convertOWLAPIRule2SWRLAPIRule(owlapiRule, generatedRuleName, comment, isActive);
-        swrlapiRules.add(swrlapiRule);
-        // TODO Do we want to add axioms to OWLAPI rule?
-        // generateRuleAnnotations(ruleName, comment, true)
-        // ontologyManager.removeAxiom(ontology, owlapiRule); // Remove the original annotated rule
-        // ontologyManager.addAxiom(ontology, annotatedOWLAPIRule); // Replace with annotated rule
+      String finalRuleName = ruleName.isPresent() ? ruleName.get() : "R" + ++ruleNameIndex;
+
+      SWRLAPIRule swrlapiRule = convertOWLAPIRule2SWRLAPIRule(owlapiRule, finalRuleName, comment, isActive);
+      this.swrlRules.put(finalRuleName, swrlapiRule);
+      this.owlapiRules.put(finalRuleName, owlapiRule);
+
+      if (swrlapiRule.isSQWRLQuery()) {
+        SQWRLQuery query = createSQWRLQueryFromSWRLRule(swrlapiRule);
+        this.sqwrlQueries.put(finalRuleName, query);
       }
+      // TODO Do we want to add axioms to OWLAPI rule that does not have them?
+      // generateRuleAnnotations(ruleName, comment, true)
+      // ontologyManager.removeAxiom(ontology, owlapiRule); // Remove the original annotated rule
+      // ontologyManager.addAxiom(ontology, annotatedOWLAPIRule); // Replace with annotated rule
     }
-    return swrlapiRules;
-  }
-
-  @NonNull @Override public SQWRLQuery getSQWRLQuery(@NonNull String queryName) throws SQWRLException
-  {
-    if (!this.sqwrlQueries.containsKey(queryName))
-      throw new SQWRLInvalidQueryNameException("invalid SQWRL query name " + queryName);
-
-    return this.sqwrlQueries.get(queryName);
   }
 
   @NonNull @Override public SWRLAPIRule getSWRLRule(@NonNull String ruleName) throws SWRLRuleException
@@ -255,13 +261,15 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
   {
     if (this.swrlRules.containsKey(ruleName)) {
       SWRLAPIRule rule = this.swrlRules.get(ruleName);
+      SWRLRule owlapiRule = this.owlapiRules.get(ruleName);
 
       if (rule.isSQWRLQuery())
         this.sqwrlQueries.remove(ruleName);
 
       this.swrlRules.remove(ruleName);
+      this.owlapiRules.remove(ruleName);
 
-      this.ontology.getOWLOntologyManager().removeAxiom(this.ontology, rule);
+      this.ontology.getOWLOntologyManager().removeAxiom(this.ontology, owlapiRule);
     }
   }
 
@@ -305,16 +313,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
     return this.swrlRules.values().size();
   }
 
-  @Override public int getNumberOfSQWRLQueries()
-  {
-    return this.sqwrlQueries.values().size();
-  }
-
-  @NonNull @Override public Set<String> getSQWRLQueryNames()
-  {
-    return new HashSet<>(this.sqwrlQueries.keySet());
-  }
-
   @Override public int getNumberOfOWLClassDeclarationAxioms()
   {
     return this.owlClassDeclarationAxioms.values().size();
@@ -340,10 +338,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
     return this.assertedOWLAxioms.size();
   }
 
-  @NonNull @Override public Set<SQWRLQuery> getSQWRLQueries()
-  {
-    return new HashSet<>(this.sqwrlQueries.values());
-  }
 
   @NonNull @Override public Set<OWLAxiom> getOWLAxioms()
   {
@@ -353,6 +347,16 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
   @Override public boolean hasAssertedOWLAxiom(@NonNull OWLAxiom axiom)
   {
     return this.assertedOWLAxioms.contains(axiom);
+  }
+
+  @NonNull @Override public Set<String> getSQWRLQueryNames()
+  {
+    return new HashSet<>(this.sqwrlQueries.keySet());
+  }
+
+  @NonNull @Override public Set<SQWRLQuery> getSQWRLQueries()
+  {
+    return new HashSet<>(this.sqwrlQueries.values());
   }
 
   /**
@@ -378,16 +382,14 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
     return this.sqwrlQueries.get(queryName).getSQWRLResultGenerator();
   }
 
-  @NonNull private SQWRLQuery createSWRLQueryFromSWRLRule(@NonNull SWRLAPIRule rule) throws SQWRLException
+  @NonNull private SQWRLQuery createSQWRLQueryFromSWRLRule(@NonNull SWRLAPIRule rule) throws SQWRLException
   {
     String queryName = rule.getRuleName();
     boolean active = rule.isActive();
     String comment = rule.getComment();
     SQWRLQuery query = SWRLAPIFactory
-      .getSQWRLQuery(queryName, rule.getBodyAtoms(), rule.getHeadAtoms(), active, comment,
-        getSWRLAPIOWLDataFactory().getLiteralFactory(),
-        getIRIResolver());
-    this.sqwrlQueries.put(queryName, query);
+      .createSQWRLQuery(queryName, rule.getBodyAtoms(), rule.getHeadAtoms(), active, comment,
+        getSWRLAPIOWLDataFactory().getLiteralFactory(), getIRIResolver());
 
     return query;
   }
@@ -973,10 +975,10 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
     String ruleName = swrlapiRule.getRuleName();
 
     this.swrlRules.put(ruleName, swrlapiRule);
+    this.owlapiRules.put(ruleName, owlapiRule);
 
     this.ontology.getOWLOntologyManager().addAxiom(this.ontology, owlapiRule);
   }
-
 
   /**
    * Process currently supported OWL axioms. The processing consists of recording any OWL properties in the processed
@@ -1018,23 +1020,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
     processOWLAsymmetricObjectPropertyAxioms();
     processOWLDisjointObjectPropertiesAxioms();
     processOWLDisjointDataPropertiesAxioms();
-  }
-
-  private void processSWRLRulesAndSQWRLQueries() throws SQWRLException
-  {
-    for (SWRLAPIRule ruleOrQuery : getSWRLRules())
-      processSWRLRuleOrSQWRLQuery(ruleOrQuery);
-  }
-
-  private void processSWRLRuleOrSQWRLQuery(@NonNull SWRLAPIRule ruleOrQuery) throws SQWRLException
-  {
-    if (ruleOrQuery.isSQWRLQuery()) {
-      createSWRLQueryFromSWRLRule(ruleOrQuery);
-      this.swrlRules.put(ruleOrQuery.getRuleName(), ruleOrQuery);
-    } else {
-      this.swrlRules.put(ruleOrQuery.getRuleName(), ruleOrQuery);
-      this.assertedOWLAxioms.add(ruleOrQuery); // A SWRL rule is a type of OWL axiom; a SQWRL query is not.
-    }
   }
 
   private void processOWLClassAssertionAxioms()

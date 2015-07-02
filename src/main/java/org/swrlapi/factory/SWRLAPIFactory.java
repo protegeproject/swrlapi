@@ -178,9 +178,9 @@ public class SWRLAPIFactory
 		return new DefaultSQWRLResultValueFactory(iriResolver);
 	}
 
-	@NonNull public static SQWRLQuery getSQWRLQuery(@NonNull String queryName, @NonNull List<SWRLAtom> bodyAtoms,
-			@NonNull List<SWRLAtom> headAtoms, boolean active, @NonNull String comment,
-			@NonNull LiteralFactory literalFactory, @NonNull IRIResolver iriResolver) throws SQWRLException
+	@NonNull public static SQWRLQuery createSQWRLQuery(@NonNull String queryName, @NonNull List<SWRLAtom> bodyAtoms,
+		@NonNull List<SWRLAtom> headAtoms, boolean active, @NonNull String comment, @NonNull LiteralFactory literalFactory,
+		@NonNull IRIResolver iriResolver) throws SQWRLException
 	{
 		return new DefaultSQWRLQuery(queryName, bodyAtoms, headAtoms, active, comment, literalFactory, iriResolver);
 	}

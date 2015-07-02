@@ -93,11 +93,7 @@ public interface SWRLAPIOWLOntology
   @NonNull SQWRLQuery createSQWRLQuery(@NonNull String queryName, @NonNull String query, @NonNull String comment,
     boolean isActive) throws SWRLParseException, SQWRLException;
 
-  @NonNull SQWRLQuery getSQWRLQuery(@NonNull String queryName) throws SQWRLException;
-
   @NonNull SQWRLResult getSQWRLResult(@NonNull String queryName) throws SQWRLException;
-
-  int getNumberOfSQWRLQueries();
 
   @NonNull Set<String> getSQWRLQueryNames();
 
