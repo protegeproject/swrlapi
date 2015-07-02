@@ -1,11 +1,8 @@
 package org.swrlapi.factory;
 
 import checkers.nullness.quals.NonNull;
-import org.semanticweb.owlapi.apibinding.OWLManager;
-import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
-import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.ui.model.FileBackedSQWRLQueryEngineModel;
@@ -31,6 +28,8 @@ public class DefaultFileBackedSQWRLQueryEngineModel extends DefaultSQWRLQueryEng
     SQWRLQueryEngine queryEngine = SWRLAPIFactory.createSQWRLQueryEngine(ontology);
 
     this.file = Optional.of(file);
+
+    resetOntologyChanged();
     updateModel(ontology, queryEngine);
   }
 
@@ -49,6 +48,7 @@ public class DefaultFileBackedSQWRLQueryEngineModel extends DefaultSQWRLQueryEng
     SQWRLQueryEngine queryEngine = SWRLAPIFactory.createSQWRLQueryEngine(ontology);
 
     this.file = Optional.empty();
+    resetOntologyChanged();
     updateModel(ontology, queryEngine);
   }
 
