@@ -40,7 +40,7 @@ public class SaveAsAction implements ActionListener
     JFileChooser fileChooser = this.dialogManager
       .createSaveFileChooser(SAVE_AS_TITLE, FILE_DESCRIPTION, FILE_EXTENSION, true);
 
-    if (fileChooser.showOpenDialog(this.parent) == JFileChooser.APPROVE_OPTION) {
+    if (fileChooser.showSaveDialog(this.parent) == JFileChooser.APPROVE_OPTION) {
       File file = fileChooser.getSelectedFile();
 
       try {

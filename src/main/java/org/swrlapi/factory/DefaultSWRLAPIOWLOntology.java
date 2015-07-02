@@ -175,40 +175,30 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
   @NonNull @Override public Set<SWRLAPIRule> getSWRLRules()
   {
     Set<SWRLAPIRule> swrlapiRules = new HashSet<>();
-    Set<SWRLRule> unannotatedOWLAPIRules = new HashSet<>();
-    Set<String> ruleNames = new HashSet<>();
+    int ruleNameIndex = 0;
 
     for (SWRLRule owlapiRule : getOWLOntology().getAxioms(AxiomType.SWRL_RULE, Imports.INCLUDED)) {
-      String ruleName = getRuleName(owlapiRule);
+      Optional<String> ruleName = getRuleName(owlapiRule);
       boolean isActive = getIsActive(owlapiRule);
       String comment = getComment(owlapiRule);
 
-      if (ruleName.isEmpty()) {
-        unannotatedOWLAPIRules.add(owlapiRule);
+      if (ruleName.isPresent()) {
+				SWRLAPIRule swrlapiRule = convertOWLAPIRule2SWRLAPIRule(owlapiRule, ruleName.get(), comment, isActive);
+				swrlapiRules.add(swrlapiRule);
       } else {
-        SWRLAPIRule swrlapiRule = convertOWLAPIRule2SWRLAPIRule(owlapiRule, ruleName, comment, isActive);
-        swrlapiRules.add(swrlapiRule);
-        ruleNames.add(ruleName);
-      }
-    }
-
-    for (SWRLRule owlapiRule : unannotatedOWLAPIRules) {
-      String ruleName = generateRuleName(ruleNames);
-      String comment = "";
-      SWRLRule annotatedOWLAPIRule = getOWLDataFactory()
-        .getSWRLRule(owlapiRule.getBody(), owlapiRule.getHead(), generateRuleAnnotations(ruleName, comment, true));
-
-      SWRLAPIRule swrlapiRule = convertOWLAPIRule2SWRLAPIRule(annotatedOWLAPIRule, ruleName, "", true);
-      swrlapiRules.add(swrlapiRule);
-      ruleNames.add(ruleName);
-
-      // ontologyManager.removeAxiom(ontology, owlapiRule); // Remove the original annotated rule
-      // ontologyManager.addAxiom(ontology, annotatedOWLAPIRule); // Replace with annotated rule
+				String generatedRuleName = "R" + ++ruleNameIndex;
+				SWRLAPIRule swrlapiRule = convertOWLAPIRule2SWRLAPIRule(owlapiRule, generatedRuleName, comment, isActive);
+				swrlapiRules.add(swrlapiRule);
+				// TODO Do we want to add axioms to OWLAPI rule?
+				// generateRuleAnnotations(ruleName, comment, true)
+				// ontologyManager.removeAxiom(ontology, owlapiRule); // Remove the original annotated rule
+				// ontologyManager.addAxiom(ontology, annotatedOWLAPIRule); // Replace with annotated rule
+			}
     }
     return swrlapiRules;
   }
 
-	@NonNull public String getRuleName(@NonNull SWRLRule owlapiRule)
+	private Optional<String> getRuleName(@NonNull SWRLRule owlapiRule)
 	{
 		OWLAnnotationProperty labelAnnotation = getOWLDataFactory()
 				.getOWLAnnotationProperty(OWLRDFVocabulary.RDFS_LABEL.getIRI());
@@ -216,11 +206,11 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		for (OWLAnnotation annotation : owlapiRule.getAnnotations(labelAnnotation)) {
 			if (annotation.getValue() instanceof OWLLiteral) {
 				OWLLiteral literal = (OWLLiteral)annotation.getValue();
-				return literal.getLiteral(); // TODO We just pick one for the moment
+				return Optional.of(literal.getLiteral()); // TODO We just pick one for the moment
 			}
 		}
 		// TODO Also look for swrla#ruleName annotation
-		return "";
+		return Optional.empty();
 	}
 
 	private boolean getIsActive(@NonNull SWRLRule owlapiRule)
@@ -251,19 +241,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 		}
 		return "";
 	}
-
-	@NonNull private String generateRuleName(@NonNull Set<String> ruleNames)
-  {
-    final String ruleNamePrefix = "R";
-    int ruleNumber = 1;
-    String candidateRuleName = ruleNamePrefix + ruleNumber;
-
-    while (ruleNames.contains(candidateRuleName)) {
-      ruleNumber++;
-      candidateRuleName = ruleNamePrefix + ruleNumber;
-    }
-    return candidateRuleName;
-  }
 
   @NonNull private Set<OWLAnnotation> generateRuleAnnotations(@NonNull String ruleName, String comment,
     boolean isEnabled)
