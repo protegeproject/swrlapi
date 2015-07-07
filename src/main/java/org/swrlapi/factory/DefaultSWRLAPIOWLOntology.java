@@ -118,7 +118,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
   @NonNull private final Map<IRI, OWLDeclarationAxiom> owlDataPropertyDeclarationAxioms;
   @NonNull private final Map<IRI, OWLDeclarationAxiom> owlAnnotationPropertyDeclarationAxioms;
 
-  public DefaultSWRLAPIOWLOntology(@NonNull OWLOntology ontology, @NonNull DefaultPrefixManager prefixManager)
+	public DefaultSWRLAPIOWLOntology(@NonNull OWLOntology ontology, @NonNull DefaultPrefixManager prefixManager)
   {
     this.ontology = ontology;
     this.prefixManager = prefixManager;
@@ -229,7 +229,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 
     for (SWRLRule owlapiRule : getOWLOntology().getAxioms(AxiomType.SWRL_RULE, Imports.INCLUDED)) {
       Optional<String> ruleName = getRuleName(owlapiRule);
-      boolean isActive = getIsActive(owlapiRule);
+      boolean isActive = getIsRuleEnabled(owlapiRule);
       String comment = getComment(owlapiRule);
 
       String finalRuleName = ruleName.isPresent() ? ruleName.get() : "R" + ++ruleNameIndex;
@@ -409,10 +409,10 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
     return Optional.empty();
   }
 
-  private boolean getIsActive(@NonNull SWRLRule owlapiRule)
+  private boolean getIsRuleEnabled(@NonNull SWRLRule owlapiRule)
   {
-    OWLAnnotationProperty enabledAnnotationProperty = getOWLDataFactory()
-      .getOWLAnnotationProperty(IRI.create("http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"));
+		OWLAnnotationProperty enabledAnnotationProperty = getOWLDataFactory()
+				.getOWLAnnotationProperty(IRI.create("http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"));
 
     for (OWLAnnotation annotation : owlapiRule.getAnnotations(enabledAnnotationProperty)) {
       if (annotation.getValue() instanceof OWLLiteral) {
@@ -432,24 +432,29 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
     for (OWLAnnotation annotation : owlapiRule.getAnnotations(commentAnnotationProperty)) {
       if (annotation.getValue() instanceof OWLLiteral) {
         OWLLiteral literal = (OWLLiteral)annotation.getValue();
-        return literal.getLiteral(); // TODO We just pick one for the moment
+        return literal.getLiteral(); // We pick the first one
       }
     }
     return "";
   }
 
   @NonNull private Set<OWLAnnotation> generateRuleAnnotations(@NonNull String ruleName, String comment,
-    boolean isEnabled)
+    boolean isRuleEnabled)
   {
     OWLAnnotation labelAnnotation = getOWLDataFactory()
       .getOWLAnnotation(getOWLDataFactory().getRDFSLabel(), getOWLDataFactory().getOWLLiteral(ruleName));
     OWLAnnotation commentAnnotation = getOWLDataFactory()
-      .getOWLAnnotation(getOWLDataFactory().getRDFSComment(), getOWLDataFactory().getOWLLiteral(""));
-    // TODO Add isEnabled annotation to rule
+      .getOWLAnnotation(getOWLDataFactory().getRDFSComment(), getOWLDataFactory().getOWLLiteral(comment));
+		OWLAnnotationProperty isRuleEnabledAnnotationProperty = getOWLDataFactory()
+				.getOWLAnnotationProperty(IRI.create("http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"));
+		OWLAnnotation isRuleEnabledAnnotation = getOWLDataFactory()
+				.getOWLAnnotation(isRuleEnabledAnnotationProperty, getOWLDataFactory().getOWLLiteral(isRuleEnabled));
+
     Set<OWLAnnotation> annotations = new HashSet<>();
 
     annotations.add(labelAnnotation);
-    annotations.add(commentAnnotation);
+		annotations.add(commentAnnotation);
+		annotations.add(isRuleEnabledAnnotation);
 
     return annotations;
   }
