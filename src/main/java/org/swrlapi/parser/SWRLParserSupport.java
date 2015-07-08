@@ -39,7 +39,6 @@ import org.swrlapi.factory.OWLLiteralFactory;
 import org.swrlapi.factory.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -49,7 +48,7 @@ import java.util.Set;
  *
  * @see org.swrlapi.parser.SWRLParser
  */
-public class SWRLParserSupport
+class SWRLParserSupport
 {
   @NonNull private final SWRLAPIOWLOntology swrlapiOWLOntology;
   @NonNull private final DefaultPrefixManager prefixManager;
@@ -139,13 +138,13 @@ public class SWRLParserSupport
         + " - cannot use name of existing OWL class, individual, property, or datatype");
   }
 
-  @NonNull public SWRLLiteralArgument getXSDStringSWRLLiteralArgument(@NonNull String lexicalValue)
+  @NonNull public SWRLLiteralArgument createXSDStringSWRLLiteralArgument(@NonNull String lexicalValue)
   {
     OWLLiteral owlLiteral = getOWLLiteralFactory().getOWLLiteral(lexicalValue);
     return getOWLDataFactory().getSWRLLiteralArgument(owlLiteral);
   }
 
-  @NonNull public SWRLLiteralArgument getXSDBooleanSWRLLiteralArgument(@NonNull String lexicalValue)
+  @NonNull public SWRLLiteralArgument createXSDBooleanSWRLLiteralArgument(@NonNull String lexicalValue)
     throws SWRLParseException
   {
     try {
@@ -157,7 +156,7 @@ public class SWRLParserSupport
     }
   }
 
-  @NonNull public SWRLLiteralArgument getXSDIntSWRLLiteralArgument(@NonNull String lexicalValue)
+  @NonNull public SWRLLiteralArgument createXSDIntSWRLLiteralArgument(@NonNull String lexicalValue)
     throws SWRLParseException
   {
     try {
@@ -169,7 +168,7 @@ public class SWRLParserSupport
     }
   }
 
-  @NonNull public SWRLLiteralArgument getXSDFloatSWRLLiteralArgument(@NonNull String lexicalValue)
+  @NonNull public SWRLLiteralArgument createXSDFloatSWRLLiteralArgument(@NonNull String lexicalValue)
     throws SWRLParseException
   {
     try {
@@ -181,7 +180,7 @@ public class SWRLParserSupport
     }
   }
 
-  @NonNull public SWRLVariable getSWRLVariable(@NonNull String variableName) throws SWRLParseException
+  @NonNull public SWRLVariable createSWRLVariable(@NonNull String variableName) throws SWRLParseException
   {
     IRI iri = getPrefixManager().getIRI(variableName);
 
@@ -191,10 +190,10 @@ public class SWRLParserSupport
     return getOWLDataFactory().getSWRLVariable(iri);
   }
 
-  @NonNull public SWRLLiteralArgument getSWRLLiteralArgument(@NonNull String lexicalValue,
-    @NonNull String datatypeShortName) throws SWRLParseException
+  @NonNull public SWRLLiteralArgument createSWRLLiteralArgument(@NonNull String lexicalValue,
+			@NonNull String datatypeShortName) throws SWRLParseException
   {
-    OWLDatatype owlDatatype = getOWLDatatype(datatypeShortName);
+    OWLDatatype owlDatatype = createOWLDatatype(datatypeShortName);
 
     try {
       OWLLiteral literal = getOWLLiteralFactory().getOWLLiteral(lexicalValue, owlDatatype);
@@ -204,121 +203,114 @@ public class SWRLParserSupport
     }
   }
 
-  @NonNull public SWRLRule getSWRLRule(@NonNull String ruleName, @NonNull Set<SWRLAtom> head,
-    @NonNull Set<SWRLAtom> body, String comment, boolean isEnabled)
+  @NonNull public SWRLRule createSWRLRule(@NonNull String ruleName, @NonNull Set<SWRLAtom> head,
+			@NonNull Set<SWRLAtom> body, String comment, boolean isEnabled)
   {
-    OWLAnnotation labelAnnotation = getOWLDataFactory()
-      .getOWLAnnotation(getOWLDataFactory().getRDFSLabel(), getOWLLiteralFactory().getOWLLiteral(ruleName));
-    OWLAnnotation commentAnnotation = getOWLDataFactory()
-      .getOWLAnnotation(getOWLDataFactory().getRDFSComment(), getOWLLiteralFactory().getOWLLiteral(comment));
-    // TODO Pull isEnabled from rule annotation
-    Set<OWLAnnotation> annotations = new HashSet<>();
-
-    annotations.add(labelAnnotation);
-    annotations.add(commentAnnotation);
+    Set<OWLAnnotation> annotations = this.swrlapiOWLOntology.generateRuleAnnotations(ruleName, comment, isEnabled);
 
     return getOWLDataFactory().getSWRLRule(body, head, annotations);
   }
 
-  @NonNull public Set<SWRLAtom> getSWRLBodyAtomList()
+  @NonNull public Set<SWRLAtom> createSWRLBodyAtomList()
   {
     return new LinkedHashSet<>();
   }
 
-  @NonNull public Set<SWRLAtom> getSWRLHeadAtomList()
+  @NonNull public Set<SWRLAtom> createSWRLHeadAtomList()
   {
     return new LinkedHashSet<>();
   }
 
-  @NonNull public SWRLClassAtom getSWRLClassAtom(@NonNull String classShortName, @NonNull SWRLIArgument iArgument)
+  @NonNull public SWRLClassAtom createSWRLClassAtom(@NonNull String classShortName, @NonNull SWRLIArgument iArgument)
     throws SWRLParseException
   {
-    OWLClass cls = getOWLClass(classShortName);
+    OWLClass cls = createOWLClass(classShortName);
 
     return getOWLDataFactory().getSWRLClassAtom(cls, iArgument);
   }
 
-  @NonNull public SWRLObjectPropertyAtom getSWRLObjectPropertyAtom(@NonNull String objectPropertyShortName,
-    @NonNull SWRLIArgument iArgument1, @NonNull SWRLIArgument iArgument2) throws SWRLParseException
+  @NonNull public SWRLObjectPropertyAtom createSWRLObjectPropertyAtom(@NonNull String objectPropertyShortName,
+			@NonNull SWRLIArgument iArgument1, @NonNull SWRLIArgument iArgument2) throws SWRLParseException
   {
-    OWLObjectProperty objectProperty = getOWLObjectProperty(objectPropertyShortName);
+    OWLObjectProperty objectProperty = createOWLObjectProperty(objectPropertyShortName);
 
     return getOWLDataFactory().getSWRLObjectPropertyAtom(objectProperty, iArgument1, iArgument2);
   }
 
-  @NonNull public SWRLDataPropertyAtom getSWRLDataPropertyAtom(@NonNull String dataPropertyShortName,
-    @NonNull SWRLIArgument iArgument, @NonNull SWRLDArgument dArgument) throws SWRLParseException
+  @NonNull public SWRLDataPropertyAtom createSWRLDataPropertyAtom(@NonNull String dataPropertyShortName,
+			@NonNull SWRLIArgument iArgument, @NonNull SWRLDArgument dArgument) throws SWRLParseException
   {
-    OWLDataProperty dataProperty = getOWLDataProperty(dataPropertyShortName);
+    OWLDataProperty dataProperty = createOWLDataProperty(dataPropertyShortName);
 
     return getOWLDataFactory().getSWRLDataPropertyAtom(dataProperty, iArgument, dArgument);
   }
 
-  @NonNull public SWRLBuiltInAtom getSWRLBuiltInAtom(@NonNull String builtInPrefixedName,
-    @NonNull List<SWRLDArgument> arguments) throws SWRLParseException
+  @NonNull public SWRLBuiltInAtom createSWRLBuiltInAtom(@NonNull String builtInPrefixedName,
+			@NonNull List<SWRLDArgument> arguments) throws SWRLParseException
   {
-    IRI builtInIRI = getSWRLBuiltInIRI(builtInPrefixedName);
+    IRI builtInIRI = createSWRLBuiltInIRI(builtInPrefixedName);
     return getOWLDataFactory().getSWRLBuiltInAtom(builtInIRI, arguments);
   }
 
-  @NonNull public SWRLSameIndividualAtom getSWRLSameIndividualAtom(@NonNull SWRLIArgument iArgument1,
-    @NonNull SWRLIArgument iArgument2)
+  @NonNull public SWRLSameIndividualAtom createSWRLSameIndividualAtom(@NonNull SWRLIArgument iArgument1,
+			@NonNull SWRLIArgument iArgument2)
   {
     return getOWLDataFactory().getSWRLSameIndividualAtom(iArgument1, iArgument2);
   }
 
-  @NonNull public SWRLDifferentIndividualsAtom getSWRLDifferentIndividualsAtom(@NonNull SWRLIArgument iArgument1,
-    @NonNull SWRLIArgument iArgument2)
+  @NonNull public SWRLDifferentIndividualsAtom createSWRLDifferentIndividualsAtom(@NonNull SWRLIArgument iArgument1,
+			@NonNull SWRLIArgument iArgument2)
   {
     return getOWLDataFactory().getSWRLDifferentIndividualsAtom(iArgument1, iArgument2);
   }
 
-  @NonNull public SWRLIndividualArgument getSWRLIndividualArgument(@NonNull String individualShortName)
+  @NonNull public SWRLIndividualArgument createSWRLIndividualArgument(@NonNull String individualShortName)
     throws SWRLParseException
   {
-    OWLNamedIndividual individual = getOWLNamedIndividual(individualShortName);
+    OWLNamedIndividual individual = createOWLNamedIndividual(individualShortName);
     return getOWLDataFactory().getSWRLIndividualArgument(individual);
   }
 
-  @NonNull public SWRLClassBuiltInArgument getSWRLClassBuiltInArgument(@NonNull String classShortName)
+  @NonNull public SWRLClassBuiltInArgument createSWRLClassBuiltInArgument(@NonNull String classShortName)
     throws SWRLParseException
   {
-    OWLClass cls = getOWLClass(classShortName);
+    OWLClass cls = createOWLClass(classShortName);
     return getSWRLBuiltInArgumentFactory().getClassBuiltInArgument(cls);
   }
 
-  @NonNull public SWRLNamedIndividualBuiltInArgument getSWRLNamedIndividualBuiltInArgument(
-    @NonNull String individualShortName) throws SWRLParseException
+  @NonNull public SWRLNamedIndividualBuiltInArgument createSWRLNamedIndividualBuiltInArgument(
+			@NonNull String individualShortName) throws SWRLParseException
   {
-    OWLNamedIndividual individual = getOWLNamedIndividual(individualShortName);
+    OWLNamedIndividual individual = createOWLNamedIndividual(individualShortName);
     return getSWRLBuiltInArgumentFactory().getNamedIndividualBuiltInArgument(individual);
   }
 
-  @NonNull public SWRLObjectPropertyBuiltInArgument getSWRLObjectPropertyBuiltInArgument(
-    @NonNull String propertyShortName) throws SWRLParseException
+  @NonNull public SWRLObjectPropertyBuiltInArgument createSWRLObjectPropertyBuiltInArgument(
+			@NonNull String propertyShortName) throws SWRLParseException
   {
-    OWLObjectProperty property = getOWLObjectProperty(propertyShortName);
+    OWLObjectProperty property = createOWLObjectProperty(propertyShortName);
     return getSWRLBuiltInArgumentFactory().getObjectPropertyBuiltInArgument(property);
   }
 
-  @NonNull public SWRLDataPropertyBuiltInArgument getSWRLDataPropertyBuiltInArgument(@NonNull String propertyShortName)
+  @NonNull public SWRLDataPropertyBuiltInArgument createSWRLDataPropertyBuiltInArgument(
+			@NonNull String propertyShortName)
     throws SWRLParseException
   {
-    OWLDataProperty property = getOWLDataProperty(propertyShortName);
+    OWLDataProperty property = createOWLDataProperty(propertyShortName);
     return getSWRLBuiltInArgumentFactory().getDataPropertyBuiltInArgument(property);
   }
 
-  @NonNull public SWRLAnnotationPropertyBuiltInArgument getSWRLAnnotationPropertyBuiltInArgument(
-    @NonNull String propertyShortName) throws SWRLParseException
+  @NonNull public SWRLAnnotationPropertyBuiltInArgument createSWRLAnnotationPropertyBuiltInArgument(
+			@NonNull String propertyShortName) throws SWRLParseException
   {
-    OWLAnnotationProperty property = getOWLAnnotationProperty(propertyShortName);
+    OWLAnnotationProperty property = createOWLAnnotationProperty(propertyShortName);
     return getSWRLBuiltInArgumentFactory().getAnnotationPropertyBuiltInArgument(property);
   }
 
-  @NonNull public SWRLDatatypeBuiltInArgument getSWRLDatatypeBuiltInArgument(@NonNull String datatypeShortName)
+  @NonNull public SWRLDatatypeBuiltInArgument createSWRLDatatypeBuiltInArgument(@NonNull String datatypeShortName)
     throws SWRLParseException
   {
-    OWLDatatype datatype = getOWLDatatype(datatypeShortName);
+    OWLDatatype datatype = createOWLDatatype(datatypeShortName);
     return getSWRLBuiltInArgumentFactory().getDatatypeBuiltInArgument(datatype);
   }
 
@@ -337,18 +329,7 @@ public class SWRLParserSupport
     }
   }
 
-  public static int findSplittingPoint(@NonNull String ruleText)
-  {
-    int i = ruleText.length() - 1;
-
-    while (i >= 0 && !(SWRLTokenizer.isOrdinaryChar(ruleText.charAt(i)) || ruleText.charAt(i) == '"'
-      || ruleText.charAt(i) == ' '))
-      i--;
-
-    return i + 1;
-  }
-
-  @NonNull private OWLClass getOWLClass(@NonNull String classShortName) throws SWRLParseException
+  @NonNull private OWLClass createOWLClass(@NonNull String classShortName) throws SWRLParseException
   {
     if (isOWLClass(classShortName)) {
       IRI classIRI = getPrefixManager().getIRI(classShortName);
@@ -357,7 +338,7 @@ public class SWRLParserSupport
       throw new SWRLParseException(classShortName + " is not an OWL class");
   }
 
-  @NonNull private OWLNamedIndividual getOWLNamedIndividual(@NonNull String individualShortName) throws SWRLParseException
+  @NonNull private OWLNamedIndividual createOWLNamedIndividual(@NonNull String individualShortName) throws SWRLParseException
   {
     if (isOWLNamedIndividual(individualShortName)) {
       IRI individualIRI = getPrefixManager().getIRI(individualShortName);
@@ -366,7 +347,7 @@ public class SWRLParserSupport
       throw new SWRLParseException(individualShortName + " is not an OWL named individual");
   }
 
-  @NonNull private OWLObjectProperty getOWLObjectProperty(@NonNull String objectPropertyShortName) throws SWRLParseException
+  @NonNull private OWLObjectProperty createOWLObjectProperty(@NonNull String objectPropertyShortName) throws SWRLParseException
   {
     if (isOWLObjectProperty(objectPropertyShortName)) {
       IRI propertyIRI = getPrefixManager().getIRI(objectPropertyShortName);
@@ -375,7 +356,7 @@ public class SWRLParserSupport
       throw new SWRLParseException(objectPropertyShortName + " is not an OWL object property");
   }
 
-  @NonNull private OWLDataProperty getOWLDataProperty(@NonNull String dataPropertyShortName) throws SWRLParseException
+  @NonNull private OWLDataProperty createOWLDataProperty(@NonNull String dataPropertyShortName) throws SWRLParseException
   {
     if (isOWLDataProperty(dataPropertyShortName)) {
       IRI propertyIRI = getPrefixManager().getIRI(dataPropertyShortName);
@@ -384,7 +365,7 @@ public class SWRLParserSupport
       throw new SWRLParseException(dataPropertyShortName + " is not an OWL data property");
   }
 
-  @NonNull private OWLAnnotationProperty getOWLAnnotationProperty(@NonNull String annotationPropertyShortName)
+  @NonNull private OWLAnnotationProperty createOWLAnnotationProperty(@NonNull String annotationPropertyShortName)
     throws SWRLParseException
   {
     if (isOWLAnnotationProperty(annotationPropertyShortName)) {
@@ -394,7 +375,7 @@ public class SWRLParserSupport
       throw new SWRLParseException(annotationPropertyShortName + " is not an OWL annotation property");
   }
 
-  @NonNull private OWLDatatype getOWLDatatype(@NonNull String datatypeShortName) throws SWRLParseException
+  @NonNull private OWLDatatype createOWLDatatype(@NonNull String datatypeShortName) throws SWRLParseException
   {
     if (isOWLDatatype(datatypeShortName)) {
       IRI datatypeIRI = getPrefixManager().getIRI(datatypeShortName);
@@ -403,7 +384,7 @@ public class SWRLParserSupport
       throw new SWRLParseException(datatypeShortName + " is not a valid datatype");
   }
 
-  @NonNull private IRI getSWRLBuiltInIRI(@NonNull String builtInPrefixedName) throws SWRLParseException
+  @NonNull private IRI createSWRLBuiltInIRI(@NonNull String builtInPrefixedName) throws SWRLParseException
   {
     if (!isSWRLBuiltIn(builtInPrefixedName))
       throw new SWRLParseException(builtInPrefixedName + " is not a SWRL built-in");

@@ -6,7 +6,6 @@ import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.parser.SWRLIncompleteRuleException;
 import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.parser.SWRLParser;
-import org.swrlapi.parser.SWRLParserSupport;
 import org.swrlapi.ui.model.SWRLAutoCompleter;
 import org.swrlapi.ui.model.SWRLRuleEngineModel;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
@@ -215,7 +214,7 @@ public class SWRLRuleEditorDialog extends JDialog
     if (!isInAutoCompleteMode()) {
       String ruleText = getRuleText();
       int textPosition = this.ruleTextTextArea.getCaretPosition();
-      int i = SWRLParserSupport.findSplittingPoint(ruleText.substring(0, textPosition));
+      int i = SWRLParser.findSplittingPoint(ruleText.substring(0, textPosition));
       String prefix = ruleText.substring(i, textPosition);
       if (!prefix.equals("")) {
         List<String> expansions = getExpansions(prefix); // All expansions will start with the empty string.

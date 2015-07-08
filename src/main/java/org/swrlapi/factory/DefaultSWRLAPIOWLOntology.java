@@ -230,7 +230,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
     for (SWRLRule owlapiRule : getOWLOntology().getAxioms(AxiomType.SWRL_RULE, Imports.INCLUDED)) {
       Optional<String> ruleName = getRuleName(owlapiRule);
       boolean isActive = getIsRuleEnabled(owlapiRule);
-      String comment = getComment(owlapiRule);
+      String comment = getRuleComment(owlapiRule);
 
       String finalRuleName = ruleName.isPresent() ? ruleName.get() : "R" + ++ruleNameIndex;
 
@@ -402,10 +402,9 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
     for (OWLAnnotation annotation : owlapiRule.getAnnotations(labelAnnotation)) {
       if (annotation.getValue() instanceof OWLLiteral) {
         OWLLiteral literal = (OWLLiteral)annotation.getValue();
-        return Optional.of(literal.getLiteral()); // TODO We just pick one for the moment
+        return Optional.of(literal.getLiteral()); //  We pick the first one
       }
     }
-    // TODO Also look for swrla#ruleName annotation
     return Optional.empty();
   }
 
@@ -424,7 +423,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
     return true;
   }
 
-  @NonNull private String getComment(@NonNull SWRLRule owlapiRule)
+  @NonNull private String getRuleComment(@NonNull SWRLRule owlapiRule)
   {
     OWLAnnotationProperty commentAnnotationProperty = getOWLDataFactory()
       .getOWLAnnotationProperty(OWLRDFVocabulary.RDFS_COMMENT.getIRI());
@@ -438,7 +437,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
     return "";
   }
 
-  @NonNull private Set<OWLAnnotation> generateRuleAnnotations(@NonNull String ruleName, String comment,
+  @NonNull public Set<OWLAnnotation> generateRuleAnnotations(@NonNull String ruleName, String comment,
     boolean isRuleEnabled)
   {
     OWLAnnotation labelAnnotation = getOWLDataFactory()

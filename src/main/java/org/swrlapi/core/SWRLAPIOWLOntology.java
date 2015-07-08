@@ -2,6 +2,7 @@ package org.swrlapi.core;
 
 import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLOntology;
@@ -71,7 +72,17 @@ public interface SWRLAPIOWLOntology
 
   void deleteSWRLRule(@NonNull String ruleName);
 
-  // The SWRLAPI provides built-ins beyond the core set defined in the SWRL submission.
+	/**
+	 *
+	 * @param ruleName The name of the rule
+	 * @param comment A comment for the rule
+	 * @param isRuleEnabled Is the rule enabled
+	 * @return A set of rule annotations
+	 */
+	@NonNull public Set<OWLAnnotation> generateRuleAnnotations(@NonNull String ruleName, String comment,
+			boolean isRuleEnabled);
+
+	// The SWRLAPI provides built-ins beyond the core set defined in the SWRL submission.
 
   boolean isSWRLBuiltIn(@NonNull IRI iri);
 

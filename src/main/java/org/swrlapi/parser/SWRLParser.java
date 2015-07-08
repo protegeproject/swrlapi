@@ -71,9 +71,9 @@ public class SWRLParser
 	{
 		SWRLTokenizer tokenizer = new SWRLTokenizer(ruleText.trim(), interactiveParseOnly);
 		Optional<Set<SWRLAtom>> head = !tokenizer.isInteractiveParseOnly() ? Optional.of(this.swrlParserSupport
-				.getSWRLHeadAtomList()) : Optional.<Set<SWRLAtom>> empty();
+				.createSWRLHeadAtomList()) : Optional.<Set<SWRLAtom>> empty();
 		Optional<Set<SWRLAtom>> body = !tokenizer.isInteractiveParseOnly() ? Optional.of(this.swrlParserSupport
-				.getSWRLBodyAtomList()) : Optional.<Set<SWRLAtom>> empty();
+				.createSWRLBodyAtomList()) : Optional.<Set<SWRLAtom>> empty();
 		boolean atLeastOneAtom = false, justProcessedAtom = false, isInHead = false;
 		String message;
 
@@ -127,7 +127,7 @@ public class SWRLParser
 		if (!tokenizer.isInteractiveParseOnly()) {
 			if (!atLeastOneAtom)
 				throw new SWRLParseException("Incomplete SWRL rule - no antecedent or consequent");
-			return Optional.of(this.swrlParserSupport.getSWRLRule(ruleName, head.get(), body.get(), comment, true));
+			return Optional.of(this.swrlParserSupport.createSWRLRule(ruleName, head.get(), body.get(), comment, true));
 		} else
 			return Optional.empty();
 	}
@@ -168,6 +168,17 @@ public class SWRLParser
 		}
 	}
 
+	public static int findSplittingPoint(@NonNull String ruleText)
+	{
+		int i = ruleText.length() - 1;
+
+		while (i >= 0 && !(SWRLTokenizer.isOrdinaryChar(ruleText.charAt(i)) || ruleText.charAt(i) == '"'
+				|| ruleText.charAt(i) == ' '))
+			i--;
+
+		return i + 1;
+	}
+
 	private Optional<? extends SWRLAtom> parseSWRLAtom(@NonNull String shortName, @NonNull SWRLTokenizer tokenizer,
 			boolean isInHead) throws SWRLParseException
 	{
@@ -200,7 +211,7 @@ public class SWRLParser
 
 		tokenizer.checkAndSkipRParen("Expecting closing parenthesis after argument for class atom " + shortName);
 
-		return !tokenizer.isInteractiveParseOnly() ? Optional.of(this.swrlParserSupport.getSWRLClassAtom(shortName,
+		return !tokenizer.isInteractiveParseOnly() ? Optional.of(this.swrlParserSupport.createSWRLClassAtom(shortName,
 				iArgument.get())) : Optional.<SWRLClassAtom> empty();
 	}
 
@@ -213,7 +224,7 @@ public class SWRLParser
 		tokenizer.checkAndSkipRParen("Expecting closing parenthesis after second argument of object property atom "
 				+ shortName);
 
-		return !tokenizer.isInteractiveParseOnly() ? Optional.of(this.swrlParserSupport.getSWRLObjectPropertyAtom(
+		return !tokenizer.isInteractiveParseOnly() ? Optional.of(this.swrlParserSupport.createSWRLObjectPropertyAtom(
 				shortName, iArgument1.get(), iArgument2.get())) : Optional.<SWRLObjectPropertyAtom> empty();
 	}
 
@@ -226,8 +237,8 @@ public class SWRLParser
 		tokenizer.checkAndSkipRParen("Expecting closing parenthesis after second argument of data property atom "
 				+ shortName);
 
-		return !tokenizer.isInteractiveParseOnly() ? Optional.of(this.swrlParserSupport.getSWRLDataPropertyAtom(shortName,
-				iArgument.get(), dArgument.get())) : Optional.<SWRLDataPropertyAtom> empty();
+		return !tokenizer.isInteractiveParseOnly() ? Optional.of(this.swrlParserSupport.createSWRLDataPropertyAtom(
+				shortName, iArgument.get(), dArgument.get())) : Optional.<SWRLDataPropertyAtom> empty();
 	}
 
 	private Optional<SWRLBuiltInAtom> parseSWRLBuiltinAtomArguments(@NonNull String builtInPrefixedName,
@@ -235,7 +246,7 @@ public class SWRLParser
 	{
 		Optional<List<SWRLDArgument>> dArgumentList = parseSWRLDArgumentList(tokenizer, isInHead); // Swallows ')'
 
-		return !tokenizer.isInteractiveParseOnly() ? Optional.of(this.swrlParserSupport.getSWRLBuiltInAtom(
+		return !tokenizer.isInteractiveParseOnly() ? Optional.of(this.swrlParserSupport.createSWRLBuiltInAtom(
 				builtInPrefixedName, dArgumentList.get())) : Optional.<SWRLBuiltInAtom> empty();
 	}
 
@@ -248,7 +259,7 @@ public class SWRLParser
 		tokenizer.checkAndSkipRParen("Expecting closing parenthesis after second argument to same individual atom");
 
 		return tokenizer.isInteractiveParseOnly() ? Optional.empty() : Optional.of(this.swrlParserSupport
-				.getSWRLSameIndividualAtom(iArgument1.get(), iArgument2.get()));
+				.createSWRLSameIndividualAtom(iArgument1.get(), iArgument2.get()));
 	}
 
 	private Optional<SWRLDifferentIndividualsAtom> parseSWRLDifferentFromAtomArguments(@NonNull SWRLTokenizer tokenizer,
@@ -261,7 +272,7 @@ public class SWRLParser
 		tokenizer.checkAndSkipRParen("Expecting closing parenthesis after second argument to different individuals atom");
 
 		return tokenizer.isInteractiveParseOnly() ? Optional.empty() : Optional.of(this.swrlParserSupport
-				.getSWRLDifferentIndividualsAtom(iArgument1.get(), iArgument2.get()));
+				.createSWRLDifferentIndividualsAtom(iArgument1.get(), iArgument2.get()));
 	}
 
 	private Optional<SWRLVariable> parseSWRLVariable(@NonNull SWRLTokenizer tokenizer, boolean isInHead)
@@ -278,7 +289,7 @@ public class SWRLParser
 			else if (!tokenizer.hasVariable(variableName))
 				throw new SWRLParseException("Variable ?" + variableName + " used in consequent is not present in antecedent");
 		}
-		return !tokenizer.isInteractiveParseOnly() ? Optional.of(this.swrlParserSupport.getSWRLVariable(variableName))
+		return !tokenizer.isInteractiveParseOnly() ? Optional.of(this.swrlParserSupport.createSWRLVariable(variableName))
 				: Optional.empty();
 	}
 
@@ -293,7 +304,7 @@ public class SWRLParser
 			String identifier = token.getValue();
 			if (this.swrlParserSupport.isOWLNamedIndividual(identifier)) {
 				return !tokenizer.isInteractiveParseOnly() ? Optional.of(this.swrlParserSupport
-						.getSWRLIndividualArgument(identifier)) : Optional.empty();
+						.createSWRLIndividualArgument(identifier)) : Optional.empty();
 			} else
 				throw generateEndOfRuleException("Invalid OWL individual name '" + token.getValue() + "'", tokenizer);
 		} else
@@ -317,10 +328,10 @@ public class SWRLParser
 			return parseLiteralSWRLDArgument(tokenizer, literalValue);
 		} else if (token.isInt()) {
 			return !tokenizer.isInteractiveParseOnly() ? Optional.of(this.swrlParserSupport
-					.getXSDIntSWRLLiteralArgument(token.getValue())) : Optional.empty();
+					.createXSDIntSWRLLiteralArgument(token.getValue())) : Optional.empty();
 		} else if (token.isFloat()) {
 			return !tokenizer.isInteractiveParseOnly() ? Optional.of(this.swrlParserSupport
-					.getXSDFloatSWRLLiteralArgument(token.getValue())) : Optional.empty();
+					.createXSDFloatSWRLLiteralArgument(token.getValue())) : Optional.empty();
 		} else
 			throw new SWRLParseException("Expecting variable or OWL literal, got '" + token.getValue() + "'");
 	}
@@ -337,11 +348,11 @@ public class SWRLParser
 			String datatype = datatypeToken.getValue();
 			if (datatype.length() == 0)
 				throw generateEndOfRuleException("Empty datatype qualifier - must supply a datatype after ^^", tokenizer);
-			return !tokenizer.isInteractiveParseOnly() ? Optional.of(this.swrlParserSupport.getSWRLLiteralArgument(
+			return !tokenizer.isInteractiveParseOnly() ? Optional.of(this.swrlParserSupport.createSWRLLiteralArgument(
 					literalValue, datatype)) : Optional.empty();
 		} else
 			return !tokenizer.isInteractiveParseOnly() ? Optional.of(this.swrlParserSupport
-					.getXSDStringSWRLLiteralArgument(literalValue)) : Optional.empty();
+					.createXSDStringSWRLLiteralArgument(literalValue)) : Optional.empty();
 	}
 
 	private Optional<SWRLDArgument> parseShortNameSWRLDArgument(@NonNull SWRLTokenizer tokenizer, boolean isInBuiltIn,
@@ -350,27 +361,27 @@ public class SWRLParser
 		// We allow the values "true" and "false" and interpret them as OWL literals of type xsd:boolean.
 		if (shortName.equalsIgnoreCase("true") || shortName.equalsIgnoreCase("false")) {
 			return !tokenizer.isInteractiveParseOnly() ? Optional.of(this.swrlParserSupport
-					.getXSDBooleanSWRLLiteralArgument(shortName)) : Optional.empty();
+					.createXSDBooleanSWRLLiteralArgument(shortName)) : Optional.empty();
 		} else { // Not "true" or "false"
 			if (isInBuiltIn) { // SWRL built-ins in the SWRLAPI allow OWL entity names as arguments
 				if (this.swrlParserSupport.isOWLNamedIndividual(shortName)) {
 					return tokenizer.isInteractiveParseOnly() ? Optional.empty() : Optional.of(this.swrlParserSupport
-							.getSWRLNamedIndividualBuiltInArgument(shortName));
+							.createSWRLNamedIndividualBuiltInArgument(shortName));
 				} else if (this.swrlParserSupport.isOWLClass(shortName)) {
 					return tokenizer.isInteractiveParseOnly() ? Optional.empty() : Optional.of(this.swrlParserSupport
-							.getSWRLClassBuiltInArgument(shortName));
+							.createSWRLClassBuiltInArgument(shortName));
 				} else if (this.swrlParserSupport.isOWLObjectProperty(shortName)) {
 					return tokenizer.isInteractiveParseOnly() ? Optional.empty() : Optional.of(this.swrlParserSupport
-							.getSWRLObjectPropertyBuiltInArgument(shortName));
+							.createSWRLObjectPropertyBuiltInArgument(shortName));
 				} else if (this.swrlParserSupport.isOWLDataProperty(shortName)) {
 					return tokenizer.isInteractiveParseOnly() ? Optional.empty() : Optional.of(this.swrlParserSupport
-							.getSWRLDataPropertyBuiltInArgument(shortName));
+							.createSWRLDataPropertyBuiltInArgument(shortName));
 				} else if (this.swrlParserSupport.isOWLAnnotationProperty(shortName)) {
 					return tokenizer.isInteractiveParseOnly() ? Optional.empty() : Optional.of(this.swrlParserSupport
-							.getSWRLAnnotationPropertyBuiltInArgument(shortName));
+							.createSWRLAnnotationPropertyBuiltInArgument(shortName));
 				} else if (this.swrlParserSupport.isOWLDatatype(shortName)) {
 					return tokenizer.isInteractiveParseOnly() ? Optional.empty() : Optional.of(this.swrlParserSupport
-							.getSWRLDatatypeBuiltInArgument(shortName));
+							.createSWRLDatatypeBuiltInArgument(shortName));
 				} else
 					throw generateEndOfRuleException("Expecting boolean or OWL entity name, got '" + shortName + "'", tokenizer);
 			} else
