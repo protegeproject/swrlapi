@@ -50,7 +50,7 @@ public class SWRLAPIMenuManager
 
 	private static class ApplicationMenuListener implements MenuListener
 	{
-		@NonNull FileBackedSWRLRuleEngineModel ruleEngineModel;
+		@NonNull private final FileBackedSWRLRuleEngineModel ruleEngineModel;
 		@NonNull private final JMenuItem saveItem;
 
 		public ApplicationMenuListener(@NonNull FileBackedSWRLRuleEngineModel ruleEngineModel, JMenuItem saveItem)
