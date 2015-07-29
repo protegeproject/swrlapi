@@ -28,7 +28,7 @@ import org.semanticweb.owlapi.model.PrefixManager;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.factory.SWRLAPIFactory;
 
-public class SWRLAPITestUtil
+class SWRLAPITestUtil
 {
   @NonNull private static final OWLDataFactory dataFactory = OWLManager.getOWLDataFactory();
 

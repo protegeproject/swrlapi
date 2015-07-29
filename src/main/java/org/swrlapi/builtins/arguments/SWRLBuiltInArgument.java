@@ -27,7 +27,6 @@ import org.swrlapi.factory.SWRLAPIOWLDataFactory;
  * @see org.swrlapi.core.SWRLAPIRule
  * @see org.swrlapi.core.SWRLAPIBuiltInAtom
  * @see org.swrlapi.core.SWRLAPIOWLOntology
- * @see org.swrlapi.core.SWRLAPIOntologyProcessor
  * @see org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument
  * @see org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument
  * @see org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument

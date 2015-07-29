@@ -11,11 +11,14 @@ import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
 
 /**
  * For simplicity, SWRL rule engine implementations will typically use the prefixed names of OWL named objects to name
- * their representation of those objects. A {@link org.swrlapi.core.SWRLAPIOntologyProcessor} will recordOWLClassExpression all the OWL
- * named objects in an ontology together with their types. Rule engines can then use this class to determine the type of
- * OWL properties using their prefixed name and to map those prefixed names to and from IRIs if necessary.
+ * their representation of those objects. This interface contains calls to record and resolve those prefixed names.
+ * Before invoking a rule engine a  {@link org.swrlapi.core.SWRLAPIOWLOntology} will process a source
+ * OWL ontology and will call the appropriate record method in this interface
+ * to record all named objects in an ontology together with their types. Rule engines can
+ * then use this interface to determine the types of OWL entities using their prefixed name and to map those prefixed
+ * names to IRIs.
  *
- * @see org.swrlapi.core.SWRLAPIOntologyProcessor
+ * @see org.swrlapi.core.SWRLAPIOWLOntology
  */
 public interface IRIResolver
 {

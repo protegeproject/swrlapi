@@ -106,17 +106,17 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
   @NonNull private final Set<IRI> swrlBuiltInIRIs;
   @NonNull private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
 
-  @NonNull private final Map<String, SWRLAPIRule> swrlRules; // SWRL rules include SQWRL queries
-  @NonNull private final Map<String, SWRLRule> owlapiRules; // SWRL rules include SQWRL queries
+  @NonNull private final Map<String, SWRLAPIRule> swrlRules; // SWRL rules and SQWRL queries extracted from ontolgy
+  @NonNull private final Map<String, SWRLRule> owlapiRules; // All SWRL rules in supplied ontology
   @NonNull private final Map<String, SQWRLQuery> sqwrlQueries;
 
   @NonNull private final Set<OWLAxiom> assertedOWLAxioms; // All asserted OWL axioms extracted from the supplied ontology
 
-  @NonNull private final Map<IRI, OWLDeclarationAxiom> owlClassDeclarationAxioms;
-  @NonNull private final Map<IRI, OWLDeclarationAxiom> owlIndividualDeclarationAxioms;
-  @NonNull private final Map<IRI, OWLDeclarationAxiom> owlObjectPropertyDeclarationAxioms;
-  @NonNull private final Map<IRI, OWLDeclarationAxiom> owlDataPropertyDeclarationAxioms;
-  @NonNull private final Map<IRI, OWLDeclarationAxiom> owlAnnotationPropertyDeclarationAxioms;
+  @NonNull private final Map<IRI, OWLDeclarationAxiom> classDeclarationAxioms;
+  @NonNull private final Map<IRI, OWLDeclarationAxiom> individualDeclarationAxioms;
+  @NonNull private final Map<IRI, OWLDeclarationAxiom> objectPropertyDeclarationAxioms;
+  @NonNull private final Map<IRI, OWLDeclarationAxiom> dataPropertyDeclarationAxioms;
+  @NonNull private final Map<IRI, OWLDeclarationAxiom> annotationPropertyDeclarationAxioms;
 
 	public DefaultSWRLAPIOWLOntology(@NonNull OWLOntology ontology, @NonNull DefaultPrefixManager prefixManager)
   {
@@ -133,11 +133,11 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 
     this.assertedOWLAxioms = new HashSet<>();
 
-    this.owlClassDeclarationAxioms = new HashMap<>();
-    this.owlIndividualDeclarationAxioms = new HashMap<>();
-    this.owlObjectPropertyDeclarationAxioms = new HashMap<>();
-    this.owlDataPropertyDeclarationAxioms = new HashMap<>();
-    this.owlAnnotationPropertyDeclarationAxioms = new HashMap<>();
+    this.classDeclarationAxioms = new HashMap<>();
+    this.individualDeclarationAxioms = new HashMap<>();
+    this.objectPropertyDeclarationAxioms = new HashMap<>();
+    this.dataPropertyDeclarationAxioms = new HashMap<>();
+    this.annotationPropertyDeclarationAxioms = new HashMap<>();
 
     addDefaultSWRLBuiltIns();
   }
@@ -160,11 +160,11 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 
     this.assertedOWLAxioms.clear();
 
-    this.owlClassDeclarationAxioms.clear();
-    this.owlIndividualDeclarationAxioms.clear();
-    this.owlObjectPropertyDeclarationAxioms.clear();
-    this.owlDataPropertyDeclarationAxioms.clear();
-    this.owlAnnotationPropertyDeclarationAxioms.clear();
+    this.classDeclarationAxioms.clear();
+    this.individualDeclarationAxioms.clear();
+    this.objectPropertyDeclarationAxioms.clear();
+    this.dataPropertyDeclarationAxioms.clear();
+    this.annotationPropertyDeclarationAxioms.clear();
   }
 
   @NonNull @Override public SWRLAPIRule createSWRLRule(@NonNull String ruleName, @NonNull String rule)
@@ -315,22 +315,22 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 
   @Override public int getNumberOfOWLClassDeclarationAxioms()
   {
-    return this.owlClassDeclarationAxioms.values().size();
+    return this.classDeclarationAxioms.values().size();
   }
 
   @Override public int getNumberOfOWLIndividualDeclarationAxioms()
   {
-    return this.owlIndividualDeclarationAxioms.values().size();
+    return this.individualDeclarationAxioms.values().size();
   }
 
   @Override public int getNumberOfOWLObjectPropertyDeclarationAxioms()
   {
-    return this.owlObjectPropertyDeclarationAxioms.size();
+    return this.objectPropertyDeclarationAxioms.size();
   }
 
   @Override public int getNumberOfOWLDataPropertyDeclarationAxioms()
   {
-    return this.owlDataPropertyDeclarationAxioms.size();
+    return this.dataPropertyDeclarationAxioms.size();
   }
 
   @Override public int getNumberOfOWLAxioms()
@@ -1055,7 +1055,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
   {
     for (OWLDeclarationAxiom axiom : getOWLClassDeclarationAxioms()) {
       OWLEntity cls = axiom.getEntity();
-      this.owlClassDeclarationAxioms.put(cls.getIRI(), axiom);
+      this.classDeclarationAxioms.put(cls.getIRI(), axiom);
       this.assertedOWLAxioms.add(axiom);
       recordOWLClass(cls);
     }
@@ -1065,7 +1065,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
   {
     for (OWLDeclarationAxiom axiom : getOWLIndividualDeclarationAxioms()) {
       OWLEntity individual = axiom.getEntity();
-      this.owlIndividualDeclarationAxioms.put(individual.getIRI(), axiom);
+      this.individualDeclarationAxioms.put(individual.getIRI(), axiom);
       this.assertedOWLAxioms.add(axiom);
       recordOWLNamedIndividual(individual);
     }
@@ -1075,7 +1075,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
   {
     for (OWLDeclarationAxiom axiom : getOWLObjectPropertyDeclarationAxioms()) {
       OWLEntity property = axiom.getEntity();
-      this.owlObjectPropertyDeclarationAxioms.put(property.getIRI(), axiom);
+      this.objectPropertyDeclarationAxioms.put(property.getIRI(), axiom);
       this.assertedOWLAxioms.add(axiom);
       recordOWLObjectProperty(property);
     }
@@ -1086,7 +1086,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
     for (OWLDeclarationAxiom axiom : getOWLDataPropertyDeclarationAxioms()) {
       OWLEntity property = axiom.getEntity();
 
-      this.owlDataPropertyDeclarationAxioms.put(property.getIRI(), axiom);
+      this.dataPropertyDeclarationAxioms.put(property.getIRI(), axiom);
       this.assertedOWLAxioms.add(axiom);
       recordOWLDataProperty(property);
     }
@@ -1097,7 +1097,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
     for (OWLDeclarationAxiom axiom : getOWLAnnotationPropertyDeclarationAxioms()) {
       OWLEntity property = axiom.getEntity();
 
-      this.owlAnnotationPropertyDeclarationAxioms.put(property.getIRI(), axiom);
+      this.annotationPropertyDeclarationAxioms.put(property.getIRI(), axiom);
       this.assertedOWLAxioms.add(axiom);
       recordOWLAnnotationProperty(property);
     }
@@ -1303,9 +1303,9 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 
   private void generateOWLClassDeclarationAxiom(@NonNull OWLClass cls)
   {
-    if (!this.owlClassDeclarationAxioms.containsKey(cls.getIRI())) {
+    if (!this.classDeclarationAxioms.containsKey(cls.getIRI())) {
       OWLDeclarationAxiom axiom = getSWRLAPIOWLDataFactory().getOWLClassDeclarationAxiom(cls);
-      this.owlClassDeclarationAxioms.put(cls.getIRI(), axiom);
+      this.classDeclarationAxioms.put(cls.getIRI(), axiom);
       this.assertedOWLAxioms.add(axiom);
       recordOWLClass(cls);
     }
@@ -1321,11 +1321,11 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 
   private void generateOWLIndividualDeclarationAxiomIfNecessary(@NonNull OWLIndividual individual)
   {
-    if (individual.isNamed() && !this.owlIndividualDeclarationAxioms
+    if (individual.isNamed() && !this.individualDeclarationAxioms
       .containsKey(individual.asOWLNamedIndividual().getIRI())) {
       OWLDeclarationAxiom axiom = getSWRLAPIOWLDataFactory()
         .getOWLIndividualDeclarationAxiom(individual.asOWLNamedIndividual());
-      this.owlIndividualDeclarationAxioms.put(individual.asOWLNamedIndividual().getIRI(), axiom);
+      this.individualDeclarationAxioms.put(individual.asOWLNamedIndividual().getIRI(), axiom);
       this.assertedOWLAxioms.add(axiom);
       recordOWLNamedIndividual(individual.asOWLNamedIndividual());
     }
@@ -1336,9 +1336,9 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
   {
     if (propertyExpression instanceof OWLObjectProperty) {
       OWLObjectProperty property = (OWLObjectProperty)propertyExpression;
-      if (!this.owlObjectPropertyDeclarationAxioms.containsKey(property.getIRI())) {
+      if (!this.objectPropertyDeclarationAxioms.containsKey(property.getIRI())) {
         OWLDeclarationAxiom axiom = getSWRLAPIOWLDataFactory().getOWLObjectPropertyDeclarationAxiom(property);
-        this.owlObjectPropertyDeclarationAxioms.put(property.getIRI(), axiom);
+        this.objectPropertyDeclarationAxioms.put(property.getIRI(), axiom);
         this.assertedOWLAxioms.add(axiom);
         recordOWLObjectProperty(property);
       }
@@ -1349,9 +1349,9 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
   {
     if (propertyExpression instanceof OWLDataProperty) {
       OWLDataProperty property = (OWLDataProperty)propertyExpression;
-      if (!this.owlDataPropertyDeclarationAxioms.containsKey(property.getIRI())) {
+      if (!this.dataPropertyDeclarationAxioms.containsKey(property.getIRI())) {
         OWLDeclarationAxiom axiom = getSWRLAPIOWLDataFactory().getOWLDataPropertyDeclarationAxiom(property);
-        this.owlDataPropertyDeclarationAxioms.put(property.getIRI(), axiom);
+        this.dataPropertyDeclarationAxioms.put(property.getIRI(), axiom);
         this.assertedOWLAxioms.add(axiom);
         recordOWLDataProperty(property);
       }

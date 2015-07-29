@@ -53,7 +53,7 @@ public class SWRLAPIMenuManager
 		@NonNull private final FileBackedSWRLRuleEngineModel ruleEngineModel;
 		@NonNull private final JMenuItem saveItem;
 
-		public ApplicationMenuListener(@NonNull FileBackedSWRLRuleEngineModel ruleEngineModel, JMenuItem saveItem)
+		public ApplicationMenuListener(@NonNull FileBackedSWRLRuleEngineModel ruleEngineModel, @NonNull JMenuItem saveItem)
 		{
 			this.ruleEngineModel = ruleEngineModel;
 			this.saveItem = saveItem;

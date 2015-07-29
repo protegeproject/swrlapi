@@ -10,7 +10,7 @@ import java.net.URI;
 import java.util.Comparator;
 
 /**
- * A very basic literal comparator for core datatypes. Now OWL specification conformant.
+ * A very basic literal comparator for core datatypes. Not OWL specification conformant.
  * 
  * @see org.semanticweb.owlapi.model.OWLLiteral
  */

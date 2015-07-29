@@ -54,9 +54,9 @@ public interface Literal
 
   double getDouble() throws LiteralException;
 
-  @NonNull String getString() throws LiteralException;
-
   boolean getBoolean() throws LiteralException;
+
+  @NonNull String getString() throws LiteralException;
 
   @NonNull URI getAnyURI() throws LiteralException;
 
