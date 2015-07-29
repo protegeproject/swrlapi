@@ -4,10 +4,14 @@ import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDataPropertyExpression;
 import org.semanticweb.owlapi.model.OWLDataRange;
-import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
-import org.swrlapi.exceptions.TargetSWRLRuleEngineException;
 
+/**
+ * OWL 2 RL-bases rules engine do not necessarily need to create class or property expressions or data ranges but
+ * they do need generate OWL axioms that use them. This class allows implementations to record and resolve class and
+ * property expressions and data ranges using a unique identifier, obviating the need to recreate expressions
+ * or data ranges.
+ */
 public interface OWLObjectResolver
 {
 	void recordOWLClassExpression(@NonNull String classExpressionID, @NonNull OWLClassExpression classExpression);
@@ -27,10 +31,6 @@ public interface OWLObjectResolver
 	 * @throws IllegalArgumentException If the class expression ID cannot be resolved
 	 */
 	@NonNull OWLClassExpression resolveOWLClassExpression(@NonNull String classExpressionID);
-
-	void recordOWLIndividual(@NonNull String individualID, @NonNull OWLIndividual individual);
-
-	@NonNull public OWLIndividual resolveOWLIndividual(@NonNull String individualID) throws TargetSWRLRuleEngineException;
 
 	void recordOWLObjectPropertyExpression(@NonNull String propertyExpressionID,
 			@NonNull OWLObjectPropertyExpression propertyExpression);

@@ -5,20 +5,16 @@ import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLDataPropertyExpression;
 import org.semanticweb.owlapi.model.OWLDataRange;
-import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.swrlapi.bridge.resolvers.OWLClassExpressionResolver;
 import org.swrlapi.bridge.resolvers.OWLDataPropertyExpressionResolver;
 import org.swrlapi.bridge.resolvers.OWLDataRangeResolver;
-import org.swrlapi.bridge.resolvers.OWLIndividualResolver;
 import org.swrlapi.bridge.resolvers.OWLObjectPropertyExpressionResolver;
 import org.swrlapi.bridge.resolvers.OWLObjectResolver;
-import org.swrlapi.exceptions.TargetSWRLRuleEngineException;
 
 class DefaultOWLObjectResolver implements OWLObjectResolver
 {
   private final @NonNull OWLClassExpressionResolver owlClassExpressionResolver;
-  private final @NonNull OWLIndividualResolver owlIndividualResolver;
   private final @NonNull OWLObjectPropertyExpressionResolver owlObjectPropertyExpressionResolver;
   private final @NonNull OWLDataPropertyExpressionResolver owlDataPropertyExpressionResolver;
   private final @NonNull OWLDataRangeResolver owlDataRangeResolver;
@@ -26,7 +22,6 @@ class DefaultOWLObjectResolver implements OWLObjectResolver
   public DefaultOWLObjectResolver(@NonNull OWLDataFactory owlDataFactory)
   {
     this.owlClassExpressionResolver = new DefaultOWLClassExpressionResolver(owlDataFactory);
-    this.owlIndividualResolver = new DefaultOWLIndividualResolver();
     this.owlObjectPropertyExpressionResolver = new DefaultOWLObjectPropertyExpressionResolver();
     this.owlDataPropertyExpressionResolver = new DefaultOWLDataPropertyExpressionResolver();
     this.owlDataRangeResolver = new DefaultOWLDataRangeResolver();
@@ -50,16 +45,6 @@ class DefaultOWLObjectResolver implements OWLObjectResolver
   @Override public @NonNull OWLClassExpression resolveOWLClassExpression(@NonNull String classExpressionID)
   {
     return this.owlClassExpressionResolver.resolveOWLClassExpression(classExpressionID);
-  }
-
-  @Override public void recordOWLIndividual(@NonNull String individualID, @NonNull OWLIndividual individual)
-  {
-    this.owlIndividualResolver.recordOWLIndividual(individualID, individual);
-  }
-
-  @Override public @NonNull OWLIndividual resolveOWLIndividual(@NonNull String individualID) throws TargetSWRLRuleEngineException
-  {
-    return this.owlIndividualResolver.resolveOWLIndividual(individualID);
   }
 
   @Override public void recordOWLObjectPropertyExpression(@NonNull String propertyExpressionID,
