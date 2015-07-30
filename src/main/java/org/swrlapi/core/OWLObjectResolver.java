@@ -1,4 +1,4 @@
-package org.swrlapi.bridge.resolvers;
+package org.swrlapi.core;
 
 import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLClassExpression;
@@ -7,7 +7,7 @@ import org.semanticweb.owlapi.model.OWLDataRange;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 
 /**
- * OWL 2 RL-bases rules engine do not necessarily need to create class or property expressions or data ranges but
+ * OWL 2 RL-based rules engine do not necessarily need to create class or property expressions or data ranges but
  * they do need generate OWL axioms that use them. This class allows implementations to record and resolve class and
  * property expressions and data ranges using a unique identifier, obviating the need to recreate expressions
  * or data ranges.

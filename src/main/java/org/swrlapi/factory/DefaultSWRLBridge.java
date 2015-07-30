@@ -8,16 +8,16 @@ import org.semanticweb.owlapi.model.parameters.Imports;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 import org.swrlapi.bridge.SWRLBridge;
 import org.swrlapi.bridge.TargetSWRLRuleEngine;
+import org.swrlapi.core.OWLObjectResolver;
 import org.swrlapi.builtins.SWRLBuiltInLibraryManager;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
-import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.IRIResolver;
+import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLRuleEngineBridgeException;
 import org.swrlapi.exceptions.TargetSWRLRuleEngineException;
 import org.swrlapi.owl2rl.OWL2RLPersistenceLayer;
-import org.swrlapi.bridge.resolvers.OWLObjectResolver;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
@@ -38,7 +38,7 @@ public class DefaultSWRLBridge implements SWRLBridge
 {
   @NonNull private final SWRLAPIOWLOntology swrlapiOWLOntology;
   @NonNull private final OWL2RLPersistenceLayer owl2RLPersistenceLayer;
-  private final @NonNull OWLObjectResolver owlObjectResolver;
+  @NonNull private final OWLObjectResolver owlObjectResolver;
 
   /**
    * OWL axioms inferred by a rule engine (via the {@link #inferOWLAxiom(org.semanticweb.owlapi.model.OWLAxiom)} call).
@@ -65,7 +65,8 @@ public class DefaultSWRLBridge implements SWRLBridge
     this.swrlapiOWLOntology = swrlapiOWLOntology;
     this.owl2RLPersistenceLayer = owl2RLPersistenceLayer;
     this.targetSWRLRuleEngine = null;
-    this.owlObjectResolver = new DefaultOWLObjectResolver(swrlapiOWLOntology.getOWLDataFactory());
+    //this.owlObjectResolver = new DefaultOWLObjectResolver(swrlapiOWLOntology.getOWLDataFactory());
+    this.owlObjectResolver = SWRLAPIFactory.createOWLObjectResolver(swrlapiOWLOntology.getOWLDataFactory());
 
     this.inferredOWLAxioms = new HashSet<>();
     this.injectedOWLAxioms = new HashSet<>();

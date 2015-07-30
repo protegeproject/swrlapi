@@ -1,4 +1,4 @@
-package org.swrlapi.factory;
+package org.swrlapi.factory.resolvers;
 
 import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.IRI;

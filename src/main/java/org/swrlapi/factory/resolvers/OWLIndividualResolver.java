@@ -1,4 +1,4 @@
-package org.swrlapi.bridge.resolvers;
+package org.swrlapi.factory.resolvers;
 
 import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLIndividual;
@@ -15,7 +15,7 @@ import org.swrlapi.exceptions.TargetSWRLRuleEngineException;
  * @see org.semanticweb.owlapi.model.OWLNamedIndividual
  * @see org.semanticweb.owlapi.model.OWLAnonymousIndividual
  */
-public interface OWLIndividualResolver
+interface OWLIndividualResolver
 {
 	void reset();
 

@@ -1,9 +1,8 @@
-package org.swrlapi.factory;
+package org.swrlapi.factory.resolvers;
 
 import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.swrlapi.exceptions.SWRLAPIInternalException;
-import org.swrlapi.bridge.resolvers.OWLObjectPropertyExpressionResolver;
 
 import java.util.HashMap;
 import java.util.Map;

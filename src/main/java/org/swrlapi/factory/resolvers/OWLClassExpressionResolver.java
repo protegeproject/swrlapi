@@ -1,4 +1,4 @@
-package org.swrlapi.bridge.resolvers;
+package org.swrlapi.factory.resolvers;
 
 import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLClassExpression;
@@ -12,7 +12,7 @@ import org.semanticweb.owlapi.model.OWLClassExpression;
  *
  * @see org.semanticweb.owlapi.model.OWLClassExpression
  */
-public interface OWLClassExpressionResolver
+interface OWLClassExpressionResolver
 {
   void reset();
 

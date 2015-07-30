@@ -2,7 +2,7 @@ package org.swrlapi.builtins.swrlm;
 
 import junit.framework.TestCase;
 import org.swrlapi.factory.SWRLBuiltInArgumentFactory;
-import org.swrlapi.factory.DefaultIRIResolver;
+import org.swrlapi.factory.resolvers.DefaultIRIResolver;
 import org.swrlapi.core.IRIResolver;
 import org.swrlapi.factory.SWRLAPIFactory;
 

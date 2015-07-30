@@ -1,4 +1,4 @@
-package org.swrlapi.factory;
+package org.swrlapi.factory.resolvers;
 
 import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLClassExpression;
@@ -6,13 +6,9 @@ import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLDataPropertyExpression;
 import org.semanticweb.owlapi.model.OWLDataRange;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
-import org.swrlapi.bridge.resolvers.OWLClassExpressionResolver;
-import org.swrlapi.bridge.resolvers.OWLDataPropertyExpressionResolver;
-import org.swrlapi.bridge.resolvers.OWLDataRangeResolver;
-import org.swrlapi.bridge.resolvers.OWLObjectPropertyExpressionResolver;
-import org.swrlapi.bridge.resolvers.OWLObjectResolver;
+import org.swrlapi.core.OWLObjectResolver;
 
-class DefaultOWLObjectResolver implements OWLObjectResolver
+public class DefaultOWLObjectResolver implements OWLObjectResolver
 {
   private final @NonNull OWLClassExpressionResolver owlClassExpressionResolver;
   private final @NonNull OWLObjectPropertyExpressionResolver owlObjectPropertyExpressionResolver;

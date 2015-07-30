@@ -3,6 +3,7 @@ package org.swrlapi.factory;
 import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.formats.PrefixDocumentFormat;
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLDocumentFormat;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLOntology;
@@ -12,6 +13,7 @@ import org.semanticweb.owlapi.model.SWRLAtom;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.semanticweb.owlapi.util.SimpleIRIMapper;
 import org.swrlapi.bridge.SWRLBridge;
+import org.swrlapi.core.OWLObjectResolver;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.IRIResolver;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
@@ -23,6 +25,8 @@ import org.swrlapi.core.SWRLRuleRenderer;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
 import org.swrlapi.exceptions.SWRLRuleEngineException;
+import org.swrlapi.factory.resolvers.DefaultIRIResolver;
+import org.swrlapi.factory.resolvers.DefaultOWLObjectResolver;
 import org.swrlapi.literal.Literal;
 import org.swrlapi.owl2rl.OWL2RLEngine;
 import org.swrlapi.owl2rl.OWL2RLPersistenceLayer;
@@ -124,6 +128,15 @@ public class SWRLAPIFactory
 	public static @NonNull SQWRLResultManager createSQWRLResultManager(@NonNull IRIResolver iriResolver)
 	{
 		return new DefaultSQWRLResultManager(iriResolver);
+	}
+
+	/**
+	 * @param dataFactory An OWL data factory
+	 * @return An OWL object resolver
+	 */
+	public static @NonNull OWLObjectResolver createOWLObjectResolver(@NonNull OWLDataFactory dataFactory)
+	{
+		return new DefaultOWLObjectResolver(dataFactory);
 	}
 
 	/**

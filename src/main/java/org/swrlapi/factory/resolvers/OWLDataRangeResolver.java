@@ -1,4 +1,4 @@
-package org.swrlapi.bridge.resolvers;
+package org.swrlapi.factory.resolvers;
 
 import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLDataRange;

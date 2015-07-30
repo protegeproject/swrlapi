@@ -1,10 +1,9 @@
-package org.swrlapi.factory;
+package org.swrlapi.factory.resolvers;
 
 import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
-import org.swrlapi.bridge.resolvers.OWLClassExpressionResolver;
 
 import java.util.HashMap;
 import java.util.Map;

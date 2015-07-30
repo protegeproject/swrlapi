@@ -3,7 +3,7 @@ package org.swrlapi.bridge.extractors;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.swrlapi.bridge.SWRLRuleEngineBridge;
 import org.swrlapi.bridge.converters.TargetRuleEngineConverterBase;
-import org.swrlapi.bridge.resolvers.OWLObjectResolver;
+import org.swrlapi.core.OWLObjectResolver;
 import org.swrlapi.core.IRIResolver;
 import org.swrlapi.factory.OWLDatatypeFactory;
 import org.swrlapi.factory.OWLLiteralFactory;

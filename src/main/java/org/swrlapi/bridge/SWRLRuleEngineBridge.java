@@ -12,7 +12,7 @@ import org.swrlapi.core.IRIResolver;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLRuleEngineBridgeException;
 import org.swrlapi.owl2rl.OWL2RLPersistenceLayer;
-import org.swrlapi.bridge.resolvers.OWLObjectResolver;
+import org.swrlapi.core.OWLObjectResolver;
 
 import java.util.List;
 

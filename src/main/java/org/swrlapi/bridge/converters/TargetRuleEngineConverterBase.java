@@ -1,7 +1,7 @@
 package org.swrlapi.bridge.converters;
 
 import org.swrlapi.bridge.SWRLRuleEngineBridge;
-import org.swrlapi.bridge.resolvers.OWLObjectResolver;
+import org.swrlapi.core.OWLObjectResolver;
 import org.swrlapi.core.IRIResolver;
 
 import checkers.nullness.quals.NonNull;

@@ -5,7 +5,7 @@ import org.semanticweb.owlapi.model.OWLAxiom;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.factory.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
-import org.swrlapi.factory.DefaultIRIResolver;
+import org.swrlapi.factory.resolvers.DefaultIRIResolver;
 import org.swrlapi.core.IRIResolver;
 import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
