@@ -13,6 +13,7 @@ class DefaultOWLClassExpressionResolver implements OWLClassExpressionResolver
 {
   @NonNull private final Map<String, OWLClassExpression> id2OWLClassExpression;
   @NonNull private final Map<OWLClassExpression, String> owlClassExpression2ID;
+
   @NonNull private final OWLDataFactory owlDataFactory;
 
   public DefaultOWLClassExpressionResolver(@NonNull OWLDataFactory owlDataFactory)
@@ -32,6 +33,7 @@ class DefaultOWLClassExpressionResolver implements OWLClassExpressionResolver
   {
     this.id2OWLClassExpression.clear();
     this.owlClassExpression2ID.clear();
+
     recordOWLClassExpression(OWLRDFVocabulary.OWL_THING.getPrefixedName(), getOWLDataFactory().getOWLThing());
     recordOWLClassExpression(OWLRDFVocabulary.OWL_NOTHING.getPrefixedName(), getOWLDataFactory().getOWLNothing());
   }
