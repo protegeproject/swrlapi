@@ -1,10 +1,6 @@
 package org.swrlapi.parser;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.SWRLAtom;
 import org.semanticweb.owlapi.model.SWRLBuiltInAtom;
 import org.semanticweb.owlapi.model.SWRLClassAtom;
@@ -18,7 +14,10 @@ import org.semanticweb.owlapi.model.SWRLSameIndividualAtom;
 import org.semanticweb.owlapi.model.SWRLVariable;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 
-import checkers.nullness.quals.NonNull;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * A basic SWRL and SQWRL parser. It provides in interactive parsing mode for incomplete rules and queries and provides
@@ -348,6 +347,8 @@ public class SWRLParser
 			String datatype = datatypeToken.getValue();
 			if (datatype.length() == 0)
 				throw generateEndOfRuleException("Empty datatype qualifier - must supply a datatype after ^^", tokenizer);
+			else if (!this.swrlParserSupport.isOWLDatatype(datatype))
+				throw generateEndOfRuleException("invalid datatype name '" + datatype + "'", tokenizer);
 			return !tokenizer.isInteractiveParseOnly() ? Optional.of(this.swrlParserSupport.createSWRLLiteralArgument(
 					literalValue, datatype)) : Optional.empty();
 		} else

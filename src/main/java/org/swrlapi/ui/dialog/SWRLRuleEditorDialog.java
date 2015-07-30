@@ -11,6 +11,7 @@ import org.swrlapi.ui.model.SWRLRuleEngineModel;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.text.BadLocationException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -41,7 +42,7 @@ public class SWRLRuleEditorDialog extends JDialog
   private static final String CANCEL_BUTTON_TITLE = "Cancel";
   private static final String STATUS_OK = "Ok";
   private static final String STATUS_NO_RULE_TEXT =
-    "Use Tab key to cycle through auto-completions;" + " to remove auto-complete expansion, use Escape key";
+    "Use Tab key to cycle through auto-completions;" + " use Escape key to remove auto-complete expansion";
   private static final String INVALID_RULE_TITLE = "Invalid";
   private static final String MISSING_RULE = "Nothing to save!";
   private static final String MISSING_RULE_NAME_TITLE = "Empty Name";
@@ -57,14 +58,17 @@ public class SWRLRuleEditorDialog extends JDialog
   private static final int RULE_EDIT_AREA_COLUMNS = 20;
   private static final int RULE_EDIT_AREA_ROWS = 60;
 
+  private final Border loweredBevelBorder;
+  private final Border yellowBorder;
+
   @NonNull private final SWRLRuleEngineModel swrlRuleEngineModel;
   @NonNull private final SWRLAPIDialogManager dialogManager;
 
   @NonNull private final SWRLRuleEditorInitialDialogState initialDialogState = new SWRLRuleEditorInitialDialogState();
 
-  private JButton saveButton;
   private JTextField ruleNameTextField, commentTextField, statusTextField;
   private JTextArea ruleTextTextArea;
+  private JButton saveButton;
 
   @NonNull private final SWRLAutoCompleter autoCompleter;
   private Optional<SWRLRuleEditorAutoCompleteState> autoCompleteState = Optional.empty(); // Present if auto-complete
@@ -79,6 +83,9 @@ public class SWRLRuleEditorDialog extends JDialog
 
     setTitle(TITLE);
     setModal(true);
+
+    this.loweredBevelBorder = BorderFactory.createLoweredBevelBorder();
+    this.yellowBorder = BorderFactory.createLineBorder(Color.YELLOW);
 
     createComponents();
 
@@ -116,6 +123,31 @@ public class SWRLRuleEditorDialog extends JDialog
     this.editMode = true;
   }
 
+  private void updateStatus()
+  {
+    String ruleText = getRuleText();
+
+    if (ruleText.isEmpty()) {
+      setInformationalStatusText(STATUS_NO_RULE_TEXT);
+      disableSave();
+    } else {
+      try {
+        getSWRLParser().parseSWRLRule(ruleText, true, getRuleName(), getComment());
+        setInformationalStatusText(STATUS_OK);
+        enableSave();
+      } catch (SWRLIncompleteRuleException e) {
+        setIncompleteStatusText(e.getMessage());
+        disableSave();
+      } catch (SWRLParseException e) {
+        setErrorStatusText("Parse error: " + e.getMessage());
+        disableSave();
+      } catch (RuntimeException e) {
+        setInformationalStatusText("Error: " + e.getMessage());
+        disableSave();
+      }
+    }
+  }
+
   private void cancelEditMode()
   {
     this.ruleNameTextField.setText("");
@@ -135,18 +167,23 @@ public class SWRLRuleEditorDialog extends JDialog
 
     JLabel ruleNameLabel = new JLabel(RULE_NAME_TITLE);
     this.ruleNameTextField = new JTextField("");
+    this.ruleNameTextField.setBorder(this.loweredBevelBorder);
 
     this.ruleTextTextArea = new JTextArea("", RULE_EDIT_AREA_COLUMNS, RULE_EDIT_AREA_ROWS);
-    this.ruleTextTextArea.setBorder(BorderFactory.createLoweredBevelBorder());
     this.ruleTextTextArea.setLineWrap(true);
     this.ruleTextTextArea.setWrapStyleWord(true);
+    this.ruleTextTextArea.setBorder(this.loweredBevelBorder);
 
     JLabel commentLabel = new JLabel(COMMENT_LABEL_TITLE);
     this.commentTextField = new JTextField("");
+    this.commentTextField.setDisabledTextColor(Color.BLACK);
+    this.commentTextField.setBorder(this.loweredBevelBorder);
 
     JLabel statusLabel = new JLabel(STATUS_LABEL_TITLE);
     this.statusTextField = new JTextField("");
+    this.statusTextField.setDisabledTextColor(Color.BLACK);
     this.statusTextField.setEnabled(false);
+    this.statusTextField.setBorder(this.loweredBevelBorder);
 
     JButton cancelButton = new JButton(CANCEL_BUTTON_TITLE);
     cancelButton.setPreferredSize(new Dimension(BUTTON_PREFERRED_WIDTH, BUTTON_PREFERRED_HEIGHT));
@@ -345,10 +382,10 @@ public class SWRLRuleEditorDialog extends JDialog
       String comment = getComment();
       boolean errorOccurred;
 
-      if (ruleName.trim().equals("")) {
+      if (ruleName.trim().length() == 0) {
         getDialogManager().showErrorMessageDialog(this.parent, MISSING_RULE_NAME, MISSING_RULE_NAME_TITLE);
         errorOccurred = true;
-      } else if (ruleText.trim().equals("")) {
+      } else if (ruleText.trim().length() == 0) {
         getDialogManager().showErrorMessageDialog(this.parent, MISSING_RULE, MISSING_RULE);
         errorOccurred = true;
       } else if (getSWRLRulesTableModel().hasSWRLRule(ruleName) && !SWRLRuleEditorDialog.this.editMode) {
@@ -386,31 +423,6 @@ public class SWRLRuleEditorDialog extends JDialog
     }
   }
 
-  private void updateStatus()
-  {
-    String ruleText = getRuleText();
-
-    if (ruleText.isEmpty()) {
-      setStatusText(STATUS_NO_RULE_TEXT);
-      disableSave();
-    } else {
-      try {
-        getSWRLParser().parseSWRLRule(ruleText, true, getRuleName(), getComment());
-        setStatusText(STATUS_OK);
-        enableSave();
-      } catch (SWRLIncompleteRuleException e) {
-        setStatusText(e.getMessage());
-        disableSave();
-      } catch (SWRLParseException e) {
-        setStatusText("Parse error: " + e.getMessage());
-        disableSave();
-      } catch (RuntimeException e) {
-        setStatusText("Error: " + e.getMessage());
-        disableSave();
-      }
-    }
-  }
-
   private void disableSave()
   {
     this.saveButton.setEnabled(false);
@@ -421,8 +433,23 @@ public class SWRLRuleEditorDialog extends JDialog
     this.saveButton.setEnabled(true);
   }
 
-  private void setStatusText(@NonNull String status)
+  private void setInformationalStatusText(@NonNull String status)
   {
+    this.statusTextField.setBorder(loweredBevelBorder);
+    this.statusTextField.setDisabledTextColor(Color.BLACK);
+    this.statusTextField.setText(status);
+  }
+
+  private void setIncompleteStatusText(@NonNull String status)
+  {
+    this.statusTextField.setBorder(yellowBorder);
+    this.statusTextField.setDisabledTextColor(Color.BLACK);
+    this.statusTextField.setText(status);
+  }
+
+  private void setErrorStatusText(@NonNull String status)
+  {
+    this.statusTextField.setDisabledTextColor(Color.RED);
     this.statusTextField.setText(status);
   }
 
@@ -438,7 +465,7 @@ public class SWRLRuleEditorDialog extends JDialog
 
   private @NonNull String getRuleText()
   { // We replace the Unicode characters when parsing
-    return this.ruleTextTextArea.getText().trim().replaceAll(Character.toString(SWRLParser.AND_CHAR), "^")
+    return this.ruleTextTextArea.getText().replaceAll(Character.toString(SWRLParser.AND_CHAR), "^")
       .replaceAll(Character.toString(SWRLParser.IMP_CHAR), "->")
       .replaceAll(Character.toString(SWRLParser.RING_CHAR), ".");
   }
