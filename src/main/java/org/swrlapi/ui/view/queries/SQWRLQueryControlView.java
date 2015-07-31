@@ -188,7 +188,7 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
 
 			if (SQWRLQueryControlView.this.sqwrlResultViews.containsKey(queryName)) {
 				SQWRLResultView queryResultsView = SQWRLQueryControlView.this.sqwrlResultViews.get(queryName);
-				SQWRLQueryControlView.this.sqwrlResultViews.remove(queryResultsView);
+				SQWRLQueryControlView.this.sqwrlResultViews.remove(queryName);
 				getParent().remove(queryResultsView);
 			}
 		}

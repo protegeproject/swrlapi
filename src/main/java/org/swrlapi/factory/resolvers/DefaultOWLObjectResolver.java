@@ -92,6 +92,6 @@ public class DefaultOWLObjectResolver implements OWLObjectResolver
 
   @Override public @NonNull OWLDataRange resolveOWLDataRange(@NonNull String dataRangeID)
   {
-    return this.resolveOWLDataRange(dataRangeID);
+    return this.owlDataRangeResolver.resolveOWLDataRange(dataRangeID);
   }
 }

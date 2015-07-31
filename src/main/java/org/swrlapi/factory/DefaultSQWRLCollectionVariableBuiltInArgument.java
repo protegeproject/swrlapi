@@ -1,13 +1,10 @@
 package org.swrlapi.factory;
 
 import checkers.nullness.quals.NonNull;
-import checkers.nullness.quals.Nullable;
 import org.semanticweb.owlapi.model.IRI;
 import org.swrlapi.builtins.arguments.SQWRLCollectionVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
-
-import java.util.Objects;
 
 class DefaultSQWRLCollectionVariableBuiltInArgument extends DefaultSWRLVariableBuiltInArgument
   implements SQWRLCollectionVariableBuiltInArgument
@@ -50,25 +47,33 @@ class DefaultSQWRLCollectionVariableBuiltInArgument extends DefaultSWRLVariableB
     visitor.visit(this);
   }
 
-  @Override public boolean equals(@Nullable Object obj)
+  @Override public boolean equals(Object o)
   {
-    if (this == obj)
+    if (this == o)
       return true;
-    if ((obj == null) || (obj.getClass() != this.getClass()))
+    if (o == null || getClass() != o.getClass())
       return false;
-    DefaultSQWRLCollectionVariableBuiltInArgument impl = (DefaultSQWRLCollectionVariableBuiltInArgument)obj;
-    return (getQueryName().equals(impl.getQueryName()) || (getQueryName() != null && getQueryName()
-      .equals(impl.getQueryName()))) && (Objects.equals(getCollectionName(), impl.getCollectionName()) || (
-      getCollectionName() != null && getCollectionName().equals(impl.getCollectionName()))) && (
-      getGroupID().equals(impl.getGroupID()) || (getGroupID() != null && getGroupID().equals(impl.getGroupID())));
+    if (!super.equals(o))
+      return false;
+
+    DefaultSQWRLCollectionVariableBuiltInArgument that = (DefaultSQWRLCollectionVariableBuiltInArgument)o;
+
+    if (queryName != null ? !queryName.equals(that.queryName) : that.queryName != null)
+      return false;
+    if (collectionName != null ? !collectionName.equals(that.collectionName) : that.collectionName != null)
+      return false;
+    return !(collectionGroupID != null ?
+      !collectionGroupID.equals(that.collectionGroupID) :
+      that.collectionGroupID != null);
+
   }
 
   @Override public int hashCode()
   {
-    int hash = 12;
-    hash = hash + (null == getQueryName() ? 0 : getQueryName().hashCode());
-    hash = hash + (null == getCollectionName() ? 0 : getCollectionName().hashCode());
-    hash = hash + (null == getGroupID() ? 0 : getGroupID().hashCode());
-    return hash;
+    int result = super.hashCode();
+    result = 31 * result + (queryName != null ? queryName.hashCode() : 0);
+    result = 31 * result + (collectionName != null ? collectionName.hashCode() : 0);
+    result = 31 * result + (collectionGroupID != null ? collectionGroupID.hashCode() : 0);
+    return result;
   }
 }

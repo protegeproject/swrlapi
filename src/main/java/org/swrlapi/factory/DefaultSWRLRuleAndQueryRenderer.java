@@ -44,12 +44,12 @@ import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
-import org.swrlapi.sqwrl.SQWRLQueryRenderer;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
 import org.swrlapi.core.SWRLRuleRenderer;
 import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.sqwrl.SQWRLNames;
 import org.swrlapi.sqwrl.SQWRLQuery;
+import org.swrlapi.sqwrl.SQWRLQueryRenderer;
 
 import java.util.Iterator;
 
@@ -72,8 +72,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
     this.prefixManager = prefixManager;
   }
 
-  @NonNull @Override
-  public String renderSWRLRule(@NonNull SWRLRule rule)
+  @NonNull @Override public String renderSWRLRule(@NonNull SWRLRule rule)
   {
     StringBuilder sb = new StringBuilder();
 
@@ -86,8 +85,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
     return sb.toString();
   }
 
-  @NonNull @Override
-  public String renderSQWRLQuery(@NonNull SQWRLQuery query)
+  @NonNull @Override public String renderSQWRLQuery(@NonNull SQWRLQuery query)
   {
     StringBuilder sb = new StringBuilder();
 
@@ -148,14 +146,12 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
     return sb;
   }
 
-  @NonNull @Override
-  public String visit(@NonNull SWRLRule swrlRule)
+  @NonNull @Override public String visit(@NonNull SWRLRule swrlRule)
   {
     return renderSWRLRule(swrlRule);
   }
 
-  @NonNull @Override
-  public String visit(@NonNull SWRLClassAtom classAtom)
+  @NonNull @Override public String visit(@NonNull SWRLClassAtom classAtom)
   {
     OWLClassExpression classExpression = classAtom.getPredicate();
     SWRLIArgument iArgument = classAtom.getArgument();
@@ -168,8 +164,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
     return sb.toString();
   }
 
-  @NonNull @Override
-  public String visit(@NonNull SWRLDataRangeAtom dataRangeAtom)
+  @NonNull @Override public String visit(@NonNull SWRLDataRangeAtom dataRangeAtom)
   {
     OWLDataRange dataRange = dataRangeAtom.getPredicate();
     SWRLDArgument dArgument = dataRangeAtom.getArgument();
@@ -182,8 +177,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
     return sb.toString();
   }
 
-  @NonNull @Override
-  public String visit(@NonNull SWRLObjectPropertyAtom objectPropertyAtom)
+  @NonNull @Override public String visit(@NonNull SWRLObjectPropertyAtom objectPropertyAtom)
   {
     OWLObjectPropertyExpression objectPropertyExpression = objectPropertyAtom.getPredicate();
     SWRLIArgument iArgument1 = objectPropertyAtom.getFirstArgument();
@@ -197,8 +191,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
     return sb.toString();
   }
 
-  @NonNull @Override
-  public String visit(@NonNull SWRLDataPropertyAtom dataPropertyAtom)
+  @NonNull @Override public String visit(@NonNull SWRLDataPropertyAtom dataPropertyAtom)
   {
     OWLDataPropertyExpression dataPropertyExpression = dataPropertyAtom.getPredicate();
     SWRLIArgument iArgument1 = dataPropertyAtom.getFirstArgument();
@@ -212,8 +205,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
     return sb.toString();
   }
 
-  @NonNull @Override
-  public String visit(@NonNull SWRLBuiltInAtom builtInAtom)
+  @NonNull @Override public String visit(@NonNull SWRLBuiltInAtom builtInAtom)
   {
     IRI iri = builtInAtom.getPredicate();
     String builtInPrefixedName = this.prefixManager.getPrefixIRI(iri);
@@ -233,8 +225,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
     return sb.toString();
   }
 
-  @NonNull @Override
-  public String visit(@NonNull SWRLAPIBuiltInAtom swrlapiBuiltInAtom)
+  @NonNull @Override public String visit(@NonNull SWRLAPIBuiltInAtom swrlapiBuiltInAtom)
   {
     String builtInPrefixedName = swrlapiBuiltInAtom.getBuiltInPrefixedName();
     StringBuilder sb = new StringBuilder(builtInPrefixedName + "(");
@@ -252,8 +243,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
     return sb.toString();
   }
 
-  @NonNull @Override
-  public String visit(@NonNull SWRLVariable variable)
+  @NonNull @Override public String visit(@NonNull SWRLVariable variable)
   {
     IRI variableIRI = variable.getIRI();
 
@@ -266,22 +256,19 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
     }
   }
 
-  @NonNull @Override
-  public String visit(@NonNull SWRLIndividualArgument individualArgument)
+  @NonNull @Override public String visit(@NonNull SWRLIndividualArgument individualArgument)
   {
     return visit(individualArgument.getIndividual());
   }
 
-  @NonNull @Override
-  public String visit(@NonNull SWRLLiteralArgument literalArgument)
+  @NonNull @Override public String visit(@NonNull SWRLLiteralArgument literalArgument)
   {
     OWLLiteral literal = literalArgument.getLiteral();
 
     return visit(literal);
   }
 
-  @NonNull @Override
-  public String visit(@NonNull SWRLSameIndividualAtom sameIndividualAtom)
+  @NonNull @Override public String visit(@NonNull SWRLSameIndividualAtom sameIndividualAtom)
   {
     SWRLIArgument iArgument1 = sameIndividualAtom.getFirstArgument();
     SWRLIArgument iArgument2 = sameIndividualAtom.getSecondArgument();
@@ -294,8 +281,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
     return sb.toString();
   }
 
-  @NonNull @Override
-  public String visit(@NonNull SWRLDifferentIndividualsAtom differentIndividualsAtom)
+  @NonNull @Override public String visit(@NonNull SWRLDifferentIndividualsAtom differentIndividualsAtom)
   {
     SWRLIArgument iArgument1 = differentIndividualsAtom.getFirstArgument();
     SWRLIArgument iArgument2 = differentIndividualsAtom.getSecondArgument();
@@ -320,7 +306,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
       sb.append(variableArgument.accept(this));
     } else
       sb.append("[Unknown ").append(SWRLIArgument.class.getName()).append(" type ")
-          .append(argument.getClass().getName()).append("]");
+        .append(argument.getClass().getName()).append("]");
 
     return sb.toString();
   }
@@ -341,7 +327,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
       sb.append(variableArgument.accept(this));
     } else
       sb.append("[Unknown ").append(SWRLDArgument.class.getName()).append(" type ")
-          .append(argument.getClass().getName()).append("]");
+        .append(argument.getClass().getName()).append("]");
 
     return sb.toString();
   }
@@ -373,7 +359,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
       return individual.toString(); // TODO Use an OWLAPI renderer
   }
 
-  @NonNull  private String visit(@NonNull OWLObjectPropertyExpression objectPropertyExpression)
+  @NonNull private String visit(@NonNull OWLObjectPropertyExpression objectPropertyExpression)
   {
     if (objectPropertyExpression.isAnonymous())
       return objectPropertyExpression.toString(); // TODO Use an OWLAPI renderer
@@ -381,15 +367,19 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
       return visit(objectPropertyExpression.asOWLObjectProperty());
   }
 
-  @NonNull  private String visit(@NonNull OWLObjectProperty property)
+  @NonNull private String visit(@NonNull OWLObjectProperty property)
   {
     String objectPropertyNameShortForm = this.prefixManager.getPrefixIRI(property.getIRI());
 
-    return objectPropertyNameShortForm.startsWith(":") ? objectPropertyNameShortForm.substring(1)
-        : objectPropertyNameShortForm;
+    if (objectPropertyNameShortForm != null)
+      return objectPropertyNameShortForm.startsWith(":") ?
+        objectPropertyNameShortForm.substring(1) :
+        objectPropertyNameShortForm;
+    else
+      return "";
   }
 
-  @NonNull  private String visit(@NonNull OWLDataPropertyExpression dataPropertyExpression)
+  @NonNull private String visit(@NonNull OWLDataPropertyExpression dataPropertyExpression)
   {
     if (dataPropertyExpression.isAnonymous())
       return dataPropertyExpression.toString(); // TODO Use an OWLAPI renderer
@@ -397,12 +387,16 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
       return visit(dataPropertyExpression.asOWLDataProperty());
   }
 
-  @NonNull  private String visit(@NonNull OWLDataProperty property)
+  @NonNull private String visit(@NonNull OWLDataProperty property)
   {
     String dataPropertyNameShortForm = this.prefixManager.getPrefixIRI(property.getIRI());
 
-    return dataPropertyNameShortForm.startsWith(":") ? dataPropertyNameShortForm.substring(1)
-        : dataPropertyNameShortForm;
+    if (dataPropertyNameShortForm != null)
+      return dataPropertyNameShortForm.startsWith(":") ?
+        dataPropertyNameShortForm.substring(1) :
+        dataPropertyNameShortForm;
+    else
+      return "";
   }
 
   @NonNull private String visit(@NonNull OWLDataRange dataRange)
@@ -414,8 +408,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
       return dataRange.toString(); // Use the OWLAPI's rendering
   }
 
-  @NonNull @Override
-  public String visit(@NonNull SWRLClassBuiltInArgument argument)
+  @NonNull @Override public String visit(@NonNull SWRLClassBuiltInArgument argument)
   {
     OWLClass cls = argument.getOWLClass();
     String classNameShortForm = this.prefixManager.getShortForm(cls.getIRI());
@@ -423,8 +416,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
     return classNameShortForm.startsWith(":") ? classNameShortForm.substring(1) : classNameShortForm;
   }
 
-  @NonNull @Override
-  public String visit(@NonNull SWRLNamedIndividualBuiltInArgument argument)
+  @NonNull @Override public String visit(@NonNull SWRLNamedIndividualBuiltInArgument argument)
   {
     OWLNamedIndividual individual = argument.getOWLNamedIndividual();
     String individualNameShortForm = this.prefixManager.getShortForm(individual.getIRI());
@@ -432,51 +424,48 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
     return individualNameShortForm.startsWith(":") ? individualNameShortForm.substring(1) : individualNameShortForm;
   }
 
-  @NonNull @Override
-  public String visit(@NonNull SWRLObjectPropertyBuiltInArgument argument)
+  @NonNull @Override public String visit(@NonNull SWRLObjectPropertyBuiltInArgument argument)
   {
     OWLObjectProperty property = argument.getOWLObjectProperty();
     String objectPropertyNameShortForm = this.prefixManager.getShortForm(property.getIRI());
 
-    return objectPropertyNameShortForm.startsWith(":") ? objectPropertyNameShortForm.substring(1)
-        : objectPropertyNameShortForm;
+    return objectPropertyNameShortForm.startsWith(":") ?
+      objectPropertyNameShortForm.substring(1) :
+      objectPropertyNameShortForm;
   }
 
-  @NonNull @Override
-  public String visit(@NonNull SWRLDataPropertyBuiltInArgument argument)
+  @NonNull @Override public String visit(@NonNull SWRLDataPropertyBuiltInArgument argument)
   {
     OWLDataProperty property = argument.getOWLDataProperty();
     String dataPropertyNameShortForm = this.prefixManager.getShortForm(property.getIRI());
 
-    return dataPropertyNameShortForm.startsWith(":") ? dataPropertyNameShortForm.substring(1)
-        : dataPropertyNameShortForm;
+    return dataPropertyNameShortForm.startsWith(":") ?
+      dataPropertyNameShortForm.substring(1) :
+      dataPropertyNameShortForm;
   }
 
-  @NonNull @Override
-  public String visit(@NonNull SWRLAnnotationPropertyBuiltInArgument argument)
+  @NonNull @Override public String visit(@NonNull SWRLAnnotationPropertyBuiltInArgument argument)
   {
     OWLAnnotationProperty property = argument.getOWLAnnotationProperty();
     String annotationPropertyNameShortForm = this.prefixManager.getShortForm(property.getIRI());
 
-    return annotationPropertyNameShortForm.startsWith(":") ? annotationPropertyNameShortForm.substring(1)
-        : annotationPropertyNameShortForm;
+    return annotationPropertyNameShortForm.startsWith(":") ?
+      annotationPropertyNameShortForm.substring(1) :
+      annotationPropertyNameShortForm;
   }
 
-  @NonNull @Override
-  public String visit(@NonNull SWRLDatatypeBuiltInArgument argument)
+  @NonNull @Override public String visit(@NonNull SWRLDatatypeBuiltInArgument argument)
   {
     OWLDatatype datatype = argument.getOWLDatatype();
     return this.prefixManager.getShortForm(datatype.getIRI());
   }
 
-  @NonNull @Override
-  public String visit(@NonNull SWRLLiteralBuiltInArgument argument)
+  @NonNull @Override public String visit(@NonNull SWRLLiteralBuiltInArgument argument)
   {
     return visit(argument.getLiteral());
   }
 
-  @NonNull @Override
-  public String visit(@NonNull SWRLVariableBuiltInArgument argument)
+  @NonNull @Override public String visit(@NonNull SWRLVariableBuiltInArgument argument)
   {
     IRI variableIRI = argument.getIRI();
 
@@ -489,16 +478,14 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
     }
   }
 
-  @NonNull @Override
-  public String visit(@NonNull SWRLMultiValueVariableBuiltInArgument argument)
+  @NonNull @Override public String visit(@NonNull SWRLMultiValueVariableBuiltInArgument argument)
   {
     String variablePrefixedName = argument.getVariablePrefixedName();
 
     return variablePrefixedName2VariableName(variablePrefixedName);
   }
 
-  @NonNull @Override
-  public String visit(@NonNull SQWRLCollectionVariableBuiltInArgument argument)
+  @NonNull @Override public String visit(@NonNull SQWRLCollectionVariableBuiltInArgument argument)
   {
     String variablePrefixedName = argument.getVariablePrefixedName();
 
@@ -532,13 +519,13 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
 
   private boolean isSQWRLCollectionMakeBuiltInAtom(@NonNull SWRLAtom atom)
   {
-    return atom instanceof SWRLAPIBuiltInAtom
-        && SQWRLNames.isSQWRLCollectionMakeBuiltIn(((SWRLAPIBuiltInAtom)atom).getBuiltInPrefixedName());
+    return atom instanceof SWRLAPIBuiltInAtom && SQWRLNames
+      .isSQWRLCollectionMakeBuiltIn(((SWRLAPIBuiltInAtom)atom).getBuiltInPrefixedName());
   }
 
   private boolean isSQWRLCollectionOperateBuiltInAtom(@NonNull SWRLAtom atom)
   {
-    return atom instanceof SWRLAPIBuiltInAtom
-        && SQWRLNames.isSQWRLCollectionOperationBuiltIn(((SWRLAPIBuiltInAtom)atom).getBuiltInPrefixedName());
+    return atom instanceof SWRLAPIBuiltInAtom && SQWRLNames
+      .isSQWRLCollectionOperationBuiltIn(((SWRLAPIBuiltInAtom)atom).getBuiltInPrefixedName());
   }
 }

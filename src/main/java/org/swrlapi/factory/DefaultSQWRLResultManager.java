@@ -1015,7 +1015,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 
     int rowIndex = 0;
     for (List<SQWRLResultValue> row : result) {
-      aggregateRowMap = aggregatesMap.get(Integer.valueOf(rowIndex));
+      aggregateRowMap = aggregatesMap.get(rowIndex);
 
       for (Integer aggregateColumnIndex : this.aggregateColumnIndexes.keySet()) {
         String aggregateFunctionName = this.aggregateColumnIndexes.get(aggregateColumnIndex);

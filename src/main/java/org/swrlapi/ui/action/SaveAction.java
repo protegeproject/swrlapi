@@ -31,7 +31,7 @@ public class SaveAction implements ActionListener
     save();
   }
 
-  public void save()
+  private void save()
   {
     try {
       this.ontologyModel.save();

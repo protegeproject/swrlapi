@@ -1,6 +1,6 @@
 package org.swrlapi.factory;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.semanticweb.owlapi.model.OWLDatatype;
@@ -10,7 +10,7 @@ import org.semanticweb.owlapi.vocab.XSDVocabulary;
 /**
  * @see OWLDatatypeFactory
  */
-public class OWLDatatypeFactoryTest extends TestCase
+public class OWLDatatypeFactoryTest
 {
   private OWLDatatypeFactory factory;
 
@@ -24,7 +24,7 @@ public class OWLDatatypeFactoryTest extends TestCase
   {
     OWLDatatype datatype = this.factory.getBooleanDatatype();
 
-    assertEquals(datatype.getIRI(), XSDVocabulary.BOOLEAN.getIRI());
-    assertTrue(datatype.isBoolean());
+    Assert.assertEquals(datatype.getIRI(), XSDVocabulary.BOOLEAN.getIRI());
+    Assert.assertTrue(datatype.isBoolean());
   }
 }

@@ -21,5 +21,5 @@ interface OWLIndividualResolver
 
 	void recordOWLIndividual(@NonNull String individualID, @NonNull OWLIndividual individual);
 
-	@NonNull public OWLIndividual resolveOWLIndividual(@NonNull String individualID) throws TargetSWRLRuleEngineException;
+	@NonNull OWLIndividual resolveOWLIndividual(@NonNull String individualID) throws TargetSWRLRuleEngineException;
 }

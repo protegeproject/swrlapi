@@ -79,7 +79,7 @@ public interface SWRLAPIOWLOntology
 	 * @param isRuleEnabled Is the rule enabled
 	 * @return A set of rule annotations
 	 */
-	@NonNull public Set<OWLAnnotation> generateRuleAnnotations(@NonNull String ruleName, String comment,
+	@NonNull Set<OWLAnnotation> generateRuleAnnotations(@NonNull String ruleName, String comment,
 			boolean isRuleEnabled);
 
 	// The SWRLAPI provides built-ins beyond the core set defined in the SWRL submission.

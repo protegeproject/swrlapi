@@ -35,7 +35,7 @@ public class SaveAsAction implements ActionListener
     saveAs();
   }
 
-  public void saveAs()
+  private void saveAs()
   {
     JFileChooser fileChooser = this.dialogManager
       .createSaveFileChooser(SAVE_AS_TITLE, FILE_DESCRIPTION, FILE_EXTENSION, true);

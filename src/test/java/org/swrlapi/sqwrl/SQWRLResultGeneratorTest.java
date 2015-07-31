@@ -37,7 +37,7 @@ public class SQWRLResultGeneratorTest
 
 	private static final String columnName = "c";
 
-	@Rule public ExpectedException thrown = ExpectedException.none();
+	@Rule public final ExpectedException thrown = ExpectedException.none();
 
 	@Before public void setUp() throws OWLOntologyCreationException
 	{

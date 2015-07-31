@@ -1,8 +1,6 @@
 package org.swrlapi.factory;
 
-import java.util.Collections;
-import java.util.Set;
-
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLEntity;
@@ -15,8 +13,8 @@ import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedBuiltInArgument;
 import org.swrlapi.exceptions.SWRLAPIException;
 
-import checkers.nullness.quals.NonNull;
-import checkers.nullness.quals.Nullable;
+import java.util.Collections;
+import java.util.Set;
 
 abstract class DefaultSWRLNamedBuiltInArgument extends DefaultSWRLBuiltInArgument implements SWRLNamedBuiltInArgument
 {
@@ -85,24 +83,22 @@ abstract class DefaultSWRLNamedBuiltInArgument extends DefaultSWRLBuiltInArgumen
 		return Collections.emptySet(); // TODO Implement getAnnotationPropertiesInSignature
 	}
 
-	@Override
-	public boolean equals(@Nullable Object obj)
+	@Override public boolean equals(Object o)
 	{
-		if (this == obj)
+		if (this == o)
 			return true;
-		if ((obj == null) || (obj.getClass() != this.getClass()))
+		if (o == null || getClass() != o.getClass())
 			return false;
-		DefaultSWRLNamedBuiltInArgument impl = (DefaultSWRLNamedBuiltInArgument)obj;
-		return (this.entity.getIRI() == impl.entity.getIRI() || (this.entity.getIRI() != null && this.entity.getIRI()
-				.equals(impl.entity.getIRI())));
+
+		DefaultSWRLNamedBuiltInArgument that = (DefaultSWRLNamedBuiltInArgument)o;
+
+		return !(entity != null ? !entity.equals(that.entity) : that.entity != null);
+
 	}
 
-	@Override
-	public int hashCode()
+	@Override public int hashCode()
 	{
-		int hash = 152;
-		hash = hash + (null == this.entity.getIRI() ? 0 : this.entity.getIRI().hashCode());
-		return hash;
+		return entity != null ? entity.hashCode() : 0;
 	}
 
 	@Override

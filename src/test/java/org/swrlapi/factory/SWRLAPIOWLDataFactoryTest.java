@@ -1,6 +1,6 @@
 package org.swrlapi.factory;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
@@ -8,7 +8,7 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 /**
  * @see SWRLAPIOWLDataFactory
  */
-public class SWRLAPIOWLDataFactoryTest extends TestCase
+public class SWRLAPIOWLDataFactoryTest
 {
 	private SWRLAPIOWLDataFactory factory;
 
@@ -20,6 +20,6 @@ public class SWRLAPIOWLDataFactoryTest extends TestCase
 	@Test public void testGetSWRLBuiltInArgumentFactory() throws Exception
 	{
 		SWRLBuiltInArgumentFactory builtInArgumentFactory = factory.getSWRLBuiltInArgumentFactory();
-		assertNotNull(builtInArgumentFactory);;
+		Assert.assertNotNull(builtInArgumentFactory);
 	}
 }

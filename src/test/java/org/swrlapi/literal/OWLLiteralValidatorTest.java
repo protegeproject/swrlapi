@@ -1,7 +1,6 @@
 package org.swrlapi.literal;
 
 import org.junit.Test;
-import org.swrlapi.literal.OWLLiteralValidator;
 import org.swrlapi.factory.OWLDatatypeFactory;
 import org.swrlapi.factory.SWRLAPIFactory;
 
@@ -13,7 +12,7 @@ import static org.junit.Assert.assertFalse;
  */
 public class OWLLiteralValidatorTest
 {
-	private OWLDatatypeFactory datatypeFactory = SWRLAPIFactory.createOWLDatatypeFactory();
+	private final OWLDatatypeFactory datatypeFactory = SWRLAPIFactory.createOWLDatatypeFactory();
 
 	@Test
 	public void testIsValidByte() throws Exception

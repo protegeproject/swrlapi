@@ -30,7 +30,7 @@ public class QuitAction implements ActionListener
     confirmQuit();
   }
 
-  public void confirmQuit()
+  private void confirmQuit()
   {
     if (!this.ontologyModel.hasOntologyChanged() || this.dialogManager.showConfirmDialog(parent, QUIT_TITLE, MESSAGE)) {
       quit();

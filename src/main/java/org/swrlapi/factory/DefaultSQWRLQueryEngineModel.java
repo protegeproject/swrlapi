@@ -5,7 +5,7 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.ui.model.SQWRLQueryEngineModel;
 
-public class DefaultSQWRLQueryEngineModel extends DefaultSWRLRuleEngineModel implements SQWRLQueryEngineModel
+class DefaultSQWRLQueryEngineModel extends DefaultSWRLRuleEngineModel implements SQWRLQueryEngineModel
 {
   @NonNull private SQWRLQueryEngine queryEngine;
 

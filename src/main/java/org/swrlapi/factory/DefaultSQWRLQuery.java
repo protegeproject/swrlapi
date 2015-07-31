@@ -167,10 +167,8 @@ class DefaultSQWRLQuery implements SQWRLQuery
 
   @NonNull private List<SWRLAPIBuiltInAtom> getBuiltInAtoms(@NonNull List<SWRLAtom> atoms)
   {
-    List<SWRLAPIBuiltInAtom> result = atoms.stream().filter(atom -> atom instanceof SWRLAPIBuiltInAtom)
+    return atoms.stream().filter(atom -> atom instanceof SWRLAPIBuiltInAtom)
       .map(atom -> (SWRLAPIBuiltInAtom)atom).collect(Collectors.toList());
-
-    return result;
   }
 
   @NonNull private List<SWRLAPIBuiltInAtom> getBuiltInAtoms(@NonNull List<SWRLAtom> atoms,
@@ -814,16 +812,6 @@ class DefaultSQWRLQuery implements SQWRLQuery
     return getMatchingRootVariableNames(pathMap, Collections.singleton(variablePrefixedName));
   }
 
-  @SuppressWarnings("unused")
-  // Used by commented-out group argument checking in processBuiltInArgumentDependencies
-  private Set<String> getVariableNames(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
-  {
-    Set<String> variablePrefixedNames = arguments.stream().filter(SWRLBuiltInArgument::isVariable)
-      .map(argument -> argument.asVariable().getVariableName()).collect(Collectors.toSet());
-
-    return variablePrefixedNames;
-  }
-
   @NonNull private Set<String> getMatchingRootVariableNames(@NonNull Map<String, Set<Set<String>>> pathMap,
     @NonNull Set<String> variablePrefixedNames)
   {
@@ -835,7 +823,6 @@ class DefaultSQWRLQuery implements SQWRLQuery
         pathsWithSameRoot.stream().filter(path -> !Collections.disjoint(path, variablePrefixedNames))
           .map(path -> rootVariableName).collect(Collectors.toList()));
     }
-
     return matchingRootVariableNames;
   }
 
@@ -848,11 +835,20 @@ class DefaultSQWRLQuery implements SQWRLQuery
         SWRLVariableBuiltInArgument variableBuiltInArgument = (SWRLVariableBuiltInArgument)argument;
         referencedVariablePrefixedNames.add(variableBuiltInArgument.getVariablePrefixedName());
       });
+
     return referencedVariablePrefixedNames;
   }
 
   private boolean hasReferencedVariables(@NonNull SWRLAtom atom)
   {
     return !getReferencedVariablePrefixedNames(atom).isEmpty();
+  }
+
+  @SuppressWarnings("unused")
+  // Used by commented-out group argument checking in processBuiltInArgumentDependencies
+  private Set<String> getVariableNames(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    return arguments.stream().filter(SWRLBuiltInArgument::isVariable)
+      .map(argument -> argument.asVariable().getVariableName()).collect(Collectors.toSet());
   }
 }

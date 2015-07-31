@@ -119,7 +119,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
   @NonNull private final Map<IRI, OWLDeclarationAxiom> dataPropertyDeclarationAxioms;
   @NonNull private final Map<IRI, OWLDeclarationAxiom> annotationPropertyDeclarationAxioms;
 
-	public DefaultSWRLAPIOWLOntology(@NonNull OWLOntology ontology, @NonNull DefaultPrefixManager prefixManager)
+  public DefaultSWRLAPIOWLOntology(@NonNull OWLOntology ontology, @NonNull DefaultPrefixManager prefixManager)
   {
     this.ontology = ontology;
     this.prefixManager = prefixManager;
@@ -339,7 +339,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
     return this.assertedOWLAxioms.size();
   }
 
-
   @NonNull @Override public Set<OWLAxiom> getOWLAxioms()
   {
     return Collections.unmodifiableSet(this.assertedOWLAxioms);
@@ -388,11 +387,9 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
     String queryName = rule.getRuleName();
     boolean active = rule.isActive();
     String comment = rule.getComment();
-    SQWRLQuery query = SWRLAPIFactory
-      .createSQWRLQuery(queryName, rule.getBodyAtoms(), rule.getHeadAtoms(), active, comment,
-        getSWRLAPIOWLDataFactory().getLiteralFactory(), getIRIResolver());
 
-    return query;
+    return SWRLAPIFactory.createSQWRLQuery(queryName, rule.getBodyAtoms(), rule.getHeadAtoms(), active, comment,
+      getSWRLAPIOWLDataFactory().getLiteralFactory(), getIRIResolver());
   }
 
   private Optional<String> getRuleName(@NonNull SWRLRule owlapiRule)
@@ -411,8 +408,8 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 
   private boolean getIsRuleEnabled(@NonNull SWRLRule owlapiRule)
   {
-		OWLAnnotationProperty enabledAnnotationProperty = getOWLDataFactory()
-				.getOWLAnnotationProperty(IRI.create("http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"));
+    OWLAnnotationProperty enabledAnnotationProperty = getOWLDataFactory()
+      .getOWLAnnotationProperty(IRI.create("http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"));
 
     for (OWLAnnotation annotation : owlapiRule.getAnnotations(enabledAnnotationProperty)) {
       if (annotation.getValue() instanceof OWLLiteral) {
@@ -445,16 +442,16 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
       .getOWLAnnotation(getOWLDataFactory().getRDFSLabel(), getOWLDataFactory().getOWLLiteral(ruleName));
     OWLAnnotation commentAnnotation = getOWLDataFactory()
       .getOWLAnnotation(getOWLDataFactory().getRDFSComment(), getOWLDataFactory().getOWLLiteral(comment));
-		OWLAnnotationProperty isRuleEnabledAnnotationProperty = getOWLDataFactory()
-				.getOWLAnnotationProperty(IRI.create("http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"));
-		OWLAnnotation isRuleEnabledAnnotation = getOWLDataFactory()
-				.getOWLAnnotation(isRuleEnabledAnnotationProperty, getOWLDataFactory().getOWLLiteral(isRuleEnabled));
+    OWLAnnotationProperty isRuleEnabledAnnotationProperty = getOWLDataFactory()
+      .getOWLAnnotationProperty(IRI.create("http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"));
+    OWLAnnotation isRuleEnabledAnnotation = getOWLDataFactory()
+      .getOWLAnnotation(isRuleEnabledAnnotationProperty, getOWLDataFactory().getOWLLiteral(isRuleEnabled));
 
     Set<OWLAnnotation> annotations = new HashSet<>();
 
     annotations.add(labelAnnotation);
-		annotations.add(commentAnnotation);
-		annotations.add(isRuleEnabledAnnotation);
+    annotations.add(commentAnnotation);
+    annotations.add(isRuleEnabledAnnotation);
 
     return annotations;
   }
@@ -1546,49 +1543,34 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 
   @NonNull private Set<OWLDeclarationAxiom> getOWLClassDeclarationAxioms()
   {
-    Set<OWLDeclarationAxiom> owlClassDeclarationAxioms = getOWLOntology()
-      .getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream()
+    return getOWLOntology().getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream()
       .filter(owlDeclarationAxiom -> owlDeclarationAxiom.getEntity().isOWLClass()).collect(Collectors.toSet());
-
-    return owlClassDeclarationAxioms;
   }
 
   @NonNull private Set<OWLDeclarationAxiom> getOWLIndividualDeclarationAxioms()
   {
-    Set<OWLDeclarationAxiom> owlIndividualDeclarationAxioms = getOWLOntology()
-      .getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream()
+    return getOWLOntology().getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream()
       .filter(owlDeclarationAxiom -> owlDeclarationAxiom.getEntity().isOWLNamedIndividual())
       .collect(Collectors.toSet());
-
-    return owlIndividualDeclarationAxioms;
   }
 
   @NonNull private Set<OWLDeclarationAxiom> getOWLObjectPropertyDeclarationAxioms()
   {
-    Set<OWLDeclarationAxiom> owlObjectPropertyDeclarationAxioms = getOWLOntology()
-      .getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream()
+    return getOWLOntology().getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream()
       .filter(owlDeclarationAxiom -> owlDeclarationAxiom.getEntity().isOWLObjectProperty()).collect(Collectors.toSet());
-
-    return owlObjectPropertyDeclarationAxioms;
   }
 
   @NonNull private Set<OWLDeclarationAxiom> getOWLDataPropertyDeclarationAxioms()
   {
-    Set<OWLDeclarationAxiom> owlDataPropertyDeclarationAxioms = getOWLOntology()
-      .getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream()
+    return getOWLOntology().getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream()
       .filter(owlDeclarationAxiom -> owlDeclarationAxiom.getEntity().isOWLDataProperty()).collect(Collectors.toSet());
-
-    return owlDataPropertyDeclarationAxioms;
   }
 
   @NonNull private Set<OWLDeclarationAxiom> getOWLAnnotationPropertyDeclarationAxioms()
   {
-    Set<OWLDeclarationAxiom> owlAnnotationPropertyDeclarationAxioms = getOWLOntology()
-      .getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream()
+    return getOWLOntology().getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream()
       .filter(owlDeclarationAxiom -> owlDeclarationAxiom.getEntity().isOWLAnnotationProperty())
       .collect(Collectors.toSet());
-
-    return owlAnnotationPropertyDeclarationAxioms;
   }
 
   private void recordOWLClass(@NonNull OWLEntity cls)

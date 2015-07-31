@@ -15,7 +15,7 @@ public class Period
 {
   // Both instants will have the same granularity so we do not store the granularity separately.
   @NonNull private Instant startInstant, finishInstant;
-  @NonNull private Temporal temporal;
+  @NonNull private final Temporal temporal;
 
   public Period(@NonNull Temporal temporal, long startGranuleCount, long finishGranuleCount, int granularity)
     throws TemporalException

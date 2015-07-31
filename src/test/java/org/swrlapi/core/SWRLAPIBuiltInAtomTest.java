@@ -17,10 +17,10 @@ import static junit.framework.TestCase.assertEquals;
  */
 public class SWRLAPIBuiltInAtomTest
 {
-	private String ruleName = "name";
-	private List<SWRLBuiltInArgument> arguments = new ArrayList<>();
-	private IRI builtInIRI = IRI.create("http://www.w3.org/2003/11/swrlb#add");
-	private String builtInName = "swrlb:add";
+	private final String ruleName = "name";
+	private final List<SWRLBuiltInArgument> arguments = new ArrayList<>();
+	private final IRI builtInIRI = IRI.create("http://www.w3.org/2003/11/swrlb#add");
+	private final String builtInName = "swrlb:add";
 	private SWRLAPIBuiltInAtom atom;
 
 	@Before public void setUp() throws OWLOntologyCreationException
