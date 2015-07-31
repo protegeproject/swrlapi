@@ -193,7 +193,7 @@ class DefaultOWLLiteralFactory implements OWLLiteralFactory
   private void validateOWLLiteral(@NonNull String literal, @NonNull OWLDatatype datatype)
   {
     if (!OWLLiteralValidator.isValid(literal, datatype))
-      throw new RuntimeException("literal value " + literal + " is not a valid " + datatype.getIRI());
+      throw new RuntimeException("literal value '" + literal + "' is not a valid " + datatype.getIRI());
   }
 
   @NonNull private OWLDatatypeFactory getOWLDatatypeFactory()

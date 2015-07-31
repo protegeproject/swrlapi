@@ -139,10 +139,10 @@ public class SWRLRuleEditorDialog extends JDialog
         setIncompleteStatusText(e.getMessage());
         disableSave();
       } catch (SWRLParseException e) {
-        setErrorStatusText("Parse error: " + e.getMessage());
+        setErrorStatusText(e.getMessage());
         disableSave();
       } catch (RuntimeException e) {
-        setInformationalStatusText("Error: " + e.getMessage());
+        setInformationalStatusText(e.getMessage());
         disableSave();
       }
     }
@@ -173,6 +173,7 @@ public class SWRLRuleEditorDialog extends JDialog
     this.ruleTextTextArea.setLineWrap(true);
     this.ruleTextTextArea.setWrapStyleWord(true);
     this.ruleTextTextArea.setBorder(this.loweredBevelBorder);
+    this.ruleTextTextArea.setPreferredSize(new Dimension(300, 300));
 
     JLabel commentLabel = new JLabel(COMMENT_LABEL_TITLE);
     this.commentTextField = new JTextField("");
@@ -204,7 +205,9 @@ public class SWRLRuleEditorDialog extends JDialog
     upperPanel.add(statusLabel);
     upperPanel.add(this.statusTextField);
 
-    JPanel rulePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+    //JPanel rulePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+    JPanel rulePanel = new JPanel(new GridLayout(1, 1));
+    rulePanel.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
     rulePanel.add(this.ruleTextTextArea);
 
     JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
