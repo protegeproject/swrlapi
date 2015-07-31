@@ -22,7 +22,7 @@ interface OWLClassExpressionResolver
 
   /**
    *
-   * @param owlClassExpression A class expression to resolveOWLClassExpression
+   * @param owlClassExpression A class expression to resolve
    * @return The ID of the resolved class expression
    * @throws IllegalArgumentException If the class expression cannot be resolved
    */

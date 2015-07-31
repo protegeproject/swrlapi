@@ -109,7 +109,7 @@ public class DefaultSWRLBridge implements SWRLBridge
     return this.swrlapiOWLOntology.getIRIResolver();
   }
 
-  @Override public @NonNull OWLObjectResolver getOWLObjectResolver()
+  @Override @NonNull public OWLObjectResolver getOWLObjectResolver()
   {
     return this.owlObjectResolver;
   }
