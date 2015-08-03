@@ -7,7 +7,7 @@ It includes graphical tools for editing and executing rules. A SWRL-based OWL qu
 See the [SWRLAPI Wiki](https://github.com/protegeproject/swrlapi/wiki) for documentation.
 
 A standalone [SWRLTab](https://github.com/protegeproject/swrltab) application and a [Protégé-based](http://protege.stanford.edu/) 
-[SWRLTab Plugin](https://github.com/protegeproject/swrltab-plugin), bothbuilt using this API, are also available. 
+[SWRLTab Plugin](https://github.com/protegeproject/swrltab-plugin), both built using this API, are also available. 
 
 #### Building Prerequisites
 
