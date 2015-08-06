@@ -70,7 +70,6 @@ public class SWRLRuleEditorDialog extends JDialog
   private JTextArea ruleTextTextArea;
   private JButton saveButton;
 
-  @NonNull private final SWRLAutoCompleter autoCompleter;
   private Optional<SWRLRuleEditorAutoCompleteState> autoCompleteState = Optional.empty(); // Present if auto-complete
   private boolean editMode = false;
 
@@ -79,7 +78,6 @@ public class SWRLRuleEditorDialog extends JDialog
   {
     this.swrlRuleEngineModel = swrlRuleEngineModel;
     this.dialogManager = dialogManager;
-    this.autoCompleter = swrlRuleEngineModel.getSWRLAutoCompleter();
 
     setTitle(TITLE);
     setModal(true);
@@ -341,9 +339,14 @@ public class SWRLRuleEditorDialog extends JDialog
     List<String> expansions = new ArrayList<>();
 
     expansions.add(""); // Add empty expansion that we can cycle back to
-    expansions.addAll(this.autoCompleter.getCompletions(prefix));
+    expansions.addAll(getSWRLAutoCompleter().getCompletions(prefix));
 
     return expansions;
+  }
+
+  @NonNull private SWRLAutoCompleter getSWRLAutoCompleter()
+  {
+    return this.swrlRuleEngineModel.getSWRLAutoCompleter();
   }
 
   private class CancelSWRLRuleEditActionListener implements ActionListener

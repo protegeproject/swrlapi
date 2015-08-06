@@ -54,6 +54,6 @@ class DefaultSWRLAutoCompleter implements SWRLAutoCompleter
   @NonNull @Override
   public List<String> getCompletions(@NonNull String prefix)
   { // TODO Look at - not very efficient
-    return this.shortForms.stream().filter(shortForm -> shortForm.startsWith(prefix)).collect(Collectors.toList());
+      return this.shortForms.stream().filter(shortForm -> shortForm.startsWith(prefix)).collect(Collectors.toList());
   }
 }
