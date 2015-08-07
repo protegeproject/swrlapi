@@ -10,7 +10,7 @@
 
   <groupId>edu.stanford.swrl</groupId>
   <artifactId>swrlapi</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <name>SWRLAPI</name>
   <description>OWLAPI-based implementation of the SWRLAPI</description>
   <url>https://github.com/protegeproject/swrlapi/wiki</url>
@@ -30,8 +30,9 @@
     <slf4j.version>1.6.1</slf4j.version>
 
     <maven.compiler.plugin.version>2.3.2</maven.compiler.plugin.version>
-    <maven.bundle.plugin.version>2.4.0</maven.bundle.plugin.version>
+    <maven.bundle.plugin.version>2.5.3</maven.bundle.plugin.version>
     <maven.source.plugin.version>2.2.1</maven.source.plugin.version>
+    <maven.release.plugin.version>2.5</maven.release.plugin.version>
     <maven.javadoc.plugin.version>2.9.1</maven.javadoc.plugin.version>
     <maven.gpg.plugin.version>1.5</maven.gpg.plugin.version>
 
@@ -176,12 +177,11 @@
             <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
             <Include-Resource>{maven-resources}</Include-Resource>
             <Import-Package>
-              org.semanticweb.owlapi.*;version="4.0.2",
+              org.semanticweb.owlapi.*;version="${owlapi.version}",
               *
             </Import-Package>
             <Export-Package>
               org.nfunk.*;version="${jep.version}",
-              org.apache.axis.*;version="${axis.osgi.version}",
               org.swrlapi.*;version="${project.version}"
             </Export-Package>
             <Embed-Transitive>true</Embed-Transitive>
@@ -204,7 +204,7 @@
 
       <plugin>
         <artifactId>maven-release-plugin</artifactId>
-        <version>2.5</version>
+        <version>${maven.release.plugin.version}</version>
         <dependencies>
           <dependency>
             <groupId>org.apache.maven.scm</groupId>
@@ -215,8 +215,8 @@
       </plugin>
 
       <plugin>
-	      <groupId>edu.washington.cs.types.checker</groupId>
-	      <artifactId>checker-maven-plugin</artifactId>
+	<groupId>edu.washington.cs.types.checker</groupId>
+	<artifactId>checker-maven-plugin</artifactId>
         <version>${checker.framework.version}</version>
 
         <executions>
