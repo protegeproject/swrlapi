@@ -120,11 +120,11 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
     }
   }
 
-  @Override public void createSQWRLQuery(@NonNull String queryName, @NonNull String queryText)
+  @Override public SQWRLQuery createSQWRLQuery(@NonNull String queryName, @NonNull String queryText)
     throws SWRLParseException, SQWRLException
   {
     try {
-      this.swrlapiOWLOntology.createSQWRLQuery(queryName, queryText);
+      return this.swrlapiOWLOntology.createSQWRLQuery(queryName, queryText);
     } catch (RuntimeException e) {
       throw new SQWRLException("error creating SQWRL query: " + e.getMessage(), e);
     }

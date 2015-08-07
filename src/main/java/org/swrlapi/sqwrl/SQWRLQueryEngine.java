@@ -37,7 +37,7 @@ public interface SQWRLQueryEngine extends SWRLRuleEngine
    * @throws SWRLParseException If a parsing error occurs during processing
    * @throws SQWRLException     If a SQWRL-specific error occurs during processing
    */
-  void createSQWRLQuery(@NonNull String queryName, @NonNull String queryText) throws SWRLParseException, SQWRLException;
+  SQWRLQuery createSQWRLQuery(@NonNull String queryName, @NonNull String queryText) throws SWRLParseException, SQWRLException;
 
   /**
    * Run a named SQWRL query. SWRL rules will also be executed and any inferences produced by them will be available in
