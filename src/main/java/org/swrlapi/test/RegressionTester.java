@@ -20,11 +20,11 @@ import java.util.StringTokenizer;
  * Utility class to individually execute all SQWRL queries in an ontology and compare the generated result with the
  * expected result stored in the <code>rdfs:comment</code> annotation associated with each query.
  */
-public class SWRLAPIRegressionTester
+public class RegressionTester
 {
   @NonNull private final SQWRLQueryEngine sqwrlQueryEngine;
 
-  public SWRLAPIRegressionTester(@NonNull SQWRLQueryEngine sqwrlQueryEngine)
+  public RegressionTester(@NonNull SQWRLQueryEngine sqwrlQueryEngine)
   {
     this.sqwrlQueryEngine = sqwrlQueryEngine;
   }

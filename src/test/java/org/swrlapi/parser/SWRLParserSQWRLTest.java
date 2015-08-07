@@ -3,11 +3,10 @@ package org.swrlapi.parser;
 import org.junit.Before;
 import org.junit.Test;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
-import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
-import org.swrlapi.test.SWRLAPIIntegrationTestBase;
+import org.swrlapi.test.IntegrationTestBase;
 
-public class SWRLParserSQWRLTest extends SWRLAPIIntegrationTestBase
+public class SWRLParserSQWRLTest extends IntegrationTestBase
 {
   @Before
   public void setUp() throws OWLOntologyCreationException

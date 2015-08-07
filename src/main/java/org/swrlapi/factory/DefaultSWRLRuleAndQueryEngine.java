@@ -10,7 +10,6 @@ import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import org.swrlapi.bridge.SWRLRuleEngineBridgeController;
 import org.swrlapi.bridge.TargetSWRLRuleEngine;
 import org.swrlapi.builtins.SWRLBuiltInBridgeController;
-import org.swrlapi.sqwrl.SQWRLQueryRenderer;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLRuleEngine;
@@ -25,6 +24,7 @@ import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.sqwrl.SQWRLQuery;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
+import org.swrlapi.sqwrl.SQWRLQueryRenderer;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.ui.model.SWRLAutoCompleter;
@@ -232,6 +232,11 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
   @NonNull @Override public SQWRLQueryRenderer createSQWRLQueryRenderer()
   {
     return this.swrlapiOWLOntology.createSQWRLQueryRenderer();
+  }
+
+  @NonNull public OWLOntology getOWLOntology()
+  {
+    return getSWRLAPIOWLOntology().getOWLOntology();
   }
 
   @NonNull @Override public OWL2RLEngine getOWL2RLEngine()
@@ -457,11 +462,6 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
   @NonNull private SWRLAPIOWLOntology getSWRLAPIOWLOntology()
   {
     return this.swrlapiOWLOntology;
-  }
-
-  @NonNull private OWLOntology getOWLOntology()
-  {
-    return getSWRLAPIOWLOntology().getOWLOntology();
   }
 
   @NonNull private SWRLBuiltInBridgeController getBuiltInBridgeController()

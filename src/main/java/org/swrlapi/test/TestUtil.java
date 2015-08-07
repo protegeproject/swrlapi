@@ -3,7 +3,6 @@ package org.swrlapi.test;
 import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.IRI;
-import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLDataFactory;
@@ -21,27 +20,13 @@ import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLObjectPropertyDomainAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
-import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.OWLSameIndividualAxiom;
 import org.semanticweb.owlapi.model.PrefixManager;
-import org.swrlapi.core.SWRLAPIOWLOntology;
-import org.swrlapi.factory.SWRLAPIFactory;
 
-class SWRLAPITestUtil
+class TestUtil
 {
   @NonNull private static final OWLDataFactory dataFactory = OWLManager.getOWLDataFactory();
-
-  @NonNull public static OWLOntology createEmptyOWLOntology() throws OWLOntologyCreationException
-  {
-    OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
-    return ontologyManager.createOntology();
-  }
-
-  @NonNull public static SWRLAPIOWLOntology createSWRLAPIOWLOntology(@NonNull OWLOntology ontology)
-  {
-    return SWRLAPIFactory.createSWRLAPIOntology(ontology);
-  }
 
   @NonNull public static IRI getIRI(@NonNull String str)
   {
@@ -71,51 +56,6 @@ class SWRLAPITestUtil
   @NonNull public static OWLDatatype getOWLDatatype(@NonNull IRI iri)
   {
     return dataFactory.getOWLDatatype(iri);
-  }
-
-  @NonNull public static OWLAnnotationProperty getOWLAnnotationProperty(@NonNull IRI iri)
-  {
-    return dataFactory.getOWLAnnotationProperty(iri);
-  }
-
-  @NonNull public static OWLAnnotationProperty getRDFSComment()
-  {
-    return dataFactory.getRDFSComment();
-  }
-
-  @NonNull public static OWLAnnotationProperty getRDFSLabel()
-  {
-    return dataFactory.getRDFSLabel();
-  }
-
-  @NonNull public static OWLDatatype getTopDatatype()
-  {
-    return dataFactory.getTopDatatype();
-  }
-
-  @NonNull public static OWLClass getOWLThing()
-  {
-    return dataFactory.getOWLThing();
-  }
-
-  @NonNull public static OWLDatatype getIntegerDatatype()
-  {
-    return dataFactory.getIntegerOWLDatatype();
-  }
-
-  @NonNull public static OWLDatatype getDoubleDatatype()
-  {
-    return dataFactory.getDoubleOWLDatatype();
-  }
-
-  @NonNull public static OWLDatatype getBooleanDatatype()
-  {
-    return dataFactory.getBooleanOWLDatatype();
-  }
-
-  @NonNull public static OWLClass getOWLNothing()
-  {
-    return dataFactory.getOWLNothing();
   }
 
   @NonNull public static OWLDeclarationAxiom getOWLDeclarationAxiom(@NonNull OWLEntity entity)

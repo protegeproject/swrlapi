@@ -3,6 +3,7 @@ package org.swrlapi.core;
 import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import org.swrlapi.exceptions.SWRLRuleEngineException;
 import org.swrlapi.exceptions.SWRLRuleException;
@@ -125,6 +126,12 @@ public interface SWRLRuleEngine
    * @return A SWRL rule renderer
    */
   @NonNull SWRLRuleRenderer createSWRLRuleRenderer();
+
+  /**
+   *
+   * @return The underlying OWL ontology
+   */
+  @NonNull OWLOntology getOWLOntology();
 
   /**
    * Get the underlying OWL 2 RL reasoner used by the rule and query engine.
