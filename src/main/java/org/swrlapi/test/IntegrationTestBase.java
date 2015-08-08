@@ -29,6 +29,7 @@ public class IntegrationTestBase
 
   protected static final OWLDatatype RDFS_LITERAL = Datatype(IRI(Namespaces.RDFS + "Literal"));
   protected static final OWLDatatype XSD_STRING = Datatype(IRI(Namespaces.XSD + "string"));
+  protected static final OWLDatatype XSD_BOOLEAN = Datatype(IRI(Namespaces.XSD + "boolean"));
   protected static final OWLDatatype XSD_BYTE = Datatype(IRI(Namespaces.XSD + "byte"));
   protected static final OWLDatatype XSD_SHORT = Datatype(IRI(Namespaces.XSD + "short"));
   protected static final OWLDatatype XSD_INT = Datatype(IRI(Namespaces.XSD + "int"));
@@ -39,6 +40,7 @@ public class IntegrationTestBase
   protected static final OWLDatatype XSD_DATETIME = Datatype(IRI(Namespaces.XSD + "dateTime"));
   protected static final OWLDatatype XSD_TIME = Datatype(IRI(Namespaces.XSD + "time"));
   protected static final OWLDatatype XSD_DURATION = Datatype(IRI(Namespaces.XSD + "duration"));
+  protected static final OWLDatatype XSD_ANY_URI = Datatype(IRI(Namespaces.XSD + "anyURI"));
 
 	private String prefix;
 	private OWLOntology ontology;
