@@ -111,7 +111,8 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
   @NonNull private final Map<String, SWRLRule> owlapiRules; // All SWRL rules in supplied ontology
   @NonNull private final Map<String, SQWRLQuery> sqwrlQueries;
 
-  @NonNull private final Set<OWLAxiom> assertedOWLAxioms; // All asserted OWL axioms extracted from the supplied ontology
+  // All asserted OWL axioms extracted from the supplied ontology; includes SWRL rules
+  @NonNull private final Set<OWLAxiom> assertedOWLAxioms;
 
   @NonNull private final Map<IRI, OWLDeclarationAxiom> classDeclarationAxioms;
   @NonNull private final Map<IRI, OWLDeclarationAxiom> individualDeclarationAxioms;
@@ -203,7 +204,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
     if (owlapiRule.isPresent()) {
       SWRLAPIRule swrlapiRule = convertOWLAPIRule2SWRLAPIRule(owlapiRule.get(), queryName, comment, isActive);
 
-      addSWRLRule(swrlapiRule, owlapiRule.get()); // Adds rule to the underlying ontology
+      addSWRLRule(swrlapiRule, owlapiRule.get()); // Adds query to the underlying ontology
 
       if (swrlapiRule.isSQWRLQuery()) {
         SQWRLQuery query = createSQWRLQueryFromSWRLRule(swrlapiRule);
@@ -236,8 +237,10 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
       String finalRuleName = ruleName.isPresent() ? ruleName.get() : "R" + ++ruleNameIndex;
 
       SWRLAPIRule swrlapiRule = convertOWLAPIRule2SWRLAPIRule(owlapiRule, finalRuleName, comment, isActive);
+
       this.swrlRules.put(finalRuleName, swrlapiRule);
       this.owlapiRules.put(finalRuleName, owlapiRule);
+      this.assertedOWLAxioms.add(swrlapiRule);
 
       if (swrlapiRule.isSQWRLQuery()) {
         SQWRLQuery query = createSQWRLQueryFromSWRLRule(swrlapiRule);
@@ -978,6 +981,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 
     this.swrlRules.put(ruleName, swrlapiRule);
     this.owlapiRules.put(ruleName, owlapiRule);
+    this.assertedOWLAxioms.add(swrlapiRule);
 
     this.ontology.getOWLOntologyManager().addAxiom(this.ontology, owlapiRule);
   }
