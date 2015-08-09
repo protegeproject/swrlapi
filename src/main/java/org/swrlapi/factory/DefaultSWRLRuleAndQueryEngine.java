@@ -149,7 +149,6 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
   {
     try {
       importSQWRLQueryAndOWLAxioms(queryName);
-
       run();
       return getSQWRLResult(queryName);
     } catch (SWRLAPIException e) {
@@ -199,8 +198,7 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
    */
   @Override public void infer() throws SWRLRuleEngineException
   {
-    reset();
-    importAssertedOWLAxioms();
+    importAssertedOWLAxioms(); // Import will call reset()
     run();
     exportInferredOWLAxioms();
   }
