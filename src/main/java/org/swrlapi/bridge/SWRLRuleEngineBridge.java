@@ -3,16 +3,15 @@ package org.swrlapi.bridge;
 import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
-import org.swrlapi.factory.SWRLBuiltInArgumentFactory;
+import org.swrlapi.core.IRIResolver;
+import org.swrlapi.core.OWLObjectResolver;
+import org.swrlapi.exceptions.SWRLBuiltInException;
+import org.swrlapi.exceptions.SWRLRuleEngineBridgeException;
 import org.swrlapi.factory.OWLDatatypeFactory;
 import org.swrlapi.factory.OWLLiteralFactory;
 import org.swrlapi.factory.SWRLAPIOWLDataFactory;
-import org.swrlapi.core.SWRLRuleEngine;
-import org.swrlapi.core.IRIResolver;
-import org.swrlapi.exceptions.SWRLBuiltInException;
-import org.swrlapi.exceptions.SWRLRuleEngineBridgeException;
+import org.swrlapi.factory.SWRLBuiltInArgumentFactory;
 import org.swrlapi.owl2rl.OWL2RLPersistenceLayer;
-import org.swrlapi.core.OWLObjectResolver;
 
 import java.util.List;
 
@@ -110,7 +109,7 @@ public interface SWRLRuleEngineBridge
   @NonNull OWL2RLPersistenceLayer getOWL2RLPersistenceLayer();
 
   /**
-   * See if the active ontology has changed since last knowledge rule engine call to {@link SWRLRuleEngine#reset()}.
+   * See if the active ontology has changed since last execution.
    *
    * @return The change status of the ontology
    */

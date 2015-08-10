@@ -1,6 +1,6 @@
 package org.swrlapi.factory;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.semanticweb.owlapi.model.OWLLiteral;
@@ -9,7 +9,7 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 /**
  * @see OWLLiteralFactory
  */
-public class OWLLiteralFactoryTest extends TestCase
+public class OWLLiteralFactoryTest
 {
   private OWLLiteralFactory literalFactory;
   private OWLDatatypeFactory datatypeFactory;
@@ -27,8 +27,8 @@ public class OWLLiteralFactoryTest extends TestCase
 
     OWLLiteral literal = this.literalFactory.getOWLLiteral(b);
 
-    assertEquals(literal.getDatatype(), this.datatypeFactory.getBooleanDatatype());
-    assertTrue(literal.isBoolean());
-    assertEquals(literal.getLiteral(), "true");
+    Assert.assertEquals(literal.getDatatype(), this.datatypeFactory.getBooleanDatatype());
+    Assert.assertTrue(literal.isBoolean());
+    Assert.assertEquals(literal.getLiteral(), "true");
   }
 }
