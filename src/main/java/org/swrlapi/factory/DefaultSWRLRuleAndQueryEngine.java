@@ -30,6 +30,7 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.ui.model.SWRLAutoCompleter;
 
 import javax.swing.*;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -55,27 +56,6 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
     importAssertedOWLAxioms();
   }
 
-  /**
-   * Clear all knowledge from rule engine.
-   */
-  @Override public void reset()
-  {
-    try {
-      this.swrlapiOWLOntology.reset();
-      getTargetSWRLRuleEngine().resetRuleEngine(); // Reset the target rule engine
-      getBuiltInBridgeController().reset();
-      getOWL2RLEngine().resetRuleSelectionChanged();
-      getSWRLAPIOWLOntology().resetOntologyChanged();
-      this.swrlapiOWLOntology.processOntology();
-    } catch (SQWRLException e) {
-      throw new SWRLRuleEngineException("error running rule engine: " + e.getMessage(), e);
-    }
-  }
-
-  /**
-   * Load rules and knowledge from OWL into bridge. All existing bridge rules and knowledge will first be cleared and
-   * the associated rule engine will be reset.
-   */
   @Override public void importAssertedOWLAxioms() throws SWRLRuleEngineException
   {
     reset();
@@ -87,10 +67,6 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
     }
   }
 
-  /**
-   * Load named SQWRL query, all enabled SWRL rules, and all relevant knowledge from OWL into bridge. All existing
-   * bridge rules and knowledge will first be cleared and the associated rule engine will be reset.
-   */
   @Override public void importSQWRLQueryAndOWLAxioms(@NonNull String queryName) throws SWRLRuleEngineException
   {
     reset();
@@ -103,9 +79,6 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
     }
   }
 
-  /**
-   * Run the rule engine.
-   */
   @Override public void run() throws SWRLRuleEngineException
   {
     try {
@@ -116,9 +89,6 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
     }
   }
 
-  /**
-   * Write knowledge inferred by rule engine back to OWL.
-   */
   @Override public void exportInferredOWLAxioms() throws SWRLRuleEngineException
   {
     try {
@@ -133,10 +103,6 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
     }
   }
 
-  /**
-   * Load rules and knowledge from OWL into bridge, send them to a rule engine, run the rule engine, and write any
-   * inferred knowledge back to OWL.
-   */
   @Override public void infer() throws SWRLRuleEngineException
   {
     importAssertedOWLAxioms(); // Import will call reset()
@@ -144,10 +110,6 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
     exportInferredOWLAxioms();
   }
 
-  /**
-   * Run a named SQWRL query. SWRL rules will also be executed and any inferences produced by them will be available in
-   * the query.
-   */
   @NonNull @Override public SQWRLResult runSQWRLQuery(@NonNull String queryName) throws SQWRLException
   {
     try {
@@ -159,9 +121,6 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
     }
   }
 
-  /**
-   * Run all SQWRL queries.
-   */
   @Override public void runSQWRLQueries() throws SQWRLException
   {
     try {
@@ -188,9 +147,6 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
     }
   }
 
-  /**
-   * Create and run a SQWRL query. The query will be created and added to the associated ontology.
-   */
   @NonNull @Override public SQWRLResult runSQWRLQuery(@NonNull String queryName, @NonNull String queryText)
     throws SWRLParseException, SQWRLException
   {
@@ -199,25 +155,16 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
     return runSQWRLQuery(queryName);
   }
 
-  /**
-   * Get the results of a previously executed SQWRL query.
-   */
   @NonNull @Override public SQWRLResult getSQWRLResult(@NonNull String queryName) throws SQWRLException
   {
     return this.swrlapiOWLOntology.getSQWRLResult(queryName);
   }
 
-  /**
-   * Get all the enabled SQWRL queries in the ontology.
-   */
   @NonNull @Override public Set<SQWRLQuery> getSQWRLQueries()
   {
     return this.swrlapiOWLOntology.getSQWRLQueries();
   }
 
-  /**
-   * Get the names of the enabled SQWRL queries in the ontology.
-   */
   @NonNull @Override public Set<String> getSQWRLQueryNames()
   {
     return this.swrlapiOWLOntology.getSQWRLQueryNames();
@@ -292,7 +239,7 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
     return this.swrlapiOWLOntology.getSWRLRules();
   }
 
-  @Override public SWRLAPIRule getSWRLRule(@NonNull String ruleName) throws SWRLRuleException
+  @Override public Optional<SWRLAPIRule> getSWRLRule(@NonNull String ruleName) throws SWRLRuleException
   {
     return this.swrlapiOWLOntology.getSWRLRule(ruleName);
   }
@@ -361,22 +308,22 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
 
   @NonNull @Override public String getRuleEngineName()
   {
-    return this.targetSWRLRuleEngine.getName();
+    return this.targetSWRLRuleEngine.getTargetRuleEngineName();
   }
 
-  @NonNull @Override public String getQueryEngineName()
+  @NonNull @Override public String getTargetQueryEngineName()
   {
-    return this.targetSWRLRuleEngine.getName();
+    return this.targetSWRLRuleEngine.getTargetRuleEngineName();
   }
 
   @NonNull @Override public String getRuleEngineVersion()
   {
-    return this.targetSWRLRuleEngine.getVersion();
+    return this.targetSWRLRuleEngine.getTargetRuleEngineVersion();
   }
 
-  @NonNull @Override public String getQueryEngineVersion()
+  @NonNull @Override public String getTargetQueryEngineVersion()
   {
-    return this.targetSWRLRuleEngine.getVersion();
+    return this.targetSWRLRuleEngine.getTargetRuleEngineVersion();
   }
 
   @NonNull @Override public OWLReasoner getOWLReasoner()
@@ -386,12 +333,26 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
 
   @NonNull @Override public Icon getRuleEngineIcon()
   {
-    return this.targetSWRLRuleEngine.getSWRLRuleEngineIcon();
+    return this.targetSWRLRuleEngine.getTargetRuleEngineIcon();
   }
 
-  @NonNull @Override public Icon getQueryEngineIcon()
+  @NonNull @Override public Icon getTargetQueryEngineIcon()
   {
-    return this.targetSWRLRuleEngine.getSWRLRuleEngineIcon();
+    return this.targetSWRLRuleEngine.getTargetRuleEngineIcon();
+  }
+
+  private void reset()
+  {
+    try {
+      this.swrlapiOWLOntology.reset();
+      getTargetSWRLRuleEngine().resetRuleEngine(); // Reset the target rule engine
+      getBuiltInBridgeController().reset();
+      getOWL2RLEngine().resetRuleSelectionChanged();
+      getSWRLAPIOWLOntology().resetOntologyChanged();
+      this.swrlapiOWLOntology.processOntology();
+    } catch (SQWRLException e) {
+      throw new SWRLRuleEngineException("error running rule engine: " + e.getMessage(), e);
+    }
   }
 
   private void exportSQWRLQuery2TargetRuleEngine(@NonNull String activeQueryName)

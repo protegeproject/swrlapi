@@ -17,7 +17,7 @@ import org.swrlapi.sqwrl.exceptions.SQWRLResultStateException;
 import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
 import org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue;
-import org.swrlapi.sqwrl.values.SQWRLIndividualResultValue;
+import org.swrlapi.sqwrl.values.SQWRLNamedIndividualResultValue;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLPropertyResultValue;
@@ -395,14 +395,14 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
     return this.rows.get(rowIndex).get(columnIndex);
   }
 
-  @NonNull @Override public SQWRLIndividualResultValue getIndividual(@NonNull String columnName) throws SQWRLException
+  @Override public @NonNull SQWRLNamedIndividualResultValue getIndividual(@NonNull String columnName) throws SQWRLException
   {
-    if (!hasIndividualValue(columnName))
+    if (!hasNamedIndividualValue(columnName))
       throw new SQWRLInvalidColumnTypeException("expecting ObjectValue type for column " + columnName);
-    return (SQWRLIndividualResultValue)getValue(columnName);
+    return (SQWRLNamedIndividualResultValue)getValue(columnName);
   }
 
-  @NonNull @Override public SQWRLIndividualResultValue getIndividual(int columnIndex) throws SQWRLException
+  @Override public @NonNull SQWRLNamedIndividualResultValue getIndividual(int columnIndex) throws SQWRLException
   {
     return getIndividual(getColumnName(columnIndex));
   }
@@ -486,14 +486,14 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
     return getColumn(getColumnName(columnIndex));
   }
 
-  @Override public boolean hasIndividualValue(@NonNull String columnName) throws SQWRLException
+  @Override public boolean hasNamedIndividualValue(@NonNull String columnName) throws SQWRLException
   {
-    return getValue(columnName) instanceof SQWRLIndividualResultValue;
+    return getValue(columnName) instanceof SQWRLNamedIndividualResultValue;
   }
 
-  @Override public boolean hasIndividualValue(int columnIndex) throws SQWRLException
+  @Override public boolean hasNamedIndividualValue(int columnIndex) throws SQWRLException
   {
-    return getValue(columnIndex) instanceof SQWRLIndividualResultValue;
+    return getValue(columnIndex) instanceof SQWRLNamedIndividualResultValue;
   }
 
   @Override public boolean hasLiteralValue(@NonNull String columnName) throws SQWRLException

@@ -59,7 +59,7 @@ public interface SWRLBuiltInBridge
    * This call can be used by built-ins to access the current active ontology. In general, built-ins should not directly
    * access the active ontology. A built-in should be able to evaluate its arguments directly without access to the
    * ontology. However, some specialized ABox and TBox built-ins may require directy ontology access (e.g.,
-   * thox:isIndividual(?i)).
+   * thox:isNamedIndividual(?i)).
    *
    * @return A SWRLAPI-based OWL ontology
    */

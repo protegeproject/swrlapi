@@ -39,7 +39,6 @@ public class RegressionTester
 
     try {
       this.sqwrlQueryEngine.getOWL2RLEngine().enableAll();
-      this.sqwrlQueryEngine.reset();
       // sqwrlQueryEngine.getOWL2RLEngine().disableAll();
       // sqwrlQueryEngine.getOWL2RLEngine().enableTables(OWL2RLNames.Table.Table5);
 

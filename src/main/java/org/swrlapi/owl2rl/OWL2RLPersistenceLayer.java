@@ -1,7 +1,6 @@
 package org.swrlapi.owl2rl;
 
 import checkers.nullness.quals.NonNull;
-import org.swrlapi.factory.DefaultOWL2RLPersistenceLayer;
 
 import java.util.Set;
 
@@ -9,7 +8,7 @@ import java.util.Set;
  * Interface defining methods necessary to persist OWL 2 RL rule selections. Implementations will likely use OWL
  * annotation properties to store these selections.
  *
- * @see DefaultOWL2RLPersistenceLayer
+ * @see org.swrlapi.factory.DefaultOWL2RLPersistenceLayer
  */
 public interface OWL2RLPersistenceLayer
 {

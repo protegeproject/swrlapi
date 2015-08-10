@@ -6,7 +6,7 @@ import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
 import org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLEntityResultValue;
-import org.swrlapi.sqwrl.values.SQWRLIndividualResultValue;
+import org.swrlapi.sqwrl.values.SQWRLNamedIndividualResultValue;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
 
@@ -60,7 +60,7 @@ abstract class DefaultSQWRLEntityResultValue implements SQWRLEntityResultValue
 	}
 
 	@Override
-	public boolean isIndividual()
+	public boolean isNamedIndividual()
 	{
 		return false;
 	}
@@ -103,11 +103,10 @@ abstract class DefaultSQWRLEntityResultValue implements SQWRLEntityResultValue
 		throw new SQWRLException(getClass().getName() + " is not a " + SQWRLClassResultValue.class.getName());
 	}
 
-	@NonNull
 	@Override
-	public SQWRLIndividualResultValue asIndividualResult() throws SQWRLException
+	public @NonNull SQWRLNamedIndividualResultValue asNamedIndividualResult() throws SQWRLException
 	{
-		throw new SQWRLException(getClass().getName() + " is not a " + SQWRLIndividualResultValue.class.getName());
+		throw new SQWRLException(getClass().getName() + " is not a " + SQWRLNamedIndividualResultValue.class.getName());
 	}
 
 	@NonNull

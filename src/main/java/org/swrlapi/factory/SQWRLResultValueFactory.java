@@ -15,7 +15,7 @@ import org.swrlapi.literal.XSDTime;
 import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
 import org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue;
-import org.swrlapi.sqwrl.values.SQWRLIndividualResultValue;
+import org.swrlapi.sqwrl.values.SQWRLNamedIndividualResultValue;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
 
@@ -33,9 +33,10 @@ public interface SQWRLResultValueFactory
 
   @NonNull SQWRLClassResultValue getClassValue(@NonNull IRI classIRI);
 
-  @NonNull SQWRLIndividualResultValue getIndividualValue(@NonNull SWRLNamedIndividualBuiltInArgument individualArgument);
+  @NonNull SQWRLNamedIndividualResultValue getNamedIndividualValue(
+      @NonNull SWRLNamedIndividualBuiltInArgument individualArgument);
 
-  @NonNull SQWRLIndividualResultValue getIndividualValue(@NonNull IRI individualIRI);
+  @NonNull SQWRLNamedIndividualResultValue getNamedIndividualValue(@NonNull IRI individualIRI);
 
   @NonNull SQWRLObjectPropertyResultValue getObjectPropertyValue(
     SWRLObjectPropertyBuiltInArgument objectPropertyArgument);

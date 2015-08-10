@@ -1,5 +1,6 @@
 package org.swrlapi.sqwrl;
 
+import org.swrlapi.sqwrl.values.SQWRLNamedIndividualResultValue;
 import org.swrlapi.sqwrl.values.SQWRLResultValue;
 
 /**
@@ -47,15 +48,15 @@ import org.swrlapi.sqwrl.values.SQWRLResultValue;
  * resultManager.configured();
  *
  * resultManager.openRow();
- * resultManager.addCell(valueFactory.getIndividualValue(i1IRI));
+ * resultManager.addCell(valueFactory.getNamedIndividualValue(i1IRI));
  * resultManager.addCell(valueFactory.getLiteralValue(27));
  * resultManager.closeRow();
  * resultManager.openRow();
- * resultManager.addCell(valueFactory.getIndividualValue(i2IRI));
+ * resultManager.addCell(valueFactory.getNamedIndividualValue(i2IRI));
  * resultManager.addCell(valueFactory.getLiteralValue(34));
  * resultManager.closeRow();
  * resultManager.openRow();
- * resultManager.addCell(valueFactory.getIndividualValue(i2IRI));
+ * resultManager.addCell(valueFactory.getNamedIndividualValue(i2IRI));
  * resultManager.addCell(valueFactory.getLiteralValue(21));
  * resultManager.closeRow();
  * resultManager.prepared();
@@ -66,7 +67,7 @@ import org.swrlapi.sqwrl.values.SQWRLResultValue;
  * {@link org.swrlapi.sqwrl.values.SQWRLResultValue}.
  * <p>
  * The possible types of values are (1) {@link org.swrlapi.sqwrl.values.SQWRLLiteralResultValue}, representing literals;
- * (2) {@link org.swrlapi.sqwrl.values.SQWRLIndividualResultValue}, representing OWL individuals; (3)
+ * (2) {@link SQWRLNamedIndividualResultValue}, representing OWL individuals; (3)
  * {@link org.swrlapi.sqwrl.values.SQWRLClassResultValue}, representing OWL classes; (4)
  * {@link org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue}, representing OWL object properties, (5)
  * {@link org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue}, representing OWL data properties, and (6)

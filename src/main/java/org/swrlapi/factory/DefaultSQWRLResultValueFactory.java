@@ -18,7 +18,7 @@ import org.swrlapi.literal.XSDTime;
 import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
 import org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue;
-import org.swrlapi.sqwrl.values.SQWRLIndividualResultValue;
+import org.swrlapi.sqwrl.values.SQWRLNamedIndividualResultValue;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
 
@@ -51,20 +51,21 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
     return new DefaultSQWRLClassResultValue(classIRI, prefixedName);
   }
 
-  @NonNull @Override
-  public SQWRLIndividualResultValue getIndividualValue(@NonNull SWRLNamedIndividualBuiltInArgument individualArgument)
+  @Override
+  public @NonNull SQWRLNamedIndividualResultValue getNamedIndividualValue(
+      @NonNull SWRLNamedIndividualBuiltInArgument individualArgument)
   {
     String prefixedName = getIRIResolver().iri2PrefixedName(individualArgument.getIRI());
 
-    return new DefaultSQWRLIndividualResultValue(individualArgument.getIRI(), prefixedName);
+    return new DefaultSQWRLNamedIndividualResultValue(individualArgument.getIRI(), prefixedName);
   }
 
-  @NonNull @Override
-  public SQWRLIndividualResultValue getIndividualValue(@NonNull IRI individualIRI)
+  @Override
+  public @NonNull SQWRLNamedIndividualResultValue getNamedIndividualValue(@NonNull IRI individualIRI)
   {
     String prefixedName = getIRIResolver().iri2PrefixedName(individualIRI);
 
-    return new DefaultSQWRLIndividualResultValue(individualIRI, prefixedName);
+    return new DefaultSQWRLNamedIndividualResultValue(individualIRI, prefixedName);
   }
 
   @NonNull @Override

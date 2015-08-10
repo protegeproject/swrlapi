@@ -8,7 +8,7 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
  *
  * @see org.swrlapi.sqwrl.values.SQWRLEntityResultValue
  * @see org.swrlapi.sqwrl.values.SQWRLClassResultValue
- * @see org.swrlapi.sqwrl.values.SQWRLIndividualResultValue
+ * @see SQWRLNamedIndividualResultValue
  * @see org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue
  * @see org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue
  * @see org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue
@@ -17,43 +17,43 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
 public interface SQWRLResultValue
 {
   /**
-   * @return True if the result value is an entity
+   * @return True if the result value is an OWL entity
    */
   boolean isEntity();
 
   /**
-   * @return True if the result value is a class
+   * @return True if the result value is an OWL class
    */
   boolean isClass();
 
   /**
-   * @return True if the result value is an individual
+   * @return True if the result value is a named OWL individual
    */
-  boolean isIndividual();
+  boolean isNamedIndividual();
 
   /**
-   * @return True if the result value is an object property
+   * @return True if the result value is an OWL object property
    */
   boolean isObjectProperty();
 
   /**
-   * @return True if the result value is a data property
+   * @return True if the result value is an OWL data property
    */
   boolean isDataProperty();
 
   /**
-   * @return True if the result value is an annotation property
+   * @return True if the result value is an OWL annotation property
    */
   boolean isAnnotationProperty();
 
   /**
-   * @return True if the result value is a literal
+   * @return True if the result value is an OWL literal
    */
   boolean isLiteral();
 
   /**
    * @return A SQWRL entity result value
-   * @throws SQWRLException If the result value cannot be converted to an entity result value
+   * @throws SQWRLException If the result value cannot be converted to an OWL entity result value
    */
   @NonNull SQWRLEntityResultValue asEntityResult() throws SQWRLException;
 
@@ -67,7 +67,7 @@ public interface SQWRLResultValue
    * @return A SQWRL entity result value
    * @throws SQWRLException If the result value cannot be converted to an individual result value
    */
-  @NonNull SQWRLIndividualResultValue asIndividualResult() throws SQWRLException;
+  @NonNull SQWRLNamedIndividualResultValue asNamedIndividualResult() throws SQWRLException;
 
   /**
    * @return A SQWRL entity result value

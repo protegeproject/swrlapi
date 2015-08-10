@@ -5,7 +5,7 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
 import org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue;
-import org.swrlapi.sqwrl.values.SQWRLIndividualResultValue;
+import org.swrlapi.sqwrl.values.SQWRLNamedIndividualResultValue;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLResultValue;
@@ -15,11 +15,12 @@ import java.util.List;
 /**
  * Interface that defines methods to process results from a SQWRL query.
  * <p>
- * See the <tt>org.swrlapi.factory.DefaultSQWRLResultManager</tt> class for detailed comments.
+ * See the {@link org.swrlapi.sqwrl.SQWRLResultManager} class for detailed comments.
  *
  * @see org.swrlapi.sqwrl.SQWRLQuery
- * @see org.swrlapi.sqwrl.values.SQWRLResultValue
+ * @see org.swrlapi.sqwrl.SQWRLResultManager
  * @see org.swrlapi.sqwrl.SQWRLResultGenerator
+ * @see org.swrlapi.sqwrl.values.SQWRLResultValue
  */
 public interface SQWRLResult
 {
@@ -91,16 +92,14 @@ public interface SQWRLResult
 	 * @return An individual result value
 	 * @throws SQWRLException If an error occurs during processing If an error occurs during processing
 	 */
-	@NonNull
-	SQWRLIndividualResultValue getIndividual(@NonNull String columnName) throws SQWRLException;
+  @NonNull SQWRLNamedIndividualResultValue getIndividual(@NonNull String columnName) throws SQWRLException;
 
 	/**
 	 * @param columnIndex A column index
 	 * @return An individual result value
 	 * @throws SQWRLException If an error occurs during processing If an error occurs during processing
 	 */
-	@NonNull
-	SQWRLIndividualResultValue getIndividual(int columnIndex) throws SQWRLException;
+  @NonNull SQWRLNamedIndividualResultValue getIndividual(int columnIndex) throws SQWRLException;
 
 	/**
 	 * @param columnName A column name A column name
@@ -185,14 +184,14 @@ public interface SQWRLResult
 	 * @return True if the value of the specified column is an individual
 	 * @throws SQWRLException If an error occurs during processing
 	 */
-	boolean hasIndividualValue(@NonNull String columnName) throws SQWRLException;
+	boolean hasNamedIndividualValue(@NonNull String columnName) throws SQWRLException;
 
 	/**
 	 * @param columnIndex A column index
 	 * @return True if the value of the specified column is an individual
 	 * @throws SQWRLException If an error occurs during processing
 	 */
-	boolean hasIndividualValue(int columnIndex) throws SQWRLException;
+	boolean hasNamedIndividualValue(int columnIndex) throws SQWRLException;
 
 	/**
 	 * @param columnName A column name A column name

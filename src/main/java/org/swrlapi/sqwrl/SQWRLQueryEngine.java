@@ -18,6 +18,17 @@ import java.util.Set;
 public interface SQWRLQueryEngine extends SWRLRuleEngine
 {
   /**
+   * Create a SQWRL query.
+   *
+   * @param queryName The name of the query
+   * @param queryText The query
+   * @throws SWRLParseException If a parsing error occurs during processing
+   * @throws SQWRLException     If a SQWRL-specific error occurs during processing
+   */
+  SQWRLQuery createSQWRLQuery(@NonNull String queryName, @NonNull String queryText)
+      throws SWRLParseException, SQWRLException;
+
+  /**
    * Create and run a SQWRL query. The query will be created and added to the associated ontology.
    *
    * @param queryName The name of the query
@@ -27,17 +38,7 @@ public interface SQWRLQueryEngine extends SWRLRuleEngine
    * @throws SQWRLException     If a SQWRL-specific error occurs during processing
    */
   @NonNull SQWRLResult runSQWRLQuery(@NonNull String queryName, @NonNull String queryText)
-    throws SWRLParseException, SQWRLException;
-
-  /**
-   * Create a SQWRL query.
-   *
-   * @param queryName The name of the query
-   * @param queryText The query
-   * @throws SWRLParseException If a parsing error occurs during processing
-   * @throws SQWRLException     If a SQWRL-specific error occurs during processing
-   */
-  SQWRLQuery createSQWRLQuery(@NonNull String queryName, @NonNull String queryText) throws SWRLParseException, SQWRLException;
+      throws SWRLParseException, SQWRLException;
 
   /**
    * Run a named SQWRL query. SWRL rules will also be executed and any inferences produced by them will be available in
@@ -85,11 +86,10 @@ public interface SQWRLQueryEngine extends SWRLRuleEngine
   @NonNull SQWRLQueryRenderer createSQWRLQueryRenderer();
 
   /**
-   * Load specific query, all enabled rules, and relevant knowledge from OWL. All existing bridge rules and knowledge
-   * will first be cleared and the rule engine will be reset.
+   * Load specific query, all enabled rules, and relevant OWL axioms from an ontology.
    *
    * @param queryName The name of the query
-   * @throws SWRLRuleEngineException If an error occurs during inference
+   * @throws SWRLRuleEngineException If an error occurs during importation
    */
   void importSQWRLQueryAndOWLAxioms(@NonNull String queryName) throws SWRLRuleEngineException;
 
@@ -98,17 +98,17 @@ public interface SQWRLQueryEngine extends SWRLRuleEngine
    *
    * @return The name of the target query engine
    */
-  @NonNull String getQueryEngineName();
+  @NonNull String getTargetQueryEngineName();
 
   /**
    * Returns the version number of the underlying target query engine.
    *
    * @return The version of the target query engine
    */
-  @NonNull String getQueryEngineVersion();
+  @NonNull String getTargetQueryEngineVersion();
 
   /**
    * @return An icon representing the query engine
    */
-  @NonNull Icon getQueryEngineIcon();
+  @NonNull Icon getTargetQueryEngineIcon();
 }

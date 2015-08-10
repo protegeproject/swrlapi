@@ -21,7 +21,7 @@ public class SQWRLQueryExecutionView extends JTabbedPane implements SWRLAPIView
 			@NonNull SQWRLQuerySelector querySelector) throws SWRLAPIException
 	{
 		SQWRLQueryEngine queryEngine = queryEngineModel.getSQWRLQueryEngine();
-		Icon queryEngineIcon = queryEngine.getQueryEngineIcon();
+		Icon queryEngineIcon = queryEngine.getTargetQueryEngineIcon();
 		Icon owl2RLIcon = SWRLAPIFactory.getOWL2RLReasonerIcon();
 
 		addTab("SQWRL Queries", queryEngineIcon, new SQWRLQueryControlView(queryEngineModel, querySelector),

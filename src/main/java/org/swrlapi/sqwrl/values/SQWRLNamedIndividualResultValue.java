@@ -5,6 +5,6 @@ package org.swrlapi.sqwrl.values;
  * 
  * @see org.swrlapi.sqwrl.SQWRLResult
  */
-public interface SQWRLIndividualResultValue extends SQWRLEntityResultValue
+public interface SQWRLNamedIndividualResultValue extends SQWRLEntityResultValue
 {
 }

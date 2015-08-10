@@ -13,12 +13,13 @@ import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.ui.model.SWRLAutoCompleter;
 
 import javax.swing.*;
+import java.util.Optional;
 import java.util.Set;
 
 /**
  * This interface defines methods that must be provided by a SWRL rule engine in the SWRLAPI.
- * <p>
- * A native rule engine implementation must implement the {@link org.swrlapi.bridge.TargetSWRLRuleEngine} interface.
+ * <p/>
+ * A native rule engine implementation must also implement the {@link org.swrlapi.bridge.TargetSWRLRuleEngine} interface.
  *
  * @see org.swrlapi.core.SWRLAPIRule
  * @see org.swrlapi.bridge.TargetSWRLRuleEngine
@@ -34,8 +35,7 @@ public interface SWRLRuleEngine
   void infer() throws SWRLRuleEngineException;
 
   /**
-   * Load rules and relevant knowledge from OWL. All existing bridge rules and knowledge will first be cleared and the
-   * associated rule engine will be reset.
+   * Load asserted OWL axioms (which include SWRL rules) from OWL ontology.
    *
    * @throws SWRLRuleEngineException If an error occurs during inference
    */
@@ -49,28 +49,11 @@ public interface SWRLRuleEngine
   void run() throws SWRLRuleEngineException;
 
   /**
-   * Write knowledge inferred by rule engine back to OWL ontology.
+   * Write OWL axioms inferred by rule engine back to OWL ontology.
    *
    * @throws SWRLRuleEngineException If an error occurs during inference
    */
   void exportInferredOWLAxioms() throws SWRLRuleEngineException;
-
-  /**
-   * Reset the rule engine.
-   */
-  void reset();
-
-  /**
-   * @return A collection of SWRL rules
-   */
-  @NonNull Set<SWRLAPIRule> getSWRLRules();
-
-  /**
-   * @param ruleName The name of the rule
-   * @return A SWRL rule
-   * @throws SWRLRuleException If the rule of the specified name does not exist
-   */
-  SWRLAPIRule getSWRLRule(@NonNull String ruleName) throws SWRLRuleException;
 
   /**
    * @param ruleName The name of the rule
@@ -89,7 +72,18 @@ public interface SWRLRuleEngine
    * @throws SWRLParseException If an error occurs during parsing
    */
   @NonNull SWRLAPIRule createSWRLRule(@NonNull String ruleName, @NonNull String rule, @NonNull String comment,
-    boolean isActive) throws SWRLParseException;
+      boolean isActive) throws SWRLParseException;
+
+  /**
+   * @return A collection of SWRL rules
+   */
+  @NonNull Set<SWRLAPIRule> getSWRLRules();
+
+  /**
+   * @param ruleName The name of the rule
+   * @return A SWRL rule
+   */
+  Optional<SWRLAPIRule> getSWRLRule(@NonNull String ruleName) throws SWRLRuleException;
 
   /**
    * @param ruleName The name of a rule
@@ -128,19 +122,6 @@ public interface SWRLRuleEngine
   @NonNull SWRLRuleRenderer createSWRLRuleRenderer();
 
   /**
-   *
-   * @return The underlying OWL ontology
-   */
-  @NonNull OWLOntology getOWLOntology();
-
-  /**
-   * Get the underlying OWL 2 RL reasoner used by the rule and query engine.
-   *
-   * @return An OWL 2 RL engine
-   */
-  @NonNull OWL2RLEngine getOWL2RLEngine();
-
-  /**
    * Get the name of the native rule engine implementing this SWRL rule engine.
    *
    * @return A rule engine name
@@ -153,6 +134,18 @@ public interface SWRLRuleEngine
    * @return A rule engine version
    */
   @NonNull String getRuleEngineVersion();
+
+  /**
+   * @return The underlying OWL ontology
+   */
+  @NonNull OWLOntology getOWLOntology();
+
+  /**
+   * Get the underlying OWL 2 RL reasoner used by the rule and query engine.
+   *
+   * @return An OWL 2 RL engine
+   */
+  @NonNull OWL2RLEngine getOWL2RLEngine();
 
   /**
    * A rule engine must also define an {@link org.semanticweb.owlapi.reasoner.OWLReasoner}.

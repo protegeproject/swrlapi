@@ -19,6 +19,7 @@ import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.ui.model.SWRLAutoCompleter;
 
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -49,7 +50,7 @@ public interface SWRLAPIOWLOntology
 
   @NonNull Set<SWRLAPIRule> getSWRLRules();
 
-  @NonNull SWRLAPIRule getSWRLRule(@NonNull String ruleName) throws SWRLRuleException;
+  Optional<SWRLAPIRule> getSWRLRule(@NonNull String ruleName) throws SWRLRuleException;
 
   /**
    * @param ruleName The name of the rule

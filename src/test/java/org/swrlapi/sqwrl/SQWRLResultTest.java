@@ -16,7 +16,7 @@ import org.swrlapi.core.IRIResolver;
 import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
 import org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue;
-import org.swrlapi.sqwrl.values.SQWRLIndividualResultValue;
+import org.swrlapi.sqwrl.values.SQWRLNamedIndividualResultValue;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
 
@@ -137,7 +137,7 @@ public class SQWRLResultTest
     resultManager.configured();
 
     resultManager.openRow();
-    resultManager.addCell(valueFactory.getIndividualValue(i1IRI));
+    resultManager.addCell(valueFactory.getNamedIndividualValue(i1IRI));
     resultManager.closeRow();
 
     resultManager.prepared();
@@ -147,10 +147,10 @@ public class SQWRLResultTest
 
     resultManager.next();
 
-    assertTrue(resultManager.hasIndividualValue(0));
-    assertTrue(resultManager.hasIndividualValue(columnName));
+    assertTrue(resultManager.hasNamedIndividualValue(0));
+    assertTrue(resultManager.hasNamedIndividualValue(columnName));
 
-    SQWRLIndividualResultValue value = resultManager.getIndividual(columnName);
+    SQWRLNamedIndividualResultValue value = resultManager.getIndividual(columnName);
     assertEquals(value.getPrefixedName(), i1PrefixedName);
   }
 

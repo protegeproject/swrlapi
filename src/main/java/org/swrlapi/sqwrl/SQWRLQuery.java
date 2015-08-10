@@ -32,14 +32,21 @@ public interface SQWRLQuery
   boolean isActive();
 
   /**
-   * @param isActive The active status
-   */
-  void setActive(boolean isActive);
-
-  /**
    * @return A comment associated with the query
    */
   String getComment();
+
+  /**
+   *
+   * @return The result of the SQWRL query
+   * @throws SQWRLException If the result if not available
+   */
+  @NonNull SQWRLResult getSQWRLResult() throws SQWRLException;
+
+  /**
+   * @param isActive The active status
+   */
+  void setActive(boolean isActive);
 
   /**
    * @return A list of SWRL atoms
@@ -51,7 +58,6 @@ public interface SQWRLQuery
    */
   @NonNull List<SWRLAtom> getBodyAtoms();
 
-  @NonNull SQWRLResult getSQWRLResult() throws SQWRLException;
 
   /**
    * @return True if the query uses SQWRL collections
@@ -69,7 +75,7 @@ public interface SQWRLQuery
   @NonNull List<SWRLAtom> getSQWRLPhase2BodyAtoms();
 
   /**
-   * @param builtInNames A set of built-in names
+   * @param builtInNames A set of built-in names used in the query
    * @return A list of built-in atoms
    */
   @NonNull List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromBody(Set<String> builtInNames);

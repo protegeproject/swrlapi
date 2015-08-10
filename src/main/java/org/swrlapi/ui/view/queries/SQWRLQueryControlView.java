@@ -40,7 +40,7 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
 	public SQWRLQueryControlView(@NonNull SQWRLQueryEngineModel queryEngineModel, SQWRLQuerySelector sqwrlQuerySelector)
 	{
 		this.queryEngineModel = queryEngineModel;
-		this.queryEngineIcon = queryEngineModel.getSQWRLQueryEngine().getQueryEngineIcon();
+		this.queryEngineIcon = queryEngineModel.getSQWRLQueryEngine().getTargetQueryEngineIcon();
 		this.sqwrlQuerySelector = sqwrlQuerySelector;
 
 		setLayout(new BorderLayout());

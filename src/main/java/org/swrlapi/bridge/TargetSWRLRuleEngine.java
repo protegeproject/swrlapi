@@ -29,7 +29,7 @@ public interface TargetSWRLRuleEngine
   /**
    * Define a target rule engine representation of an OWL axiom. Note that SWRL rules are a type of OWL axiom.
    * 
-   * @param axiom The OWL axiom to define
+   * @param axiom The OWL axiom to define; a SWRL rule is a type of OWL axiom
    * @throws TargetSWRLRuleEngineException If an error occurs during definition
    */
   void defineOWLAxiom(OWLAxiom axiom) throws TargetSWRLRuleEngineException;
@@ -61,20 +61,21 @@ public interface TargetSWRLRuleEngine
    *
    * @return The name of the target rule engine
    */
-  @NonNull String getName();
+  @NonNull String getTargetRuleEngineName();
 
   /**
    * Return version information of the target rule engine.
    *
    * @return The version of the target rule engine
    */
-  @NonNull String getVersion();
+  @NonNull String getTargetRuleEngineVersion();
 
   /**
    *
    * @return An icon for the rule engine
    */
-  Icon getSWRLRuleEngineIcon();
+  @NonNull Icon getTargetRuleEngineIcon();
+
   /**
    * A target rule engine must also define an OWL reasoner implementation.
    *
