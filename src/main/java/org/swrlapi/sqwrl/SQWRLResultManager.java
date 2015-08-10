@@ -67,8 +67,8 @@ import org.swrlapi.sqwrl.values.SQWRLResultValue;
  * {@link org.swrlapi.sqwrl.values.SQWRLResultValue}.
  * <p>
  * The possible types of values are (1) {@link org.swrlapi.sqwrl.values.SQWRLLiteralResultValue}, representing literals;
- * (2) {@link SQWRLNamedIndividualResultValue}, representing OWL individuals; (3)
- * {@link org.swrlapi.sqwrl.values.SQWRLClassResultValue}, representing OWL classes; (4)
+ * (2) {@link SQWRLNamedIndividualResultValue}, representing OWL named individuals; (3)
+ * {@link org.swrlapi.sqwrl.values.SQWRLClassResultValue}, representing OWL named classes; (4)
  * {@link org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue}, representing OWL object properties, (5)
  * {@link org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue}, representing OWL data properties, and (6)
  * {@link org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue}, representing OWL annotation properties.
@@ -80,8 +80,8 @@ import org.swrlapi.sqwrl.values.SQWRLResultValue;
  * SQWRLResult result = ...
  *
  * while (result.next()) {
- * 	SQWRLIndividualResultValue nameValue = result.getIndividual(&quot;name&quot;);
- * 	SQWRLLiteralResultValue averageValue = result.createLiteral(&quot;average&quot;);
+ * 	SQWRLNamedIndividualResultValue nameValue = result.getNamedIndividual(&quot;name&quot;);
+ * 	SQWRLLiteralResultValue averageValue = result.getLiteral(&quot;average&quot;);
  * 	System.out.println(&quot;Name: &quot; + nameValue.getPrefixedName());
  * 	System.out.println(&quot;Average: &quot; + averageValue.getInt());
  * }
