@@ -11,7 +11,7 @@ import java.util.Comparator;
 
 /**
  * A very basic literal comparator for core datatypes. Not OWL specification conformant.
- * 
+ *
  * @see org.semanticweb.owlapi.model.OWLLiteral
  */
 public final class OWLLiteralComparator implements Comparator<OWLLiteral>
@@ -20,20 +20,9 @@ public final class OWLLiteralComparator implements Comparator<OWLLiteral>
 
   @NonNull public static final Comparator<OWLLiteral> COMPARATOR = new OWLLiteralComparator();
 
-  @Override
-  public int compare(@NonNull OWLLiteral l1, @NonNull OWLLiteral l2)
+  @Override public int compare(@NonNull OWLLiteral l1, @NonNull OWLLiteral l2)
   {
-    int diff = l1.getDatatype().compareTo(l2.getDatatype());
-    if (diff != 0)
-      return diff;
-
-    diff = l1.getLang().compareTo(l2.getLang());
-    if (diff != 0)
-      return diff;
-
-    diff = compareOWLLiterals(l1, l2);
-
-    return diff;
+    return compareOWLLiterals(l1, l2);
   }
 
   private int compareOWLLiterals(@NonNull OWLLiteral l1, @NonNull OWLLiteral l2)
@@ -71,7 +60,7 @@ public final class OWLLiteralComparator implements Comparator<OWLLiteral>
           Double d2 = Double.parseDouble(l2.getLiteral());
           return d1.compareTo(d2);
         }
-      } else { // Non numeric type; types will be the same
+      } else { // Non numeric type; types should be the same
         if (!identicalTypes(l1, l2))
           return -1;
         else {
@@ -105,8 +94,8 @@ public final class OWLLiteralComparator implements Comparator<OWLLiteral>
         }
       }
     } catch (IllegalArgumentException e) {
-      throw new SWRLAPIException("Literal " + l1.getLiteral() + " or " + l2.getLiteral() + " not valid "
-          + l1.getDatatype().getIRI());
+      throw new SWRLAPIException(
+        "Literal " + l1.getLiteral() + " or " + l2.getLiteral() + " not valid " + l1.getDatatype().getIRI());
     }
   }
 
@@ -125,11 +114,9 @@ public final class OWLLiteralComparator implements Comparator<OWLLiteral>
 
   private boolean isNumeric(@NonNull OWLLiteral literal)
   {
-    return literal.getDatatype().getIRI().equals(XSDVocabulary.BYTE.getIRI())
-        || literal.getDatatype().getIRI().equals(XSDVocabulary.SHORT.getIRI())
-        || literal.getDatatype().getIRI().equals(XSDVocabulary.INT.getIRI())
-        || literal.getDatatype().getIRI().equals(XSDVocabulary.LONG.getIRI())
-        || literal.getDatatype().getIRI().equals(XSDVocabulary.FLOAT.getIRI())
-        || literal.getDatatype().getIRI().equals(XSDVocabulary.DOUBLE.getIRI());
+    return literal.getDatatype().getIRI().equals(XSDVocabulary.BYTE.getIRI()) || literal.getDatatype().getIRI()
+      .equals(XSDVocabulary.SHORT.getIRI()) || literal.getDatatype().getIRI().equals(XSDVocabulary.INT.getIRI())
+      || literal.getDatatype().getIRI().equals(XSDVocabulary.LONG.getIRI()) || literal.getDatatype().getIRI()
+      .equals(XSDVocabulary.FLOAT.getIRI()) || literal.getDatatype().getIRI().equals(XSDVocabulary.DOUBLE.getIRI());
   }
 }
