@@ -2,82 +2,112 @@ package org.swrlapi.parser;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLDataProperty;
+import org.semanticweb.owlapi.model.OWLNamedIndividual;
+import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.SWRLBuiltInAtom;
 import org.semanticweb.owlapi.model.SWRLClassAtom;
 import org.semanticweb.owlapi.model.SWRLDataPropertyAtom;
 import org.semanticweb.owlapi.model.SWRLObjectPropertyAtom;
 import org.semanticweb.owlapi.model.SWRLSameIndividualAtom;
+import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIRule;
+import org.swrlapi.factory.SWRLAPIFactory;
 import org.swrlapi.test.IntegrationTestBase;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
+import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.Class;
+import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.DataProperty;
+import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.Declaration;
+import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.IRI;
+import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.NamedIndividual;
+import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.ObjectProperty;
 
 public class SWRLParserTest extends IntegrationTestBase
 {
-  @Before
-  public void setUp() throws OWLOntologyCreationException
+  private static final OWLClass PERSON = Class(IRI(":Person"));
+  private static final OWLClass MALE = Class(IRI(":Male"));
+  private static final OWLNamedIndividual P1 = NamedIndividual(IRI(":p1"));
+  private static final OWLNamedIndividual P2 = NamedIndividual(IRI(":p2"));
+  private static final OWLNamedIndividual P3 = NamedIndividual(IRI(":p3"));
+  private static final OWLNamedIndividual P4 = NamedIndividual(IRI(":p4"));
+  private static final OWLNamedIndividual I1 = NamedIndividual(IRI(":i1"));
+  private static final OWLNamedIndividual I2 = NamedIndividual(IRI(":i2"));
+  private static final OWLObjectProperty HAS_UNCLE = ObjectProperty(IRI(":hasUncle"));
+  private static final OWLDataProperty HAS_NAME = DataProperty(IRI(":hasName"));
+  private static final OWLDataProperty HAS_FIRST_NAME = DataProperty(IRI(":hasFirstName"));
+  private static final OWLDataProperty HAS_HOME_PAGE = DataProperty(IRI(":hasHomePage"));
+  private static final OWLDataProperty YEARS_TO_BIRTH = DataProperty(IRI(":yearsToBirth"));
+  private static final OWLDataProperty HAS_ID = DataProperty(IRI(":hasID"));
+  private static final OWLDataProperty HAS_AGE = DataProperty(IRI(":hasAge"));
+  private static final OWLDataProperty IS_FRENCH = DataProperty(IRI(":isFrench"));
+  private static final OWLDataProperty HAS_TOB = DataProperty(IRI(":hasTOB"));
+  private static final OWLDataProperty HAS_DOB = DataProperty(IRI(":hasDOB"));
+  private static final OWLDataProperty HAS_HEIGHT = DataProperty(IRI(":hasHeight"));
+  private static final OWLDataProperty HAS_LAST_ACCESS_TIME = DataProperty(IRI(":hasLastAccessTime"));
+
+  private OWLOntology ontology;
+  private SWRLAPIOWLOntology swrlapiOWLOntology;
+
+  @Before public void setUp() throws OWLOntologyCreationException
   {
-    createOWLOntology();
+    ontology = OWLManager.createOWLOntologyManager().createOntology();
+    swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
   }
 
-  @Test
-  public void TestClassAtomInConsequentWithShortNamedIndividual() throws SWRLParseException
+  @Test public void TestClassAtomInConsequentWithShortNamedIndividual() throws SWRLParseException
   {
-    declareOWLClass("Male");
-    declareOWLNamedIndividual("p1");
+    addOWLAxioms(ontology, Declaration(MALE), Declaration(P1));
 
-    SWRLAPIRule rule = createSWRLRule("r1", "-> Male(p1)");
+    SWRLAPIRule rule = swrlapiOWLOntology.createSWRLRule("r1", "-> Male(p1)");
 
     assertEquals(rule.getBodyAtoms().size(), 0);
     assertEquals(rule.getHeadAtoms().size(), 1);
     assertThat(rule.getHeadAtoms().get(0), instanceOf(SWRLClassAtom.class));
   }
 
-  @Test
-  public void TestClassAtomInConsequentWithPrefixedNamedIndividual() throws SWRLParseException
+  @Test public void TestClassAtomInConsequentWithPrefixedNamedIndividual() throws SWRLParseException
   {
-    declareOWLClass("Male");
-    declareOWLNamedIndividual("p1");
+    addOWLAxioms(ontology, Declaration(MALE), Declaration(P1));
 
-    SWRLAPIRule rule = createSWRLRule("r1", "-> Male(:p1)");
+    SWRLAPIRule rule = swrlapiOWLOntology.createSWRLRule("r1", "-> Male(:p1)");
 
     assertEquals(rule.getBodyAtoms().size(), 0);
     assertEquals(rule.getHeadAtoms().size(), 1);
     assertThat(rule.getHeadAtoms().get(0), instanceOf(SWRLClassAtom.class));
   }
 
-  @Test
-  public void TestClassAtomInAntecedentWithVariable() throws SWRLParseException
+  @Test public void TestClassAtomInAntecedentWithVariable() throws SWRLParseException
   {
-    declareOWLClass("Male");
+    addOWLAxioms(ontology, Declaration(MALE));
 
-    SWRLAPIRule rule = createSWRLRule("r1", "Male(?m) -> ");
+    SWRLAPIRule rule = swrlapiOWLOntology.createSWRLRule("r1", "Male(?m) -> ");
     assertEquals(rule.getBodyAtoms().size(), 1);
     assertEquals(rule.getHeadAtoms().size(), 0);
     assertThat(rule.getBodyAtoms().get(0), instanceOf(SWRLClassAtom.class));
   }
 
-  @Test
-  public void TestClassAtomInAntecedentWithPrefixedVariable() throws SWRLParseException
+  @Test public void TestClassAtomInAntecedentWithPrefixedVariable() throws SWRLParseException
   {
-    declareOWLClass("Male");
+    addOWLAxioms(ontology, Declaration(MALE));
 
-    SWRLAPIRule rule = createSWRLRule("r1", "Male(?m) -> ");
+    SWRLAPIRule rule = swrlapiOWLOntology.createSWRLRule("r1", "Male(?m) -> ");
     assertEquals(rule.getBodyAtoms().size(), 1);
     assertEquals(rule.getHeadAtoms().size(), 0);
     assertThat(rule.getBodyAtoms().get(0), instanceOf(SWRLClassAtom.class));
   }
 
-  @Test
-  public void TestClassAtomInAntecedentWithName() throws SWRLParseException
+  @Test public void TestClassAtomInAntecedentWithName() throws SWRLParseException
   {
-    declareOWLClass("Male");
-    declareOWLNamedIndividual("p1");
+    addOWLAxioms(ontology, Declaration(MALE), Declaration(P1));
 
-    SWRLAPIRule rule = createSWRLRule("r1", "Male(p1) -> ");
+    SWRLAPIRule rule = swrlapiOWLOntology.createSWRLRule("r1", "Male(p1) -> ");
     assertEquals(rule.getBodyAtoms().size(), 1);
     assertEquals(rule.getHeadAtoms().size(), 0);
     assertThat(rule.getBodyAtoms().get(0), instanceOf(SWRLClassAtom.class));
@@ -94,405 +124,349 @@ public class SWRLParserTest extends IntegrationTestBase
   // assertThat(rule.getHeadAtoms().get(0), instanceOf(SWRLClassAtom.class));
   // }
 
-  @Test
-  public void TestStringLiteral() throws SWRLParseException
+  @Test public void TestStringLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("hasName");
+    addOWLAxioms(ontology, Declaration(HAS_NAME));
 
-    SWRLAPIRule rule = createSWRLRule("r1", "hasName(?p, \"Fred\") ->");
+    SWRLAPIRule rule = swrlapiOWLOntology.createSWRLRule("r1", "hasName(?p, \"Fred\") ->");
     assertEquals(rule.getBodyAtoms().size(), 1);
     assertEquals(rule.getHeadAtoms().size(), 0);
     assertThat(rule.getBodyAtoms().get(0), instanceOf(SWRLDataPropertyAtom.class));
   }
 
-  @Test
-  public void TestRawBooleanTrueLowerCaseLiteral() throws SWRLParseException
+  @Test public void TestRawBooleanTrueLowerCaseLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("isFrench");
+    addOWLAxioms(ontology, Declaration(IS_FRENCH));
 
-    SWRLAPIRule rule = createSWRLRule("r1", "isFrench(?f, true) ->");
+    SWRLAPIRule rule = swrlapiOWLOntology.createSWRLRule("r1", "isFrench(?f, true) ->");
     assertEquals(rule.getBodyAtoms().size(), 1);
     assertEquals(rule.getHeadAtoms().size(), 0);
     assertThat(rule.getBodyAtoms().get(0), instanceOf(SWRLDataPropertyAtom.class));
   }
 
-  @Test
-  public void TestRawBooleanFalseLowerCaseLiteral() throws SWRLParseException
+  @Test public void TestRawBooleanFalseLowerCaseLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("isFrench");
+    addOWLAxioms(ontology, Declaration(IS_FRENCH));
 
-    SWRLAPIRule rule = createSWRLRule("r1", "isFrench(?f, false) ->");
+    SWRLAPIRule rule = swrlapiOWLOntology.createSWRLRule("r1", "isFrench(?f, false) ->");
     assertEquals(rule.getBodyAtoms().size(), 1);
     assertEquals(rule.getHeadAtoms().size(), 0);
     assertThat(rule.getBodyAtoms().get(0), instanceOf(SWRLDataPropertyAtom.class));
   }
 
-  @Test
-  public void TestRawBooleanTrueUpperCaseLiteral() throws SWRLParseException
+  @Test public void TestRawBooleanTrueUpperCaseLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("isFrench");
+    addOWLAxioms(ontology, Declaration(IS_FRENCH));
 
-    createSWRLRule("r1", "isFrench(?f, True) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "isFrench(?f, True) ->");
   }
 
-  @Test
-  public void TestRawBooleanFalseUpperCaseLiteral() throws SWRLParseException
+  @Test public void TestRawBooleanFalseUpperCaseLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("isFrench");
+    addOWLAxioms(ontology, Declaration(IS_FRENCH));
 
-    createSWRLRule("r1", "isFrench(?f, False) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "isFrench(?f, False) ->");
   }
 
-  @Test
-  public void TestBooleanTrueQualifiedLiteral() throws SWRLParseException
+  @Test public void TestBooleanTrueQualifiedLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("isFrench");
+    addOWLAxioms(ontology, Declaration(IS_FRENCH));
 
-    createSWRLRule("r1", "isFrench(?f, \"true\"^^xsd:boolean) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "isFrench(?f, \"true\"^^xsd:boolean) ->");
   }
 
-  @Test
-  public void TestByteLiteral() throws SWRLParseException
+  @Test public void TestByteLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("hasAge");
+    addOWLAxioms(ontology, Declaration(HAS_AGE));
 
-    createSWRLRule("r1", "hasAge(?p, \"34\"^^xsd:byte) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, \"34\"^^xsd:byte) ->");
   }
 
-  @Test
-  public void TestNegativeByteLiteral() throws SWRLParseException
+  @Test public void TestNegativeByteLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("yearsToBirth");
+    addOWLAxioms(ontology, Declaration(YEARS_TO_BIRTH));
 
-    createSWRLRule("r1", "yearsToBirth(?p, \"-34\"^^xsd:byte) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "yearsToBirth(?p, \"-34\"^^xsd:byte) ->");
   }
 
-  @Test(expected = SWRLParseException.class)
-  public void TestInvalidByteLiteral() throws SWRLParseException
+  @Test(expected = SWRLParseException.class) public void TestInvalidByteLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("hasAge");
+    addOWLAxioms(ontology, Declaration(HAS_AGE));
 
-    createSWRLRule("r1", "hasAge(?p, \"b34\"^^xsd:byte) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, \"b34\"^^xsd:byte) ->");
   }
 
-  @Test
-  public void TestShortLiteral() throws SWRLParseException
+  @Test public void TestShortLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("hasAge");
+    addOWLAxioms(ontology, Declaration(HAS_AGE));
 
-    createSWRLRule("r1", "hasAge(?p, \"34\"^^xsd:short) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, \"34\"^^xsd:short) ->");
   }
 
-  @Test
-  public void TestNegativeShortLiteral() throws SWRLParseException
+  @Test public void TestNegativeShortLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("hasAge");
+    addOWLAxioms(ontology, Declaration(HAS_AGE));
 
-    createSWRLRule("r1", "hasAge(?p, \"-34\"^^xsd:short) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, \"-34\"^^xsd:short) ->");
   }
 
-  @Test(expected = SWRLParseException.class)
-  public void TestInvalidShortLiteral() throws SWRLParseException
+  @Test(expected = SWRLParseException.class) public void TestInvalidShortLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("hasAge");
+    addOWLAxioms(ontology, Declaration(HAS_AGE));
 
-    createSWRLRule("r1", "hasAge(?p, \"b34\"^^xsd:short) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, \"b34\"^^xsd:short) ->");
   }
 
-  @Test
-  public void TestRawIntLiteral() throws SWRLParseException
+  @Test public void TestRawIntLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("hasAge");
+    addOWLAxioms(ontology, Declaration(HAS_AGE));
 
-    createSWRLRule("r1", "hasAge(?p, 34) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, 34) ->");
   }
 
-  @Test
-  public void TestRawNegativeIntLiteral() throws SWRLParseException
+  @Test public void TestRawNegativeIntLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("hasAge");
+    addOWLAxioms(ontology, Declaration(HAS_AGE));
 
-    createSWRLRule("r1", "hasAge(?p, -34) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, -34) ->");
   }
 
-  @Test
-  public void TestIntQualifiedLiteral() throws SWRLParseException
+  @Test public void TestIntQualifiedLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("hasAge");
+    addOWLAxioms(ontology, Declaration(HAS_AGE));
 
-    createSWRLRule("r1", "hasAge(?p, \"34\"^^xsd:int) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, \"34\"^^xsd:int) ->");
   }
 
-  @Test
-  public void TestNegativeIntQualifiedLiteral() throws SWRLParseException
+  @Test public void TestNegativeIntQualifiedLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("hasAge");
+    addOWLAxioms(ontology, Declaration(HAS_AGE));
 
-    createSWRLRule("r1", "hasAge(?p, \"-34\"^^xsd:int) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, \"-34\"^^xsd:int) ->");
   }
 
-  @Test(expected = SWRLParseException.class)
-  public void TestInvalidIntLiteral() throws SWRLParseException
+  @Test(expected = SWRLParseException.class) public void TestInvalidIntLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("hasAge");
+    addOWLAxioms(ontology, Declaration(HAS_AGE));
 
-    createSWRLRule("r1", "hasAge(?p, \"b34\"^^xsd:int) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, \"b34\"^^xsd:int) ->");
   }
 
-  @Test
-  public void TestLongLiteral() throws SWRLParseException
+  @Test public void TestLongLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("hasAge");
+    addOWLAxioms(ontology, Declaration(HAS_AGE));
 
-    createSWRLRule("r1", "hasAge(?p, \"34\"^^xsd:long) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, \"34\"^^xsd:long) ->");
   }
 
-  @Test
-  public void TestNegativeLongLiteral() throws SWRLParseException
+  @Test public void TestNegativeLongLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("hasAge");
+    addOWLAxioms(ontology, Declaration(HAS_AGE));
 
-    createSWRLRule("r1", "hasAge(?p, \"-34\"^^xsd:long) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, \"-34\"^^xsd:long) ->");
   }
 
-  @Test(expected = SWRLParseException.class)
-  public void TestInvalidLongLiteral() throws SWRLParseException
+  @Test(expected = SWRLParseException.class) public void TestInvalidLongLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("hasAge");
+    addOWLAxioms(ontology, Declaration(HAS_AGE));
 
-    createSWRLRule("r1", "hasAge(?p, \"b34\"^^xsd:long) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, \"b34\"^^xsd:long) ->");
   }
 
-  @Test
-  public void TestFloatRawLiteral() throws SWRLParseException
+  @Test public void TestFloatRawLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("hasHeight");
+    addOWLAxioms(ontology, Declaration(HAS_HEIGHT));
 
-    createSWRLRule("r1", "hasHeight(?p, 34.5) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "hasHeight(?p, 34.5) ->");
   }
 
-  @Test
-  public void TestNegativeFloatRawLiteral() throws SWRLParseException
+  @Test public void TestNegativeFloatRawLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("hasHeight");
+    addOWLAxioms(ontology, Declaration(HAS_HEIGHT));
 
-    createSWRLRule("r1", "hasHeight(?p, -34.5) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "hasHeight(?p, -34.5) ->");
   }
 
-  @Test
-  public void TestFloatQualifiedLiteral() throws SWRLParseException
+  @Test public void TestFloatQualifiedLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("hasHeight");
+    addOWLAxioms(ontology, Declaration(HAS_HEIGHT));
 
-    createSWRLRule("r1", "hasHeight(?p, \"34.0\"^^xsd:float) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "hasHeight(?p, \"34.0\"^^xsd:float) ->");
   }
 
-  @Test
-  public void TestNegativeFloatQualifiedLiteral() throws SWRLParseException
+  @Test public void TestNegativeFloatQualifiedLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("hasHeight");
+    addOWLAxioms(ontology, Declaration(HAS_HEIGHT));
 
-    createSWRLRule("r1", "hasHeight(?p, \"-34.0\"^^xsd:float) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "hasHeight(?p, \"-34.0\"^^xsd:float) ->");
   }
 
-  @Test(expected = SWRLParseException.class)
-  public void TestInvalidFloatLiteral() throws SWRLParseException
+  @Test(expected = SWRLParseException.class) public void TestInvalidFloatLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("hasHeight");
+    addOWLAxioms(ontology, Declaration(HAS_HEIGHT));
 
-    createSWRLRule("r1", "hasHeight(?p, \"x34.0\"^^xsd:float) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "hasHeight(?p, \"x34.0\"^^xsd:float) ->");
   }
 
-  @Test
-  public void TestDoubleQualifiedLiteral() throws SWRLParseException
+  @Test public void TestDoubleQualifiedLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("hasHeight");
+    addOWLAxioms(ontology, Declaration(HAS_HEIGHT));
 
-    createSWRLRule("r1", "hasHeight(?p, \"34.0\"^^xsd:double) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "hasHeight(?p, \"34.0\"^^xsd:double) ->");
   }
 
-  @Test
-  public void TestNegativeDoubleQualifiedLiteral() throws SWRLParseException
+  @Test public void TestNegativeDoubleQualifiedLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("hasHeight");
+    addOWLAxioms(ontology, Declaration(HAS_HEIGHT));
 
-    createSWRLRule("r1", "hasHeight(?p, \"-34.0\"^^xsd:double) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "hasHeight(?p, \"-34.0\"^^xsd:double) ->");
   }
 
-  @Test(expected = SWRLParseException.class)
-  public void TestInvalidDoubleLiteral() throws SWRLParseException
+  @Test(expected = SWRLParseException.class) public void TestInvalidDoubleLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("hasHeight");
+    addOWLAxioms(ontology, Declaration(HAS_HEIGHT));
 
-    createSWRLRule("r1", "hasHeight(?p, \"x34.0\"^^xsd:double) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "hasHeight(?p, \"x34.0\"^^xsd:double) ->");
   }
 
-  @Test
-  public void TestURILiteral() throws SWRLParseException
+  @Test public void TestURILiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("hasHomePage");
+    addOWLAxioms(ontology, Declaration(HAS_HOME_PAGE));
 
-    createSWRLRule("r1", "hasHomePage(?p, \"http://stanford.edu/~fred\"^^xsd:anyURI) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "hasHomePage(?p, \"http://stanford.edu/~fred\"^^xsd:anyURI) ->");
   }
 
-  @Test(expected = SWRLParseException.class)
-  public void TestInvalidURILiteral() throws SWRLParseException
+  @Test(expected = SWRLParseException.class) public void TestInvalidURILiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("hasHomePage");
+    addOWLAxioms(ontology, Declaration(HAS_HOME_PAGE));
 
-    createSWRLRule("r1", "hasHomePage(?p, \":stanford.edu/~fred\"^^xsd:anyURI) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "hasHomePage(?p, \":stanford.edu/~fred\"^^xsd:anyURI) ->");
   }
 
-  @Test
-  public void TestDateLiteral() throws SWRLParseException
+  @Test public void TestDateLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("hasDOB");
+    addOWLAxioms(ontology, Declaration(HAS_DOB));
 
-    createSWRLRule("r1", "hasDOB(?p, \"1999-11-22\"^^xsd:date) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "hasDOB(?p, \"1999-11-22\"^^xsd:date) ->");
   }
 
-  @Test(expected = SWRLParseException.class)
-  public void TestInvalidDateLiteral() throws SWRLParseException
+  @Test(expected = SWRLParseException.class) public void TestInvalidDateLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("hasDOB");
+    addOWLAxioms(ontology, Declaration(HAS_DOB));
 
-    createSWRLRule("r1", "hasDOB(?p, \"x199-11-22\"^^xsd:date) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "hasDOB(?p, \"x199-11-22\"^^xsd:date) ->");
   }
 
-  @Test
-  public void TestTimeLiteral() throws SWRLParseException
+  @Test public void TestTimeLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("hasTOB");
+    addOWLAxioms(ontology, Declaration(HAS_TOB));
 
-    createSWRLRule("r1", "hasTOB(?p, \"10:10:10.23\"^^xsd:time) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "hasTOB(?p, \"10:10:10.23\"^^xsd:time) ->");
   }
 
-  @Test(expected = SWRLParseException.class)
-  public void TestInvalidTimeLiteral() throws SWRLParseException
+  @Test(expected = SWRLParseException.class) public void TestInvalidTimeLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("hasTOB");
+    addOWLAxioms(ontology, Declaration(HAS_TOB));
 
-    createSWRLRule("r1", "hasTOB(?p, \"10:0:10.23\"^^xsd:time) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "hasTOB(?p, \"10:0:10.23\"^^xsd:time) ->");
   }
 
-  @Test
-  public void TestDateTimeLiteral() throws SWRLParseException
+  @Test public void TestDateTimeLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("hasTOB");
+    addOWLAxioms(ontology, Declaration(HAS_TOB));
 
-    createSWRLRule("r1", "hasTOB(?p, \"1999-11-22T10:10:10.23\"^^xsd:dateTime) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "hasTOB(?p, \"1999-11-22T10:10:10.23\"^^xsd:dateTime) ->");
   }
 
-  @Test(expected = SWRLParseException.class)
-  public void TestInvalidDateTimeLiteral() throws SWRLParseException
+  @Test(expected = SWRLParseException.class) public void TestInvalidDateTimeLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("hasTOB");
+    addOWLAxioms(ontology, Declaration(HAS_TOB));
 
-    createSWRLRule("r1", "hasTOB(?p, \"x1999-11-22T10:10:10.23\"^^xsd:dateTime) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "hasTOB(?p, \"x1999-11-22T10:10:10.23\"^^xsd:dateTime) ->");
   }
 
-  @Test
-  public void TestDurationLiteral() throws SWRLParseException
+  @Test public void TestDurationLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("hasAge");
+    addOWLAxioms(ontology, Declaration(HAS_AGE));
 
-    createSWRLRule("r1", "hasAge(?p, \"P43Y\"^^xsd:duration) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, \"P43Y\"^^xsd:duration) ->");
   }
 
-  @Test(expected = SWRLParseException.class)
-  public void TestInvalidDurationLiteral() throws SWRLParseException
+  @Test(expected = SWRLParseException.class) public void TestInvalidDurationLiteral() throws SWRLParseException
   {
-    declareOWLDataProperty("hasAge");
+    addOWLAxioms(ontology, Declaration(HAS_AGE));
 
-    createSWRLRule("r1", "hasAge(?p, \"43Y\"^^xsd:duration) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, \"43Y\"^^xsd:duration) ->");
   }
 
-  @Test
-  public void TestAddAndEqualsTemporalBuiltIns() throws SWRLParseException
+  @Test public void TestAddAndEqualsTemporalBuiltIns() throws SWRLParseException
   {
-    createSWRLRule("r1", "temporal:add(?x, \"1999-11-01T10:00:00\"^^xsd:dateTime, 4, \"Years\") ^ "
+    swrlapiOWLOntology.createSWRLRule("r1", "temporal:add(?x, \"1999-11-01T10:00:00\"^^xsd:dateTime, 4, \"Years\") ^ "
         + "temporal:equals(?x, \"2003-11-01T10:00:00.0\"^^xsd:dateTime) " + "-> sqwrl:select(\"Yes!\")");
   }
 
-  @Test
-  public void TestObjectPropertyInAntecedentWithVariables() throws SWRLParseException
+  @Test public void TestObjectPropertyInAntecedentWithVariables() throws SWRLParseException
   {
-    declareOWLObjectProperty("hasUncle");
+    addOWLAxioms(ontology, Declaration(HAS_UNCLE));
 
-    SWRLAPIRule rule = createSWRLRule("r1", "hasUncle(?p, ?u) -> ");
+    SWRLAPIRule rule = swrlapiOWLOntology.createSWRLRule("r1", "hasUncle(?p, ?u) -> ");
 
     assertEquals(rule.getBodyAtoms().size(), 1);
     assertEquals(rule.getHeadAtoms().size(), 0);
     assertThat(rule.getBodyAtoms().get(0), instanceOf(SWRLObjectPropertyAtom.class));
   }
 
-  @Test
-  public void TestObjectPropertyInAntecedentWithNamedIndividuals() throws SWRLParseException
+  @Test public void TestObjectPropertyInAntecedentWithNamedIndividuals() throws SWRLParseException
   {
-    declareOWLObjectProperty("hasUncle");
-    declareOWLNamedIndividual("p1");
-    declareOWLNamedIndividual("p2");
+    addOWLAxioms(ontology, Declaration(HAS_UNCLE), Declaration(P1), Declaration(P2));
 
-    SWRLAPIRule rule = createSWRLRule("r1", "hasUncle(p1, p2) -> ");
+    SWRLAPIRule rule = swrlapiOWLOntology.createSWRLRule("r1", "hasUncle(p1, p2) -> ");
     assertEquals(rule.getBodyAtoms().size(), 1);
     assertEquals(rule.getHeadAtoms().size(), 0);
     assertThat(rule.getBodyAtoms().get(0), instanceOf(SWRLObjectPropertyAtom.class));
   }
 
-  @Test
-  public void TestObjectPropertyInConsequentWithNamedIndividals() throws SWRLParseException
+  @Test public void TestObjectPropertyInConsequentWithNamedIndividals() throws SWRLParseException
   {
-    declareOWLObjectProperty("hasUncle");
-    declareOWLNamedIndividual("p1");
-    declareOWLNamedIndividual("p2");
+    addOWLAxioms(ontology, Declaration(HAS_UNCLE), Declaration(P1), Declaration(P2));
 
-    createSWRLRule("r1", "-> hasUncle(p1, p2)");
+    swrlapiOWLOntology.createSWRLRule("r1", "-> hasUncle(p1, p2)");
   }
 
-  @Test
-  public void TestDataPropertyInAntecedent() throws SWRLParseException
+  @Test public void TestDataPropertyInAntecedent() throws SWRLParseException
   {
-    declareOWLDataProperty("hasAge");
-    declareOWLNamedIndividual("p3");
+    addOWLAxioms(ontology, Declaration(HAS_AGE), Declaration(P3));
 
-    createSWRLRule("r1", "hasAge(p3, ?a) -> ");
+    swrlapiOWLOntology.createSWRLRule("r1", "hasAge(p3, ?a) -> ");
   }
 
-  @Test
-  public void TestDataPropertyInConsequent() throws SWRLParseException
+  @Test public void TestDataPropertyInConsequent() throws SWRLParseException
   {
-    declareOWLDataProperty("hasAge");
-    declareOWLNamedIndividual("p4");
+    addOWLAxioms(ontology, Declaration(HAS_AGE), Declaration(P4));
 
-    createSWRLRule("r1", " -> hasAge(p4, 34)");
+    swrlapiOWLOntology.createSWRLRule("r1", " -> hasAge(p4, 34)");
   }
 
-  @Test
-  public void TestClassAtomInAntecedentWithNamedIndividual() throws SWRLParseException
+  @Test public void TestClassAtomInAntecedentWithNamedIndividual() throws SWRLParseException
   {
-    declareOWLClass("Male");
-    declareOWLNamedIndividual("m1");
+    addOWLAxioms(ontology, Declaration(MALE), Declaration(P1));
 
-    createSWRLRule("r1", "Male(m1) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "Male(p1) ->");
   }
 
-  @Test
-  public void TestClassAtomInConsequent() throws SWRLParseException
+  @Test public void TestClassAtomInConsequent() throws SWRLParseException
   {
-    declareOWLClass("Male");
-    declareOWLNamedIndividual("m1");
+    addOWLAxioms(ontology, Declaration(MALE), Declaration(P1));
 
-    createSWRLRule("r1", "-> Male(m1)");
+    swrlapiOWLOntology.createSWRLRule("r1", "-> Male(p1)");
   }
 
-  @Test
-  public void TestBuiltInWithLiteralsAndVariables() throws SWRLParseException
+  @Test public void TestBuiltInWithLiteralsAndVariables() throws SWRLParseException
   {
-    declareOWLNamedIndividual("p13");
-    declareOWLDataProperty("hasLastAccessTime");
+    addOWLAxioms(ontology, Declaration(HAS_LAST_ACCESS_TIME), Declaration(P1));
 
-    SWRLAPIRule rule = createSWRLRule("r1",
-        "swrlb:addDayTimeDurationToDateTime(?dt, \"1999-01-01T12:12:12\", \"P1Y\") -> hasLastAccessTime(p13, ?dt)");
+    SWRLAPIRule rule = swrlapiOWLOntology.createSWRLRule("r1",
+        "swrlb:addDayTimeDurationToDateTime(?dt, \"1999-01-01T12:12:12\", \"P1Y\") -> hasLastAccessTime(p1, ?dt)");
 
     assertEquals(rule.getBodyAtoms().size(), 1);
     assertEquals(rule.getHeadAtoms().size(), 1);
@@ -500,14 +474,11 @@ public class SWRLParserTest extends IntegrationTestBase
     assertThat(rule.getHeadAtoms().get(0), instanceOf(SWRLDataPropertyAtom.class));
   }
 
-  @Test
-  public void TestSameAsInConsequentWithNamedIndividualAndVariable() throws SWRLParseException
+  @Test public void TestSameAsInConsequentWithNamedIndividualAndVariable() throws SWRLParseException
   {
-    declareOWLClass("Person");
-    declareOWLDataProperty("hasID");
-    declareOWLNamedIndividual("s12");
+    addOWLAxioms(ontology, Declaration(PERSON), Declaration(HAS_ID), Declaration(I1));
 
-    SWRLAPIRule rule = createSWRLRule("r1", "Person(?i2) ^ hasID(?i2, \"s13ID\") -> sameAs(s12, ?i2)");
+    SWRLAPIRule rule = swrlapiOWLOntology.createSWRLRule("r1", "Person(?i2) ^ hasID(?i2, \"i2ID\") -> sameAs(i1, ?i2)");
 
     assertEquals(rule.getBodyAtoms().size(), 2);
     assertEquals(rule.getHeadAtoms().size(), 1);
@@ -516,62 +487,48 @@ public class SWRLParserTest extends IntegrationTestBase
     assertThat(rule.getHeadAtoms().get(0), instanceOf(SWRLSameIndividualAtom.class));
   }
 
-  @Test
-  public void TestSameAsInAntecedentWithVariables() throws SWRLParseException
+  @Test public void TestSameAsInAntecedentWithVariables() throws SWRLParseException
   {
-    createSWRLRule("r1", "sameAs(?i1, ?i2) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "sameAs(?i1, ?i2) ->");
   }
 
-  @Test
-  public void TestSameAsInAntecedentWithNamedIndividual() throws SWRLParseException
+  @Test public void TestSameAsInAntecedentWithNamedIndividual() throws SWRLParseException
   {
-    declareOWLNamedIndividual("i1");
-    declareOWLNamedIndividual("i2");
+    addOWLAxioms(ontology, Declaration(I1), Declaration(I2));
 
-    createSWRLRule("r1", "sameAs(i1, i2) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "sameAs(i1, i2) ->");
   }
 
-  @Test
-  public void TestSameAsInConsequentWithNamedIndividual() throws SWRLParseException
+  @Test public void TestSameAsInConsequentWithNamedIndividual() throws SWRLParseException
   {
-    declareOWLNamedIndividual("i1");
-    declareOWLNamedIndividual("i2");
+    addOWLAxioms(ontology, Declaration(I1), Declaration(I2));
 
-    createSWRLRule("r1", "-> sameAs(i1, i2)");
+    swrlapiOWLOntology.createSWRLRule("r1", "-> sameAs(i1, i2)");
   }
 
-  @Test
-  public void TestDifferentFromInAntecedentWithVariables() throws SWRLParseException
+  @Test public void TestDifferentFromInAntecedentWithVariables() throws SWRLParseException
   {
-    createSWRLRule("r1", "differentFrom(?i1, ?i2) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "differentFrom(?i1, ?i2) ->");
   }
 
-  @Test
-  public void TestDifferentFromInAntecedentWithNamedIndividual() throws SWRLParseException
+  @Test public void TestDifferentFromInAntecedentWithNamedIndividual() throws SWRLParseException
   {
-    declareOWLNamedIndividual("i1");
-    declareOWLNamedIndividual("i2");
+    addOWLAxioms(ontology, Declaration(I1), Declaration(I2));
 
-    createSWRLRule("r1", "differentFrom(i1, i2) ->");
+    swrlapiOWLOntology.createSWRLRule("r1", "differentFrom(i1, i2) ->");
   }
 
-  @Test
-  public void TestDifferentFromInConsequentWithNamedIndividual() throws SWRLParseException
+  @Test public void TestDifferentFromInConsequentWithNamedIndividual() throws SWRLParseException
   {
-    declareOWLNamedIndividual("i1");
-    declareOWLNamedIndividual("i2");
+    addOWLAxioms(ontology, Declaration(I1), Declaration(I2));
 
-    createSWRLRule("r1", "-> differentFrom(i1, i2)");
+    swrlapiOWLOntology.createSWRLRule("r1", "-> differentFrom(i1, i2)");
   }
 
-  @Test
-  public void TestClassAndDataPropertyAtom() throws SWRLParseException
+  @Test public void TestClassAndDataPropertyAtom() throws SWRLParseException
   {
-    declareOWLClass("Person");
-    declareOWLDataProperty("hasID");
-    declareOWLDataProperty("hasFirstName");
-    declareOWLNamedIndividual("s12");
+    addOWLAxioms(ontology, Declaration(PERSON), Declaration(HAS_ID), Declaration(HAS_FIRST_NAME));
 
-    createSWRLRule("r1", "Person(?p) ^ hasID(?p, \"p7ID\") -> hasFirstName(?p, \"Angela\")");
+    swrlapiOWLOntology.createSWRLRule("r1", "Person(?p) ^ hasID(?p, \"p7ID\") -> hasFirstName(?p, \"Angela\")");
   }
 }

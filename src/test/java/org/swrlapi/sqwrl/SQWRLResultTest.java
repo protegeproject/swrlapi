@@ -150,7 +150,7 @@ public class SQWRLResultTest
     assertTrue(resultManager.hasNamedIndividualValue(0));
     assertTrue(resultManager.hasNamedIndividualValue(columnName));
 
-    SQWRLNamedIndividualResultValue value = resultManager.getIndividual(columnName);
+    SQWRLNamedIndividualResultValue value = resultManager.getNamedIndividual(columnName);
     assertEquals(value.getPrefixedName(), i1PrefixedName);
   }
 

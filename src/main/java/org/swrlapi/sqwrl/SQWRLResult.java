@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Interface that defines methods to process results from a SQWRL query.
  * <p>
- * See the {@link org.swrlapi.sqwrl.SQWRLResultManager} class for detailed comments.
+ * See the {@link org.swrlapi.sqwrl.SQWRLResultManager} interface for detailed comments.
  *
  * @see org.swrlapi.sqwrl.SQWRLQuery
  * @see org.swrlapi.sqwrl.SQWRLResultManager
@@ -26,13 +26,13 @@ public interface SQWRLResult
 {
 	/**
 	 * @return The number of columns in the result
-	 * @throws SQWRLException If an error occurs during processing If an error occurs during processing
+	 * @throws SQWRLException If an error occurs
 	 */
 	int getNumberOfColumns() throws SQWRLException;
 
 	/**
 	 * @return The result column names
-	 * @throws SQWRLException If an error occurs during processing If an error occurs during processing
+	 * @throws SQWRLException If an error occurs
 	 */
 	@NonNull
 	List<String> getColumnNames() throws SQWRLException;
@@ -40,20 +40,20 @@ public interface SQWRLResult
 	/**
 	 * @param columnIndex A column index A column index
 	 * @return The name of the specified column
-	 * @throws SQWRLException If an error occurs during processing If an error occurs during processing
+	 * @throws SQWRLException If an error occurs
 	 */
 	@NonNull
 	String getColumnName(int columnIndex) throws SQWRLException;
 
 	/**
 	 * @return True if the result is empty
-	 * @throws SQWRLException If an error occurs during processing If an error occurs during processing
+	 * @throws SQWRLException If an error occurs during processing
 	 */
 	boolean isEmpty() throws SQWRLException;
 
 	/**
 	 * @return The number of rows in the result
-	 * @throws SQWRLException If an error occurs during processing If an error occurs during processing
+	 * @throws SQWRLException If an error occurs
 	 */
 	int getNumberOfRows() throws SQWRLException;
 
@@ -74,7 +74,7 @@ public interface SQWRLResult
 	/**
 	 * @param columnName A column name A column name
 	 * @return A class result value
-	 * @throws SQWRLException If an error occurs during processing If an error occurs during processing
+	 * @throws SQWRLException If an error occurs during processing
 	 */
 	@NonNull
 	SQWRLClassResultValue getClass(@NonNull String columnName) throws SQWRLException;
@@ -82,24 +82,24 @@ public interface SQWRLResult
 	/**
 	 * @param columnIndex A column index
 	 * @return A class result value
-	 * @throws SQWRLException If an error occurs during processing If an error occurs during processing
+	 * @throws SQWRLException If an error occurs during processing
 	 */
 	@NonNull
 	SQWRLClassResultValue getClass(int columnIndex) throws SQWRLException;
 
 	/**
 	 * @param columnName A column name A column name
-	 * @return An individual result value
-	 * @throws SQWRLException If an error occurs during processing If an error occurs during processing
+	 * @return A named individual result value
+	 * @throws SQWRLException If an error occurs during processing
 	 */
-  @NonNull SQWRLNamedIndividualResultValue getIndividual(@NonNull String columnName) throws SQWRLException;
+  @NonNull SQWRLNamedIndividualResultValue getNamedIndividual(@NonNull String columnName) throws SQWRLException;
 
 	/**
 	 * @param columnIndex A column index
-	 * @return An individual result value
-	 * @throws SQWRLException If an error occurs during processing If an error occurs during processing
+	 * @return A named individual result value
+	 * @throws SQWRLException If an error occurs during processing
 	 */
-  @NonNull SQWRLNamedIndividualResultValue getIndividual(int columnIndex) throws SQWRLException;
+  @NonNull SQWRLNamedIndividualResultValue getNamedIndividual(int columnIndex) throws SQWRLException;
 
 	/**
 	 * @param columnName A column name A column name

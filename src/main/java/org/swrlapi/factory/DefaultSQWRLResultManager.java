@@ -395,16 +395,16 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
     return this.rows.get(rowIndex).get(columnIndex);
   }
 
-  @Override public @NonNull SQWRLNamedIndividualResultValue getIndividual(@NonNull String columnName) throws SQWRLException
+  @Override public @NonNull SQWRLNamedIndividualResultValue getNamedIndividual(@NonNull String columnName) throws SQWRLException
   {
     if (!hasNamedIndividualValue(columnName))
       throw new SQWRLInvalidColumnTypeException("expecting ObjectValue type for column " + columnName);
     return (SQWRLNamedIndividualResultValue)getValue(columnName);
   }
 
-  @Override public @NonNull SQWRLNamedIndividualResultValue getIndividual(int columnIndex) throws SQWRLException
+  @Override public @NonNull SQWRLNamedIndividualResultValue getNamedIndividual(int columnIndex) throws SQWRLException
   {
-    return getIndividual(getColumnName(columnIndex));
+    return getNamedIndividual(getColumnName(columnIndex));
   }
 
   @NonNull @Override public SQWRLLiteralResultValue getLiteral(@NonNull String columnName) throws SQWRLException
