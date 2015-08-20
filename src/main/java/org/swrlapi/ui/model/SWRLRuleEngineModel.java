@@ -1,6 +1,7 @@
 package org.swrlapi.ui.model;
 
 import checkers.nullness.quals.NonNull;
+import org.semanticweb.owlapi.model.OWLOntology;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.core.SWRLRuleRenderer;
 import org.swrlapi.parser.SWRLParser;
@@ -10,6 +11,14 @@ import org.swrlapi.parser.SWRLParser;
  */
 public interface SWRLRuleEngineModel extends OntologyModel
 {
+  /**
+   * Update the model's ontology and rule engine
+   *
+   * @param ontology A new OWL ontology
+   * @param ruleEngine A new SWRL rule engine
+   */
+ void updateModel(@NonNull OWLOntology ontology, @NonNull SWRLRuleEngine ruleEngine);
+
   /**
    * @return A SWRL rule engine
    */

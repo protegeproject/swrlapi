@@ -55,7 +55,7 @@ public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel, OWLOntol
 		this.hasOntologyChanged = false;
 	}
 
-	protected void updateModel(@NonNull OWLOntology ontology, @NonNull SWRLRuleEngine ruleEngine)
+	@Override public void updateModel(@NonNull OWLOntology ontology, @NonNull SWRLRuleEngine ruleEngine)
 	{
 		this.ontology = ontology;
 		this.ruleEngine = ruleEngine;

@@ -15,7 +15,7 @@ class DefaultSQWRLQueryEngineModel extends DefaultSWRLRuleEngineModel implements
     this.queryEngine = sqwrlQueryEngine;
   }
 
-  protected void updateModel(@NonNull OWLOntology ontology, @NonNull SQWRLQueryEngine queryEngine)
+  @Override public void updateModel(@NonNull OWLOntology ontology, @NonNull SQWRLQueryEngine queryEngine)
   {
     this.queryEngine = queryEngine;
     super.updateModel(ontology, queryEngine);
