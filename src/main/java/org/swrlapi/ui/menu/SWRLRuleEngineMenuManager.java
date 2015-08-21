@@ -45,15 +45,16 @@ public class SWRLRuleEngineMenuManager
 		menuBar.add(menu);
 
 		applicationFrame.setJMenuBar(menuBar);
-		menu.addMenuListener(new ApplicationMenuListener(ruleEngineModel, saveItem));
+		menu.addMenuListener(new SWRLRuleEngineMenuListener(ruleEngineModel, saveItem));
 	}
 
-	private static class ApplicationMenuListener implements MenuListener
+	private static class SWRLRuleEngineMenuListener implements MenuListener
 	{
 		@NonNull private final FileBackedSWRLRuleEngineModel ruleEngineModel;
 		@NonNull private final JMenuItem saveItem;
 
-		public ApplicationMenuListener(@NonNull FileBackedSWRLRuleEngineModel ruleEngineModel, @NonNull JMenuItem saveItem)
+		public SWRLRuleEngineMenuListener(@NonNull FileBackedSWRLRuleEngineModel ruleEngineModel,
+        @NonNull JMenuItem saveItem)
 		{
 			this.ruleEngineModel = ruleEngineModel;
 			this.saveItem = saveItem;
