@@ -2,7 +2,7 @@ package org.swrlapi.ui.view.rules;
 
 import checkers.nullness.quals.NonNull;
 import org.swrlapi.exceptions.SWRLAPIException;
-import org.swrlapi.ui.dialog.SWRLAPIDialogManager;
+import org.swrlapi.ui.dialog.SWRLRuleEngineDialogManager;
 import org.swrlapi.ui.model.SWRLRuleEngineModel;
 import org.swrlapi.ui.view.SWRLAPIView;
 import org.swrlapi.ui.view.SWRLRulesTableView;
@@ -25,7 +25,7 @@ public class SWRLRulesView extends JSplitPane implements SWRLAPIView
 	@NonNull private final SWRLRulesTableView ruleTablesView;
 	@NonNull private final SWRLRuleExecutionView ruleExecutionView;
 
-	public SWRLRulesView(@NonNull SWRLRuleEngineModel ruleEngineModel, @NonNull SWRLAPIDialogManager dialogManager)
+	public SWRLRulesView(@NonNull SWRLRuleEngineModel ruleEngineModel, @NonNull SWRLRuleEngineDialogManager dialogManager)
 			throws SWRLAPIException
 	{
 		this.ruleTablesView = new SWRLRulesTableView(ruleEngineModel, dialogManager);

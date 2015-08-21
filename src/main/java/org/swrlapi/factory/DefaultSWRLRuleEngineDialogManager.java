@@ -3,7 +3,7 @@ package org.swrlapi.factory;
 import checkers.nullness.quals.NonNull;
 import checkers.nullness.quals.Nullable;
 import org.swrlapi.ui.dialog.ExtensionFilter;
-import org.swrlapi.ui.dialog.SWRLAPIDialogManager;
+import org.swrlapi.ui.dialog.SWRLRuleEngineDialogManager;
 import org.swrlapi.ui.dialog.SWRLRuleEditorDialog;
 import org.swrlapi.ui.model.SWRLRuleEngineModel;
 
@@ -11,12 +11,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 
-public class DefaultSWRLAPIDialogManager implements SWRLAPIDialogManager
+public class DefaultSWRLRuleEngineDialogManager implements SWRLRuleEngineDialogManager
 {
   @NonNull private final SWRLRuleEditorDialog swrlRuleEditorDialog;
   @Nullable private File lastDirectory = null;
 
-  public DefaultSWRLAPIDialogManager(@NonNull SWRLRuleEngineModel swrlRuleEngineModel)
+  public DefaultSWRLRuleEngineDialogManager(@NonNull SWRLRuleEngineModel swrlRuleEngineModel)
   {
     this.swrlRuleEditorDialog = new SWRLRuleEditorDialog(swrlRuleEngineModel, this);
   }
@@ -78,7 +78,7 @@ public class DefaultSWRLAPIDialogManager implements SWRLAPIDialogManager
       {
         int rval = super.showDialog(c, s);
         if (rval == APPROVE_OPTION) {
-          DefaultSWRLAPIDialogManager.this.lastDirectory = getCurrentDirectory();
+          DefaultSWRLRuleEngineDialogManager.this.lastDirectory = getCurrentDirectory();
         }
         return rval;
       }
@@ -104,7 +104,7 @@ public class DefaultSWRLAPIDialogManager implements SWRLAPIDialogManager
       {
         int rval = super.showDialog(c, s);
         if (rval == APPROVE_OPTION) {
-          DefaultSWRLAPIDialogManager.this.lastDirectory = getCurrentDirectory();
+          DefaultSWRLRuleEngineDialogManager.this.lastDirectory = getCurrentDirectory();
         }
         return rval;
       }

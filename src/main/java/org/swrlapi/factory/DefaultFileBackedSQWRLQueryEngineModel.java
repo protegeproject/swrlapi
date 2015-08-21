@@ -11,14 +11,13 @@ import java.io.File;
 import java.util.Optional;
 
 public class DefaultFileBackedSQWRLQueryEngineModel extends DefaultSQWRLQueryEngineModel
-  implements FileBackedSQWRLQueryEngineModel
+    implements FileBackedSQWRLQueryEngineModel
 {
   private Optional<File> file;
 
-  public DefaultFileBackedSQWRLQueryEngineModel(@NonNull OWLOntology ontology, @NonNull SQWRLQueryEngine queryEngine,
-    Optional<File> file)
+  public DefaultFileBackedSQWRLQueryEngineModel(@NonNull SQWRLQueryEngine queryEngine, Optional<File> file)
   {
-    super(ontology, queryEngine);
+    super(queryEngine);
     this.file = file;
   }
 
@@ -30,14 +29,14 @@ public class DefaultFileBackedSQWRLQueryEngineModel extends DefaultSQWRLQueryEng
     this.file = Optional.of(file);
 
     resetOntologyChanged();
-    updateModel(ontology, queryEngine);
+    updateModel(queryEngine);
   }
 
   @Override public void saveAs(@NonNull File file) throws OWLOntologyStorageException
   {
     this.file = Optional.of(file);
 
-		saveOWLOntology(this.file.get());
+    saveOWLOntology(this.file.get());
 
     resetOntologyChanged();
   }
@@ -49,7 +48,7 @@ public class DefaultFileBackedSQWRLQueryEngineModel extends DefaultSQWRLQueryEng
 
     this.file = Optional.empty();
     resetOntologyChanged();
-    updateModel(ontology, queryEngine);
+    updateModel(queryEngine);
   }
 
   @Override public void save() throws OWLOntologyStorageException
@@ -60,5 +59,5 @@ public class DefaultFileBackedSQWRLQueryEngineModel extends DefaultSQWRLQueryEng
     resetOntologyChanged();
   }
 
-	@Override public boolean hasBackingFile() { return file.isPresent(); }
+  @Override public boolean hasBackingFile() { return file.isPresent(); }
 }

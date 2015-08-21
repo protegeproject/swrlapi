@@ -15,10 +15,10 @@ public class DefaultFileBackedSWRLRuleEngineModel extends DefaultSWRLRuleEngineM
 {
   private Optional<File> file;
 
-  public DefaultFileBackedSWRLRuleEngineModel(@NonNull OWLOntology ontology, @NonNull SWRLRuleEngine ruleEngine,
+  public DefaultFileBackedSWRLRuleEngineModel(@NonNull SWRLRuleEngine ruleEngine,
     Optional<File> file)
   {
-    super(ontology, ruleEngine);
+    super(ruleEngine);
     this.file = file;
   }
 
@@ -28,7 +28,7 @@ public class DefaultFileBackedSWRLRuleEngineModel extends DefaultSWRLRuleEngineM
     SWRLRuleEngine ruleEngine = SWRLAPIFactory.createSWRLRuleEngine(ontology);
 
     this.file = Optional.of(file);
-    updateModel(ontology, ruleEngine);
+    updateModel(ruleEngine);
   }
 
   @Override public void saveAs(@NonNull File file) throws OWLOntologyStorageException
@@ -47,7 +47,7 @@ public class DefaultFileBackedSWRLRuleEngineModel extends DefaultSWRLRuleEngineM
 
     this.file = Optional.empty();
 
-    updateModel(ontology, ruleEngine);
+    updateModel(ruleEngine);
   }
 
   @Override public void save() throws OWLOntologyStorageException

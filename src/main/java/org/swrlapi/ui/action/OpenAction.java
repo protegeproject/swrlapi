@@ -8,7 +8,7 @@ import java.io.File;
 import javax.swing.JFileChooser;
 
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
-import org.swrlapi.ui.dialog.SWRLAPIDialogManager;
+import org.swrlapi.ui.dialog.SWRLRuleEngineDialogManager;
 import org.swrlapi.ui.model.FileBackedOntologyModel;
 
 import checkers.nullness.quals.NonNull;
@@ -17,8 +17,7 @@ public class OpenAction implements ActionListener
 {
 	@NonNull
 	private final Component parent;
-	@NonNull
-	private final SWRLAPIDialogManager dialogManager;
+	private final @NonNull SWRLRuleEngineDialogManager dialogManager;
 	@NonNull
 	private final FileBackedOntologyModel ontologyModel;
 
@@ -28,7 +27,7 @@ public class OpenAction implements ActionListener
 	private static final String ERROR_TITLE = "Error";
 
 	public OpenAction(@NonNull Component parent, @NonNull FileBackedOntologyModel ontologyModel,
-			@NonNull SWRLAPIDialogManager dialogManager)
+			@NonNull SWRLRuleEngineDialogManager dialogManager)
 	{
 		this.parent = parent;
 		this.dialogManager = dialogManager;

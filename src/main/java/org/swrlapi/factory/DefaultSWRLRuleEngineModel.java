@@ -25,7 +25,6 @@ import java.util.List;
 public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel, OWLOntologyChangeListener
 {
 	@NonNull private final OWLOntologyManager ontologyManager;
-	@NonNull private OWLOntology ontology;
 	@NonNull private SWRLRuleEngine ruleEngine;
 	@NonNull private SWRLParser swrlParser;
 	@NonNull private SWRLRuleRenderer swrlRuleRenderer;
@@ -37,10 +36,9 @@ public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel, OWLOntol
 
 	private boolean hasOntologyChanged;
 
-	public DefaultSWRLRuleEngineModel(@NonNull OWLOntology ontology, @NonNull SWRLRuleEngine ruleEngine)
+	public DefaultSWRLRuleEngineModel(@NonNull SWRLRuleEngine ruleEngine)
 	{
 		this.ontologyManager = OWLManager.createOWLOntologyManager();
-		this.ontology = ontology;
 		this.ruleEngine = ruleEngine;
 		this.swrlRuleRenderer = this.ruleEngine.createSWRLRuleRenderer();
 		this.swrlParser = this.ruleEngine.createSWRLParser();
@@ -50,14 +48,13 @@ public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel, OWLOntol
 		this.swrlRulesTableModel = SWRLAPIFactory.createSWRLRulesTableModel(ruleEngine, this.swrlRuleRenderer);
 		this.owl2RLModel = SWRLAPIFactory.createOWL2RLModel(owl2RLEngine);
 
-		this.ontology.getOWLOntologyManager().addOntologyChangeListener(this);
+		this.ruleEngine.getOWLOntology().getOWLOntologyManager().addOntologyChangeListener(this);
 
 		this.hasOntologyChanged = false;
 	}
 
-	@Override public void updateModel(@NonNull OWLOntology ontology, @NonNull SWRLRuleEngine ruleEngine)
+	@Override public void updateModel(@NonNull SWRLRuleEngine ruleEngine)
 	{
-		this.ontology = ontology;
 		this.ruleEngine = ruleEngine;
 		this.swrlRuleRenderer = this.ruleEngine.createSWRLRuleRenderer();
 		this.swrlParser = this.ruleEngine.createSWRLParser();
@@ -74,7 +71,7 @@ public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel, OWLOntol
 
 	@NonNull protected OWLOntology createOWLOntology() throws OWLOntologyCreationException
 	{
-		this.ontologyManager.removeOntology(this.ontology);
+		this.ontologyManager.removeOntology(this.ruleEngine.getOWLOntology());
 		return this.ontologyManager.createOntology();
 	}
 
@@ -85,13 +82,13 @@ public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel, OWLOntol
 
 	@NonNull protected OWLOntology createOWLOntology(File file) throws OWLOntologyCreationException
 	{
-		this.ontologyManager.removeOntology(this.ontology);
+		this.ontologyManager.removeOntology(this.ruleEngine.getOWLOntology());
 		return this.ontologyManager.loadOntologyFromOntologyDocument(file);
 	}
 
 	@NonNull @Override public OWLOntology getOWLOntology()
 	{
-		return this.ontology;
+		return this.ruleEngine.getOWLOntology();
 	}
 
 	@NonNull @Override public SWRLRuleEngine getSWRLRuleEngine()

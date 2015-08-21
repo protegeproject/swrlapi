@@ -11,7 +11,8 @@ import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.IRI;
 
 public class IntegrationTestBase
 {
-	final protected double DELTA = 1e-6;
+  final protected static String NS = "http://org.swrlapi.test";
+	final protected static double DELTA = 1e-6;
 
   protected static final OWLDatatype RDFS_LITERAL = Datatype(IRI(Namespaces.RDFS + "Literal"));
   protected static final OWLDatatype XSD_STRING = Datatype(IRI(Namespaces.XSD + "string"));
@@ -35,4 +36,9 @@ public class IntegrationTestBase
 		for (OWLAxiom axiom : axioms)
 			ontologyManager.addAxiom(ontology, axiom);
 	}
+
+  protected static org.semanticweb.owlapi.model.IRI iri(String fragment)
+  {
+    return org.semanticweb.owlapi.model.IRI.create(NS + "#" + fragment);
+  }
 }

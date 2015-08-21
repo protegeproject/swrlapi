@@ -62,7 +62,7 @@ public class SWRLRuleEditorDialog extends JDialog
   private final Border yellowBorder;
 
   @NonNull private final SWRLRuleEngineModel swrlRuleEngineModel;
-  @NonNull private final SWRLAPIDialogManager dialogManager;
+  private final @NonNull SWRLRuleEngineDialogManager dialogManager;
 
   @NonNull private final SWRLRuleEditorInitialDialogState initialDialogState = new SWRLRuleEditorInitialDialogState();
 
@@ -74,7 +74,7 @@ public class SWRLRuleEditorDialog extends JDialog
   private boolean editMode = false;
 
   public SWRLRuleEditorDialog(@NonNull SWRLRuleEngineModel swrlRuleEngineModel,
-    @NonNull SWRLAPIDialogManager dialogManager)
+    @NonNull SWRLRuleEngineDialogManager dialogManager)
   {
     this.swrlRuleEngineModel = swrlRuleEngineModel;
     this.dialogManager = dialogManager;
@@ -508,7 +508,7 @@ public class SWRLRuleEditorDialog extends JDialog
     return this.swrlRuleEngineModel.getSWRLRulesTableModel();
   }
 
-  @NonNull private SWRLAPIDialogManager getDialogManager()
+  private @NonNull SWRLRuleEngineDialogManager getDialogManager()
   {
     return this.dialogManager;
   }

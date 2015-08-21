@@ -8,7 +8,7 @@ import java.awt.*;
 /**
  * Provides a set of standard dialogs.
  */
-public interface SWRLAPIDialogManager
+public interface SWRLRuleEngineDialogManager
 {
   @NonNull JDialog getSWRLRuleEditorDialog(@NonNull Component parent);
 

@@ -6,19 +6,19 @@ import org.swrlapi.ui.action.OpenAction;
 import org.swrlapi.ui.action.QuitAction;
 import org.swrlapi.ui.action.SaveAction;
 import org.swrlapi.ui.action.SaveAsAction;
-import org.swrlapi.ui.dialog.SWRLAPIDialogManager;
+import org.swrlapi.ui.dialog.SWRLRuleEngineDialogManager;
 import org.swrlapi.ui.model.FileBackedSWRLRuleEngineModel;
 
 import javax.swing.*;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
-public class SWRLAPIMenuManager
+public class SWRLRuleEngineMenuManager
 {
 	private static final String FILE_MENU_TITLE = "File";
 
-	public static void createApplicationMenus(@NonNull JFrame applicationFrame,
-			@NonNull FileBackedSWRLRuleEngineModel ruleEngineModel, @NonNull SWRLAPIDialogManager dialogManager)
+	public static void createSWRLRuleEngineMenus(@NonNull JFrame applicationFrame,
+      @NonNull FileBackedSWRLRuleEngineModel ruleEngineModel, @NonNull SWRLRuleEngineDialogManager dialogManager)
 	{
 		JMenuBar menuBar = new JMenuBar();
 

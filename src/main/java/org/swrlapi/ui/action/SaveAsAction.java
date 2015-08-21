@@ -2,7 +2,7 @@ package org.swrlapi.ui.action;
 
 import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
-import org.swrlapi.ui.dialog.SWRLAPIDialogManager;
+import org.swrlapi.ui.dialog.SWRLRuleEngineDialogManager;
 import org.swrlapi.ui.model.FileBackedOntologyModel;
 
 import javax.swing.*;
@@ -14,7 +14,7 @@ import java.io.File;
 public class SaveAsAction implements ActionListener
 {
   @NonNull private final Component parent;
-  @NonNull private final SWRLAPIDialogManager dialogManager;
+  private final @NonNull SWRLRuleEngineDialogManager dialogManager;
   @NonNull private final FileBackedOntologyModel ontologyModel;
 
   public static final String SAVE_AS_TITLE = "Save As";
@@ -23,7 +23,7 @@ public class SaveAsAction implements ActionListener
   private static final String ERROR_TITLE = "Error";
 
   public SaveAsAction(@NonNull Component parent, @NonNull FileBackedOntologyModel ontologyModel,
-    @NonNull SWRLAPIDialogManager dialogManager)
+    @NonNull SWRLRuleEngineDialogManager dialogManager)
   {
     this.parent = parent;
     this.dialogManager = dialogManager;
