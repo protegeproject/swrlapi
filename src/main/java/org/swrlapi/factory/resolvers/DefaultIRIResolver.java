@@ -30,11 +30,6 @@ public class DefaultIRIResolver implements IRIResolver
   @NonNull private final Set<String> annotationPropertyPrefixedNames = new HashSet<>();
   @NonNull private final Set<String> datatypePrefixedNames = new HashSet<>();
 
-  public DefaultIRIResolver()
-  {
-    this.prefixManager = new DefaultPrefixManager();
-  }
-
   public DefaultIRIResolver(@NonNull DefaultPrefixManager prefixManager)
   {
     this.prefixManager = prefixManager;

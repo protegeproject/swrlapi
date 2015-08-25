@@ -28,11 +28,6 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
   @NonNull private final SWRLBuiltInArgumentFactory swrlBuiltInArgumentFactory;
   @NonNull private final SQWRLResultValueFactory sqwrlResultValueFactory;
 
-  public DefaultSWRLAPIOWLDataFactory()
-  {
-    this(new DefaultIRIResolver());
-  }
-
   public DefaultSWRLAPIOWLDataFactory(@NonNull IRIResolver iriResolver)
   {
     this.iriResolver = iriResolver;

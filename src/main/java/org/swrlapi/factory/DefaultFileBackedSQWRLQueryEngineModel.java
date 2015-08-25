@@ -1,9 +1,11 @@
 package org.swrlapi.factory;
 
 import checkers.nullness.quals.NonNull;
+import org.semanticweb.owlapi.model.OWLDocumentFormat;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
+import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.ui.model.FileBackedSQWRLQueryEngineModel;
 
@@ -24,7 +26,12 @@ public class DefaultFileBackedSQWRLQueryEngineModel extends DefaultSQWRLQueryEng
   @Override public void open(@NonNull File file) throws OWLOntologyCreationException
   {
     OWLOntology ontology = createOWLOntology(file);
-    SQWRLQueryEngine queryEngine = SWRLAPIFactory.createSQWRLQueryEngine(ontology);
+    OWLDocumentFormat format = ontology.getOWLOntologyManager().getOntologyFormat(ontology);
+    DefaultPrefixManager prefixManager = new DefaultPrefixManager();
+    if (format.isPrefixOWLOntologyFormat())
+      prefixManager.copyPrefixesFrom(format.asPrefixOWLOntologyFormat().getPrefixName2PrefixMap());
+
+    SQWRLQueryEngine queryEngine = SWRLAPIFactory.createSQWRLQueryEngine(ontology, prefixManager);
 
     this.file = Optional.of(file);
 
@@ -44,7 +51,12 @@ public class DefaultFileBackedSQWRLQueryEngineModel extends DefaultSQWRLQueryEng
   @Override public void close() throws OWLOntologyCreationException
   {
     OWLOntology ontology = createOWLOntology();
-    SQWRLQueryEngine queryEngine = SWRLAPIFactory.createSQWRLQueryEngine(ontology);
+    OWLDocumentFormat format = ontology.getOWLOntologyManager().getOntologyFormat(ontology);
+    DefaultPrefixManager prefixManager = new DefaultPrefixManager();
+    if (format.isPrefixOWLOntologyFormat())
+      prefixManager.copyPrefixesFrom(format.asPrefixOWLOntologyFormat().getPrefixName2PrefixMap());
+
+    SQWRLQueryEngine queryEngine = SWRLAPIFactory.createSQWRLQueryEngine(ontology, prefixManager);
 
     this.file = Optional.empty();
     resetOntologyChanged();
