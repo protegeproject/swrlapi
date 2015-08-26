@@ -341,6 +341,11 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
     return this.targetSWRLRuleEngine.getTargetRuleEngineIcon();
   }
 
+  @NonNull @Override public SWRLRuleEngine getSWRLRuleEngine()
+  {
+    return this;
+  }
+
   private void reset()
   {
     try {

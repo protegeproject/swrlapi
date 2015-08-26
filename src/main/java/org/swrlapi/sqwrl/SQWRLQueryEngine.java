@@ -111,4 +111,10 @@ public interface SQWRLQueryEngine extends SWRLRuleEngine
    * @return An icon representing the query engine
    */
   @NonNull Icon getTargetQueryEngineIcon();
+
+  /**
+   *
+   * @return The underlying SWRL rule engine
+   */
+  @NonNull SWRLRuleEngine getSWRLRuleEngine();
 }
