@@ -12,7 +12,7 @@ import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.Datat
 
 public class IntegrationTestBase
 {
-  final protected static String NS = "http://org.swrlapi.test";
+  final protected static String NS = "http://org.swrlapi.test#";
   final protected static double DELTA = 1e-6;
 
   protected static final OWLDatatype RDFS_LITERAL = Datatype(iri(Namespaces.RDFS + "Literal"));

@@ -124,7 +124,6 @@ public class SWRLParserSQWRLTest extends IntegrationTestBase
     SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology, prefixManager);
 
     addOWLAxioms(ontology, Declaration(PERSON_NAMED_FRED));
-    //    declareOWLClass("PersonNamedFred");
 
     swrlapiOWLOntology.createSQWRLQuery("q1", "PersonNamedFred(?fp) -> sqwrl:select(?fp) ^ sqwrl:orderBy(?fp)");
   }

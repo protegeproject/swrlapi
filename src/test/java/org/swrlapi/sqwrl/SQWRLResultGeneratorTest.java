@@ -27,9 +27,6 @@ import static org.junit.Assert.assertTrue;
  */
 public class SQWRLResultGeneratorTest
 {
-	private OWLOntologyManager ontologyManager;
-	private OWLOntology ontology;
-	private DefaultPrefixManager prefixManager;
 	private SQWRLResultManager resultManager;
 
 	private static final String TestPrefix = "test:";
@@ -41,13 +38,14 @@ public class SQWRLResultGeneratorTest
 
 	@Before public void setUp() throws OWLOntologyCreationException
 	{
-		ontologyManager = OWLManager.createOWLOntologyManager();
-		ontology = ontologyManager.createOntology();
-		prefixManager = new DefaultPrefixManager();
-		resultManager = SWRLAPIFactory.createSQWRLResultManager(prefixManager);
+		OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
+		OWLOntology ontology = ontologyManager.createOntology();
+		DefaultPrefixManager prefixManager = new DefaultPrefixManager();
 
 		prefixManager.setPrefix(TestPrefix, TestNamespace);
-	}
+
+    resultManager = SWRLAPIFactory.createSQWRLResultManager(prefixManager);
+  }
 
 	@Test public void testAddColumns() throws Exception
 	{

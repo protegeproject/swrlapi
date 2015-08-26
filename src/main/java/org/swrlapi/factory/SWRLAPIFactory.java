@@ -407,17 +407,10 @@ public class SWRLAPIFactory
 
     if (ontologyFormat != null && ontologyFormat.isPrefixOWLOntologyFormat()) {
       PrefixDocumentFormat prefixOntologyFormat = ontologyFormat.asPrefixOWLOntologyFormat();
-      String defaultPrefix = prefixOntologyFormat.getDefaultPrefix();
 
       Map<String, String> map = prefixOntologyFormat.getPrefixName2PrefixMap();
       for (String prefix : map.keySet())
         prefixManager.setPrefix(prefix, map.get(prefix));
-
-      // TODO Look at this. Seems dodgy.
-      if (defaultPrefix != null)
-        prefixManager.setDefaultPrefix(defaultPrefix);
-      else
-        prefixManager.setDefaultPrefix(":");
     }
     addSWRLAPIPrefixes(prefixManager);
   }
