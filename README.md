@@ -2,7 +2,8 @@ SWRLAPI
 =======
 
 The SWRLAPI is a Java API for working with the [OWL](http://en.wikipedia.org/wiki/Web_Ontology_Language)-based [SWRL](http://www.w3.org/Submission/SWRL/) rule language. 
-It includes graphical tools for editing and executing rules. A SWRL-based OWL query language called [SQWRL](https://github.com/protegeproject/swrlapi/wiki/SQWRL) is also provided.
+It includes graphical tools for editing and executing rules. 
+A SWRL-based OWL query language called [SQWRL](https://github.com/protegeproject/swrlapi/wiki/SQWRL) is also provided.
 
 See the [SWRLAPI Wiki](https://github.com/protegeproject/swrlapi/wiki) for documentation.
 
@@ -13,9 +14,9 @@ A standalone [SWRLTab](https://github.com/protegeproject/swrltab) application an
 
 To build this library you must have the following items installed:
 
++ [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 + A tool for checking out a [Git](http://git-scm.com/) repository
 + Apache's [Maven](http://maven.apache.org/index.html)
-+ [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 
 #### Building
 
@@ -37,3 +38,47 @@ This JAR is used by the [Protégé](http://protege.stanford.edu/) [SWRLTab Plugi
 and by the standalone [SWRLTab](https://github.com/protegeproject/swrltab) tool.
 
 A [Build Project](https://github.com/protegeproject/swrltab-project) is provided to build core SWRLAPI-related components.
+
+#### Getting Started
+
+The various Java APIs provided by this library are documented on the [SWRLAPI Wiki](https://github.com/protegeproject/swrlapi/wiki).
+
+The following examples can be used to quickly get started with the API.
+
+This code illustrates how the API can be used to create a SWRL query engine using an ontology 
+created by the OWLAPI and then execute rules in that ontology.
+
+```java
+      OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
+      OWLOntology ontology = ontologyManager.loadOntologyFromOntologyDocument(new File("/myontologies/Ont1.owl"));
+      DefaultPrefixManager prefixManager = new DefaultPrefixManager();
+      OWLDocumentFormat format = ontology.getOWLOntologyManager().getOntologyFormat(ontology);
+
+      if (format.isPrefixOWLOntologyFormat())
+        prefixManager.copyPrefixesFrom(format.asPrefixOWLOntologyFormat().getPrefixName2PrefixMap());
+
+      SWRLRuleEngine ruleEngine = SWRLAPIFactory.createSWRLRuleEngine(ontology, prefixManager);
+
+      ruleEngine.infer();
+```
+
+This example shows how the API can be used to create a SQWRL query engine, execute a SQWRL query using
+this engine, and then process the results.
+
+```java
+      OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
+      OWLOntology ontology = ontologyManager.loadOntologyFromOntologyDocument(new File("/myontologies/Ont1.owl"));
+      DefaultPrefixManager prefixManager = new DefaultPrefixManager();
+      OWLDocumentFormat format = ontology.getOWLOntologyManager().getOntologyFormat(ontology);
+
+      if (format.isPrefixOWLOntologyFormat())
+        prefixManager.copyPrefixesFrom(format.asPrefixOWLOntologyFormat().getPrefixName2PrefixMap());
+
+      SQWRLQueryEngine queryEngine = SWRLAPIFactory.createSQWRLQueryEngine(ontology, prefixManager);
+
+      SQWRLResult result = queryEngine.runSQWRLQuery("q1","swrlb:add(?x, 2, 2) -> sqwrl:select(?x)");
+
+      while (result.next()) {
+        System.out.println("Name: " + result.getLiteral("x").getInt());
+      }
+```

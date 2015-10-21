@@ -31,8 +31,9 @@ public class SQWRLQueryEngineMinimalApp
       OWLOntology ontology = owlFile.isPresent() ?
         ontologyManager.loadOntologyFromOntologyDocument(owlFile.get()) :
         ontologyManager.createOntology();
-      OWLDocumentFormat format = ontology.getOWLOntologyManager().getOntologyFormat(ontology);
       DefaultPrefixManager prefixManager = new DefaultPrefixManager();
+      OWLDocumentFormat format = ontology.getOWLOntologyManager().getOntologyFormat(ontology);
+
       if (format.isPrefixOWLOntologyFormat())
         prefixManager.copyPrefixesFrom(format.asPrefixOWLOntologyFormat().getPrefixName2PrefixMap());
 
