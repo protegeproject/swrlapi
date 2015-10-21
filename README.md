@@ -47,8 +47,9 @@ This code illustrates how the API can be used to create a SWRL query engine usin
 created by the OWLAPI and then execute rules in that ontology.
 
 ```java
+ File owlFile = new File("/ont/Ont1.owl");
  OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
- OWLOntology ontology = ontologyManager.loadOntologyFromOntologyDocument(new File("/ont/Ont1.owl"));
+ OWLOntology ontology = ontologyManager.loadOntologyFromOntologyDocument(owlFile);
  DefaultPrefixManager prefixManager = new DefaultPrefixManager();
  OWLDocumentFormat format = ontology.getOWLOntologyManager().getOntologyFormat(ontology);
 
@@ -64,8 +65,9 @@ This example shows how the API can be used to create a SQWRL query engine, execu
 this engine, and then process the results.
 
 ```java
+ File owlFile = new File("/ont/Ont1.owl");
  OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
- OWLOntology ontology = ontologyManager.loadOntologyFromOntologyDocument(new File("/ont/Ont1.owl"));
+ OWLOntology ontology = ontologyManager.loadOntologyFromOntologyDocument(owlFile);
  DefaultPrefixManager prefixManager = new DefaultPrefixManager();
  OWLDocumentFormat format = ontology.getOWLOntologyManager().getOntologyFormat(ontology);
 
