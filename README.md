@@ -41,44 +41,42 @@ A [Build Project](https://github.com/protegeproject/swrltab-project) is provided
 
 #### Getting Started
 
-The various Java APIs provided by this library are documented on the [SWRLAPI Wiki](https://github.com/protegeproject/swrlapi/wiki).
-
 The following examples can be used to quickly get started with the API.
 
 This code illustrates how the API can be used to create a SWRL query engine using an ontology 
 created by the OWLAPI and then execute rules in that ontology.
 
 ```java
-      OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
-      OWLOntology ontology = ontologyManager.loadOntologyFromOntologyDocument(new File("/myontologies/Ont1.owl"));
-      DefaultPrefixManager prefixManager = new DefaultPrefixManager();
-      OWLDocumentFormat format = ontology.getOWLOntologyManager().getOntologyFormat(ontology);
+ OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
+ OWLOntology ontology = ontologyManager.loadOntologyFromOntologyDocument(new File("/ont/Ont1.owl"));
+ DefaultPrefixManager prefixManager = new DefaultPrefixManager();
+ OWLDocumentFormat format = ontology.getOWLOntologyManager().getOntologyFormat(ontology);
 
-      if (format.isPrefixOWLOntologyFormat())
-        prefixManager.copyPrefixesFrom(format.asPrefixOWLOntologyFormat().getPrefixName2PrefixMap());
+ if (format.isPrefixOWLOntologyFormat())
+   prefixManager.copyPrefixesFrom(format.asPrefixOWLOntologyFormat().getPrefixName2PrefixMap());
 
-      SWRLRuleEngine ruleEngine = SWRLAPIFactory.createSWRLRuleEngine(ontology, prefixManager);
+ SWRLRuleEngine ruleEngine = SWRLAPIFactory.createSWRLRuleEngine(ontology, prefixManager);
 
-      ruleEngine.infer();
+ ruleEngine.infer();
 ```
 
 This example shows how the API can be used to create a SQWRL query engine, execute a SQWRL query using
 this engine, and then process the results.
 
 ```java
-      OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
-      OWLOntology ontology = ontologyManager.loadOntologyFromOntologyDocument(new File("/myontologies/Ont1.owl"));
-      DefaultPrefixManager prefixManager = new DefaultPrefixManager();
-      OWLDocumentFormat format = ontology.getOWLOntologyManager().getOntologyFormat(ontology);
+ OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
+ OWLOntology ontology = ontologyManager.loadOntologyFromOntologyDocument(new File("/ont/Ont1.owl"));
+ DefaultPrefixManager prefixManager = new DefaultPrefixManager();
+ OWLDocumentFormat format = ontology.getOWLOntologyManager().getOntologyFormat(ontology);
 
-      if (format.isPrefixOWLOntologyFormat())
-        prefixManager.copyPrefixesFrom(format.asPrefixOWLOntologyFormat().getPrefixName2PrefixMap());
+ if (format.isPrefixOWLOntologyFormat())
+   prefixManager.copyPrefixesFrom(format.asPrefixOWLOntologyFormat().getPrefixName2PrefixMap());
 
-      SQWRLQueryEngine queryEngine = SWRLAPIFactory.createSQWRLQueryEngine(ontology, prefixManager);
+ SQWRLQueryEngine queryEngine = SWRLAPIFactory.createSQWRLQueryEngine(ontology, prefixManager);
 
-      SQWRLResult result = queryEngine.runSQWRLQuery("q1","swrlb:add(?x, 2, 2) -> sqwrl:select(?x)");
+ SQWRLResult result = queryEngine.runSQWRLQuery("q1","swrlb:add(?x, 2, 2) -> sqwrl:select(?x)");
 
-      while (result.next()) {
-        System.out.println("Name: " + result.getLiteral("x").getInt());
-      }
+ while (result.next()) {
+   System.out.println("Name: " + result.getLiteral("x").getInt());
+ }
 ```
