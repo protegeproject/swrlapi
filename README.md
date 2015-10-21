@@ -88,3 +88,5 @@ this engine, and then process the results.
  while (result.next()) 
    System.out.println("Name: " + result.getLiteral("x").getInt());
 ```
+
+Extensive documentation on the SWRLAPI can be found on the [SWRLAPI Wiki](https://github.com/protegeproject/swrlapi/wiki).
