@@ -48,7 +48,6 @@ created by the OWLAPI and then execute rules in that ontology.
 
 ```java
  // Create OWLOntology and DefaultPrefixManager instances using the OWLAPI
-
  File owlFile = new File("/ont/Ont1.owl");
  OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
  OWLOntology ontology = ontologyManager.loadOntologyFromOntologyDocument(owlFile);
@@ -59,7 +58,6 @@ created by the OWLAPI and then execute rules in that ontology.
    prefixManager.copyPrefixesFrom(format.asPrefixOWLOntologyFormat().getPrefixName2PrefixMap());
 
  // Create a SWRL rule engine using the SWRLAPI
-
  SWRLRuleEngine ruleEngine = SWRLAPIFactory.createSWRLRuleEngine(ontology, prefixManager);
 
  // Run the rule engine
@@ -71,7 +69,6 @@ this engine, and then process the results.
 
 ```java
  // Create OWLOntology and DefaultPrefixManager instances using the OWLAPI
-
  File owlFile = new File("/ont/Ont1.owl");
  OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
  OWLOntology ontology = ontologyManager.loadOntologyFromOntologyDocument(owlFile);
@@ -82,16 +79,12 @@ this engine, and then process the results.
    prefixManager.copyPrefixesFrom(format.asPrefixOWLOntologyFormat().getPrefixName2PrefixMap());
 
  // Create SQWRL query engine using SWRLAPI
-
  SQWRLQueryEngine queryEngine = SWRLAPIFactory.createSQWRLQueryEngine(ontology, prefixManager);
 
  // Create and execute a SQWRL query using the SWRLAPI
-
  SQWRLResult result = queryEngine.runSQWRLQuery("q1","swrlb:add(?x, 2, 2) -> sqwrl:select(?x)");
 
  // Process the SQWRL result
-
- while (result.next()) {
+ while (result.next()) 
    System.out.println("Name: " + result.getLiteral("x").getInt());
- }
 ```
