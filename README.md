@@ -78,14 +78,14 @@ this engine, and then process the results.
  if (format.isPrefixOWLOntologyFormat())
    prefixManager.copyPrefixesFrom(format.asPrefixOWLOntologyFormat().getPrefixName2PrefixMap());
 
- // Create SQWRL query engine using SWRLAPI
+ // Create SQWRL query engine using the SWRLAPI
  SQWRLQueryEngine queryEngine = SWRLAPIFactory.createSQWRLQueryEngine(ontology, prefixManager);
 
  // Create and execute a SQWRL query using the SWRLAPI
  SQWRLResult result = queryEngine.runSQWRLQuery("q1","swrlb:add(?x, 2, 2) -> sqwrl:select(?x)");
 
  // Process the SQWRL result
- while (result.next()) 
+ if (result.next()) 
    System.out.println("Name: " + result.getLiteral("x").getInt());
 ```
 

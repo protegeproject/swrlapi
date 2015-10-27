@@ -75,7 +75,6 @@ import org.swrlapi.sqwrl.values.SQWRLResultValue;
  * <p>
  * The following is an example of dealing with a {@link org.swrlapi.sqwrl.SQWRLResult}:
  * <p>
- * <p>
  * <pre>
  * SQWRLResult result = ...
  *

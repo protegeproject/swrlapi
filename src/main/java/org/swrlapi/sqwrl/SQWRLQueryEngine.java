@@ -51,14 +51,16 @@ public interface SQWRLQueryEngine extends SWRLRuleEngine
   @NonNull SQWRLResult runSQWRLQuery(@NonNull String queryName) throws SQWRLException;
 
   /**
-   * Run all enabled SQWRL queries.
+   * Run all enabled SQWRL queries. The {@link #getSQWRLResult(String)} method can be used to retrieve the
+   * results of these queries.
    *
    * @throws SQWRLException If an error occurs during processing
    */
   void runSQWRLQueries() throws SQWRLException;
 
   /**
-   * Get the results from a previously executed SQWRL query. Null is returned if there is no result.
+   * Get the results from a previously executed SQWRL query.
+   * A {@link org.swrlapi.sqwrl.exceptions.SQWRLInvalidQueryNameException} is thrown if no result is present.
    *
    * @param queryName The name of the query
    * @return The result of the query
@@ -69,14 +71,14 @@ public interface SQWRLQueryEngine extends SWRLRuleEngine
   /**
    * Get all the enabled SQWRL queries in the ontology.
    *
-   * @return A set of queries
+   * @return A set of SQWRL queries
    */
   @NonNull Set<SQWRLQuery> getSQWRLQueries();
 
   /**
    * Get the names of the enabled SQWRL queries in the ontology.
    *
-   * @return The names of all SQWRL queries
+   * @return The names of all enabled SQWRL queries
    */
   @NonNull Set<String> getSQWRLQueryNames();
 

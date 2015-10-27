@@ -38,7 +38,7 @@ public interface SQWRLResultGenerator
 	/**
 	 * @param orderedColumnIndex The 0-based index of an order column
 	 * @param ascending          Order ascending or descending
-	 * @throws SQWRLException If an error occurs during setting
+	 * @throws SQWRLException If an error occurs
 	 */
 	void setOrderByColumn(int orderedColumnIndex, boolean ascending) throws SQWRLException;
 
@@ -53,7 +53,7 @@ public interface SQWRLResultGenerator
 	boolean isOrderedAscending();
 
 	/**
-	 * Indicate that the duplicate columns should be removed
+	 * Indicate that duplicate columns should be removed
 	 */
 	void setIsDistinct();
 
@@ -70,7 +70,7 @@ public interface SQWRLResultGenerator
 	int getCurrentNumberOfColumns() throws SQWRLException;
 
 	/**
-	 * @return Is the result configured
+	 * @return True if the result is configured
 	 */
 	boolean isConfigured();
 
@@ -120,7 +120,7 @@ public interface SQWRLResultGenerator
 	/**
 	 * Indicate that the result is prepared
 	 *
-	 * @throws SQWRLException If the result is not configured or is already prepared
+	 * @throws SQWRLException If the result is not yet configured or is already prepared
 	 */
 	void prepared() throws SQWRLException;
 
@@ -133,25 +133,58 @@ public interface SQWRLResultGenerator
 	void setNth(int nth);
 
 	/**
+	 * Exclude the nth result row
 	 *
 	 * @param nth 1-based index
 	 */
 	void setNotNth(int nth);
 
+  /**
+   * Exclude all but the first result row
+   */
 	void setFirst();
 
+  /**
+   * Exclude all but the first n result roes.
+   *
+   * @param n
+   */
 	void setFirst(int n);
 
+  /**
+   * Exclude all but the last result row
+   */
 	void setLast();
 
+  /**
+   * Exclude all but the last n result rows
+   *
+   * @param n
+   */
 	void setLast(int n);
 
+  /**
+   * Exclude the first result row
+   */
 	void setNotFirst();
 
+  /**
+   * Exclude the first n result rows
+   *
+   * @param n
+   */
 	void setNotFirst(int n);
 
+  /**
+   * Exclude the last result row
+   */
 	void setNotLast();
 
+  /**
+   * Exclude the last n result rows
+   *
+   * @param n
+   */
 	void setNotLast(int n);
 
 	/**
