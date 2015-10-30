@@ -11,16 +11,16 @@
   <groupId>edu.stanford.swrl</groupId>
   <artifactId>swrlapi</artifactId>
   <version>1.0.0</version>
-  <name>SWRLAPI</name>
-  <description>OWLAPI-based implementation of the SWRLAPI</description>
-  <url>https://github.com/protegeproject/swrlapi/wiki</url>
   <packaging>bundle</packaging>
+  <name>SWRLAPI</name>
+  <description>Java API for working with SWRL rules and SQWRL queries</description>
+  <url>https://github.com/protegeproject/swrlapi/wiki</url>
 
   <properties>
 
     <java.version>1.8</java.version> 
 
-    <owlapi.version>4.1.0-RC2</owlapi.version> 
+    <owlapi.version>4.1.1</owlapi.version> 
     <jep.version>2.4.0</jep.version>
     <axis.osgi.version>1.4_1</axis.osgi.version>
     <commons.discovery.osgi.version>0.4_1</commons.discovery.osgi.version>
