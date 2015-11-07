@@ -70,7 +70,8 @@ public class SWRLAPIFactory
   @NonNull private static final SWRLRuleAndQueryEngineFactory swrlRuleAndQueryEngineFactory = new DefaultSWRLRuleAndQueryEngineFactory();
 
   /**
-   * @param ontology An OWL ontology
+   * @param ontology      An OWL ontology
+   * @param prefixManager A prefix manager
    * @return A SWRL rule engine
    * @throws SWRLRuleEngineException If an error occurs during rule engine creation
    */
@@ -82,12 +83,47 @@ public class SWRLAPIFactory
 
   /**
    * @param ontology An OWL ontology
+   * @return A SWRL rule engine
+   * @throws SWRLRuleEngineException If an error occurs during rule engine creation
+   */
+  @NonNull public static SWRLRuleEngine createSWRLRuleEngine(@NonNull OWLOntology ontology)
+      throws SWRLRuleEngineException
+  {
+    DefaultPrefixManager prefixManager = new DefaultPrefixManager();
+    OWLDocumentFormat format = ontology.getOWLOntologyManager().getOntologyFormat(ontology);
+
+    if (format.isPrefixOWLOntologyFormat())
+      prefixManager.copyPrefixesFrom(format.asPrefixOWLOntologyFormat().getPrefixName2PrefixMap());
+
+    return swrlRuleAndQueryEngineFactory.createSWRLRuleEngine(ontology, prefixManager);
+  }
+
+  /**
+   * @param ontology      An OWL ontology
+   * @param prefixManager A prefix manager
    * @return A SQWRL query engine
    * @throws SWRLRuleEngineException If an error occurs during query engine creation
    */
   @NonNull public static SQWRLQueryEngine createSQWRLQueryEngine(@NonNull OWLOntology ontology,
       @NonNull DefaultPrefixManager prefixManager) throws SWRLRuleEngineException
   {
+    return swrlRuleAndQueryEngineFactory.createSQWRLQueryEngine(ontology, prefixManager);
+  }
+
+  /**
+   * @param ontology      An OWL ontology
+   * @return A SQWRL query engine
+   * @throws SWRLRuleEngineException If an error occurs during query engine creation
+   */
+  @NonNull public static SQWRLQueryEngine createSQWRLQueryEngine(@NonNull OWLOntology ontology)
+      throws SWRLRuleEngineException
+  {
+    DefaultPrefixManager prefixManager = new DefaultPrefixManager();
+    OWLDocumentFormat format = ontology.getOWLOntologyManager().getOntologyFormat(ontology);
+
+    if (format.isPrefixOWLOntologyFormat())
+      prefixManager.copyPrefixesFrom(format.asPrefixOWLOntologyFormat().getPrefixName2PrefixMap());
+
     return swrlRuleAndQueryEngineFactory.createSQWRLQueryEngine(ontology, prefixManager);
   }
 

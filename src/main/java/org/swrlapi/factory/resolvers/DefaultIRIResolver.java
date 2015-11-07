@@ -30,6 +30,10 @@ public class DefaultIRIResolver implements IRIResolver
   @NonNull private final Set<String> annotationPropertyPrefixedNames = new HashSet<>();
   @NonNull private final Set<String> datatypePrefixedNames = new HashSet<>();
 
+  @NonNull private final Map<String, String> autogenNamespace2Prefix = new HashMap<>();
+
+  private int autogenPrefixNumber = 0;
+
   public DefaultIRIResolver(@NonNull DefaultPrefixManager prefixManager)
   {
     this.prefixManager = prefixManager;
@@ -46,18 +50,37 @@ public class DefaultIRIResolver implements IRIResolver
     this.dataPropertyPrefixedNames.clear();
     this.annotationPropertyPrefixedNames.clear();
     this.datatypePrefixedNames.clear();
+
+    this.autogenNamespace2Prefix.clear();
+    this.autogenPrefixNumber = 0;
   }
 
   @Override @NonNull public String iri2PrefixedName(@NonNull IRI iri)
-  {
+  { // TODO Need to do something with IRIs where namespace is ontology IRI
     if (this.iri2PrefixedNameCache.containsKey(iri))
       return this.iri2PrefixedNameCache.get(iri);
     else {
-      String prefixedName = this.prefixManager.getPrefixIRI(iri);
-      if (prefixedName != null)
-        return prefixedName;
-      else
-        throw new IllegalArgumentException("could not find prefixed name for IRI " + iri);
+      String existingPrefixedName = this.prefixManager.getPrefixIRI(iri);
+      if (existingPrefixedName != null)
+        return existingPrefixedName;
+      else {
+        String namespace = iri.getNamespace();
+        com.google.common.base.Optional<String> remainder = iri.getRemainder();
+        if (remainder.isPresent()) {
+          if (this.autogenNamespace2Prefix.containsKey(namespace)) {
+            String prefixedName = this.autogenNamespace2Prefix.get(namespace) + remainder.get();
+            this.iri2PrefixedNameCache.put(iri, prefixedName);
+            return prefixedName;
+          } else {
+            String autogenPrefix = "autogen" + this.autogenPrefixNumber++ + ":";
+            String prefixedName = autogenPrefix + remainder.get();
+            this.autogenNamespace2Prefix.put(namespace, autogenPrefix);
+            this.iri2PrefixedNameCache.put(iri, prefixedName);
+            return prefixedName;
+          }
+        } else
+          throw new IllegalArgumentException("could not create prefixed name for IRI " + iri);
+      }
     }
   }
 

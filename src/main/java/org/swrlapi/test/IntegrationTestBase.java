@@ -47,8 +47,8 @@ public class IntegrationTestBase
     if (format.isPrefixOWLOntologyFormat())
       prefixManager.copyPrefixesFrom(format.asPrefixOWLOntologyFormat().getPrefixName2PrefixMap());
 
-    prefixManager.setPrefix(":", NS);
-    prefixManager.setDefaultPrefix(NS);
+   prefixManager.setPrefix(":", NS);
+ //   prefixManager.setDefaultPrefix(NS);
 
     return prefixManager;
   }

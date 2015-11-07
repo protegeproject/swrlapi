@@ -2,11 +2,9 @@ package org.swrlapi.test;
 
 import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.apibinding.OWLManager;
-import org.semanticweb.owlapi.model.OWLDocumentFormat;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
-import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.factory.SWRLAPIFactory;
 import org.swrlapi.parser.SWRLParseException;
@@ -31,13 +29,8 @@ public class SQWRLQueryEngineMinimalApp
       OWLOntology ontology = owlFile.isPresent() ?
         ontologyManager.loadOntologyFromOntologyDocument(owlFile.get()) :
         ontologyManager.createOntology();
-      DefaultPrefixManager prefixManager = new DefaultPrefixManager();
-      OWLDocumentFormat format = ontology.getOWLOntologyManager().getOntologyFormat(ontology);
 
-      if (format.isPrefixOWLOntologyFormat())
-        prefixManager.copyPrefixesFrom(format.asPrefixOWLOntologyFormat().getPrefixName2PrefixMap());
-
-      SQWRLQueryEngine queryEngine = SWRLAPIFactory.createSQWRLQueryEngine(ontology, prefixManager);
+      SQWRLQueryEngine queryEngine = SWRLAPIFactory.createSQWRLQueryEngine(ontology);
 
       SQWRLResult result = queryEngine.runSQWRLQuery("q1","swrlb:add(?x, 2, 2) -> sqwrl:select(?x)");
 
