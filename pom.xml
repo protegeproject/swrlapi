@@ -24,11 +24,13 @@
     <jep.version>2.4.0</jep.version>
     <axis.osgi.version>1.4_1</axis.osgi.version>
     <commons.discovery.osgi.version>0.4_1</commons.discovery.osgi.version>
+    <com.google.guava.version>18.0</com.google.guava.version>
 
     <checker.framework.version>1.7.5</checker.framework.version>
     <junit.version>4.11</junit.version>
-    <slf4j.version>1.6.1</slf4j.version>
-
+    <org.hamcrest.core.version>1.3</org.hamcrest.core.version>
+    
+    <maven.release.plugin.version>1.9</maven.release.plugin.version>
     <maven.compiler.plugin.version>2.3.2</maven.compiler.plugin.version>
     <maven.bundle.plugin.version>2.5.3</maven.bundle.plugin.version>
     <maven.source.plugin.version>2.2.1</maven.source.plugin.version>
@@ -123,6 +125,12 @@
       <scope>test</scope>
     </dependency>
 
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>${com.google.guava.version}</version>
+    </dependency>
+    
     <!-- In local project repository (./lib) because we could not find a public Maven repository containing it. -->
     <dependency>
       <groupId>org.nfunk</groupId>
@@ -144,10 +152,9 @@
     </dependency>
 
     <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
-      <version>${slf4j.version}</version>
-      <scope>test</scope>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-core</artifactId>
+      <version>${org.hamcrest.core.version}</version>
     </dependency>
 
   </dependencies>
@@ -209,7 +216,7 @@
           <dependency>
             <groupId>org.apache.maven.scm</groupId>
             <artifactId>maven-scm-provider-gitexe</artifactId>
-            <version>1.9</version>
+            <version>${maven.release.plugin.version}</version>
           </dependency>
         </dependencies>
       </plugin>
