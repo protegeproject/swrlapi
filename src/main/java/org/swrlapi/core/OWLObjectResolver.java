@@ -7,6 +7,7 @@ import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLDataPropertyExpression;
 import org.semanticweb.owlapi.model.OWLDataRange;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
+import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 
 /**
@@ -61,11 +62,16 @@ public interface OWLObjectResolver
 
   @NonNull String resolveOWLObjectPropertyExpression(@NonNull OWLObjectPropertyExpression propertyExpression);
 
+
   @NonNull OWLObjectPropertyExpression resolveOWLObjectPropertyExpression(@NonNull String propertyExpressionID);
+
+  @NonNull OWLObjectProperty resolveOWLObjectProperty(@NonNull String propertyID);
 
   @NonNull String resolveOWLDataPropertyExpression(@NonNull OWLDataPropertyExpression propertyExpression);
 
   @NonNull OWLDataPropertyExpression resolveOWLDataPropertyExpression(@NonNull String propertyExpressionID);
+
+  @NonNull OWLDataProperty resolveOWLDataProperty(@NonNull String propertyID);
 
   @NonNull OWLDataRange resolveOWLDataRange(@NonNull String dataRangeID);
 }

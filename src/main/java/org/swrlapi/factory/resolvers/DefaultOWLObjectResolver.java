@@ -8,24 +8,29 @@ import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLDataPropertyExpression;
 import org.semanticweb.owlapi.model.OWLDataRange;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
+import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.swrlapi.core.OWLObjectResolver;
 
 public class DefaultOWLObjectResolver implements OWLObjectResolver
 {
-  private final @NonNull OWLClassExpressionResolver owlClassResolver;
+  private final @NonNull OWLClassResolver owlClassResolver;
   private final @NonNull OWLClassExpressionResolver owlClassExpressionResolver;
+  private final @NonNull OWLObjectPropertyResolver owlObjectPropertyResolver;
+  private final @NonNull OWLNamedIndividualResolver owlNamedIndividualResolver;
   private final @NonNull OWLObjectPropertyExpressionResolver owlObjectPropertyExpressionResolver;
-  private final @NonNull OWLDataPropertyExpressionResolver owlDataPropertyResolver;
+  private final @NonNull OWLDataPropertyResolver owlDataPropertyResolver;
   private final @NonNull OWLDataPropertyExpressionResolver owlDataPropertyExpressionResolver;
   private final @NonNull OWLDataRangeResolver owlDataRangeResolver;
 
   public DefaultOWLObjectResolver(@NonNull OWLDataFactory owlDataFactory)
   {
-    this.owlClassResolver = new DefaultOWLClassExpressionResolver(owlDataFactory);
+    this.owlClassResolver = new DefaultOWLClassResolver(owlDataFactory);
     this.owlClassExpressionResolver = new DefaultOWLClassExpressionResolver(owlDataFactory);
+    this.owlNamedIndividualResolver = new DefaultOWLNamedIndividualResolver();
+    this.owlObjectPropertyResolver = new DefaultOWLObjectPropertyResolver(owlDataFactory);
     this.owlObjectPropertyExpressionResolver = new DefaultOWLObjectPropertyExpressionResolver();
-    this.owlDataPropertyResolver = new DefaultOWLDataPropertyExpressionResolver();
+    this.owlDataPropertyResolver = new DefaultOWLDataPropertyResolver(owlDataFactory);
     this.owlDataPropertyExpressionResolver = new DefaultOWLDataPropertyExpressionResolver();
     this.owlDataRangeResolver = new DefaultOWLDataRangeResolver();
   }
@@ -37,12 +42,12 @@ public class DefaultOWLObjectResolver implements OWLObjectResolver
 
   @Override public boolean recordsOWLClass(@NonNull OWLClass cls)
   {
-    return this.owlClassResolver.recordsOWLClassExpression(cls);
+    return this.owlClassResolver.recordsOWLClass(cls);
   }
 
   @Override @NonNull public OWLClass resolveOWLClass(@NonNull String classID)
   {
-    return this.owlClassResolver.resolveOWLClassExpression(classID).asOWLClass();
+    return this.owlClassResolver.resolveOWLClass(classID).asOWLClass();
   }
 
   @Override public void recordOWLClassExpression(@NonNull String classExpressionID,
@@ -58,7 +63,7 @@ public class DefaultOWLObjectResolver implements OWLObjectResolver
 
   @Override public boolean recordsOWLNamedIndividual(@NonNull OWLNamedIndividual individual)
   {
-    return false; // TODO
+    return this.owlNamedIndividualResolver.recordsOWLNamedIndividual(individual);
   }
 
   @Override @NonNull public String resolveOWLClassExpression(@NonNull OWLClassExpression owlClassExpression)
@@ -73,7 +78,7 @@ public class DefaultOWLObjectResolver implements OWLObjectResolver
 
   @Override public @NonNull OWLNamedIndividual resolveOWLNamedIndividual(@NonNull String individualID)
   {
-    return null; // TODO
+    return this.owlNamedIndividualResolver.resolveOWLNamedIndividual(individualID);
   }
 
   @Override public void recordOWLObjectPropertyExpression(@NonNull String propertyExpressionID,
@@ -85,7 +90,7 @@ public class DefaultOWLObjectResolver implements OWLObjectResolver
 
   @Override public void recordOWLDataProperty(@NonNull String propertyID, @NonNull OWLDataProperty property)
   {
-    this.owlDataPropertyResolver.recordOWLDataPropertyExpression(propertyID, property);
+    this.owlDataPropertyResolver.recordOWLDataProperty(propertyID, property);
   }
 
   @Override public boolean recordsOWLObjectPropertyExpression(@NonNull OWLObjectPropertyExpression propertyExpression)
@@ -103,6 +108,11 @@ public class DefaultOWLObjectResolver implements OWLObjectResolver
     @NonNull String propertyExpressionID)
   {
     return this.owlObjectPropertyExpressionResolver.resolveOWLObjectPropertyExpression(propertyExpressionID);
+  }
+
+  @Override public @NonNull OWLObjectProperty resolveOWLObjectProperty(@NonNull String propertyID)
+  {
+    return this.owlObjectPropertyResolver.resolveOWLObjectProperty(propertyID);
   }
 
   @Override public void recordOWLDataPropertyExpression(@NonNull String propertyExpressionID,
@@ -126,6 +136,11 @@ public class DefaultOWLObjectResolver implements OWLObjectResolver
     @NonNull String propertyExpressionID)
   {
     return this.owlDataPropertyExpressionResolver.resolveOWLDataPropertyExpression(propertyExpressionID);
+  }
+
+  @Override public @NonNull OWLDataProperty resolveOWLDataProperty(@NonNull String propertyID)
+  {
+    return this.owlDataPropertyResolver.resolveOWLDataProperty(propertyID);
   }
 
   @Override public void recordOWLDataRange(@NonNull String dataRangeID, @NonNull OWLDataRange dataRange)
