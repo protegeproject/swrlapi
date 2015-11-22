@@ -11,8 +11,8 @@ import org.swrlapi.literal.XSDTime;
 import java.net.URI;
 
 /**
- * Factory for constructing SWRLAPI-based literals, which wrap {@link org.semanticweb.owlapi.model.OWLLiteral}s to provide
- * additional convenience methods used by the SWRLAPI.
+ * Factory for constructing SWRLAPI-based literals, which wrap {@link org.semanticweb.owlapi.model.OWLLiteral}s
+ * to provide additional convenience methods used by the SWRLAPI.
  *
  * @see Literal
  * @see org.semanticweb.owlapi.model.OWLLiteral

@@ -18,7 +18,7 @@ public class SWRLBuiltInLibraryImplTest extends TestCase
 
   public void testSqrt() throws Exception
   {
-    // TODO Need a mock bridge
+    // TODO Need a mock bridge for built-in library tests
     //    List<SWRLBuiltInArgument> arguments = new ArrayList<>();
     //    SWRLBuiltInArgument argument1 = argumentFactory.getLiteralBuiltInArgument(2);
     //    SWRLBuiltInArgument argument2 = argumentFactory.getLiteralBuiltInArgument(4);
