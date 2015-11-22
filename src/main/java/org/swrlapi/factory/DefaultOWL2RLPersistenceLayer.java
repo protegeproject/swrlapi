@@ -27,6 +27,7 @@ public class DefaultOWL2RLPersistenceLayer implements OWL2RLPersistenceLayer
 
   @Override public void setEnabledRules(@NonNull Set<OWL2RLNames.OWL2RLRule> rules)
   {
+    // TODO setEnabledRules
     // OWLIndividual p3OWLIndividual = getOWLModel().getOWLIndividual(OWL2RLNames.SWRLA_NAMESPACE +
     // rule.toString());
     // OWLDatatypeProperty p3OWLDataProperty = getIsOWL2RLRuleEnabledProperty();
@@ -60,7 +61,7 @@ public class DefaultOWL2RLPersistenceLayer implements OWL2RLPersistenceLayer
 
   private void disableRule(OWL2RLNames.OWL2RLRule rule)
   {
-    if (!isOWL2RLRuleDisabled(rule)) { // TODO
+    if (!isOWL2RLRuleDisabled(rule)) { // TODO implement disableRule
       // OWLIndividual p3OWLIndividual = getOWLModel().getOWLIndividual(OWL2RLNames.SWRLA_NAMESPACE + rule.toString());
       // OWLDatatypeProperty p3OWLDataProperty = getIsOWL2RLRuleEnabledProperty();
       // if (p3OWLIndividual != null && p3OWLDataProperty != null)
@@ -70,7 +71,7 @@ public class DefaultOWL2RLPersistenceLayer implements OWL2RLPersistenceLayer
 
   private boolean isOWL2RLRuleDisabled(OWL2RLNames.OWL2RLRule rule)
   {
-    // TODO
+    // TODO implement isOWL2RLRuleDisabled
     // OWLIndividual p3OWLIndividual = getOWLModel().getOWLIndividual(OWL2RLNames.SWRLA_NAMESPACE + rule.toString());
     // OWLDatatypeProperty p3OWLDataProperty = getIsOWL2RLRuleEnabledProperty();
     //
