@@ -7,6 +7,7 @@ import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLDataPropertyExpression;
 import org.semanticweb.owlapi.model.OWLDataRange;
+import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
@@ -21,6 +22,7 @@ public class DefaultOWLObjectResolver implements OWLObjectResolver
   private final @NonNull OWLObjectPropertyExpressionResolver owlObjectPropertyExpressionResolver;
   private final @NonNull OWLDataPropertyResolver owlDataPropertyResolver;
   private final @NonNull OWLDataPropertyExpressionResolver owlDataPropertyExpressionResolver;
+  private final @NonNull OWLDatatypeResolver owlDatatypeResolver;
   private final @NonNull OWLDataRangeResolver owlDataRangeResolver;
 
   public DefaultOWLObjectResolver(@NonNull OWLDataFactory owlDataFactory)
@@ -32,6 +34,7 @@ public class DefaultOWLObjectResolver implements OWLObjectResolver
     this.owlObjectPropertyExpressionResolver = new DefaultOWLObjectPropertyExpressionResolver();
     this.owlDataPropertyResolver = new DefaultOWLDataPropertyResolver(owlDataFactory);
     this.owlDataPropertyExpressionResolver = new DefaultOWLDataPropertyExpressionResolver();
+    this.owlDatatypeResolver = new DefaultOWLDatatypeResolver(owlDataFactory);
     this.owlDataRangeResolver = new DefaultOWLDataRangeResolver();
   }
 
@@ -157,6 +160,11 @@ public class DefaultOWLObjectResolver implements OWLObjectResolver
     return this.owlDataPropertyResolver.resolveOWLDataProperty(property);
   }
 
+  @Override public @NonNull String resolveOWLDatatype2ID(@NonNull OWLDatatype datatype)
+  {
+    return this.owlDatatypeResolver.resolveOWLDatatype(datatype);
+  }
+
   @Override @NonNull public OWLDataPropertyExpression resolveOWLDataPropertyExpression(
       @NonNull String propertyExpressionID)
   {
@@ -166,6 +174,11 @@ public class DefaultOWLObjectResolver implements OWLObjectResolver
   @Override @NonNull public OWLDataProperty resolveOWLDataProperty(@NonNull String propertyID)
   {
     return this.owlDataPropertyResolver.resolveOWLDataProperty(propertyID);
+  }
+
+  @Override public @NonNull OWLDatatype resolveOWLDatatype(@NonNull String datatypeID)
+  {
+    return this.owlDatatypeResolver.resolveOWLDatatype(datatypeID);
   }
 
   @Override public void recordOWLDataRange(@NonNull String dataRangeID, @NonNull OWLDataRange dataRange)

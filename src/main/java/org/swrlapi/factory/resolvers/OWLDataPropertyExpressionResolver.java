@@ -14,14 +14,14 @@ import org.semanticweb.owlapi.model.OWLDataPropertyExpression;
  */
 interface OWLDataPropertyExpressionResolver
 {
-	void reset();
+  void reset();
 
-	void recordOWLDataPropertyExpression(@NonNull String propertyExpressionID,
-			@NonNull OWLDataPropertyExpression propertyExpression);
+  void recordOWLDataPropertyExpression(@NonNull String propertyExpressionID,
+    @NonNull OWLDataPropertyExpression propertyExpression);
 
-	boolean recordsOWLDataPropertyExpression(@NonNull OWLDataPropertyExpression propertyExpression);
+  boolean recordsOWLDataPropertyExpression(@NonNull OWLDataPropertyExpression propertyExpression);
 
-	@NonNull String resolveOWLDataPropertyExpression(@NonNull OWLDataPropertyExpression propertyExpression);
+  @NonNull String resolveOWLDataPropertyExpression(@NonNull OWLDataPropertyExpression propertyExpression);
 
-	@NonNull OWLDataPropertyExpression resolveOWLDataPropertyExpression(@NonNull String propertyExpressionID);
+  @NonNull OWLDataPropertyExpression resolveOWLDataPropertyExpression(@NonNull String propertyExpressionID);
 }
