@@ -22,6 +22,8 @@ public interface OWLObjectResolver
 
   void recordOWLClassExpression(@NonNull String classExpressionID, @NonNull OWLClassExpression classExpression);
 
+  void recordOWLObjectProperty(@NonNull String propertyID, @NonNull OWLObjectProperty property);
+
   void recordOWLObjectPropertyExpression(@NonNull String propertyExpressionID,
     @NonNull OWLObjectPropertyExpression propertyExpression);
 
@@ -42,32 +44,29 @@ public interface OWLObjectResolver
 
   boolean recordsOWLDataPropertyExpression(@NonNull OWLDataPropertyExpression propertyExpression);
 
-  /**
-   * @param classExpression A class expression to resolve
-   * @return The ID of the resolved class expression
-   * @throws IllegalArgumentException If the class expression cannot be resolved
-   */
-  @NonNull String resolveOWLClassExpression(@NonNull OWLClassExpression classExpression);
+  @NonNull String resolveOWLClass2ID(@NonNull OWLClass cls);
+
+  @NonNull String resolveOWLClassExpression2ID(@NonNull OWLClassExpression classExpression);
+
+  @NonNull String resolveOWLNamedIndividual2ID(@NonNull OWLNamedIndividual individual);
+
+  @NonNull String resolveOWLObjectProperty2ID(@NonNull OWLObjectProperty property);
+
+  @NonNull String resolveOWLObjectPropertyExpression2ID(@NonNull OWLObjectPropertyExpression propertyExpression);
+
+  @NonNull String resolveOWLDataProperty2ID(@NonNull OWLDataProperty property);
+
+  @NonNull String resolveOWLDataPropertyExpression2ID(@NonNull OWLDataPropertyExpression propertyExpression);
 
   @NonNull OWLClass resolveOWLClass(@NonNull String classID);
 
-  /**
-   * @param classExpressionID A class expression ID
-   * @return The resolved class expression
-   * @throws IllegalArgumentException If the class expression ID cannot be resolved
-   */
   @NonNull OWLClassExpression resolveOWLClassExpression(@NonNull String classExpressionID);
 
   @NonNull OWLNamedIndividual resolveOWLNamedIndividual(@NonNull String individualID);
 
-  @NonNull String resolveOWLObjectPropertyExpression(@NonNull OWLObjectPropertyExpression propertyExpression);
-
-
   @NonNull OWLObjectPropertyExpression resolveOWLObjectPropertyExpression(@NonNull String propertyExpressionID);
 
   @NonNull OWLObjectProperty resolveOWLObjectProperty(@NonNull String propertyID);
-
-  @NonNull String resolveOWLDataPropertyExpression(@NonNull OWLDataPropertyExpression propertyExpression);
 
   @NonNull OWLDataPropertyExpression resolveOWLDataPropertyExpression(@NonNull String propertyExpressionID);
 

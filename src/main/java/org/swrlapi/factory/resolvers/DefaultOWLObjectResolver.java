@@ -51,24 +51,24 @@ public class DefaultOWLObjectResolver implements OWLObjectResolver
   }
 
   @Override public void recordOWLClassExpression(@NonNull String classExpressionID,
-    @NonNull OWLClassExpression classExpression)
+      @NonNull OWLClassExpression classExpression)
   {
     this.owlClassExpressionResolver.recordOWLClassExpression(classExpressionID, classExpression);
   }
 
-  @Override public boolean recordsOWLClassExpression(@NonNull OWLClassExpression owlClassExpression)
+  @Override public boolean recordsOWLClassExpression(@NonNull OWLClassExpression classExpression)
   {
-    return this.owlClassExpressionResolver.recordsOWLClassExpression(owlClassExpression);
+    return this.owlClassExpressionResolver.recordsOWLClassExpression(classExpression);
   }
 
-  @Override public boolean recordsOWLNamedIndividual(@NonNull OWLNamedIndividual individual)
+  @Override @NonNull public String resolveOWLClassExpression2ID(@NonNull OWLClassExpression classExpression)
   {
-    return this.owlNamedIndividualResolver.recordsOWLNamedIndividual(individual);
+    return this.owlClassExpressionResolver.resolveOWLClassExpression(classExpression);
   }
 
-  @Override @NonNull public String resolveOWLClassExpression(@NonNull OWLClassExpression owlClassExpression)
+  @Override @NonNull public String resolveOWLClass2ID(@NonNull OWLClass cls)
   {
-    return this.owlClassExpressionResolver.resolveOWLClassExpression(owlClassExpression);
+    return this.owlClassResolver.resolveOWLClass(cls);
   }
 
   @Override @NonNull public OWLClassExpression resolveOWLClassExpression(@NonNull String classExpressionID)
@@ -76,16 +76,26 @@ public class DefaultOWLObjectResolver implements OWLObjectResolver
     return this.owlClassExpressionResolver.resolveOWLClassExpression(classExpressionID);
   }
 
-  @Override public @NonNull OWLNamedIndividual resolveOWLNamedIndividual(@NonNull String individualID)
+  @Override public boolean recordsOWLNamedIndividual(@NonNull OWLNamedIndividual individual)
+  {
+    return this.owlNamedIndividualResolver.recordsOWLNamedIndividual(individual);
+  }
+
+  @Override @NonNull public OWLNamedIndividual resolveOWLNamedIndividual(@NonNull String individualID)
   {
     return this.owlNamedIndividualResolver.resolveOWLNamedIndividual(individualID);
   }
 
+  @Override public void recordOWLObjectProperty(@NonNull String propertyID, @NonNull OWLObjectProperty property)
+  {
+    this.owlObjectPropertyResolver.recordOWLObjectProperty(propertyID, property);
+  }
+
   @Override public void recordOWLObjectPropertyExpression(@NonNull String propertyExpressionID,
-    @NonNull OWLObjectPropertyExpression propertyExpression)
+      @NonNull OWLObjectPropertyExpression propertyExpression)
   {
     this.owlObjectPropertyExpressionResolver
-      .recordOWLObjectPropertyExpression(propertyExpressionID, propertyExpression);
+        .recordOWLObjectPropertyExpression(propertyExpressionID, propertyExpression);
   }
 
   @Override public void recordOWLDataProperty(@NonNull String propertyID, @NonNull OWLDataProperty property)
@@ -98,25 +108,35 @@ public class DefaultOWLObjectResolver implements OWLObjectResolver
     return this.owlObjectPropertyExpressionResolver.recordsOWLObjectPropertyExpression(propertyExpression);
   }
 
-  @Override @NonNull public String resolveOWLObjectPropertyExpression(
-    @NonNull OWLObjectPropertyExpression propertyExpression)
+  @Override @NonNull public String resolveOWLObjectPropertyExpression2ID(
+      @NonNull OWLObjectPropertyExpression propertyExpression)
   {
     return this.owlObjectPropertyExpressionResolver.resolveOWLObjectPropertyExpression(propertyExpression);
   }
 
+  @Override @NonNull public String resolveOWLNamedIndividual2ID(@NonNull OWLNamedIndividual individual)
+  {
+    return this.owlNamedIndividualResolver.resolveOWLNamedIndividual(individual);
+  }
+
+  @Override @NonNull public String resolveOWLObjectProperty2ID(@NonNull OWLObjectProperty property)
+  {
+    return this.owlObjectPropertyResolver.resolveOWLObjectProperty(property);
+  }
+
   @Override @NonNull public OWLObjectPropertyExpression resolveOWLObjectPropertyExpression(
-    @NonNull String propertyExpressionID)
+      @NonNull String propertyExpressionID)
   {
     return this.owlObjectPropertyExpressionResolver.resolveOWLObjectPropertyExpression(propertyExpressionID);
   }
 
-  @Override public @NonNull OWLObjectProperty resolveOWLObjectProperty(@NonNull String propertyID)
+  @Override @NonNull public OWLObjectProperty resolveOWLObjectProperty(@NonNull String propertyID)
   {
     return this.owlObjectPropertyResolver.resolveOWLObjectProperty(propertyID);
   }
 
   @Override public void recordOWLDataPropertyExpression(@NonNull String propertyExpressionID,
-    @NonNull OWLDataPropertyExpression propertyExpression)
+      @NonNull OWLDataPropertyExpression propertyExpression)
   {
     this.owlDataPropertyExpressionResolver.recordOWLDataPropertyExpression(propertyExpressionID, propertyExpression);
   }
@@ -126,19 +146,24 @@ public class DefaultOWLObjectResolver implements OWLObjectResolver
     return this.owlDataPropertyExpressionResolver.recordsOWLDataPropertyExpression(propertyExpression);
   }
 
-  @Override @NonNull public String resolveOWLDataPropertyExpression(
-    @NonNull OWLDataPropertyExpression propertyExpression)
+  @Override @NonNull public String resolveOWLDataPropertyExpression2ID(
+      @NonNull OWLDataPropertyExpression propertyExpression)
   {
     return this.owlDataPropertyExpressionResolver.resolveOWLDataPropertyExpression(propertyExpression);
   }
 
+  @Override @NonNull public String resolveOWLDataProperty2ID(@NonNull OWLDataProperty property)
+  {
+    return this.owlDataPropertyResolver.resolveOWLDataProperty(property);
+  }
+
   @Override @NonNull public OWLDataPropertyExpression resolveOWLDataPropertyExpression(
-    @NonNull String propertyExpressionID)
+      @NonNull String propertyExpressionID)
   {
     return this.owlDataPropertyExpressionResolver.resolveOWLDataPropertyExpression(propertyExpressionID);
   }
 
-  @Override public @NonNull OWLDataProperty resolveOWLDataProperty(@NonNull String propertyID)
+  @Override @NonNull public OWLDataProperty resolveOWLDataProperty(@NonNull String propertyID)
   {
     return this.owlDataPropertyResolver.resolveOWLDataProperty(propertyID);
   }
