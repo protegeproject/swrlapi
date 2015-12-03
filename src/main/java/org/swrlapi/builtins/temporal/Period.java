@@ -2,6 +2,7 @@ package org.swrlapi.builtins.temporal;
 
 import checkers.nullness.quals.NonNull;
 import checkers.nullness.quals.Nullable;
+import dataflow.quals.SideEffectFree;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -560,12 +561,12 @@ public class Period
     return this.startInstant.equals(this.finishInstant, Temporal.FINEST);
   }
 
-  @NonNull public String toString(int granularity) throws TemporalException
+  @SideEffectFree @NonNull public String toString(int granularity) throws TemporalException
   {
     return "(" + this.startInstant.toString(granularity) + ", " + this.finishInstant.toString(granularity) + ")";
   }
 
-  @NonNull @Override public String toString()
+  @SideEffectFree @NonNull @Override public String toString()
   {
     try {
       return toString(Temporal.FINEST);

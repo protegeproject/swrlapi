@@ -1,6 +1,7 @@
 package org.swrlapi.literal;
 
 import checkers.nullness.quals.NonNull;
+import dataflow.quals.SideEffectFree;
 import org.semanticweb.owlapi.model.IRI;
 
 /**
@@ -19,8 +20,7 @@ abstract class XSDType<T> implements Comparable<T>
 
   @NonNull public String getContent() { return this.content; }
 
-  @NonNull @Override
-  public String toString()
+  @SideEffectFree @NonNull @Override public String toString()
   {
     return this.content;
   }

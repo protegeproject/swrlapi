@@ -2,6 +2,7 @@ package org.swrlapi.ui.model;
 
 import checkers.nullness.quals.NonNull;
 import checkers.nullness.quals.Nullable;
+import dataflow.quals.SideEffectFree;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.core.SWRLRuleRenderer;
@@ -258,7 +259,7 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 			return this.comment;
 		}
 
-		@NonNull @Override public String toString()
+		@SideEffectFree @NonNull @Override public String toString()
 		{
 			return "(ruleName: " + this.ruleName + ", ruleText: " + this.ruleText + ", comment: " + this.comment
 					+ ", active: " + this.active + ")";
