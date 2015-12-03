@@ -145,9 +145,9 @@ public interface SQWRLResultGenerator
 	void setFirst();
 
   /**
-   * Exclude all but the first n result roes.
+   * Exclude all but the first n result rows.
    *
-   * @param n
+   * @param n Number of rows to retain
    */
 	void setFirst(int n);
 
@@ -159,7 +159,7 @@ public interface SQWRLResultGenerator
   /**
    * Exclude all but the last n result rows
    *
-   * @param n
+   * @param n Number of rows to retain
    */
 	void setLast(int n);
 
@@ -171,7 +171,7 @@ public interface SQWRLResultGenerator
   /**
    * Exclude the first n result rows
    *
-   * @param n
+   * @param n Number of rows to exclude
    */
 	void setNotFirst(int n);
 
@@ -183,7 +183,7 @@ public interface SQWRLResultGenerator
   /**
    * Exclude the last n result rows
    *
-   * @param n
+   * @param n Number of rows to exclude
    */
 	void setNotLast(int n);
 

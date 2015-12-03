@@ -16,6 +16,7 @@ public interface FileBackedOntologyModel extends OntologyModel
 
   /**
    * Close ontology; create an empty ontology with no backing file
+   *
    * @throws OWLOntologyCreationException If an error occurs during creation of an empty ontology
    */
   void close() throws OWLOntologyCreationException;
@@ -27,12 +28,12 @@ public interface FileBackedOntologyModel extends OntologyModel
 
   /**
    * @param file The backing file
+   * @throws OWLOntologyStorageException If a storage error occurs
    */
   void saveAs(@NonNull File file) throws OWLOntologyStorageException;
 
-	/**
-	 *
-	 * @return True if there is a file associated with the ontology
-	 */
-	boolean hasBackingFile();
+  /**
+   * @return True if there is a file associated with the ontology
+   */
+  boolean hasBackingFile();
 }

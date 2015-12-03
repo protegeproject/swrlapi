@@ -30,8 +30,6 @@ import org.swrlapi.sqwrl.values.SQWRLResultValue;
  * The interface {@link org.swrlapi.sqwrl.SQWRLResult} defines the calls used in the processing phase.
  * <p>
  * An example configuration, data generation, and result retrieval is:
- * <p>
- * <p>
  * <pre>
  * private static final String TestPrefix = "test:";
  * private static final String TestNamespace = "http://example.org#";
@@ -74,7 +72,6 @@ import org.swrlapi.sqwrl.values.SQWRLResultValue;
  * {@link org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue}, representing OWL annotation properties.
  * <p>
  * The following is an example of dealing with a {@link org.swrlapi.sqwrl.SQWRLResult}:
- * <p>
  * <pre>
  * SQWRLResult result = ...
  *

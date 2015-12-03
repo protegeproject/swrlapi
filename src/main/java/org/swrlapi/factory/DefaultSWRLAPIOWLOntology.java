@@ -622,7 +622,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
    * classes represent named OWL concepts so have an IRI). So if we are processing built-in parameters and encounter
    * variables with an IRI referring to named OWL properties in the active ontology we can transform them to the
    * appropriate SWRLAPI built-in argument for the named entity.
-   * <p/>
+   * <p>
    * Note: An important restriction here is that variable names do not intersect with named properties in their OWL
    * ontology. A SWRL parser should check for this on inpit and report an error.
    *
@@ -677,7 +677,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
    * these additional argument types in a standards-conformant way, the SWRLAPI treats URI literal arguments specially.
    * It a URI literal argument is passed to a built-in we determine if it refers to an OWL named object in the active
    * ontology and if so we create specific SWRLAPI built-in argument types for it.
-   * <p/>
+   * <p>
    * The SWRLAPI allows SQWRL collection built-in arguments (represented by a
    * {@link org.swrlapi.builtins.arguments.SQWRLCollectionVariableBuiltInArgument}) and multi-value variables
    * (represented by a {@link org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument}). These two argument
@@ -990,7 +990,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
    * Process currently supported OWL axioms. The processing consists of recording any OWL properties in the processed
    * axioms (with an instance of the {@link DefaultIRIResolver} class) and generating declaration
    * axioms for these properties.
-   * <p/>
+   * <p>
    * TODO The current approach is clunky. A better approach would be to walk the axioms with a visitor and recordOWLClassExpression the
    * properties and generate the declaration axioms.
    */
