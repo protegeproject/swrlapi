@@ -37,6 +37,7 @@
     <maven.release.plugin.version>2.5</maven.release.plugin.version>
     <maven.javadoc.plugin.version>2.9.1</maven.javadoc.plugin.version>
     <maven.gpg.plugin.version>1.5</maven.gpg.plugin.version>
+    <maven.scm.gitexe.version>1.9</maven.scm.gitexe.version>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
@@ -216,7 +217,7 @@
           <dependency>
             <groupId>org.apache.maven.scm</groupId>
             <artifactId>maven-scm-provider-gitexe</artifactId>
-            <version>${maven.release.plugin.version}</version>
+	    <version>${maven.scm.gitexe.version}</version>
           </dependency>
         </dependencies>
       </plugin>
