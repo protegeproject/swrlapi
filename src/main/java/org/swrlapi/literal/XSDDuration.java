@@ -1,8 +1,11 @@
 package org.swrlapi.literal;
 
 import checkers.nullness.quals.NonNull;
-import org.semanticweb.owlapi.vocab.XSDVocabulary;
+import checkers.nullness.quals.Nullable;
+import dataflow.quals.Deterministic;
+import dataflow.quals.SideEffectFree;
 import org.apache.axis.types.Duration;
+import org.semanticweb.owlapi.vocab.XSDVocabulary;
 
 public class XSDDuration extends XSDType<XSDDuration>
 {
@@ -12,7 +15,7 @@ public class XSDDuration extends XSDType<XSDDuration>
   {
     super(content, XSDVocabulary.DURATION.getIRI());
 
-    this.duration = XSDTimeUtil.xsdDurationString2AxisDuration(getContent());
+    this.duration = XSDTimeUtil.xsdDurationString2AxisDuration(content);
   }
 
   @Override protected void validate()
@@ -24,7 +27,7 @@ public class XSDDuration extends XSDType<XSDDuration>
       throw new IllegalArgumentException("invalid xsd:Duration: " + getContent());
   }
 
-  @Override public boolean equals(Object o)
+  @SideEffectFree @Deterministic @Override public boolean equals(@Nullable Object o)
   {
     if (this == o)
       return true;
@@ -37,14 +40,14 @@ public class XSDDuration extends XSDType<XSDDuration>
     return this.duration != null && otherDuration.duration != null && this.duration.equals(otherDuration.duration);
   }
 
-  @Override public int hashCode()
+  @SideEffectFree @Deterministic @Override public int hashCode()
   {
     int code = 34;
     code += this.duration.hashCode();
     return code;
   }
 
-  @Override public int compareTo(@NonNull XSDDuration o)
+  @SideEffectFree @Deterministic @Override public int compareTo(@NonNull XSDDuration o)
   {
     if (o == null)
       throw new NullPointerException();

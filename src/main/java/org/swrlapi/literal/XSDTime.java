@@ -2,6 +2,8 @@ package org.swrlapi.literal;
 
 import checkers.nullness.quals.NonNull;
 import checkers.nullness.quals.Nullable;
+import dataflow.quals.Deterministic;
+import dataflow.quals.SideEffectFree;
 import org.apache.axis.types.Time;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
 
@@ -34,7 +36,7 @@ public class XSDTime extends XSDType<XSDTime>
       throw new IllegalArgumentException("invalid xsd:Time '" + getContent() + "'");
   }
 
-  @Override public boolean equals(@Nullable Object o)
+  @SideEffectFree @Deterministic @Override public boolean equals(@Nullable Object o)
   {
     if (this == o)
       return true;
@@ -47,14 +49,14 @@ public class XSDTime extends XSDType<XSDTime>
     return this.time != null && otherTime.time != null && this.time.equals(otherTime.time);
   }
 
-  @Override public int hashCode()
+  @SideEffectFree @Deterministic @Override public int hashCode()
   {
     int code = 156;
     code += this.time.hashCode();
     return code;
   }
 
-  @Override public int compareTo(@NonNull XSDTime o)
+  @SideEffectFree @Deterministic @Override public int compareTo(@NonNull XSDTime o)
   {
     if (o == null)
       throw new NullPointerException();

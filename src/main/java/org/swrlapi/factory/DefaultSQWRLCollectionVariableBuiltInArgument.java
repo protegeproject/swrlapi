@@ -1,6 +1,9 @@
 package org.swrlapi.factory;
 
 import checkers.nullness.quals.NonNull;
+import checkers.nullness.quals.Nullable;
+import dataflow.quals.Deterministic;
+import dataflow.quals.SideEffectFree;
 import org.semanticweb.owlapi.model.IRI;
 import org.swrlapi.builtins.arguments.SQWRLCollectionVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor;
@@ -47,7 +50,7 @@ class DefaultSQWRLCollectionVariableBuiltInArgument extends DefaultSWRLVariableB
     visitor.visit(this);
   }
 
-  @Override public boolean equals(Object o)
+  @SideEffectFree @Deterministic @Override public boolean equals(@Nullable Object o)
   {
     if (this == o)
       return true;
@@ -68,7 +71,7 @@ class DefaultSQWRLCollectionVariableBuiltInArgument extends DefaultSWRLVariableB
 
   }
 
-  @Override public int hashCode()
+  @SideEffectFree @Deterministic @Override public int hashCode()
   {
     int result = super.hashCode();
     result = 31 * result + (queryName != null ? queryName.hashCode() : 0);

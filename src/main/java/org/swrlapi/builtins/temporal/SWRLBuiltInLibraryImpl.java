@@ -432,7 +432,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
         operationResult = i1.duration(i2, granularity);
       }
     } catch (TemporalException e) {
-      throw new SWRLBuiltInException(e.getMessage(), e);
+      throw new SWRLBuiltInException(e.getMessage() == null ? "" : e.getMessage(), e);
     }
 
     if (isUnboundArgument(0, arguments)) {
@@ -590,7 +590,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
         return (argument1.equals(operationResult, Temporal.FINEST));
       }
     } catch (TemporalException e) {
-      throw new SWRLBuiltInException(e.getMessage(), e);
+      throw new SWRLBuiltInException(e.getMessage() == null ? "" : e.getMessage(), e);
     }
   }
 
@@ -645,7 +645,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
         throw new SWRLBuiltInException("internal error - unknown temporal operator " + operation);
       }
     } catch (TemporalException e) {
-      throw new SWRLBuiltInException(e.getMessage(), e);
+      throw new SWRLBuiltInException(e.getMessage() == null ? "" : e.getMessage(), e);
     }
   }
 

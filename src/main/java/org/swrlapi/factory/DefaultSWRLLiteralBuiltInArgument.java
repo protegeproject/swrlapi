@@ -2,6 +2,7 @@ package org.swrlapi.factory;
 
 import checkers.nullness.quals.NonNull;
 import checkers.nullness.quals.Nullable;
+import dataflow.quals.Deterministic;
 import dataflow.quals.SideEffectFree;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLLiteral;
@@ -81,7 +82,7 @@ class DefaultSWRLLiteralBuiltInArgument extends DefaultSWRLBuiltInArgument imple
     throw new SWRLAPIException("Not a SWRLNamedBuiltInArgument");
   }
 
-  @Override public boolean equals(@Nullable Object o)
+  @SideEffectFree @Deterministic @Override public boolean equals(@Nullable Object o)
   {
     if (this == o) {
       return true;
@@ -95,12 +96,12 @@ class DefaultSWRLLiteralBuiltInArgument extends DefaultSWRLBuiltInArgument imple
     return this.literal.equals(that.literal);
   }
 
-  @Override public int hashCode()
+  @SideEffectFree @Deterministic @Override public int hashCode()
   {
     return this.literal.hashCode();
   }
 
-  @Override public int compareTo(@NonNull OWLObject o)
+  @SideEffectFree @Deterministic @Override public int compareTo(@NonNull OWLObject o)
   {
     if (o == null)
       throw new NullPointerException();

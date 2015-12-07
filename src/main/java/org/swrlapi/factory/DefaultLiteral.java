@@ -2,6 +2,7 @@ package org.swrlapi.factory;
 
 import checkers.nullness.quals.NonNull;
 import checkers.nullness.quals.Nullable;
+import dataflow.quals.Deterministic;
 import dataflow.quals.SideEffectFree;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
@@ -307,7 +308,7 @@ class DefaultLiteral implements Literal
     return "\"" + this.literal.toString().replaceAll("[~\\\\]\"", "\\\\\"") + "\"";
   }
 
-  @Override public boolean equals(@Nullable Object obj)
+  @SideEffectFree @Deterministic @Override public boolean equals(@Nullable Object obj)
   {
     if (this == obj)
       return true;
@@ -317,7 +318,7 @@ class DefaultLiteral implements Literal
     return (this.literal != null && impl.literal != null && this.literal.equals(impl.literal));
   }
 
-  @Override public int hashCode()
+  @SideEffectFree @Deterministic @Override public int hashCode()
   {
     int hash = 95;
     hash = hash + (null == this.literal ? 0 : this.literal.hashCode());

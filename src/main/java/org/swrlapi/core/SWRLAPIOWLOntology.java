@@ -25,7 +25,7 @@ import java.util.Set;
 /**
  * Wraps the OWLAPI's {@link org.semanticweb.owlapi.model.OWLOntology} class with additional functionality used by the
  * SWRLAPI. Primarily it provides methods for dealing with SWRL rules and SQWRL queries.
- * <p>
+ * <p/>
  * The {@link org.swrlapi.core.SWRLAPIRule} class provides an equivalent wrapping of the OWLAPI's
  * {@link org.semanticweb.owlapi.model.SWRLRule}. The SWRLAPI also provides a range of types extending the OWLAPI's
  * {@link org.semanticweb.owlapi.model.SWRLDArgument} interface to define arguments to built-in atoms. This extension
@@ -33,7 +33,7 @@ import java.util.Set;
  * OWLAPI's {@link org.semanticweb.owlapi.model.SWRLDArgument} interface. A {@link org.swrlapi.core.SWRLAPIOWLOntology}
  * will construct SWRLAPI rules from the SWRL rules in an OWLAPI-based ontology to contain these additional built-in
  * argument types.
- * <p>
+ * <p/>
  * The {@link #startBulkConversion()}, {@link #completeBulkConversion()}, {@link #hasOntologyChanged()}, and
  * {@link #resetOntologyChanged()} methods can be used for optimization purposes. For example, in the Protege-OWL API
  * the {@link #startBulkConversion()} method turns off listener notification so that bulk transfer of OWL axioms can be
@@ -69,21 +69,20 @@ public interface SWRLAPIOWLOntology
    * @throws SWRLParseException If an error occurs during parsing
    */
   @NonNull SWRLAPIRule createSWRLRule(@NonNull String ruleName, @NonNull String rule, @NonNull String comment,
-    boolean isActive) throws SWRLParseException;
+      boolean isActive) throws SWRLParseException;
 
   void deleteSWRLRule(@NonNull String ruleName);
 
-	/**
-	 *
-	 * @param ruleName The name of the rule
-	 * @param comment A comment for the rule
-	 * @param isRuleEnabled Is the rule enabled
-	 * @return A set of rule annotations
-	 */
-	@NonNull Set<OWLAnnotation> generateRuleAnnotations(@NonNull String ruleName, String comment,
-			boolean isRuleEnabled);
+  /**
+   * @param ruleName      The name of the rule
+   * @param comment       A comment for the rule
+   * @param isRuleEnabled Is the rule enabled
+   * @return A set of rule annotations
+   */
+  @NonNull Set<OWLAnnotation> generateRuleAnnotations(@NonNull String ruleName, @NonNull String comment,
+      boolean isRuleEnabled);
 
-	// The SWRLAPI provides built-ins beyond the core set defined in the SWRL submission.
+  // The SWRLAPI provides built-ins beyond the core set defined in the SWRL submission.
 
   boolean isSWRLBuiltIn(@NonNull IRI iri);
 
@@ -100,10 +99,10 @@ public interface SWRLAPIOWLOntology
   // Methods for handling SQWRL Queries
 
   @NonNull SQWRLQuery createSQWRLQuery(@NonNull String queryName, @NonNull String query)
-    throws SWRLParseException, SQWRLException;
+      throws SWRLParseException, SQWRLException;
 
   @NonNull SQWRLQuery createSQWRLQuery(@NonNull String queryName, @NonNull String query, @NonNull String comment,
-    boolean isActive) throws SWRLParseException, SQWRLException;
+      boolean isActive) throws SWRLParseException, SQWRLException;
 
   @NonNull SQWRLResult getSQWRLResult(@NonNull String queryName) throws SQWRLException;
 

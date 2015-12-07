@@ -134,13 +134,13 @@ public class SWRLRuleEditorDialog extends JDialog
         setInformationalStatusText(STATUS_OK);
         enableSave();
       } catch (SWRLIncompleteRuleException e) {
-        setIncompleteStatusText(e.getMessage());
+        setIncompleteStatusText(e.getMessage() == null ? "" : e.getMessage());
         disableSave();
       } catch (SWRLParseException e) {
-        setErrorStatusText(e.getMessage());
+        setErrorStatusText(e.getMessage() == null ? "" : e.getMessage());
         disableSave();
       } catch (RuntimeException e) {
-        setInformationalStatusText(e.getMessage());
+        setInformationalStatusText(e.getMessage() == null ? "" : e.getMessage());
         disableSave();
       }
     }

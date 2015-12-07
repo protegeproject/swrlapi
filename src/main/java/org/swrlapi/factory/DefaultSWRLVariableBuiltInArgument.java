@@ -2,6 +2,8 @@ package org.swrlapi.factory;
 
 import checkers.nullness.quals.NonNull;
 import checkers.nullness.quals.Nullable;
+import dataflow.quals.Deterministic;
+import dataflow.quals.SideEffectFree;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLObject;
@@ -94,8 +96,8 @@ class DefaultSWRLVariableBuiltInArgument extends DefaultSWRLBuiltInArgument impl
   @NonNull @Override public String getVariableName()
   {
     return this.variablePrefixedName.startsWith(":") ?
-      this.variablePrefixedName.substring(1) :
-      this.variablePrefixedName;
+        this.variablePrefixedName.substring(1) :
+        this.variablePrefixedName;
   }
 
   @Override public void setBuiltInResult(SWRLBuiltInArgument builtInResult) throws SWRLBuiltInException
@@ -173,7 +175,7 @@ class DefaultSWRLVariableBuiltInArgument extends DefaultSWRLBuiltInArgument impl
     return this.getIRI().compareTo(o.getIRI());
   }
 
-  @Override public int compareTo(@NonNull OWLObject o)
+  @SideEffectFree @Deterministic @Override public int compareTo(@NonNull OWLObject o)
   {
     if (!(o instanceof SWRLVariableBuiltInArgument))
       return -1;
@@ -183,7 +185,7 @@ class DefaultSWRLVariableBuiltInArgument extends DefaultSWRLBuiltInArgument impl
     return compareTo(other);
   }
 
-  @Override public boolean equals(@Nullable Object obj)
+  @SideEffectFree @Deterministic @Override public boolean equals(@Nullable Object obj)
   {
     if (this == obj)
       return true;
@@ -191,10 +193,11 @@ class DefaultSWRLVariableBuiltInArgument extends DefaultSWRLBuiltInArgument impl
       return false;
     DefaultSWRLVariableBuiltInArgument impl = (DefaultSWRLVariableBuiltInArgument)obj;
     return super.equals(impl) && ((this.builtInResult == impl.builtInResult)
-      || (this.builtInResult != null && this.builtInResult.equals(impl.builtInResult)) && this.isBound == impl.isBound);
+        || (this.builtInResult != null && this.builtInResult.equals(impl.builtInResult))
+        && this.isBound == impl.isBound);
   }
 
-  @Override public int hashCode()
+  @SideEffectFree @Deterministic @Override public int hashCode()
   {
     int hash = 78;
     hash = hash + (null == this.builtInResult ? 0 : this.builtInResult.hashCode());

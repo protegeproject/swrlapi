@@ -1,6 +1,8 @@
 package org.swrlapi.factory;
 
 import checkers.nullness.quals.NonNull;
+import checkers.nullness.quals.Nullable;
+import dataflow.quals.Deterministic;
 import dataflow.quals.SideEffectFree;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
@@ -58,7 +60,7 @@ abstract class DefaultSWRLNamedBuiltInArgument extends DefaultSWRLBuiltInArgumen
     return this;
   }
 
-  @Override public int compareTo(@NonNull OWLObject o)
+  @SideEffectFree @Deterministic @Override public int compareTo(@NonNull OWLObject o)
   {
     if (!(o instanceof DefaultSWRLNamedBuiltInArgument))
       return -1;
@@ -73,7 +75,7 @@ abstract class DefaultSWRLNamedBuiltInArgument extends DefaultSWRLBuiltInArgumen
     return Collections.emptySet(); // TODO Implement getAnnotationPropertiesInSignature
   }
 
-  @Override public boolean equals(Object o)
+  @SideEffectFree @Deterministic @Override public boolean equals(@Nullable Object o)
   {
     if (this == o)
       return true;
@@ -86,7 +88,7 @@ abstract class DefaultSWRLNamedBuiltInArgument extends DefaultSWRLBuiltInArgumen
 
   }
 
-  @Override public int hashCode()
+  @SideEffectFree @Deterministic @Override public int hashCode()
   {
     return entity != null ? entity.hashCode() : 0;
   }

@@ -1,14 +1,7 @@
 package org.swrlapi.builtins;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import checkers.nullness.quals.NonNull;
+import checkers.nullness.quals.Nullable;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLClass;
@@ -22,7 +15,6 @@ import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.swrlapi.builtins.arguments.SQWRLCollectionVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
-import org.swrlapi.factory.SWRLBuiltInArgumentFactory;
 import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDatatypeBuiltInArgument;
@@ -31,28 +23,35 @@ import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLPropertyBuiltInArgument;
-import org.swrlapi.literal.Literal;
-import org.swrlapi.factory.LiteralFactory;
-import org.swrlapi.factory.OWLLiteralFactory;
-import org.swrlapi.factory.SWRLAPIOWLDataFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
-import org.swrlapi.literal.XSDDate;
-import org.swrlapi.literal.XSDDateTime;
-import org.swrlapi.literal.XSDDuration;
-import org.swrlapi.literal.XSDTime;
 import org.swrlapi.exceptions.InvalidSWRLBuiltInArgumentException;
 import org.swrlapi.exceptions.InvalidSWRLBuiltInArgumentNumberException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLBuiltInLibraryException;
 import org.swrlapi.exceptions.SWRLBuiltInMethodRuntimeException;
+import org.swrlapi.factory.LiteralFactory;
+import org.swrlapi.factory.OWLLiteralFactory;
 import org.swrlapi.factory.SQWRLResultValueFactory;
+import org.swrlapi.factory.SWRLAPIOWLDataFactory;
+import org.swrlapi.factory.SWRLBuiltInArgumentFactory;
+import org.swrlapi.literal.Literal;
+import org.swrlapi.literal.XSDDate;
+import org.swrlapi.literal.XSDDateTime;
+import org.swrlapi.literal.XSDDuration;
+import org.swrlapi.literal.XSDTime;
 
-import checkers.nullness.quals.NonNull;
-import checkers.nullness.quals.Nullable;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A class that must be subclassed by a class implementing a library of SWRL built-in methods.
- * <p>
+ * <p/>
  * Provides invocation context for invoked built-ins (such the name of invoking rule, whether the invocation is in the
  * consequent or the antecedent) and access to the invoking {@link org.swrlapi.builtins.SWRLBuiltInBridge}. Also
  * provides implementations for a large number of SWRL built-in argument processing methods.
@@ -1207,7 +1206,8 @@ public abstract class AbstractSWRLBuiltInLibrary
     return arguments.get(argumentNumber).asVariable().getVariablePrefixedName();
   }
 
-  @NonNull private String makeInvalidArgumentTypeMessage(@NonNull SWRLBuiltInArgument argument, String expectedTypeName)
+  @NonNull private String makeInvalidArgumentTypeMessage(@NonNull SWRLBuiltInArgument argument,
+      @NonNull String expectedTypeName)
   {
     String message = "expecting " + expectedTypeName + ", got ";
 
@@ -1243,7 +1243,7 @@ public abstract class AbstractSWRLBuiltInLibrary
   {
     checkThatArgumentIsBound(argumentNumber, arguments);
 
-		SWRLBuiltInArgument argument = arguments.get(argumentNumber);
+    SWRLBuiltInArgument argument = arguments.get(argumentNumber);
 
     if (argument instanceof SWRLClassBuiltInArgument) {
       SWRLClassBuiltInArgument classArgument = (SWRLClassBuiltInArgument)argument;
@@ -1387,7 +1387,7 @@ public abstract class AbstractSWRLBuiltInLibrary
   }
 
   @Override public boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
-      String resultArgument) throws SWRLBuiltInException
+      @NonNull String resultArgument) throws SWRLBuiltInException
   {
     return processResultArgument(arguments, resultArgumentNumber, createLiteralBuiltInArgument(resultArgument));
   }
@@ -1399,19 +1399,19 @@ public abstract class AbstractSWRLBuiltInLibrary
   }
 
   @Override public boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
-			@NonNull XSDTime resultArgument) throws SWRLBuiltInException
+      @NonNull XSDTime resultArgument) throws SWRLBuiltInException
   {
     return processResultArgument(arguments, resultArgumentNumber, createLiteralBuiltInArgument(resultArgument));
   }
 
   @Override public boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
-			@NonNull XSDDate resultArgument) throws SWRLBuiltInException
+      @NonNull XSDDate resultArgument) throws SWRLBuiltInException
   {
     return processResultArgument(arguments, resultArgumentNumber, createLiteralBuiltInArgument(resultArgument));
   }
 
   @Override public boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
-			@NonNull XSDDateTime resultArgument) throws SWRLBuiltInException
+      @NonNull XSDDateTime resultArgument) throws SWRLBuiltInException
   {
     return processResultArgument(arguments, resultArgumentNumber, createLiteralBuiltInArgument(resultArgument));
   }
@@ -1538,7 +1538,8 @@ public abstract class AbstractSWRLBuiltInLibrary
   }
 
   @NonNull @Override public SQWRLCollectionVariableBuiltInArgument createSQWRLCollectionVariableBuiltInArgument(
-      IRI variableIRI, String queryName, String collectionName, String collectionGroupID)
+      @NonNull IRI variableIRI, @NonNull String queryName, @NonNull String collectionName,
+      @NonNull String collectionGroupID)
   {
     return getSWRLBuiltInArgumentFactory()
         .getSQWRLCollectionVariableBuiltInArgument(variableIRI, queryName, collectionName, collectionGroupID);

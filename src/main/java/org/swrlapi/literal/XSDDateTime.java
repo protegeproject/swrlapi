@@ -2,6 +2,8 @@ package org.swrlapi.literal;
 
 import checkers.nullness.quals.NonNull;
 import checkers.nullness.quals.Nullable;
+import dataflow.quals.Deterministic;
+import dataflow.quals.SideEffectFree;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
 
 import java.util.Date;
@@ -14,7 +16,7 @@ public class XSDDateTime extends XSDType<XSDDateTime>
   {
     super(content, XSDVocabulary.DATE_TIME.getIRI());
 
-    this.datetime = XSDTimeUtil.xsdDateTimeString2Date(getContent());
+    this.datetime = XSDTimeUtil.xsdDateTimeString2Date(content);
   }
 
   public XSDDateTime(@NonNull Date datetime)
@@ -24,8 +26,7 @@ public class XSDDateTime extends XSDType<XSDDateTime>
     this.datetime = datetime;
   }
 
-  @Override
-  protected void validate()
+  @Override protected void validate()
   {
     if (getContent() == null)
       throw new IllegalArgumentException("null content for xsd:DateTime");
@@ -34,8 +35,7 @@ public class XSDDateTime extends XSDType<XSDDateTime>
       throw new IllegalArgumentException("invalid xsd:DateTime " + getContent());
   }
 
-  @Override
-  public boolean equals(@Nullable Object o)
+  @SideEffectFree @Deterministic @Override public boolean equals(@Nullable Object o)
   {
     if (this == o)
       return true;
@@ -48,16 +48,14 @@ public class XSDDateTime extends XSDType<XSDDateTime>
     return this.datetime != null && otherDateTime.datetime != null && this.datetime.equals(otherDateTime.datetime);
   }
 
-  @Override
-  public int hashCode()
+  @SideEffectFree @Deterministic @Override public int hashCode()
   {
     int code = 136;
     code += this.datetime.hashCode();
     return code;
   }
 
-  @Override
-  public int compareTo(@NonNull XSDDateTime o)
+  @SideEffectFree @Deterministic @Override public int compareTo(@NonNull XSDDateTime o)
   {
     if (o == null)
       throw new NullPointerException();

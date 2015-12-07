@@ -1,6 +1,7 @@
 package org.swrlapi.literal;
 
 import checkers.nullness.quals.NonNull;
+import dataflow.quals.SideEffectFree;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.swrlapi.exceptions.LiteralException;
@@ -74,8 +75,7 @@ public interface Literal
 
   boolean isQuotableType();
 
-  @NonNull @Override
-  String toString();
+  @SideEffectFree @NonNull @Override String toString();
 
   @NonNull String toQuotedString();
 

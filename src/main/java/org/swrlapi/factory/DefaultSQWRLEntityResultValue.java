@@ -2,6 +2,7 @@ package org.swrlapi.factory;
 
 import checkers.nullness.quals.NonNull;
 import checkers.nullness.quals.Nullable;
+import dataflow.quals.Deterministic;
 import dataflow.quals.SideEffectFree;
 import org.semanticweb.owlapi.model.IRI;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
@@ -109,7 +110,7 @@ abstract class DefaultSQWRLEntityResultValue implements SQWRLEntityResultValue
     throw new SQWRLException(getClass().getName() + " is not a " + SQWRLLiteralResultValue.class.getName());
   }
 
-  @Override public boolean equals(@Nullable Object obj)
+  @SideEffectFree @Deterministic @Override public boolean equals(@Nullable Object obj)
   {
     if (this == obj)
       return true;
@@ -120,14 +121,14 @@ abstract class DefaultSQWRLEntityResultValue implements SQWRLEntityResultValue
     return this.iri.equals(n.iri);
   }
 
-  @Override public int hashCode()
+  @SideEffectFree @Deterministic @Override public int hashCode()
   {
     int hash = 298;
     hash = hash + (null == this.iri ? 0 : this.iri.hashCode());
     return hash;
   }
 
-  @Override public int compareTo(@NonNull SQWRLEntityResultValue o)
+  @SideEffectFree @Deterministic @Override public int compareTo(@NonNull SQWRLEntityResultValue o)
   {
     if (o == null)
       throw new NullPointerException();

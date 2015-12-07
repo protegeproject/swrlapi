@@ -2,6 +2,8 @@ package org.swrlapi.literal;
 
 import checkers.nullness.quals.NonNull;
 import checkers.nullness.quals.Nullable;
+import dataflow.quals.Deterministic;
+import dataflow.quals.SideEffectFree;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
 
 import java.util.Date;
@@ -24,8 +26,7 @@ public class XSDDate extends XSDType<XSDDate>
     this.date = date;
   }
 
-  @Override
-  protected void validate()
+  @Override protected void validate()
   {
     if (getContent() == null)
       throw new IllegalArgumentException("null content for xsd:Date");
@@ -34,7 +35,7 @@ public class XSDDate extends XSDType<XSDDate>
       throw new IllegalArgumentException("invalid xsd:Date '" + getContent() + "'");
   }
 
-  @Override public boolean equals(@Nullable Object o)
+  @SideEffectFree @Deterministic @Override public boolean equals(@Nullable Object o)
   {
     if (this == o)
       return true;
@@ -46,13 +47,12 @@ public class XSDDate extends XSDType<XSDDate>
     return !(date != null ? !date.equals(xsdDate.date) : xsdDate.date != null);
   }
 
-  @Override public int hashCode()
+  @SideEffectFree @Deterministic @Override public int hashCode()
   {
     return date != null ? date.hashCode() : 0;
   }
 
-  @Override
-  public int compareTo(@NonNull XSDDate o)
+  @SideEffectFree @Deterministic @Override public int compareTo(@NonNull XSDDate o)
   {
     if (o == null)
       throw new NullPointerException();

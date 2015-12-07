@@ -20,8 +20,8 @@ import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
 import org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue;
-import org.swrlapi.sqwrl.values.SQWRLNamedIndividualResultValue;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
+import org.swrlapi.sqwrl.values.SQWRLNamedIndividualResultValue;
 import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
 
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ import java.util.Set;
 
 /**
  * Implementation library for SQWRL built-ins.
- * <p>
+ * <p/>
  * Unlike other built-in libraries, queries that use built-ins in this library need to be preprocessed by a SQWRL-aware
  * processor. See the <tt>org.swrlapi.factory.DefaultSQWRLQuery</tt> class for an example of this processing.
  */
@@ -1769,8 +1769,9 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   }
 
   // An ungrouped collection will have a collectionGroupKey of the empty string so will not be partitioned.
-  private void recordCollection(@NonNull String queryName, String collectionName, @NonNull String collectionGroupKey,
-      @NonNull Collection<SWRLBuiltInArgument> collection) throws SWRLBuiltInException
+  private void recordCollection(@NonNull String queryName, @NonNull String collectionName,
+      @NonNull String collectionGroupKey, @NonNull Collection<SWRLBuiltInArgument> collection)
+      throws SWRLBuiltInException
   {
     String collectionKey = createCollectionKey(queryName, collectionName);
 
