@@ -1,20 +1,19 @@
 package org.swrlapi.factory;
 
+import static junit.framework.TestCase.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataFactory;
-import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.core.IRIResolver;
 import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
-
-import static junit.framework.TestCase.assertEquals;
 
 /**
  * @see SQWRLResultValueFactory
@@ -25,10 +24,9 @@ public class SQWRLResultValueFactoryTest
 	private static final String TestNamespace = "http://example.org#";
 
 	private OWLOntologyManager ontologyManager;
-	private OWLOntology ontology;
 	private DefaultPrefixManager prefixManager;
 	private IRIResolver iriResolver;
-  private SQWRLResultValueFactory resultValueFactory;
+	private SQWRLResultValueFactory resultValueFactory;
 	private SWRLBuiltInArgumentFactory builtInArgumentFactory;
 	private OWLDataFactory dataFactory;
 
@@ -37,8 +35,7 @@ public class SQWRLResultValueFactoryTest
 	{
 		ontologyManager = OWLManager.createOWLOntologyManager();
 		dataFactory = ontologyManager.getOWLDataFactory();
-		ontology = ontologyManager.createOntology();
-    prefixManager = new DefaultPrefixManager();
+		prefixManager = new DefaultPrefixManager();
 		iriResolver = SWRLAPIFactory.createIRIResolver(prefixManager);
 		resultValueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(iriResolver);
 		builtInArgumentFactory = SWRLAPIFactory.createSWRLBuiltInArgumentFactory(iriResolver);
