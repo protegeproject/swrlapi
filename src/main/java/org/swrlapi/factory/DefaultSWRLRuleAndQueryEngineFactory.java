@@ -62,7 +62,10 @@ public class DefaultSWRLRuleAndQueryEngineFactory implements SWRLRuleAndQueryEng
 
         bridge.setTargetSWRLRuleEngine(targetSWRLRuleEngine);
 
-        return new DefaultSWRLRuleAndQueryEngine(swrlapiOWLOntology, targetSWRLRuleEngine, bridge, bridge);
+        SWRLRuleEngine ruleEngine = new DefaultSWRLRuleAndQueryEngine(swrlapiOWLOntology, targetSWRLRuleEngine, bridge, bridge);
+        ruleEngine.importAssertedOWLAxioms();
+        return ruleEngine;
+
       } catch (Throwable e) {
         throw new SWRLRuleEngineException(
             "Error creating rule engine " + ruleEngineName + ". Exception: " + e.getClass().getCanonicalName()
@@ -95,7 +98,9 @@ public class DefaultSWRLRuleAndQueryEngineFactory implements SWRLRuleAndQueryEng
 
         bridge.setTargetSWRLRuleEngine(targetSWRLRuleEngine);
 
-        return new DefaultSWRLRuleAndQueryEngine(swrlapiOWLOntology, targetSWRLRuleEngine, bridge, bridge);
+        SQWRLQueryEngine queryEngine =  new DefaultSWRLRuleAndQueryEngine(swrlapiOWLOntology, targetSWRLRuleEngine, bridge, bridge);
+        queryEngine.importAssertedOWLAxioms();
+        return queryEngine;
       } catch (Throwable e) {
         throw new SWRLRuleEngineException(
             "Error creating query engine " + queryEngineName + ". Exception: " + e.getClass().getCanonicalName()

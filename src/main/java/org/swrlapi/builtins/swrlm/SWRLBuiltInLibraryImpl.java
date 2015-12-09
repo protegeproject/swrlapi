@@ -23,8 +23,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     super(SWRLMLibraryName);
   }
 
-  @Override
-  public void reset()
+  @Override public void reset()
   {
     this.jep = null;
   }

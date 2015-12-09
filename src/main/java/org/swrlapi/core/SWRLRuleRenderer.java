@@ -18,5 +18,5 @@ public interface SWRLRuleRenderer extends SWRLAPIEntityVisitorEx<String>
    * @param rule A SWRL rule
    * @return A text rendering of the rule
    */
-  @NonNull String renderSWRLRule(SWRLRule rule);
+  @NonNull String renderSWRLRule(@NonNull SWRLRule rule);
 }

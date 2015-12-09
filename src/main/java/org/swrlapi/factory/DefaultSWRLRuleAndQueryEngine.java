@@ -52,8 +52,6 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
     this.targetSWRLRuleEngine = targetSWRLRuleEngine;
     this.builtInBridgeController = builtInBridgeController;
     this.ruleEngineBridgeController = ruleEngineBridgeController;
-
-    importAssertedOWLAxioms();
   }
 
   @Override public void importAssertedOWLAxioms() throws SWRLRuleEngineException

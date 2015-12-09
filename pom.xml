@@ -238,7 +238,6 @@
         <configuration>
           <processors>
             <processor>checkers.nullness.NullnessChecker</processor>
-            <processor>checkers.interning.InterningChecker</processor>
           </processors>
         </configuration>
       </plugin>

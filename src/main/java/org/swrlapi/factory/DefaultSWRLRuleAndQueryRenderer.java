@@ -66,7 +66,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
   @NonNull private final OWLOntology ontology;
   @NonNull private final DefaultPrefixManager prefixManager;
 
-  public DefaultSWRLRuleAndQueryRenderer(@NonNull OWLOntology ontology, DefaultPrefixManager prefixManager)
+  public DefaultSWRLRuleAndQueryRenderer(@NonNull OWLOntology ontology, @NonNull DefaultPrefixManager prefixManager)
   {
     this.ontology = ontology;
     this.prefixManager = prefixManager;

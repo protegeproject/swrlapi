@@ -1,5 +1,6 @@
 package org.swrlapi.factory;
 
+import checkers.nullness.quals.MonotonicNonNull;
 import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
@@ -58,7 +59,7 @@ public class DefaultSWRLBridge implements SWRLBridge
   /**
    * The target rule engine implementation (e.g., Drools, Jess)
    */
-  @NonNull private TargetSWRLRuleEngine targetSWRLRuleEngine;
+  @MonotonicNonNull private TargetSWRLRuleEngine targetSWRLRuleEngine;
 
   public DefaultSWRLBridge(@NonNull SWRLAPIOWLOntology swrlapiOWLOntology,
       @NonNull OWL2RLPersistenceLayer owl2RLPersistenceLayer) throws SWRLBuiltInBridgeException
@@ -73,7 +74,7 @@ public class DefaultSWRLBridge implements SWRLBridge
     this.inferredOWLAxioms = new HashSet<>();
     this.injectedOWLAxioms = new HashSet<>();
 
-    reset();
+    this.builtInLibraryManager.invokeAllBuiltInLibrariesResetMethod(this);
   }
 
   @Override public void setTargetSWRLRuleEngine(@NonNull TargetSWRLRuleEngine targetSWRLRuleEngine)
