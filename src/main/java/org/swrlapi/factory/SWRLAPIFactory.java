@@ -92,7 +92,7 @@ public class SWRLAPIFactory
     DefaultPrefixManager prefixManager = new DefaultPrefixManager();
     OWLDocumentFormat format = ontology.getOWLOntologyManager().getOntologyFormat(ontology);
 
-    if (format.isPrefixOWLOntologyFormat())
+    if (format != null & format.isPrefixOWLOntologyFormat())
       prefixManager.copyPrefixesFrom(format.asPrefixOWLOntologyFormat().getPrefixName2PrefixMap());
 
     return swrlRuleAndQueryEngineFactory.createSWRLRuleEngine(ontology, prefixManager);
@@ -121,7 +121,7 @@ public class SWRLAPIFactory
     DefaultPrefixManager prefixManager = new DefaultPrefixManager();
     OWLDocumentFormat format = ontology.getOWLOntologyManager().getOntologyFormat(ontology);
 
-    if (format.isPrefixOWLOntologyFormat())
+    if (format != null && format.isPrefixOWLOntologyFormat())
       prefixManager.copyPrefixesFrom(format.asPrefixOWLOntologyFormat().getPrefixName2PrefixMap());
 
     return swrlRuleAndQueryEngineFactory.createSQWRLQueryEngine(ontology, prefixManager);
@@ -497,7 +497,12 @@ public class SWRLAPIFactory
   // TODO This looks dodgy
   @NonNull private static String resourceName2File(@NonNull String resourceName)
   {
-    URL url = SWRLAPIFactory.class.getClassLoader().getResource(resourceName);
+    ClassLoader classLoader = SWRLAPIFactory.class.getClassLoader();
+
+    if (classLoader == null)
+      throw new SWRLAPIException("Could not find class loader");
+
+    URL url = classLoader.getResource(resourceName);
     if (url == null)
       throw new SWRLAPIException("Could not find resource " + resourceName);
 

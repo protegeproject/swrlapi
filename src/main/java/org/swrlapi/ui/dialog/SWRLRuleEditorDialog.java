@@ -9,6 +9,7 @@ import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.ui.model.SWRLAutoCompleter;
 import org.swrlapi.ui.model.SWRLRuleEngineModel;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
+import org.swrlapi.ui.view.SWRLAPIView;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -30,7 +31,7 @@ import java.util.Optional;
  * @see org.swrlapi.core.SWRLAPIRule
  * @see org.swrlapi.sqwrl.SQWRLQuery
  */
-public class SWRLRuleEditorDialog extends JDialog
+public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
 {
   private static final long serialVersionUID = 1L;
 
@@ -78,16 +79,17 @@ public class SWRLRuleEditorDialog extends JDialog
   {
     this.swrlRuleEngineModel = swrlRuleEngineModel;
     this.dialogManager = dialogManager;
+    this.loweredBevelBorder = BorderFactory.createLoweredBevelBorder();
+    this.yellowBorder = BorderFactory.createLineBorder(Color.YELLOW);
+    this.ruleTextTextArea.addKeyListener(new SWRLRuleEditorKeyAdapter());
+  }
 
+  @Override public void initialize()
+  {
     setTitle(TITLE);
     setModal(true);
 
-    this.loweredBevelBorder = BorderFactory.createLoweredBevelBorder();
-    this.yellowBorder = BorderFactory.createLineBorder(Color.YELLOW);
-
     createComponents();
-
-    this.ruleTextTextArea.addKeyListener(new SWRLRuleEditorKeyAdapter());
 
     setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 

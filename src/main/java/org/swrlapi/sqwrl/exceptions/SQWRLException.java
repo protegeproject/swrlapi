@@ -1,6 +1,7 @@
 package org.swrlapi.sqwrl.exceptions;
 
 import checkers.nullness.quals.NonNull;
+import checkers.nullness.quals.Nullable;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 
 public class SQWRLException extends SWRLBuiltInException
@@ -12,7 +13,7 @@ public class SQWRLException extends SWRLBuiltInException
     super(message);
   }
 
-  public SQWRLException(@NonNull String message, Throwable cause)
+  public SQWRLException(@NonNull String message, @Nullable Throwable cause)
   {
     super(message, cause);
   }

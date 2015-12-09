@@ -15,20 +15,17 @@ class DefaultSWRLClassBuiltInArgument extends DefaultSWRLNamedBuiltInArgument im
     super(cls);
   }
 
-  @NonNull @Override
-  public OWLClass getOWLClass()
+  @NonNull @Override public OWLClass getOWLClass()
   {
     return getOWLEntity().asOWLClass();
   }
 
-  @Override
-  @NonNull public <T> T accept(@NonNull SWRLBuiltInArgumentVisitorEx<T> visitor)
+  @NonNull @Override public <T> T accept(@NonNull SWRLBuiltInArgumentVisitorEx<T> visitor)
   {
     return visitor.visit(this);
   }
 
-  @Override
-  public void accept(@NonNull SWRLBuiltInArgumentVisitor visitor)
+  @Override public void accept(@NonNull SWRLBuiltInArgumentVisitor visitor)
   {
     visitor.visit(this);
   }

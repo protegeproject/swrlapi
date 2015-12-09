@@ -4,6 +4,7 @@ import checkers.nullness.quals.NonNull;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class OWL2RLInconsistencyDescription
 {
@@ -23,16 +24,20 @@ public class OWL2RLInconsistencyDescription
     return argumentsDescriptionMap.containsKey(owl2RLRuleName);
   }
 
-  @NonNull public static OWL2RLRuleArguments getRuleArguments(@NonNull String owl2RLRuleName)
+  public static Optional<OWL2RLRuleArguments> getRuleArguments(@NonNull String owl2RLRuleName)
   {
-    return argumentsDescriptionMap.get(owl2RLRuleName);
+    if (argumentsDescriptionMap.containsKey(owl2RLRuleName))
+      return Optional.of(argumentsDescriptionMap.get(owl2RLRuleName));
+    else
+      return Optional.empty();
   }
 
   private static void createArgumentDescription(@NonNull String owl2RLRuleName, int numberOfClassArguments,
-      int numberOfIndividualArguments, int numberOfObjectPropertyArguments, int numberOfDataPropertyArguments)
+    int numberOfIndividualArguments, int numberOfObjectPropertyArguments, int numberOfDataPropertyArguments)
   {
-    argumentsDescriptionMap.put(owl2RLRuleName, new OWL2RLRuleArguments(numberOfClassArguments,
-        numberOfIndividualArguments, numberOfObjectPropertyArguments, numberOfDataPropertyArguments));
+    argumentsDescriptionMap.put(owl2RLRuleName,
+      new OWL2RLRuleArguments(numberOfClassArguments, numberOfIndividualArguments, numberOfObjectPropertyArguments,
+        numberOfDataPropertyArguments));
   }
 
   public static class OWL2RLRuleArguments
@@ -43,7 +48,7 @@ public class OWL2RLInconsistencyDescription
     private final int numberOfDataPropertyArguments;
 
     public OWL2RLRuleArguments(int numberOfClassArguments, int numberOfIndividualArguments,
-        int numberOfObjectPropertyArguments, int numberOfDataPropertyArguments)
+      int numberOfObjectPropertyArguments, int numberOfDataPropertyArguments)
     {
       this.numberOfClassArguments = numberOfClassArguments;
       this.numberOfIndividualArguments = numberOfIndividualArguments;

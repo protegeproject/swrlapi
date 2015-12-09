@@ -44,7 +44,7 @@ public interface SWRLRuleEngineManager
    * @param ruleEngineName A rule engine name
    * @return A creator for the specified rule engine; null if it is not registered
    */
-  @NonNull TargetSWRLRuleEngineCreator getRegisteredRuleEngineCreator(@NonNull String ruleEngineName);
+  Optional<TargetSWRLRuleEngineCreator> getRegisteredRuleEngineCreator(@NonNull String ruleEngineName);
 
   /**
    * @param ruleEngineName A rule engine name

@@ -19,6 +19,7 @@ public class DefaultSWRLRuleEngineDialogManager implements SWRLRuleEngineDialogM
   public DefaultSWRLRuleEngineDialogManager(@NonNull SWRLRuleEngineModel swrlRuleEngineModel)
   {
     this.swrlRuleEditorDialog = new SWRLRuleEditorDialog(swrlRuleEngineModel, this);
+    this.swrlRuleEditorDialog.initialize();
   }
 
   @NonNull @Override public JDialog getSWRLRuleEditorDialog(@NonNull Component parent)

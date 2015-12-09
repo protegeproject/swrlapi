@@ -15,20 +15,17 @@ class DefaultSWRLDatatypeBuiltInArgument extends DefaultSWRLNamedBuiltInArgument
     super(datatype);
   }
 
-  @NonNull @Override
-  public OWLDatatype getOWLDatatype()
+  @NonNull @Override public OWLDatatype getOWLDatatype()
   {
     return getOWLEntity().asOWLDatatype();
   }
 
-  @NonNull @Override
-  public <T> T accept(@NonNull SWRLBuiltInArgumentVisitorEx<T> visitor)
+  @NonNull @Override public <T> T accept(@NonNull SWRLBuiltInArgumentVisitorEx<T> visitor)
   {
     return visitor.visit(this);
   }
 
-  @Override
-  public void accept(@NonNull SWRLBuiltInArgumentVisitor visitor)
+  @Override public void accept(@NonNull SWRLBuiltInArgumentVisitor visitor)
   {
     visitor.visit(this);
   }

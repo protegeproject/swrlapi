@@ -13,9 +13,10 @@ public class CloseAction implements ActionListener
 {
   @NonNull private final Component parent;
   @NonNull private final FileBackedOntologyModel ontologyModel;
-  private final @NonNull SWRLRuleEngineDialogManager dialogManager;
+  @NonNull private final SWRLRuleEngineDialogManager dialogManager;
 
   public static final String CLOSE_TITLE = "Close";
+
   private static final String MESSAGE = "Do you really want to close the ontology?";
   private static final String ERROR_TITLE = "Error";
 
@@ -45,7 +46,7 @@ public class CloseAction implements ActionListener
     try {
       this.ontologyModel.close();
     } catch (OWLOntologyCreationException e) {
-      this.dialogManager.showErrorMessageDialog(this.parent, e.getMessage(), ERROR_TITLE);
+      this.dialogManager.showErrorMessageDialog(this.parent, e != null ? e.getMessage() : "", ERROR_TITLE);
     }
   }
 }

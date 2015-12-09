@@ -47,9 +47,12 @@ class DefaultSWRLRuleEngineManager implements SWRLRuleEngineManager
       return Optional.empty();
   }
 
-  @Override @NonNull public TargetSWRLRuleEngineCreator getRegisteredRuleEngineCreator(@NonNull String ruleEngineName)
+  @Override public Optional<TargetSWRLRuleEngineCreator> getRegisteredRuleEngineCreator(@NonNull String ruleEngineName)
   {
-    return this.registeredSWRLRuleEngines.get(ruleEngineName);
+    if (this.registeredSWRLRuleEngines.containsKey(ruleEngineName))
+      return Optional.of(this.registeredSWRLRuleEngines.get(ruleEngineName));
+    else
+      return Optional.empty();
   }
 
   @NonNull @Override public Set<String> getRegisteredRuleEngineNames()

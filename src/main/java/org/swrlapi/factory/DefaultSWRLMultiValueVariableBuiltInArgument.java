@@ -38,12 +38,12 @@ class DefaultSWRLMultiValueVariableBuiltInArgument extends DefaultSWRLVariableBu
     return this;
   }
 
-  @Override public void addArgument(SWRLBuiltInArgument argument)
+  @Override public void addArgument(@NonNull SWRLBuiltInArgument argument)
   {
     this.arguments.add(argument);
   }
 
-  @Override public void setArguments(List<SWRLBuiltInArgument> arguments)
+  @Override public void setArguments(@NonNull List<SWRLBuiltInArgument> arguments)
   {
     this.arguments = arguments;
   }
