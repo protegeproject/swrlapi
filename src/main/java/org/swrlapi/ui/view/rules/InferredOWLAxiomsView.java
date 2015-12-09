@@ -20,7 +20,10 @@ public class InferredOWLAxiomsView extends JPanel implements SWRLAPIView
   {
     this.ruleEngineModel = ruleEngineModel;
     this.inferredAxiomsTableModel = new InferredAxiomsTableModel();
+  }
 
+  @Override public void initialize()
+  {
     JTable inferredAxiomsTable = new JTable(this.inferredAxiomsTableModel);
     JScrollPane scrollPane = new JScrollPane(inferredAxiomsTable);
     JViewport viewPort = scrollPane.getViewport();

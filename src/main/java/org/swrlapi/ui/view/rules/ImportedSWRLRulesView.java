@@ -18,13 +18,17 @@ public class ImportedSWRLRulesView extends JPanel implements SWRLAPIView
 
   @NonNull private final SWRLRuleEngineModel swrlRuleEngineModel;
   @NonNull private final SWRLRulesTableModel swrlRulesTableModel;
+  @NonNull private final JTable swrlRulesTable;
 
   public ImportedSWRLRulesView(@NonNull SWRLRuleEngineModel ruleEngineModel)
   {
     this.swrlRuleEngineModel = ruleEngineModel;
     this.swrlRulesTableModel = new SWRLRulesTableModel();
-    JTable swrlRulesTable = new JTable(this.swrlRulesTableModel);
+    this.swrlRulesTable = new JTable(this.swrlRulesTableModel);
+  }
 
+  @Override public void initialize()
+  {
     JScrollPane scrollPane = new JScrollPane(swrlRulesTable);
     JViewport viewPort = scrollPane.getViewport();
     setLayout(new BorderLayout());

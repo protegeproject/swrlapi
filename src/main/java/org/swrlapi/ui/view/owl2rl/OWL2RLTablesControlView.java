@@ -24,11 +24,15 @@ public class OWL2RLTablesControlView extends JPanel implements SWRLAPIView
   {
     this.owl2RLModel = owl2RLModel;
     this.ruleTableActivationButtons = new ArrayList<>();
+  }
 
+  @Override public void initialize()
+  {
     setLayout(new GridLayout(1, this.owl2RLModel.getOWL2RLEngine().getNumberOfTables()));
 
     for (OWL2RLNames.OWL2RLRuleTable ruleTable : this.owl2RLModel.getOWL2RLEngine().getRuleTables()) {
       OWL2RLRuleTableActivationButton button = new OWL2RLRuleTableActivationButton(this.owl2RLModel, ruleTable);
+      button.initialize();
       this.ruleTableActivationButtons.add(button);
       add(button);
     }

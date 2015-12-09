@@ -24,6 +24,11 @@ public class OWL2RLControlView extends JPanel implements SWRLAPIView
   public OWL2RLControlView(@NonNull OWL2RLModel owl2RLModel)
   {
     this.owl2RLTablesControlView = new OWL2RLTablesControlView(owl2RLModel);
+  }
+
+  @Override public void initialize()
+  {
+    this.owl2RLTablesControlView.initialize();
 
     JTextArea console = createConsole();
     JScrollPane scrollPane = new JScrollPane(console);
@@ -32,25 +37,24 @@ public class OWL2RLControlView extends JPanel implements SWRLAPIView
     scrollPane.setPreferredSize(new Dimension(VIEW_PREFERRED_WIDTH, VIEW_PREFERRED_HEIGHT));
     add(BorderLayout.CENTER, scrollPane);
 
-    console
-      .append("The SWRLAPI supports an OWL profile called OWL 2 RL and uses an OWL 2 RL-based reasoner to perform reasoning.\n\n");
-    console
-      .append("OWL 2 RL reasoning is performed primarily via a set of implication rules. These rules are described\n");
+    console.append(
+        "The SWRLAPI supports an OWL profile called OWL 2 RL and uses an OWL 2 RL-based reasoner to perform reasoning.\n\n");
+    console.append(
+        "OWL 2 RL reasoning is performed primarily via a set of implication rules. These rules are described\n");
     console.append("in the following W3C document: http://www.w3.org/TR/owl2-profiles/#OWL_2_RL.\n");
-    console
-      .append("This document divides these rules into a set of numbered tables and each rule is given a unique name.\n\n");
+    console.append(
+        "This document divides these rules into a set of numbered tables and each rule is given a unique name.\n\n");
     console.append("The toggle buttons below allow all rules in particular tables to be enabled and disabled.\n\n");
-    console
-      .append("The table-specific subtabs list individual rule names, indicate their support status, and allow suported rules to be\n");
-    console
-      .append("enabled or disabled. A check next to each rule indicates whether that rule is enabled or disabled. Greyed-out\n");
+    console.append(
+        "The table-specific subtabs list individual rule names, indicate their support status, and allow suported rules to be\n");
+    console.append(
+        "enabled or disabled. A check next to each rule indicates whether that rule is enabled or disabled. Greyed-out\n");
     console.append("rules are either permanently enabled or currently unsupported and cannot be toggled.\n\n");
 
     add(BorderLayout.SOUTH, this.owl2RLTablesControlView);
   }
 
-  @Override
-  public void update()
+  @Override public void update()
   {
     this.owl2RLTablesControlView.update();
   }

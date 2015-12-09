@@ -30,6 +30,12 @@ public class SWRLRulesView extends JSplitPane implements SWRLAPIView
 	{
 		this.ruleTablesView = new SWRLRulesTableView(ruleEngineModel, dialogManager);
 		this.ruleExecutionView = new SWRLRuleExecutionView(ruleEngineModel);
+  }
+
+  @Override public void initialize()
+  {
+    this.ruleTablesView.initialize();
+    this.ruleExecutionView.initialize();
 
 		setOrientation(JSplitPane.VERTICAL_SPLIT);
 		setResizeWeight(SPLIT_PANE_RESIZE_WEIGHT);

@@ -27,7 +27,10 @@ public class OWL2RLRuleTableView extends JPanel implements SWRLAPIView
     this.owl2RLModel = owl2RLModel;
     this.owl2RLRuleTable = owl2RLRuleTable;
     this.ruleActivationButtons = new ArrayList<>();
+  }
 
+  @Override public void initialize()
+  {
     int numberOfButtons = getOWL2RLModel().getOWL2RLEngine().getRules(this.owl2RLRuleTable).size();
     int n = 1 + (int)java.lang.Math.sqrt(numberOfButtons);
 
@@ -36,6 +39,7 @@ public class OWL2RLRuleTableView extends JPanel implements SWRLAPIView
     for (OWL2RLNames.OWL2RLRule rule : this.owl2RLModel.getOWL2RLEngine().getRules(this.owl2RLRuleTable)) {
       OWL2RLRuleActivationButton button = new OWL2RLRuleActivationButton(getOWL2RLModel(), rule);
       this.ruleActivationButtons.add(button);
+      button.initialize();
       add(button);
     }
   }

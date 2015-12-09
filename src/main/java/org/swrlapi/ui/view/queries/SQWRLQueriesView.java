@@ -26,12 +26,17 @@ public class SQWRLQueriesView extends JSplitPane implements SWRLAPIView
 
 	public SQWRLQueriesView(@NonNull SQWRLQueryEngineModel queryEngineModel, @NonNull SWRLRuleEngineDialogManager dialogManager)
 			throws SWRLAPIException
-	{
-		this.swrlRulesTableView = new SWRLRulesTableView(queryEngineModel, dialogManager);
-		this.sqwrlQueryExecutionView = new SQWRLQueryExecutionView(queryEngineModel,
-				new SQWRLQuerySelector(this.swrlRulesTableView));
+  {
+    this.swrlRulesTableView = new SWRLRulesTableView(queryEngineModel, dialogManager);
+    this.sqwrlQueryExecutionView = new SQWRLQueryExecutionView(queryEngineModel, new SQWRLQuerySelector(this.swrlRulesTableView));
+  }
 
-		setOrientation(JSplitPane.VERTICAL_SPLIT);
+  @Override public void initialize()
+  {
+    this.swrlRulesTableView.initialize();
+    this.sqwrlQueryExecutionView.initialize();
+
+    setOrientation(JSplitPane.VERTICAL_SPLIT);
 		setResizeWeight(SPLIT_PANE_RESIZE_WEIGHT);
 		setTopComponent(this.swrlRulesTableView);
 		setBottomComponent(this.sqwrlQueryExecutionView);

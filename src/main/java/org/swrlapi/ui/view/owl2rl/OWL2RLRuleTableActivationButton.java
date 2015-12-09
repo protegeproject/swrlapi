@@ -3,6 +3,7 @@ package org.swrlapi.ui.view.owl2rl;
 import checkers.nullness.quals.NonNull;
 import org.swrlapi.owl2rl.OWL2RLNames;
 import org.swrlapi.ui.model.OWL2RLModel;
+import org.swrlapi.ui.view.SWRLAPIView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +14,7 @@ import java.awt.event.ActionListener;
  * @see org.swrlapi.ui.model.OWL2RLModel
  * @see org.swrlapi.owl2rl.OWL2RLNames
  */
-public class OWL2RLRuleTableActivationButton extends JCheckBox implements ActionListener
+public class OWL2RLRuleTableActivationButton extends JCheckBox implements ActionListener, SWRLAPIView
 {
   private static final long serialVersionUID = 1L;
 
@@ -29,7 +30,10 @@ public class OWL2RLRuleTableActivationButton extends JCheckBox implements Action
 
     this.owl2RLModel = owl2RLModel;
     this.ruleTable = ruleTable;
+  }
 
+  @Override public void initialize()
+  {
     setPreferredSize(new Dimension(TOOLTIP_PREFERRED_WIDTH, TOOLTIP_PREFERRED_HEIGHT));
     setToolTipText("Click to enable or disable OWL 2 RL ruleTable " + this.ruleTable.toString() + ".");
     setEnabled(this.owl2RLModel.getOWL2RLEngine().hasSwitchableRules(this.ruleTable));
@@ -37,13 +41,12 @@ public class OWL2RLRuleTableActivationButton extends JCheckBox implements Action
     addActionListener(this);
   }
 
-  public void update()
+  @Override public void update()
   {
     setSelected(getOWL2RLModel().getOWL2RLEngine().hasEnabledRules(this.ruleTable));
   }
 
-  @Override
-  public void actionPerformed(ActionEvent e)
+  @Override public void actionPerformed(ActionEvent e)
   {
     if (isSelected())
       getOWL2RLModel().getOWL2RLEngine().enableTables(this.ruleTable);

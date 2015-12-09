@@ -14,12 +14,24 @@ public class SWRLRuleExecutionView extends JTabbedPane implements SWRLAPIView
 {
   private static final long serialVersionUID = 1L;
 
+  @NonNull private final SWRLRuleEngineModel swrlRuleEngineModel;
+  @NonNull private final SWRLRuleEngine swrlRuleEngine;
+  @NonNull private final Icon ruleEngineIcon;
+  @NonNull private final Icon owl2RLIcon;
+
   public SWRLRuleExecutionView(@NonNull SWRLRuleEngineModel swrlRuleEngineModel)
     throws SWRLAPIException
   {
-    SWRLRuleEngine swrlRuleEngine = swrlRuleEngineModel.getSWRLRuleEngine();
-    Icon ruleEngineIcon = swrlRuleEngine.getRuleEngineIcon();
-    Icon owl2RLIcon = SWRLAPIFactory.getOWL2RLReasonerIcon();
+    this.swrlRuleEngineModel = swrlRuleEngineModel;
+    this.swrlRuleEngine = swrlRuleEngineModel.getSWRLRuleEngine();
+    this.ruleEngineIcon = this.swrlRuleEngine.getRuleEngineIcon();
+    this.owl2RLIcon = SWRLAPIFactory.getOWL2RLReasonerIcon();
+  }
+
+  @Override public void initialize()
+  {
+    OWL2RLRuleTablesView ruleTablesView = new OWL2RLRuleTablesView(swrlRuleEngineModel.getOWL2RLModel());
+    ruleTablesView.initialize();;
 
     addTab("Control", ruleEngineIcon, new SWRLRulesControlView(swrlRuleEngineModel), "Control Tab");
 
@@ -29,7 +41,7 @@ public class SWRLRuleExecutionView extends JTabbedPane implements SWRLAPIView
 
     addTab("Inferred Axioms", owl2RLIcon, new InferredOWLAxiomsView(swrlRuleEngineModel), "Inferred OWL Axioms Tab");
 
-    addTab("OWL 2 RL", owl2RLIcon, new OWL2RLRuleTablesView(swrlRuleEngineModel.getOWL2RLModel()), "OWL 2 RL Tab");
+    addTab("OWL 2 RL", owl2RLIcon, ruleTablesView, "OWL 2 RL Tab");
   }
 
   @Override public void update()

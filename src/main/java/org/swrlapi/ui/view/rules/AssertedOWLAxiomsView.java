@@ -15,13 +15,17 @@ public class AssertedOWLAxiomsView extends JPanel implements SWRLAPIView
 
   @NonNull private final SWRLRuleEngineModel ruleEngineModel;
   @NonNull private final AssertedAxiomsTableModel assertedAxiomsTableModel;
+  @NonNull private final JTable table;
 
   public AssertedOWLAxiomsView(@NonNull SWRLRuleEngineModel ruleEngineModel)
   {
     this.ruleEngineModel = ruleEngineModel;
     this.assertedAxiomsTableModel = new AssertedAxiomsTableModel();
-    JTable table = new JTable(this.assertedAxiomsTableModel);
+    this.table = new JTable(this.assertedAxiomsTableModel);
+  }
 
+  @Override public void initialize()
+  {
     setLayout(new BorderLayout());
 
     JScrollPane scrollPane = new JScrollPane(table);

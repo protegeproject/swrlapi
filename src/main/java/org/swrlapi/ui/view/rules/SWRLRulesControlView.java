@@ -27,7 +27,10 @@ public class SWRLRulesControlView extends JPanel implements SWRLAPIView
   public SWRLRulesControlView(@NonNull SWRLRuleEngineModel swrlRuleEngineModel)
   {
     this.swrlRuleEngineModel = swrlRuleEngineModel;
+  }
 
+  @Override public void initialize()
+  {
     String ruleEngineName = this.swrlRuleEngineModel.getSWRLRuleEngine().getRuleEngineName();
     String ruleEngineVersion = this.swrlRuleEngineModel.getSWRLRuleEngine().getRuleEngineVersion();
 

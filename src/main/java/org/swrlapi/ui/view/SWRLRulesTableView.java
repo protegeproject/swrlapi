@@ -23,278 +23,284 @@ import java.util.Optional;
  */
 public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 {
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	private static final int ACTIVE_COLUMN_PREFERRED_WIDTH = 30;
-	private static final int ACTIVE_COLUMN_MAX_WIDTH = 50;
-	private static final int RULE_NAME_COLUMN_PREFERRED_WIDTH = 150;
-	private static final int RULE_NAME_COLUMN_MAX_WIDTH = 200;
-	private static final int RULE_TEXT_COLUMN_PREFERRED_WIDTH = 500;
-	private static final int RULE_TEXT_COLUMN_MAX_WIDTH = 1400;
-	private static final int COMMENT_COLUMN_PREFERRED_WIDTH = 200;
-	private static final int COMMENT_COLUMN_MAX_WIDTH = 300;
+  private static final int ACTIVE_COLUMN_PREFERRED_WIDTH = 30;
+  private static final int ACTIVE_COLUMN_MAX_WIDTH = 50;
+  private static final int RULE_NAME_COLUMN_PREFERRED_WIDTH = 150;
+  private static final int RULE_NAME_COLUMN_MAX_WIDTH = 200;
+  private static final int RULE_TEXT_COLUMN_PREFERRED_WIDTH = 500;
+  private static final int RULE_TEXT_COLUMN_MAX_WIDTH = 1400;
+  private static final int COMMENT_COLUMN_PREFERRED_WIDTH = 200;
+  private static final int COMMENT_COLUMN_MAX_WIDTH = 300;
 
-	@NonNull private final SWRLRuleEngineModel swrlRuleEngineModel;
-	private final @NonNull SWRLRuleEngineDialogManager dialogManager;
-	@NonNull private final JTable swrlRulesTable;
+  @NonNull private final SWRLRuleEngineModel swrlRuleEngineModel;
+  @NonNull private final SWRLRuleEngineDialogManager dialogManager;
+  @NonNull private final JTable swrlRulesTable;
 
-	private JButton editButton, deleteButton;
+  private JButton editButton, deleteButton;
 
-	public SWRLRulesTableView(@NonNull SWRLRuleEngineModel swrlRuleEngineModel,
-			@NonNull SWRLRuleEngineDialogManager dialogManager)
-	{
-		this.swrlRuleEngineModel = swrlRuleEngineModel;
-		this.dialogManager = dialogManager;
-		this.swrlRulesTable = new JTable(this.swrlRuleEngineModel.getSWRLRulesTableModel());
-		this.swrlRulesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+  public SWRLRulesTableView(@NonNull SWRLRuleEngineModel swrlRuleEngineModel,
+      @NonNull SWRLRuleEngineDialogManager dialogManager)
+  {
+    this.swrlRuleEngineModel = swrlRuleEngineModel;
+    this.dialogManager = dialogManager;
+    this.swrlRulesTable = new JTable(this.swrlRuleEngineModel.getSWRLRulesTableModel());
+    this.swrlRulesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-		this.swrlRuleEngineModel.getSWRLRulesTableModel().setView(this);
+    this.swrlRuleEngineModel.getSWRLRulesTableModel().setView(this);
+  }
 
-		addTableListeners();
-		setPreferredColumnWidths();
-		createComponents(dialogManager);
-		createPopupMenu();
-	}
+  @Override public void initialize()
+  {
+    addTableListeners();
 
-	@Override public void update()
-	{
-		getSWRLRulesTableModel().fireTableDataChanged();
-		validate();
-	}
+    setPreferredColumnWidths();
 
-	public Optional<String> getSelectedSWRLRuleName()
-	{
-		int selectedRow = this.swrlRulesTable.getSelectedRow();
+    createComponents(dialogManager);
 
-		if (selectedRow != -1)
-			return Optional.of(getSWRLRulesTableModel().getSWRLRuleNameByIndex(selectedRow));
-		else
-			return Optional.empty();
-	}
+    createPopupMenu();
+  }
 
-	private Optional<String> getSelectedSWRLRuleText()
-	{
-		int selectedRow = this.swrlRulesTable.getSelectedRow();
+  @Override public void update()
+  {
+    getSWRLRulesTableModel().fireTableDataChanged();
+    validate();
+  }
 
-		if (selectedRow != -1)
-			return Optional.of(getSWRLRulesTableModel().getSWRLRuleTextByIndex(selectedRow));
-		else
-			return Optional.empty();
-	}
+  public Optional<String> getSelectedSWRLRuleName()
+  {
+    int selectedRow = this.swrlRulesTable.getSelectedRow();
 
-	private Optional<String> getSelectedSWRLRuleComment()
-	{
-		int selectedRow = this.swrlRulesTable.getSelectedRow();
+    if (selectedRow != -1)
+      return Optional.of(getSWRLRulesTableModel().getSWRLRuleNameByIndex(selectedRow));
+    else
+      return Optional.empty();
+  }
 
-		if (selectedRow != -1)
-			return Optional.of(getSWRLRulesTableModel().getSWRLRuleCommentByIndex(selectedRow));
-		else
-			return Optional.empty();
-	}
+  private Optional<String> getSelectedSWRLRuleText()
+  {
+    int selectedRow = this.swrlRulesTable.getSelectedRow();
 
-	private void setPreferredColumnWidths()
-	{
-		TableColumnModel columnModel = this.swrlRulesTable.getColumnModel();
+    if (selectedRow != -1)
+      return Optional.of(getSWRLRulesTableModel().getSWRLRuleTextByIndex(selectedRow));
+    else
+      return Optional.empty();
+  }
 
-		columnModel.getColumn(SWRLRulesTableModel.ACTIVE_COLUMN).setPreferredWidth(ACTIVE_COLUMN_PREFERRED_WIDTH);
-		columnModel.getColumn(SWRLRulesTableModel.ACTIVE_COLUMN).setMaxWidth(ACTIVE_COLUMN_MAX_WIDTH);
-		columnModel.getColumn(SWRLRulesTableModel.RULE_NAME_COLUMN).setPreferredWidth(RULE_NAME_COLUMN_PREFERRED_WIDTH);
-		columnModel.getColumn(SWRLRulesTableModel.RULE_NAME_COLUMN).setMaxWidth(RULE_NAME_COLUMN_MAX_WIDTH);
-		columnModel.getColumn(SWRLRulesTableModel.RULE_TEXT_COLUMN).setPreferredWidth(RULE_TEXT_COLUMN_PREFERRED_WIDTH);
-		columnModel.getColumn(SWRLRulesTableModel.RULE_TEXT_COLUMN).setMaxWidth(RULE_TEXT_COLUMN_MAX_WIDTH);
-		columnModel.getColumn(SWRLRulesTableModel.RULE_COMMENT_COLUMN).setPreferredWidth(COMMENT_COLUMN_PREFERRED_WIDTH);
-		columnModel.getColumn(SWRLRulesTableModel.RULE_COMMENT_COLUMN).setMaxWidth(COMMENT_COLUMN_MAX_WIDTH);
-	}
+  private Optional<String> getSelectedSWRLRuleComment()
+  {
+    int selectedRow = this.swrlRulesTable.getSelectedRow();
 
-	private void addTableListeners()
-	{
-		this.swrlRulesTable.addMouseListener(new MouseAdapter()
-		{
-			@Override public void mouseClicked(@NonNull MouseEvent e)
-			{
-				if (e.getClickCount() == 2) {
-					if (e.getSource() == SWRLRulesTableView.this.swrlRulesTable) {
-						editSelectedSWRLRule();
-					}
-				}
-			}
-		});
+    if (selectedRow != -1)
+      return Optional.of(getSWRLRulesTableModel().getSWRLRuleCommentByIndex(selectedRow));
+    else
+      return Optional.empty();
+  }
 
-		this.swrlRulesTable.getSelectionModel().addListSelectionListener(e -> {
-			if (hasSelectedRule())
-				enableEditAndDelete();
-			else
-				disableEditAndDelete();
-		});
-	}
+  private void setPreferredColumnWidths()
+  {
+    TableColumnModel columnModel = this.swrlRulesTable.getColumnModel();
 
-	private void editSelectedSWRLRule()
-	{
-		if (this.swrlRulesTable.getSelectedRow() != -1) {
-			String ruleName = getSelectedSWRLRuleName().get();
-			String ruleText = getSelectedSWRLRuleText().get();
-			String ruleComment = getSelectedSWRLRuleComment().get();
+    columnModel.getColumn(SWRLRulesTableModel.ACTIVE_COLUMN).setPreferredWidth(ACTIVE_COLUMN_PREFERRED_WIDTH);
+    columnModel.getColumn(SWRLRulesTableModel.ACTIVE_COLUMN).setMaxWidth(ACTIVE_COLUMN_MAX_WIDTH);
+    columnModel.getColumn(SWRLRulesTableModel.RULE_NAME_COLUMN).setPreferredWidth(RULE_NAME_COLUMN_PREFERRED_WIDTH);
+    columnModel.getColumn(SWRLRulesTableModel.RULE_NAME_COLUMN).setMaxWidth(RULE_NAME_COLUMN_MAX_WIDTH);
+    columnModel.getColumn(SWRLRulesTableModel.RULE_TEXT_COLUMN).setPreferredWidth(RULE_TEXT_COLUMN_PREFERRED_WIDTH);
+    columnModel.getColumn(SWRLRulesTableModel.RULE_TEXT_COLUMN).setMaxWidth(RULE_TEXT_COLUMN_MAX_WIDTH);
+    columnModel.getColumn(SWRLRulesTableModel.RULE_COMMENT_COLUMN).setPreferredWidth(COMMENT_COLUMN_PREFERRED_WIDTH);
+    columnModel.getColumn(SWRLRulesTableModel.RULE_COMMENT_COLUMN).setMaxWidth(COMMENT_COLUMN_MAX_WIDTH);
+  }
 
-			this.dialogManager.getSWRLRuleEditorDialog(this, ruleName, ruleText, ruleComment).setVisible(true);
-		}
-	}
+  private void addTableListeners()
+  {
+    this.swrlRulesTable.addMouseListener(new MouseAdapter()
+    {
+      @Override public void mouseClicked(@NonNull MouseEvent e)
+      {
+        if (e.getClickCount() == 2) {
+          if (e.getSource() == SWRLRulesTableView.this.swrlRulesTable) {
+            editSelectedSWRLRule();
+          }
+        }
+      }
+    });
 
-	private void createComponents(SWRLRuleEngineDialogManager dialogManager)
-	{
-		JScrollPane scrollPane = new JScrollPane(this.swrlRulesTable);
-		JViewport viewport = scrollPane.getViewport();
+    this.swrlRulesTable.getSelectionModel().addListSelectionListener(e -> {
+      if (hasSelectedRule())
+        enableEditAndDelete();
+      else
+        disableEditAndDelete();
+    });
+  }
 
-		setLayout(new BorderLayout());
+  private void editSelectedSWRLRule()
+  {
+    if (this.swrlRulesTable.getSelectedRow() != -1) {
+      String ruleName = getSelectedSWRLRuleName().get();
+      String ruleText = getSelectedSWRLRuleText().get();
+      String ruleComment = getSelectedSWRLRuleComment().get();
 
-		JPanel headingPanel = new JPanel(new BorderLayout());
-		add(headingPanel, BorderLayout.SOUTH);
+      this.dialogManager.getSWRLRuleEditorDialog(this, ruleName, ruleText, ruleComment).setVisible(true);
+    }
+  }
 
-		viewport.setBackground(this.swrlRulesTable.getBackground());
+  private void createComponents(SWRLRuleEngineDialogManager dialogManager)
+  {
+    JScrollPane scrollPane = new JScrollPane(this.swrlRulesTable);
+    JViewport viewport = scrollPane.getViewport();
 
-		JPanel buttonPanel = new JPanel(new BorderLayout());
-		headingPanel.add(buttonPanel, BorderLayout.EAST);
+    setLayout(new BorderLayout());
 
-		JButton newButton = new JButton("New");
-		newButton.addActionListener(new NewSWRLRuleActionListener(this, dialogManager));
-		buttonPanel.add(newButton, BorderLayout.WEST);
+    JPanel headingPanel = new JPanel(new BorderLayout());
+    add(headingPanel, BorderLayout.SOUTH);
 
-		this.editButton = new JButton("Edit");
-		this.editButton.addActionListener(new EditSWRLRuleActionListener(this, dialogManager));
-		buttonPanel.add(this.editButton, BorderLayout.CENTER);
+    viewport.setBackground(this.swrlRulesTable.getBackground());
 
-		this.deleteButton = new JButton("Delete");
-		this.deleteButton.addActionListener(new DeleteSWRLRuleActionListener(this, dialogManager));
-		buttonPanel.add(this.deleteButton, BorderLayout.EAST);
+    JPanel buttonPanel = new JPanel(new BorderLayout());
+    headingPanel.add(buttonPanel, BorderLayout.EAST);
 
-		disableEditAndDelete(); // Will get enabled by listener on rule table if a rule is selected
+    JButton newButton = new JButton("New");
+    newButton.addActionListener(new NewSWRLRuleActionListener(this, dialogManager));
+    buttonPanel.add(newButton, BorderLayout.WEST);
 
-		add(scrollPane, BorderLayout.CENTER);
+    this.editButton = new JButton("Edit");
+    this.editButton.addActionListener(new EditSWRLRuleActionListener(this, dialogManager));
+    buttonPanel.add(this.editButton, BorderLayout.CENTER);
 
-		validate();
-	}
+    this.deleteButton = new JButton("Delete");
+    this.deleteButton.addActionListener(new DeleteSWRLRuleActionListener(this, dialogManager));
+    buttonPanel.add(this.deleteButton, BorderLayout.EAST);
 
-	private void enableEditAndDelete()
-	{
-		this.editButton.setEnabled(true);
-		this.deleteButton.setEnabled(true);
-	}
+    disableEditAndDelete(); // Will get enabled by listener on rule table if a rule is selected
 
-	private void disableEditAndDelete()
-	{
-		this.editButton.setEnabled(false);
-		this.deleteButton.setEnabled(false);
-	}
+    add(scrollPane, BorderLayout.CENTER);
 
-	private boolean hasSelectedRule()
-	{
-		return this.swrlRulesTable.getSelectedRow() != -1;
-	}
+    validate();
+  }
 
-	@NonNull private SWRLRulesTableModel getSWRLRulesTableModel()
-	{
-		return this.swrlRuleEngineModel.getSWRLRulesTableModel();
-	}
+  private void enableEditAndDelete()
+  {
+    this.editButton.setEnabled(true);
+    this.deleteButton.setEnabled(true);
+  }
 
-	@NonNull private SWRLRuleEngineModel getSWRLRuleEngineModel()
-	{
-		return this.swrlRuleEngineModel;
-	}
+  private void disableEditAndDelete()
+  {
+    this.editButton.setEnabled(false);
+    this.deleteButton.setEnabled(false);
+  }
 
-	private abstract class ActionListenerBase implements ActionListener
-	{
-		protected final @NonNull SWRLRuleEngineDialogManager dialogManager;
-		@NonNull protected final Component parent;
+  private boolean hasSelectedRule()
+  {
+    return this.swrlRulesTable.getSelectedRow() != -1;
+  }
 
-		protected ActionListenerBase(@NonNull Component parent, @NonNull SWRLRuleEngineDialogManager dialogManager)
-		{
-			this.parent = parent;
-			this.dialogManager = dialogManager;
-		}
-	}
+  @NonNull private SWRLRulesTableModel getSWRLRulesTableModel()
+  {
+    return this.swrlRuleEngineModel.getSWRLRulesTableModel();
+  }
 
-	private class NewSWRLRuleActionListener extends ActionListenerBase
-	{
-		public NewSWRLRuleActionListener(@NonNull Component parent, @NonNull SWRLRuleEngineDialogManager dialogManager)
-		{
-			super(parent, dialogManager);
-		}
+  @NonNull private SWRLRuleEngineModel getSWRLRuleEngineModel()
+  {
+    return this.swrlRuleEngineModel;
+  }
 
-		@Override public void actionPerformed(@NonNull ActionEvent e)
-		{
-			this.dialogManager.getSWRLRuleEditorDialog(this.parent).setVisible(true);
-		}
-	}
+  private abstract class ActionListenerBase implements ActionListener
+  {
+    protected final @NonNull SWRLRuleEngineDialogManager dialogManager;
+    @NonNull protected final Component parent;
 
-	private class EditSWRLRuleActionListener extends ActionListenerBase
-	{
-		public EditSWRLRuleActionListener(@NonNull Component parent, @NonNull SWRLRuleEngineDialogManager dialogManager)
-		{
-			super(parent, dialogManager);
-		}
+    protected ActionListenerBase(@NonNull Component parent, @NonNull SWRLRuleEngineDialogManager dialogManager)
+    {
+      this.parent = parent;
+      this.dialogManager = dialogManager;
+    }
+  }
 
-		@Override public void actionPerformed(@NonNull ActionEvent e)
-		{
-			editSelectedSWRLRule();
-		}
-	}
+  private class NewSWRLRuleActionListener extends ActionListenerBase
+  {
+    public NewSWRLRuleActionListener(@NonNull Component parent, @NonNull SWRLRuleEngineDialogManager dialogManager)
+    {
+      super(parent, dialogManager);
+    }
 
-	private class DeleteSWRLRuleActionListener extends ActionListenerBase
-	{
-		public DeleteSWRLRuleActionListener(@NonNull Component parent, @NonNull SWRLRuleEngineDialogManager dialogManager)
-		{
-			super(parent, dialogManager);
-		}
+    @Override public void actionPerformed(@NonNull ActionEvent e)
+    {
+      this.dialogManager.getSWRLRuleEditorDialog(this.parent).setVisible(true);
+    }
+  }
 
-		@Override public void actionPerformed(@NonNull ActionEvent e)
-		{
-			deleteSelectedSWRLRule();
-		}
+  private class EditSWRLRuleActionListener extends ActionListenerBase
+  {
+    public EditSWRLRuleActionListener(@NonNull Component parent, @NonNull SWRLRuleEngineDialogManager dialogManager)
+    {
+      super(parent, dialogManager);
+    }
 
-		private void deleteSelectedSWRLRule()
-		{
-			Optional<String> selectedRuleName = getSelectedSWRLRuleName();
+    @Override public void actionPerformed(@NonNull ActionEvent e)
+    {
+      editSelectedSWRLRule();
+    }
+  }
 
-			if (selectedRuleName.isPresent()) {
-				if (SWRLRulesTableView.this.getSWRLRulesTableModel().hasSWRLRule(selectedRuleName.get()) && this.dialogManager
-						.showConfirmDialog(this.parent, "Do you really want to delete the rule?", "Delete Rule")) {
-					getSWRLRuleEngineModel().getSWRLRuleEngine().deleteSWRLRule(selectedRuleName.get());
-					getSWRLRuleEngineModel().updateView();
-				}
-			}
-		}
-	}
+  private class DeleteSWRLRuleActionListener extends ActionListenerBase
+  {
+    public DeleteSWRLRuleActionListener(@NonNull Component parent, @NonNull SWRLRuleEngineDialogManager dialogManager)
+    {
+      super(parent, dialogManager);
+    }
 
-	private void createPopupMenu()
-	{
-		JPopupMenu popup = new JPopupMenu();
-		popup.add(new EnableAllRulesAction());
-		popup.add(new DisableAllRulesAction());
-		addMouseListener(new PopupListener(popup));
-	}
+    @Override public void actionPerformed(@NonNull ActionEvent e)
+    {
+      deleteSelectedSWRLRule();
+    }
 
-	private class PopupListener extends MouseAdapter
-	{
-		@NonNull private final JPopupMenu popup;
+    private void deleteSelectedSWRLRule()
+    {
+      Optional<String> selectedRuleName = getSelectedSWRLRuleName();
 
-		public PopupListener(@NonNull JPopupMenu popupMenu)
-		{
-			this.popup = popupMenu;
-		}
+      if (selectedRuleName.isPresent()) {
+        if (SWRLRulesTableView.this.getSWRLRulesTableModel().hasSWRLRule(selectedRuleName.get()) && this.dialogManager
+            .showConfirmDialog(this.parent, "Do you really want to delete the rule?", "Delete Rule")) {
+          getSWRLRuleEngineModel().getSWRLRuleEngine().deleteSWRLRule(selectedRuleName.get());
+          getSWRLRuleEngineModel().updateView();
+        }
+      }
+    }
+  }
 
-		@Override public void mousePressed(@NonNull MouseEvent e)
-		{
-			maybeShowPopup(e);
-		}
+  private void createPopupMenu()
+  {
+    JPopupMenu popup = new JPopupMenu();
+    popup.add(new EnableAllRulesAction());
+    popup.add(new DisableAllRulesAction());
+    addMouseListener(new PopupListener(popup));
+  }
 
-		@Override public void mouseReleased(@NonNull MouseEvent e)
-		{
-			maybeShowPopup(e);
-		}
+  private class PopupListener extends MouseAdapter
+  {
+    @NonNull private final JPopupMenu popup;
 
-		private void maybeShowPopup(@NonNull MouseEvent e)
-		{
-			if (e.isPopupTrigger())
-				this.popup.show(e.getComponent(), e.getX(), e.getY());
-		}
-	}
+    public PopupListener(@NonNull JPopupMenu popupMenu)
+    {
+      this.popup = popupMenu;
+    }
+
+    @Override public void mousePressed(@NonNull MouseEvent e)
+    {
+      maybeShowPopup(e);
+    }
+
+    @Override public void mouseReleased(@NonNull MouseEvent e)
+    {
+      maybeShowPopup(e);
+    }
+
+    private void maybeShowPopup(@NonNull MouseEvent e)
+    {
+      if (e.isPopupTrigger())
+        this.popup.show(e.getComponent(), e.getX(), e.getY());
+    }
+  }
 }

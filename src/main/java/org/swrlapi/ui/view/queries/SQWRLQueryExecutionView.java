@@ -15,23 +15,39 @@ import javax.swing.*;
  */
 public class SQWRLQueryExecutionView extends JTabbedPane implements SWRLAPIView
 {
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	public SQWRLQueryExecutionView(@NonNull SQWRLQueryEngineModel queryEngineModel,
-			@NonNull SQWRLQuerySelector querySelector) throws SWRLAPIException
-	{
-		SQWRLQueryEngine queryEngine = queryEngineModel.getSQWRLQueryEngine();
-		Icon queryEngineIcon = queryEngine.getTargetQueryEngineIcon();
-		Icon owl2RLIcon = SWRLAPIFactory.getOWL2RLReasonerIcon();
+  @NonNull private final SQWRLQueryEngineModel queryEngineModel;
+  @NonNull private final SQWRLQuerySelector querySelector;
+  @NonNull private final SQWRLQueryEngine queryEngine;
+  @NonNull private final Icon queryEngineIcon;
+  @NonNull private final Icon owl2RLIcon;
 
-		addTab("SQWRL Queries", queryEngineIcon, new SQWRLQueryControlView(queryEngineModel, querySelector),
-				"Control Panel");
+  public SQWRLQueryExecutionView(@NonNull SQWRLQueryEngineModel queryEngineModel,
+      @NonNull SQWRLQuerySelector querySelector) throws SWRLAPIException
+  {
+    this.queryEngineModel = queryEngineModel;
+    this.querySelector = querySelector;
+    this.queryEngine = queryEngineModel.getSQWRLQueryEngine();
+    this.queryEngineIcon = queryEngine.getTargetQueryEngineIcon();
+    this.owl2RLIcon = SWRLAPIFactory.getOWL2RLReasonerIcon();
 
-		addTab("OWL 2 RL", owl2RLIcon, new OWL2RLRuleTablesView(queryEngineModel.getOWL2RLModel()), "OWL 2 RL Tab");
-	}
+  }
 
-	@Override public void update()
-	{
-		validate();
-	}
+  @Override public void initialize()
+  {
+    SQWRLQueryControlView queryControlView = new SQWRLQueryControlView(queryEngineModel, querySelector);
+    OWL2RLRuleTablesView ruleTablesView = new OWL2RLRuleTablesView(queryEngineModel.getOWL2RLModel());
+
+    queryControlView.initialize();
+    ruleTablesView.initialize();
+
+    addTab("SQWRL Queries", queryEngineIcon, queryControlView, "Control Panel");
+    addTab("OWL 2 RL", owl2RLIcon, ruleTablesView, "OWL 2 RL Tab");
+  }
+
+  @Override public void update()
+  {
+    validate();
+  }
 }
