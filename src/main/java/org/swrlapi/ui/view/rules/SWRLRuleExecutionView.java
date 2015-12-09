@@ -31,15 +31,24 @@ public class SWRLRuleExecutionView extends JTabbedPane implements SWRLAPIView
   @Override public void initialize()
   {
     OWL2RLRuleTablesView ruleTablesView = new OWL2RLRuleTablesView(swrlRuleEngineModel.getOWL2RLModel());
+    SWRLRulesControlView swrlRulesControlView = new SWRLRulesControlView(swrlRuleEngineModel);
+    ImportedSWRLRulesView importedSWRLRulesView = new ImportedSWRLRulesView(swrlRuleEngineModel);
+    AssertedOWLAxiomsView assertedOWLAxiomsView = new AssertedOWLAxiomsView(swrlRuleEngineModel);
+    InferredOWLAxiomsView inferredOWLAxiomsView = new InferredOWLAxiomsView(swrlRuleEngineModel);
+
     ruleTablesView.initialize();;
+    swrlRulesControlView.initialize();
+    importedSWRLRulesView.initialize();
+    assertedOWLAxiomsView.initialize();
+    inferredOWLAxiomsView.initialize();
 
-    addTab("Control", ruleEngineIcon, new SWRLRulesControlView(swrlRuleEngineModel), "Control Tab");
+    addTab("Control", ruleEngineIcon, swrlRulesControlView, "Control Tab");
 
-    addTab("Rules", ruleEngineIcon, new ImportedSWRLRulesView(swrlRuleEngineModel), "Rules Tab");
+    addTab("Rules", ruleEngineIcon, importedSWRLRulesView, "Rules Tab");
 
-    addTab("Asserted Axioms", ruleEngineIcon, new AssertedOWLAxiomsView(swrlRuleEngineModel), "Asserted OWL Axioms Tab");
+    addTab("Asserted Axioms", ruleEngineIcon, assertedOWLAxiomsView, "Asserted OWL Axioms Tab");
 
-    addTab("Inferred Axioms", owl2RLIcon, new InferredOWLAxiomsView(swrlRuleEngineModel), "Inferred OWL Axioms Tab");
+    addTab("Inferred Axioms", owl2RLIcon, inferredOWLAxiomsView, "Inferred OWL Axioms Tab");
 
     addTab("OWL 2 RL", owl2RLIcon, ruleTablesView, "OWL 2 RL Tab");
   }

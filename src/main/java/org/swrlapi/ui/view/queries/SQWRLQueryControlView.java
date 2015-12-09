@@ -208,6 +208,7 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
       else { // Create new result tab
         sqwrlResultView = new SQWRLResultView(SQWRLQueryControlView.this.queryEngineModel, queryName, sqwrlResult,
             this.sqwrlQueryControlView);
+        sqwrlResultView.initialize();
         SQWRLQueryControlView.this.sqwrlResultViews.put(queryName, sqwrlResultView);
         ((JTabbedPane)getParent()).addTab(queryName, SQWRLQueryControlView.this.queryEngineIcon, sqwrlResultView,
             "SQWRL Result for query '" + queryName + "'");
