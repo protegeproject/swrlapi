@@ -240,7 +240,8 @@ public abstract class AbstractSWRLBuiltInLibrary
     try {
       return IRI.create(fullName);
     } catch (RuntimeException e) {
-      throw new SWRLBuiltInException("error creating IRI from full name " + fullName + ": " + e.getMessage(), e);
+      throw new SWRLBuiltInException(
+          "error creating IRI from full name " + fullName + ": " + (e.getMessage() != null ? e.getMessage() : ""), e);
     }
   }
 

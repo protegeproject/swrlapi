@@ -27,31 +27,31 @@ public class SQWRLQueryEngineMinimalApp
     try {
       OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
       OWLOntology ontology = owlFile.isPresent() ?
-        ontologyManager.loadOntologyFromOntologyDocument(owlFile.get()) :
-        ontologyManager.createOntology();
+          ontologyManager.loadOntologyFromOntologyDocument(owlFile.get()) :
+          ontologyManager.createOntology();
 
       SQWRLQueryEngine queryEngine = SWRLAPIFactory.createSQWRLQueryEngine(ontology);
 
-      SQWRLResult result = queryEngine.runSQWRLQuery("q1","swrlb:add(?x, 2, 2) -> sqwrl:select(?x)");
+      SQWRLResult result = queryEngine.runSQWRLQuery("q1", "swrlb:add(?x, 2, 2) -> sqwrl:select(?x)");
 
       while (result.next()) {
         System.out.println("Name: " + result.getLiteral("x").getInt());
       }
     } catch (OWLOntologyCreationException e) {
       if (owlFile.isPresent())
-        System.err
-          .println("Error creating OWL ontology from file " + owlFile.get().getAbsolutePath() + ": " + e.getMessage());
+        System.err.println("Error creating OWL ontology from file " + owlFile.get().getAbsolutePath() + ": " + (
+                e.getMessage() != null ? e.getMessage() : ""));
       else
-        System.err.println("Error creating OWL ontology: " + e.getMessage());
+        System.err.println("Error creating OWL ontology: " + (e.getMessage() != null ? e.getMessage() : ""));
       System.exit(-1);
     } catch (SWRLAPIException e) {
-      System.err.println("SWRLAPI error: " + e.getMessage());
+      System.err.println("SWRLAPI error: " + (e.getMessage() != null ? e.getMessage() : ""));
       System.exit(-1);
     } catch (SWRLParseException e) {
-      System.err.println("SQWRL parse error: " + e.getMessage());
+      System.err.println("SQWRL parse error: " + (e.getMessage() != null ? e.getMessage() : ""));
       System.exit(-1);
     } catch (SQWRLException e) {
-      System.err.println("SQWRL error: " + e.getMessage());
+      System.err.println("SQWRL error: " + (e.getMessage() != null ? e.getMessage() : ""));
       System.exit(-1);
     }
   }

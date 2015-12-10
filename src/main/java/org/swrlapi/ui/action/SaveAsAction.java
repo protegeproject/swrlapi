@@ -46,7 +46,7 @@ public class SaveAsAction implements ActionListener
       try {
         this.ontologyModel.saveAs(file);
       } catch (OWLOntologyStorageException e) {
-        this.dialogManager.showErrorMessageDialog(this.parent, e.getMessage(), ERROR_TITLE);
+        this.dialogManager.showErrorMessageDialog(this.parent, e.getMessage() != null ? e.getMessage() : "", ERROR_TITLE);
       }
     }
   }

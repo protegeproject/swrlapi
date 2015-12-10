@@ -21,14 +21,14 @@ public class SWRLRuleEngineMinimalApp
 
     Optional<String> owlFilename = args.length == 0 ? Optional.empty() : Optional.of(args[0]);
     Optional<@NonNull File> owlFile = (owlFilename != null && owlFilename.isPresent()) ?
-      Optional.of(new File(owlFilename.get())) :
-      Optional.empty();
+        Optional.of(new File(owlFilename.get())) :
+        Optional.empty();
 
     try {
       OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
       OWLOntology ontology = owlFile.isPresent() ?
-        ontologyManager.loadOntologyFromOntologyDocument(owlFile.get()) :
-        ontologyManager.createOntology();
+          ontologyManager.loadOntologyFromOntologyDocument(owlFile.get()) :
+          ontologyManager.createOntology();
 
       SWRLRuleEngine ruleEngine = SWRLAPIFactory.createSWRLRuleEngine(ontology);
 
@@ -36,13 +36,13 @@ public class SWRLRuleEngineMinimalApp
 
     } catch (OWLOntologyCreationException e) {
       if (owlFile.isPresent())
-        System.err
-          .println("Error creating OWL ontology from file " + owlFile.get().getAbsolutePath() + ": " + e.getMessage());
+        System.err.println("Error creating OWL ontology from file " + owlFile.get().getAbsolutePath() + ": " + (
+                e.getMessage() != null ? e.getMessage() : ""));
       else
-        System.err.println("Error creating OWL ontology: " + e.getMessage());
+        System.err.println("Error creating OWL ontology: " + (e.getMessage() != null ? e.getMessage() : ""));
       System.exit(-1);
     } catch (SWRLAPIException e) {
-      System.err.println("SWRLAPI error: " + e.getMessage());
+      System.err.println("SWRLAPI error: " + (e.getMessage() != null ? e.getMessage() : ""));
       System.exit(-1);
     }
   }

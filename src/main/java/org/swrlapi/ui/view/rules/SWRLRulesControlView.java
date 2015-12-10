@@ -192,7 +192,7 @@ public class SWRLRulesControlView extends JPanel implements SWRLAPIView
         appendToConsole("Press the '" + SWRLRulesControlView.this.getSWRLRuleEngine().getRuleEngineName()
           + "->OWL' button to translate the inferred axioms to OWL knowledge.\n");
       } catch (SWRLRuleEngineException e) {
-        appendToConsole("Exception running rule engine: " + e.getMessage() + "\n");
+        appendToConsole("Exception running rule engine: " + (e.getMessage() != null ? e.getMessage() : "") + "\n");
       }
       this.controlPanel.getParent().validate();
     }

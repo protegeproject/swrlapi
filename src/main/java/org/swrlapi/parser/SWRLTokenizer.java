@@ -186,7 +186,7 @@ class SWRLTokenizer
     try {
       return convertToken2SWRLToken(this.tokenizer.nextToken());
     } catch (IOException e) {
-      throw new SWRLParseException("Error tokenizing " + e.getMessage());
+      throw new SWRLParseException("Error tokenizing " + (e.getMessage() != null ? e.getMessage() : ""));
     }
   }
 

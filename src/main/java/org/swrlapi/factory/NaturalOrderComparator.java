@@ -52,7 +52,7 @@ import checkers.nullness.quals.NonNull;
 
 import java.util.Comparator;
 
-public final class NaturalOrderComparator<T> implements Comparator<T>
+public final class NaturalOrderComparator<T extends @NonNull Object> implements Comparator<T>
 {
   @NonNull public static final Comparator<String> NUMERICAL_ORDER = new NaturalOrderComparator<>(false);
   @NonNull public static final Comparator<String> CASE_INSENSITIVE_NUMERICAL_ORDER = new NaturalOrderComparator<>(true);
@@ -74,7 +74,7 @@ public final class NaturalOrderComparator<T> implements Comparator<T>
     // value wins, but we can't know that it will until we've scanned
     // both numbers to know that they have the same magnitude, so we
     // remember it in BIAS.
-    for (;; ia++, ib++) {
+    for (; ; ia++, ib++) {
       char ca = charAt(a, ia);
       char cb = charAt(b, ib);
 
@@ -97,8 +97,7 @@ public final class NaturalOrderComparator<T> implements Comparator<T>
     }
   }
 
-  @Override
-  public int compare(@NonNull T o1, @NonNull T o2)
+  @Override public int compare(@NonNull T o1, @NonNull T o2)
   {
     String a = o1.toString();
     String b = o2.toString();

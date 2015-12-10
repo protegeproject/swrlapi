@@ -9,10 +9,10 @@ import org.semanticweb.owlapi.model.parameters.Imports;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 import org.swrlapi.bridge.SWRLBridge;
 import org.swrlapi.bridge.TargetSWRLRuleEngine;
-import org.swrlapi.core.OWLObjectResolver;
 import org.swrlapi.builtins.SWRLBuiltInLibraryManager;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.IRIResolver;
+import org.swrlapi.core.OWLObjectResolver;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
@@ -30,7 +30,7 @@ import java.util.Set;
 /**
  * Default implementation of a SWRL rule engine bridge, built-in bridge, built-in bridge controller, and rule engine
  * bridge controller.
- * <p>
+ * <p/>
  * Asserted OWL axioms are managed by a {@link org.swrlapi.core.SWRLRuleEngine}, which passes them to a
  * {@link org.swrlapi.bridge.TargetSWRLRuleEngine} using the
  * {@link org.swrlapi.bridge.TargetSWRLRuleEngine#defineOWLAxiom(OWLAxiom)} call.
@@ -200,7 +200,9 @@ public class DefaultSWRLBridge implements SWRLBridge
       this.targetSWRLRuleEngine.defineOWLAxiom(axiom);
     } catch (TargetSWRLRuleEngineException e) {
       throw new SWRLBuiltInBridgeException(
-          "error exporting OWL axiom " + axiom + " to target rule engine: " + e.getMessage(), e);
+          "error exporting OWL axiom " + axiom + " to target rule engine: " + (e.getMessage() != null ?
+              e.getMessage() :
+              ""), e);
     }
   }
 

@@ -37,7 +37,7 @@ public class DefaultSWRLRuleAndQueryEngineFactory implements SWRLRuleAndQueryEng
   }
 
   @NonNull @Override public SWRLRuleEngine createSWRLRuleEngine(@NonNull OWLOntology ontology,
-    @NonNull DefaultPrefixManager prefixManager)
+      @NonNull DefaultPrefixManager prefixManager)
   {
     if (this.ruleEngineManager.hasRegisteredRuleEngines()) {
       Optional<String> ruleEngineName = this.ruleEngineManager.getAnyRegisteredRuleEngineName();
@@ -50,7 +50,7 @@ public class DefaultSWRLRuleAndQueryEngineFactory implements SWRLRuleAndQueryEng
   }
 
   @NonNull @Override public SWRLRuleEngine createSWRLRuleEngine(@NonNull String ruleEngineName,
-    @NonNull OWLOntology ontology, @NonNull DefaultPrefixManager prefixManager)
+      @NonNull OWLOntology ontology, @NonNull DefaultPrefixManager prefixManager)
   {
     if (this.ruleEngineManager.isRuleEngineRegistered(ruleEngineName)) {
       try {
@@ -58,28 +58,28 @@ public class DefaultSWRLRuleAndQueryEngineFactory implements SWRLRuleAndQueryEng
         OWL2RLPersistenceLayer owl2RLPersistenceLayer = SWRLAPIFactory.createOWL2RLPersistenceLayer(ontology);
         SWRLBridge bridge = SWRLAPIFactory.createSWRLBridge(swrlapiOWLOntology, owl2RLPersistenceLayer);
         Optional<TargetSWRLRuleEngineCreator> targetSWRLRuleEngineCreator = this.ruleEngineManager
-          .getRegisteredRuleEngineCreator(ruleEngineName);
+            .getRegisteredRuleEngineCreator(ruleEngineName);
         if (targetSWRLRuleEngineCreator.isPresent()) {
           TargetSWRLRuleEngine targetSWRLRuleEngine = targetSWRLRuleEngineCreator.get().create(bridge);
           bridge.setTargetSWRLRuleEngine(targetSWRLRuleEngine);
 
           SWRLRuleEngine ruleEngine = new DefaultSWRLRuleAndQueryEngine(swrlapiOWLOntology, targetSWRLRuleEngine,
-            bridge, bridge);
+              bridge, bridge);
           ruleEngine.importAssertedOWLAxioms();
           return ruleEngine;
         } else
           throw new SWRLRuleEngineException("Error creating rule engine " + ruleEngineName + ". Creator failed.");
       } catch (Throwable e) {
         throw new SWRLRuleEngineException(
-          "Error creating rule engine " + ruleEngineName + ". Exception: " + e.getClass().getCanonicalName()
-            + ". Message: " + e.getMessage(), e);
+            "Error creating rule engine " + ruleEngineName + ". Exception: " + e.getClass().getCanonicalName()
+                + ". Message: " + (e.getMessage() != null ? e.getMessage() : ""), e);
       }
     } else
       throw new InvalidSWRLRuleEngineNameException(ruleEngineName);
   }
 
   @NonNull @Override public SQWRLQueryEngine createSQWRLQueryEngine(@NonNull OWLOntology ontology,
-    @NonNull DefaultPrefixManager prefixManager)
+      @NonNull DefaultPrefixManager prefixManager)
   {
     Optional<String> ruleEngineName = this.ruleEngineManager.getAnyRegisteredRuleEngineName();
     if (ruleEngineName.isPresent())
@@ -89,7 +89,7 @@ public class DefaultSWRLRuleAndQueryEngineFactory implements SWRLRuleAndQueryEng
   }
 
   @NonNull @Override public SQWRLQueryEngine createSQWRLQueryEngine(@NonNull String queryEngineName,
-    @NonNull OWLOntology ontology, @NonNull DefaultPrefixManager prefixManager)
+      @NonNull OWLOntology ontology, @NonNull DefaultPrefixManager prefixManager)
   {
     if (this.ruleEngineManager.isRuleEngineRegistered(queryEngineName)) {
       try {
@@ -97,13 +97,13 @@ public class DefaultSWRLRuleAndQueryEngineFactory implements SWRLRuleAndQueryEng
         OWL2RLPersistenceLayer owl2RLPersistenceLayer = SWRLAPIFactory.createOWL2RLPersistenceLayer(ontology);
         SWRLBridge bridge = SWRLAPIFactory.createSWRLBridge(swrlapiOWLOntology, owl2RLPersistenceLayer);
         Optional<TargetSWRLRuleEngineCreator> targetSWRLRuleEngineCreator = this.ruleEngineManager
-          .getRegisteredRuleEngineCreator(queryEngineName);
+            .getRegisteredRuleEngineCreator(queryEngineName);
         if (targetSWRLRuleEngineCreator.isPresent()) {
           TargetSWRLRuleEngine targetSWRLRuleEngine = targetSWRLRuleEngineCreator.get().create(bridge);
           bridge.setTargetSWRLRuleEngine(targetSWRLRuleEngine);
 
           SQWRLQueryEngine queryEngine = new DefaultSWRLRuleAndQueryEngine(swrlapiOWLOntology, targetSWRLRuleEngine,
-            bridge, bridge);
+              bridge, bridge);
           queryEngine.importAssertedOWLAxioms();
           return queryEngine;
 
@@ -111,8 +111,8 @@ public class DefaultSWRLRuleAndQueryEngineFactory implements SWRLRuleAndQueryEng
           throw new SWRLRuleEngineException("Error creating query engine " + queryEngineName + ". Creator failed.");
       } catch (Throwable e) {
         throw new SWRLRuleEngineException(
-          "Error creating query engine " + queryEngineName + ". Exception: " + e.getClass().getCanonicalName()
-            + ". Message: " + e.getMessage(), e);
+            "Error creating query engine " + queryEngineName + ". Exception: " + e.getClass().getCanonicalName()
+                + ". Message: " + (e.getMessage() != null ? e.getMessage() : ""), e);
       }
     } else
       throw new InvalidSWRLRuleEngineNameException(queryEngineName);

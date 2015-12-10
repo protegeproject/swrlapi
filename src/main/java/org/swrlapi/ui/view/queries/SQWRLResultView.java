@@ -111,7 +111,9 @@ public class SQWRLResultView extends JPanel implements SWRLAPIView
             .appendToConsole("Invalid query name " + SQWRLResultView.this.queryName + ".\n");
       } catch (SQWRLException e) {
         SQWRLResultView.this.sqwrlQueryControlView.appendToConsole(
-            "Exception running SQWRL query '" + SQWRLResultView.this.queryName + "': " + e.getMessage() + "\n");
+            "Exception running SQWRL query '" + SQWRLResultView.this.queryName + "': " + (e != null ?
+                e.getMessage() :
+                "") + "\n");
       }
 
       /*
@@ -187,8 +189,8 @@ public class SQWRLResultView extends JPanel implements SWRLAPIView
           }
         }
       } catch (Throwable e) {
-        JOptionPane.showMessageDialog(null, "Error saving file: " + e.getMessage(), "Error saving file",
-            JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Error saving file: " + (e.getMessage() != null ? e.getMessage() : ""),
+            "Error saving file", JOptionPane.ERROR_MESSAGE);
       }
     }
   }

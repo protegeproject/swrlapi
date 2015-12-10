@@ -1,17 +1,15 @@
 package org.swrlapi.ui.action;
 
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-
-import javax.swing.JFileChooser;
-
+import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.swrlapi.ui.dialog.SWRLRuleEngineDialogManager;
 import org.swrlapi.ui.model.FileBackedOntologyModel;
 
-import checkers.nullness.quals.NonNull;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 
 public class OpenAction implements ActionListener
 {
@@ -50,7 +48,7 @@ public class OpenAction implements ActionListener
 			try {
 				this.ontologyModel.open(file);
 			} catch (OWLOntologyCreationException e) {
-				this.dialogManager.showErrorMessageDialog(this.parent, e.getMessage(), ERROR_TITLE);
+				this.dialogManager.showErrorMessageDialog(this.parent, e.getMessage() != null ? e.getMessage() : "", ERROR_TITLE);
 			}
 		}
 	}

@@ -46,7 +46,7 @@ public class CloseAction implements ActionListener
     try {
       this.ontologyModel.close();
     } catch (OWLOntologyCreationException e) {
-      this.dialogManager.showErrorMessageDialog(this.parent, e != null ? e.getMessage() : "", ERROR_TITLE);
+      this.dialogManager.showErrorMessageDialog(this.parent, e.getMessage() != null ? e.getMessage() : "", ERROR_TITLE);
     }
   }
 }

@@ -172,9 +172,12 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
           appendToConsole(queryName + " is not a valid SQWRL query or is not enabled.\n");
         } catch (SQWRLException | RuntimeException e) {
           if (queryName.isPresent())
-            appendToConsole("Exception when running SQWRL query " + queryName + ": " + e.getMessage() + "\n");
+            appendToConsole("Exception when running SQWRL query " + queryName + ": " + (e.getMessage() != null ?
+                e.getMessage() :
+                "") + "\n");
           else
-            appendToConsole("Exception running SQWRL queries: " + e.getMessage() + "\n");
+            appendToConsole(
+                "Exception running SQWRL queries: " + (e.getMessage() != null ? e.getMessage() : "") + "\n");
         }
       }
     }
