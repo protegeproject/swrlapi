@@ -24,8 +24,7 @@ public class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
   @NonNull private final String ruleName;
   @NonNull private final boolean active;
   @NonNull private final String comment;
-
-  @NonNull private List<SWRLAtom> bodyAtoms; // Body atoms can be reorganized during processing
+  @NonNull private final List<SWRLAtom> bodyAtoms; // Body atoms can be reorganized during processing
   @NonNull private final List<SWRLAtom> headAtoms;
 
   public DefaultSWRLAPIRule(@NonNull String ruleName, @NonNull List<? extends SWRLAtom> bodyAtoms,
@@ -35,10 +34,8 @@ public class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
     this.ruleName = ruleName;
     this.active = isActive;
     this.comment = comment;
-    this.bodyAtoms = new ArrayList<>(bodyAtoms);
+    this.bodyAtoms = processBuiltInArguments(bodyAtoms);
     this.headAtoms = new ArrayList<>(headAtoms);
-
-    processBuiltInArguments();
   }
 
   @NonNull @Override public String getRuleName()
@@ -85,7 +82,7 @@ public class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
   /**
    * Find all built-in atoms with unbound arguments and tell them which of their arguments are unbound.
    */
-  private void processBuiltInArguments()
+  private static List<SWRLAtom> processBuiltInArguments(List<? extends SWRLAtom> bodyAtoms)
   {
     List<SWRLAPIBuiltInAtom> bodyBuiltInAtoms = new ArrayList<>();
     List<SWRLAtom> bodyNonBuiltInAtoms = new ArrayList<>();
@@ -94,7 +91,7 @@ public class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
     List<SWRLAtom> finalBodyAtoms;
 
     // Process body atoms to build list of (1) built-in body atoms, and (2) the variables used by non-built-in atoms.
-    for (SWRLAtom atom : getBodyAtoms()) {
+    for (SWRLAtom atom : bodyAtoms) {
       if (atom instanceof SWRLAPIBuiltInAtom)
         bodyBuiltInAtoms.add((SWRLAPIBuiltInAtom)atom);
       else {
@@ -130,14 +127,17 @@ public class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
     // engines (e.g., Jess) expect variables used as parameters to functions to have been defined before their use in
     // a left to right fashion.
     finalBodyAtoms = reorganizeBodyNonBuiltInAtoms(bodyNonBuiltInAtoms);
-    this.bodyAtoms = finalBodyAtoms;
-    finalBodyAtoms.addAll(bodyBuiltInAtoms);
+
+    List<SWRLAtom> processedBodyAtoms = new ArrayList<>(finalBodyAtoms);
+    processedBodyAtoms.addAll(bodyBuiltInAtoms);
+
+    return processedBodyAtoms;
   }
 
   /**
    * Reorganize body non-built atoms so that class atoms appear firsts, followed by other atom types.
    */
-  @NonNull private List<SWRLAtom> reorganizeBodyNonBuiltInAtoms(@NonNull List<SWRLAtom> bodyNonBuiltInAtoms)
+  @NonNull private static List<SWRLAtom> reorganizeBodyNonBuiltInAtoms(@NonNull List<SWRLAtom> bodyNonBuiltInAtoms)
   {
     List<SWRLAtom> bodyClassAtoms = new ArrayList<>();
     List<SWRLAtom> bodyNonClassNonBuiltInAtoms = new ArrayList<>();
@@ -169,7 +169,7 @@ public class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
     return result;
   }
 
-  @NonNull private Set<IRI> getReferencedVariableIRIs(@NonNull SWRLAtom atom)
+  @NonNull private static Set<IRI> getReferencedVariableIRIs(@NonNull SWRLAtom atom)
   {
     Set<IRI> referencedVariableIRIs = new HashSet<>();
 

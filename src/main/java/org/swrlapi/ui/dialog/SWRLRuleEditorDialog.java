@@ -64,13 +64,12 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
   private final Border yellowBorder;
 
   @NonNull private final SWRLRuleEngineModel swrlRuleEngineModel;
-  private final @NonNull SWRLRuleEngineDialogManager dialogManager;
-
+  @NonNull private final SWRLRuleEngineDialogManager dialogManager;
   @NonNull private final SWRLRuleEditorInitialDialogState initialDialogState = new SWRLRuleEditorInitialDialogState();
 
-  private JTextField ruleNameTextField, commentTextField, statusTextField;
-  private JTextArea ruleTextTextArea;
-  private JButton saveButton;
+  @NonNull private final JTextField ruleNameTextField, commentTextField, statusTextField;
+  @NonNull private final JTextArea ruleTextTextArea;
+  @NonNull private final JButton saveButton;
 
   private Optional<SWRLRuleEditorAutoCompleteState> autoCompleteState = Optional.empty(); // Present if auto-complete
   private boolean editMode = false;
@@ -82,7 +81,12 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
     this.dialogManager = dialogManager;
     this.loweredBevelBorder = BorderFactory.createLoweredBevelBorder();
     this.yellowBorder = BorderFactory.createLineBorder(Color.YELLOW);
+    this.ruleTextTextArea = new JTextArea("", RULE_EDIT_AREA_COLUMNS, RULE_EDIT_AREA_ROWS);
     this.ruleTextTextArea.addKeyListener(new SWRLRuleEditorKeyAdapter());
+    this.saveButton = new JButton(OK_BUTTON_TITLE);
+    this.ruleNameTextField = new JTextField("");
+    this.commentTextField = new JTextField("");
+    this.statusTextField = new JTextField("");
   }
 
   @Override public void initialize()
@@ -90,7 +94,7 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
     setTitle(TITLE);
     setModal(true);
 
-    createComponents();
+    initializeComponents();
 
     setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
@@ -164,27 +168,23 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
     this.editMode = false;
   }
 
-  private void createComponents()
+  private void initializeComponents()
   {
     Container contentPane = getContentPane();
 
     JLabel ruleNameLabel = new JLabel(RULE_NAME_TITLE);
-    this.ruleNameTextField = new JTextField("");
     this.ruleNameTextField.setBorder(this.loweredBevelBorder);
 
-    this.ruleTextTextArea = new JTextArea("", RULE_EDIT_AREA_COLUMNS, RULE_EDIT_AREA_ROWS);
     this.ruleTextTextArea.setLineWrap(true);
     this.ruleTextTextArea.setWrapStyleWord(true);
     this.ruleTextTextArea.setBorder(this.loweredBevelBorder);
     this.ruleTextTextArea.setPreferredSize(new Dimension(300, 300));
 
     JLabel commentLabel = new JLabel(COMMENT_LABEL_TITLE);
-    this.commentTextField = new JTextField("");
     this.commentTextField.setDisabledTextColor(Color.BLACK);
     this.commentTextField.setBorder(this.loweredBevelBorder);
 
     JLabel statusLabel = new JLabel(STATUS_LABEL_TITLE);
-    this.statusTextField = new JTextField("");
     this.statusTextField.setDisabledTextColor(Color.BLACK);
     this.statusTextField.setEnabled(false);
     this.statusTextField.setBorder(this.loweredBevelBorder);
@@ -193,7 +193,6 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
     cancelButton.setPreferredSize(new Dimension(BUTTON_PREFERRED_WIDTH, BUTTON_PREFERRED_HEIGHT));
     cancelButton.addActionListener(new CancelSWRLRuleEditActionListener(contentPane));
 
-    this.saveButton = new JButton(OK_BUTTON_TITLE);
     this.saveButton.setPreferredSize(new Dimension(BUTTON_PREFERRED_WIDTH, BUTTON_PREFERRED_HEIGHT));
     this.saveButton.addActionListener(new SaveSWRLRuleActionListener(contentPane));
 
