@@ -461,17 +461,17 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
     this.statusTextField.setText(status);
   }
 
-  private @NonNull String getRuleName()
+  @NonNull private String getRuleName()
   {
     return this.ruleNameTextField.getText().trim();
   }
 
-  private @NonNull String getComment()
+  @NonNull private String getComment()
   {
     return this.commentTextField.getText().trim();
   }
 
-  private @NonNull String getRuleText()
+  @NonNull private String getRuleText()
   { // We replace the Unicode characters when parsing
     return this.ruleTextTextArea.getText().replaceAll(Character.toString(SWRLParser.AND_CHAR), "^")
       .replaceAll(Character.toString(SWRLParser.IMP_CHAR), "->")
@@ -510,7 +510,7 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
     return this.swrlRuleEngineModel.getSWRLRulesTableModel();
   }
 
-  private @NonNull SWRLRuleEngineDialogManager getDialogManager()
+  @NonNullprivate SWRLRuleEngineDialogManager getDialogManager()
   {
     return this.dialogManager;
   }
