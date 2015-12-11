@@ -23,6 +23,7 @@ import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -66,8 +67,6 @@ public class DefaultSWRLBridge implements SWRLBridge
   {
     this.swrlapiOWLOntology = swrlapiOWLOntology;
     this.owl2RLPersistenceLayer = owl2RLPersistenceLayer;
-    this.targetSWRLRuleEngine = null;
-    //this.owlObjectResolver = new DefaultOWLObjectResolver(swrlapiOWLOntology.getOWLDataFactory());
     this.owlObjectResolver = SWRLAPIFactory.createOWLObjectResolver(swrlapiOWLOntology.getOWLDataFactory());
     this.builtInLibraryManager = new SWRLBuiltInLibraryManager();
 
@@ -124,7 +123,7 @@ public class DefaultSWRLBridge implements SWRLBridge
 
   @NonNull @Override public Set<OWLAxiom> getInjectedOWLAxioms()
   {
-    return new HashSet<>(this.injectedOWLAxioms);
+    return Collections.unmodifiableSet(this.injectedOWLAxioms);
   }
 
   @Override public int getNumberOfInjectedOWLAxioms()
@@ -197,7 +196,8 @@ public class DefaultSWRLBridge implements SWRLBridge
   private void exportOWLAxiom(@NonNull OWLAxiom axiom) throws SWRLBuiltInBridgeException
   {
     try {
-      this.targetSWRLRuleEngine.defineOWLAxiom(axiom);
+      if (this.targetSWRLRuleEngine != null)
+        this.targetSWRLRuleEngine.defineOWLAxiom(axiom);
     } catch (TargetSWRLRuleEngineException e) {
       throw new SWRLBuiltInBridgeException(
           "error exporting OWL axiom " + axiom + " to target rule engine: " + (e.getMessage() != null ?

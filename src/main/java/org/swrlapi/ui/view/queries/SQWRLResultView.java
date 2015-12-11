@@ -58,7 +58,7 @@ public class SQWRLResultView extends JPanel implements SWRLAPIView
 
     JPanel buttonsPanel = new JPanel(new FlowLayout());
     JButton saveSQWRLResultButton = createButton("Save as CSV...", "Save the result as a CSV file...",
-        new SaveSQWRLResultActionListener());
+        new SaveSQWRLResultActionListener(this));
     buttonsPanel.add(saveSQWRLResultButton);
     JButton runSQWRLQueryButton = createButton("Rerun", "Rerun this SQWRL query", new RunSQWRLQueryActionListener());
     buttonsPanel.add(runSQWRLQueryButton);
@@ -135,10 +135,12 @@ public class SQWRLResultView extends JPanel implements SWRLAPIView
 
   private class SaveSQWRLResultActionListener implements ActionListener
   {
+    @NonNull private final Component component;
     @NonNull private final JFileChooser chooser;
 
-    public SaveSQWRLResultActionListener()
+    public SaveSQWRLResultActionListener(Component component)
     {
+      this.component = component;
       this.chooser = new JFileChooser();
       this.chooser.setCurrentDirectory(currentDirectory);
     }
@@ -189,8 +191,9 @@ public class SQWRLResultView extends JPanel implements SWRLAPIView
           }
         }
       } catch (Throwable e) {
-        JOptionPane.showMessageDialog(null, "Error saving file: " + (e.getMessage() != null ? e.getMessage() : ""),
-            "Error saving file", JOptionPane.ERROR_MESSAGE);
+        JOptionPane
+            .showMessageDialog(this.component, "Error saving file: " + (e.getMessage() != null ? e.getMessage() : ""),
+                "Error saving file", JOptionPane.ERROR_MESSAGE);
       }
     }
   }
