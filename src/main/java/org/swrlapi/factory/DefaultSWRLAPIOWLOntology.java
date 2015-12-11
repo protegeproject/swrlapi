@@ -438,7 +438,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
     return "";
   }
 
-  @NonNull public Set<OWLAnnotation> generateRuleAnnotations(@NonNull String ruleName, @NonNull String comment,
+  @NonNull public Set<@NonNull OWLAnnotation> generateRuleAnnotations(@NonNull String ruleName, @NonNull String comment,
       boolean isRuleEnabled)
   {
     OWLAnnotation labelAnnotation = getOWLDataFactory()

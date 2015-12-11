@@ -206,17 +206,17 @@ class SWRLParserSupport
   @NonNull public SWRLRule createSWRLRule(@NonNull String ruleName, @NonNull Set<SWRLAtom> head,
       @NonNull Set<SWRLAtom> body, @NonNull String comment, boolean isEnabled)
   {
-    Set<OWLAnnotation> annotations = this.swrlapiOWLOntology.generateRuleAnnotations(ruleName, comment, isEnabled);
+    Set<@NonNull OWLAnnotation> annotations = this.swrlapiOWLOntology.generateRuleAnnotations(ruleName, comment, isEnabled);
 
     return getOWLDataFactory().getSWRLRule(body, head, annotations);
   }
 
-  @NonNull public Set<SWRLAtom> createSWRLBodyAtomList()
+  @NonNull public Set<@NonNull SWRLAtom> createSWRLBodyAtomList()
   {
     return new LinkedHashSet<>();
   }
 
-  @NonNull public Set<SWRLAtom> createSWRLHeadAtomList()
+  @NonNull public Set<@NonNull SWRLAtom> createSWRLHeadAtomList()
   {
     return new LinkedHashSet<>();
   }
