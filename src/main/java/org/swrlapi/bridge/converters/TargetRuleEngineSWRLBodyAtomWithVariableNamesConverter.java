@@ -23,21 +23,21 @@ import java.util.Set;
  */
 public interface TargetRuleEngineSWRLBodyAtomWithVariableNamesConverter<T> extends TargetRuleEngineConverter
 {
-  @NonNull T convert(@NonNull SWRLClassAtom atom, @NonNull Set<String> previouslyEncounteredVariablePrefixedNames);
+  @NonNull T convert(@NonNull SWRLClassAtom atom, @NonNull Set<@NonNull String> previouslyEncounteredVariablePrefixedNames);
 
   @NonNull T convert(@NonNull SWRLDataPropertyAtom atom,
-    @NonNull Set<String> previouslyEncounteredVariablePrefixedNames);
+    @NonNull Set<@NonNull String> previouslyEncounteredVariablePrefixedNames);
 
   @NonNull T convert(@NonNull SWRLObjectPropertyAtom atom,
-    @NonNull Set<String> previouslyEncounteredVariablePrefixedNames);
+    @NonNull Set<@NonNull String> previouslyEncounteredVariablePrefixedNames);
 
   @NonNull T convert(@NonNull SWRLSameIndividualAtom atom,
-    @NonNull Set<String> previouslyEncounteredVariablePrefixedNames);
+    @NonNull Set<@NonNull String> previouslyEncounteredVariablePrefixedNames);
 
   @NonNull T convert(@NonNull SWRLDifferentIndividualsAtom atom,
-    @NonNull Set<String> previouslyEncounteredVariablePrefixedNames);
+    @NonNull Set<@NonNull String> previouslyEncounteredVariablePrefixedNames);
 
-  @NonNull T convert(@NonNull SWRLAPIBuiltInAtom atom, @NonNull Set<String> previouslyEncounteredVariablePrefixedNames);
+  @NonNull T convert(@NonNull SWRLAPIBuiltInAtom atom, @NonNull Set<@NonNull String> previouslyEncounteredVariablePrefixedNames);
 
-  @NonNull T convert(@NonNull SWRLDataRangeAtom atom, @NonNull Set<String> previouslyEncounteredVariablePrefixedNames);
+  @NonNull T convert(@NonNull SWRLDataRangeAtom atom, @NonNull Set<@NonNull String> previouslyEncounteredVariablePrefixedNames);
 }

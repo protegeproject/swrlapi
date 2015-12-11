@@ -21,7 +21,6 @@ public class SWRLRuleEngineMenuManager
       @NonNull FileBackedSWRLRuleEngineModel ruleEngineModel, @NonNull SWRLRuleEngineDialogManager dialogManager)
   {
     JMenuBar menuBar = new JMenuBar();
-
     JMenu menu = new JMenu(FILE_MENU_TITLE);
 
     JMenuItem openItem = new JMenuItem(OpenAction.OPEN_TITLE);

@@ -40,7 +40,7 @@ public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtom
    * @param variablePrefixedNames A set of prefixed variable names
    * @return True if the built-in uses at lease one of the supplied variables
    */
-  boolean usesAtLeastOneVariableOf(Set<String> variablePrefixedNames);
+  boolean usesAtLeastOneVariableOf(Set<@NonNull String> variablePrefixedNames);
 
   /**
    * @return A list of built-in arguments
@@ -77,7 +77,7 @@ public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtom
   /**
    * @return The prefixed names of the unbound variable arguments
    */
-  @NonNull Set<String> getUnboundArgumentVariablePrefixedNames();
+  @NonNull Set<@NonNull String> getUnboundArgumentVariablePrefixedNames();
 
   /**
    * @param argumentNumber An argument index
@@ -115,7 +115,7 @@ public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtom
   /**
    * @param variablePrefixedNames A set of variable prefixed-names
    */
-  void setPathVariablePrefixedNames(Set<String> variablePrefixedNames);
+  void setPathVariablePrefixedNames(Set<@NonNull String> variablePrefixedNames);
 
   /**
    * @return True if the built-in has at least one path variable
@@ -127,7 +127,7 @@ public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtom
    * 
    * @return A list of variable prefixed names
    */
-  @NonNull Set<String> getPathVariablePrefixedNames();
+  @NonNull Set<@NonNull String> getPathVariablePrefixedNames();
 
   /**
    * Indicate that the built-in uses a SQWRL collection result

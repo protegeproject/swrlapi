@@ -19,8 +19,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 {
   private static final String SWRLXLibraryName = "SWRLExtensionsBuiltIns";
 
-  @NonNull private final Map<String, OWLClass> classInvocationMap;
-  @NonNull private final Map<String, OWLNamedIndividual> individualInvocationMap;
+  @NonNull private final Map<@NonNull String, @NonNull OWLClass> classInvocationMap;
+  @NonNull private final Map<@NonNull String, @NonNull OWLNamedIndividual> individualInvocationMap;
 
   public SWRLBuiltInLibraryImpl()
   {

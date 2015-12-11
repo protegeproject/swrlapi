@@ -106,7 +106,7 @@ public interface SWRLAPIOWLOntology
 
   @NonNull SQWRLResult getSQWRLResult(@NonNull String queryName) throws SQWRLException;
 
-  @NonNull Set<String> getSQWRLQueryNames();
+  @NonNull Set<@NonNull String> getSQWRLQueryNames();
 
   @NonNull Set<SQWRLQuery> getSQWRLQueries();
 

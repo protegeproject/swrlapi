@@ -40,7 +40,7 @@ public class DefaultSWRLRuleAndQueryEngineFactory implements SWRLRuleAndQueryEng
     @NonNull DefaultPrefixManager prefixManager)
   {
     if (this.ruleEngineManager.hasRegisteredRuleEngines()) {
-      Optional<String> ruleEngineName = this.ruleEngineManager.getAnyRegisteredRuleEngineName();
+      Optional<@NonNull String> ruleEngineName = this.ruleEngineManager.getAnyRegisteredRuleEngineName();
       if (ruleEngineName.isPresent())
         return createSWRLRuleEngine(ruleEngineName.get(), ontology, prefixManager);
       else

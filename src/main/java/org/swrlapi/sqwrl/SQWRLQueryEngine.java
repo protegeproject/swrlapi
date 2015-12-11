@@ -81,7 +81,7 @@ public interface SQWRLQueryEngine extends SWRLRuleEngine
    *
    * @return The names of all enabled SQWRL queries
    */
-  @NonNull Set<String> getSQWRLQueryNames();
+  @NonNull Set<@NonNull String> getSQWRLQueryNames();
 
   /**
    * @return A SQWRL query renderer

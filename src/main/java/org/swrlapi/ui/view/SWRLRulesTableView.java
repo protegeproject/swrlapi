@@ -25,6 +25,9 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 {
   private static final long serialVersionUID = 1L;
 
+  private static final String EDIT_BUTTON_TITLE = "Edit";
+  private static final String DELETE_BUTTON_TITLE = "Delete";
+
   private static final int ACTIVE_COLUMN_PREFERRED_WIDTH = 30;
   private static final int ACTIVE_COLUMN_MAX_WIDTH = 50;
   private static final int RULE_NAME_COLUMN_PREFERRED_WIDTH = 150;
@@ -37,8 +40,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
   @NonNull private final SWRLRuleEngineModel swrlRuleEngineModel;
   @NonNull private final SWRLRuleEngineDialogManager dialogManager;
   @NonNull private final JTable swrlRulesTable;
-
-  private JButton editButton, deleteButton;
+  @NonNull private final JButton editButton, deleteButton;
 
   public SWRLRulesTableView(@NonNull SWRLRuleEngineModel swrlRuleEngineModel,
       @NonNull SWRLRuleEngineDialogManager dialogManager)
@@ -47,6 +49,8 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
     this.dialogManager = dialogManager;
     this.swrlRulesTable = new JTable(this.swrlRuleEngineModel.getSWRLRulesTableModel());
     this.swrlRulesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    this.deleteButton = new JButton(EDIT_BUTTON_TITLE);
+    this.editButton = new JButton(DELETE_BUTTON_TITLE);
 
     this.swrlRuleEngineModel.getSWRLRulesTableModel().setView(this);
   }
@@ -68,34 +72,34 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
     validate();
   }
 
-  public Optional<String> getSelectedSWRLRuleName()
+  public Optional<@NonNull String> getSelectedSWRLRuleName()
   {
     int selectedRow = this.swrlRulesTable.getSelectedRow();
 
     if (selectedRow != -1)
       return Optional.of(getSWRLRulesTableModel().getSWRLRuleNameByIndex(selectedRow));
     else
-      return Optional.empty();
+      return Optional.<@NonNull String>empty();
   }
 
-  private Optional<String> getSelectedSWRLRuleText()
+  private Optional<@NonNull String> getSelectedSWRLRuleText()
   {
     int selectedRow = this.swrlRulesTable.getSelectedRow();
 
     if (selectedRow != -1)
       return Optional.of(getSWRLRulesTableModel().getSWRLRuleTextByIndex(selectedRow));
     else
-      return Optional.empty();
+      return Optional.<@NonNull String>empty();
   }
 
-  private Optional<String> getSelectedSWRLRuleComment()
+  private Optional<@NonNull String> getSelectedSWRLRuleComment()
   {
     int selectedRow = this.swrlRulesTable.getSelectedRow();
 
     if (selectedRow != -1)
       return Optional.of(getSWRLRulesTableModel().getSWRLRuleCommentByIndex(selectedRow));
     else
-      return Optional.empty();
+      return Optional.<@NonNull String>empty();
   }
 
   private void setPreferredColumnWidths()
@@ -164,11 +168,9 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
     newButton.addActionListener(new NewSWRLRuleActionListener(this, dialogManager));
     buttonPanel.add(newButton, BorderLayout.WEST);
 
-    this.editButton = new JButton("Edit");
     this.editButton.addActionListener(new EditSWRLRuleActionListener(this, dialogManager));
     buttonPanel.add(this.editButton, BorderLayout.CENTER);
 
-    this.deleteButton = new JButton("Delete");
     this.deleteButton.addActionListener(new DeleteSWRLRuleActionListener(this, dialogManager));
     buttonPanel.add(this.deleteButton, BorderLayout.EAST);
 
@@ -258,7 +260,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 
     private void deleteSelectedSWRLRule()
     {
-      Optional<String> selectedRuleName = getSelectedSWRLRuleName();
+      Optional<@NonNull String> selectedRuleName = getSelectedSWRLRuleName();
 
       if (selectedRuleName.isPresent()) {
         if (SWRLRulesTableView.this.getSWRLRulesTableModel().hasSWRLRule(selectedRuleName.get()) && this.dialogManager

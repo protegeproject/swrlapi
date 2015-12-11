@@ -48,7 +48,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
   @NonNull private final Map<Integer, String> aggregateColumnIndexes; // Map of (index, function) pairs
   @NonNull private List<List<SQWRLResultValue>> rows; // List of List of SQWRLResultValue objects.
   @NonNull private List<SQWRLResultValue> rowData; // List of SQWRLResultValue objects used when assembling a row.
-  @NonNull private Map<String, List<SQWRLResultValue>> columnValuesMap; // Column name -> List<SQWRLResultValue>
+  @NonNull private Map<@NonNull String, List<SQWRLResultValue>> columnValuesMap; // Column name -> List<SQWRLResultValue>
 
   private int numberOfColumns, currentRowIndex, currentRowDataColumnIndex;
   private boolean isConfigured, isPrepared, isRowOpen, isOrdered, isAscending, isDistinct, hasAggregates;

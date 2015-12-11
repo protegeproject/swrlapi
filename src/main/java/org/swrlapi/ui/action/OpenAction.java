@@ -13,43 +13,42 @@ import java.io.File;
 
 public class OpenAction implements ActionListener
 {
-	@NonNull
-	private final Component parent;
-	private final @NonNull SWRLRuleEngineDialogManager dialogManager;
-	@NonNull
-	private final FileBackedOntologyModel ontologyModel;
+  public static final String OPEN_TITLE = "Open";
 
-	public static final String OPEN_TITLE = "Open";
-	private static final String FILE_DESCRIPTION = "OWL Ontology";
-	private static final String FILE_EXTENSION = "owl";
-	private static final String ERROR_TITLE = "Error";
+  private static final String FILE_DESCRIPTION = "OWL Ontology";
+  private static final String FILE_EXTENSION = "owl";
+  private static final String ERROR_TITLE = "Error";
 
-	public OpenAction(@NonNull Component parent, @NonNull FileBackedOntologyModel ontologyModel,
-			@NonNull SWRLRuleEngineDialogManager dialogManager)
-	{
-		this.parent = parent;
-		this.dialogManager = dialogManager;
-		this.ontologyModel = ontologyModel;
-	}
+  @NonNull private final Component parent;
+  @NonNull private final SWRLRuleEngineDialogManager dialogManager;
+  @NonNull private final FileBackedOntologyModel ontologyModel;
 
-	@Override
-	public void actionPerformed(ActionEvent e)
-	{
-		open();
-	}
+  public OpenAction(@NonNull Component parent, @NonNull FileBackedOntologyModel ontologyModel,
+      @NonNull SWRLRuleEngineDialogManager dialogManager)
+  {
+    this.parent = parent;
+    this.dialogManager = dialogManager;
+    this.ontologyModel = ontologyModel;
+  }
 
-	public void open()
-	{
-		JFileChooser fileChooser = this.dialogManager.createFileChooser(OPEN_TITLE, FILE_DESCRIPTION, FILE_EXTENSION);
+  @Override public void actionPerformed(ActionEvent e)
+  {
+    open();
+  }
 
-		if (fileChooser.showOpenDialog(this.parent) == JFileChooser.APPROVE_OPTION) {
-			File file = fileChooser.getSelectedFile();
+  public void open()
+  {
+    JFileChooser fileChooser = this.dialogManager.createFileChooser(OPEN_TITLE, FILE_DESCRIPTION, FILE_EXTENSION);
 
-			try {
-				this.ontologyModel.open(file);
-			} catch (OWLOntologyCreationException e) {
-				this.dialogManager.showErrorMessageDialog(this.parent, e.getMessage() != null ? e.getMessage() : "", ERROR_TITLE);
-			}
-		}
-	}
+    if (fileChooser.showOpenDialog(this.parent) == JFileChooser.APPROVE_OPTION) {
+      File file = fileChooser.getSelectedFile();
+
+      try {
+        this.ontologyModel.open(file);
+      } catch (OWLOntologyCreationException e) {
+        this.dialogManager
+            .showErrorMessageDialog(this.parent, e.getMessage() != null ? e.getMessage() : "", ERROR_TITLE);
+      }
+    }
+  }
 }

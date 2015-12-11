@@ -447,7 +447,7 @@ public class SWRLAPIFactory
     if (ontologyFormat != null && ontologyFormat.isPrefixOWLOntologyFormat()) {
       PrefixDocumentFormat prefixOntologyFormat = ontologyFormat.asPrefixOWLOntologyFormat();
 
-      Map<String, String> map = prefixOntologyFormat.getPrefixName2PrefixMap();
+      Map<@NonNull String, String> map = prefixOntologyFormat.getPrefixName2PrefixMap();
       for (String prefix : map.keySet())
         prefixManager.setPrefix(prefix, map.get(prefix));
     }
@@ -468,7 +468,7 @@ public class SWRLAPIFactory
 
   private static void addSWRLAPIBuiltInOntologies(@NonNull OWLOntology ontology)
   {
-    Map<String, String> map = new HashMap<>();
+    Map<@NonNull String, String> map = new HashMap<>();
 
     map.put("http://www.w3.org/2003/11/swrl#", resourceName2File("owl/swrl.owl"));
     map.put("http://www.w3.org/2003/11/swrlb#", resourceName2File("owl/swrlb.owl"));

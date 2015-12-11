@@ -107,9 +107,9 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
   @NonNull private final Set<IRI> swrlBuiltInIRIs;
   @NonNull private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
 
-  @NonNull private final Map<String, SWRLAPIRule> swrlRules; // SWRL rules and SQWRL queries extracted from ontolgy
-  @NonNull private final Map<String, SWRLRule> owlapiRules; // All SWRL rules in supplied ontology
-  @NonNull private final Map<String, SQWRLQuery> sqwrlQueries;
+  @NonNull private final Map<@NonNull String, SWRLAPIRule> swrlRules; // SWRL rules and SQWRL queries extracted from ontolgy
+  @NonNull private final Map<@NonNull String, SWRLRule> owlapiRules; // All SWRL rules in supplied ontology
+  @NonNull private final Map<@NonNull String, SQWRLQuery> sqwrlQueries;
 
   // All asserted OWL axioms extracted from the supplied ontology; includes SWRL rules
   @NonNull private final Set<OWLAxiom> assertedOWLAxioms;
@@ -230,7 +230,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
     this.sqwrlQueries.clear();
 
     for (SWRLRule owlapiRule : getOWLOntology().getAxioms(AxiomType.SWRL_RULE, Imports.INCLUDED)) {
-      Optional<String> ruleName = getRuleName(owlapiRule);
+      Optional<@NonNull String> ruleName = getRuleName(owlapiRule);
       boolean isActive = getIsRuleEnabled(owlapiRule);
       String comment = getRuleComment(owlapiRule);
 
@@ -352,7 +352,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
     return this.assertedOWLAxioms.contains(axiom);
   }
 
-  @NonNull @Override public Set<String> getSQWRLQueryNames()
+  @NonNull @Override public Set<@NonNull String> getSQWRLQueryNames()
   {
     return new HashSet<>(this.sqwrlQueries.keySet());
   }
@@ -395,7 +395,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
         getSWRLAPIOWLDataFactory().getLiteralFactory(), getIRIResolver());
   }
 
-  private Optional<String> getRuleName(@NonNull SWRLRule owlapiRule)
+  private Optional<@NonNull String> getRuleName(@NonNull SWRLRule owlapiRule)
   {
     OWLAnnotationProperty labelAnnotation = getOWLDataFactory()
         .getOWLAnnotationProperty(OWLRDFVocabulary.RDFS_LABEL.getIRI());

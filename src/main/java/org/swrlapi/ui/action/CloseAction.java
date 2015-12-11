@@ -11,17 +11,17 @@ import java.awt.event.ActionListener;
 
 public class CloseAction implements ActionListener
 {
-  @NonNull private final Component parent;
-  @NonNull private final FileBackedOntologyModel ontologyModel;
-  @NonNull private final SWRLRuleEngineDialogManager dialogManager;
-
   public static final String CLOSE_TITLE = "Close";
 
   private static final String MESSAGE = "Do you really want to close the ontology?";
   private static final String ERROR_TITLE = "Error";
 
+  @NonNull private final Component parent;
+  @NonNull private final FileBackedOntologyModel ontologyModel;
+  @NonNull private final SWRLRuleEngineDialogManager dialogManager;
+
   public CloseAction(@NonNull Component parent, @NonNull FileBackedOntologyModel ontologyModel,
-    @NonNull SWRLRuleEngineDialogManager dialogManager)
+      @NonNull SWRLRuleEngineDialogManager dialogManager)
   {
     this.parent = parent;
     this.ontologyModel = ontologyModel;
@@ -36,7 +36,7 @@ public class CloseAction implements ActionListener
   private void confirmClose()
   {
     if (!this.ontologyModel.hasOntologyChanged() || this.dialogManager
-      .showConfirmDialog(parent, MESSAGE, CLOSE_TITLE)) {
+        .showConfirmDialog(parent, MESSAGE, CLOSE_TITLE)) {
       close();
     }
   }

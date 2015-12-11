@@ -78,7 +78,7 @@ public interface SQWRLQuery
    * @param builtInNames A set of built-in names used in the query
    * @return A list of built-in atoms
    */
-  @NonNull List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromBody(Set<String> builtInNames);
+  @NonNull List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromBody(Set<@NonNull String> builtInNames);
 
   /**
    * @return A SQWRL result generator

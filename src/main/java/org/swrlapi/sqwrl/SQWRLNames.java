@@ -133,19 +133,19 @@ public class SQWRLNames
     SumAggregateFunction, AvgAggregateFunction, MedianAggregateFunction, CountAggregateFunction,
     CountDistinctAggregateFunction };
 
-  @NonNull private static final Set<String> sqwrlBuiltInNames;
-  @NonNull private static final Set<String> headBuiltInNames;
-  @NonNull private static final Set<String> headSelectionBuiltInNames;
-  @NonNull private static final Set<String> headAggregationBuiltInNames;
-  @NonNull private static final Set<String> headSlicingBuiltInNames;
-  @NonNull private static final Set<String> collectionMakeBuiltInNames;
-  @NonNull private static final Set<String> collectionGroupByBuiltInNames;
-  @NonNull private static final Set<String> collectionCreateOperationBuiltInNames;
-  @NonNull private static final Set<String> collectionOperationBuiltInNames;
-  @NonNull private static final Set<String> singleCollectionOperationWithCollectionCreateBuiltInNames;
-  @NonNull private static final Set<String> singleCollectionOperationWithoutCollectionCreateBuiltInNames;
-  @NonNull private static final Set<String> multiCollectionOperationWithCollectionCreateBuiltInNames;
-  @NonNull private static final Set<String> multiCollectionOperationWithoutCollectionCreateBuiltInNames;
+  @NonNull private static final Set<@NonNull String> sqwrlBuiltInNames;
+  @NonNull private static final Set<@NonNull String> headBuiltInNames;
+  @NonNull private static final Set<@NonNull String> headSelectionBuiltInNames;
+  @NonNull private static final Set<@NonNull String> headAggregationBuiltInNames;
+  @NonNull private static final Set<@NonNull String> headSlicingBuiltInNames;
+  @NonNull private static final Set<@NonNull String> collectionMakeBuiltInNames;
+  @NonNull private static final Set<@NonNull String> collectionGroupByBuiltInNames;
+  @NonNull private static final Set<@NonNull String> collectionCreateOperationBuiltInNames;
+  @NonNull private static final Set<@NonNull String> collectionOperationBuiltInNames;
+  @NonNull private static final Set<@NonNull String> singleCollectionOperationWithCollectionCreateBuiltInNames;
+  @NonNull private static final Set<@NonNull String> singleCollectionOperationWithoutCollectionCreateBuiltInNames;
+  @NonNull private static final Set<@NonNull String> multiCollectionOperationWithCollectionCreateBuiltInNames;
+  @NonNull private static final Set<@NonNull String> multiCollectionOperationWithoutCollectionCreateBuiltInNames;
 
   static {
     sqwrlBuiltInNames = new HashSet<>();
@@ -203,42 +203,42 @@ public class SQWRLNames
     sqwrlBuiltInNames.addAll(multiCollectionOperationWithoutCollectionCreateBuiltInNames);
   }
 
-  @NonNull public static Set<String> getSQWRLBuiltInNames()
+  @NonNull public static Set<@NonNull String> getSQWRLBuiltInNames()
   {
     return sqwrlBuiltInNames;
   }
 
-  @NonNull public static Set<String> getHeadBuiltInNames()
+  @NonNull public static Set<@NonNull String> getHeadBuiltInNames()
   {
     return headBuiltInNames;
   }
 
-  @NonNull public static Set<String> getHeadSlicingBuiltInNames()
+  @NonNull public static Set<@NonNull String> getHeadSlicingBuiltInNames()
   {
     return headSlicingBuiltInNames;
   }
 
-  @NonNull public static Set<String> getHeadSelectionBuiltInNames()
+  @NonNull public static Set<@NonNull String> getHeadSelectionBuiltInNames()
   {
     return headSelectionBuiltInNames;
   }
 
-  @NonNull public static Set<String> getCollectionMakeBuiltInNames()
+  @NonNull public static Set<@NonNull String> getCollectionMakeBuiltInNames()
   {
     return collectionMakeBuiltInNames;
   }
 
-  @NonNull public static Set<String> getCollectionGroupByBuiltInNames()
+  @NonNull public static Set<@NonNull String> getCollectionGroupByBuiltInNames()
   {
     return collectionGroupByBuiltInNames;
   }
 
-  @NonNull public static Set<String> getCollectionCreateBuiltInNames()
+  @NonNull public static Set<@NonNull String> getCollectionCreateBuiltInNames()
   {
     return collectionCreateOperationBuiltInNames;
   }
 
-  @NonNull public static Set<String> getCollectionOperationBuiltInNames()
+  @NonNull public static Set<@NonNull String> getCollectionOperationBuiltInNames()
   {
     return collectionOperationBuiltInNames;
   }

@@ -20,17 +20,17 @@ public class DefaultIRIResolver implements IRIResolver
 {
   @NonNull private final DefaultPrefixManager prefixManager;
 
-  @NonNull private final Map<String, IRI> prefixedName2IRI = new HashMap<>();
+  @NonNull private final Map<@NonNull String, IRI> prefixedName2IRI = new HashMap<>();
   @NonNull private final Map<IRI, String> iri2PrefixedNameCache = new HashMap<>();
-  @NonNull private final Set<String> variablePrefixedNames = new HashSet<>();
-  @NonNull private final Set<String> classPrefixedNames = new HashSet<>();
-  @NonNull private final Set<String> namedIndividualPrefixedNames = new HashSet<>();
-  @NonNull private final Set<String> objectPropertyPrefixedNames = new HashSet<>();
-  @NonNull private final Set<String> dataPropertyPrefixedNames = new HashSet<>();
-  @NonNull private final Set<String> annotationPropertyPrefixedNames = new HashSet<>();
-  @NonNull private final Set<String> datatypePrefixedNames = new HashSet<>();
+  @NonNull private final Set<@NonNull String> variablePrefixedNames = new HashSet<>();
+  @NonNull private final Set<@NonNull String> classPrefixedNames = new HashSet<>();
+  @NonNull private final Set<@NonNull String> namedIndividualPrefixedNames = new HashSet<>();
+  @NonNull private final Set<@NonNull String> objectPropertyPrefixedNames = new HashSet<>();
+  @NonNull private final Set<@NonNull String> dataPropertyPrefixedNames = new HashSet<>();
+  @NonNull private final Set<@NonNull String> annotationPropertyPrefixedNames = new HashSet<>();
+  @NonNull private final Set<@NonNull String> datatypePrefixedNames = new HashSet<>();
 
-  @NonNull private final Map<String, String> autogenNamespace2Prefix = new HashMap<>();
+  @NonNull private final Map<@NonNull String, String> autogenNamespace2Prefix = new HashMap<>();
 
   private int autogenPrefixNumber = 0;
 
@@ -65,7 +65,7 @@ public class DefaultIRIResolver implements IRIResolver
         return existingPrefixedName;
       else {
         String namespace = iri.getNamespace();
-        com.google.common.base.Optional<String> remainder = iri.getRemainder();
+        com.google.common.base.Optional<@NonNull String> remainder = iri.getRemainder();
         if (remainder.isPresent()) {
           if (this.autogenNamespace2Prefix.containsKey(namespace)) {
             String prefixedName = this.autogenNamespace2Prefix.get(namespace) + remainder.get();

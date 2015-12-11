@@ -9,7 +9,7 @@ import java.util.Map;
 
 class DefaultOWLIndividualResolver implements OWLIndividualResolver
 {
-  @NonNull private final Map<String, OWLIndividual> individualID2OWLIndividual;
+  @NonNull private final Map<@NonNull String, OWLIndividual> individualID2OWLIndividual;
 
   public DefaultOWLIndividualResolver()
   {

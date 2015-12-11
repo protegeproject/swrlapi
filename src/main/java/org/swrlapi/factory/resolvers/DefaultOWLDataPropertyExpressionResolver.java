@@ -8,7 +8,7 @@ import java.util.Map;
 
 class DefaultOWLDataPropertyExpressionResolver implements OWLDataPropertyExpressionResolver
 {
-  @NonNull private final Map<String, OWLDataPropertyExpression> id2OWLPropertyExpression;
+  @NonNull private final Map<@NonNull String, OWLDataPropertyExpression> id2OWLPropertyExpression;
   @NonNull private final Map<OWLDataPropertyExpression, String> owlPropertyExpression2ID;
 
   public DefaultOWLDataPropertyExpressionResolver()

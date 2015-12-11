@@ -10,12 +10,13 @@ import java.awt.event.ActionListener;
 
 public class QuitAction implements ActionListener
 {
+  public static final String QUIT_TITLE = "Quit";
+
+  private static final String MESSAGE = "Do you really want to quit?";
+
   @NonNull private final Component parent;
   @NonNull private final FileBackedOntologyModel ontologyModel;
-  private final @NonNull SWRLRuleEngineDialogManager dialogManager;
-
-  public static final String QUIT_TITLE = "Quit";
-  private static final String MESSAGE = "Do you really want to quit?";
+  @NonNull private final SWRLRuleEngineDialogManager dialogManager;
 
   public QuitAction(@NonNull Component parent, @NonNull FileBackedOntologyModel ontologyModel,
     @NonNull SWRLRuleEngineDialogManager dialogManager)

@@ -11,15 +11,16 @@ import java.awt.event.ActionListener;
 
 public class SaveAction implements ActionListener
 {
-  @NonNull private final Component parent;
-  private final @NonNull SWRLRuleEngineDialogManager dialogManager;
-  private final @NonNull FileBackedOntologyModel ontologyModel;
-
   public static final String SAVE_TITLE = "Save";
+
   private static final String ERROR_TITLE = "Error";
 
+  @NonNull private final Component parent;
+  @NonNull private final SWRLRuleEngineDialogManager dialogManager;
+  @NonNull private final FileBackedOntologyModel ontologyModel;
+
   public SaveAction(@NonNull Component parent, @NonNull FileBackedOntologyModel ontologyModel,
-    @NonNull SWRLRuleEngineDialogManager dialogManager)
+      @NonNull SWRLRuleEngineDialogManager dialogManager)
   {
     this.parent = parent;
     this.dialogManager = dialogManager;

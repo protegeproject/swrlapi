@@ -13,17 +13,17 @@ import java.io.File;
 
 public class SaveAsAction implements ActionListener
 {
-  @NonNull private final Component parent;
-  private final @NonNull SWRLRuleEngineDialogManager dialogManager;
-  @NonNull private final FileBackedOntologyModel ontologyModel;
-
   public static final String SAVE_AS_TITLE = "Save As";
   private static final String FILE_DESCRIPTION = "OWL Ontology";
   private static final String FILE_EXTENSION = "owl";
   private static final String ERROR_TITLE = "Error";
 
+  @NonNull private final Component parent;
+  @NonNull private final SWRLRuleEngineDialogManager dialogManager;
+  @NonNull private final FileBackedOntologyModel ontologyModel;
+
   public SaveAsAction(@NonNull Component parent, @NonNull FileBackedOntologyModel ontologyModel,
-    @NonNull SWRLRuleEngineDialogManager dialogManager)
+      @NonNull SWRLRuleEngineDialogManager dialogManager)
   {
     this.parent = parent;
     this.dialogManager = dialogManager;
@@ -38,7 +38,7 @@ public class SaveAsAction implements ActionListener
   private void saveAs()
   {
     JFileChooser fileChooser = this.dialogManager
-      .createSaveFileChooser(SAVE_AS_TITLE, FILE_DESCRIPTION, FILE_EXTENSION, true);
+        .createSaveFileChooser(SAVE_AS_TITLE, FILE_DESCRIPTION, FILE_EXTENSION, true);
 
     if (fileChooser.showSaveDialog(this.parent) == JFileChooser.APPROVE_OPTION) {
       File file = fileChooser.getSelectedFile();
@@ -46,7 +46,8 @@ public class SaveAsAction implements ActionListener
       try {
         this.ontologyModel.saveAs(file);
       } catch (OWLOntologyStorageException e) {
-        this.dialogManager.showErrorMessageDialog(this.parent, e.getMessage() != null ? e.getMessage() : "", ERROR_TITLE);
+        this.dialogManager
+            .showErrorMessageDialog(this.parent, e.getMessage() != null ? e.getMessage() : "", ERROR_TITLE);
       }
     }
   }

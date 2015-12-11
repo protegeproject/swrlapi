@@ -33,8 +33,8 @@ public class SWRLBuiltInLibraryManager
   private static final String BuiltInLibraryPackageBaseName = "org.swrlapi.builtins.";
 
   // Holds instances of implementation classes defining built-in libraries
-  @NonNull private final Map<String, SWRLBuiltInLibrary> builtInLibraries;
-  @NonNull private final Map<String, Method> methods;
+  @NonNull private final Map<@NonNull String, @NonNull SWRLBuiltInLibrary> builtInLibraries;
+  @NonNull private final Map<@NonNull String, @NonNull Method> methods;
 
   public SWRLBuiltInLibraryManager()
   {

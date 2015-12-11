@@ -166,7 +166,7 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
     return this.swrlapiOWLOntology.getSQWRLQueries();
   }
 
-  @NonNull @Override public Set<String> getSQWRLQueryNames()
+  @NonNull @Override public Set<@NonNull String> getSQWRLQueryNames()
   {
     return this.swrlapiOWLOntology.getSQWRLQueryNames();
   }

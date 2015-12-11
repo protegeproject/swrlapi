@@ -35,7 +35,7 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
   @NonNull private final SQWRLQuerySelector sqwrlQuerySelector;
   @NonNull private final JTextArea console;
   @NonNull private final Icon queryEngineIcon;
-  @NonNull private final Map<String, SQWRLResultView> sqwrlResultViews = new HashMap<>();
+  @NonNull private final Map<@NonNull String, SQWRLResultView> sqwrlResultViews = new HashMap<>();
 
   public SQWRLQueryControlView(@NonNull SQWRLQueryEngineModel queryEngineModel, SQWRLQuerySelector sqwrlQuerySelector)
   {
@@ -142,7 +142,7 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
 
     private void runSQWRLQuery()
     {
-      Optional<String> queryName = Optional.empty();
+      Optional<@NonNull String> queryName = Optional.empty();
 
       if (SQWRLQueryControlView.this.sqwrlResultViews.size() == SQWRLQueryControlView.MAXIMUM_OPEN_RESULT_VIEWS) {
         appendToConsole(

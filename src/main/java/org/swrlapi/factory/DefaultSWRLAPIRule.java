@@ -69,12 +69,12 @@ public class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
     return this.bodyAtoms;
   }
 
-  @NonNull @Override public List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromHead(@NonNull Set<String> builtInNames)
+  @NonNull @Override public List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromHead(@NonNull Set<@NonNull String> builtInNames)
   {
     return getBuiltInAtoms(getHeadAtoms(), builtInNames);
   }
 
-  @NonNull @Override public List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromBody(@NonNull Set<String> builtInNames)
+  @NonNull @Override public List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromBody(@NonNull Set<@NonNull String> builtInNames)
   {
     return getBuiltInAtoms(getBodyAtoms(), builtInNames);
   }
@@ -157,7 +157,7 @@ public class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
   }
 
   @NonNull private List<SWRLAPIBuiltInAtom> getBuiltInAtoms(@NonNull List<SWRLAtom> atoms,
-    @NonNull Set<String> builtInNames)
+    @NonNull Set<@NonNull String> builtInNames)
   {
     List<SWRLAPIBuiltInAtom> result = new ArrayList<>();
 

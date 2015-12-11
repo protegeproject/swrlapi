@@ -63,11 +63,11 @@ public interface SWRLAPIRule extends SWRLRule
    * @param builtInNames A set of built-in names
    * @return A list of built-in atoms
    */
-  @NonNull List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromHead(Set<String> builtInNames);
+  @NonNull List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromHead(Set<@NonNull String> builtInNames);
 
   /**
    * @param builtInNames A set of built-in names
    * @return A list of built-in atoms
    */
-  @NonNull List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromBody(Set<String> builtInNames);
+  @NonNull List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromBody(Set<@NonNull String> builtInNames);
 }

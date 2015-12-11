@@ -36,7 +36,7 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 
 	@NonNull private SWRLRuleEngine swrlRuleEngine;
 	@NonNull private SWRLRuleRenderer swrlRuleRenderer;
-	@NonNull private final SortedMap<String, SWRLRuleModel> swrlRuleModels; // rule name -> SWRLRuleModel
+	@NonNull private final SortedMap<@NonNull String, SWRLRuleModel> swrlRuleModels; // rule name -> SWRLRuleModel
   private boolean isModified;
 
 	private Optional<SWRLAPIView> view = Optional.empty();

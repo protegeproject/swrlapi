@@ -8,7 +8,7 @@ import java.util.Map;
 
 class DefaultOWLDataRangeResolver implements OWLDataRangeResolver
 {
-  @NonNull private final Map<String, OWLDataRange> dataRangeMap;
+  @NonNull private final Map<@NonNull String, OWLDataRange> dataRangeMap;
 
   public DefaultOWLDataRangeResolver()
   {

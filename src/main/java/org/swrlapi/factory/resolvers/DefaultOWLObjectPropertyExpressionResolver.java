@@ -9,7 +9,7 @@ import java.util.Map;
 
 class DefaultOWLObjectPropertyExpressionResolver implements OWLObjectPropertyExpressionResolver
 {
-  @NonNull private final Map<String, OWLObjectPropertyExpression> id2OWLPropertyExpression;
+  @NonNull private final Map<@NonNull String, OWLObjectPropertyExpression> id2OWLPropertyExpression;
   @NonNull private final Map<OWLObjectPropertyExpression, String> owlPropertyExpression2ID;
 
   public DefaultOWLObjectPropertyExpressionResolver()

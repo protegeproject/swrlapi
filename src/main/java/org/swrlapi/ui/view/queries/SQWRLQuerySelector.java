@@ -20,7 +20,7 @@ class SQWRLQuerySelector
     this.swrlRulesTableView = swrlRulesTableView;
   }
 
-  public Optional<String> getSelectedQueryName()
+  public Optional<@NonNull String> getSelectedQueryName()
   {
     return this.swrlRulesTableView.getSelectedSWRLRuleName();
   }

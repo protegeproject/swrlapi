@@ -24,7 +24,7 @@ class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SWRLAPIBu
   @NonNull private final String builtInPrefixedName;
 
   @NonNull private List<SWRLBuiltInArgument> arguments;
-  @NonNull private Set<String> pathVariablePrefixedNames = new HashSet<>();
+  @NonNull private Set<@NonNull String> pathVariablePrefixedNames = new HashSet<>();
   private boolean sqwrlCollectionResultsUsed = false;
   private int builtInIndex = -1; // Index of this built-in atom in rule body; left-to-right, first built-in index is 0,
   // second in 1, and so on
@@ -79,7 +79,7 @@ class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SWRLAPIBu
     this.builtInIndex = builtInIndex;
   }
 
-  @NonNull @Override public Set<String> getPathVariablePrefixedNames()
+  @NonNull @Override public Set<@NonNull String> getPathVariablePrefixedNames()
   {
     return Collections.unmodifiableSet(this.pathVariablePrefixedNames);
   }
@@ -89,9 +89,9 @@ class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SWRLAPIBu
     return !this.pathVariablePrefixedNames.isEmpty();
   }
 
-  @Override public boolean usesAtLeastOneVariableOf(@NonNull Set<String> variablePrefixedNames)
+  @Override public boolean usesAtLeastOneVariableOf(@NonNull Set<@NonNull String> variablePrefixedNames)
   {
-    Set<String> s = new HashSet<>(variablePrefixedNames);
+    Set<@NonNull String> s = new HashSet<>(variablePrefixedNames);
 
     s.retainAll(getArgumentsVariablePrefixedNames());
 
@@ -129,9 +129,9 @@ class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SWRLAPIBu
     return false;
   }
 
-  @NonNull @Override public Set<String> getUnboundArgumentVariablePrefixedNames()
+  @NonNull @Override public Set<@NonNull String> getUnboundArgumentVariablePrefixedNames()
   {
-    Set<String> result = this.arguments.stream()
+    Set<@NonNull String> result = this.arguments.stream()
       .filter(argument -> argument.isVariable() && argument.asVariable().isUnbound())
       .map(argument -> argument.asVariable().getVariablePrefixedName()).collect(Collectors.toSet());
 
@@ -173,7 +173,7 @@ class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SWRLAPIBu
     this.arguments.addAll(additionalArguments);
   }
 
-  @Override public void setPathVariablePrefixedNames(@NonNull Set<String> variablePrefixedNames)
+  @Override public void setPathVariablePrefixedNames(@NonNull Set<@NonNull String> variablePrefixedNames)
   {
     this.pathVariablePrefixedNames = new HashSet<>(variablePrefixedNames);
   }

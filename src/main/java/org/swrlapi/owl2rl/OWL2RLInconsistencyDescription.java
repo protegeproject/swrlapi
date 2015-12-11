@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public class OWL2RLInconsistencyDescription
 {
-  @NonNull private static final Map<String, OWL2RLRuleArguments> argumentsDescriptionMap;
+  @NonNull private static final Map<@NonNull String, OWL2RLRuleArguments> argumentsDescriptionMap;
 
   static {
     argumentsDescriptionMap = new HashMap<>();

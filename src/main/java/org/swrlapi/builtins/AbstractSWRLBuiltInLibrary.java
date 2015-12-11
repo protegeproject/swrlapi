@@ -74,10 +74,11 @@ public abstract class AbstractSWRLBuiltInLibrary
   // from within a built-in; the invokingBridge method is valid only in built-ins and in the reset method.
   @Nullable private SWRLBuiltInBridge invokingBridge;
   @NonNull private String invokingRuleName = "";
+  @NonNull private Long invocationPatternID;
+  @NonNull private Map<@NonNull String, @NonNull Long> invocationPatternMap;
+
   private int invokingBuiltInIndex = -1;
   private boolean isInConsequent = false;
-  @NonNull private Long invocationPatternID;
-  @NonNull private Map<String, Long> invocationPatternMap;
 
   protected AbstractSWRLBuiltInLibrary(@NonNull String libraryName)
   {
