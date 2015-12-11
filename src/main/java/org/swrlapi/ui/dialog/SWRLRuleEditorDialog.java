@@ -15,6 +15,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
+import javax.swing.text.SimpleAttributeSet;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -44,7 +45,7 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
   private static final String CANCEL_BUTTON_TITLE = "Cancel";
   private static final String STATUS_OK = "Ok";
   private static final String STATUS_NO_RULE_TEXT =
-      "Use Tab key to cycle through auto-completions;" + " use Escape key to remove auto-complete expansion";
+    "Use Tab key to cycle through auto-completions;" + " use Escape key to remove auto-complete expansion";
   private static final String INVALID_RULE_TITLE = "Invalid";
   private static final String MISSING_RULE = "Nothing to save!";
   private static final String MISSING_RULE_NAME_TITLE = "Empty Name";
@@ -60,22 +61,20 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
   private static final int RULE_EDIT_AREA_COLUMNS = 20;
   private static final int RULE_EDIT_AREA_ROWS = 60;
 
-  private final Border loweredBevelBorder;
-  private final Border yellowBorder;
-
   @NonNull private final SWRLRuleEngineModel swrlRuleEngineModel;
   @NonNull private final SWRLRuleEngineDialogManager dialogManager;
   @NonNull private final SWRLRuleEditorInitialDialogState initialDialogState = new SWRLRuleEditorInitialDialogState();
-
   @NonNull private final JTextField ruleNameTextField, commentTextField, statusTextField;
   @NonNull private final JTextArea ruleTextTextArea;
   @NonNull private final JButton saveButton;
+  @NonNull private final Border loweredBevelBorder;
+  @NonNull private final Border yellowBorder;
 
-  private Optional<SWRLRuleEditorAutoCompleteState> autoCompleteState = Optional.empty(); // Present if auto-complete
+  private Optional<@NonNull SWRLRuleEditorAutoCompleteState> autoCompleteState = Optional.<@NonNull SWRLRuleEditorAutoCompleteState>empty(); // Present if auto-complete
   private boolean editMode = false;
 
   public SWRLRuleEditorDialog(@NonNull SWRLRuleEngineModel swrlRuleEngineModel,
-      @NonNull SWRLRuleEngineDialogManager dialogManager)
+    @NonNull SWRLRuleEngineDialogManager dialogManager)
   {
     this.swrlRuleEngineModel = swrlRuleEngineModel;
     this.dialogManager = dialogManager;
@@ -289,13 +288,13 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
 
   private void disableAutoCompleteModeIfNecessary()
   {
-    if (this.autoCompleteState != null)
+    if (this.autoCompleteState.isPresent())
       disableAutoCompleteMode();
   }
 
   private void disableAutoCompleteMode()
   {
-    this.autoCompleteState = null;
+    this.autoCompleteState = Optional.<@NonNull SWRLRuleEditorAutoCompleteState>empty();
   }
 
   private void cancelAutoCompleteIfNecessary()
@@ -317,7 +316,7 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
     try {
       Document document = this.ruleTextTextArea.getDocument();
       if (document != null)
-        document.insertString(textPosition, expansionTail, null);
+        document.insertString(textPosition, expansionTail, SimpleAttributeSet.EMPTY);
       else
         disableAutoCompleteMode();
     } catch (BadLocationException e) {
@@ -326,7 +325,7 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
   }
 
   private void replaceExpansion(int textPosition, @NonNull String prefix, @NonNull String currentExpansion,
-      @NonNull String nextExpansion)
+    @NonNull String nextExpansion)
   {
     String currentExpansionTail = currentExpansion.isEmpty() ? "" : currentExpansion.substring(prefix.length());
     String nextExpansionTail = nextExpansion.isEmpty() ? "" : nextExpansion.substring(prefix.length());
@@ -336,7 +335,7 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
         this.ruleTextTextArea.getDocument().remove(textPosition, currentExpansionTail.length());
 
       if (!nextExpansionTail.isEmpty())
-        this.ruleTextTextArea.getDocument().insertString(textPosition, nextExpansionTail, null);
+        this.ruleTextTextArea.getDocument().insertString(textPosition, nextExpansionTail, SimpleAttributeSet.EMPTY);
     } catch (BadLocationException e) {
       disableAutoCompleteMode();
     }
@@ -344,7 +343,7 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
 
   @NonNull private List<String> getExpansions(@NonNull String prefix)
   {
-    List<String> expansions = new ArrayList<>();
+    List<@NonNull String> expansions = new ArrayList<>();
 
     expansions.add(""); // Add empty expansion that we can cycle back to
     expansions.addAll(getSWRLAutoCompleter().getCompletions(prefix));
@@ -371,7 +370,7 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
       boolean okToQuit;
 
       okToQuit = !hasDialogStateChanged() || getDialogManager()
-          .showConfirmDialog(this.parent, QUIT_CONFIRM_MESSAGE, QUIT_CONFIRM_TITLE);
+        .showConfirmDialog(this.parent, QUIT_CONFIRM_MESSAGE, QUIT_CONFIRM_TITLE);
 
       if (okToQuit) {
         cancelEditMode();
@@ -421,12 +420,12 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
             }
           }
         } catch (SWRLParseException pe) {
-          getDialogManager().showErrorMessageDialog(this.parent, (pe.getMessage() != null ? pe.getMessage() : ""),
-              INVALID_RULE_TITLE);
+          getDialogManager()
+            .showErrorMessageDialog(this.parent, (pe.getMessage() != null ? pe.getMessage() : ""), INVALID_RULE_TITLE);
           errorOccurred = true;
         } catch (RuntimeException pe) {
           getDialogManager().showErrorMessageDialog(this.parent, (pe.getMessage() != null ? pe.getMessage() : ""),
-              INTERNAL_ERROR_TITLE);
+            INTERNAL_ERROR_TITLE);
           errorOccurred = true;
         }
       }
@@ -482,12 +481,12 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
   @NonNull private String getRuleText()
   { // We replace the Unicode characters when parsing
     return this.ruleTextTextArea.getText().replaceAll(Character.toString(SWRLParser.AND_CHAR), "^")
-        .replaceAll(Character.toString(SWRLParser.IMP_CHAR), "->")
-        .replaceAll(Character.toString(SWRLParser.RING_CHAR), ".");
+      .replaceAll(Character.toString(SWRLParser.IMP_CHAR), "->")
+      .replaceAll(Character.toString(SWRLParser.RING_CHAR), ".");
   }
 
   private void createSWRLRule(@NonNull String ruleName, @NonNull String rule, @NonNull String comment, boolean isActive)
-      throws SWRLParseException
+    throws SWRLParseException
   {
     SWRLAPIRule swrlapiRule = getSWRLRuleEngine().createSWRLRule(ruleName, rule, comment, isActive);
 

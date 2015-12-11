@@ -48,14 +48,14 @@ public class DefaultSWRLBridge implements SWRLBridge
    * A {@link org.swrlapi.core.SWRLRuleEngine} can retrieve these using the the {@link #getInjectedOWLAxioms()} call
    * after calling {@link org.swrlapi.bridge.TargetSWRLRuleEngine#runRuleEngine()}.
    */
-  @NonNull private final Set<OWLAxiom> inferredOWLAxioms;
+  @NonNull private final Set<@NonNull OWLAxiom> inferredOWLAxioms;
 
   /**
    * OWL axioms inferred by SWRL built-ins (via the {@link #inferOWLAxiom(org.semanticweb.owlapi.model.OWLAxiom)}). A
    * {@link org.swrlapi.core.SWRLRuleEngine} can retrieve these using the {@link #getInjectedOWLAxioms()} call after
    * calling {@link org.swrlapi.bridge.TargetSWRLRuleEngine#runRuleEngine()}.
    */
-  @NonNull private final Set<OWLAxiom> injectedOWLAxioms;
+  @NonNull private final Set<@NonNull OWLAxiom> injectedOWLAxioms;
 
   /**
    * The target rule engine implementation (e.g., Drools, Jess)
@@ -121,7 +121,7 @@ public class DefaultSWRLBridge implements SWRLBridge
     return this.owl2RLPersistenceLayer;
   }
 
-  @NonNull @Override public Set<OWLAxiom> getInjectedOWLAxioms()
+  @NonNull @Override public Set<@NonNull OWLAxiom> getInjectedOWLAxioms()
   {
     return Collections.unmodifiableSet(this.injectedOWLAxioms);
   }
@@ -136,7 +136,7 @@ public class DefaultSWRLBridge implements SWRLBridge
     return this.injectedOWLAxioms.contains(axiom);
   }
 
-  @NonNull @Override public Set<OWLAxiom> getInferredOWLAxioms()
+  @NonNull @Override public Set<@NonNull OWLAxiom> getInferredOWLAxioms()
   {
     return this.inferredOWLAxioms;
   }

@@ -119,7 +119,7 @@ class DefaultSWRLLiteralBuiltInArgument extends DefaultSWRLBuiltInArgument imple
     visitor.visit(this);
   }
 
-  @NonNull @Override public <O> O accept(@NonNull SWRLObjectVisitorEx<O> visitor)
+  @NonNull @Override public <@NonNull O> O accept(@NonNull SWRLObjectVisitorEx<O> visitor)
   {
     return visitor.visit(this);
   }
@@ -129,7 +129,7 @@ class DefaultSWRLLiteralBuiltInArgument extends DefaultSWRLBuiltInArgument imple
     visitor.visit(this);
   }
 
-  @NonNull @Override public <O> O accept(@NonNull OWLObjectVisitorEx<O> visitor)
+  @NonNull @Override public <@NonNull O> O accept(@NonNull OWLObjectVisitorEx<O> visitor)
   {
     return visitor.visit(this);
   }
@@ -149,7 +149,7 @@ class DefaultSWRLLiteralBuiltInArgument extends DefaultSWRLBuiltInArgument imple
     return this.literal.getLiteral();
   }
 
-  @NonNull @Override public Set<OWLAnnotationProperty> getAnnotationPropertiesInSignature()
+  @NonNull @Override public Set<@NonNull OWLAnnotationProperty> getAnnotationPropertiesInSignature()
   {
     return Collections.emptySet(); // TODO Implement getAnnotationPropertiesInSignature
   }

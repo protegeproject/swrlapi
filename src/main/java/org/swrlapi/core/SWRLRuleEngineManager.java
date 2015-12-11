@@ -22,7 +22,7 @@ public interface SWRLRuleEngineManager
   /**
    * @return Any registered rule engine name - if any.
    */
-  Optional<String> getAnyRegisteredRuleEngineName();
+  Optional<@NonNull String> getAnyRegisteredRuleEngineName();
 
   /**
    * @param ruleEngineCreator A creator for the rule engine
@@ -38,13 +38,13 @@ public interface SWRLRuleEngineManager
   /**
    * @return A list of registered rule engine names
    */
-  @NonNull Set<String> getRegisteredRuleEngineNames();
+  @NonNull Set<@NonNull String> getRegisteredRuleEngineNames();
 
   /**
    * @param ruleEngineName A rule engine name
    * @return A creator for the specified rule engine; null if it is not registered
    */
-  Optional<TargetSWRLRuleEngineCreator> getRegisteredRuleEngineCreator(@NonNull String ruleEngineName);
+  Optional<@NonNull TargetSWRLRuleEngineCreator> getRegisteredRuleEngineCreator(@NonNull String ruleEngineName);
 
   /**
    * @param ruleEngineName A rule engine name

@@ -51,7 +51,7 @@ public class DefaultFileBackedSWRLRuleEngineModel extends DefaultSWRLRuleEngineM
     OWLOntology ontology = createOWLOntology();
     OWLDocumentFormat format = ontology.getOWLOntologyManager().getOntologyFormat(ontology);
     DefaultPrefixManager prefixManager = new DefaultPrefixManager();
-    if (format.isPrefixOWLOntologyFormat())
+    if (format != null && format.isPrefixOWLOntologyFormat())
       prefixManager.copyPrefixesFrom(format.asPrefixOWLOntologyFormat().getPrefixName2PrefixMap());
 
     SWRLRuleEngine ruleEngine = SWRLAPIFactory.createSWRLRuleEngine(ontology, prefixManager);

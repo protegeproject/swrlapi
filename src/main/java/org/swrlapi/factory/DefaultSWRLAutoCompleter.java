@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  */
 class DefaultSWRLAutoCompleter implements SWRLAutoCompleter
 {
-  @NonNull private final List<String> shortForms;
+  @NonNull private final List<@NonNull String> shortForms;
 
   public DefaultSWRLAutoCompleter(@NonNull SWRLAPIOWLOntology swrlapiowlOntology)
   {
@@ -52,7 +52,7 @@ class DefaultSWRLAutoCompleter implements SWRLAutoCompleter
   }
 
   @NonNull @Override
-  public List<String> getCompletions(@NonNull String prefix)
+  public List<@NonNull String> getCompletions(@NonNull String prefix)
   { // TODO Look at - not very efficient
       return this.shortForms.stream().filter(shortForm -> shortForm.startsWith(prefix)).collect(Collectors.toList());
   }

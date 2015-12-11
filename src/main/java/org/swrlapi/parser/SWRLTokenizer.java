@@ -28,8 +28,8 @@ class SWRLTokenizer
 
   @NonNull private final MyStreamTokenizer tokenizer;
 
-  @NonNull private final Set<String> swrlVariables;
-  @NonNull private final List<SWRLToken> tokens;
+  @NonNull private final Set<@NonNull String> swrlVariables;
+  @NonNull private final List<@NonNull SWRLToken> tokens;
   private final boolean interactiveParseOnly;
   private int tokenPosition;
 
@@ -69,7 +69,7 @@ class SWRLTokenizer
   }
 
   @NonNull public SWRLToken getToken(SWRLToken.SWRLTokenType expectedTokenType, @NonNull String unexpectedTokenMessage)
-      throws SWRLParseException
+    throws SWRLParseException
   {
     if (hasMoreTokens()) {
       SWRLToken token = getToken();
@@ -159,7 +159,7 @@ class SWRLTokenizer
   }
 
   private void checkAndSkipToken(SWRLToken.SWRLTokenType tokenType, @NonNull String unexpectedTokenMessage)
-      throws SWRLParseException
+    throws SWRLParseException
   {
     if (hasMoreTokens()) {
       SWRLToken token = getToken();

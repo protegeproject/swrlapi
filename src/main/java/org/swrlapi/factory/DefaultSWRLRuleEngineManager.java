@@ -12,7 +12,7 @@ import java.util.Set;
 
 class DefaultSWRLRuleEngineManager implements SWRLRuleEngineManager
 {
-  @NonNull private final Map<String, TargetSWRLRuleEngineCreator> registeredSWRLRuleEngines;
+  @NonNull private final Map<@NonNull String, @NonNull TargetSWRLRuleEngineCreator> registeredSWRLRuleEngines;
 
   public DefaultSWRLRuleEngineManager()
   {
@@ -40,23 +40,24 @@ class DefaultSWRLRuleEngineManager implements SWRLRuleEngineManager
     return !this.registeredSWRLRuleEngines.isEmpty();
   }
 
-  @Override public Optional<String> getAnyRegisteredRuleEngineName()
+  @Override public Optional<@NonNull String> getAnyRegisteredRuleEngineName()
   {
     if (hasRegisteredRuleEngines())
       return Optional.of(this.registeredSWRLRuleEngines.keySet().iterator().next());
     else
-      return Optional.empty();
+      return Optional.<@NonNull String>empty();
   }
 
-  @Override public Optional<TargetSWRLRuleEngineCreator> getRegisteredRuleEngineCreator(@NonNull String ruleEngineName)
+  @Override public Optional<@NonNull TargetSWRLRuleEngineCreator> getRegisteredRuleEngineCreator(
+    @NonNull String ruleEngineName)
   {
     if (this.registeredSWRLRuleEngines.containsKey(ruleEngineName))
       return Optional.of(this.registeredSWRLRuleEngines.get(ruleEngineName));
     else
-      return Optional.empty();
+      return Optional.<@NonNull TargetSWRLRuleEngineCreator>empty();
   }
 
-  @NonNull @Override public Set<@KeyFor("this.registeredSWRLRuleEngines") String> getRegisteredRuleEngineNames()
+  @NonNull @Override public Set<@NonNull @KeyFor("this.registeredSWRLRuleEngines") String> getRegisteredRuleEngineNames()
   {
     return this.registeredSWRLRuleEngines.keySet();
   }

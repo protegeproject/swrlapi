@@ -10,5 +10,5 @@ public interface SWRLAutoCompleter
    * @param prefix A prefix string
    * @return The possible completions
    */
-  @NonNull List<String> getCompletions(@NonNull String prefix);
+  @NonNull List<@NonNull String> getCompletions(@NonNull String prefix);
 }

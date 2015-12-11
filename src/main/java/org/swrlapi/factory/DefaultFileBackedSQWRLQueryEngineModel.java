@@ -13,11 +13,11 @@ import java.io.File;
 import java.util.Optional;
 
 public class DefaultFileBackedSQWRLQueryEngineModel extends DefaultSQWRLQueryEngineModel
-    implements FileBackedSQWRLQueryEngineModel
+  implements FileBackedSQWRLQueryEngineModel
 {
-  private Optional<File> file;
+  private Optional<@NonNull File> file;
 
-  public DefaultFileBackedSQWRLQueryEngineModel(@NonNull SQWRLQueryEngine queryEngine, Optional<File> file)
+  public DefaultFileBackedSQWRLQueryEngineModel(@NonNull SQWRLQueryEngine queryEngine, Optional<@NonNull File> file)
   {
     super(queryEngine);
     this.file = file;
@@ -53,7 +53,7 @@ public class DefaultFileBackedSQWRLQueryEngineModel extends DefaultSQWRLQueryEng
     OWLOntology ontology = createOWLOntology();
     OWLDocumentFormat format = ontology.getOWLOntologyManager().getOntologyFormat(ontology);
     DefaultPrefixManager prefixManager = new DefaultPrefixManager();
-    if (format.isPrefixOWLOntologyFormat())
+    if (format != null && format.isPrefixOWLOntologyFormat())
       prefixManager.copyPrefixesFrom(format.asPrefixOWLOntologyFormat().getPrefixName2PrefixMap());
 
     SQWRLQueryEngine queryEngine = SWRLAPIFactory.createSQWRLQueryEngine(ontology, prefixManager);

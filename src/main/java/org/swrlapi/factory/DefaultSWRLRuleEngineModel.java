@@ -24,127 +24,127 @@ import java.util.List;
 
 public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel, OWLOntologyChangeListener
 {
-	@NonNull private final OWLOntologyManager ontologyManager;
-	@NonNull private SWRLRuleEngine ruleEngine;
-	@NonNull private SWRLParser swrlParser;
-	@NonNull private SWRLRuleRenderer swrlRuleRenderer;
-	@NonNull private SWRLAutoCompleter swrlAutoCompleter;
-	@NonNull private OWL2RLEngine owl2RLEngine;
+  @NonNull private final OWLOntologyManager ontologyManager;
+  @NonNull private SWRLRuleEngine ruleEngine;
+  @NonNull private SWRLParser swrlParser;
+  @NonNull private SWRLRuleRenderer swrlRuleRenderer;
+  @NonNull private SWRLAutoCompleter swrlAutoCompleter;
+  @NonNull private OWL2RLEngine owl2RLEngine;
 
-	@NonNull private final SWRLRulesTableModel swrlRulesTableModel;
-	@NonNull private final OWL2RLModel owl2RLModel;
+  @NonNull private final SWRLRulesTableModel swrlRulesTableModel;
+  @NonNull private final OWL2RLModel owl2RLModel;
 
-	private boolean hasOntologyChanged;
+  private boolean hasOntologyChanged;
 
-	public DefaultSWRLRuleEngineModel(@NonNull SWRLRuleEngine ruleEngine)
-	{
-		this.ontologyManager = OWLManager.createOWLOntologyManager();
-		this.ruleEngine = ruleEngine;
-		this.swrlRuleRenderer = this.ruleEngine.createSWRLRuleRenderer();
-		this.swrlParser = this.ruleEngine.createSWRLParser();
-		this.swrlAutoCompleter = this.ruleEngine.createSWRLAutoCompleter();
-		this.owl2RLEngine = this.ruleEngine.getOWL2RLEngine();
+  public DefaultSWRLRuleEngineModel(@NonNull SWRLRuleEngine ruleEngine)
+  {
+    this.ontologyManager = OWLManager.createOWLOntologyManager();
+    this.ruleEngine = ruleEngine;
+    this.swrlRuleRenderer = this.ruleEngine.createSWRLRuleRenderer();
+    this.swrlParser = this.ruleEngine.createSWRLParser();
+    this.swrlAutoCompleter = this.ruleEngine.createSWRLAutoCompleter();
+    this.owl2RLEngine = this.ruleEngine.getOWL2RLEngine();
 
-		this.swrlRulesTableModel = SWRLAPIFactory.createSWRLRulesTableModel(ruleEngine, this.swrlRuleRenderer);
-		this.owl2RLModel = SWRLAPIFactory.createOWL2RLModel(owl2RLEngine);
+    this.swrlRulesTableModel = SWRLAPIFactory.createSWRLRulesTableModel(ruleEngine, this.swrlRuleRenderer);
+    this.owl2RLModel = SWRLAPIFactory.createOWL2RLModel(owl2RLEngine);
 
-		this.ruleEngine.getOWLOntology().getOWLOntologyManager().addOntologyChangeListener(this);
+    this.ruleEngine.getOWLOntology().getOWLOntologyManager().addOntologyChangeListener(this);
 
-		this.hasOntologyChanged = false;
-	}
+    this.hasOntologyChanged = false;
+  }
 
-	@Override public void updateModel(@NonNull SWRLRuleEngine ruleEngine)
-	{
-		this.ruleEngine = ruleEngine;
-		this.swrlRuleRenderer = this.ruleEngine.createSWRLRuleRenderer();
-		this.swrlParser = this.ruleEngine.createSWRLParser();
-		this.swrlAutoCompleter = this.ruleEngine.createSWRLAutoCompleter();
-		this.owl2RLEngine = this.ruleEngine.getOWL2RLEngine();
+  @Override public void updateModel(@NonNull SWRLRuleEngine ruleEngine)
+  {
+    this.ruleEngine = ruleEngine;
+    this.swrlRuleRenderer = this.ruleEngine.createSWRLRuleRenderer();
+    this.swrlParser = this.ruleEngine.createSWRLParser();
+    this.swrlAutoCompleter = this.ruleEngine.createSWRLAutoCompleter();
+    this.owl2RLEngine = this.ruleEngine.getOWL2RLEngine();
 
-		this.swrlRulesTableModel.updateModel(ruleEngine, this.swrlRuleRenderer);
-		this.owl2RLModel.updateModel(owl2RLEngine);
+    this.swrlRulesTableModel.updateModel(ruleEngine, this.swrlRuleRenderer);
+    this.owl2RLModel.updateModel(owl2RLEngine);
 
-		this.hasOntologyChanged = false;
+    this.hasOntologyChanged = false;
 
-		updateView();
-	}
+    updateView();
+  }
 
-	@NonNull protected OWLOntology createOWLOntology() throws OWLOntologyCreationException
-	{
-		this.ontologyManager.removeOntology(this.ruleEngine.getOWLOntology());
-		return this.ontologyManager.createOntology();
-	}
+  @NonNull protected OWLOntology createOWLOntology() throws OWLOntologyCreationException
+  {
+    this.ontologyManager.removeOntology(this.ruleEngine.getOWLOntology());
+    return this.ontologyManager.createOntology();
+  }
 
-	protected void saveOWLOntology(File file) throws OWLOntologyStorageException
-	{
-		this.getOWLOntology().getOWLOntologyManager().saveOntology(getOWLOntology(), IRI.create(file.toURI()));
-	}
+  protected void saveOWLOntology(@NonNull File file) throws OWLOntologyStorageException
+  {
+    this.getOWLOntology().getOWLOntologyManager().saveOntology(getOWLOntology(), IRI.create(file.toURI()));
+  }
 
-	@NonNull protected OWLOntology createOWLOntology(File file) throws OWLOntologyCreationException
-	{
-		this.ontologyManager.removeOntology(this.ruleEngine.getOWLOntology());
-		return this.ontologyManager.loadOntologyFromOntologyDocument(file);
-	}
+  @NonNull protected OWLOntology createOWLOntology(@NonNull File file) throws OWLOntologyCreationException
+  {
+    this.ontologyManager.removeOntology(this.ruleEngine.getOWLOntology());
+    return this.ontologyManager.loadOntologyFromOntologyDocument(file);
+  }
 
-	@NonNull @Override public OWLOntology getOWLOntology()
-	{
-		return this.ruleEngine.getOWLOntology();
-	}
+  @NonNull @Override public OWLOntology getOWLOntology()
+  {
+    return this.ruleEngine.getOWLOntology();
+  }
 
-	@NonNull @Override public SWRLRuleEngine getSWRLRuleEngine()
-	{
-		return this.ruleEngine;
-	}
+  @NonNull @Override public SWRLRuleEngine getSWRLRuleEngine()
+  {
+    return this.ruleEngine;
+  }
 
-	@NonNull @Override public SWRLParser getSWRLParser()
-	{
-		return this.swrlParser;
-	}
+  @NonNull @Override public SWRLParser getSWRLParser()
+  {
+    return this.swrlParser;
+  }
 
-	@NonNull @Override public SWRLAutoCompleter getSWRLAutoCompleter()
-	{
-		return this.swrlAutoCompleter;
-	}
+  @NonNull @Override public SWRLAutoCompleter getSWRLAutoCompleter()
+  {
+    return this.swrlAutoCompleter;
+  }
 
-	@NonNull @Override public SWRLRuleRenderer getSWRLRuleRenderer()
-	{
-		return this.swrlRuleRenderer;
-	}
+  @NonNull @Override public SWRLRuleRenderer getSWRLRuleRenderer()
+  {
+    return this.swrlRuleRenderer;
+  }
 
-	@NonNull @Override public SWRLRulesTableModel getSWRLRulesTableModel()
-	{
-		return this.swrlRulesTableModel;
-	}
+  @NonNull @Override public SWRLRulesTableModel getSWRLRulesTableModel()
+  {
+    return this.swrlRulesTableModel;
+  }
 
-	@NonNull @Override public OWL2RLModel getOWL2RLModel()
-	{
-		return this.owl2RLModel;
-	}
+  @NonNull @Override public OWL2RLModel getOWL2RLModel()
+  {
+    return this.owl2RLModel;
+  }
 
-	@Override public boolean areSWRLRulesModified()
-	{
-		return this.swrlRulesTableModel.hasBeenModified();
-	}
+  @Override public boolean areSWRLRulesModified()
+  {
+    return this.swrlRulesTableModel.hasBeenModified();
+  }
 
-	@Override public void clearSWRLRulesModified()
-	{
-		this.swrlRulesTableModel.clearModifiedStatus();
-	}
+  @Override public void clearSWRLRulesModified()
+  {
+    this.swrlRulesTableModel.clearModifiedStatus();
+  }
 
-	@Override public boolean hasOntologyChanged()
-	{
-		return this.hasOntologyChanged;
-	}
+  @Override public boolean hasOntologyChanged()
+  {
+    return this.hasOntologyChanged;
+  }
 
-	@Override public void resetOntologyChanged()
-	{
-		this.hasOntologyChanged = false;
-	}
+  @Override public void resetOntologyChanged()
+  {
+    this.hasOntologyChanged = false;
+  }
 
-	@Override public void ontologiesChanged(@NonNull List<? extends OWLOntologyChange> var1) throws OWLException
-	{
-		this.hasOntologyChanged = true;
-	}
+  @Override public void ontologiesChanged(@NonNull List<? extends OWLOntologyChange> var1) throws OWLException
+  {
+    this.hasOntologyChanged = true;
+  }
 
-	@Override public void updateView() { this.swrlRulesTableModel.updateView(); }
+  @Override public void updateView() { this.swrlRulesTableModel.updateView(); }
 }
