@@ -43,12 +43,12 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 
   @NonNull private final SQWRLResultValueFactory sqwrlResultValueFactory;
 
-  @NonNull private final List<String> allColumnNames, columnDisplayNames;
-  @NonNull private final List<Integer> selectedColumnIndexes, orderByColumnIndexes;
-  @NonNull private final Map<Integer, String> aggregateColumnIndexes; // Map of (index, function) pairs
-  @NonNull private List<List<SQWRLResultValue>> rows; // List of List of SQWRLResultValue objects.
-  @NonNull private List<SQWRLResultValue> rowData; // List of SQWRLResultValue objects used when assembling a row.
-  @NonNull private Map<@NonNull String, List<SQWRLResultValue>> columnValuesMap; // Column name -> List<SQWRLResultValue>
+  @NonNull private final List<@NonNull String> allColumnNames, columnDisplayNames;
+  @NonNull private final List<@NonNull Integer> selectedColumnIndexes, orderByColumnIndexes;
+  @NonNull private final Map<@NonNull Integer, @NonNull String> aggregateColumnIndexes; // Map of (index, function) pairs
+  @NonNull private List<@NonNull List<@NonNull SQWRLResultValue>> rows; // List of List of SQWRLResultValue objects.
+  @NonNull private List<@NonNull SQWRLResultValue> rowData; // List of SQWRLResultValue objects used when assembling a row.
+  @NonNull private Map<@NonNull String, @NonNull List<@NonNull SQWRLResultValue>> columnValuesMap; // Column name -> List<SQWRLResultValue>
 
   private int numberOfColumns, currentRowIndex, currentRowDataColumnIndex;
   private boolean isConfigured, isPrepared, isRowOpen, isOrdered, isAscending, isDistinct, hasAggregates;
@@ -57,7 +57,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
   private boolean notLastSelection = false, nthSliceSelection = false, notNthSliceSelection = false;
   private boolean nthLastSliceSelection = false, notNthLastSliceSelection = false;
 
-  public DefaultSQWRLResultManager(DefaultPrefixManager prefixManager)
+  public DefaultSQWRLResultManager(@NonNull DefaultPrefixManager prefixManager)
   {
     this(SWRLAPIFactory.createIRIResolver(prefixManager));
   }
@@ -111,7 +111,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
     return this.isAscending;
   }
 
-  @Override public void addColumns(@NonNull List<String> columnNames) throws SQWRLException
+  @Override public void addColumns(@NonNull List<@NonNull String> columnNames) throws SQWRLException
   {
     for (String columnName : columnNames)
       addColumn(columnName);

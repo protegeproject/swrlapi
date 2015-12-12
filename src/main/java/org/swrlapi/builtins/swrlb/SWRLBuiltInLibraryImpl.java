@@ -7,15 +7,15 @@ import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
+import org.swrlapi.exceptions.InvalidSWRLBuiltInArgumentException;
+import org.swrlapi.exceptions.InvalidSWRLBuiltInNameException;
+import org.swrlapi.exceptions.SWRLBuiltInException;
+import org.swrlapi.exceptions.SWRLBuiltInNotImplementedException;
 import org.swrlapi.literal.XSDDate;
 import org.swrlapi.literal.XSDDateTime;
 import org.swrlapi.literal.XSDDuration;
 import org.swrlapi.literal.XSDTime;
 import org.swrlapi.literal.XSDTimeUtil;
-import org.swrlapi.exceptions.InvalidSWRLBuiltInArgumentException;
-import org.swrlapi.exceptions.InvalidSWRLBuiltInNameException;
-import org.swrlapi.exceptions.SWRLBuiltInException;
-import org.swrlapi.exceptions.SWRLBuiltInNotImplementedException;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -71,7 +71,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean greaterThan(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean greaterThan(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(2, arguments.size());
 
@@ -99,7 +99,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean lessThan(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean lessThan(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(2, arguments.size());
 
@@ -127,7 +127,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean equal(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean equal(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(2, arguments.size());
 
@@ -192,7 +192,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notEqual(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notEqual(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return !equal(arguments);
   }
@@ -202,7 +202,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean lessThanOrEqual(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean lessThanOrEqual(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return equal(arguments) || lessThan(arguments);
   }
@@ -212,7 +212,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean greaterThanOrEqual(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean greaterThanOrEqual(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return equal(arguments) || greaterThan(arguments);
   }
@@ -224,7 +224,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean add(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean add(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsAtLeast(2, arguments.size());
 
@@ -236,7 +236,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean subtract(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean subtract(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(3, arguments.size());
 
@@ -248,7 +248,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean multiply(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean multiply(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsAtLeast(2, arguments.size());
 
@@ -260,7 +260,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean divide(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean divide(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(3, arguments.size());
 
@@ -272,7 +272,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean integerDivide(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean integerDivide(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(3, arguments.size());
 
@@ -284,7 +284,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean mod(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean mod(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(3, arguments.size());
 
@@ -296,7 +296,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean pow(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean pow(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(3, arguments.size());
 
@@ -308,7 +308,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean unaryPlus(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean unaryPlus(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(2, arguments.size());
 
@@ -320,7 +320,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean unaryMinus(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean unaryMinus(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(2, arguments.size());
 
@@ -332,7 +332,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean abs(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean abs(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(2, arguments.size());
 
@@ -344,7 +344,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean ceiling(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean ceiling(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(2, arguments.size());
 
@@ -356,7 +356,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean floor(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean floor(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(2, arguments.size());
 
@@ -368,7 +368,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean round(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean round(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(2, arguments.size());
 
@@ -380,7 +380,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean roundHalfToEven(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean roundHalfToEven(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(2, arguments.size());
 
@@ -392,7 +392,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean sin(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean sin(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(2, arguments.size());
 
@@ -404,7 +404,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean cos(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean cos(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(2, arguments.size());
 
@@ -416,7 +416,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean tan(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean tan(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(2, arguments.size());
 
@@ -430,7 +430,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean booleanNot(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean booleanNot(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(2, arguments.size());
     checkForUnboundNonFirstArguments(arguments);
@@ -460,7 +460,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean stringEqualIgnoreCase(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean stringEqualIgnoreCase(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException
   {
     String argument1, argument2;
 
@@ -478,7 +479,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean stringConcat(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean stringConcat(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     String operationResult = "";
 
@@ -497,7 +498,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean substring(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean substring(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     String argument2, operationResult;
     int startIndex, length;
@@ -522,7 +523,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean stringLength(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean stringLength(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(2, arguments.size());
 
@@ -537,7 +538,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean upperCase(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean upperCase(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(2, arguments.size());
 
@@ -552,7 +553,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean lowerCase(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean lowerCase(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(2, arguments.size());
 
@@ -567,7 +568,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean contains(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean contains(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(2, arguments.size());
 
@@ -582,7 +583,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean containsIgnoreCase(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean containsIgnoreCase(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(2, arguments.size());
 
@@ -597,7 +598,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean startsWith(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean startsWith(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(2, arguments.size());
 
@@ -612,7 +613,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean endsWith(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean endsWith(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(2, arguments.size());
 
@@ -629,16 +630,19 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean translate(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean translate(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(4, arguments.size());
 
     String argument2 = getArgumentAsAString(1, arguments);
     String argument3 = getArgumentAsAString(2, arguments);
     String argument4 = getArgumentAsAString(3, arguments);
-    String operationResult = argument2.replace(argument3, argument4);
+    @Nullable String operationResult = argument2.replace(argument3, argument4);
 
-    return processResultArgument(arguments, 0, operationResult);
+    if (operationResult != null)
+      return processResultArgument(arguments, 0, operationResult);
+    else
+      return false;
   }
 
   /**
@@ -646,15 +650,18 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean substringAfter(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean substringAfter(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(3, arguments.size());
 
     String argument2 = getArgumentAsAString(1, arguments);
     String argument3 = getArgumentAsAString(2, arguments);
-    String operationResult = substringAfter(argument2, argument3);
+    @Nullable String operationResult = substringAfter(argument2, argument3);
 
-    return processResultArgument(arguments, 0, operationResult);
+    if (operationResult != null)
+      return processResultArgument(arguments, 0, operationResult);
+    else
+      return false;
   }
 
   /**
@@ -662,15 +669,18 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean substringBefore(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean substringBefore(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(3, arguments.size());
 
     String argument2 = getArgumentAsAString(1, arguments);
     String argument3 = getArgumentAsAString(2, arguments);
-    String operationResult = substringBefore(argument2, argument3);
+    @Nullable String operationResult = substringBefore(argument2, argument3);
 
-    return processResultArgument(arguments, 0, operationResult);
+    if (operationResult != null)
+      return processResultArgument(arguments, 0, operationResult);
+    else
+      return false;
   }
 
   /**
@@ -678,7 +688,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean matches(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean matches(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(2, arguments.size());
 
@@ -698,7 +708,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean replace(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean replace(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(4, arguments.size());
 
@@ -718,7 +728,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean normalizeSpace(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean normalizeSpace(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(2, arguments.size());
 
@@ -736,7 +746,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean tokenize(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean tokenize(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     if (!isUnboundArgument(0, arguments))
       throw new InvalidSWRLBuiltInArgumentException(0, "unexpected bound argument found");
@@ -768,7 +778,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean yearMonthDuration(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean yearMonthDuration(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(3, arguments.size());
     int year = getArgumentAsAnInt(1, arguments);
@@ -786,7 +796,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @param arguments The built-in arguments
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
-   */ public boolean dayTimeDuration(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+   */ public boolean dayTimeDuration(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(5, arguments.size());
     int days = getArgumentAsAnInt(1, arguments);
@@ -808,7 +818,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean dateTime(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean dateTime(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(8, arguments.size());
 
@@ -837,7 +847,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean date(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean date(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(5, arguments.size());
 
@@ -862,7 +872,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean time(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean time(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(5, arguments.size());
 
@@ -880,7 +890,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean addYearMonthDurations(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean addYearMonthDurations(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException
   {
     checkNumberOfArgumentsAtLeast(3, arguments.size());
 
@@ -899,7 +910,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean subtractYearMonthDurations(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean subtractYearMonthDurations(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(3, arguments.size());
 
@@ -915,7 +927,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean multiplyYearMonthDuration(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean multiplyYearMonthDuration(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(3, arguments.size());
 
@@ -931,7 +944,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean divideYearMonthDuration(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean divideYearMonthDuration(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(3, arguments.size());
 
@@ -947,7 +961,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean addDayTimeDurations(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean addDayTimeDurations(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     org.apache.axis.types.Duration operationDuration = new org.apache.axis.types.Duration();
 
@@ -966,7 +980,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean subtractDayTimeDurations(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean subtractDayTimeDurations(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(3, arguments.size());
 
@@ -982,7 +997,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean multiplyDayTimeDuration(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean multiplyDayTimeDuration(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(3, arguments.size());
 
@@ -998,7 +1014,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean divideDayTimeDuration(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean divideDayTimeDuration(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(3, arguments.size());
 
@@ -1014,7 +1031,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean subtractDates(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean subtractDates(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(3, arguments.size());
 
@@ -1030,7 +1047,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean subtractTimes(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean subtractTimes(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(3, arguments.size());
 
@@ -1046,7 +1063,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean addYearMonthDurationToDateTime(@NonNull List<SWRLBuiltInArgument> arguments)
+  public boolean addYearMonthDurationToDateTime(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(3, arguments.size());
@@ -1063,7 +1080,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean subtractYearMonthDurationFromDateTime(@NonNull List<SWRLBuiltInArgument> arguments)
+  public boolean subtractYearMonthDurationFromDateTime(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(3, arguments.size());
@@ -1080,7 +1097,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  addDayTimeDurationToDateTime(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  addDayTimeDurationToDateTime(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(3, arguments.size());
 
@@ -1096,7 +1113,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean subtractDayTimeDurationFromDateTime(@NonNull List<SWRLBuiltInArgument> arguments)
+  public boolean subtractDayTimeDurationFromDateTime(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(3, arguments.size());
@@ -1113,7 +1130,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean addYearMonthDurationToDate(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean addYearMonthDurationToDate(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(3, arguments.size());
 
@@ -1129,7 +1147,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean subtractYearMonthDurationFromDate(@NonNull List<SWRLBuiltInArgument> arguments)
+  public boolean subtractYearMonthDurationFromDate(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(3, arguments.size());
@@ -1146,7 +1164,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean addDayTimeDurationToDate(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean addDayTimeDurationToDate(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(3, arguments.size());
 
@@ -1162,7 +1181,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean subtractDayTimeDurationFromDate(@NonNull List<SWRLBuiltInArgument> arguments)
+  public boolean subtractDayTimeDurationFromDate(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(3, arguments.size());
@@ -1179,7 +1198,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean addDayTimeDurationToTime(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean addDayTimeDurationToTime(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(3, arguments.size());
 
@@ -1195,7 +1215,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean subtractDayTimeDurationFromTime(@NonNull List<SWRLBuiltInArgument> arguments)
+  public boolean subtractDayTimeDurationFromTime(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(3, arguments.size());
@@ -1212,7 +1232,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean subtractDateTimesYieldingYearMonthDuration(@NonNull List<SWRLBuiltInArgument> arguments)
+  public boolean subtractDateTimesYieldingYearMonthDuration(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     java.util.Date date1 = getXSDDateTimeArgumentAsAUtilDate(1, arguments);
@@ -1228,7 +1248,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean subtractDateTimesYieldingDayTimeDuration(@NonNull List<SWRLBuiltInArgument> arguments)
+  public boolean subtractDateTimesYieldingDayTimeDuration(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     java.util.Date date1 = getXSDDateTimeArgumentAsAUtilDate(1, arguments);
@@ -1246,7 +1266,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean resolveURI(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean resolveURI(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     throw new SWRLBuiltInNotImplementedException();
   }
@@ -1256,7 +1276,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean anyURI(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean anyURI(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     throw new SWRLBuiltInNotImplementedException();
   }
@@ -1268,7 +1288,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean listConcat(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean listConcat(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     throw new SWRLBuiltInNotImplementedException();
   }
@@ -1278,7 +1298,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean listIntersection(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean listIntersection(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     throw new SWRLBuiltInNotImplementedException();
   }
@@ -1288,7 +1308,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean listSubtraction(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean listSubtraction(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     throw new SWRLBuiltInNotImplementedException();
   }
@@ -1298,7 +1318,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean member(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean member(List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     throw new SWRLBuiltInNotImplementedException();
   }
@@ -1308,7 +1328,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean length(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean length(List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     throw new SWRLBuiltInNotImplementedException();
   }
@@ -1318,7 +1338,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean first(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean first(List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     throw new SWRLBuiltInNotImplementedException();
   }
@@ -1328,7 +1348,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean rest(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean rest(List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     throw new SWRLBuiltInNotImplementedException();
   }
@@ -1338,7 +1358,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean sublist(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean sublist(List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     throw new SWRLBuiltInNotImplementedException();
   }
@@ -1348,14 +1368,15 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean empty(List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean empty(List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     throw new SWRLBuiltInNotImplementedException();
   }
 
   // Private methods
 
-  private int compareTwoNumericArguments(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  private int compareTwoNumericArguments(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException
   {
     int result;
 
@@ -1411,7 +1432,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     return result;
   }
 
-  private boolean mathOperation(@NonNull String builtInName, @NonNull List<SWRLBuiltInArgument> arguments)
+  private boolean mathOperation(@NonNull String builtInName, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     double argument1 = 0.0, argument2, argument3, operationResult;
@@ -1481,7 +1502,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       throw new InvalidSWRLBuiltInNameException(builtInName);
 
     if (hasUnbound1stArgument) { // Bind the result to the first argument.
-      List<SWRLBuiltInArgument> boundInputArguments = arguments.subList(1, arguments.size());
+      List<@NonNull SWRLBuiltInArgument> boundInputArguments = arguments.subList(1, arguments.size());
 
       if (builtInName.equalsIgnoreCase(SWRLB_SIN) || builtInName.equalsIgnoreCase(SWRLB_COS) || builtInName
         .equalsIgnoreCase(SWRLB_TAN))
@@ -1497,7 +1518,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   }
 
   private org.apache.axis.types.Duration getArgumentAsAnAxisDuration(int argumentNumber,
-    @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     String duration = "";
 
@@ -1509,8 +1530,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     }
   }
 
-  private java.util.Date getXSDDateArgumentAsAUtilDate(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
-    throws SWRLBuiltInException
+  private java.util.Date getXSDDateArgumentAsAUtilDate(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     String date = "";
 
@@ -1523,7 +1544,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   }
 
   private java.util.Date getXSDDateTimeArgumentAsAUtilDate(int argumentNumber,
-    @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     String date = "";
 
@@ -1536,7 +1557,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   }
 
   private org.apache.axis.types.Time getArgumentAsAnAxisTime(int argumentNumber,
-    @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     String time = getArgumentAsAString(argumentNumber, arguments);
 
