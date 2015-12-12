@@ -36,7 +36,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean sqrt(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean sqrt(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsAtLeast(2, arguments.size());
 
@@ -59,7 +59,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean log(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean log(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsAtLeast(2, arguments.size());
 
@@ -83,14 +83,14 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean eval(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean eval(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsAtLeast(2, arguments.size());
 
     String expression = getArgumentAsAString(1, arguments);
 
     if (arguments.size() > 2) {
-      List<SWRLBuiltInArgument> variableArguments = arguments.subList(2, arguments.size());
+      List<@NonNull SWRLBuiltInArgument> variableArguments = arguments.subList(2, arguments.size());
 
       checkForUnboundArguments(variableArguments, "2nd and subequent arguments cannot be unbound");
       checkThatArgumentsWereBoundVariables(variableArguments, "2nd and subequent arguments should be variables");

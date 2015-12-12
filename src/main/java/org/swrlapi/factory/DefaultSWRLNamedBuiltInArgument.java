@@ -70,9 +70,9 @@ abstract class DefaultSWRLNamedBuiltInArgument extends DefaultSWRLBuiltInArgumen
     return this.entity.getIRI().compareTo(other.entity.getIRI());
   }
 
-  @NonNull @Override public Set<OWLAnnotationProperty> getAnnotationPropertiesInSignature()
+  @NonNull @Override public Set<@NonNull OWLAnnotationProperty> getAnnotationPropertiesInSignature()
   {
-    return Collections.emptySet(); // TODO Implement getAnnotationPropertiesInSignature
+    return Collections.<@NonNull OWLAnnotationProperty>emptySet(); // TODO Implement getAnnotationPropertiesInSignature
   }
 
   @SideEffectFree @Deterministic @Override public boolean equals(@Nullable Object o)
@@ -98,7 +98,7 @@ abstract class DefaultSWRLNamedBuiltInArgument extends DefaultSWRLBuiltInArgumen
     visitor.visit(this);
   }
 
-  @NonNull @Override public <O> O accept(@NonNull SWRLObjectVisitorEx<O> visitor)
+  @NonNull @Override public <@NonNull O> O accept(@NonNull SWRLObjectVisitorEx<O> visitor)
   {
     return visitor.visit(this);
   }
@@ -108,7 +108,7 @@ abstract class DefaultSWRLNamedBuiltInArgument extends DefaultSWRLBuiltInArgumen
     visitor.visit(this);
   }
 
-  @NonNull @Override public <O> O accept(@NonNull OWLObjectVisitorEx<O> visitor)
+  @NonNull @Override public <@NonNull O> O accept(@NonNull OWLObjectVisitorEx<O> visitor)
   {
     return visitor.visit(this);
   }

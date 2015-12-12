@@ -29,8 +29,8 @@ class DefaultSWRLVariableBuiltInArgument extends DefaultSWRLBuiltInArgument impl
   // There is an equals methods defined for this class.
   private static final long serialVersionUID = 1L;
 
-  private final IRI iri;
-  private final String variablePrefixedName;
+  @NonNull private final IRI iri;
+  @NonNull private final String variablePrefixedName;
 
   @Nullable private SWRLBuiltInArgument builtInResult; // Used to store result of binding for unbound arguments
   private boolean isBound;
@@ -100,7 +100,7 @@ class DefaultSWRLVariableBuiltInArgument extends DefaultSWRLBuiltInArgument impl
         this.variablePrefixedName;
   }
 
-  @Override public void setBuiltInResult(SWRLBuiltInArgument builtInResult) throws SWRLBuiltInException
+  @Override public void setBuiltInResult(@NonNull SWRLBuiltInArgument builtInResult) throws SWRLBuiltInException
   {
     if (!isUnbound())
       throw new SWRLBuiltInException("attempt to bind value to bound argument " + this.toString());
@@ -140,7 +140,7 @@ class DefaultSWRLVariableBuiltInArgument extends DefaultSWRLBuiltInArgument impl
     this.isBound = true;
   }
 
-  @Override public <T> T accept(@NonNull SWRLBuiltInArgumentVisitorEx<T> visitor)
+  @Override public <@NonNull T> T accept(@NonNull SWRLBuiltInArgumentVisitorEx<T> visitor)
   {
     return visitor.visit(this);
   }
@@ -155,7 +155,7 @@ class DefaultSWRLVariableBuiltInArgument extends DefaultSWRLBuiltInArgument impl
     visitor.visit(this);
   }
 
-  @NonNull @Override public <O> O accept(@NonNull SWRLObjectVisitorEx<O> visitor)
+  @NonNull @Override public <@NonNull O> O accept(@NonNull SWRLObjectVisitorEx<O> visitor)
   {
     return visitor.visit(this);
   }
@@ -165,7 +165,7 @@ class DefaultSWRLVariableBuiltInArgument extends DefaultSWRLBuiltInArgument impl
     visitor.visit(this);
   }
 
-  @NonNull @Override public <O> O accept(@NonNull OWLObjectVisitorEx<O> visitor)
+  @NonNull @Override public <@NonNull O> O accept(@NonNull OWLObjectVisitorEx<O> visitor)
   {
     return visitor.visit(this);
   }

@@ -1831,7 +1831,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   {
     String collectionKey = createCollectionKey(queryName, collectionName);
 
-    return this.collectionsMap.containsKey(collectionKey) && this.collectionsMap.get(collectionKey)
+    return this.collectionsMap.get(collectionKey) != null && this.collectionsMap.get(collectionKey)
       .containsKey(collectionGroupKey);
   }
 
@@ -1882,8 +1882,11 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
         new ArrayList<>();
       String collectionKey = createCollectionKey(queryName, collectionName);
 
-      for (String collectionGroupKey : this.collectionsMap.get(collectionKey).keySet()) {
-        ungroupedCollection.addAll(this.collectionsMap.get(collectionKey).get(collectionGroupKey));
+      if (this.collectionsMap.get(collectionKey) != null) {
+        for (String collectionGroupKey : this.collectionsMap.get(collectionKey).keySet()) {
+          if (this.collectionsMap.get(collectionKey).get(collectionGroupKey) != null)
+            ungroupedCollection.addAll(this.collectionsMap.get(collectionKey).get(collectionGroupKey));
+        }
       }
       return ungroupedCollection;
     }

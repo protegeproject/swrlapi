@@ -22,8 +22,7 @@ public interface SWRLVariableBuiltInArgument extends SWRLBuiltInArgument, SWRLVa
    */
   @NonNull String getVariableName();
 
-  @Override
-  boolean isVariable();
+  @Override boolean isVariable();
 
   /**
    * @return True if the variable has a built-in result attached
@@ -39,7 +38,7 @@ public interface SWRLVariableBuiltInArgument extends SWRLBuiltInArgument, SWRLVa
    * @param builtInResult A SWRL built-in result
    * @throws SWRLBuiltInException If the variable is bound
    */
-  void setBuiltInResult(SWRLBuiltInArgument builtInResult) throws SWRLBuiltInException;
+  void setBuiltInResult(@NonNull SWRLBuiltInArgument builtInResult) throws SWRLBuiltInException;
 
   /**
    * @return True if the variable is unbound
