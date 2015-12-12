@@ -253,10 +253,10 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
     }
   }
 
-  @NonNull @Override public Optional<SWRLAPIRule> getSWRLRule(@NonNull String ruleName) throws SWRLRuleException
+  @NonNull @Override public Optional<@NonNull SWRLAPIRule> getSWRLRule(@NonNull String ruleName) throws SWRLRuleException
   {
     if (!this.swrlRules.containsKey(ruleName))
-      return Optional.empty();
+      return Optional.<@NonNull SWRLAPIRule>empty();
     else
       return Optional.of(this.swrlRules.get(ruleName));
   }
@@ -395,7 +395,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
         getSWRLAPIOWLDataFactory().getLiteralFactory(), getIRIResolver());
   }
 
-  private Optional<@NonNull String> getRuleName(@NonNull SWRLRule owlapiRule)
+  @NonNull private Optional<@NonNull String> getRuleName(@NonNull SWRLRule owlapiRule)
   {
     OWLAnnotationProperty labelAnnotation = getOWLDataFactory()
         .getOWLAnnotationProperty(OWLRDFVocabulary.RDFS_LABEL.getIRI());
@@ -406,7 +406,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
         return Optional.of(literal.getLiteral()); //  We pick the first one
       }
     }
-    return Optional.empty();
+    return Optional.<@NonNull String>empty();
   }
 
   private boolean getIsRuleEnabled(@NonNull SWRLRule owlapiRule)

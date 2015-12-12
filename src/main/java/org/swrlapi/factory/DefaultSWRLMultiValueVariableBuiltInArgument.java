@@ -63,7 +63,7 @@ class DefaultSWRLMultiValueVariableBuiltInArgument extends DefaultSWRLVariableBu
     return this.arguments.size() == 0;
   }
 
-  @NonNull @Override public <T> T accept(@NonNull SWRLBuiltInArgumentVisitorEx<T> visitor)
+  @NonNull @Override public <@NonNull T> T accept(@NonNull SWRLBuiltInArgumentVisitorEx<@NonNull T> visitor)
   {
     return visitor.visit(this);
   }

@@ -8,6 +8,7 @@ import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Implementations library for SWRL mathematical built-ins.
@@ -96,9 +97,11 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       checkThatArgumentsWereBoundVariables(variableArguments, "2nd and subequent arguments should be variables");
 
       for (SWRLBuiltInArgument argument : variableArguments) {
-        String variableName = argument.getBoundVariableName(); // We have checked that they are all variables
-        double variableValue = getArgumentAsADouble(argument);
-        getJEP().addVariable(variableName, variableValue);
+        Optional<String> variableName = argument.getBoundVariableName(); // We have checked that they are all variables
+        if (variableName.isPresent()) {
+          double variableValue = getArgumentAsADouble(argument);
+          getJEP().addVariable(variableName.get(), variableValue);
+        }
       }
     }
 

@@ -20,9 +20,10 @@ class SWRLRuleEditorInitialDialogState
     return this.ruleName;
   }
 
-  public boolean hasStateChanged(@NonNull String currentRuleName, @NonNull String currentComment, @NonNull String currentRuleText)
+  public boolean hasStateChanged(@NonNull String currentRuleName, @NonNull String currentComment,
+    @NonNull String currentRuleText)
   {
     return !this.ruleName.equals(currentRuleName.trim()) || !this.comment.equals(currentComment.trim())
-        || !this.ruleText.equals(currentRuleText.trim());
+      || !this.ruleText.equals(currentRuleText.trim());
   }
 }

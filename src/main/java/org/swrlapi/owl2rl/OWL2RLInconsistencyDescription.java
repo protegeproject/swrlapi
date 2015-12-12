@@ -24,12 +24,12 @@ public class OWL2RLInconsistencyDescription
     return argumentsDescriptionMap.containsKey(owl2RLRuleName);
   }
 
-  public static Optional<OWL2RLRuleArguments> getRuleArguments(@NonNull String owl2RLRuleName)
+  @NonNull public static Optional<@NonNull OWL2RLRuleArguments> getRuleArguments(@NonNull String owl2RLRuleName)
   {
     if (argumentsDescriptionMap.containsKey(owl2RLRuleName))
       return Optional.of(argumentsDescriptionMap.get(owl2RLRuleName));
     else
-      return Optional.empty();
+      return Optional.<@NonNull OWL2RLRuleArguments>empty();
   }
 
   private static void createArgumentDescription(@NonNull String owl2RLRuleName, int numberOfClassArguments,

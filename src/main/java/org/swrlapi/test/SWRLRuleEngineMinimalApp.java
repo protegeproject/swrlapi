@@ -22,7 +22,7 @@ public class SWRLRuleEngineMinimalApp
     Optional<@NonNull String> owlFilename = args.length == 0 ? Optional.<@NonNull String>empty() : Optional.of(args[0]);
     Optional<@NonNull File> owlFile = (owlFilename != null && owlFilename.isPresent()) ?
         Optional.of(new File(owlFilename.get())) :
-        Optional.empty();
+        Optional.<@NonNull File>empty();
 
     try {
       OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();

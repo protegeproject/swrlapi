@@ -37,9 +37,9 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 	@NonNull private SWRLRuleEngine swrlRuleEngine;
 	@NonNull private SWRLRuleRenderer swrlRuleRenderer;
 	@NonNull private final SortedMap<@NonNull String, SWRLRuleModel> swrlRuleModels; // rule name -> SWRLRuleModel
-  private boolean isModified;
+	@NonNull private Optional<@NonNull SWRLAPIView> view = Optional.<@NonNull SWRLAPIView>empty();
 
-	private Optional<SWRLAPIView> view = Optional.empty();
+	private boolean isModified;
 
 	public SWRLRulesTableModel(@NonNull SWRLRuleEngine swrlRuleEngine, @NonNull SWRLRuleRenderer swrlRuleRenderer)
 	{
@@ -200,12 +200,12 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 		}
 	}
 
-	private Optional<SWRLRuleModel> getSWRLRuleModelByIndex(int ruleIndex)
+	@NonNull private Optional<@NonNull SWRLRuleModel> getSWRLRuleModelByIndex(int ruleIndex)
 	{
 		if (ruleIndex >= 0 && ruleIndex < this.swrlRuleModels.values().size())
 			return Optional.of(((SWRLRuleModel)this.swrlRuleModels.values().toArray()[ruleIndex]));
 		else
-			return Optional.empty();
+			return Optional.<@NonNull SWRLRuleModel>empty();
 	}
 
 	private void updateRuleModels()

@@ -25,8 +25,6 @@ public class DefaultSWRLRuleAndQueryEngineFactory implements SWRLRuleAndQueryEng
   public DefaultSWRLRuleAndQueryEngineFactory()
   {
     this.ruleEngineManager = SWRLAPIFactory.createSWRLRuleEngineManager();
-
-    tryToRegisterDroolsSWRLRuleEngine();
   }
 
   @Override public void registerRuleEngine(@NonNull TargetSWRLRuleEngineCreator ruleEngineCreator)
@@ -118,7 +116,7 @@ public class DefaultSWRLRuleAndQueryEngineFactory implements SWRLRuleAndQueryEng
       throw new InvalidSWRLRuleEngineNameException(queryEngineName);
   }
 
-  private void tryToRegisterDroolsSWRLRuleEngine()
+  @Override public void tryToRegisterADefaultSWRLRuleEngine()
   {
     Optional<@NonNull TargetSWRLRuleEngineCreator> ruleEngineCreator = getDroolsSWRLRuleEngineCreator();
 

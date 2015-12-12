@@ -6,8 +6,8 @@ import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 
-class DefaultSWRLNamedIndividualBuiltInArgument extends DefaultSWRLNamedBuiltInArgument implements
-    SWRLNamedIndividualBuiltInArgument
+class DefaultSWRLNamedIndividualBuiltInArgument extends DefaultSWRLNamedBuiltInArgument
+  implements SWRLNamedIndividualBuiltInArgument
 {
   private static final long serialVersionUID = 1L;
 
@@ -16,20 +16,17 @@ class DefaultSWRLNamedIndividualBuiltInArgument extends DefaultSWRLNamedBuiltInA
     super(individual);
   }
 
-  @NonNull @Override
-  public OWLNamedIndividual getOWLNamedIndividual()
+  @NonNull @Override public OWLNamedIndividual getOWLNamedIndividual()
   {
     return getOWLEntity().asOWLNamedIndividual();
   }
 
-  @Override
-  public <T> T accept(@NonNull SWRLBuiltInArgumentVisitorEx<T> visitor)
+  @Override public <@NonNull T> T accept(@NonNull SWRLBuiltInArgumentVisitorEx<@NonNull T> visitor)
   {
     return visitor.visit(this);
   }
 
-  @Override
-  public void accept(@NonNull SWRLBuiltInArgumentVisitor visitor)
+  @Override public void accept(@NonNull SWRLBuiltInArgumentVisitor visitor)
   {
     visitor.visit(this);
   }

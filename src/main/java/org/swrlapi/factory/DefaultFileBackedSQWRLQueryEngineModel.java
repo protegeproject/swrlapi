@@ -58,7 +58,7 @@ public class DefaultFileBackedSQWRLQueryEngineModel extends DefaultSQWRLQueryEng
 
     SQWRLQueryEngine queryEngine = SWRLAPIFactory.createSQWRLQueryEngine(ontology, prefixManager);
 
-    this.file = Optional.empty();
+    this.file = Optional.<@NonNull File>empty();
     resetOntologyChanged();
     updateModel(queryEngine);
   }

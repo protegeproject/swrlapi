@@ -15,7 +15,8 @@ import java.util.Optional;
 public class OWL2RLModel implements SWRLAPIModel
 {
   @NonNull private OWL2RLEngine owl2RLEngine;
-  private Optional<OWL2RLRuleTablesView> view = Optional.empty();
+
+  @NonNull private Optional<@NonNull OWL2RLRuleTablesView> view = Optional.<@NonNull OWL2RLRuleTablesView>empty();
 
   public OWL2RLModel(@NonNull OWL2RLEngine owl2RLEngine)
   {
@@ -38,8 +39,7 @@ public class OWL2RLModel implements SWRLAPIModel
     return this.owl2RLEngine;
   }
 
-  @Override
-  public void updateView()
+  @Override public void updateView()
   {
     if (view.isPresent())
       this.view.get().update();

@@ -10,17 +10,17 @@ import java.util.List;
 
 /**
  * A file filter the works on a particular extension.
- * <p>
+ * <p/>
  * Taken from Protege.
  *
  * @author Ray Fergerson fergerson@smi.stanford.edu
  */
 public class ExtensionFilter extends FileFilter
 {
-  @NonNull private final List<String> _extensions;
+  @NonNull private final List<@NonNull String> _extensions;
   @NonNull private final String _description;
 
-  public ExtensionFilter(@NonNull Iterator<String> extensions, @NonNull String description)
+  public ExtensionFilter(@NonNull Iterator<@NonNull String> extensions, @NonNull String description)
   {
     this._extensions = new ArrayList<>();
     while (extensions.hasNext()) {
@@ -38,8 +38,7 @@ public class ExtensionFilter extends FileFilter
     this(Collections.singleton(extension).iterator(), description);
   }
 
-  @Override
-  public boolean accept(java.io.File file)
+  @Override public boolean accept(java.io.File file)
   {
     if (file.isDirectory()) {
       return true;
@@ -54,8 +53,7 @@ public class ExtensionFilter extends FileFilter
     }
   }
 
-  @NonNull @Override
-  public String getDescription()
+  @NonNull @Override public String getDescription()
   {
     String text;
     String es = "";

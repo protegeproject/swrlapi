@@ -21,7 +21,7 @@ class DefaultDefaultSWRLAnnotationPropertyBuiltInArgument extends DefaultSWRLNam
     return getOWLEntity().asOWLAnnotationProperty();
   }
 
-  @NonNull @Override public <T> T accept(@NonNull SWRLBuiltInArgumentVisitorEx<T> visitor)
+  @NonNull @Override public <@NonNull T> T accept(@NonNull SWRLBuiltInArgumentVisitorEx<@NonNull T> visitor)
   {
     return visitor.visit(this);
   }

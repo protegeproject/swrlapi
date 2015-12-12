@@ -1,5 +1,6 @@
 package org.swrlapi.factory;
 
+import checkers.nullness.quals.MonotonicNonNull;
 import checkers.nullness.quals.NonNull;
 import checkers.nullness.quals.Nullable;
 import org.swrlapi.ui.dialog.ExtensionFilter;
@@ -14,7 +15,7 @@ import java.io.File;
 public class DefaultSWRLRuleEngineDialogManager implements SWRLRuleEngineDialogManager
 {
   @NonNull private final SWRLRuleEditorDialog swrlRuleEditorDialog;
-  @Nullable private File lastDirectory = null;
+  @MonotonicNonNull private File lastDirectory = null;
 
   public DefaultSWRLRuleEngineDialogManager(@NonNull SWRLRuleEngineModel swrlRuleEngineModel)
   {

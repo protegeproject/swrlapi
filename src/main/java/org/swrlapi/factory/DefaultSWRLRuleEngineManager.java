@@ -1,6 +1,5 @@
 package org.swrlapi.factory;
 
-import checkers.nullness.quals.KeyFor;
 import checkers.nullness.quals.NonNull;
 import org.swrlapi.bridge.TargetSWRLRuleEngineCreator;
 import org.swrlapi.core.SWRLRuleEngineManager;
@@ -57,7 +56,7 @@ class DefaultSWRLRuleEngineManager implements SWRLRuleEngineManager
       return Optional.<@NonNull TargetSWRLRuleEngineCreator>empty();
   }
 
-  @NonNull @Override public Set<@NonNull @KeyFor("this.registeredSWRLRuleEngines") String> getRegisteredRuleEngineNames()
+  @NonNull @Override public Set<@NonNull String> getRegisteredRuleEngineNames()
   {
     return this.registeredSWRLRuleEngines.keySet();
   }

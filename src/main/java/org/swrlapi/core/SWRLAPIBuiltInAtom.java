@@ -45,7 +45,7 @@ public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtom
   /**
    * @return A list of built-in arguments
    */
-  @NonNull List<SWRLBuiltInArgument> getBuiltInArguments();
+  @NonNull List<@NonNull SWRLBuiltInArgument> getBuiltInArguments();
 
   /**
    * @return The number of built-in arguments
@@ -88,12 +88,12 @@ public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtom
   /**
    * @return A list of variable prefixed names
    */
-  @NonNull List<String> getArgumentsVariablePrefixedNames();
+  @NonNull List<@NonNull String> getArgumentsVariablePrefixedNames();
 
   /**
    * @return A list of variable prefixed names
    */
-  @NonNull List<String> getArgumentsVariableNamesExceptFirst();
+  @NonNull List<@NonNull String> getArgumentsVariableNamesExceptFirst();
 
   /**
    * @return The name of the rule
@@ -105,12 +105,12 @@ public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtom
   /**
    * @param arguments A list of built-in arguments
    */
-  void setBuiltInArguments(List<SWRLBuiltInArgument> arguments);
+  void setBuiltInArguments(@NonNull List<@NonNull SWRLBuiltInArgument> arguments);
 
   /**
    * @param additionalArguments A list of built-in arguments
    */
-  void addArguments(List<SWRLBuiltInArgument> additionalArguments);
+  void addArguments(@NonNull List<@NonNull SWRLBuiltInArgument> additionalArguments);
 
   /**
    * @param variablePrefixedNames A set of variable prefixed-names

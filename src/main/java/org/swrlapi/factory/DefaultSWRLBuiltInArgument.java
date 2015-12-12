@@ -16,6 +16,7 @@ import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.exceptions.SWRLAPIException;
 
 import java.util.Collections;
+import java.util.Optional;
 import java.util.Set;
 
 abstract class DefaultSWRLBuiltInArgument implements SWRLBuiltInArgument
@@ -49,9 +50,12 @@ abstract class DefaultSWRLBuiltInArgument implements SWRLBuiltInArgument
     return this.boundVariableName != null;
   }
 
-  @Nullable @Override public String getBoundVariableName()
+  @Override public Optional<@NonNull String> getBoundVariableName()
   {
-    return this.boundVariableName;
+    if (this.boundVariableName != null)
+      return Optional.of(this.boundVariableName);
+    else
+      return Optional.<@NonNull String>empty();
   }
 
   @Override public void setBoundVariableName(@NonNull String boundVariableName)

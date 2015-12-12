@@ -40,7 +40,7 @@ class DefaultSQWRLCollectionVariableBuiltInArgument extends DefaultSWRLVariableB
     return this.collectionName;
   }
 
-  @NonNull @Override public <T> T accept(@NonNull SWRLBuiltInArgumentVisitorEx<T> visitor)
+  @NonNull @Override public <@NonNull T> T accept(@NonNull SWRLBuiltInArgumentVisitorEx<@NonNull T> visitor)
   {
     return visitor.visit(this);
   }

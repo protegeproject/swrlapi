@@ -1,5 +1,7 @@
 package org.swrlapi.builtins.arguments;
 
+import checkers.nullness.quals.NonNull;
+
 /**
  * Interface representing SQWRL collection arguments to SWRL built-ins
  */
@@ -8,15 +10,15 @@ public interface SQWRLCollectionVariableBuiltInArgument extends SWRLVariableBuil
   /**
    * @return The name of the enclosing SQWRL query
    */
-  String getQueryName();
+  @NonNull String getQueryName();
 
   /**
    * @return The collection name
    */
-  String getCollectionName();
+  @NonNull String getCollectionName();
 
   /**
    * @return The collection group ID
    */
-  String getGroupID();
+  @NonNull String getGroupID();
 }

@@ -15,7 +15,7 @@ public class OWL2RLRuleTablesView extends JTabbedPane implements SWRLAPIView
 
   @NonNull private final OWL2RLModel owl2RLModel;
   @NonNull private final OWL2RLControlView owl2RLControlView;
-  @NonNull private final List<OWL2RLRuleTableView> owl2RLTableViews;
+  @NonNull private final List<@NonNull OWL2RLRuleTableView> owl2RLTableViews;
 
   public OWL2RLRuleTablesView(@NonNull OWL2RLModel owl2RLModel)
   {

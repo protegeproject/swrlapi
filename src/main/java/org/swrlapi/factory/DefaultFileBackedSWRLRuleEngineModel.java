@@ -15,7 +15,7 @@ import java.util.Optional;
 public class DefaultFileBackedSWRLRuleEngineModel extends DefaultSWRLRuleEngineModel
     implements FileBackedSWRLRuleEngineModel
 {
-  private Optional<File> file;
+  private Optional<@NonNull File> file;
 
   public DefaultFileBackedSWRLRuleEngineModel(@NonNull SWRLRuleEngine ruleEngine, Optional<File> file)
   {
@@ -28,7 +28,8 @@ public class DefaultFileBackedSWRLRuleEngineModel extends DefaultSWRLRuleEngineM
     OWLOntology ontology = createOWLOntology(file);
     OWLDocumentFormat format = ontology.getOWLOntologyManager().getOntologyFormat(ontology);
     DefaultPrefixManager prefixManager = new DefaultPrefixManager();
-    if (format.isPrefixOWLOntologyFormat())
+
+    if (format != null && format.isPrefixOWLOntologyFormat())
       prefixManager.copyPrefixesFrom(format.asPrefixOWLOntologyFormat().getPrefixName2PrefixMap());
 
     SWRLRuleEngine ruleEngine = SWRLAPIFactory.createSWRLRuleEngine(ontology, prefixManager);
@@ -51,12 +52,13 @@ public class DefaultFileBackedSWRLRuleEngineModel extends DefaultSWRLRuleEngineM
     OWLOntology ontology = createOWLOntology();
     OWLDocumentFormat format = ontology.getOWLOntologyManager().getOntologyFormat(ontology);
     DefaultPrefixManager prefixManager = new DefaultPrefixManager();
+
     if (format != null && format.isPrefixOWLOntologyFormat())
       prefixManager.copyPrefixesFrom(format.asPrefixOWLOntologyFormat().getPrefixName2PrefixMap());
 
     SWRLRuleEngine ruleEngine = SWRLAPIFactory.createSWRLRuleEngine(ontology, prefixManager);
 
-    this.file = Optional.empty();
+    this.file = Optional.<@NonNull File>empty();
 
     updateModel(ruleEngine);
   }

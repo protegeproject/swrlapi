@@ -64,4 +64,6 @@ public interface SWRLRuleAndQueryEngineFactory
    */
   @NonNull SQWRLQueryEngine createSQWRLQueryEngine(@NonNull String ruleEngineName, @NonNull OWLOntology ontology,
     @NonNull DefaultPrefixManager prefixManager) throws SWRLRuleEngineException;
+
+  void tryToRegisterADefaultSWRLRuleEngine();
 }

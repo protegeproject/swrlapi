@@ -140,7 +140,7 @@ class DefaultSWRLVariableBuiltInArgument extends DefaultSWRLBuiltInArgument impl
     this.isBound = true;
   }
 
-  @Override public <@NonNull T> T accept(@NonNull SWRLBuiltInArgumentVisitorEx<T> visitor)
+  @Override public <@NonNull T> T accept(@NonNull SWRLBuiltInArgumentVisitorEx<@NonNull T> visitor)
   {
     return visitor.visit(this);
   }
@@ -155,7 +155,7 @@ class DefaultSWRLVariableBuiltInArgument extends DefaultSWRLBuiltInArgument impl
     visitor.visit(this);
   }
 
-  @NonNull @Override public <@NonNull O> O accept(@NonNull SWRLObjectVisitorEx<O> visitor)
+  @Override public <O> @NonNull O accept(@NonNull SWRLObjectVisitorEx<O> visitor)
   {
     return visitor.visit(this);
   }
@@ -165,7 +165,7 @@ class DefaultSWRLVariableBuiltInArgument extends DefaultSWRLBuiltInArgument impl
     visitor.visit(this);
   }
 
-  @NonNull @Override public <@NonNull O> O accept(@NonNull OWLObjectVisitorEx<O> visitor)
+  @NonNull @Override public <O> O accept(@NonNull OWLObjectVisitorEx<O> visitor)
   {
     return visitor.visit(this);
   }

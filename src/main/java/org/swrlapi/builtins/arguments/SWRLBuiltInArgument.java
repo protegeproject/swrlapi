@@ -1,9 +1,10 @@
 package org.swrlapi.builtins.arguments;
 
 import checkers.nullness.quals.NonNull;
-import checkers.nullness.quals.Nullable;
 import org.semanticweb.owlapi.model.SWRLDArgument;
 import org.swrlapi.factory.SWRLAPIOWLDataFactory;
+
+import java.util.Optional;
 
 /**
  * Interface representing an argument to a SWRL built-in. It extends the OWLAPI's
@@ -89,7 +90,7 @@ public interface SWRLBuiltInArgument extends SWRLDArgument
   /**
    * @return The bound variable name
    */
-  @Nullable String getBoundVariableName();
+  Optional<@NonNull String> getBoundVariableName();
 
   /**
    * @param boundVariableName The variable name that the built-in argument is bound to
@@ -106,5 +107,5 @@ public interface SWRLBuiltInArgument extends SWRLDArgument
    * @param visitor A visitor
    * @return A result generate by the visitor
    */
-  @NonNull <T> T accept(@NonNull SWRLBuiltInArgumentVisitorEx<T> visitor);
+  @NonNull <@NonNull T> T accept(@NonNull SWRLBuiltInArgumentVisitorEx<@NonNull T> visitor);
 }

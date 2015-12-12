@@ -51,12 +51,12 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
     this.swrlRulesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     this.deleteButton = new JButton(EDIT_BUTTON_TITLE);
     this.editButton = new JButton(DELETE_BUTTON_TITLE);
-
-    this.swrlRuleEngineModel.getSWRLRulesTableModel().setView(this);
   }
 
   @Override public void initialize()
   {
+    this.swrlRuleEngineModel.getSWRLRulesTableModel().setView(this);
+
     addTableListeners();
 
     setPreferredColumnWidths();
