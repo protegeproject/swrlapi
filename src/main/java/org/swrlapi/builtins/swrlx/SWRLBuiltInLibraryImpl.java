@@ -30,8 +30,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     this.individualInvocationMap = new HashMap<>();
   }
 
-  @Override
-  public void reset()
+  @Override public void reset()
   {
     this.classInvocationMap.clear();
     this.individualInvocationMap.clear();
@@ -45,7 +44,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean makeOWLClass(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean makeOWLClass(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsAtLeast(2, arguments.size());
 
@@ -78,7 +77,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  private boolean makeOWLIndividual(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  private boolean makeOWLIndividual(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsAtLeast(2, arguments.size());
 
@@ -105,26 +104,27 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   }
 
   // For backwards compatability
-  public boolean makeOWLThing(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean makeOWLThing(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return makeOWLIndividual(arguments);
   }
 
   // For backwards compatability
-  public boolean createOWLThing(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean createOWLThing(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return makeOWLIndividual(arguments);
   }
 
   // TODO: check for invocations to swrlx built-ins, which will cause blocking
-  public boolean invokeSWRLBuiltIn(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean invokeSWRLBuiltIn(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsAtLeast(2, arguments.size());
 
     String builtInName = getArgumentAsAString(0, arguments);
 
-    List<List<SWRLBuiltInArgument>> argumentPatterns = getBuiltInBridge().invokeSWRLBuiltIn(getInvokingRuleName(),
-        builtInName, getInvokingBuiltInIndex(), getIsInConsequent(), arguments.subList(1, arguments.size()));
+    List<@NonNull List<@NonNull SWRLBuiltInArgument>> argumentPatterns = getBuiltInBridge()
+        .invokeSWRLBuiltIn(getInvokingRuleName(), builtInName, getInvokingBuiltInIndex(), getIsInConsequent(),
+            arguments.subList(1, arguments.size()));
     return !argumentPatterns.isEmpty();
   }
 }

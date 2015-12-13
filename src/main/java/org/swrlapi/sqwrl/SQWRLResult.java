@@ -34,7 +34,7 @@ public interface SQWRLResult
    * @return The result column names
    * @throws SQWRLException If an error occurs
    */
-  @NonNull List<String> getColumnNames() throws SQWRLException;
+  @NonNull List<@NonNull String> getColumnNames() throws SQWRLException;
 
   /**
    * @param columnIndex A column index
@@ -242,7 +242,7 @@ public interface SQWRLResult
    * @return A list of SQWRL result values
    * @throws SQWRLException If an error occurs
    */
-  @NonNull List<SQWRLResultValue> getRow() throws SQWRLException;
+  @NonNull List<@NonNull SQWRLResultValue> getRow() throws SQWRLException;
 
   /**
    * @param columnName A column name
@@ -271,12 +271,12 @@ public interface SQWRLResult
    * @return A list of SQWRL result values
    * @throws SQWRLException If an error occurs
    */
-  @NonNull List<SQWRLResultValue> getColumn(@NonNull String columnName) throws SQWRLException;
+  @NonNull List<@NonNull SQWRLResultValue> getColumn(@NonNull String columnName) throws SQWRLException;
 
   /**
    * @param columnIndex A column index
    * @return A list of SQWRL result values
    * @throws SQWRLException If an error occurs
    */
-  @NonNull List<SQWRLResultValue> getColumn(int columnIndex) throws SQWRLException;
+  @NonNull List<@NonNull SQWRLResultValue> getColumn(int columnIndex) throws SQWRLException;
 }

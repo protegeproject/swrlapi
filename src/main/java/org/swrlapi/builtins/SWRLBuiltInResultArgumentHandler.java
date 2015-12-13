@@ -31,7 +31,7 @@ public interface SWRLBuiltInResultArgumentHandler
    * @return If the specified argument is equal to the generated result argument
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+  boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
     byte generatedResultArgument) throws SWRLBuiltInException;
 
   /**
@@ -41,7 +41,7 @@ public interface SWRLBuiltInResultArgumentHandler
    * @return If the specified argument is equal to the generated result argument
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+  boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
     short generatedResultArgument) throws SWRLBuiltInException;
 
   /**
@@ -51,7 +51,7 @@ public interface SWRLBuiltInResultArgumentHandler
    * @return If the specified argument is equal to the generated result argument
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+  boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
     int generatedResultArgument) throws SWRLBuiltInException;
 
   /**
@@ -61,7 +61,7 @@ public interface SWRLBuiltInResultArgumentHandler
    * @return If the specified argument is equal to the generated result argument
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+  boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
     long generatedResultArgument) throws SWRLBuiltInException;
 
   /**
@@ -71,7 +71,7 @@ public interface SWRLBuiltInResultArgumentHandler
    * @return If the specified argument is equal to the generated result argument
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+  boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
     float generatedResultArgument) throws SWRLBuiltInException;
 
   /**
@@ -81,7 +81,7 @@ public interface SWRLBuiltInResultArgumentHandler
    * @return If the specified argument is equal to the generated result argument
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+  boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
     double generatedResultArgument) throws SWRLBuiltInException;
 
   /**
@@ -91,7 +91,7 @@ public interface SWRLBuiltInResultArgumentHandler
    * @return If the specified argument is equal to the generated result argument
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+  boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
     String generatedResultArgument) throws SWRLBuiltInException;
 
   /**
@@ -101,7 +101,7 @@ public interface SWRLBuiltInResultArgumentHandler
    * @return If the specified argument is equal to the generated result argument
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+  boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
     boolean generatedResultArgument) throws SWRLBuiltInException;
 
   /**
@@ -111,7 +111,7 @@ public interface SWRLBuiltInResultArgumentHandler
    * @return If the specified argument is equal to the generated result argument
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+  boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
     @NonNull XSDTime generatedResultArgument) throws SWRLBuiltInException;
 
   /**
@@ -121,7 +121,7 @@ public interface SWRLBuiltInResultArgumentHandler
    * @return If the specified argument is equal to the generated result argument
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+  boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
     @NonNull XSDDate generatedResultArgument) throws SWRLBuiltInException;
 
   /**
@@ -131,7 +131,7 @@ public interface SWRLBuiltInResultArgumentHandler
    * @return If the specified argument is equal to the generated result argument
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+  boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
     @NonNull XSDDateTime generatedResultArgument) throws SWRLBuiltInException;
 
   /**
@@ -141,7 +141,7 @@ public interface SWRLBuiltInResultArgumentHandler
    * @return If the specified argument is equal to the generated result argument
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+  boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
     @NonNull XSDDuration generatedResultArgument) throws SWRLBuiltInException;
 
   /**
@@ -151,8 +151,8 @@ public interface SWRLBuiltInResultArgumentHandler
    * @return If the specified argument is equal to the generated result argument
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
-    @NonNull Collection<SWRLBuiltInArgument> generatedResultArguments) throws SWRLBuiltInException;
+  boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+    @NonNull Collection<@NonNull SWRLBuiltInArgument> generatedResultArguments) throws SWRLBuiltInException;
 
   /**
    * @param arguments               A list of built-in arguments
@@ -161,7 +161,7 @@ public interface SWRLBuiltInResultArgumentHandler
    * @return If the specified argument is equal to the generated result argument
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+  boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
     @NonNull SWRLBuiltInArgument generatedResultArgument) throws SWRLBuiltInException;
 
   /**
@@ -171,7 +171,7 @@ public interface SWRLBuiltInResultArgumentHandler
    * @return If the specified argument is equal to the generated result argument
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+  boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
     @NonNull SWRLLiteralBuiltInArgument generatedResultArgument) throws SWRLBuiltInException;
 
   /**
@@ -181,6 +181,6 @@ public interface SWRLBuiltInResultArgumentHandler
    * @return If the specified argument is equal to the generated result argument
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+  boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
     @NonNull OWLLiteral generatedResultArgument) throws SWRLBuiltInException;
 }

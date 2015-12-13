@@ -81,5 +81,5 @@ public interface SQWRLResultValueFactory
   @NonNull SQWRLLiteralResultValue getLiteralValue(@NonNull OWLLiteral literal);
 
   @NonNull SQWRLLiteralResultValue createLeastNarrowNumericLiteralValue(double value,
-    @NonNull List<SQWRLLiteralResultValue> inputResultValues);
+    @NonNull List<@NonNull SQWRLLiteralResultValue> inputResultValues);
 }

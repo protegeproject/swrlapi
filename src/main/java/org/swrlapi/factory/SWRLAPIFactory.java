@@ -225,8 +225,8 @@ public class SWRLAPIFactory
     return new DefaultSQWRLResultValueFactory(iriResolver);
   }
 
-  @NonNull public static SQWRLQuery createSQWRLQuery(@NonNull String queryName, @NonNull List<SWRLAtom> bodyAtoms,
-    @NonNull List<SWRLAtom> headAtoms, boolean active, @NonNull String comment, @NonNull LiteralFactory literalFactory,
+  @NonNull public static SQWRLQuery createSQWRLQuery(@NonNull String queryName, @NonNull List<@NonNull SWRLAtom> bodyAtoms,
+    @NonNull List<@NonNull SWRLAtom> headAtoms, boolean active, @NonNull String comment, @NonNull LiteralFactory literalFactory,
     @NonNull IRIResolver iriResolver) throws SQWRLException
   {
     return new DefaultSQWRLQuery(queryName, bodyAtoms, headAtoms, active, comment, literalFactory, iriResolver);
@@ -401,7 +401,7 @@ public class SWRLAPIFactory
   }
 
   @NonNull public static SWRLAPIBuiltInAtom createSWRLAPIBuiltInAtom(@NonNull String ruleName, @NonNull IRI builtInIRI,
-    @NonNull String builtInPrefixedName, @NonNull List<SWRLBuiltInArgument> arguments)
+    @NonNull String builtInPrefixedName, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
   {
     return new DefaultSWRLAPIBuiltInAtom(ruleName, builtInIRI, builtInPrefixedName, arguments);
   }

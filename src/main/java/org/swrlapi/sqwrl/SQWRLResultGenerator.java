@@ -20,7 +20,7 @@ public interface SQWRLResultGenerator
 	 * @param columnNames A list of column names
 	 * @throws SQWRLException If an error occurs during column addition
 	 */
-	void addColumns(@NonNull List<String> columnNames) throws SQWRLException;
+	void addColumns(@NonNull List<@NonNull String> columnNames) throws SQWRLException;
 
 	/**
 	 * @param columnName A column name
@@ -87,7 +87,7 @@ public interface SQWRLResultGenerator
 	 * @param resultValues A list of SQWRL result values
 	 * @throws SQWRLException If an error occurs during row addition
 	 */
-	void addRow(@NonNull List<SQWRLResultValue> resultValues) throws SQWRLException;
+	void addRow(@NonNull List<@NonNull SQWRLResultValue> resultValues) throws SQWRLException;
 
 	/**
 	 * Open a row for incremental cell addition

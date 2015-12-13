@@ -9,8 +9,8 @@ import java.util.Map;
 
 class DefaultOWLDatatypeResolver implements OWLDatatypeResolver
 {
-  @NonNull private final Map<@NonNull String, OWLDatatype> id2OWLDatatype;
-  @NonNull private final Map<OWLDatatype, String> owlDatatype2ID;
+  @NonNull private final Map<@NonNull String, @NonNull OWLDatatype> id2OWLDatatype;
+  @NonNull private final Map<@NonNull OWLDatatype, @NonNull String> owlDatatype2ID;
 
   private final @NonNull OWLDataFactory owlDataFactory;
 

@@ -404,12 +404,12 @@ public class Period
   // other, producing a new period list.
 
   // This routine modifies the periods list that it has been passed so this list should not be used again.
-  @NonNull public List<Period> coalesce(@NonNull List<Period> periods, int granularity) throws TemporalException
+  @NonNull public List<@NonNull Period> coalesce(@NonNull List<@NonNull Period> periods, int granularity) throws TemporalException
   {
-    Iterator<Period> iterator;
+    Iterator<@NonNull Period> iterator;
     Period p1, p2;
     boolean periodMerged;
-    List<Period> resultList = new ArrayList<>();
+    List<@NonNull Period> resultList = new ArrayList<>();
 
     // Loop through each period in the list trying to merge with other periods.
     while (!periods.isEmpty()) {

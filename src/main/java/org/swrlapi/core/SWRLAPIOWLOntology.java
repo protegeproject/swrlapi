@@ -48,9 +48,9 @@ public interface SWRLAPIOWLOntology
 {
   // Methods for handling SWRL Rules
 
-  @NonNull Set<SWRLAPIRule> getSWRLRules();
+  @NonNull Set<@NonNull SWRLAPIRule> getSWRLRules();
 
-  Optional<SWRLAPIRule> getSWRLRule(@NonNull String ruleName) throws SWRLRuleException;
+  @NonNull Optional<@NonNull SWRLAPIRule> getSWRLRule(@NonNull String ruleName) throws SWRLRuleException;
 
   /**
    * @param ruleName The name of the rule
@@ -88,7 +88,7 @@ public interface SWRLAPIOWLOntology
 
   void addSWRLBuiltIn(@NonNull IRI iri);
 
-  @NonNull Set<IRI> getSWRLBuiltInIRIs();
+  @NonNull Set<@NonNull IRI> getSWRLBuiltInIRIs();
 
   @NonNull SWRLParser createSWRLParser();
 
@@ -108,7 +108,7 @@ public interface SWRLAPIOWLOntology
 
   @NonNull Set<@NonNull String> getSQWRLQueryNames();
 
-  @NonNull Set<SQWRLQuery> getSQWRLQueries();
+  @NonNull Set<@NonNull SQWRLQuery> getSQWRLQueries();
 
   @NonNull SQWRLResultGenerator getSQWRLResultGenerator(@NonNull String queryName) throws SQWRLException;
 
@@ -136,7 +136,7 @@ public interface SWRLAPIOWLOntology
 
   boolean hasAssertedOWLAxiom(OWLAxiom axiom);
 
-  @NonNull Set<OWLAxiom> getOWLAxioms();
+  @NonNull Set<@NonNull OWLAxiom> getOWLAxioms();
 
   int getNumberOfSWRLRules();
 

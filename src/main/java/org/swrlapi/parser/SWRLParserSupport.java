@@ -203,8 +203,8 @@ class SWRLParserSupport
     }
   }
 
-  @NonNull public SWRLRule createSWRLRule(@NonNull String ruleName, @NonNull Set<SWRLAtom> head,
-      @NonNull Set<SWRLAtom> body, @NonNull String comment, boolean isEnabled)
+  @NonNull public SWRLRule createSWRLRule(@NonNull String ruleName, @NonNull Set<@NonNull SWRLAtom> head,
+      @NonNull Set<@NonNull SWRLAtom> body, @NonNull String comment, boolean isEnabled)
   {
     Set<@NonNull OWLAnnotation> annotations = this.swrlapiOWLOntology.generateRuleAnnotations(ruleName, comment, isEnabled);
 
@@ -246,7 +246,7 @@ class SWRLParserSupport
   }
 
   @NonNull public SWRLBuiltInAtom createSWRLBuiltInAtom(@NonNull String builtInPrefixedName,
-      @NonNull List<SWRLDArgument> arguments) throws SWRLParseException
+      @NonNull List<@NonNull SWRLDArgument> arguments) throws SWRLParseException
   {
     IRI builtInIRI = createSWRLBuiltInIRI(builtInPrefixedName);
     return getOWLDataFactory().getSWRLBuiltInAtom(builtInIRI, arguments);

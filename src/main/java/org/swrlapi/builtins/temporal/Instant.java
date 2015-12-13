@@ -331,10 +331,10 @@ class Instant
   }
 
   // Take a list of instants and remove duplicate identical elements.
-  @NonNull public List<Instant> coalesce(@NonNull List<Instant> instants, int g) throws TemporalException
+  @NonNull public List<@NonNull Instant> coalesce(@NonNull List<@NonNull Instant> instants, int g) throws TemporalException
   {
     Instant i1, i2;
-    List<Instant> resultList = new ArrayList<>();
+    List<@NonNull Instant> resultList = new ArrayList<>();
 
     // Loop through each instant in the list trying to merge with other instants.
     while (!instants.isEmpty()) {
@@ -344,7 +344,7 @@ class Instant
       // See if we can merge this instant with the remaining instants in the list. If we merge this instant with an
       // existing instant later
       // in the list, remove the later element.
-      Iterator<Instant> iterator = instants.iterator();
+      Iterator<@NonNull Instant> iterator = instants.iterator();
       while (iterator.hasNext()) {
         i2 = iterator.next();
         // Merge contiguous or overlapping periods.

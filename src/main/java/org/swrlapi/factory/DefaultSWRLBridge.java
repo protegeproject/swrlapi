@@ -153,9 +153,9 @@ public class DefaultSWRLBridge implements SWRLBridge
       this.inferredOWLAxioms.add(axiom);
   }
 
-  @NonNull @Override public List<List<SWRLBuiltInArgument>> invokeSWRLBuiltIn(@NonNull String ruleName,
+  @NonNull @Override public List<@NonNull List<@NonNull SWRLBuiltInArgument>> invokeSWRLBuiltIn(@NonNull String ruleName,
       @NonNull String builtInName, int builtInIndex, boolean isInConsequent,
-      @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+      @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return builtInLibraryManager
         .invokeSWRLBuiltIn(this, ruleName, builtInName, builtInIndex, isInConsequent, arguments);

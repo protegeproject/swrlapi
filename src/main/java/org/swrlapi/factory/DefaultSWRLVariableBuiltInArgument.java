@@ -208,7 +208,7 @@ class DefaultSWRLVariableBuiltInArgument extends DefaultSWRLBuiltInArgument impl
     return hash;
   }
 
-  @NonNull @Override public Set<OWLAnnotationProperty> getAnnotationPropertiesInSignature()
+  @NonNull @Override public Set<@NonNull OWLAnnotationProperty> getAnnotationPropertiesInSignature()
   {
     return new HashSet<>(); // TODO Implement getAnnotationPropertiesInSignature
   }

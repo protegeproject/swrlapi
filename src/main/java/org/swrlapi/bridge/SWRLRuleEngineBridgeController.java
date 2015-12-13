@@ -22,5 +22,5 @@ public interface SWRLRuleEngineBridgeController
   /**
    * @return A set of inferred OWL axioms
    */
-  @NonNull Set<OWLAxiom> getInferredOWLAxioms();
+  @NonNull Set<@NonNull OWLAxiom> getInferredOWLAxioms();
 }

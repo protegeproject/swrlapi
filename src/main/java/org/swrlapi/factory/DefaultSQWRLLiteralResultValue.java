@@ -19,7 +19,7 @@ import java.util.Comparator;
 
 class DefaultSQWRLLiteralResultValue extends DefaultLiteral implements SQWRLLiteralResultValue
 {
-  private static final Comparator<OWLLiteral> owlLiteralComparator = OWLLiteralComparator.COMPARATOR;
+  private static final Comparator<@NonNull OWLLiteral> owlLiteralComparator = OWLLiteralComparator.COMPARATOR;
 
   private final String datatypePrefixedName;
 

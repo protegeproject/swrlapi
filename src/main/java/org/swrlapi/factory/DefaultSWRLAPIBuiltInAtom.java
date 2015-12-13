@@ -150,7 +150,7 @@ class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SWRLAPIBu
 
   @NonNull @Override public List<@NonNull String> getArgumentsVariablePrefixedNames()
   {
-    List<String> result = this.arguments.stream().filter(SWRLBuiltInArgument::isVariable)
+    List<@NonNull String> result = this.arguments.stream().filter(SWRLBuiltInArgument::isVariable)
       .map(argument -> argument.asVariable().getVariablePrefixedName()).collect(Collectors.toList());
 
     return Collections.unmodifiableList(result);
@@ -158,7 +158,7 @@ class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SWRLAPIBu
 
   @NonNull @Override public List<@NonNull String> getArgumentsVariableNamesExceptFirst()
   {
-    List<String> result = new ArrayList<>();
+    List<@NonNull String> result = new ArrayList<>();
     int argumentCount = 0;
 
     for (SWRLBuiltInArgument argument : this.arguments)

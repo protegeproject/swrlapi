@@ -75,7 +75,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean equals(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean equals(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return temporalOperation(TemporalEquals, arguments);
   }
@@ -85,7 +85,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean before(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean before(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return temporalOperation(TemporalBefore, arguments);
   }
@@ -95,7 +95,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean after(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean after(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return temporalOperation(TemporalAfter, arguments);
   }
@@ -105,7 +105,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean meets(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean meets(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return temporalOperation(TemporalMeets, arguments);
   }
@@ -115,7 +115,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean metBy(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean metBy(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return temporalOperation(TemporalMetBy, arguments);
   }
@@ -125,7 +125,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean overlaps(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean overlaps(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return temporalOperation(TemporalOverlaps, arguments);
   }
@@ -135,7 +135,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean overlappedBy(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean overlappedBy(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return temporalOperation(TemporalOverlappedBy, arguments);
   }
@@ -145,7 +145,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean contains(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean contains(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return temporalOperation(TemporalContains, arguments);
   }
@@ -155,7 +155,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean during(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean during(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return temporalOperation(TemporalDuring, arguments);
   }
@@ -165,7 +165,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean starts(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean starts(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return temporalOperation(TemporalStarts, arguments);
   }
@@ -175,7 +175,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean startedBy(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean startedBy(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return temporalOperation(TemporalStartedBy, arguments);
   }
@@ -185,7 +185,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean finishes(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean finishes(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return temporalOperation(TemporalFinishes, arguments);
   }
@@ -195,7 +195,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean finishedBy(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean finishedBy(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return temporalOperation(TemporalFinishedBy, arguments);
   }
@@ -205,7 +205,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean intersects(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean intersects(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return temporalOperation(TemporalIntersects, arguments);
   }
@@ -215,7 +215,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notIntersects(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notIntersects(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return !temporalOperation(TemporalIntersects, arguments);
   }
@@ -225,7 +225,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notEquals(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notEquals(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return !temporalOperation(TemporalEquals, arguments);
   }
@@ -235,7 +235,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notBefore(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notBefore(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return !temporalOperation(TemporalBefore, arguments);
   }
@@ -245,7 +245,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notAfter(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notAfter(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return !temporalOperation(TemporalAfter, arguments);
   }
@@ -255,7 +255,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notMeets(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notMeets(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return !temporalOperation(TemporalMeets, arguments);
   }
@@ -265,7 +265,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notMetBy(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notMetBy(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return !temporalOperation(TemporalMetBy, arguments);
   }
@@ -275,7 +275,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notOverlaps(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notOverlaps(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return !temporalOperation(TemporalOverlaps, arguments);
   }
@@ -285,7 +285,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notOverlappedBy(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notOverlappedBy(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return !temporalOperation(TemporalOverlappedBy, arguments);
   }
@@ -295,7 +295,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notContains(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notContains(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return !temporalOperation(TemporalContains, arguments);
   }
@@ -305,7 +305,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notDuring(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notDuring(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return !temporalOperation(TemporalDuring, arguments);
   }
@@ -315,7 +315,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notStarts(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notStarts(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return !temporalOperation(TemporalStarts, arguments);
   }
@@ -325,7 +325,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notStartedBy(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notStartedBy(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return !temporalOperation(TemporalStartedBy, arguments);
   }
@@ -335,7 +335,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notFinishes(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notFinishes(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return !temporalOperation(TemporalFinishes, arguments);
   }
@@ -345,7 +345,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notFinishedBy(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notFinishedBy(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return !temporalOperation(TemporalFinishedBy, arguments);
   }
@@ -355,7 +355,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notDurationLessThan(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notDurationLessThan(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return !durationLessThan(arguments);
   }
@@ -365,7 +365,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notDurationLessThanOrEqualTo(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notDurationLessThanOrEqualTo(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return !durationLessThanOrEqualTo(arguments);
   }
@@ -375,7 +375,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notDurationEqualTo(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notDurationEqualTo(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return !durationEqualTo(arguments);
   }
@@ -385,7 +385,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notDurationGreaterThan(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notDurationGreaterThan(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return !durationGreaterThan(arguments);
   }
@@ -395,7 +395,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notDurationGreaterThanOrEqualTo(@NonNull List<SWRLBuiltInArgument> arguments)
+  public boolean notDurationGreaterThanOrEqualTo(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     return !durationGreaterThanOrEqualTo(arguments);
@@ -411,7 +411,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean duration(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean duration(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     long operationResult;
 
@@ -450,11 +450,11 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean durationLessThan(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean durationLessThan(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsInRange(3, 4, arguments.size());
     checkForUnboundArguments(arguments);
-    List<SWRLBuiltInArgument> newArguments = cloneArguments(arguments);
+    List<@NonNull SWRLBuiltInArgument> newArguments = cloneArguments(arguments);
 
     long argument1 = getArgumentAsALong(0, arguments);
 
@@ -472,11 +472,11 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean durationLessThanOrEqualTo(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean durationLessThanOrEqualTo(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsInRange(3, 4, arguments.size());
     checkForUnboundArguments(arguments);
-    List<SWRLBuiltInArgument> newArguments = cloneArguments(arguments);
+    List<@NonNull SWRLBuiltInArgument> newArguments = cloneArguments(arguments);
 
     long argument1 = getArgumentAsALong(0, arguments);
 
@@ -494,12 +494,12 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean durationEqualTo(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean durationEqualTo(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsInRange(3, 4, arguments.size());
     checkForUnboundArguments(arguments);
 
-    List<SWRLBuiltInArgument> newArguments = cloneArguments(arguments);
+    List<@NonNull SWRLBuiltInArgument> newArguments = cloneArguments(arguments);
 
     long argument1 = getArgumentAsALong(0, arguments);
 
@@ -517,12 +517,12 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean durationGreaterThan(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean durationGreaterThan(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsInRange(3, 4, arguments.size());
     checkForUnboundArguments(arguments);
 
-    List<SWRLBuiltInArgument> newArguments = cloneArguments(arguments);
+    List<@NonNull SWRLBuiltInArgument> newArguments = cloneArguments(arguments);
 
     long argument1 = getArgumentAsALong(0, arguments);
 
@@ -540,11 +540,11 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean durationGreaterThanOrEqualTo(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean durationGreaterThanOrEqualTo(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsInRange(3, 4, arguments.size());
     checkForUnboundArguments(arguments);
-    List<SWRLBuiltInArgument> newArguments = cloneArguments(arguments);
+    List<@NonNull SWRLBuiltInArgument> newArguments = cloneArguments(arguments);
 
     long argument1 = getArgumentAsALong(0, arguments);
 
@@ -567,7 +567,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean add(@NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean add(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(4, arguments.size());
     checkForUnboundNonFirstArguments(arguments);
@@ -594,7 +594,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     }
   }
 
-  private boolean temporalOperation(@NonNull String operation, @NonNull List<SWRLBuiltInArgument> arguments)
+  private boolean temporalOperation(@NonNull String operation, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     checkNumberOfArgumentsInRange(2, 4, arguments.size());
@@ -650,7 +650,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   }
 
   @NonNull private Period getTwoInstantArgumentsAsAPeriod(int firstArgumentNumber, int secondArgumentNumber,
-    @NonNull List<SWRLBuiltInArgument> arguments, int granularity) throws SWRLBuiltInException, TemporalException
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments, int granularity) throws SWRLBuiltInException, TemporalException
   {
     if (firstArgumentNumber >= arguments.size())
       throw new InvalidSWRLBuiltInArgumentException(firstArgumentNumber, "out of range");
@@ -663,7 +663,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     return new Period(this.temporal, i1, i2, granularity);
   }
 
-  @NonNull private Period getArgumentAsAPeriod(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments,
+  @NonNull private Period getArgumentAsAPeriod(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments,
     int granularity) throws SWRLBuiltInException, TemporalException
   {
     if (isArgumentALiteral(argumentNumber, arguments)) {
@@ -698,7 +698,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
           + ExtendedPropositionClassName + " individual, got " + arguments.get(argumentNumber));
   }
 
-  @NonNull private Instant getArgumentAsAnInstant(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments,
+  @NonNull private Instant getArgumentAsAnInstant(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments,
     int granularity) throws SWRLBuiltInException, TemporalException
   {
     if (isArgumentALiteral(argumentNumber, arguments)) {
@@ -730,7 +730,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
           + " individual, got " + arguments.get(argumentNumber));
   }
 
-  private int getBuiltInArgumentAsAGranularity(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  private int getBuiltInArgumentAsAGranularity(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws TemporalException, SWRLBuiltInException
   {
     if (isArgumentALiteral(argumentNumber, arguments)) {
@@ -756,7 +756,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
         "expecting a " + GranularityClassName + " individual" + ", got " + arguments.get(argumentNumber));
   }
 
-  private boolean isBuiltInArgumentAGranularity(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  private boolean isBuiltInArgumentAGranularity(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     if (isArgumentAString(argumentNumber, arguments)) {
@@ -817,7 +817,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   @NonNull private IRI getObjectPropertyValueAsIRI(@NonNull SWRLBuiltInBridge bridge, @NonNull IRI individualIRI,
     @NonNull IRI propertyIRI)
   {
-    Set<OWLObjectPropertyAssertionAxiom> axioms = new HashSet<>(); // TODO Get assertions for this individual/property
+    Set<@NonNull OWLObjectPropertyAssertionAxiom> axioms = new HashSet<>(); // TODO Get assertions for this individual/property
     OWLObjectPropertyAssertionAxiom axiom = axioms.toArray(new OWLObjectPropertyAssertionAxiom[axioms.size()])[0];
     OWLIndividual subject = axiom.getObject();
 
@@ -833,7 +833,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   @NonNull private String getDataPropertyValueAsAString(@NonNull SWRLBuiltInBridge bridge, @NonNull IRI individualIRI,
     @NonNull IRI propertyIRI)
   {
-    Set<OWLDataPropertyAssertionAxiom> axioms = new HashSet<>(); // TODO Get assertions for this individual/property
+    Set<@NonNull OWLDataPropertyAssertionAxiom> axioms = new HashSet<>(); // TODO Get assertions for this individual/property
     OWLDataPropertyAssertionAxiom axiom = axioms.toArray(new OWLDataPropertyAssertionAxiom[axioms.size()])[0];
     OWLLiteral value = axiom.getObject();
 
@@ -847,7 +847,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * specifications supplied.
    */
   @SuppressWarnings("unused") private void rewriteStringArgumentAsADateOrDateTime(int argumentNumber,
-    @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     String datetimeString = getArgumentAsAString(argumentNumber, arguments);
     XSDDateTimeStringProcessor datetimeProcessor = new XSDDateTimeStringProcessor();

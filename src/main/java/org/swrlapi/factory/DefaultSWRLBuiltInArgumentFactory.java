@@ -167,7 +167,7 @@ class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFactory
   }
 
   @NonNull @Override public SWRLMultiValueVariableBuiltInArgument getMultiValueVariableBuiltInArgument(
-    @NonNull IRI variableIRI, List<SWRLBuiltInArgument> arguments)
+    @NonNull IRI variableIRI, List<@NonNull SWRLBuiltInArgument> arguments)
   {
     String variablePrefixedName = getIRIResolver().iri2PrefixedName(variableIRI);
 

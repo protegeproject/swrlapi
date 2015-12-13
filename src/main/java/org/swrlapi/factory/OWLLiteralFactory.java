@@ -56,5 +56,5 @@ public interface OWLLiteralFactory
 
   @NonNull OWLLiteral getOWLLiteral(@NonNull String literal, @NonNull OWLDatatype datatype);
 
-  @NonNull OWLLiteral createLeastNarrowNumericOWLLiteral(double value, @NonNull List<OWLLiteral> inputLiterals);
+  @NonNull OWLLiteral createLeastNarrowNumericOWLLiteral(double value, @NonNull List<@NonNull OWLLiteral> inputLiterals);
 }

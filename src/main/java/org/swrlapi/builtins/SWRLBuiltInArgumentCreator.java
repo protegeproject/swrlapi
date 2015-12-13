@@ -167,7 +167,7 @@ public interface SWRLBuiltInArgumentCreator
    * @return A multi-variable built-in argument
    */
   @NonNull SWRLMultiValueVariableBuiltInArgument createSWRLMultiValueVariableBuiltInArgument(@NonNull IRI variableIRI,
-    @NonNull List<SWRLBuiltInArgument> arguments);
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments);
 
   /**
    * @param variableIRI       The IRI of a variable

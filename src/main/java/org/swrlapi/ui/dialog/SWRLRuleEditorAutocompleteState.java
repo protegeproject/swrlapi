@@ -8,11 +8,11 @@ import java.util.List;
 class SWRLRuleEditorAutoCompleteState
 {
   @NonNull private final String prefix;
-  @NonNull private final List<String> expansions;
+  @NonNull private final List<@NonNull String> expansions;
   private final int textPosition;
   private int expansionIndex;
 
-  public SWRLRuleEditorAutoCompleteState(int textPosition, @NonNull String prefix, @NonNull List<String> expansions)
+  public SWRLRuleEditorAutoCompleteState(int textPosition, @NonNull String prefix, @NonNull List<@NonNull String> expansions)
   {
     this.textPosition = textPosition;
     this.prefix = prefix;

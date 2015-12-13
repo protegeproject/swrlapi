@@ -167,7 +167,7 @@ public abstract class AbstractSWRLBuiltInLibrary
 
   @Override public boolean invokeBuiltInMethod(@NonNull Method method, @NonNull SWRLBuiltInBridge bridge,
     @NonNull String ruleName, @NonNull String prefix, @NonNull String builtInMethodName, int builtInIndex,
-    boolean inConsequent, @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+    boolean inConsequent, @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     String builtInName = prefix + ":" + builtInMethodName;
     Boolean result;
@@ -217,7 +217,7 @@ public abstract class AbstractSWRLBuiltInLibrary
    * bridge/rule/built-in/arguments combination.
    */
   @NonNull @Override public String createInvocationPattern(@NonNull SWRLBuiltInBridge bridge, @NonNull String ruleName,
-    int builtInIndex, boolean inConsequent, @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+    int builtInIndex, boolean inConsequent, @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     String pattern = "" + bridge.hashCode() + "." + ruleName + "." + builtInIndex + "." + inConsequent;
     String result;
@@ -248,7 +248,7 @@ public abstract class AbstractSWRLBuiltInLibrary
 
   // Argument handling methods
 
-  protected void checkNumberOfArgumentsAtLeastOne(@NonNull List<SWRLBuiltInArgument> arguments)
+  protected void checkNumberOfArgumentsAtLeastOne(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     if (arguments.size() < 1)
@@ -283,28 +283,28 @@ public abstract class AbstractSWRLBuiltInLibrary
       throw new InvalidSWRLBuiltInArgumentNumberException(expectingAtMost, actual, expectingAtLeast + " to");
   }
 
-  @Override public void checkThatAllArgumentsAreLiterals(@NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public void checkThatAllArgumentsAreLiterals(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
       checkThatArgumentIsALiteral(argumentNumber, arguments);
   }
 
-  @Override public void checkThatAllArgumentsAreNumeric(@NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public void checkThatAllArgumentsAreNumeric(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
       checkThatArgumentIsNumeric(argumentNumber, arguments);
   }
 
-  @Override public void checkThatAllArgumentsAreIntegers(@NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public void checkThatAllArgumentsAreIntegers(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
       checkThatArgumentIsAnInt(argumentNumber, arguments);
   }
 
-  @Override public boolean areAllArgumentsBytes(@NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean areAllArgumentsBytes(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
@@ -313,7 +313,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     return true;
   }
 
-  @Override public boolean areAllArgumentsShorts(@NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean areAllArgumentsShorts(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
@@ -322,7 +322,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     return true;
   }
 
-  @Override public boolean areAllArgumentsIntegers(@NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean areAllArgumentsIntegers(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
@@ -331,7 +331,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     return true;
   }
 
-  @Override public boolean areAllArgumentsLongs(@NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean areAllArgumentsLongs(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
@@ -340,7 +340,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     return true;
   }
 
-  @Override public boolean areAllArgumentsFloats(@NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean areAllArgumentsFloats(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
@@ -349,7 +349,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     return true;
   }
 
-  @Override public boolean areAllArgumentsDoubles(@NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean areAllArgumentsDoubles(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
@@ -358,27 +358,27 @@ public abstract class AbstractSWRLBuiltInLibrary
     return true;
   }
 
-  @Override public boolean isArgumentConvertibleToByte(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean isArgumentConvertibleToByte(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     return (isArgumentNumeric(argumentNumber, arguments) && isArgumentAByte(argumentNumber, arguments));
   }
 
   @Override public boolean isArgumentConvertibleToShort(int argumentNumber,
-    @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return (isArgumentNumeric(argumentNumber, arguments) && isArgumentAByte(argumentNumber, arguments)
       && isArgumentAShort(argumentNumber, arguments));
   }
 
   @Override public boolean isArgumentConvertibleToInteger(int argumentNumber,
-    @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return (isArgumentNumeric(argumentNumber, arguments) && isArgumentAByte(argumentNumber, arguments)
       && isArgumentAShort(argumentNumber, arguments) && isArgumentAnInt(argumentNumber, arguments));
   }
 
-  @Override public boolean isArgumentConvertibleToLong(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean isArgumentConvertibleToLong(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     return (isArgumentNumeric(argumentNumber, arguments) && isArgumentAByte(argumentNumber, arguments)
@@ -387,7 +387,7 @@ public abstract class AbstractSWRLBuiltInLibrary
   }
 
   @Override public boolean isArgumentConvertibleToFloat(int argumentNumber,
-    @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return (isArgumentNumeric(argumentNumber, arguments) && isArgumentAByte(argumentNumber, arguments)
       && isArgumentAShort(argumentNumber, arguments) && isArgumentAnInt(argumentNumber, arguments) && isArgumentALong(
@@ -395,12 +395,12 @@ public abstract class AbstractSWRLBuiltInLibrary
   }
 
   @Override public boolean isArgumentConvertibleToDouble(int argumentNumber,
-    @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return (isArgumentNumeric(argumentNumber, arguments));
   }
 
-  @Override public boolean isWidestNumericArgumentAByte(@NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean isWidestNumericArgumentAByte(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
@@ -411,7 +411,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     return true;
   }
 
-  @Override public boolean isWidestNumericArgumentAShort(@NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean isWidestNumericArgumentAShort(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
@@ -421,7 +421,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     return true;
   }
 
-  @Override public boolean isWidestNumericArgumentAnInt(@NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean isWidestNumericArgumentAnInt(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
@@ -431,7 +431,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     return true;
   }
 
-  @Override public boolean isWidestNumericArgumentALong(@NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean isWidestNumericArgumentALong(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
@@ -440,7 +440,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     return true;
   }
 
-  @Override public boolean isWidestNumericArgumentAFloat(@NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean isWidestNumericArgumentAFloat(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
@@ -449,7 +449,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     return true;
   }
 
-  @Override public boolean areAllArgumentsBooleans(@NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean areAllArgumentsBooleans(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
@@ -458,7 +458,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     return true;
   }
 
-  @Override public boolean areAllArgumentLiterals(@NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean areAllArgumentLiterals(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
@@ -467,7 +467,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     return true;
   }
 
-  @Override public boolean areAllArgumentsNumeric(@NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean areAllArgumentsNumeric(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
@@ -476,7 +476,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     return true;
   }
 
-  @Override public boolean areAllArgumentsStrings(@NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean areAllArgumentsStrings(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
@@ -485,7 +485,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     return true;
   }
 
-  @Override public boolean areAllArgumentsOfAnOrderedType(@NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean areAllArgumentsOfAnOrderedType(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
@@ -494,28 +494,28 @@ public abstract class AbstractSWRLBuiltInLibrary
     return true;
   }
 
-  @Override public void checkThatAllArgumentsAreFloats(@NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public void checkThatAllArgumentsAreFloats(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
       checkThatArgumentIsAFloat(argumentNumber, arguments);
   }
 
-  @Override public void checkThatAllArgumentsAreStrings(@NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public void checkThatAllArgumentsAreStrings(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
       checkThatArgumentIsAString(argumentNumber, arguments);
   }
 
-  @Override public void checkThatAllArgumentsAreOfAnOrderedType(@NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public void checkThatAllArgumentsAreOfAnOrderedType(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
       checkThatArgumentIsOfAnOrderedType(argumentNumber, arguments);
   }
 
-  @Override public void checkThatArgumentIsNumeric(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public void checkThatArgumentIsNumeric(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     if (!isArgumentNumeric(argumentNumber, arguments))
@@ -524,20 +524,20 @@ public abstract class AbstractSWRLBuiltInLibrary
   }
 
   @Override public void checkThatArgumentIsOfAnOrderedType(int argumentNumber,
-    @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     if (!isArgumentOfAnOrderedType(argumentNumber, arguments))
       throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
         makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "ordered type"));
   }
 
-  @Override public boolean isArgumentOfAnOrderedType(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean isArgumentOfAnOrderedType(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     return (isArgumentNumeric(argumentNumber, arguments) || isArgumentAString(argumentNumber, arguments));
   }
 
-  @Override public boolean isArgumentAnIndividual(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean isArgumentAnIndividual(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     checkArgumentNumber(argumentNumber, arguments);
@@ -545,7 +545,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     return arguments.get(argumentNumber) instanceof SWRLNamedIndividualBuiltInArgument;
   }
 
-  public boolean isArgumentALiterak(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  public boolean isArgumentALiterak(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     checkArgumentNumber(argumentNumber, arguments);
@@ -554,7 +554,7 @@ public abstract class AbstractSWRLBuiltInLibrary
   }
 
   @Override public void checkThatArgumentIsAnIndividual(int argumentNumber,
-    @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     if (!isArgumentAnIndividual(argumentNumber, arguments)) {
       throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
@@ -562,7 +562,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     }
   }
 
-  @Override public void checkThatArgumentIsALiteral(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public void checkThatArgumentIsALiteral(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     if (!isArgumentALiteral(argumentNumber, arguments)) {
@@ -572,7 +572,7 @@ public abstract class AbstractSWRLBuiltInLibrary
   }
 
   @NonNull @Override public IRI getArgumentAsAnIndividualIRI(int argumentNumber,
-    @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatArgumentIsAnIndividual(argumentNumber, arguments);
 
@@ -580,14 +580,14 @@ public abstract class AbstractSWRLBuiltInLibrary
   }
 
   @NonNull @Override public SWRLNamedIndividualBuiltInArgument getArgumentAsAnIndividual(int argumentNumber,
-    @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatArgumentIsAnIndividual(argumentNumber, arguments);
 
     return (SWRLNamedIndividualBuiltInArgument)arguments.get(argumentNumber);
   }
 
-  @NonNull @Override public IRI getArgumentAsAClassIRI(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @NonNull @Override public IRI getArgumentAsAClassIRI(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     checkThatArgumentIsAClass(argumentNumber, arguments);
@@ -596,7 +596,7 @@ public abstract class AbstractSWRLBuiltInLibrary
   }
 
   @NonNull @Override public SWRLClassBuiltInArgument getArgumentAsAClass(int argumentNumber,
-    @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatArgumentIsAClass(argumentNumber, arguments);
 
@@ -604,7 +604,7 @@ public abstract class AbstractSWRLBuiltInLibrary
   }
 
   @NonNull public SWRLPropertyBuiltInArgument getArgumentAsAProperty(int argumentNumber,
-    @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatArgumentIsAProperty(argumentNumber, arguments);
 
@@ -612,7 +612,7 @@ public abstract class AbstractSWRLBuiltInLibrary
   }
 
   @NonNull @Override public SWRLObjectPropertyBuiltInArgument getArgumentAsAnObjectProperty(int argumentNumber,
-    @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatArgumentIsAnObjectProperty(argumentNumber, arguments);
 
@@ -620,14 +620,14 @@ public abstract class AbstractSWRLBuiltInLibrary
   }
 
   @NonNull @Override public SWRLDataPropertyBuiltInArgument getArgumentAsADataProperty(int argumentNumber,
-    @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatArgumentIsADataProperty(argumentNumber, arguments);
 
     return (SWRLDataPropertyBuiltInArgument)arguments.get(argumentNumber);
   }
 
-  @NonNull @Override public IRI getArgumentAsAnIRI(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @NonNull @Override public IRI getArgumentAsAnIRI(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     checkThatArgumentIsAClassPropertyOrIndividual(argumentNumber, arguments);
@@ -644,35 +644,35 @@ public abstract class AbstractSWRLBuiltInLibrary
   }
 
   @NonNull @Override public IRI getArgumentAsAPropertyIRI(int argumentNumber,
-    @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatArgumentIsAProperty(argumentNumber, arguments);
 
     return ((SWRLPropertyBuiltInArgument)arguments.get(argumentNumber)).getIRI();
   }
 
-  @Override public void checkArgumentNumber(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public void checkArgumentNumber(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     if ((argumentNumber < 0) || (argumentNumber >= arguments.size()))
       throw new SWRLBuiltInException("(0-offset) argument number #" + argumentNumber + " is out of bounds");
   }
 
-  @Override public boolean isArgumentNumeric(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean isArgumentNumeric(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     return isArgumentALiteral(argumentNumber, arguments) && getArgumentAsALiteral(argumentNumber, arguments)
       .isNumeric();
   }
 
-  @Override public boolean isArgumentNonNumeric(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean isArgumentNonNumeric(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     return isArgumentALiteral(argumentNumber, arguments) && !getArgumentAsALiteral(argumentNumber, arguments)
       .isNumeric();
   }
 
-  @Override public void checkThatArgumentIsNonNumeric(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public void checkThatArgumentIsNonNumeric(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     if (!isArgumentNonNumeric(argumentNumber, arguments))
@@ -682,7 +682,7 @@ public abstract class AbstractSWRLBuiltInLibrary
 
   // Bytes
 
-  @Override public void checkThatArgumentIsAByte(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public void checkThatArgumentIsAByte(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     if (!isArgumentAByte(argumentNumber, arguments))
@@ -690,13 +690,13 @@ public abstract class AbstractSWRLBuiltInLibrary
         makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "byte"));
   }
 
-  @Override public boolean isArgumentAByte(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean isArgumentAByte(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     return isArgumentALiteral(argumentNumber, arguments) && (getArgumentAsALiteral(argumentNumber, arguments).isByte());
   }
 
-  @Override public short getArgumentAsAByte(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public short getArgumentAsAByte(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     return getArgumentAsALiteral(argumentNumber, arguments).getByte();
@@ -705,7 +705,7 @@ public abstract class AbstractSWRLBuiltInLibrary
 
   // Shorts
 
-  @Override public void checkThatArgumentIsAShort(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public void checkThatArgumentIsAShort(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     if (!isArgumentAShort(argumentNumber, arguments))
@@ -713,14 +713,14 @@ public abstract class AbstractSWRLBuiltInLibrary
         makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "short"));
   }
 
-  @Override public boolean isArgumentAShort(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean isArgumentAShort(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     return isArgumentALiteral(argumentNumber, arguments) && (getArgumentAsALiteral(argumentNumber, arguments)
       .isShort());
   }
 
-  @Override public short getArgumentAsAShort(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public short getArgumentAsAShort(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     return getArgumentAsALiteral(argumentNumber, arguments).getShort();
@@ -729,7 +729,7 @@ public abstract class AbstractSWRLBuiltInLibrary
 
   // Integers
 
-  @Override public void checkThatArgumentIsAnInt(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public void checkThatArgumentIsAnInt(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     if (!isArgumentAnInt(argumentNumber, arguments))
@@ -737,20 +737,20 @@ public abstract class AbstractSWRLBuiltInLibrary
         makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "int"));
   }
 
-  @Override public boolean isArgumentAnInt(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean isArgumentAnInt(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     return isArgumentALiteral(argumentNumber, arguments) && (getArgumentAsALiteral(argumentNumber, arguments).isInt());
   }
 
-  @Override public int getArgumentAsAnInt(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public int getArgumentAsAnInt(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     return getArgumentAsALiteral(argumentNumber, arguments).getInt();
     // Will throw exception if invalid.
   }
 
-  @Override public int getArgumentAsAPositiveInt(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public int getArgumentAsAPositiveInt(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     int i = getArgumentAsALiteral(argumentNumber, arguments).getInt(); // Will throw LiteralException
@@ -761,7 +761,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     return i;
   }
 
-  @Override public boolean isArgumentALiteral(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean isArgumentALiteral(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     checkThatArgumentIsBound(argumentNumber, arguments);
@@ -769,7 +769,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     return (arguments.get(argumentNumber) instanceof SWRLLiteralBuiltInArgument);
   }
 
-  @Override public boolean isArgumentAProperty(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean isArgumentAProperty(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     checkThatArgumentIsBound(argumentNumber, arguments);
@@ -777,7 +777,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     return (arguments.get(argumentNumber) instanceof SWRLPropertyBuiltInArgument);
   }
 
-  @Override public boolean isArgumentADataProperty(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean isArgumentADataProperty(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     checkThatArgumentIsBound(argumentNumber, arguments);
@@ -785,7 +785,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     return (arguments.get(argumentNumber) instanceof SWRLDataPropertyBuiltInArgument);
   }
 
-  @Override public boolean isArgumentAnObjectProperty(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean isArgumentAnObjectProperty(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     checkThatArgumentIsBound(argumentNumber, arguments);
@@ -793,7 +793,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     return (arguments.get(argumentNumber) instanceof SWRLObjectPropertyBuiltInArgument);
   }
 
-  @Override public void checkThatArgumentIsAProperty(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public void checkThatArgumentIsAProperty(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     if (!isArgumentAProperty(argumentNumber, arguments))
@@ -802,7 +802,7 @@ public abstract class AbstractSWRLBuiltInLibrary
   }
 
   @Override public void checkThatArgumentIsAnObjectProperty(int argumentNumber,
-    @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     if (!isArgumentAnObjectProperty(argumentNumber, arguments))
       throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
@@ -810,7 +810,7 @@ public abstract class AbstractSWRLBuiltInLibrary
   }
 
   @Override public void checkThatArgumentIsADataProperty(int argumentNumber,
-    @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     if (!isArgumentADataProperty(argumentNumber, arguments))
       throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
@@ -818,7 +818,7 @@ public abstract class AbstractSWRLBuiltInLibrary
   }
 
   @Override public void checkThatArgumentIsAClassPropertyOrIndividual(int argumentNumber,
-    @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     if (!isArgumentAClassPropertyOrIndividual(argumentNumber, arguments))
       throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
@@ -826,13 +826,13 @@ public abstract class AbstractSWRLBuiltInLibrary
   }
 
   @Override public boolean isArgumentAClassPropertyOrIndividual(int argumentNumber,
-    @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return isArgumentAClass(argumentNumber, arguments) || isArgumentAProperty(argumentNumber, arguments)
       || isArgumentAnIndividual(argumentNumber, arguments);
   }
 
-  @Override public boolean isArgumentAClass(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean isArgumentAClass(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     checkThatArgumentIsBound(argumentNumber, arguments);
@@ -840,7 +840,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     return (arguments.get(argumentNumber) instanceof SWRLClassBuiltInArgument);
   }
 
-  @Override public void checkThatArgumentIsAClass(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public void checkThatArgumentIsAClass(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     if (!isArgumentAClass(argumentNumber, arguments))
@@ -849,7 +849,7 @@ public abstract class AbstractSWRLBuiltInLibrary
   }
 
   @NonNull @Override public OWLLiteral getArgumentAsAnOWLLiteral(int argumentNumber,
-    @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatArgumentIsALiteral(argumentNumber, arguments);
 
@@ -870,7 +870,7 @@ public abstract class AbstractSWRLBuiltInLibrary
 
   // Longs
 
-  @Override public void checkThatArgumentIsALong(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public void checkThatArgumentIsALong(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     if (!isArgumentALong(argumentNumber, arguments))
@@ -878,13 +878,13 @@ public abstract class AbstractSWRLBuiltInLibrary
         makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "long"));
   }
 
-  @Override public boolean isArgumentALong(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean isArgumentALong(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     return isArgumentALiteral(argumentNumber, arguments) && (getArgumentAsALiteral(argumentNumber, arguments).isLong());
   }
 
-  @Override public long getArgumentAsALong(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public long getArgumentAsALong(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     return getArgumentAsALiteral(argumentNumber, arguments).getLong(); // Will throw DatatypeConversionException
@@ -892,7 +892,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     // invalid.
   }
 
-  @Override public long getArgumentAsAPositiveLong(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public long getArgumentAsAPositiveLong(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     long l = getArgumentAsALiteral(argumentNumber, arguments).getLong(); // Will throw
@@ -908,7 +908,7 @@ public abstract class AbstractSWRLBuiltInLibrary
 
   // Floats
 
-  @Override public void checkThatArgumentIsAFloat(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public void checkThatArgumentIsAFloat(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     if (!isArgumentAFloat(argumentNumber, arguments))
@@ -916,14 +916,14 @@ public abstract class AbstractSWRLBuiltInLibrary
         makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "float"));
   }
 
-  @Override public boolean isArgumentAFloat(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean isArgumentAFloat(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     return isArgumentALiteral(argumentNumber, arguments) && (getArgumentAsALiteral(argumentNumber, arguments)
       .isFloat());
   }
 
-  @Override public float getArgumentAsAFloat(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public float getArgumentAsAFloat(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     return getArgumentAsALiteral(argumentNumber, arguments).getFloat(); // Will throw DatatypeConversionException
@@ -938,7 +938,7 @@ public abstract class AbstractSWRLBuiltInLibrary
 
   // Double
 
-  @Override public void checkThatArgumentIsADouble(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public void checkThatArgumentIsADouble(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     if (!isArgumentADouble(argumentNumber, arguments))
@@ -946,14 +946,14 @@ public abstract class AbstractSWRLBuiltInLibrary
         makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "double"));
   }
 
-  @Override public boolean isArgumentADouble(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean isArgumentADouble(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     return isArgumentALiteral(argumentNumber, arguments) && (getArgumentAsALiteral(argumentNumber, arguments)
       .isDouble());
   }
 
-  @Override public double getArgumentAsADouble(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public double getArgumentAsADouble(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     checkArgumentNumber(argumentNumber, arguments);
@@ -968,7 +968,7 @@ public abstract class AbstractSWRLBuiltInLibrary
 
   // Booleans
 
-  @Override public void checkThatArgumentIsABoolean(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public void checkThatArgumentIsABoolean(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     if (!isArgumentABoolean(argumentNumber, arguments))
@@ -976,14 +976,14 @@ public abstract class AbstractSWRLBuiltInLibrary
         makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "boolean"));
   }
 
-  @Override public boolean isArgumentABoolean(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean isArgumentABoolean(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     return isArgumentALiteral(argumentNumber, arguments) && (getArgumentAsALiteral(argumentNumber, arguments)
       .isBoolean());
   }
 
-  @Override public boolean getArgumentAsABoolean(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean getArgumentAsABoolean(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     checkThatArgumentIsABoolean(argumentNumber, arguments);
@@ -993,7 +993,7 @@ public abstract class AbstractSWRLBuiltInLibrary
 
   // Strings
 
-  @Override public void checkThatArgumentIsAString(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public void checkThatArgumentIsAString(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     if (!isArgumentAString(argumentNumber, arguments))
@@ -1001,14 +1001,14 @@ public abstract class AbstractSWRLBuiltInLibrary
         makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "string"));
   }
 
-  @Override public boolean isArgumentAString(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean isArgumentAString(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     return isArgumentALiteral(argumentNumber, arguments) && getArgumentAsALiteral(argumentNumber, arguments).isString();
   }
 
   @NonNull @Override public String getArgumentAsAString(int argumentNumber,
-    @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatArgumentIsAString(argumentNumber, arguments);
 
@@ -1017,7 +1017,7 @@ public abstract class AbstractSWRLBuiltInLibrary
 
   // Time
 
-  @Override public void checkThatArgumentIsATime(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public void checkThatArgumentIsATime(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     if (!isArgumentATime(argumentNumber, arguments))
@@ -1025,13 +1025,13 @@ public abstract class AbstractSWRLBuiltInLibrary
         makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "xsd:time"));
   }
 
-  @Override public boolean isArgumentATime(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean isArgumentATime(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     return isArgumentALiteral(argumentNumber, arguments) && getArgumentAsALiteral(argumentNumber, arguments).isTime();
   }
 
-  @Override @NonNull public XSDTime getArgumentAsATime(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override @NonNull public XSDTime getArgumentAsATime(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     checkThatArgumentIsATime(argumentNumber, arguments);
@@ -1041,7 +1041,7 @@ public abstract class AbstractSWRLBuiltInLibrary
 
   // Date
 
-  @Override public void checkThatArgumentIsADate(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public void checkThatArgumentIsADate(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     if (!isArgumentADate(argumentNumber, arguments))
@@ -1049,13 +1049,13 @@ public abstract class AbstractSWRLBuiltInLibrary
         makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "xsd:Date"));
   }
 
-  @Override public boolean isArgumentADate(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean isArgumentADate(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     return isArgumentALiteral(argumentNumber, arguments) && getArgumentAsALiteral(argumentNumber, arguments).isDate();
   }
 
-  @NonNull @Override public XSDDate getArgumentAsADate(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @NonNull @Override public XSDDate getArgumentAsADate(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     checkThatArgumentIsADate(argumentNumber, arguments);
@@ -1065,7 +1065,7 @@ public abstract class AbstractSWRLBuiltInLibrary
 
   // DateTime
 
-  @Override public void checkThatArgumentIsADateTime(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public void checkThatArgumentIsADateTime(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     if (!isArgumentADateTime(argumentNumber, arguments))
@@ -1073,7 +1073,7 @@ public abstract class AbstractSWRLBuiltInLibrary
         makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "xsd:DateTime"));
   }
 
-  @Override public boolean isArgumentADateTime(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean isArgumentADateTime(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     return isArgumentALiteral(argumentNumber, arguments) && getArgumentAsALiteral(argumentNumber, arguments)
@@ -1081,7 +1081,7 @@ public abstract class AbstractSWRLBuiltInLibrary
   }
 
   @NonNull @Override public XSDDateTime getArgumentAsADateTime(int argumentNumber,
-    @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatArgumentIsADateTime(argumentNumber, arguments);
 
@@ -1090,7 +1090,7 @@ public abstract class AbstractSWRLBuiltInLibrary
 
   // Duration
 
-  @Override public void checkThatArgumentIsADuration(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public void checkThatArgumentIsADuration(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     if (!isArgumentADuration(argumentNumber, arguments))
@@ -1098,7 +1098,7 @@ public abstract class AbstractSWRLBuiltInLibrary
         makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "xsd:Duration"));
   }
 
-  @Override public boolean isArgumentADuration(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean isArgumentADuration(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     return isArgumentALiteral(argumentNumber, arguments) && getArgumentAsALiteral(argumentNumber, arguments)
@@ -1106,7 +1106,7 @@ public abstract class AbstractSWRLBuiltInLibrary
   }
 
   @NonNull @Override public XSDDuration getArgumentAsADuration(int argumentNumber,
-    @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatArgumentIsADuration(argumentNumber, arguments);
 
@@ -1115,7 +1115,7 @@ public abstract class AbstractSWRLBuiltInLibrary
 
   // Unbound argument processing methods.
 
-  @Override public boolean hasUnboundArguments(@NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean hasUnboundArguments(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
   {
     for (SWRLBuiltInArgument argument : arguments)
       if (argument.isVariable() && argument.asVariable().isUnbound())
@@ -1124,21 +1124,21 @@ public abstract class AbstractSWRLBuiltInLibrary
     return false;
   }
 
-  @Override public void checkThatAllArgumentsAreBound(@NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public void checkThatAllArgumentsAreBound(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     if (hasUnboundArguments(arguments))
       throw new SWRLBuiltInException("all arguments must be bound");
   }
 
-  @Override public void checkThatArgumentIsBound(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public void checkThatArgumentIsBound(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     if (isUnboundArgument(argumentNumber, arguments))
       throw new SWRLBuiltInException("not expecting an unbound argument for (0-offset) argument #" + argumentNumber);
   }
 
-  @Override public boolean isUnboundArgument(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public boolean isUnboundArgument(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     checkArgumentNumber(argumentNumber, arguments);
@@ -1146,7 +1146,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     return arguments.get(argumentNumber).isVariable() && arguments.get(argumentNumber).asVariable().isUnbound();
   }
 
-  protected boolean isBoundArgument(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  protected boolean isBoundArgument(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     checkArgumentNumber(argumentNumber, arguments);
@@ -1157,7 +1157,7 @@ public abstract class AbstractSWRLBuiltInLibrary
   /**
    * Get 0-offset position of first unbound argument; return -1 if no unbound arguments are found.
    */
-  @Override public int getFirstUnboundArgument(@NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public int getFirstUnboundArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
   {
     for (int index = 0; index < arguments.size(); index++)
       if (arguments.get(index).isVariable() && arguments.get(index).asVariable().isUnbound())
@@ -1166,21 +1166,21 @@ public abstract class AbstractSWRLBuiltInLibrary
     return -1;
   }
 
-  @Override public void checkForUnboundArguments(@NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public void checkForUnboundArguments(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     checkForUnboundArguments(arguments,
       "built-in does not support variable binding - unbound argument '" + getFirstUnboundArgument(arguments) + "'");
   }
 
-  @Override public void checkForUnboundArguments(@NonNull List<SWRLBuiltInArgument> arguments, @NonNull String message)
+  @Override public void checkForUnboundArguments(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, @NonNull String message)
     throws SWRLBuiltInException
   {
     if (hasUnboundArguments(arguments))
       throw new SWRLBuiltInException(message + " (0-offset) argument #" + getFirstUnboundArgument(arguments));
   }
 
-  @Override public void checkThatArgumentsWereBoundVariables(@NonNull List<SWRLBuiltInArgument> arguments,
+  @Override public void checkThatArgumentsWereBoundVariables(@NonNull List<@NonNull SWRLBuiltInArgument> arguments,
     @NonNull String message) throws SWRLBuiltInException
   {
     for (SWRLBuiltInArgument argument : arguments)
@@ -1188,7 +1188,7 @@ public abstract class AbstractSWRLBuiltInLibrary
         throw new SWRLBuiltInException(message + " " + argument);
   }
 
-  @Override public void checkForUnboundNonFirstArguments(@NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public void checkForUnboundNonFirstArguments(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     if (hasUnboundArguments(arguments.subList(1, arguments.size())))
@@ -1196,7 +1196,7 @@ public abstract class AbstractSWRLBuiltInLibrary
         + "unbound variables used as other arguments");
   }
 
-  @Override public String getVariablePrefixedName(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public String getVariablePrefixedName(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     checkArgumentNumber(argumentNumber, arguments);
@@ -1240,7 +1240,7 @@ public abstract class AbstractSWRLBuiltInLibrary
    * IRIs; data value objects are represented by the appropriate Java type. Primitive XSD datatypes that do not have a
    * corresponding Java type are not yet supported.
    */
-  @Override public Object getArgumentAsAPropertyValue(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public Object getArgumentAsAPropertyValue(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     checkThatArgumentIsBound(argumentNumber, arguments);
@@ -1280,7 +1280,7 @@ public abstract class AbstractSWRLBuiltInLibrary
   }
 
   @Override public void checkForUnboundArguments(@NonNull String ruleName, @NonNull String builtInName,
-    @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     for (SWRLBuiltInArgument argument : arguments) {
       if (argument.isVariable() && argument.asVariable().isUnbound())
@@ -1294,12 +1294,12 @@ public abstract class AbstractSWRLBuiltInLibrary
     }
   }
 
-  @NonNull @Override public List<SWRLBuiltInArgument> cloneArguments(@NonNull List<SWRLBuiltInArgument> arguments)
+  @NonNull @Override public List<@NonNull SWRLBuiltInArgument> cloneArguments(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
   {
     return new ArrayList<>(arguments);
   }
 
-  @Override public boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+  @Override public boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
     @NonNull Collection<SWRLBuiltInArgument> resultArguments) throws SWRLBuiltInException
   {
     checkArgumentNumber(resultArgumentNumber, arguments);
@@ -1317,7 +1317,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     }
   }
 
-  @Override public boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+  @Override public boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
     SWRLBuiltInArgument resultArgument) throws SWRLBuiltInException
   {
     checkArgumentNumber(resultArgumentNumber, arguments);
@@ -1331,7 +1331,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     }
   }
 
-  @Override public boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+  @Override public boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
     SWRLLiteralBuiltInArgument resultArgument) throws SWRLBuiltInException
   {
     checkArgumentNumber(resultArgumentNumber, arguments);
@@ -1346,43 +1346,43 @@ public abstract class AbstractSWRLBuiltInLibrary
     }
   }
 
-  @Override public boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+  @Override public boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
     OWLLiteral resultArgument) throws SWRLBuiltInException
   {
     return processResultArgument(arguments, resultArgumentNumber, createLiteralBuiltInArgument(resultArgument));
   }
 
-  @Override public boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+  @Override public boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
     byte resultArgument) throws SWRLBuiltInException
   {
     return processResultArgument(arguments, resultArgumentNumber, createLiteralBuiltInArgument(resultArgument));
   }
 
-  @Override public boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+  @Override public boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
     short resultArgument) throws SWRLBuiltInException
   {
     return processResultArgument(arguments, resultArgumentNumber, createLiteralBuiltInArgument(resultArgument));
   }
 
-  @Override public boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+  @Override public boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
     int resultArgument) throws SWRLBuiltInException
   {
     return processResultArgument(arguments, resultArgumentNumber, createLiteralBuiltInArgument(resultArgument));
   }
 
-  @Override public boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+  @Override public boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
     long resultArgument) throws SWRLBuiltInException
   {
     return processResultArgument(arguments, resultArgumentNumber, createLiteralBuiltInArgument(resultArgument));
   }
 
-  @Override public boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+  @Override public boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
     float resultArgument) throws SWRLBuiltInException
   {
     return processResultArgument(arguments, resultArgumentNumber, createLiteralBuiltInArgument(resultArgument));
   }
 
-  @Override public boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+  @Override public boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
     double resultArgument) throws SWRLBuiltInException
   {
     return processResultArgument(arguments, resultArgumentNumber, createLiteralBuiltInArgument(resultArgument));
@@ -1394,31 +1394,31 @@ public abstract class AbstractSWRLBuiltInLibrary
     return processResultArgument(arguments, resultArgumentNumber, createLiteralBuiltInArgument(resultArgument));
   }
 
-  @Override public boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+  @Override public boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
     boolean resultArgument) throws SWRLBuiltInException
   {
     return processResultArgument(arguments, resultArgumentNumber, createLiteralBuiltInArgument(resultArgument));
   }
 
-  @Override public boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+  @Override public boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
     @NonNull XSDTime resultArgument) throws SWRLBuiltInException
   {
     return processResultArgument(arguments, resultArgumentNumber, createLiteralBuiltInArgument(resultArgument));
   }
 
-  @Override public boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+  @Override public boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
     @NonNull XSDDate resultArgument) throws SWRLBuiltInException
   {
     return processResultArgument(arguments, resultArgumentNumber, createLiteralBuiltInArgument(resultArgument));
   }
 
-  @Override public boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+  @Override public boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
     @NonNull XSDDateTime resultArgument) throws SWRLBuiltInException
   {
     return processResultArgument(arguments, resultArgumentNumber, createLiteralBuiltInArgument(resultArgument));
   }
 
-  @Override public boolean processResultArgument(@NonNull List<SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+  @Override public boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
     @NonNull XSDDuration resultArgument) throws SWRLBuiltInException
   {
     return processResultArgument(arguments, resultArgumentNumber, createLiteralBuiltInArgument(resultArgument));
@@ -1534,7 +1534,7 @@ public abstract class AbstractSWRLBuiltInLibrary
   }
 
   @NonNull @Override public SWRLMultiValueVariableBuiltInArgument createSWRLMultiValueVariableBuiltInArgument(
-    IRI variableIRI, List<SWRLBuiltInArgument> arguments)
+    IRI variableIRI, List<@NonNull SWRLBuiltInArgument> arguments)
   {
     return getSWRLBuiltInArgumentFactory().getMultiValueVariableBuiltInArgument(variableIRI, arguments);
   }
@@ -1548,7 +1548,7 @@ public abstract class AbstractSWRLBuiltInLibrary
   }
 
   @NonNull protected SWRLLiteralBuiltInArgument createLeastNarrowNumericLiteralBuiltInArgument(double value,
-    @NonNull List<SWRLBuiltInArgument> boundInputNumericArguments) throws SWRLBuiltInException
+    @NonNull List<@NonNull SWRLBuiltInArgument> boundInputNumericArguments) throws SWRLBuiltInException
   {
     OWLLiteral literal = createLeastNarrowNumericOWLLiteral(value, boundInputNumericArguments);
 
@@ -1594,7 +1594,7 @@ public abstract class AbstractSWRLBuiltInLibrary
   }
 
   @NonNull private OWLLiteral createLeastNarrowNumericOWLLiteral(double value,
-    @NonNull List<SWRLBuiltInArgument> boundInputNumericArguments) throws SWRLBuiltInException
+    @NonNull List<@NonNull SWRLBuiltInArgument> boundInputNumericArguments) throws SWRLBuiltInException
   {
     if (isWidestNumericArgumentAByte(boundInputNumericArguments))
       return getOWLLiteralFactory().getOWLLiteral((byte)value);
@@ -1615,7 +1615,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     return getBuiltInBridge().getSWRLAPIOWLDataFactory().getOWLLiteralFactory();
   }
 
-  @NonNull private Literal getArgumentAsALiteral(int argumentNumber, @NonNull List<SWRLBuiltInArgument> arguments)
+  @NonNull private Literal getArgumentAsALiteral(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     checkThatArgumentIsALiteral(argumentNumber, arguments);

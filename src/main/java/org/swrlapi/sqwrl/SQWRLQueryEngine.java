@@ -74,7 +74,7 @@ public interface SQWRLQueryEngine extends SWRLRuleEngine
    *
    * @return A set of SQWRL queries
    */
-  @NonNull Set<SQWRLQuery> getSQWRLQueries();
+  @NonNull Set<@NonNull SQWRLQuery> getSQWRLQueries();
 
   /**
    * Get the names of the enabled SQWRL queries in the ontology.

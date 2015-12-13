@@ -24,7 +24,7 @@ public interface SQWRLQuery
   /**
    * @return The name of the query
    */
-  String getQueryName();
+  @NonNull String getQueryName();
 
   /**
    * @return True if the query is active
@@ -34,7 +34,7 @@ public interface SQWRLQuery
   /**
    * @return A comment associated with the query
    */
-  String getComment();
+  @NonNull String getComment();
 
   /**
    *
@@ -51,12 +51,12 @@ public interface SQWRLQuery
   /**
    * @return A list of SWRL atoms
    */
-  @NonNull List<SWRLAtom> getHeadAtoms();
+  @NonNull List<@NonNull SWRLAtom> getHeadAtoms();
 
   /**
    * @return A list of SWRL atoms
    */
-  @NonNull List<SWRLAtom> getBodyAtoms();
+  @NonNull List<@NonNull SWRLAtom> getBodyAtoms();
 
 
   /**
@@ -67,18 +67,18 @@ public interface SQWRLQuery
   /**
    * @return A list of SWRL atoms
    */
-  @NonNull List<SWRLAtom> getSQWRLPhase1BodyAtoms();
+  @NonNull List<@NonNull SWRLAtom> getSQWRLPhase1BodyAtoms();
 
   /**
    * @return A list of SWRL atoms
    */
-  @NonNull List<SWRLAtom> getSQWRLPhase2BodyAtoms();
+  @NonNull List<@NonNull SWRLAtom> getSQWRLPhase2BodyAtoms();
 
   /**
    * @param builtInNames A set of built-in names used in the query
    * @return A list of built-in atoms
    */
-  @NonNull List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromBody(Set<@NonNull String> builtInNames);
+  @NonNull List<@NonNull SWRLAPIBuiltInAtom> getBuiltInAtomsFromBody(Set<@NonNull String> builtInNames);
 
   /**
    * @return A SQWRL result generator

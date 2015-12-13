@@ -55,8 +55,9 @@ public interface SWRLRuleEngineBridge
    * @return A list of argument bindings if the built-in evaluates to true; an empty list otherwise
    * @throws SWRLBuiltInException If the parameters are invalid or an error occurs during invocation
    */
-  @NonNull List<List<SWRLBuiltInArgument>> invokeSWRLBuiltIn(@NonNull String ruleName, @NonNull String builtInName,
-    int builtInIndex, boolean isInConsequent, @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+  @NonNull List<@NonNull List<@NonNull SWRLBuiltInArgument>> invokeSWRLBuiltIn(@NonNull String ruleName,
+      @NonNull String builtInName, int builtInIndex, boolean isInConsequent,
+      @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
   /**
    * A target rule engine can create OWL axioms using the OWL factory supplied by the bridge.

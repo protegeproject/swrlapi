@@ -258,7 +258,7 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
       int i = SWRLParser.findSplittingPoint(ruleText.substring(0, textPosition));
       String prefix = ruleText.substring(i, textPosition);
       if (!prefix.equals("")) {
-        List<String> expansions = getExpansions(prefix); // All expansions will start with the empty string.
+        List<@NonNull String> expansions = getExpansions(prefix); // All expansions will start with the empty string.
 
         if (expansions.size() > 1) { // More than the empty string expansion; if not, do not enter autoComplete mode
           SWRLRuleEditorAutoCompleteState state = new SWRLRuleEditorAutoCompleteState(textPosition, prefix, expansions);
@@ -341,7 +341,7 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
     }
   }
 
-  @NonNull private List<String> getExpansions(@NonNull String prefix)
+  @NonNull private List<@NonNull String> getExpansions(@NonNull String prefix)
   {
     List<@NonNull String> expansions = new ArrayList<>();
 

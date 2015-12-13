@@ -10,9 +10,8 @@ import java.util.Map;
 
 class DefaultOWLClassExpressionResolver implements OWLClassExpressionResolver
 {
-  @NonNull private final Map<@NonNull String, OWLClassExpression> id2OWLClassExpression;
-  @NonNull private final Map<OWLClassExpression, String> owlClassExpression2ID;
-
+  @NonNull private final Map<@NonNull String, @NonNull OWLClassExpression> id2OWLClassExpression;
+  @NonNull private final Map<@NonNull OWLClassExpression, @NonNull String> owlClassExpression2ID;
   @NonNull private final OWLDataFactory owlDataFactory;
 
   public DefaultOWLClassExpressionResolver(@NonNull OWLDataFactory owlDataFactory)

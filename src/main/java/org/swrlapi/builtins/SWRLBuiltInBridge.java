@@ -3,12 +3,12 @@ package org.swrlapi.builtins;
 import checkers.nullness.quals.NonNull;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
-import org.swrlapi.factory.SWRLAPIOWLDataFactory;
-import org.swrlapi.core.SWRLAPIOWLOntology;
-import org.swrlapi.factory.resolvers.DefaultIRIResolver;
 import org.swrlapi.core.IRIResolver;
+import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
+import org.swrlapi.factory.SWRLAPIOWLDataFactory;
+import org.swrlapi.factory.resolvers.DefaultIRIResolver;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
@@ -77,6 +77,7 @@ public interface SWRLBuiltInBridge
    * @return A list of built-in argument bindings
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  @NonNull List<List<SWRLBuiltInArgument>> invokeSWRLBuiltIn(@NonNull String ruleName, @NonNull String builtInName,
-    int builtInIndex, boolean isInConsequent, @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+  @NonNull List<@NonNull List<@NonNull SWRLBuiltInArgument>> invokeSWRLBuiltIn(@NonNull String ruleName,
+      @NonNull String builtInName, int builtInIndex, boolean isInConsequent,
+      @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 }

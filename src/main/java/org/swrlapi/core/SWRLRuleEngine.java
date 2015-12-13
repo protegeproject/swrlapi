@@ -77,14 +77,14 @@ public interface SWRLRuleEngine
   /**
    * @return A collection of SWRL rules
    */
-  @NonNull Set<SWRLAPIRule> getSWRLRules();
+  @NonNull Set<@NonNull SWRLAPIRule> getSWRLRules();
 
   /**
    * @param ruleName The name of the rule
    * @return A SWRL rule
    * @throws SWRLRuleException If an error occurs
    */
-  Optional<SWRLAPIRule> getSWRLRule(@NonNull String ruleName) throws SWRLRuleException;
+  Optional<@NonNull SWRLAPIRule> getSWRLRule(@NonNull String ruleName) throws SWRLRuleException;
 
   /**
    * @param ruleName The name of a rule
@@ -105,7 +105,7 @@ public interface SWRLRuleEngine
   /**
    * @return The IRIs of all SWRL built-ins
    */
-  @NonNull Set<IRI> getSWRLBuiltInIRIs();
+  @NonNull Set<@NonNull IRI> getSWRLBuiltInIRIs();
 
   /**
    * @return A SWRL parser
@@ -165,17 +165,17 @@ public interface SWRLRuleEngine
   /**
    * @return A collection of OWL axioms
    */
-  @NonNull Set<OWLAxiom> getAssertedOWLAxioms();
+  @NonNull Set<@NonNull OWLAxiom> getAssertedOWLAxioms();
 
   /**
    * @return A collection of OWL axioms
    */
-  @NonNull Set<OWLAxiom> getInferredOWLAxioms();
+  @NonNull Set<@NonNull OWLAxiom> getInferredOWLAxioms();
 
   /**
    * @return A collection of OWL axioms
    */
-  @NonNull Set<OWLAxiom> getInjectedOWLAxioms();
+  @NonNull Set<@NonNull OWLAxiom> getInjectedOWLAxioms();
 
   /**
    * @return The number of imported SWRL rules

@@ -52,22 +52,22 @@ public interface SWRLAPIRule extends SWRLRule
   /**
    * @return A list of SWRL atoms
    */
-  @NonNull List<SWRLAtom> getHeadAtoms();
+  @NonNull List<@NonNull SWRLAtom> getHeadAtoms();
 
   /**
    * @return A list of SWRL atoms
    */
-  List<SWRLAtom> getBodyAtoms();
+  List<@NonNull SWRLAtom> getBodyAtoms();
 
   /**
    * @param builtInNames A set of built-in names
    * @return A list of built-in atoms
    */
-  @NonNull List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromHead(Set<@NonNull String> builtInNames);
+  @NonNull List<@NonNull SWRLAPIBuiltInAtom> getBuiltInAtomsFromHead(Set<@NonNull String> builtInNames);
 
   /**
    * @param builtInNames A set of built-in names
    * @return A list of built-in atoms
    */
-  @NonNull List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromBody(Set<@NonNull String> builtInNames);
+  @NonNull List<@NonNull SWRLAPIBuiltInAtom> getBuiltInAtomsFromBody(@NonNull Set<@NonNull String> builtInNames);
 }

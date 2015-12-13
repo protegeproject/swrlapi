@@ -1,5 +1,7 @@
 package org.swrlapi.builtins.arguments;
 
+import checkers.nullness.quals.NonNull;
+
 import java.util.List;
 
 /**
@@ -10,7 +12,7 @@ public interface SWRLMultiValueVariableBuiltInArgument extends SWRLVariableBuilt
   /**
    * @return A list of SWRL built-in arguments
    */
-  List<SWRLBuiltInArgument> getArguments();
+  List<@NonNull SWRLBuiltInArgument> getArguments();
 
   /**
    * @return The number of arguments
@@ -25,10 +27,10 @@ public interface SWRLMultiValueVariableBuiltInArgument extends SWRLVariableBuilt
   /**
    * @param argument A SWRL built-in argument
    */
-  void addArgument(SWRLBuiltInArgument argument);
+  void addArgument(@NonNull SWRLBuiltInArgument argument);
 
   /**
    * @param arguments A list of SWRL built-in arguments
    */
-  void setArguments(List<SWRLBuiltInArgument> arguments);
+  void setArguments(@NonNull List<@NonNull SWRLBuiltInArgument> arguments);
 }

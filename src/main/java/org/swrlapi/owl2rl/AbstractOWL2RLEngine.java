@@ -28,7 +28,7 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
   @NonNull private final Set<@NonNull OWL2RLRule> permanentlyOnRules;
   @NonNull private final Set<@NonNull OWL2RLRule> switchableRules;
 
-  private Set<OWL2RLRule> enabledRules;
+  private Set<@NonNull OWL2RLRule> enabledRules;
   private boolean ruleSelectionChanged;
 
   protected AbstractOWL2RLEngine(@NonNull OWL2RLPersistenceLayer persistenceLayer,
@@ -82,7 +82,7 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
     return this.ruleSelectionChanged;
   }
 
-  @NonNull @Override public List<OWL2RLRuleTable> getRuleTables()
+  @NonNull @Override public List<@NonNull OWL2RLRuleTable> getRuleTables()
   {
     return this.ruleTables;
   }

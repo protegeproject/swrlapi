@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Defines a base interface for a SWRL built-in library. All built-in library implementation must implement this
  * interface.
- * <p>
+ * <p/>
  * The class {@link org.swrlapi.builtins.AbstractSWRLBuiltInLibrary} provides a default implementation of this interface
  * and provides and array of methods for dealing with built-in arguments.
  *
@@ -48,8 +48,8 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
    * @throws SWRLBuiltInException If the parameters are invalid or if there is an error during built-in invocation
    */
   boolean invokeBuiltInMethod(@NonNull Method method, @NonNull SWRLBuiltInBridge bridge, @NonNull String ruleName,
-    @NonNull String prefix, @NonNull String builtInMethodName, int builtInIndex, boolean isInConsequent,
-    @NonNull List<SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+      @NonNull String prefix, @NonNull String builtInMethodName, int builtInIndex, boolean isInConsequent,
+      @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
   /**
    * Create a string that represents a unique invocation pattern for a built-in for a bridge/rule/built-in/arguments
@@ -64,8 +64,8 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
    * @throws SWRLBuiltInException If the parameters are invalid or if there is an error during pattern generation
    */
   @NonNull String createInvocationPattern(@NonNull SWRLBuiltInBridge invokingBridge, @NonNull String invokingRuleName,
-    int invokingBuiltInIndex, boolean isInConsequent, @NonNull List<SWRLBuiltInArgument> arguments)
-    throws SWRLBuiltInException;
+      int invokingBuiltInIndex, boolean isInConsequent, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+      throws SWRLBuiltInException;
 
   /**
    * @return A SQWRL result value factory

@@ -8,8 +8,8 @@ import java.util.Map;
 
 class DefaultOWLNamedIndividualResolver implements OWLNamedIndividualResolver
 {
-  @NonNull private final Map<@NonNull String, OWLNamedIndividual> id2OWLNamedIndividual;
-  @NonNull private final Map<OWLNamedIndividual, String> owlNamedIndividual2ID;
+  @NonNull private final Map<@NonNull String, @NonNull OWLNamedIndividual> id2OWLNamedIndividual;
+  @NonNull private final Map<@NonNull OWLNamedIndividual, @NonNull String> owlNamedIndividual2ID;
   
   public DefaultOWLNamedIndividualResolver()
   {

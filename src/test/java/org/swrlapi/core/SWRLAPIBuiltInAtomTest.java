@@ -1,5 +1,6 @@
 package org.swrlapi.core;
 
+import checkers.nullness.quals.NonNull;
 import org.junit.Before;
 import org.junit.Test;
 import org.semanticweb.owlapi.model.IRI;
@@ -18,7 +19,7 @@ import static junit.framework.TestCase.assertEquals;
 public class SWRLAPIBuiltInAtomTest
 {
 	private final String ruleName = "name";
-	private final List<SWRLBuiltInArgument> arguments = new ArrayList<>();
+	private final List<@NonNull SWRLBuiltInArgument> arguments = new ArrayList<>();
 	private final IRI builtInIRI = IRI.create("http://www.w3.org/2003/11/swrlb#add");
 	private final String builtInName = "swrlb:add";
 	private SWRLAPIBuiltInAtom atom;

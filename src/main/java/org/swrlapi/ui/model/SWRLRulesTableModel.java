@@ -65,12 +65,12 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
     updateView();
 	}
 
-	@NonNull public Set<SWRLRuleModel> getSWRLRuleModels()
+	@NonNull public Set<@NonNull SWRLRuleModel> getSWRLRuleModels()
 	{
 		return new HashSet<>(this.swrlRuleModels.values());
 	}
 
-	@NonNull public Set<SWRLRuleModel> getSWRLRuleModels(boolean isActiveFlag)
+	@NonNull public Set<@NonNull SWRLRuleModel> getSWRLRuleModels(boolean isActiveFlag)
 	{
 		return this.swrlRuleModels.values().stream().filter(swrlRuleModel -> swrlRuleModel.isActive() == isActiveFlag)
 				.collect(Collectors.toSet());
@@ -83,7 +83,7 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 
 	@NonNull public String getSWRLRuleNameByIndex(int ruleIndex)
 	{
-		Optional<SWRLRuleModel> swrlRuleModel = getSWRLRuleModelByIndex(ruleIndex);
+		Optional<@NonNull SWRLRuleModel> swrlRuleModel = getSWRLRuleModelByIndex(ruleIndex);
 
 		if (swrlRuleModel.isPresent())
 			return swrlRuleModel.get().getRuleName();
@@ -93,7 +93,7 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 
 	@NonNull public String getSWRLRuleTextByIndex(int ruleIndex)
 	{
-		Optional<SWRLRuleModel> swrlRuleModel = getSWRLRuleModelByIndex(ruleIndex);
+		Optional<@NonNull SWRLRuleModel> swrlRuleModel = getSWRLRuleModelByIndex(ruleIndex);
 
 		if (swrlRuleModel.isPresent())
 			return swrlRuleModel.get().getRuleText();
@@ -103,7 +103,7 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 
 	@NonNull public String getSWRLRuleCommentByIndex(int ruleIndex)
 	{
-		Optional<SWRLRuleModel> swrlRuleModel = getSWRLRuleModelByIndex(ruleIndex);
+		Optional<@NonNull SWRLRuleModel> swrlRuleModel = getSWRLRuleModelByIndex(ruleIndex);
 
 		if (swrlRuleModel.isPresent())
 			return swrlRuleModel.get().getComment();

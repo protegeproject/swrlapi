@@ -24,11 +24,11 @@ public class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
   @NonNull private final String ruleName;
   @NonNull private final boolean active;
   @NonNull private final String comment;
-  @NonNull private final List<SWRLAtom> bodyAtoms; // Body atoms can be reorganized during processing
-  @NonNull private final List<SWRLAtom> headAtoms;
+  @NonNull private final List<@NonNull SWRLAtom> bodyAtoms; // Body atoms can be reorganized during processing
+  @NonNull private final List<@NonNull SWRLAtom> headAtoms;
 
-  public DefaultSWRLAPIRule(@NonNull String ruleName, @NonNull List<? extends SWRLAtom> bodyAtoms,
-    @NonNull List<? extends SWRLAtom> headAtoms, @NonNull String comment, boolean isActive)
+  public DefaultSWRLAPIRule(@NonNull String ruleName, @NonNull List<? extends @NonNull SWRLAtom> bodyAtoms,
+    @NonNull List<? extends @NonNull SWRLAtom> headAtoms, @NonNull String comment, boolean isActive)
   {
     super(new LinkedHashSet<>(bodyAtoms), new LinkedHashSet<>(headAtoms), new HashSet<>());
     this.ruleName = ruleName;
@@ -59,22 +59,22 @@ public class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
     return this.comment;
   }
 
-  @NonNull @Override public List<SWRLAtom> getHeadAtoms()
+  @NonNull @Override public List<@NonNull SWRLAtom> getHeadAtoms()
   {
     return this.headAtoms;
   }
 
-  @NonNull @Override public List<SWRLAtom> getBodyAtoms()
+  @NonNull @Override public List<@NonNull SWRLAtom> getBodyAtoms()
   {
     return this.bodyAtoms;
   }
 
-  @NonNull @Override public List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromHead(@NonNull Set<@NonNull String> builtInNames)
+  @NonNull @Override public List<@NonNull SWRLAPIBuiltInAtom> getBuiltInAtomsFromHead(@NonNull Set<@NonNull String> builtInNames)
   {
     return getBuiltInAtoms(getHeadAtoms(), builtInNames);
   }
 
-  @NonNull @Override public List<SWRLAPIBuiltInAtom> getBuiltInAtomsFromBody(@NonNull Set<@NonNull String> builtInNames)
+  @NonNull @Override public List<@NonNull SWRLAPIBuiltInAtom> getBuiltInAtomsFromBody(@NonNull Set<@NonNull String> builtInNames)
   {
     return getBuiltInAtoms(getBodyAtoms(), builtInNames);
   }
@@ -82,13 +82,13 @@ public class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
   /**
    * Find all built-in atoms with unbound arguments and tell them which of their arguments are unbound.
    */
-  private static List<SWRLAtom> processBuiltInArguments(List<? extends SWRLAtom> bodyAtoms)
+  private static List<@NonNull SWRLAtom> processBuiltInArguments(List<? extends @NonNull SWRLAtom> bodyAtoms)
   {
-    List<SWRLAPIBuiltInAtom> bodyBuiltInAtoms = new ArrayList<>();
-    List<SWRLAtom> bodyNonBuiltInAtoms = new ArrayList<>();
-    Set<IRI> variablesUsedByNonBuiltInBodyAtoms = new HashSet<>(); // By definition, always bound
-    Set<IRI> variablesBoundByBuiltIns = new HashSet<>(); // Variables bound by built-ins in rule
-    List<SWRLAtom> finalBodyAtoms;
+    List<@NonNull SWRLAPIBuiltInAtom> bodyBuiltInAtoms = new ArrayList<>();
+    List<@NonNull SWRLAtom> bodyNonBuiltInAtoms = new ArrayList<>();
+    Set<@NonNull IRI> variablesUsedByNonBuiltInBodyAtoms = new HashSet<>(); // By definition, always bound
+    Set<@NonNull IRI> variablesBoundByBuiltIns = new HashSet<>(); // Variables bound by built-ins in rule
+    List<@NonNull SWRLAtom> finalBodyAtoms;
 
     // Process body atoms to build list of (1) built-in body atoms, and (2) the variables used by non-built-in atoms.
     for (SWRLAtom atom : bodyAtoms) {
@@ -128,7 +128,7 @@ public class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
     // a left to right fashion.
     finalBodyAtoms = reorganizeBodyNonBuiltInAtoms(bodyNonBuiltInAtoms);
 
-    List<SWRLAtom> processedBodyAtoms = new ArrayList<>(finalBodyAtoms);
+    List<@NonNull SWRLAtom> processedBodyAtoms = new ArrayList<>(finalBodyAtoms);
     processedBodyAtoms.addAll(bodyBuiltInAtoms);
 
     return processedBodyAtoms;
@@ -137,11 +137,11 @@ public class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
   /**
    * Reorganize body non-built atoms so that class atoms appear firsts, followed by other atom types.
    */
-  @NonNull private static List<SWRLAtom> reorganizeBodyNonBuiltInAtoms(@NonNull List<SWRLAtom> bodyNonBuiltInAtoms)
+  @NonNull private static List<@NonNull SWRLAtom> reorganizeBodyNonBuiltInAtoms(@NonNull List<@NonNull SWRLAtom> bodyNonBuiltInAtoms)
   {
-    List<SWRLAtom> bodyClassAtoms = new ArrayList<>();
-    List<SWRLAtom> bodyNonClassNonBuiltInAtoms = new ArrayList<>();
-    List<SWRLAtom> result = new ArrayList<>();
+    List<@NonNull SWRLAtom> bodyClassAtoms = new ArrayList<>();
+    List<@NonNull SWRLAtom> bodyNonClassNonBuiltInAtoms = new ArrayList<>();
+    List<@NonNull SWRLAtom> result = new ArrayList<>();
 
     for (SWRLAtom atom : bodyNonBuiltInAtoms) {
       if (atom instanceof SWRLClassAtom)
@@ -156,10 +156,10 @@ public class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
     return result;
   }
 
-  @NonNull private List<SWRLAPIBuiltInAtom> getBuiltInAtoms(@NonNull List<SWRLAtom> atoms,
+  @NonNull private List<@NonNull SWRLAPIBuiltInAtom> getBuiltInAtoms(@NonNull List<@NonNull SWRLAtom> atoms,
     @NonNull Set<@NonNull String> builtInNames)
   {
-    List<SWRLAPIBuiltInAtom> result = new ArrayList<>();
+    List<@NonNull SWRLAPIBuiltInAtom> result = new ArrayList<>();
 
     atoms.stream().filter(atom -> atom instanceof SWRLAPIBuiltInAtom).forEach(atom -> {
       SWRLAPIBuiltInAtom builtInAtom = (SWRLAPIBuiltInAtom)atom;
@@ -169,9 +169,9 @@ public class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
     return result;
   }
 
-  @NonNull private static Set<IRI> getReferencedVariableIRIs(@NonNull SWRLAtom atom)
+  @NonNull private static Set<@NonNull IRI> getReferencedVariableIRIs(@NonNull SWRLAtom atom)
   {
-    Set<IRI> referencedVariableIRIs = new HashSet<>();
+    Set<@NonNull IRI> referencedVariableIRIs = new HashSet<>();
 
     atom.getAllArguments().stream().filter(argument -> argument instanceof SWRLVariable).forEach(argument -> {
       SWRLVariable variable = (SWRLVariable)argument;

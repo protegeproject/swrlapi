@@ -18,7 +18,7 @@ public class OWL2RLTablesControlView extends JPanel implements SWRLAPIView
   private static final long serialVersionUID = 1L;
 
   @NonNull private final OWL2RLModel owl2RLModel;
-  @NonNull private final List<OWL2RLRuleTableActivationButton> ruleTableActivationButtons;
+  @NonNull private final List<@NonNull OWL2RLRuleTableActivationButton> ruleTableActivationButtons;
 
   public OWL2RLTablesControlView(@NonNull OWL2RLModel owl2RLModel)
   {

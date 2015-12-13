@@ -180,7 +180,7 @@ public interface SWRLBuiltInArgumentFactory
    * @return A built-in argument
    */
   @NonNull SWRLMultiValueVariableBuiltInArgument getMultiValueVariableBuiltInArgument(@NonNull IRI variableIRI,
-    @NonNull List<SWRLBuiltInArgument> arguments);
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments);
 
   /**
    * @param variableIRI    The IRI of a SWRL variable

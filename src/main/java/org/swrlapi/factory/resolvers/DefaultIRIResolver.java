@@ -20,8 +20,8 @@ public class DefaultIRIResolver implements IRIResolver
 {
   @NonNull private final DefaultPrefixManager prefixManager;
 
-  @NonNull private final Map<@NonNull String, IRI> prefixedName2IRI = new HashMap<>();
-  @NonNull private final Map<IRI, String> iri2PrefixedNameCache = new HashMap<>();
+  @NonNull private final Map<@NonNull String, @NonNull IRI> prefixedName2IRI = new HashMap<>();
+  @NonNull private final Map<@NonNull IRI, @NonNull String> iri2PrefixedNameCache = new HashMap<>();
   @NonNull private final Set<@NonNull String> variablePrefixedNames = new HashSet<>();
   @NonNull private final Set<@NonNull String> classPrefixedNames = new HashSet<>();
   @NonNull private final Set<@NonNull String> namedIndividualPrefixedNames = new HashSet<>();
@@ -30,7 +30,7 @@ public class DefaultIRIResolver implements IRIResolver
   @NonNull private final Set<@NonNull String> annotationPropertyPrefixedNames = new HashSet<>();
   @NonNull private final Set<@NonNull String> datatypePrefixedNames = new HashSet<>();
 
-  @NonNull private final Map<@NonNull String, String> autogenNamespace2Prefix = new HashMap<>();
+  @NonNull private final Map<@NonNull String, @NonNull String> autogenNamespace2Prefix = new HashMap<>();
 
   private int autogenPrefixNumber = 0;
 

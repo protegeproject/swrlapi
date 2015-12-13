@@ -18,7 +18,7 @@ class DefaultSWRLMultiValueVariableBuiltInArgument extends DefaultSWRLVariableBu
 {
   private static final long serialVersionUID = 1L;
 
-  @NonNull private List<SWRLBuiltInArgument> arguments;
+  @NonNull private List<@NonNull SWRLBuiltInArgument> arguments;
 
   public DefaultSWRLMultiValueVariableBuiltInArgument(@NonNull IRI variableIRI, @NonNull String variablePrefixedName)
   {
@@ -27,7 +27,7 @@ class DefaultSWRLMultiValueVariableBuiltInArgument extends DefaultSWRLVariableBu
   }
 
   public DefaultSWRLMultiValueVariableBuiltInArgument(@NonNull IRI variableIRI, @NonNull String variablePrefixedName,
-    @NonNull List<SWRLBuiltInArgument> arguments)
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
   {
     super(variableIRI, variablePrefixedName);
     this.arguments = arguments;
@@ -43,12 +43,12 @@ class DefaultSWRLMultiValueVariableBuiltInArgument extends DefaultSWRLVariableBu
     this.arguments.add(argument);
   }
 
-  @Override public void setArguments(@NonNull List<SWRLBuiltInArgument> arguments)
+  @Override public void setArguments(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
   {
     this.arguments = arguments;
   }
 
-  @NonNull @Override public List<SWRLBuiltInArgument> getArguments()
+  @NonNull @Override public List<@NonNull SWRLBuiltInArgument> getArguments()
   {
     return this.arguments;
   }

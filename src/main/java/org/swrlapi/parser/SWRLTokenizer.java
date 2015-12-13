@@ -170,9 +170,9 @@ class SWRLTokenizer
       throw generateEndOfRuleException(unexpectedTokenMessage);
   }
 
-  @UnderInitialization @NonNull private List<SWRLToken> generateTokens() throws SWRLParseException
+  @UnderInitialization @NonNull private List<@NonNull SWRLToken> generateTokens() throws SWRLParseException
   {
-    List<SWRLToken> tokens = new ArrayList<>();
+    List<@NonNull SWRLToken> tokens = new ArrayList<>();
     SWRLToken token = generateToken();
     while (token.getTokenType() != SWRLToken.SWRLTokenType.END_OF_INPUT) {
       tokens.add(token);

@@ -32,5 +32,5 @@ public interface SWRLBuiltInBridgeController
   /**
    * @return A list of injected OWL axioms
    */
-  @NonNull Set<OWLAxiom> getInjectedOWLAxioms();
+  @NonNull Set<@NonNull OWLAxiom> getInjectedOWLAxioms();
 }

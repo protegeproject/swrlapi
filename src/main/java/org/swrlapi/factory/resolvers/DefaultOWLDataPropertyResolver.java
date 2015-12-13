@@ -10,8 +10,8 @@ import java.util.Map;
 
 class DefaultOWLDataPropertyResolver implements OWLDataPropertyResolver
 {
-  @NonNull private final Map<@NonNull String, OWLDataProperty> id2OWLDataProperty;
-  @NonNull private final Map<OWLDataProperty, String> owlDataProperty2ID;
+  @NonNull private final Map<@NonNull String, @NonNull OWLDataProperty> id2OWLDataProperty;
+  @NonNull private final Map<@NonNull OWLDataProperty, @NonNull String> owlDataProperty2ID;
 
   private final @NonNull OWLDataFactory owlDataFactory;
 
