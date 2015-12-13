@@ -1,9 +1,10 @@
 package org.swrlapi.builtins.arguments;
 
 import checkers.nullness.quals.NonNull;
-import checkers.nullness.quals.Nullable;
 import org.semanticweb.owlapi.model.SWRLVariable;
 import org.swrlapi.exceptions.SWRLBuiltInException;
+
+import java.util.Optional;
 
 /**
  * Represents a variable argument to a SWRL built-in atom.
@@ -32,7 +33,7 @@ public interface SWRLVariableBuiltInArgument extends SWRLBuiltInArgument, SWRLVa
   /**
    * @return A SWRL built-in result
    */
-  @Nullable SWRLBuiltInArgument getBuiltInResult();
+  @NonNull Optional<@NonNull SWRLBuiltInArgument> getBuiltInResult();
 
   /**
    * @param builtInResult A SWRL built-in result

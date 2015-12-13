@@ -50,7 +50,7 @@ abstract class DefaultSWRLBuiltInArgument implements SWRLBuiltInArgument
     return this.boundVariableName != null;
   }
 
-  @Override public Optional<@NonNull String> getBoundVariableName()
+  @NonNull @Override public Optional<@NonNull String> getBoundVariableName()
   {
     if (this.boundVariableName != null)
       return Optional.of(this.boundVariableName);

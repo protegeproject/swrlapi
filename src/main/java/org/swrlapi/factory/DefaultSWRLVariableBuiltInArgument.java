@@ -22,6 +22,7 @@ import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 class DefaultSWRLVariableBuiltInArgument extends DefaultSWRLBuiltInArgument implements SWRLVariableBuiltInArgument
@@ -96,8 +97,8 @@ class DefaultSWRLVariableBuiltInArgument extends DefaultSWRLBuiltInArgument impl
   @NonNull @Override public String getVariableName()
   {
     return this.variablePrefixedName.startsWith(":") ?
-        this.variablePrefixedName.substring(1) :
-        this.variablePrefixedName;
+      this.variablePrefixedName.substring(1) :
+      this.variablePrefixedName;
   }
 
   @Override public void setBuiltInResult(@NonNull SWRLBuiltInArgument builtInResult) throws SWRLBuiltInException
@@ -110,9 +111,12 @@ class DefaultSWRLVariableBuiltInArgument extends DefaultSWRLBuiltInArgument impl
     this.builtInResult = builtInResult;
   }
 
-  @Nullable @Override public SWRLBuiltInArgument getBuiltInResult()
+  @NonNull @Override public Optional<@NonNull SWRLBuiltInArgument> getBuiltInResult()
   {
-    return this.builtInResult;
+    if (this.builtInResult != null)
+      return Optional.of(this.builtInResult);
+    else
+      return Optional.<@NonNull SWRLBuiltInArgument>empty();
   }
 
   @Override public boolean hasBuiltInResult()
@@ -193,8 +197,7 @@ class DefaultSWRLVariableBuiltInArgument extends DefaultSWRLBuiltInArgument impl
       return false;
     DefaultSWRLVariableBuiltInArgument impl = (DefaultSWRLVariableBuiltInArgument)obj;
     return super.equals(impl) && ((this.builtInResult == impl.builtInResult)
-        || (this.builtInResult != null && this.builtInResult.equals(impl.builtInResult))
-        && this.isBound == impl.isBound);
+      || (this.builtInResult != null && this.builtInResult.equals(impl.builtInResult)) && this.isBound == impl.isBound);
   }
 
   @SideEffectFree @Deterministic @Override public int hashCode()

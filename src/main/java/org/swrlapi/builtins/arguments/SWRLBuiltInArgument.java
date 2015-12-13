@@ -90,7 +90,7 @@ public interface SWRLBuiltInArgument extends SWRLDArgument
   /**
    * @return The bound variable name
    */
-  Optional<@NonNull String> getBoundVariableName();
+  @NonNull Optional<@NonNull String> getBoundVariableName();
 
   /**
    * @param boundVariableName The variable name that the built-in argument is bound to
