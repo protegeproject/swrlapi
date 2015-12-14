@@ -1,7 +1,7 @@
 package org.swrlapi.builtins.swrlm;
 
-import checkers.nullness.quals.NonNull;
-import checkers.nullness.quals.Nullable;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.nfunk.jep.JEP;
 import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;

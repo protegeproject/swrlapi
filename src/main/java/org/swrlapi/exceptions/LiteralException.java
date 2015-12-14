@@ -1,6 +1,6 @@
 package org.swrlapi.exceptions;
 
-import checkers.nullness.quals.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
 public class LiteralException extends SQWRLException

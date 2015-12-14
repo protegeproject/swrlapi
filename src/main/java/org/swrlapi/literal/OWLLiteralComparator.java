@@ -1,6 +1,6 @@
 package org.swrlapi.literal;
 
-import checkers.nullness.quals.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
 import org.swrlapi.exceptions.SWRLAPIException;

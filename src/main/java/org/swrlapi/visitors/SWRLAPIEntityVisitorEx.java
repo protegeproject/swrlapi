@@ -1,6 +1,6 @@
 package org.swrlapi.visitors;
 
-import checkers.nullness.quals.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.SWRLObjectVisitorEx;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
 

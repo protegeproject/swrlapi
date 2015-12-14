@@ -1,6 +1,6 @@
 package org.swrlapi.ui.action;
 
-import checkers.nullness.quals.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.swrlapi.ui.dialog.SWRLRuleEngineDialogManager;
 import org.swrlapi.ui.model.FileBackedOntologyModel;
 

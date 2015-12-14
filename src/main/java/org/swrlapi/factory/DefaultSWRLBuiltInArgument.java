@@ -1,7 +1,7 @@
 package org.swrlapi.factory;
 
-import checkers.nullness.quals.NonNull;
-import checkers.nullness.quals.Nullable;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.semanticweb.owlapi.model.OWLAnonymousIndividual;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;

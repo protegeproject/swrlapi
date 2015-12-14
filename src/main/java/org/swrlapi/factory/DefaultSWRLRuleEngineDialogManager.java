@@ -1,8 +1,8 @@
 package org.swrlapi.factory;
 
-import checkers.nullness.quals.MonotonicNonNull;
-import checkers.nullness.quals.NonNull;
-import checkers.nullness.quals.Nullable;
+import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.swrlapi.ui.dialog.ExtensionFilter;
 import org.swrlapi.ui.dialog.SWRLRuleEngineDialogManager;
 import org.swrlapi.ui.dialog.SWRLRuleEditorDialog;

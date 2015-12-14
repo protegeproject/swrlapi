@@ -1,7 +1,7 @@
 package org.swrlapi.builtins.temporal;
 
-import checkers.nullness.quals.NonNull;
-import dataflow.quals.SideEffectFree;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.dataflow.qual.SideEffectFree;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
 package org.swrlapi.ui.view.owl2rl;
 
-import checkers.nullness.quals.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.swrlapi.ui.model.OWL2RLModel;
 import org.swrlapi.ui.view.SWRLAPIView;
 

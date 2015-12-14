@@ -1,6 +1,6 @@
 package org.swrlapi.parser;
 
-import checkers.nullness.quals.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * @see org.swrlapi.parser.SWRLParser

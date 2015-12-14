@@ -1,6 +1,6 @@
 package org.swrlapi.builtins.arguments;
 
-import checkers.nullness.quals.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.SWRLDArgument;
 import org.swrlapi.factory.SWRLAPIOWLDataFactory;
 

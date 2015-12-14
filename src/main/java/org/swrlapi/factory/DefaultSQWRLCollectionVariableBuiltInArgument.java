@@ -1,9 +1,9 @@
 package org.swrlapi.factory;
 
-import checkers.nullness.quals.NonNull;
-import checkers.nullness.quals.Nullable;
-import dataflow.quals.Deterministic;
-import dataflow.quals.SideEffectFree;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.dataflow.qual.Deterministic;
+import org.checkerframework.dataflow.qual.SideEffectFree;
 import org.semanticweb.owlapi.model.IRI;
 import org.swrlapi.builtins.arguments.SQWRLCollectionVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor;

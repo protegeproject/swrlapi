@@ -1,6 +1,6 @@
 package org.swrlapi.sqwrl;
 
-import checkers.nullness.quals.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.SWRLAtom;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;

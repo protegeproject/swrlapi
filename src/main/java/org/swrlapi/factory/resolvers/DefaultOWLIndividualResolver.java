@@ -1,6 +1,6 @@
 package org.swrlapi.factory.resolvers;
 
-import checkers.nullness.quals.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.OWLIndividual;
 import org.swrlapi.exceptions.TargetSWRLRuleEngineException;
 

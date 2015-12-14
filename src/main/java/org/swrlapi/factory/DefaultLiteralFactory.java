@@ -1,6 +1,6 @@
 package org.swrlapi.factory;
 
-import checkers.nullness.quals.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.swrlapi.literal.Literal;
 import org.swrlapi.literal.XSDDate;

@@ -1,6 +1,6 @@
 package org.swrlapi.factory;
 
-import checkers.nullness.quals.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.swrlapi.owl2rl.OWL2RLNames;
 import org.swrlapi.owl2rl.OWL2RLPersistenceLayer;

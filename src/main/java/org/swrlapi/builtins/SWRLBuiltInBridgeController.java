@@ -1,6 +1,6 @@
 package org.swrlapi.builtins;
 
-import checkers.nullness.quals.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
 

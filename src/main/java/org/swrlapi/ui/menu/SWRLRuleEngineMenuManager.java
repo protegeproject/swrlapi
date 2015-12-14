@@ -1,6 +1,6 @@
 package org.swrlapi.ui.menu;
 
-import checkers.nullness.quals.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.swrlapi.ui.action.CloseAction;
 import org.swrlapi.ui.action.OpenAction;
 import org.swrlapi.ui.action.QuitAction;

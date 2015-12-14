@@ -1,6 +1,6 @@
 package org.swrlapi.builtins.arguments;
 
-import checkers.nullness.quals.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.List;
 

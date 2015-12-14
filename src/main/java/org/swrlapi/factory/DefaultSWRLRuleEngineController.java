@@ -1,6 +1,6 @@
 package org.swrlapi.factory;
 
-import checkers.nullness.quals.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.swrlapi.ui.controller.SWRLRuleEngineController;
 import org.swrlapi.ui.model.SWRLRuleEngineModel;
 

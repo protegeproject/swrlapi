@@ -1,6 +1,6 @@
 package org.swrlapi.ui.dialog;
 
-import checkers.nullness.quals.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import javax.swing.filechooser.FileFilter;
 import java.util.ArrayList;

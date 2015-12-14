@@ -4,7 +4,7 @@ import org.swrlapi.bridge.SWRLRuleEngineBridge;
 import org.swrlapi.core.OWLObjectResolver;
 import org.swrlapi.core.IRIResolver;
 
-import checkers.nullness.quals.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * This interface provides gives target rule engines access to {@link OWLObjectResolver} and {@link IRIResolver}

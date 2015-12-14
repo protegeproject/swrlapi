@@ -1,7 +1,7 @@
 package org.swrlapi.factory;
 
-import checkers.nullness.quals.NonNull;
-import dataflow.quals.SideEffectFree;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.dataflow.qual.SideEffectFree;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.IRIResolver;
 import org.swrlapi.exceptions.SWRLAPIInternalException;

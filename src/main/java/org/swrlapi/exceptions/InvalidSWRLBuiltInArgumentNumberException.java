@@ -1,6 +1,6 @@
 package org.swrlapi.exceptions;
 
-import checkers.nullness.quals.Nullable;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 public class InvalidSWRLBuiltInArgumentNumberException extends SWRLBuiltInException
 {

@@ -10,7 +10,7 @@ import org.swrlapi.factory.OWLLiteralFactory;
 import org.swrlapi.factory.SWRLAPIOWLDataFactory;
 import org.swrlapi.factory.SWRLBuiltInArgumentFactory;
 
-import checkers.nullness.quals.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * This interface describes a set of methods that will be needed by a target rule engine to create OWLAPI

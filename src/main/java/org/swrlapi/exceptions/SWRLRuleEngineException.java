@@ -1,7 +1,7 @@
 package org.swrlapi.exceptions;
 
-import checkers.nullness.quals.NonNull;
-import checkers.nullness.quals.Nullable;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 public class SWRLRuleEngineException extends SWRLAPIException
 {

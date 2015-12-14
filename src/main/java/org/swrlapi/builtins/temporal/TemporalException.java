@@ -1,6 +1,6 @@
 package org.swrlapi.builtins.temporal;
 
-import checkers.nullness.quals.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 class TemporalException extends Exception
 {

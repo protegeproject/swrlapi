@@ -1,7 +1,7 @@
 package org.swrlapi.factory;
 
-import checkers.nullness.quals.MonotonicNonNull;
-import checkers.nullness.quals.NonNull;
+import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;

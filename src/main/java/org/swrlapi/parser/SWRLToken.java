@@ -1,7 +1,7 @@
 package org.swrlapi.parser;
 
-import checkers.nullness.quals.NonNull;
-import dataflow.quals.SideEffectFree;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.dataflow.qual.SideEffectFree;
 
 /**
  * Defines a basic token class used by the {@link org.swrlapi.parser.SWRLTokenizer} and

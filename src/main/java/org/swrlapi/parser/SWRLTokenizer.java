@@ -1,7 +1,7 @@
 package org.swrlapi.parser;
 
-import checkers.initialization.quals.UnderInitialization;
-import checkers.nullness.quals.NonNull;
+import org.checkerframework.checker.initialization.qual.UnderInitialization;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.IOException;
 import java.io.Reader;
