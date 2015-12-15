@@ -12,7 +12,7 @@ public class TargetSWRLRuleEngineNotImplementedFeatureException extends TargetSW
     super(message);
   }
 
-  public TargetSWRLRuleEngineNotImplementedFeatureException(@NonNull String message, @Nullable Throwable cause)
+  public TargetSWRLRuleEngineNotImplementedFeatureException(@NonNull String message, @NonNull Throwable cause)
   {
     super(message, cause);
   }

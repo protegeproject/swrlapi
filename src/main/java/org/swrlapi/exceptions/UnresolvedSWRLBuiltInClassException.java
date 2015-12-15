@@ -8,7 +8,7 @@ public class UnresolvedSWRLBuiltInClassException extends SWRLBuiltInLibraryExcep
   private static final long serialVersionUID = 1L;
 
   public UnresolvedSWRLBuiltInClassException(@NonNull String ruleName, @NonNull String prefix, @NonNull String message,
-    @Nullable Throwable cause)
+    @NonNull Throwable cause)
   {
     super("unresolved built-in class for prefix '" + prefix + "' in rule '" + ruleName + "': " + message, cause);
   }

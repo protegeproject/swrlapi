@@ -12,7 +12,7 @@ public class SWRLRuleException extends SWRLBuiltInException
     super(message);
   }
 
-  public SWRLRuleException(@NonNull String message, @Nullable Throwable cause)
+  public SWRLRuleException(@NonNull String message, @NonNull Throwable cause)
   {
     super(message, cause);
   }

@@ -13,7 +13,7 @@ public class SQWRLException extends SWRLBuiltInException
     super(message);
   }
 
-  public SQWRLException(@NonNull String message, @Nullable Throwable cause)
+  public SQWRLException(@NonNull String message, @NonNull Throwable cause)
   {
     super(message, cause);
   }

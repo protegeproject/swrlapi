@@ -12,7 +12,7 @@ public class SWRLAPIInternalException extends SWRLAPIException
     super(message);
   }
 
-  public SWRLAPIInternalException(@NonNull String message, @Nullable Throwable cause)
+  public SWRLAPIInternalException(@NonNull String message, @NonNull Throwable cause)
   {
     super(message, cause);
   }

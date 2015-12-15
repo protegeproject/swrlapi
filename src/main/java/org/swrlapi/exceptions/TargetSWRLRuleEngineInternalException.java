@@ -12,7 +12,7 @@ public class TargetSWRLRuleEngineInternalException extends TargetSWRLRuleEngineE
     super(message);
   }
 
-  public TargetSWRLRuleEngineInternalException(@NonNull String message, @Nullable Throwable cause)
+  public TargetSWRLRuleEngineInternalException(@NonNull String message, @NonNull Throwable cause)
   {
     super(message, cause);
   }

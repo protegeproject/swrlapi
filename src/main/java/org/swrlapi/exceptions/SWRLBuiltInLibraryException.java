@@ -1,7 +1,6 @@
 package org.swrlapi.exceptions;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
 
 public class SWRLBuiltInLibraryException extends SWRLBuiltInBridgeException
 {
@@ -12,7 +11,7 @@ public class SWRLBuiltInLibraryException extends SWRLBuiltInBridgeException
     super(message);
   }
 
-  public SWRLBuiltInLibraryException(@NonNull String message, @Nullable Throwable cause)
+  public SWRLBuiltInLibraryException(@NonNull String message, @NonNull Throwable cause)
   {
     super(message, cause);
   }

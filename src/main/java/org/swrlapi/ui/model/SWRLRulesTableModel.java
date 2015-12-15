@@ -1,7 +1,6 @@
 package org.swrlapi.ui.model;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.dataflow.qual.SideEffectFree;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLRuleEngine;
@@ -150,7 +149,7 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 			return "";
 	}
 
-	@Nullable @Override public Object getValueAt(int row, int column)
+	@NonNull @Override public Object getValueAt(int row, int column)
 	{
 		Object result = null;
 

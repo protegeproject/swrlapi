@@ -189,23 +189,34 @@ class DefaultSWRLVariableBuiltInArgument extends DefaultSWRLBuiltInArgument impl
     return compareTo(other);
   }
 
-  @SideEffectFree @Deterministic @Override public boolean equals(@Nullable Object obj)
+  @SideEffectFree @Deterministic @Override public boolean equals(@Nullable Object o)
   {
-    if (this == obj)
+    if (this == o)
       return true;
-    if ((obj == null) || (obj.getClass() != this.getClass()))
+    if (o == null || getClass() != o.getClass())
       return false;
-    DefaultSWRLVariableBuiltInArgument impl = (DefaultSWRLVariableBuiltInArgument)obj;
-    return super.equals(impl) && ((this.builtInResult == impl.builtInResult)
-      || (this.builtInResult != null && this.builtInResult.equals(impl.builtInResult)) && this.isBound == impl.isBound);
+
+    DefaultSWRLVariableBuiltInArgument that = (DefaultSWRLVariableBuiltInArgument)o;
+
+    if (isBound != that.isBound)
+      return false;
+    if (iri != null ? !iri.equals(that.iri) : that.iri != null)
+      return false;
+    if (variablePrefixedName != null ?
+      !variablePrefixedName.equals(that.variablePrefixedName) :
+      that.variablePrefixedName != null)
+      return false;
+    return builtInResult != null ? builtInResult.equals(that.builtInResult) : that.builtInResult == null;
+
   }
 
   @SideEffectFree @Deterministic @Override public int hashCode()
   {
-    int hash = 78;
-    hash = hash + (null == this.builtInResult ? 0 : this.builtInResult.hashCode());
-    hash = hash + (this.isBound ? 1 : 0);
-    return hash;
+    int result = iri != null ? iri.hashCode() : 0;
+    result = 31 * result + (variablePrefixedName != null ? variablePrefixedName.hashCode() : 0);
+    result = 31 * result + (builtInResult != null ? builtInResult.hashCode() : 0);
+    result = 31 * result + (isBound ? 1 : 0);
+    return result;
   }
 
   @NonNull @Override public Set<@NonNull OWLAnnotationProperty> getAnnotationPropertiesInSignature()

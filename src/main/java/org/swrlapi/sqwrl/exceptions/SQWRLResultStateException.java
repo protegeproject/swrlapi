@@ -12,7 +12,7 @@ public class SQWRLResultStateException extends SQWRLException
     super(message);
   }
 
-  public SQWRLResultStateException(@NonNull String message, @Nullable Throwable cause)
+  public SQWRLResultStateException(@NonNull String message, @NonNull Throwable cause)
   {
     super(message, cause);
   }

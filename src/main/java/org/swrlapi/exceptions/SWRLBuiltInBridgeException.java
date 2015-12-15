@@ -12,7 +12,7 @@ public class SWRLBuiltInBridgeException extends SWRLAPIException
     super(message);
   }
 
-  public SWRLBuiltInBridgeException(@NonNull String message, @Nullable Throwable cause)
+  public SWRLBuiltInBridgeException(@NonNull String message, @NonNull Throwable cause)
   {
     super(message, cause);
   }

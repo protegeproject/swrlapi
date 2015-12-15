@@ -17,7 +17,7 @@ public class SWRLRuleEngineBridgeException extends SWRLRuleEngineException
     super(message);
   }
 
-  SWRLRuleEngineBridgeException(@NonNull String message, @Nullable Throwable cause)
+  SWRLRuleEngineBridgeException(@NonNull String message, @NonNull Throwable cause)
   {
     super(message, cause);
   }

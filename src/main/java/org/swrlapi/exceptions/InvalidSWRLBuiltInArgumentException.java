@@ -12,7 +12,7 @@ public class InvalidSWRLBuiltInArgumentException extends SWRLBuiltInException
     super(message + " for (0-offset) argument #" + argumentNumber);
   }
 
-  public InvalidSWRLBuiltInArgumentException(int argumentNumber, @NonNull String message, @Nullable Throwable cause)
+  public InvalidSWRLBuiltInArgumentException(int argumentNumber, @NonNull String message, @NonNull Throwable cause)
   {
     super(message + " for (0-offset) argument #" + argumentNumber, cause);
   }
@@ -22,7 +22,7 @@ public class InvalidSWRLBuiltInArgumentException extends SWRLBuiltInException
     super(message);
   }
 
-  public InvalidSWRLBuiltInArgumentException(@NonNull String message, @Nullable Throwable cause)
+  public InvalidSWRLBuiltInArgumentException(@NonNull String message, @NonNull Throwable cause)
   {
     super(message, cause);
   }

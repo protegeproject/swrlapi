@@ -17,7 +17,7 @@ public class SWRLRuleEngineException extends SWRLAPIException
     super(message);
   }
 
-  public SWRLRuleEngineException(@NonNull String message, @Nullable Throwable cause)
+  public SWRLRuleEngineException(@NonNull String message, @NonNull Throwable cause)
   {
     super(message, cause);
   }

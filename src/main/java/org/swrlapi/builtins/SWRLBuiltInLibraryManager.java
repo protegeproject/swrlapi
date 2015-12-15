@@ -335,6 +335,6 @@ public class SWRLBuiltInLibraryManager
   {
     if (!SWRLBuiltInLibrary.class.isAssignableFrom(cls))
       throw new IncompatibleSWRLBuiltInClassException(ruleName, prefix, cls.getName(),
-          "Java class does not extend SWRLBuiltInLibrary", null);
+          "Java class does not extend SWRLBuiltInLibrary");
   }
 }

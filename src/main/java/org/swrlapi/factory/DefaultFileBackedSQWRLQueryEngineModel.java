@@ -28,7 +28,7 @@ public class DefaultFileBackedSQWRLQueryEngineModel extends DefaultSQWRLQueryEng
     OWLOntology ontology = createOWLOntology(file);
     OWLDocumentFormat format = ontology.getOWLOntologyManager().getOntologyFormat(ontology);
     DefaultPrefixManager prefixManager = new DefaultPrefixManager();
-    if (format.isPrefixOWLOntologyFormat())
+    if (format != null && format.isPrefixOWLOntologyFormat())
       prefixManager.copyPrefixesFrom(format.asPrefixOWLOntologyFormat().getPrefixName2PrefixMap());
 
     SQWRLQueryEngine queryEngine = SWRLAPIFactory.createSQWRLQueryEngine(ontology, prefixManager);

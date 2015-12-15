@@ -1,7 +1,6 @@
 package org.swrlapi.exceptions;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
 
 public class SWRLAPIException extends RuntimeException
 {
@@ -17,7 +16,7 @@ public class SWRLAPIException extends RuntimeException
     super(message);
   }
 
-  public SWRLAPIException(@NonNull String message, @Nullable Throwable cause)
+  public SWRLAPIException(@NonNull String message, @NonNull Throwable cause)
   {
     super(message, cause);
   }

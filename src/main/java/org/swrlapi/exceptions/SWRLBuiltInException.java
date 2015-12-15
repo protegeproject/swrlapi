@@ -17,7 +17,7 @@ public class SWRLBuiltInException extends Exception
     super(message);
   }
 
-  public SWRLBuiltInException(@NonNull String message, @Nullable Throwable cause)
+  public SWRLBuiltInException(@NonNull String message, @NonNull Throwable cause)
   {
     super(message, cause);
   }
