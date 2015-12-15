@@ -192,7 +192,6 @@
             <annotationProcessor>org.checkerframework.checker.nullness.NullnessChecker</annotationProcessor>
           </annotationProcessors>
           <compilerArgs>
-            <!-- Location of the annotated JDK, which comes from a Maven dependency -->
             <arg>-Xbootclasspath/p:${annotatedJdk}</arg>
           </compilerArgs>
         </configuration>

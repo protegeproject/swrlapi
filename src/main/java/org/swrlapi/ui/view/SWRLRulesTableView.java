@@ -210,7 +210,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 
   private abstract class ActionListenerBase implements ActionListener
   {
-    protected final @NonNull SWRLRuleEngineDialogManager dialogManager;
+    @NonNull protected final SWRLRuleEngineDialogManager dialogManager;
     @NonNull protected final Component parent;
 
     protected ActionListenerBase(@NonNull Component parent, @NonNull SWRLRuleEngineDialogManager dialogManager)
