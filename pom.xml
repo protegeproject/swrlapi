@@ -187,6 +187,7 @@
         <configuration>
           <source>${java.version}</source>
           <target>${java.version}</target>
+<!--
           <fork>true</fork>
           <annotationProcessors>
             <annotationProcessor>org.checkerframework.checker.nullness.NullnessChecker</annotationProcessor>
@@ -194,6 +195,7 @@
           <compilerArgs>
             <arg>-Xbootclasspath/p:${annotatedJdk}</arg>
           </compilerArgs>
+-->
         </configuration>
       </plugin>
 
