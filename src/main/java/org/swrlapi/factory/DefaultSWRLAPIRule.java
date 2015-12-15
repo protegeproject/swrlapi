@@ -2,7 +2,9 @@ package org.swrlapi.factory;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.SWRLArgument;
 import org.semanticweb.owlapi.model.SWRLAtom;
+import org.semanticweb.owlapi.model.SWRLBuiltInAtom;
 import org.semanticweb.owlapi.model.SWRLClassAtom;
 import org.semanticweb.owlapi.model.SWRLVariable;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
@@ -28,7 +30,7 @@ public class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
   @NonNull private final List<@NonNull SWRLAtom> headAtoms;
 
   public DefaultSWRLAPIRule(@NonNull String ruleName, @NonNull List<? extends @NonNull SWRLAtom> bodyAtoms,
-    @NonNull List<? extends @NonNull SWRLAtom> headAtoms, @NonNull String comment, boolean isActive)
+      @NonNull List<? extends @NonNull SWRLAtom> headAtoms, @NonNull String comment, boolean isActive)
   {
     super(new LinkedHashSet<>(bodyAtoms), new LinkedHashSet<>(headAtoms), new HashSet<>());
     this.ruleName = ruleName;
@@ -51,7 +53,7 @@ public class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
   @Override public boolean isSQWRLQuery()
   {
     return !getBuiltInAtomsFromHead(SQWRLNames.getSQWRLBuiltInNames()).isEmpty() || !getBuiltInAtomsFromBody(
-      SQWRLNames.getSQWRLBuiltInNames()).isEmpty();
+        SQWRLNames.getSQWRLBuiltInNames()).isEmpty();
   }
 
   @NonNull @Override public String getComment()
@@ -69,12 +71,14 @@ public class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
     return this.bodyAtoms;
   }
 
-  @NonNull @Override public List<@NonNull SWRLAPIBuiltInAtom> getBuiltInAtomsFromHead(@NonNull Set<@NonNull String> builtInNames)
+  @NonNull @Override public List<@NonNull SWRLAPIBuiltInAtom> getBuiltInAtomsFromHead(
+      @NonNull Set<@NonNull String> builtInNames)
   {
     return getBuiltInAtoms(getHeadAtoms(), builtInNames);
   }
 
-  @NonNull @Override public List<@NonNull SWRLAPIBuiltInAtom> getBuiltInAtomsFromBody(@NonNull Set<@NonNull String> builtInNames)
+  @NonNull @Override public List<@NonNull SWRLAPIBuiltInAtom> getBuiltInAtomsFromBody(
+      @NonNull Set<@NonNull String> builtInNames)
   {
     return getBuiltInAtoms(getBodyAtoms(), builtInNames);
   }
@@ -109,19 +113,23 @@ public class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
       // passed the bound value of this variable during rule execution.
       // Tell the built-in that it is expected to bind this argument
       // Flag as a bound variable for later built-ins
-      builtInAtom.getBuiltInArguments().stream().filter(SWRLBuiltInArgument::isVariable).forEach(argument -> {
-        IRI argumentVariableIRI = argument.asVariable().getIRI();
-
-        // If a variable argument is not used by any non built-in body atom or is not bound by another body built-in
-        // atom it will therefore be unbound when this built-in is called. We thus set this built-in argument to
-        // unbound. If a built-in binds an argument, all later built-ins (proceeding from left to right) will be
-        // passed the bound value of this variable during rule execution.
-        if (!variablesUsedByNonBuiltInBodyAtoms.contains(argumentVariableIRI) && !variablesBoundByBuiltIns
-          .contains(argumentVariableIRI)) {
-          argument.asVariable().setUnbound(); // Tell the built-in that it is expected to bind this argument
-          variablesBoundByBuiltIns.add(argumentVariableIRI); // Flag as a bound variable for later built-ins
+      // TODO Checker does not like this so remove
+      //      builtInAtom.getBuiltInArguments().stream().filter(SWRLBuiltInArgument::isVariable).forEach(argument -> {
+      //        IRI argumentVariableIRI = argument.asVariable().getIRI();
+      for (SWRLBuiltInArgument argument : builtInAtom.getBuiltInArguments()) {
+        if (argument.isVariable()) {
+          IRI argumentVariableIRI = argument.asVariable().getIRI();
+          // If a variable argument is not used by any non built-in body atom or is not bound by another body built-in
+          // atom it will therefore be unbound when this built-in is called. We thus set this built-in argument to
+          // unbound. If a built-in binds an argument, all later built-ins (proceeding from left to right) will be
+          // passed the bound value of this variable during rule execution.
+          if (!variablesUsedByNonBuiltInBodyAtoms.contains(argumentVariableIRI) && !variablesBoundByBuiltIns
+              .contains(argumentVariableIRI)) {
+            argument.asVariable().setUnbound(); // Tell the built-in that it is expected to bind this argument
+            variablesBoundByBuiltIns.add(argumentVariableIRI); // Flag as a bound variable for later built-ins
+          }
         }
-      });
+      }
     }
     // If we have built-in atoms, construct a new body with built-in atoms moved to the end of the list. Some rule
     // engines (e.g., Jess) expect variables used as parameters to functions to have been defined before their use in
@@ -137,7 +145,8 @@ public class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
   /**
    * Reorganize body non-built atoms so that class atoms appear firsts, followed by other atom types.
    */
-  @NonNull private static List<@NonNull SWRLAtom> reorganizeBodyNonBuiltInAtoms(@NonNull List<@NonNull SWRLAtom> bodyNonBuiltInAtoms)
+  @NonNull private static List<@NonNull SWRLAtom> reorganizeBodyNonBuiltInAtoms(
+      @NonNull List<@NonNull SWRLAtom> bodyNonBuiltInAtoms)
   {
     List<@NonNull SWRLAtom> bodyClassAtoms = new ArrayList<>();
     List<@NonNull SWRLAtom> bodyNonClassNonBuiltInAtoms = new ArrayList<>();
@@ -157,15 +166,20 @@ public class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
   }
 
   @NonNull private List<@NonNull SWRLAPIBuiltInAtom> getBuiltInAtoms(@NonNull List<@NonNull SWRLAtom> atoms,
-    @NonNull Set<@NonNull String> builtInNames)
+      @NonNull Set<@NonNull String> builtInNames)
   {
     List<@NonNull SWRLAPIBuiltInAtom> result = new ArrayList<>();
 
-    atoms.stream().filter(atom -> atom instanceof SWRLAPIBuiltInAtom).forEach(atom -> {
-      SWRLAPIBuiltInAtom builtInAtom = (SWRLAPIBuiltInAtom)atom;
-      if (builtInNames.contains(builtInAtom.getBuiltInPrefixedName()))
-        result.add(builtInAtom);
-    });
+    //       // TODO Checker does not like this so remove
+
+    //    atoms.stream().filter(atom -> atom instanceof SWRLAPIBuiltInAtom).forEach(atom -> {
+    for (SWRLAtom atom : atoms) {
+      if (atom instanceof SWRLBuiltInAtom) {
+        SWRLAPIBuiltInAtom builtInAtom = (SWRLAPIBuiltInAtom)atom;
+        if (builtInNames.contains(builtInAtom.getBuiltInPrefixedName()))
+          result.add(builtInAtom);
+      }
+    }
     return result;
   }
 
@@ -173,10 +187,14 @@ public class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
   {
     Set<@NonNull IRI> referencedVariableIRIs = new HashSet<>();
 
-    atom.getAllArguments().stream().filter(argument -> argument instanceof SWRLVariable).forEach(argument -> {
-      SWRLVariable variable = (SWRLVariable)argument;
-      referencedVariableIRIs.add(variable.getIRI());
-    });
+    //       // TODO Checker does not like this so remove
+    //    atom.getAllArguments().stream().filter(argument -> argument instanceof SWRLVariable).forEach(argument -> {
+    for (SWRLArgument argument : atom.getAllArguments()) {
+      if (argument instanceof SWRLVariable) {
+        SWRLVariable variable = (SWRLVariable)argument;
+        referencedVariableIRIs.add(variable.getIRI());
+      }
+    }
     return referencedVariableIRIs;
   }
 }

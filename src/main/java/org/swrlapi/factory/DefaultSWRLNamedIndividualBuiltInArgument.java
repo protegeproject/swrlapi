@@ -21,7 +21,7 @@ class DefaultSWRLNamedIndividualBuiltInArgument extends DefaultSWRLNamedBuiltInA
     return getOWLEntity().asOWLNamedIndividual();
   }
 
-  @Override public <@NonNull T> T accept(@NonNull SWRLBuiltInArgumentVisitorEx<@NonNull T> visitor)
+  @NonNull @Override public <@NonNull T> T accept(@NonNull SWRLBuiltInArgumentVisitorEx<@NonNull T> visitor)
   {
     return visitor.visit(this);
   }
