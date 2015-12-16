@@ -35,7 +35,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 {
@@ -958,7 +957,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
     return ((value instanceof SQWRLLiteralResultValue) && (((SQWRLLiteralResultValue)value).isNumeric()));
   }
 
-  // TODO: fix - very inefficient
+  // TODO Fix - very inefficient
   @NonNull private List<@NonNull List<@NonNull SQWRLResultValue>> distinct(
       @NonNull List<@NonNull List<@NonNull SQWRLResultValue>> sourceRows) throws SQWRLException
   {
@@ -969,12 +968,15 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 
     try {
       Collections.sort(localRows, rowComparator); // Binary search is expecting a sorted list
-      localRows.stream().filter(row -> Collections.binarySearch(processedRows, row, rowComparator) < 0)
-          .forEach(processedRows::add);
+// TODO      localRows.stream().filter(row -> Collections.binarySearch(processedRows, row, rowComparator) < 0)
+//          .forEach(processedRows::add);
+      for (List<@NonNull SQWRLResultValue> row : localRows) {
+        if (Collections.binarySearch(processedRows, row, rowComparator) < 0)
+          processedRows.add(row);
+      }
     } catch (RuntimeException e) {
       throw new SQWRLException("Internal error comparing rows", e);
     }
-
     return processedRows;
   }
 
@@ -1258,8 +1260,11 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
       this.ascending = ascending;
       this.orderByColumnIndexes = new ArrayList<>();
 
-      this.orderByColumnIndexes
-          .addAll(allColumnNames.stream().map(allColumnNames::indexOf).collect(Collectors.toList()));
+//     TODO  this.orderByColumnIndexes
+//          .addAll(allColumnNames.stream().map(allColumnNames::indexOf).collect(Collectors.toList()));
+
+      for (String columnName : allColumnNames)
+        this.orderByColumnIndexes.add(allColumnNames.indexOf(columnName));
     }
 
     @Override public int compare(@NonNull List<@NonNull SQWRLResultValue> row1,

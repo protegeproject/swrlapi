@@ -13,7 +13,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SWRLAPIBuiltInAtom
 {
@@ -131,11 +130,17 @@ class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SWRLAPIBu
 
   @NonNull @Override public Set<@NonNull String> getUnboundArgumentVariablePrefixedNames()
   {
-    Set<@NonNull String> result = this.arguments.stream()
-      .filter(argument -> argument.isVariable() && argument.asVariable().isUnbound())
-      .map(argument -> argument.asVariable().getVariablePrefixedName()).collect(Collectors.toSet());
+//  TODO
+//  Set<@NonNull String> result = this.arguments.stream()
+//      .filter(argument -> argument.isVariable() && argument.asVariable().isUnbound())
+//      .map(argument -> argument.asVariable().getVariablePrefixedName()).collect(Collectors.toSet());
 
-    return Collections.unmodifiableSet(result);
+    Set<@NonNull String> unboundArgumentVariablePrefixNames = new HashSet<>();
+    for (SWRLBuiltInArgument argument : this.arguments) {
+      if (argument.isVariable() && argument.asVariable().isUnbound())
+        unboundArgumentVariablePrefixNames.add(argument.asVariable().getVariablePrefixedName());
+    }
+    return unboundArgumentVariablePrefixNames;
   }
 
   @NonNull @Override public String getArgumentVariablePrefixedName(int argumentNumber)
@@ -150,10 +155,15 @@ class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SWRLAPIBu
 
   @NonNull @Override public List<@NonNull String> getArgumentsVariablePrefixedNames()
   {
-    List<@NonNull String> result = this.arguments.stream().filter(SWRLBuiltInArgument::isVariable)
-      .map(argument -> argument.asVariable().getVariablePrefixedName()).collect(Collectors.toList());
+//  TODO   List<@NonNull String> result = this.arguments.stream().filter(SWRLBuiltInArgument::isVariable)
+//      .map(argument -> argument.asVariable().getVariablePrefixedName()).collect(Collectors.toList());
 
-    return Collections.unmodifiableList(result);
+    List<@NonNull String> argumentsVariablePrefixNames = new ArrayList<>();
+    for (SWRLBuiltInArgument argument : this.arguments) {
+      if (argument.isVariable())
+        argumentsVariablePrefixNames.add(argument.asVariable().getVariablePrefixedName());
+    }
+    return argumentsVariablePrefixNames;
   }
 
   @NonNull @Override public List<@NonNull String> getArgumentsVariableNamesExceptFirst()
