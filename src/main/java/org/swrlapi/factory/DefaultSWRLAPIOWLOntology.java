@@ -103,7 +103,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
   @NonNull private final OWLOntology ontology;
   @NonNull private final DefaultPrefixManager prefixManager;
   @NonNull private final IRIResolver iriResolver;
-  @NonNull private final SWRLParser swrlParser;
   @NonNull private final Set<@NonNull IRI> swrlBuiltInIRIs;
   @NonNull private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
 
@@ -125,7 +124,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
     this.ontology = ontology;
     this.prefixManager = prefixManager;
     this.iriResolver = new DefaultIRIResolver(this.prefixManager);
-    this.swrlParser = new SWRLParser(this);
     this.swrlBuiltInIRIs = new HashSet<>();
     this.swrlapiOWLDataFactory = SWRLAPIFactory.createSWRLAPIOWLDataFactory(this.iriResolver);
 
@@ -170,15 +168,15 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
   }
 
   @NonNull @Override public SWRLAPIRule createSWRLRule(@NonNull String ruleName, @NonNull String rule)
-      throws SWRLParseException
+    throws SWRLParseException
   {
     return createSWRLRule(ruleName, rule, "", true);
   }
 
   @NonNull @Override public SWRLAPIRule createSWRLRule(@NonNull String ruleName, @NonNull String rule,
-      @NonNull String comment, boolean isActive) throws SWRLParseException
+    @NonNull String comment, boolean isActive) throws SWRLParseException
   {
-    Optional<SWRLRule> owlapiRule = this.swrlParser.parseSWRLRule(rule, false, ruleName, comment);
+    Optional<SWRLRule> owlapiRule = createSWRLParser().parseSWRLRule(rule, false, ruleName, comment);
 
     if (owlapiRule.isPresent()) {
       SWRLAPIRule swrlapiRule = convertOWLAPIRule2SWRLAPIRule(owlapiRule.get(), ruleName, comment, isActive);
@@ -191,15 +189,15 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
   }
 
   @NonNull @Override public SQWRLQuery createSQWRLQuery(@NonNull String queryName, @NonNull String query)
-      throws SWRLParseException, SQWRLException
+    throws SWRLParseException, SQWRLException
   {
     return createSQWRLQuery(queryName, query, "", true);
   }
 
   @NonNull @Override public SQWRLQuery createSQWRLQuery(@NonNull String queryName, @NonNull String queryText,
-      @NonNull String comment, boolean isActive) throws SWRLParseException, SQWRLException
+    @NonNull String comment, boolean isActive) throws SWRLParseException, SQWRLException
   {
-    Optional<SWRLRule> owlapiRule = this.swrlParser.parseSWRLRule(queryText, false, queryName, comment);
+    Optional<SWRLRule> owlapiRule = createSWRLParser().parseSWRLRule(queryText, false, queryName, comment);
 
     if (owlapiRule.isPresent()) {
       SWRLAPIRule swrlapiRule = convertOWLAPIRule2SWRLAPIRule(owlapiRule.get(), queryName, comment, isActive);
@@ -253,7 +251,8 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
     }
   }
 
-  @NonNull @Override public Optional<@NonNull SWRLAPIRule> getSWRLRule(@NonNull String ruleName) throws SWRLRuleException
+  @NonNull @Override public Optional<@NonNull SWRLAPIRule> getSWRLRule(@NonNull String ruleName)
+    throws SWRLRuleException
   {
     if (!this.swrlRules.containsKey(ruleName))
       return Optional.<@NonNull SWRLAPIRule>empty();
@@ -377,7 +376,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
    * Get the result generator for a SQWRL query.
    */
   @NonNull @Override public SQWRLResultGenerator getSQWRLResultGenerator(@NonNull String queryName)
-      throws SQWRLException
+    throws SQWRLException
   {
     if (!this.sqwrlQueries.containsKey(queryName))
       throw new SQWRLInvalidQueryNameException(queryName);
@@ -392,13 +391,13 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
     String comment = rule.getComment();
 
     return SWRLAPIFactory.createSQWRLQuery(queryName, rule.getBodyAtoms(), rule.getHeadAtoms(), active, comment,
-        getSWRLAPIOWLDataFactory().getLiteralFactory(), getIRIResolver());
+      getSWRLAPIOWLDataFactory().getLiteralFactory(), getIRIResolver());
   }
 
   @NonNull private Optional<@NonNull String> getRuleName(@NonNull SWRLRule owlapiRule)
   {
     OWLAnnotationProperty labelAnnotation = getOWLDataFactory()
-        .getOWLAnnotationProperty(OWLRDFVocabulary.RDFS_LABEL.getIRI());
+      .getOWLAnnotationProperty(OWLRDFVocabulary.RDFS_LABEL.getIRI());
 
     for (OWLAnnotation annotation : owlapiRule.getAnnotations(labelAnnotation)) {
       if (annotation.getValue() instanceof OWLLiteral) {
@@ -412,7 +411,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
   private boolean getIsRuleEnabled(@NonNull SWRLRule owlapiRule)
   {
     OWLAnnotationProperty enabledAnnotationProperty = getOWLDataFactory()
-        .getOWLAnnotationProperty(IRI.create("http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"));
+      .getOWLAnnotationProperty(IRI.create("http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"));
 
     for (OWLAnnotation annotation : owlapiRule.getAnnotations(enabledAnnotationProperty)) {
       if (annotation.getValue() instanceof OWLLiteral) {
@@ -427,7 +426,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
   @NonNull private String getRuleComment(@NonNull SWRLRule owlapiRule)
   {
     OWLAnnotationProperty commentAnnotationProperty = getOWLDataFactory()
-        .getOWLAnnotationProperty(OWLRDFVocabulary.RDFS_COMMENT.getIRI());
+      .getOWLAnnotationProperty(OWLRDFVocabulary.RDFS_COMMENT.getIRI());
 
     for (OWLAnnotation annotation : owlapiRule.getAnnotations(commentAnnotationProperty)) {
       if (annotation.getValue() instanceof OWLLiteral) {
@@ -439,16 +438,16 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
   }
 
   @NonNull public Set<@NonNull OWLAnnotation> generateRuleAnnotations(@NonNull String ruleName, @NonNull String comment,
-      boolean isRuleEnabled)
+    boolean isRuleEnabled)
   {
     OWLAnnotation labelAnnotation = getOWLDataFactory()
-        .getOWLAnnotation(getOWLDataFactory().getRDFSLabel(), getOWLDataFactory().getOWLLiteral(ruleName));
+      .getOWLAnnotation(getOWLDataFactory().getRDFSLabel(), getOWLDataFactory().getOWLLiteral(ruleName));
     OWLAnnotation commentAnnotation = getOWLDataFactory()
-        .getOWLAnnotation(getOWLDataFactory().getRDFSComment(), getOWLDataFactory().getOWLLiteral(comment));
+      .getOWLAnnotation(getOWLDataFactory().getRDFSComment(), getOWLDataFactory().getOWLLiteral(comment));
     OWLAnnotationProperty isRuleEnabledAnnotationProperty = getOWLDataFactory()
-        .getOWLAnnotationProperty(IRI.create("http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"));
+      .getOWLAnnotationProperty(IRI.create("http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"));
     OWLAnnotation isRuleEnabledAnnotation = getOWLDataFactory()
-        .getOWLAnnotation(isRuleEnabledAnnotationProperty, getOWLDataFactory().getOWLLiteral(isRuleEnabled));
+      .getOWLAnnotation(isRuleEnabledAnnotationProperty, getOWLDataFactory().getOWLLiteral(isRuleEnabled));
 
     Set<@NonNull OWLAnnotation> annotations = new HashSet<>();
 
@@ -533,7 +532,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
    * @see org.swrlapi.core.SWRLAPIRule
    */
   @NonNull private SWRLAPIRule convertOWLAPIRule2SWRLAPIRule(@NonNull SWRLRule owlapiRule, @NonNull String ruleName,
-      @NonNull String comment, boolean isActive)
+    @NonNull String comment, boolean isActive)
   {
     List<@NonNull SWRLAtom> owlapiBodyAtoms = new ArrayList<>(owlapiRule.getBody());
     List<@NonNull SWRLAtom> owlapiHeadAtoms = new ArrayList<>(owlapiRule.getHead());
@@ -546,9 +545,10 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
         IRI builtInIRI = builtInAtom.getPredicate();
         String builtInPrefixedName = getIRIResolver().iri2PrefixedName(builtInIRI);
         List<@NonNull SWRLDArgument> swrlDArguments = builtInAtom.getArguments();
-        List<@NonNull SWRLBuiltInArgument> swrlBuiltInArguments = convertSWRLDArguments2SWRLBuiltInArguments(swrlDArguments);
+        List<@NonNull SWRLBuiltInArgument> swrlBuiltInArguments = convertSWRLDArguments2SWRLBuiltInArguments(
+          swrlDArguments);
         SWRLBuiltInAtom swrlapiBuiltInAtom = getSWRLAPIOWLDataFactory()
-            .getSWRLAPIBuiltInAtom(ruleName, builtInIRI, builtInPrefixedName, swrlBuiltInArguments);
+          .getSWRLAPIBuiltInAtom(ruleName, builtInIRI, builtInPrefixedName, swrlBuiltInArguments);
         swrlapiBodyAtoms.add(swrlapiBuiltInAtom);
       } else
         swrlapiBodyAtoms.add(atom); // Only built-in atoms are converted; other atoms remain the same
@@ -560,9 +560,10 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
         IRI builtInIRI = builtInAtom.getPredicate();
         String builtInPrefixedName = getIRIResolver().iri2PrefixedName(builtInIRI);
         List<@NonNull SWRLDArgument> swrlDArguments = builtInAtom.getArguments();
-        List<@NonNull SWRLBuiltInArgument> swrlBuiltInArguments = convertSWRLDArguments2SWRLBuiltInArguments(swrlDArguments);
+        List<@NonNull SWRLBuiltInArgument> swrlBuiltInArguments = convertSWRLDArguments2SWRLBuiltInArguments(
+          swrlDArguments);
         SWRLBuiltInAtom swrlapiBuiltInAtom = getSWRLAPIOWLDataFactory()
-            .getSWRLAPIBuiltInAtom(ruleName, builtInIRI, builtInPrefixedName, swrlBuiltInArguments);
+          .getSWRLAPIBuiltInAtom(ruleName, builtInIRI, builtInPrefixedName, swrlBuiltInArguments);
         swrlapiHeadAtoms.add(swrlapiBuiltInAtom);
       } else
         swrlapiHeadAtoms.add(atom); // Only built-in atoms are converted; other atoms remain the same
@@ -579,7 +580,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
    * @see org.swrlapi.builtins.arguments.SWRLBuiltInArgument
    */
   @NonNull private List<@NonNull SWRLBuiltInArgument> convertSWRLDArguments2SWRLBuiltInArguments(
-      @NonNull List<@NonNull SWRLDArgument> swrlDArguments)
+    @NonNull List<@NonNull SWRLDArgument> swrlDArguments)
   {
     List<@NonNull SWRLBuiltInArgument> swrlBuiltInArguments = new ArrayList<>();
 
@@ -612,7 +613,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
       return convertSWRLVariable2SWRLBuiltInArgument(swrlVariable);
     } else
       throw new SWRLAPIInternalException(
-          "Unknown " + SWRLDArgument.class.getName() + " class " + swrlDArgument.getClass().getName());
+        "Unknown " + SWRLDArgument.class.getName() + " class " + swrlDArgument.getClass().getName());
   }
 
   /**
@@ -668,7 +669,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
   private boolean isOWLClass(@NonNull IRI iri)
   {
     return getOWLOntology().containsClassInSignature(iri, Imports.INCLUDED) || iri
-        .equals(OWLRDFVocabulary.OWL_THING.getIRI()) || iri.equals(OWLRDFVocabulary.OWL_NOTHING.getIRI());
+      .equals(OWLRDFVocabulary.OWL_THING.getIRI()) || iri.equals(OWLRDFVocabulary.OWL_NOTHING.getIRI());
   }
 
   /**
@@ -695,7 +696,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
    * @see org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument
    */
   @NonNull private SWRLBuiltInArgument convertSWRLLiteralArgument2SWRLBuiltInArgument(
-      @NonNull SWRLLiteralArgument swrlLiteralArgument)
+    @NonNull SWRLLiteralArgument swrlLiteralArgument)
   {
     OWLLiteral literal = swrlLiteralArgument.getLiteral();
     OWLDatatype literalDatatype = literal.getDatatype();
@@ -1324,9 +1325,9 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
   private void generateOWLIndividualDeclarationAxiomIfNecessary(@NonNull OWLIndividual individual)
   {
     if (individual.isNamed() && !this.individualDeclarationAxioms
-        .containsKey(individual.asOWLNamedIndividual().getIRI())) {
+      .containsKey(individual.asOWLNamedIndividual().getIRI())) {
       OWLDeclarationAxiom axiom = getSWRLAPIOWLDataFactory()
-          .getOWLIndividualDeclarationAxiom(individual.asOWLNamedIndividual());
+        .getOWLIndividualDeclarationAxiom(individual.asOWLNamedIndividual());
       this.individualDeclarationAxioms.put(individual.asOWLNamedIndividual().getIRI(), axiom);
       this.assertedOWLAxioms.add(axiom);
       recordOWLNamedIndividual(individual.asOWLNamedIndividual());
@@ -1334,7 +1335,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
   }
 
   private void generateOWLObjectPropertyDeclarationAxiomIfNecessary(
-      @NonNull OWLObjectPropertyExpression propertyExpression)
+    @NonNull OWLObjectPropertyExpression propertyExpression)
   {
     if (propertyExpression instanceof OWLObjectProperty) {
       OWLObjectProperty property = (OWLObjectProperty)propertyExpression;
@@ -1548,34 +1549,33 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
   @NonNull private Set<@NonNull OWLDeclarationAxiom> getOWLClassDeclarationAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream()
-        .filter(owlDeclarationAxiom -> owlDeclarationAxiom.getEntity().isOWLClass()).collect(Collectors.toSet());
+      .filter(owlDeclarationAxiom -> owlDeclarationAxiom.getEntity().isOWLClass()).collect(Collectors.toSet());
   }
 
   @NonNull private Set<@NonNull OWLDeclarationAxiom> getOWLIndividualDeclarationAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream()
-        .filter(owlDeclarationAxiom -> owlDeclarationAxiom.getEntity().isOWLNamedIndividual())
-        .collect(Collectors.toSet());
+      .filter(owlDeclarationAxiom -> owlDeclarationAxiom.getEntity().isOWLNamedIndividual())
+      .collect(Collectors.toSet());
   }
 
   @NonNull private Set<@NonNull OWLDeclarationAxiom> getOWLObjectPropertyDeclarationAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream()
-        .filter(owlDeclarationAxiom -> owlDeclarationAxiom.getEntity().isOWLObjectProperty())
-        .collect(Collectors.toSet());
+      .filter(owlDeclarationAxiom -> owlDeclarationAxiom.getEntity().isOWLObjectProperty()).collect(Collectors.toSet());
   }
 
   @NonNull private Set<@NonNull OWLDeclarationAxiom> getOWLDataPropertyDeclarationAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream()
-        .filter(owlDeclarationAxiom -> owlDeclarationAxiom.getEntity().isOWLDataProperty()).collect(Collectors.toSet());
+      .filter(owlDeclarationAxiom -> owlDeclarationAxiom.getEntity().isOWLDataProperty()).collect(Collectors.toSet());
   }
 
   @NonNull private Set<@NonNull OWLDeclarationAxiom> getOWLAnnotationPropertyDeclarationAxioms()
   {
     return getOWLOntology().getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream()
-        .filter(owlDeclarationAxiom -> owlDeclarationAxiom.getEntity().isOWLAnnotationProperty())
-        .collect(Collectors.toSet());
+      .filter(owlDeclarationAxiom -> owlDeclarationAxiom.getEntity().isOWLAnnotationProperty())
+      .collect(Collectors.toSet());
   }
 
   private void recordOWLClass(@NonNull OWLEntity cls)
