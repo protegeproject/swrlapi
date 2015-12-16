@@ -21,8 +21,6 @@ public class DefaultOWL2RLPersistenceLayer implements OWL2RLPersistenceLayer
 
   @NonNull @Override public Set<OWL2RLNames.OWL2RLRule> getEnabledRules()
   { // If not explicitly disabled, assume enabled
-    //    return EnumSet.allOf(OWL2RLNames.OWL2RLRule.class).stream().filter(rule -> !isOWL2RLRuleDisabled(rule))
-    //      .collect(Collectors.toSet());
     Set<OWL2RLNames.OWL2RLRule> enabledRules = new HashSet<>();
     for (OWL2RLNames.OWL2RLRule rule : EnumSet.allOf(OWL2RLNames.OWL2RLRule.class))
       if (!isOWL2RLRuleDisabled(rule))

@@ -130,11 +130,6 @@ class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SWRLAPIBu
 
   @NonNull @Override public Set<@NonNull String> getUnboundArgumentVariablePrefixedNames()
   {
-//  TODO
-//  Set<@NonNull String> result = this.arguments.stream()
-//      .filter(argument -> argument.isVariable() && argument.asVariable().isUnbound())
-//      .map(argument -> argument.asVariable().getVariablePrefixedName()).collect(Collectors.toSet());
-
     Set<@NonNull String> unboundArgumentVariablePrefixNames = new HashSet<>();
     for (SWRLBuiltInArgument argument : this.arguments) {
       if (argument.isVariable() && argument.asVariable().isUnbound())
@@ -155,9 +150,6 @@ class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SWRLAPIBu
 
   @NonNull @Override public List<@NonNull String> getArgumentsVariablePrefixedNames()
   {
-//  TODO   List<@NonNull String> result = this.arguments.stream().filter(SWRLBuiltInArgument::isVariable)
-//      .map(argument -> argument.asVariable().getVariablePrefixedName()).collect(Collectors.toList());
-
     List<@NonNull String> argumentsVariablePrefixNames = new ArrayList<>();
     for (SWRLBuiltInArgument argument : this.arguments) {
       if (argument.isVariable())

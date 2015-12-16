@@ -396,7 +396,8 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
   private void exportOWLAxioms2TargetRuleEngine(@NonNull Set<@NonNull OWLAxiom> axioms)
       throws SWRLRuleEngineException, TargetSWRLRuleEngineException
   {
-    axioms.stream().forEach(axiom -> getTargetSWRLRuleEngine().defineOWLAxiom(axiom));
+    for (OWLAxiom axiom : axioms)
+      getTargetSWRLRuleEngine().defineOWLAxiom(axiom);
   }
 
   private void writeOWLAxioms2OWLOntology(@NonNull Set<@NonNull OWLAxiom> axioms) throws SWRLRuleEngineException

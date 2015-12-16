@@ -968,8 +968,6 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 
     try {
       Collections.sort(localRows, rowComparator); // Binary search is expecting a sorted list
-// TODO      localRows.stream().filter(row -> Collections.binarySearch(processedRows, row, rowComparator) < 0)
-//          .forEach(processedRows::add);
       for (List<@NonNull SQWRLResultValue> row : localRows) {
         if (Collections.binarySearch(processedRows, row, rowComparator) < 0)
           processedRows.add(row);
@@ -1259,9 +1257,6 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
     {
       this.ascending = ascending;
       this.orderByColumnIndexes = new ArrayList<>();
-
-//     TODO  this.orderByColumnIndexes
-//          .addAll(allColumnNames.stream().map(allColumnNames::indexOf).collect(Collectors.toList()));
 
       for (String columnName : allColumnNames)
         this.orderByColumnIndexes.add(allColumnNames.indexOf(columnName));

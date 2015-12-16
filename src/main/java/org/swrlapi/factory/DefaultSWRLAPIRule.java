@@ -113,9 +113,6 @@ public class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
       // passed the bound value of this variable during rule execution.
       // Tell the built-in that it is expected to bind this argument
       // Flag as a bound variable for later built-ins
-      // TODO Checker does not like this so remove
-      //      builtInAtom.getBuiltInArguments().stream().filter(SWRLBuiltInArgument::isVariable).forEach(argument -> {
-      //        IRI argumentVariableIRI = argument.asVariable().getIRI();
       for (SWRLBuiltInArgument argument : builtInAtom.getBuiltInArguments()) {
         if (argument.isVariable()) {
           IRI argumentVariableIRI = argument.asVariable().getIRI();
@@ -170,9 +167,6 @@ public class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
   {
     List<@NonNull SWRLAPIBuiltInAtom> result = new ArrayList<>();
 
-    //       // TODO Checker does not like this so remove
-
-    //    atoms.stream().filter(atom -> atom instanceof SWRLAPIBuiltInAtom).forEach(atom -> {
     for (SWRLAtom atom : atoms) {
       if (atom instanceof SWRLBuiltInAtom) {
         SWRLAPIBuiltInAtom builtInAtom = (SWRLAPIBuiltInAtom)atom;
@@ -187,8 +181,6 @@ public class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
   {
     Set<@NonNull IRI> referencedVariableIRIs = new HashSet<>();
 
-    //       // TODO Checker does not like this so remove
-    //    atom.getAllArguments().stream().filter(argument -> argument instanceof SWRLVariable).forEach(argument -> {
     for (SWRLArgument argument : atom.getAllArguments()) {
       if (argument instanceof SWRLVariable) {
         SWRLVariable variable = (SWRLVariable)argument;
