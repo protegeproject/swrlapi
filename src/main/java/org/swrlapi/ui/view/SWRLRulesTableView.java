@@ -8,6 +8,8 @@ import org.swrlapi.ui.model.SWRLRuleEngineModel;
 import org.swrlapi.ui.model.SWRLRulesTableModel;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -43,7 +45,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
   @NonNull private final JButton editButton, deleteButton;
 
   public SWRLRulesTableView(@NonNull SWRLRuleEngineModel swrlRuleEngineModel,
-      @NonNull SWRLRuleEngineDialogManager dialogManager)
+    @NonNull SWRLRuleEngineDialogManager dialogManager)
   {
     this.swrlRuleEngineModel = swrlRuleEngineModel;
     this.dialogManager = dialogManager;
@@ -123,18 +125,22 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
       @Override public void mouseClicked(@NonNull MouseEvent e)
       {
         if (e.getClickCount() == 2) {
-          if (e.getSource() == SWRLRulesTableView.this.swrlRulesTable) {
+          if (e.getSource() == SWRLRulesTableView.this.swrlRulesTable)
             editSelectedSWRLRule();
-          }
         }
       }
     });
 
-    this.swrlRulesTable.getSelectionModel().addListSelectionListener(e -> {
-      if (hasSelectedRule())
-        enableEditAndDelete();
-      else
-        disableEditAndDelete();
+    // TODO    this.swrlRulesTable.getSelectionModel().addListSelectionListener(e -> {
+    this.swrlRulesTable.getSelectionModel().addListSelectionListener(new ListSelectionListener()
+    {
+      @Override public void valueChanged(ListSelectionEvent e)
+      {
+        if (hasSelectedRule())
+          enableEditAndDelete();
+        else
+          disableEditAndDelete();
+      }
     });
   }
 
@@ -264,7 +270,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 
       if (selectedRuleName.isPresent()) {
         if (SWRLRulesTableView.this.getSWRLRulesTableModel().hasSWRLRule(selectedRuleName.get()) && this.dialogManager
-            .showConfirmDialog(this.parent, "Do you really want to delete the rule?", "Delete Rule")) {
+          .showConfirmDialog(this.parent, "Do you really want to delete the rule?", "Delete Rule")) {
           getSWRLRuleEngineModel().getSWRLRuleEngine().deleteSWRLRule(selectedRuleName.get());
           getSWRLRuleEngineModel().updateView();
         }
