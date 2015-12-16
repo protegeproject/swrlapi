@@ -45,16 +45,18 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
   @NonNull private final List<@NonNull String> allColumnNames, columnDisplayNames;
   @NonNull private final List<@NonNull Integer> selectedColumnIndexes, orderByColumnIndexes;
   @NonNull private final Map<@NonNull Integer, @NonNull String> aggregateColumnIndexes; // Map of (index, function) pairs
-  @NonNull private List<@NonNull List<@NonNull SQWRLResultValue>> rows; // List of List of SQWRLResultValue objects.
-  @NonNull private List<@NonNull SQWRLResultValue> rowData; // List of SQWRLResultValue objects used when assembling a row.
-  @NonNull private Map<@NonNull String, @NonNull List<@NonNull SQWRLResultValue>> columnValuesMap; // Column name -> List<@NonNull SQWRLResultValue>
-
-  private int numberOfColumns, currentRowIndex, currentRowDataColumnIndex;
+  private int numberOfColumns, currentRowDataColumnIndex;
   private boolean isConfigured, isPrepared, isRowOpen, isOrdered, isAscending, isDistinct, hasAggregates;
   private int limit = -1, nth = -1, firstN = -1, lastN = -1, sliceSize = -1;
   private boolean notNthSelection = false, firstSelection = false, lastSelection = false, notFirstSelection = false;
   private boolean notLastSelection = false, nthSliceSelection = false, notNthSliceSelection = false;
   private boolean nthLastSliceSelection = false, notNthLastSliceSelection = false;
+
+  // The following variables will not be externally meaningful until prepared() is called.
+  @NonNull private List<@NonNull List<@NonNull SQWRLResultValue>> rows; // List of List of SQWRLResultValue objects.
+  @NonNull private List<@NonNull SQWRLResultValue> rowData; // List of SQWRLResultValue objects used when assembling a row.
+  @NonNull private Map<@NonNull String, @NonNull List<@NonNull SQWRLResultValue>> columnValuesMap; // Column name -> List<@NonNull SQWRLResultValue>
+  private int currentRowIndex;
 
   public DefaultSQWRLResultManager(@NonNull DefaultPrefixManager prefixManager)
   {
@@ -78,9 +80,11 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
     this.numberOfColumns = 0;
     this.isOrdered = this.isAscending = this.isDistinct = false;
 
-    // The following variables will not be externally valid until prepared() is called.
-    this.currentRowIndex = -1; // If there are no rows in the final result, it will remain at -1.
+    // The following variables will not be externally meaningful until prepared() is called.
     this.rows = new ArrayList<>();
+    this.rowData = new ArrayList<>();
+    this.columnValuesMap = new HashMap<>();
+    this.currentRowIndex = -1; // If there are no rows in the final result, it will remain at -1.
   }
 
   // Configuration phase methods
@@ -1078,10 +1082,10 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
   @NonNull private SQWRLLiteralResultValue min(@NonNull List<@NonNull SQWRLLiteralResultValue> columnValues,
       int columnIndex) throws SQWRLException
   {
-    SQWRLLiteralResultValue result = null;
-
     if (columnValues.isEmpty())
       throw new SQWRLException("empty aggregate list for " + SQWRLResultNames.MinAggregateFunction);
+
+    SQWRLLiteralResultValue result = columnValues.get(0);
 
     int rowIndex = 0;
     for (SQWRLLiteralResultValue value : columnValues) {
@@ -1105,10 +1109,10 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
   @NonNull private SQWRLLiteralResultValue max(@NonNull List<@NonNull SQWRLLiteralResultValue> columnValues,
       int columnIndex) throws SQWRLException
   {
-    SQWRLLiteralResultValue result = null;
-
     if (columnValues.isEmpty())
       throw new SQWRLException("empty aggregate list for " + SQWRLResultNames.MaxAggregateFunction);
+
+    SQWRLLiteralResultValue result = columnValues.get(0);
 
     int rowIndex = 0;
     for (SQWRLLiteralResultValue value : columnValues) {
