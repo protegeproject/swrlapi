@@ -1,7 +1,6 @@
 package org.swrlapi.bridge.converters;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.swrlapi.bridge.converters.TargetRuleEngineConverter;
 import org.swrlapi.exceptions.TargetSWRLRuleEngineException;
 import org.swrlapi.sqwrl.SQWRLQuery;
 
