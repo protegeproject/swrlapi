@@ -29,6 +29,7 @@
     <annotatedJdk>${org.checkerframework:jdk8:jar}</annotatedJdk>
     <junit.version>4.11</junit.version>
     <org.hamcrest.core.version>1.3</org.hamcrest.core.version>
+    <slf4j.version>1.7.13</slf4j.version>
     
     <maven.release.plugin.version>1.9</maven.release.plugin.version>
     <maven.compiler.plugin.version>2.3.2</maven.compiler.plugin.version>
@@ -174,6 +175,20 @@
       <version>${org.hamcrest.core.version}</version>
     </dependency>
 
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>${slf4j.version}</version>
+      <scope>test</scope>
+    </dependency>
+
   </dependencies>
 
   <build>
@@ -186,19 +201,19 @@
         <configuration>
           <source>${java.version}</source>
           <target>${java.version}</target>
-<!--
-          <fork>true</fork>
-          <annotationProcessors>
-            <annotationProcessor>org.checkerframework.checker.nullness.NullnessChecker</annotationProcessor>
-          </annotationProcessors>
-          <compilerArgs>
-            <arg>-Xbootclasspath/p:${annotatedJdk}</arg>
-          </compilerArgs>
--->
+          <!--
+              <fork>true</fork>
+              <annotationProcessors>
+              <annotationProcessor>org.checkerframework.checker.nullness.NullnessChecker</annotationProcessor>
+              </annotationProcessors>
+              <compilerArgs>
+              <arg>-Xbootclasspath/p:${annotatedJdk}</arg>
+              </compilerArgs>
+          -->
         </configuration>
       </plugin>
 
-            <plugin>
+      <plugin>
         <!-- This plugin will set properties values using dependency information -->
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
