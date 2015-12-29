@@ -70,7 +70,7 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
   @NonNull private final Border loweredBevelBorder;
   @NonNull private final Border yellowBorder;
 
-  private Optional<@NonNull SWRLRuleEditorAutoCompleteState> autoCompleteState = Optional.<@NonNull SWRLRuleEditorAutoCompleteState>empty(); // Present if auto-complete
+  @NonNull private Optional<@NonNull SWRLRuleEditorAutoCompleteState> autoCompleteState = Optional.<@NonNull SWRLRuleEditorAutoCompleteState>empty(); // Present if auto-complete
   private boolean editMode = false;
 
   public SWRLRuleEditorDialog(@NonNull SWRLRuleEngineModel swrlRuleEngineModel,
@@ -278,7 +278,7 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
 
   private boolean isInAutoCompleteMode()
   {
-    return this.autoCompleteState != null;
+    return this.autoCompleteState.isPresent();
   }
 
   private void enableAutoCompleteMode(@NonNull SWRLRuleEditorAutoCompleteState autoCompleteState)

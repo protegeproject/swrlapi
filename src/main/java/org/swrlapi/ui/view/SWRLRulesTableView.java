@@ -51,8 +51,8 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
     this.dialogManager = dialogManager;
     this.swrlRulesTable = new JTable(this.swrlRuleEngineModel.getSWRLRulesTableModel());
     this.swrlRulesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    this.deleteButton = new JButton(EDIT_BUTTON_TITLE);
-    this.editButton = new JButton(DELETE_BUTTON_TITLE);
+    this.deleteButton = new JButton(DELETE_BUTTON_TITLE);
+    this.editButton = new JButton(EDIT_BUTTON_TITLE);
   }
 
   @Override public void initialize()
