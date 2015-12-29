@@ -33,7 +33,7 @@
     <maven.release.plugin.version>1.9</maven.release.plugin.version>
     <maven.compiler.plugin.version>2.3.2</maven.compiler.plugin.version>
     <maven.dependency.plugin.version>2.3</maven.dependency.plugin.version>
-    <maven.bundle.plugin.version>2.5.3</maven.bundle.plugin.version>
+    <maven.bundle.plugin.version>2.5.4</maven.bundle.plugin.version>
     <maven.source.plugin.version>2.2.1</maven.source.plugin.version>
     <maven.release.plugin.version>2.5</maven.release.plugin.version>
     <maven.javadoc.plugin.version>2.9.1</maven.javadoc.plugin.version>
