@@ -1,6 +1,8 @@
 package org.swrlapi.ui.dialog;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.parser.SWRLIncompleteRuleException;
@@ -23,6 +25,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -60,6 +64,8 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
   private static final int BUTTON_PREFERRED_HEIGHT = 30;
   private static final int RULE_EDIT_AREA_COLUMNS = 20;
   private static final int RULE_EDIT_AREA_ROWS = 60;
+
+  private static final Logger log = LoggerFactory.getLogger(SWRLRuleEditorDialog.class);
 
   @NonNull private final SWRLRuleEngineModel swrlRuleEngineModel;
   @NonNull private final SWRLRuleEngineDialogManager dialogManager;
@@ -427,6 +433,10 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
           getDialogManager().showErrorMessageDialog(this.parent, (pe.getMessage() != null ? pe.getMessage() : ""),
             INTERNAL_ERROR_TITLE);
           errorOccurred = true;
+          StringWriter sw = new StringWriter();
+          PrintWriter pw = new PrintWriter(sw);
+          pe.printStackTrace(pw);
+          log.warn(sw.toString());
         }
       }
 
