@@ -23,7 +23,7 @@ public class XSDDateTime extends XSDType<XSDDateTime>
   {
     super(XSDTimeUtil.utilDate2XSDDateTimeString(datetime), XSDVocabulary.DATE_TIME.getIRI());
 
-    this.datetime = datetime;
+    this.datetime = new Date(datetime.getTime());
   }
 
   @Override protected void validate()

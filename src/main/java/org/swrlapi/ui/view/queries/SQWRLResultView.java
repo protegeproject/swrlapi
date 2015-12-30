@@ -18,7 +18,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 
 /**
  * A view holding the result for a single SQWRL query.
@@ -155,7 +157,8 @@ public class SQWRLResultView extends JPanel implements SWRLAPIView
         if (returnValue == JFileChooser.APPROVE_OPTION) {
           File selectedFile = this.chooser.getSelectedFile();
           currentDirectory = this.chooser.getCurrentDirectory();
-          FileWriter writer = new FileWriter(selectedFile);
+          OutputStream fileOutputStream = new FileOutputStream(selectedFile);
+          OutputStreamWriter writer = new OutputStreamWriter(fileOutputStream, "UTF8");
           SQWRLResultView.this.sqwrlResult = SQWRLResultView.this.getSQWRLQueryEngine()
             .getSQWRLResult(SQWRLResultView.this.queryName);
 

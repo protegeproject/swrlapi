@@ -189,4 +189,38 @@ public class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
     }
     return referencedVariableIRIs;
   }
+
+  @Override public boolean equals(Object o)
+  {
+    if (this == o)
+      return true;
+    if (o == null || getClass() != o.getClass())
+      return false;
+    if (!super.equals(o))
+      return false;
+
+    DefaultSWRLAPIRule that = (DefaultSWRLAPIRule)o;
+
+    if (active != that.active)
+      return false;
+    if (ruleName != null ? !ruleName.equals(that.ruleName) : that.ruleName != null)
+      return false;
+    if (comment != null ? !comment.equals(that.comment) : that.comment != null)
+      return false;
+    if (bodyAtoms != null ? !bodyAtoms.equals(that.bodyAtoms) : that.bodyAtoms != null)
+      return false;
+    return headAtoms != null ? headAtoms.equals(that.headAtoms) : that.headAtoms == null;
+
+  }
+
+  @Override public int hashCode()
+  {
+    int result = super.hashCode();
+    result = 31 * result + (ruleName != null ? ruleName.hashCode() : 0);
+    result = 31 * result + (active ? 1 : 0);
+    result = 31 * result + (comment != null ? comment.hashCode() : 0);
+    result = 31 * result + (bodyAtoms != null ? bodyAtoms.hashCode() : 0);
+    result = 31 * result + (headAtoms != null ? headAtoms.hashCode() : 0);
+    return result;
+  }
 }

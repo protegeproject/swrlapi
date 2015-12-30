@@ -195,4 +195,48 @@ class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SWRLAPIBu
     if (argumentNumber < 0 || argumentNumber > this.arguments.size())
       throw new SWRLAPIException("invalid (0-offset) argument #" + argumentNumber);
   }
+
+  @Override public boolean equals(Object o)
+  {
+    if (this == o)
+      return true;
+    if (o == null || getClass() != o.getClass())
+      return false;
+    if (!super.equals(o))
+      return false;
+
+    DefaultSWRLAPIBuiltInAtom that = (DefaultSWRLAPIBuiltInAtom)o;
+
+    if (sqwrlCollectionResultsUsed != that.sqwrlCollectionResultsUsed)
+      return false;
+    if (builtInIndex != that.builtInIndex)
+      return false;
+    if (ruleName != null ? !ruleName.equals(that.ruleName) : that.ruleName != null)
+      return false;
+    if (builtInIRI != null ? !builtInIRI.equals(that.builtInIRI) : that.builtInIRI != null)
+      return false;
+    if (builtInPrefixedName != null ?
+      !builtInPrefixedName.equals(that.builtInPrefixedName) :
+      that.builtInPrefixedName != null)
+      return false;
+    if (arguments != null ? !arguments.equals(that.arguments) : that.arguments != null)
+      return false;
+    return pathVariablePrefixedNames != null ?
+      pathVariablePrefixedNames.equals(that.pathVariablePrefixedNames) :
+      that.pathVariablePrefixedNames == null;
+
+  }
+
+  @Override public int hashCode()
+  {
+    int result = super.hashCode();
+    result = 31 * result + (ruleName != null ? ruleName.hashCode() : 0);
+    result = 31 * result + (builtInIRI != null ? builtInIRI.hashCode() : 0);
+    result = 31 * result + (builtInPrefixedName != null ? builtInPrefixedName.hashCode() : 0);
+    result = 31 * result + (arguments != null ? arguments.hashCode() : 0);
+    result = 31 * result + (pathVariablePrefixedNames != null ? pathVariablePrefixedNames.hashCode() : 0);
+    result = 31 * result + (sqwrlCollectionResultsUsed ? 1 : 0);
+    result = 31 * result + builtInIndex;
+    return result;
+  }
 }

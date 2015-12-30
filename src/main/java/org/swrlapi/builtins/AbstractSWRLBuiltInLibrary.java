@@ -104,19 +104,21 @@ public abstract class AbstractSWRLBuiltInLibrary
 
   @NonNull @Override public String getInvokingRuleName() throws SWRLBuiltInLibraryException
   {
-    if (this.invokingRuleName.length() == 0)
-      throw new SWRLBuiltInLibraryException(
-        "invalid call to getInvokingRuleName - should only be called from within a built-in");
-
+    synchronized (this) {
+      if (this.invokingRuleName.length() == 0)
+        throw new SWRLBuiltInLibraryException(
+          "invalid call to getInvokingRuleName - should only be called from within a built-in");
+    }
     return this.invokingRuleName;
   }
 
   @Override public int getInvokingBuiltInIndex() throws SWRLBuiltInLibraryException
   {
-    if (this.invokingBuiltInIndex == -1)
-      throw new SWRLBuiltInLibraryException(
-        "invalid call to getInvokingBuiltInIndex - should only be called from within a built-in");
-
+    synchronized (this) {
+      if (this.invokingBuiltInIndex == -1)
+        throw new SWRLBuiltInLibraryException(
+          "invalid call to getInvokingBuiltInIndex - should only be called from within a built-in");
+    }
     return this.invokingBuiltInIndex;
   }
 
