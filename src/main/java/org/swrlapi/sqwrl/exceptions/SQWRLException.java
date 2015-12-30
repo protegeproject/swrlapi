@@ -1,7 +1,6 @@
 package org.swrlapi.sqwrl.exceptions;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 
 public class SQWRLException extends SWRLBuiltInException

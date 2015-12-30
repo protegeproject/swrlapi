@@ -131,7 +131,6 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
       }
     });
 
-    // TODO    this.swrlRulesTable.getSelectionModel().addListSelectionListener(e -> {
     this.swrlRulesTable.getSelectionModel().addListSelectionListener(new ListSelectionListener()
     {
       @Override public void valueChanged(ListSelectionEvent e)

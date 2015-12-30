@@ -1000,7 +1000,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
           rowComparator); // Find row with same values for non aggregated columns
 
       if (foundRowIndex.isPresent()) { // Row with same values for non aggregated columns not yet present in result.
-        aggregateRowMap = aggregatesMap.get(Integer.valueOf(foundRowIndex.get())); // Find the aggregate map
+        aggregateRowMap = aggregatesMap.get(foundRowIndex.get()); // Find the aggregate map
         for (Integer aggregateColumnIndex : this.aggregateColumnIndexes.keySet()) {
           value = row.get(aggregateColumnIndex); // Find value
           values = aggregateRowMap.get(aggregateColumnIndex); // Find row map
