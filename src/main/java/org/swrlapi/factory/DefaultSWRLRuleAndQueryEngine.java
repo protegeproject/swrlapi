@@ -347,6 +347,11 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
     return this;
   }
 
+  @NonNull @Override public SWRLAPIOWLOntology getSWRLAPIOWLOntology()
+  {
+    return this.swrlapiOWLOntology;
+  }
+
   private void reset()
   {
     try {
@@ -354,7 +359,6 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
       getTargetSWRLRuleEngine().resetRuleEngine(); // Reset the target rule engine
       getBuiltInBridgeController().reset();
       getOWL2RLEngine().resetRuleSelectionChanged();
-      getSWRLAPIOWLOntology().resetOntologyChanged();
       this.swrlapiOWLOntology.processOntology();
     } catch (SQWRLException e) {
       throw new SWRLRuleEngineException("error running rule engine: " + (e.getMessage() != null ? e.getMessage() : ""),
@@ -419,11 +423,6 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
   @NonNull private OWLOntologyManager getOWLOntologyManager()
   {
     return this.getSWRLAPIOWLOntology().getOWLOntologyManager();
-  }
-
-  @NonNull private SWRLAPIOWLOntology getSWRLAPIOWLOntology()
-  {
-    return this.swrlapiOWLOntology;
   }
 
   @NonNull private SWRLBuiltInBridgeController getBuiltInBridgeController()

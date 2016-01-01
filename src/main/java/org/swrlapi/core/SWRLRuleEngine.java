@@ -216,4 +216,9 @@ public interface SWRLRuleEngine
    * @return The number of asserted OWL data property declaration axioms
    */
   int getNumberOfAssertedOWLDataPropertyDeclarationAxioms();
+
+  /**
+   * @return The underlying OWL ontology
+   */
+  @NonNull SWRLAPIOWLOntology getSWRLAPIOWLOntology();
 }

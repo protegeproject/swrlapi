@@ -31,6 +31,7 @@ import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLEquivalentClassesAxiom;
 import org.semanticweb.owlapi.model.OWLEquivalentDataPropertiesAxiom;
 import org.semanticweb.owlapi.model.OWLEquivalentObjectPropertiesAxiom;
+import org.semanticweb.owlapi.model.OWLException;
 import org.semanticweb.owlapi.model.OWLFunctionalDataPropertyAxiom;
 import org.semanticweb.owlapi.model.OWLFunctionalObjectPropertyAxiom;
 import org.semanticweb.owlapi.model.OWLHasKeyAxiom;
@@ -48,6 +49,8 @@ import org.semanticweb.owlapi.model.OWLObjectPropertyDomainAxiom;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.model.OWLObjectPropertyRangeAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyChange;
+import org.semanticweb.owlapi.model.OWLOntologyChangeListener;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.OWLReflexiveObjectPropertyAxiom;
 import org.semanticweb.owlapi.model.OWLSameIndividualAxiom;
@@ -69,6 +72,8 @@ import org.semanticweb.owlapi.model.parameters.Imports;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.semanticweb.owlapi.vocab.OWL2Datatype;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.core.IRIResolver;
@@ -88,6 +93,7 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.exceptions.SQWRLInvalidQueryNameException;
 import org.swrlapi.ui.model.SWRLAutoCompleter;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -98,8 +104,10 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
+class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChangeListener
 {
+  private static final Logger log = LoggerFactory.getLogger(DefaultSWRLAPIOWLOntology.class);
+
   @NonNull private final OWLOntology ontology;
   @NonNull private final DefaultPrefixManager prefixManager;
   @NonNull private final IRIResolver iriResolver;
@@ -118,6 +126,8 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
   @NonNull private final Map<@NonNull IRI, @NonNull OWLDeclarationAxiom> objectPropertyDeclarationAxioms;
   @NonNull private final Map<@NonNull IRI, @NonNull OWLDeclarationAxiom> dataPropertyDeclarationAxioms;
   @NonNull private final Map<@NonNull IRI, @NonNull OWLDeclarationAxiom> annotationPropertyDeclarationAxioms;
+
+  private boolean hasOntologyChanged = false;
 
   public DefaultSWRLAPIOWLOntology(@NonNull OWLOntology ontology, @NonNull DefaultPrefixManager prefixManager)
   {
@@ -140,10 +150,13 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
     this.annotationPropertyDeclarationAxioms = new HashMap<>();
 
     addDefaultSWRLBuiltIns();
+
+    this.ontology.getOWLOntologyManager().addOntologyChangeListener(this);
   }
 
   @Override public void processOntology() throws SQWRLException
-  {
+  { // TODO If ontology has not changed do not reprocess
+    
     reset();
 
     processSWRLRulesAndSQWRLQueries();
@@ -165,6 +178,8 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
     this.objectPropertyDeclarationAxioms.clear();
     this.dataPropertyDeclarationAxioms.clear();
     this.annotationPropertyDeclarationAxioms.clear();
+
+    this.hasOntologyChanged = false;
   }
 
   @NonNull @Override public SWRLAPIRule createSWRLRule(@NonNull String ruleName, @NonNull String rule)
@@ -485,12 +500,12 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
 
   @Override public boolean hasOntologyChanged()
   {
-    return true; // TODO implement hasOntologyChanged
+    return this.hasOntologyChanged;
   }
 
   @Override public void resetOntologyChanged()
   {
-    // TODO implement resetOntologyChanged
+    hasOntologyChanged = false;
   }
 
   // void addRuleNameAnnotation(@NonNull SWRLRule rule, @NonNull String ruleName)
@@ -1603,4 +1618,9 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology
     getIRIResolver().recordOWLAnnotationProperty(property);
   }
 
+  @Override public void ontologiesChanged(@Nonnull List<? extends OWLOntologyChange> list) throws OWLException
+  {
+    this.hasOntologyChanged = true;
+    log.info("ontology changed");
+  }
 }
