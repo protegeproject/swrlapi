@@ -127,7 +127,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
   @NonNull private final Map<@NonNull IRI, @NonNull OWLDeclarationAxiom> dataPropertyDeclarationAxioms;
   @NonNull private final Map<@NonNull IRI, @NonNull OWLDeclarationAxiom> annotationPropertyDeclarationAxioms;
 
-  private boolean hasOntologyChanged = false;
+  private boolean hasOntologyChanged = true; // Ensure initial processing
 
   public DefaultSWRLAPIOWLOntology(@NonNull OWLOntology ontology, @NonNull DefaultPrefixManager prefixManager)
   {
@@ -155,10 +155,8 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
   }
 
   @Override public void processOntology() throws SQWRLException
-  { // TODO If ontology has not changed do not reprocess
-    
-    reset();
-
+  { // TODO If ontology has not changed do not reprocess; however, will break currently
+    reset(); // Will reset hasOntologyChanged
     processSWRLRulesAndSQWRLQueries();
     processOWLAxioms();
   }

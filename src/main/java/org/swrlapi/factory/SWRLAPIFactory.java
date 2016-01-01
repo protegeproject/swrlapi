@@ -415,12 +415,15 @@ public class SWRLAPIFactory
    * @return A SWRLAPI-based wrapper of an OWL ontology
    */
   @NonNull public static SWRLAPIOWLOntology createSWRLAPIOntology(@NonNull OWLOntology ontology,
-    @NonNull DefaultPrefixManager prefixManager)
+    @NonNull DefaultPrefixManager prefixManager) throws SQWRLException
   {
     addDefaultPrefixes(ontology, prefixManager);
     addSWRLAPIBuiltInOntologies(ontology);
 
-    return new DefaultSWRLAPIOWLOntology(ontology, prefixManager);
+    SWRLAPIOWLOntology swrlapiowlOntology = new DefaultSWRLAPIOWLOntology(ontology, prefixManager);
+    swrlapiowlOntology.processOntology();
+
+    return swrlapiowlOntology;
   }
 
   /**

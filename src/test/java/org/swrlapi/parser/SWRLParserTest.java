@@ -17,6 +17,7 @@ import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.factory.SWRLAPIFactory;
+import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.test.IntegrationTestBase;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -52,7 +53,7 @@ public class SWRLParserTest extends IntegrationTestBase
   private static final OWLDataProperty HAS_LAST_ACCESS_TIME = DataProperty(iri("hasLastAccessTime"));
 
   @Test public void TestClassAtomInConsequentWithShortNamedIndividual()
-    throws SWRLParseException, OWLOntologyCreationException
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -68,7 +69,7 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestClassAtomInConsequentWithPrefixedNamedIndividual()
-    throws SWRLParseException, OWLOntologyCreationException
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -83,7 +84,8 @@ public class SWRLParserTest extends IntegrationTestBase
     assertThat(rule.getHeadAtoms().get(0), instanceOf(SWRLClassAtom.class));
   }
 
-  @Test public void TestClassAtomInAntecedentWithVariable() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestClassAtomInAntecedentWithVariable()
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -98,7 +100,7 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestClassAtomInAntecedentWithPrefixedVariable()
-    throws SWRLParseException, OWLOntologyCreationException
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -112,7 +114,8 @@ public class SWRLParserTest extends IntegrationTestBase
     assertThat(rule.getBodyAtoms().get(0), instanceOf(SWRLClassAtom.class));
   }
 
-  @Test public void TestClassAtomInAntecedentWithName() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestClassAtomInAntecedentWithName()
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -136,7 +139,7 @@ public class SWRLParserTest extends IntegrationTestBase
   // assertThat(rule.getHeadAtoms().get(0), instanceOf(SWRLClassAtom.class));
   // }
 
-  @Test public void TestStringLiteral() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestStringLiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -150,7 +153,8 @@ public class SWRLParserTest extends IntegrationTestBase
     assertThat(rule.getBodyAtoms().get(0), instanceOf(SWRLDataPropertyAtom.class));
   }
 
-  @Test public void TestRawBooleanTrueLowerCaseLiteral() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestRawBooleanTrueLowerCaseLiteral()
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -164,7 +168,8 @@ public class SWRLParserTest extends IntegrationTestBase
     assertThat(rule.getBodyAtoms().get(0), instanceOf(SWRLDataPropertyAtom.class));
   }
 
-  @Test public void TestRawBooleanFalseLowerCaseLiteral() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestRawBooleanFalseLowerCaseLiteral()
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -178,7 +183,8 @@ public class SWRLParserTest extends IntegrationTestBase
     assertThat(rule.getBodyAtoms().get(0), instanceOf(SWRLDataPropertyAtom.class));
   }
 
-  @Test public void TestRawBooleanTrueUpperCaseLiteral() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestRawBooleanTrueUpperCaseLiteral()
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -189,7 +195,8 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "isFrench(?f, True) ->");
   }
 
-  @Test public void TestRawBooleanFalseUpperCaseLiteral() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestRawBooleanFalseUpperCaseLiteral()
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -200,7 +207,8 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "isFrench(?f, False) ->");
   }
 
-  @Test public void TestBooleanTrueQualifiedLiteral() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestBooleanTrueQualifiedLiteral()
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -211,7 +219,7 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "isFrench(?f, \"true\"^^xsd:boolean) ->");
   }
 
-  @Test public void TestByteLiteral() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestByteLiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -222,7 +230,7 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, \"34\"^^xsd:byte) ->");
   }
 
-  @Test public void TestNegativeByteLiteral() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestNegativeByteLiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -234,7 +242,7 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test(expected = SWRLParseException.class) public void TestInvalidByteLiteral()
-    throws SWRLParseException, OWLOntologyCreationException
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -245,7 +253,7 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, \"b34\"^^xsd:byte) ->");
   }
 
-  @Test public void TestShortLiteral() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestShortLiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -256,7 +264,7 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, \"34\"^^xsd:short) ->");
   }
 
-  @Test public void TestNegativeShortLiteral() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestNegativeShortLiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -268,7 +276,7 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test(expected = SWRLParseException.class) public void TestInvalidShortLiteral()
-    throws SWRLParseException, OWLOntologyCreationException
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -279,7 +287,7 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, \"b34\"^^xsd:short) ->");
   }
 
-  @Test public void TestRawIntLiteral() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestRawIntLiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -290,7 +298,7 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, 34) ->");
   }
 
-  @Test public void TestRawNegativeIntLiteral() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestRawNegativeIntLiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -301,7 +309,7 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, -34) ->");
   }
 
-  @Test public void TestIntQualifiedLiteral() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestIntQualifiedLiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -312,7 +320,8 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, \"34\"^^xsd:int) ->");
   }
 
-  @Test public void TestNegativeIntQualifiedLiteral() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestNegativeIntQualifiedLiteral()
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -324,7 +333,7 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test(expected = SWRLParseException.class) public void TestInvalidIntLiteral()
-    throws SWRLParseException, OWLOntologyCreationException
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -335,7 +344,7 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, \"b34\"^^xsd:int) ->");
   }
 
-  @Test public void TestLongLiteral() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestLongLiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -346,7 +355,7 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, \"34\"^^xsd:long) ->");
   }
 
-  @Test public void TestNegativeLongLiteral() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestNegativeLongLiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -357,7 +366,7 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test(expected = SWRLParseException.class) public void TestInvalidLongLiteral()
-    throws SWRLParseException, OWLOntologyCreationException
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -367,7 +376,7 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, \"b34\"^^xsd:long) ->");
   }
 
-  @Test public void TestFloatRawLiteral() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestFloatRawLiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -378,7 +387,8 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "hasHeight(?p, 34.5) ->");
   }
 
-  @Test public void TestNegativeFloatRawLiteral() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestNegativeFloatRawLiteral()
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -389,7 +399,7 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "hasHeight(?p, -34.5) ->");
   }
 
-  @Test public void TestFloatQualifiedLiteral() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestFloatQualifiedLiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -400,7 +410,8 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "hasHeight(?p, \"34.0\"^^xsd:float) ->");
   }
 
-  @Test public void TestNegativeFloatQualifiedLiteral() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestNegativeFloatQualifiedLiteral()
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -412,7 +423,7 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test(expected = SWRLParseException.class) public void TestInvalidFloatLiteral()
-    throws SWRLParseException, OWLOntologyCreationException
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -423,7 +434,7 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "hasHeight(?p, \"x34.0\"^^xsd:float) ->");
   }
 
-  @Test public void TestDoubleQualifiedLiteral() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestDoubleQualifiedLiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -434,7 +445,8 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "hasHeight(?p, \"34.0\"^^xsd:double) ->");
   }
 
-  @Test public void TestNegativeDoubleQualifiedLiteral() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestNegativeDoubleQualifiedLiteral()
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -446,7 +458,7 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test(expected = SWRLParseException.class) public void TestInvalidDoubleLiteral()
-    throws SWRLParseException, OWLOntologyCreationException
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -457,7 +469,7 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "hasHeight(?p, \"x34.0\"^^xsd:double) ->");
   }
 
-  @Test public void TestURILiteral() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestURILiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -469,7 +481,7 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test(expected = SWRLParseException.class) public void TestInvalidURILiteral()
-    throws SWRLParseException, OWLOntologyCreationException
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -480,7 +492,7 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "hasHomePage(?p, \":stanford.edu/~fred\"^^xsd:anyURI) ->");
   }
 
-  @Test public void TestDateLiteral() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestDateLiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -492,7 +504,7 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test(expected = SWRLParseException.class) public void TestInvalidDateLiteral()
-    throws SWRLParseException, OWLOntologyCreationException
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -503,7 +515,7 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "hasDOB(?p, \"x199-11-22\"^^xsd:date) ->");
   }
 
-  @Test public void TestTimeLiteral() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestTimeLiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -515,7 +527,7 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test(expected = SWRLParseException.class) public void TestInvalidTimeLiteral()
-    throws SWRLParseException, OWLOntologyCreationException
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -526,7 +538,7 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "hasTOB(?p, \"10:0:10.23\"^^xsd:time) ->");
   }
 
-  @Test public void TestDateTimeLiteral() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestDateTimeLiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -538,7 +550,7 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test(expected = SWRLParseException.class) public void TestInvalidDateTimeLiteral()
-    throws SWRLParseException, OWLOntologyCreationException
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -549,7 +561,7 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "hasTOB(?p, \"x1999-11-22T10:10:10.23\"^^xsd:dateTime) ->");
   }
 
-  @Test public void TestDurationLiteral() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestDurationLiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -561,7 +573,7 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test(expected = SWRLParseException.class) public void TestInvalidDurationLiteral()
-    throws SWRLParseException, OWLOntologyCreationException
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -572,7 +584,8 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, \"43Y\"^^xsd:duration) ->");
   }
 
-  @Test public void TestAddAndEqualsTemporalBuiltIns() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestAddAndEqualsTemporalBuiltIns()
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -583,7 +596,7 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestObjectPropertyInAntecedentWithVariables()
-    throws SWRLParseException, OWLOntologyCreationException
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -599,7 +612,7 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestObjectPropertyInAntecedentWithNamedIndividuals()
-    throws SWRLParseException, OWLOntologyCreationException
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -614,7 +627,7 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestObjectPropertyInConsequentWithNamedIndividals()
-    throws SWRLParseException, OWLOntologyCreationException
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -625,7 +638,8 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "-> hasUncle(p1, p2)");
   }
 
-  @Test public void TestDataPropertyInAntecedent() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestDataPropertyInAntecedent()
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -636,7 +650,8 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "hasAge(p3, ?a) -> ");
   }
 
-  @Test public void TestDataPropertyInConsequent() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestDataPropertyInConsequent()
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -648,7 +663,7 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestClassAtomInAntecedentWithNamedIndividual()
-    throws SWRLParseException, OWLOntologyCreationException
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -659,7 +674,7 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "Male(p1) ->");
   }
 
-  @Test public void TestClassAtomInConsequent() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestClassAtomInConsequent() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -670,7 +685,8 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "-> Male(p1)");
   }
 
-  @Test public void TestBuiltInWithLiteralsAndVariables() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestBuiltInWithLiteralsAndVariables()
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -688,7 +704,7 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestSameAsInConsequentWithNamedIndividualAndVariable()
-    throws SWRLParseException, OWLOntologyCreationException
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -705,7 +721,8 @@ public class SWRLParserTest extends IntegrationTestBase
     assertThat(rule.getHeadAtoms().get(0), instanceOf(SWRLSameIndividualAtom.class));
   }
 
-  @Test public void TestSameAsInAntecedentWithVariables() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestSameAsInAntecedentWithVariables()
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -714,7 +731,8 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "sameAs(?i1, ?i2) ->");
   }
 
-  @Test public void TestSameAsInAntecedentWithNamedIndividual() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestSameAsInAntecedentWithNamedIndividual()
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -725,7 +743,8 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "sameAs(i1, i2) ->");
   }
 
-  @Test public void TestSameAsInConsequentWithNamedIndividual() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestSameAsInConsequentWithNamedIndividual()
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -736,7 +755,8 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "-> sameAs(i1, i2)");
   }
 
-  @Test public void TestDifferentFromInAntecedentWithVariables() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestDifferentFromInAntecedentWithVariables()
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -746,7 +766,7 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestDifferentFromInAntecedentWithNamedIndividual()
-    throws SWRLParseException, OWLOntologyCreationException
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -758,7 +778,7 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestDifferentFromInConsequentWithNamedIndividual()
-    throws SWRLParseException, OWLOntologyCreationException
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
@@ -769,7 +789,8 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "-> differentFrom(i1, i2)");
   }
 
-  @Test public void TestClassAndDataPropertyAtom() throws SWRLParseException, OWLOntologyCreationException
+  @Test public void TestClassAndDataPropertyAtom()
+    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     DefaultPrefixManager prefixManager = createPrefixManager(ontology);
