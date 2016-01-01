@@ -4,7 +4,6 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.dataflow.qual.SideEffectFree;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLRuleEngine;
-import org.swrlapi.core.SWRLRuleRenderer;
 import org.swrlapi.ui.view.SWRLAPIView;
 
 import javax.swing.table.AbstractTableModel;
@@ -33,16 +32,14 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
   public static final int NUMBER_OF_COLUMNS = 4;
 
   @NonNull private SWRLRuleEngine swrlRuleEngine;
-  @NonNull private SWRLRuleRenderer swrlRuleRenderer;
   @NonNull private final SortedMap<@NonNull String, @NonNull SWRLRuleModel> swrlRuleModels; // rule name -> SWRLRuleModel
   @NonNull private Optional<@NonNull SWRLAPIView> view = Optional.<@NonNull SWRLAPIView>empty();
 
   private boolean isModified;
 
-  public SWRLRulesTableModel(@NonNull SWRLRuleEngine swrlRuleEngine, @NonNull SWRLRuleRenderer swrlRuleRenderer)
+  public SWRLRulesTableModel(@NonNull SWRLRuleEngine swrlRuleEngine)
   {
     this.swrlRuleEngine = swrlRuleEngine;
-    this.swrlRuleRenderer = swrlRuleRenderer;
     this.swrlRuleModels = new TreeMap<>();
     this.isModified = false;
   }
@@ -53,10 +50,9 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
     updateRuleModels();
   }
 
-  public void updateModel(SWRLRuleEngine swrlRuleEngine, SWRLRuleRenderer swrlRuleRenderer)
+  public void updateModel(SWRLRuleEngine swrlRuleEngine)
   {
     this.swrlRuleEngine = swrlRuleEngine;
-    this.swrlRuleRenderer = swrlRuleRenderer;
     this.swrlRuleModels.clear();
     this.isModified = false;
 
@@ -214,7 +210,7 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 
     for (SWRLAPIRule swrlapiRule : this.swrlRuleEngine.getSWRLRules()) {
       String ruleName = swrlapiRule.getRuleName();
-      String ruleText = swrlRuleRenderer.renderSWRLRule(swrlapiRule);
+      String ruleText = this.swrlRuleEngine.createSWRLRuleRenderer().renderSWRLRule(swrlapiRule);
       String comment = swrlapiRule.getComment();
       SWRLRuleModel swrlRuleModel = new SWRLRuleModel(ruleName, ruleText, comment);
       this.swrlRuleModels.put(ruleName, swrlRuleModel);

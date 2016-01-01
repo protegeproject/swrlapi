@@ -25,17 +25,17 @@ public interface SWRLRuleEngineModel extends OntologyModel
   /**
    * @return A SWRL parser
    */
-  @NonNull SWRLParser getSWRLParser();
+  @NonNull SWRLParser createSWRLParser();
 
   /**
    * @return A SWRL auto-completer
    */
-  @NonNull SWRLAutoCompleter getSWRLAutoCompleter();
+  @NonNull SWRLAutoCompleter createSWRLAutoCompleter();
 
   /**
    * @return A SWRL rule renderer
    */
-  @NonNull SWRLRuleRenderer getSWRLRuleRenderer();
+  @NonNull SWRLRuleRenderer createSWRLRuleRenderer();
 
   /**
    * @return A SWRL rules table model

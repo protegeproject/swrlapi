@@ -23,39 +23,30 @@ public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel
 {
   @NonNull private final OWLOntologyManager ontologyManager;
   @NonNull private SWRLAPIOWLOntology swrlapiOWLOntology;
-  @NonNull private SWRLRuleEngine ruleEngine;
-  @NonNull private SWRLParser swrlParser;
-  @NonNull private SWRLRuleRenderer swrlRuleRenderer;
-  @NonNull private SWRLAutoCompleter swrlAutoCompleter;
+  @NonNull private SWRLRuleEngine swrlRuleEngine;
   @NonNull private OWL2RLEngine owl2RLEngine;
 
   @NonNull private final SWRLRulesTableModel swrlRulesTableModel;
   @NonNull private final OWL2RLModel owl2RLModel;
 
-  public DefaultSWRLRuleEngineModel(@NonNull SWRLRuleEngine ruleEngine)
+  public DefaultSWRLRuleEngineModel(@NonNull SWRLRuleEngine swrlRuleEngine)
   {
     this.ontologyManager = OWLManager.createOWLOntologyManager();
-    this.ruleEngine = ruleEngine;
-    this.swrlapiOWLOntology = ruleEngine.getSWRLAPIOWLOntology();
-    this.swrlRuleRenderer = this.ruleEngine.createSWRLRuleRenderer();
-    this.swrlParser = this.ruleEngine.createSWRLParser();
-    this.swrlAutoCompleter = this.ruleEngine.createSWRLAutoCompleter();
-    this.owl2RLEngine = this.ruleEngine.getOWL2RLEngine();
+    this.swrlRuleEngine = swrlRuleEngine;
+    this.swrlapiOWLOntology = swrlRuleEngine.getSWRLAPIOWLOntology();
+    this.owl2RLEngine = this.swrlRuleEngine.getOWL2RLEngine();
 
-    this.swrlRulesTableModel = SWRLAPIFactory.createSWRLRulesTableModel(ruleEngine, this.swrlRuleRenderer);
+    this.swrlRulesTableModel = SWRLAPIFactory.createSWRLRulesTableModel(swrlRuleEngine);
     this.owl2RLModel = SWRLAPIFactory.createOWL2RLModel(owl2RLEngine);
   }
 
   @Override public void updateModel(@NonNull SWRLRuleEngine ruleEngine)
   {
-    this.ruleEngine = ruleEngine;
+    this.swrlRuleEngine = ruleEngine;
     this.swrlapiOWLOntology = ruleEngine.getSWRLAPIOWLOntology();
-    this.swrlRuleRenderer = this.ruleEngine.createSWRLRuleRenderer();
-    this.swrlParser = this.ruleEngine.createSWRLParser();
-    this.swrlAutoCompleter = this.ruleEngine.createSWRLAutoCompleter();
-    this.owl2RLEngine = this.ruleEngine.getOWL2RLEngine();
+    this.owl2RLEngine = this.swrlRuleEngine.getOWL2RLEngine();
 
-    this.swrlRulesTableModel.updateModel(ruleEngine, this.swrlRuleRenderer);
+    this.swrlRulesTableModel.updateModel(ruleEngine);
     this.owl2RLModel.updateModel(owl2RLEngine);
 
     updateView();
@@ -63,7 +54,7 @@ public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel
 
   @NonNull protected OWLOntology createOWLOntology() throws OWLOntologyCreationException
   {
-    this.ontologyManager.removeOntology(this.ruleEngine.getOWLOntology());
+    this.ontologyManager.removeOntology(this.swrlRuleEngine.getOWLOntology());
     return this.ontologyManager.createOntology();
   }
 
@@ -74,28 +65,28 @@ public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel
 
   @NonNull protected OWLOntology createOWLOntology(@NonNull File file) throws OWLOntologyCreationException
   {
-    this.ontologyManager.removeOntology(this.ruleEngine.getOWLOntology());
+    this.ontologyManager.removeOntology(this.swrlRuleEngine.getOWLOntology());
     return this.ontologyManager.loadOntologyFromOntologyDocument(file);
   }
 
   @NonNull @Override public SWRLRuleEngine getSWRLRuleEngine()
   {
-    return this.ruleEngine;
+    return this.swrlRuleEngine;
   }
 
-  @NonNull @Override public SWRLParser getSWRLParser()
+  @NonNull @Override public SWRLParser createSWRLParser()
   {
-    return this.swrlParser;
+    return this.swrlRuleEngine.createSWRLParser();
   }
 
-  @NonNull @Override public SWRLAutoCompleter getSWRLAutoCompleter()
+  @NonNull @Override public SWRLAutoCompleter createSWRLAutoCompleter()
   {
-    return this.swrlAutoCompleter;
+    return this.swrlRuleEngine.createSWRLAutoCompleter();
   }
 
-  @NonNull @Override public SWRLRuleRenderer getSWRLRuleRenderer()
+  @NonNull @Override public SWRLRuleRenderer createSWRLRuleRenderer()
   {
-    return this.swrlRuleRenderer;
+    return this.swrlRuleEngine.createSWRLRuleRenderer();
   }
 
   @NonNull @Override public SWRLRulesTableModel getSWRLRulesTableModel()
@@ -132,6 +123,6 @@ public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel
 
   @NonNull private OWLOntology getOWLOntology()
   {
-    return this.ruleEngine.getOWLOntology();
+    return this.swrlRuleEngine.getOWLOntology();
   }
 }

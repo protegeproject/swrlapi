@@ -243,13 +243,11 @@ public class SWRLAPIFactory
 
   /**
    * @param swrlRuleEngine   A SWRL rule engine
-   * @param swrlRuleRenderer A SWRL renderer
    * @return A SWRL rule table model
    */
-  @NonNull public static SWRLRulesTableModel createSWRLRulesTableModel(@NonNull SWRLRuleEngine swrlRuleEngine,
-    @NonNull SWRLRuleRenderer swrlRuleRenderer)
+  @NonNull public static SWRLRulesTableModel createSWRLRulesTableModel(@NonNull SWRLRuleEngine swrlRuleEngine)
   {
-    return new SWRLRulesTableModel(swrlRuleEngine, swrlRuleRenderer);
+    return new SWRLRulesTableModel(swrlRuleEngine);
   }
 
   @NonNull public static OWL2RLModel createOWL2RLModel(@NonNull OWL2RLEngine owl2RLEngine)

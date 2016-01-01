@@ -144,7 +144,7 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
       disableSave();
     } else {
       try {
-        getSWRLParser().parseSWRLRule(ruleText, true, getRuleName(), getComment());
+        createSWRLParser().parseSWRLRule(ruleText, true, getRuleName(), getComment());
         setInformationalStatusText(STATUS_OK);
         enableSave();
       } catch (SWRLIncompleteRuleException e) {
@@ -352,14 +352,14 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
     List<@NonNull String> expansions = new ArrayList<>();
 
     expansions.add(""); // Add empty expansion that we can cycle back to
-    expansions.addAll(getSWRLAutoCompleter().getCompletions(prefix));
+    expansions.addAll(createSWRLAutoCompleter().getCompletions(prefix));
 
     return expansions;
   }
 
-  @NonNull private SWRLAutoCompleter getSWRLAutoCompleter()
+  @NonNull private SWRLAutoCompleter createSWRLAutoCompleter()
   {
-    return this.swrlRuleEngineModel.getSWRLAutoCompleter();
+    return this.swrlRuleEngineModel.createSWRLAutoCompleter();
   }
 
   private class CancelSWRLRuleEditActionListener implements ActionListener
@@ -517,9 +517,9 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
     return this.swrlRuleEngineModel.getSWRLRuleEngine();
   }
 
-  @NonNull private SWRLParser getSWRLParser()
+  @NonNull private SWRLParser createSWRLParser()
   {
-    return this.swrlRuleEngineModel.getSWRLParser();
+    return this.swrlRuleEngineModel.createSWRLParser();
   }
 
   @NonNull private SWRLRulesTableModel getSWRLRulesTableModel()

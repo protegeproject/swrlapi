@@ -54,9 +54,9 @@ public class ImportedSWRLRulesView extends JPanel implements SWRLAPIView
     return this.swrlRuleEngineModel.getSWRLRuleEngine();
   }
 
-  @NonNull private SWRLRuleRenderer getSWRLRuleRenderer()
+  @NonNull private SWRLRuleRenderer createSWRLRuleRenderer()
   {
-    return this.swrlRuleEngineModel.getSWRLRuleRenderer();
+    return this.swrlRuleEngineModel.createSWRLRuleRenderer();
   }
 
   private class SWRLRulesTableModel extends AbstractTableModel
@@ -84,7 +84,7 @@ public class ImportedSWRLRulesView extends JPanel implements SWRLAPIView
         Set<@NonNull SWRLAPIRule> swrlRules = ImportedSWRLRulesView.this.getSWRLRuleEngine().getSWRLRules();
         SWRLAPIRule[] swrlRuleArray = swrlRules.toArray(new SWRLAPIRule[swrlRules.size()]);
         SWRLAPIRule swrlRule = swrlRuleArray[row];
-        return swrlRule.accept(ImportedSWRLRulesView.this.getSWRLRuleRenderer());
+        return swrlRule.accept(ImportedSWRLRulesView.this.createSWRLRuleRenderer());
       }
     }
   }

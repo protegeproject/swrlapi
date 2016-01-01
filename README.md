@@ -58,10 +58,10 @@ created by the OWLAPI and then execute rules in that ontology.
    prefixManager.copyPrefixesFrom(format.asPrefixOWLOntologyFormat().getPrefixName2PrefixMap());
 
  // Create a SWRL rule engine using the SWRLAPI
- SWRLRuleEngine ruleEngine = SWRLAPIFactory.createSWRLRuleEngine(ontology, prefixManager);
+ SWRLRuleEngine swrlRuleEngine = SWRLAPIFactory.createSWRLRuleEngine(ontology, prefixManager);
 
  // Run the rule engine
- ruleEngine.infer();
+ swrlRuleEngine.infer();
 ```
 
 This example shows how the API can be used to create a SQWRL query engine, execute a SQWRL query using
