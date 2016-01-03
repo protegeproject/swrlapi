@@ -43,14 +43,13 @@ A [Build Project](https://github.com/protegeproject/swrltab-project) is provided
 
 The following examples can be used to quickly get started with the API.
 
-This code illustrates how the API can be used to create a SWRL query engine using an ontology 
+The following example illustrates how the API can be used to create a SWRL query engine using an ontology 
 created by the OWLAPI and then execute rules in that ontology.
 
 ```java
  // Create OWLOntology instance using the OWLAPI
- File owlFile = new File("/ont/Ont1.owl");
  OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
- OWLOntology ontology = ontologyManager.loadOntologyFromOntologyDocument(owlFile);
+ OWLOntology ontology = ontologyManager.loadOntologyFromOntologyDocument(new File("/ont/Ont1.owl"));
 
  // Create a SWRL rule engine using the SWRLAPI
  SWRLRuleEngine swrlRuleEngine = SWRLAPIFactory.createSWRLRuleEngine(ontology);
@@ -64,9 +63,8 @@ this engine, and then process the results.
 
 ```java
  // Create OWLOntology instances using the OWLAPI
- File owlFile = new File("/ont/Ont1.owl");
  OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
- OWLOntology ontology = ontologyManager.loadOntologyFromOntologyDocument(owlFile);
+ OWLOntology ontology = ontologyManager.loadOntologyFromOntologyDocument(new File("/ont/Ont1.owl"));
 
  // Create SQWRL query engine using the SWRLAPI
  SQWRLQueryEngine queryEngine = SWRLAPIFactory.createSQWRLQueryEngine(ontology);
