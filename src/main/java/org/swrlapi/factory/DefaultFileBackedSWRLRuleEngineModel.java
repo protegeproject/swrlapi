@@ -1,11 +1,9 @@
 package org.swrlapi.factory;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.semanticweb.owlapi.model.OWLDocumentFormat;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
-import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.ui.model.FileBackedSWRLRuleEngineModel;
 
@@ -26,13 +24,7 @@ public class DefaultFileBackedSWRLRuleEngineModel extends DefaultSWRLRuleEngineM
   @Override public void open(@NonNull File file) throws OWLOntologyCreationException
   {
     OWLOntology ontology = createOWLOntology(file);
-    OWLDocumentFormat format = ontology.getOWLOntologyManager().getOntologyFormat(ontology);
-    DefaultPrefixManager prefixManager = new DefaultPrefixManager();
-
-    if (format != null && format.isPrefixOWLOntologyFormat())
-      prefixManager.copyPrefixesFrom(format.asPrefixOWLOntologyFormat().getPrefixName2PrefixMap());
-
-    SWRLRuleEngine ruleEngine = SWRLAPIFactory.createSWRLRuleEngine(ontology, prefixManager);
+    SWRLRuleEngine ruleEngine = SWRLAPIFactory.createSWRLRuleEngine(ontology);
 
     this.file = Optional.of(file);
     updateModel(ruleEngine);
@@ -50,13 +42,7 @@ public class DefaultFileBackedSWRLRuleEngineModel extends DefaultSWRLRuleEngineM
   @Override public void close() throws OWLOntologyCreationException
   {
     OWLOntology ontology = createOWLOntology();
-    OWLDocumentFormat format = ontology.getOWLOntologyManager().getOntologyFormat(ontology);
-    DefaultPrefixManager prefixManager = new DefaultPrefixManager();
-
-    if (format != null && format.isPrefixOWLOntologyFormat())
-      prefixManager.copyPrefixesFrom(format.asPrefixOWLOntologyFormat().getPrefixName2PrefixMap());
-
-    SWRLRuleEngine ruleEngine = SWRLAPIFactory.createSWRLRuleEngine(ontology, prefixManager);
+    SWRLRuleEngine ruleEngine = SWRLAPIFactory.createSWRLRuleEngine(ontology);
 
     this.file = Optional.<@NonNull File>empty();
 

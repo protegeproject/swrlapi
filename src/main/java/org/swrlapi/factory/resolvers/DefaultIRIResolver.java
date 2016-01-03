@@ -56,7 +56,7 @@ public class DefaultIRIResolver implements IRIResolver
   }
 
   @Override @NonNull public String iri2PrefixedName(@NonNull IRI iri)
-  { // TODO Need to do something with IRIs where namespace is ontology IRI
+  {
     if (this.iri2PrefixedNameCache.containsKey(iri))
       return this.iri2PrefixedNameCache.get(iri);
     else {
@@ -67,7 +67,11 @@ public class DefaultIRIResolver implements IRIResolver
         String namespace = iri.getNamespace();
         com.google.common.base.Optional<@NonNull String> remainder = iri.getRemainder();
         if (remainder.isPresent()) {
-          if (this.autogenNamespace2Prefix.containsKey(namespace)) {
+          if (namespace.isEmpty()) {
+            String prefixedName = ":" + remainder.get();
+            this.iri2PrefixedNameCache.put(iri, prefixedName);
+            return prefixedName;
+          } else if (this.autogenNamespace2Prefix.containsKey(namespace)) {
             String prefixedName = this.autogenNamespace2Prefix.get(namespace) + remainder.get();
             this.iri2PrefixedNameCache.put(iri, prefixedName);
             return prefixedName;

@@ -2,10 +2,8 @@ package org.swrlapi.test;
 
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLDatatype;
-import org.semanticweb.owlapi.model.OWLDocumentFormat;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
-import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.semanticweb.owlapi.vocab.Namespaces;
 
 import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.Datatype;
@@ -39,22 +37,8 @@ public class IntegrationTestBase
       ontologyManager.addAxiom(ontology, axiom);
   }
 
-  protected DefaultPrefixManager createPrefixManager(OWLOntology ontology)
-  {
-    DefaultPrefixManager prefixManager = new DefaultPrefixManager();
-    OWLDocumentFormat format = ontology.getOWLOntologyManager().getOntologyFormat(ontology);
-
-    if (format != null && format.isPrefixOWLOntologyFormat())
-      prefixManager.copyPrefixesFrom(format.asPrefixOWLOntologyFormat().getPrefixName2PrefixMap());
-
-   prefixManager.setPrefix(":", NS);
- //   prefixManager.setDefaultPrefix(NS);
-
-    return prefixManager;
-  }
-
   protected static org.semanticweb.owlapi.model.IRI iri(String fragment)
   {
-    return org.semanticweb.owlapi.model.IRI.create(NS + fragment);
+    return org.semanticweb.owlapi.model.IRI.create(fragment);
   }
 }

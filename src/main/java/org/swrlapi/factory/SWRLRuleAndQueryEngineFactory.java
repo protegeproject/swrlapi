@@ -2,7 +2,6 @@ package org.swrlapi.factory;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.OWLOntology;
-import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.bridge.TargetSWRLRuleEngineCreator;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.exceptions.SWRLRuleEngineException;
@@ -29,41 +28,35 @@ public interface SWRLRuleAndQueryEngineFactory
    * Create an instance of a rule engine.
    *
    * @param ontology      A OWL ontology
-   * @param prefixManager A prefix manager
    * @return A SWRL rule engine
    * @throws SWRLRuleEngineException If an error occurs during creation
    */
-  @NonNull SWRLRuleEngine createSWRLRuleEngine(@NonNull OWLOntology ontology,
-    @NonNull DefaultPrefixManager prefixManager) throws SWRLRuleEngineException;
+  @NonNull SWRLRuleEngine createSWRLRuleEngine(@NonNull OWLOntology ontology) throws SWRLRuleEngineException;
 
   /**
    * @param ruleEngineName The name of a rule engine
    * @param ontology       An OWL ontology
-   * @param prefixManager  A prefix manager
    * @return A SWRL rule engine
    * @throws SWRLRuleEngineException If an error occurs during creation
    */
-  @NonNull SWRLRuleEngine createSWRLRuleEngine(@NonNull String ruleEngineName, @NonNull OWLOntology ontology,
-    @NonNull DefaultPrefixManager prefixManager) throws SWRLRuleEngineException;
+  @NonNull SWRLRuleEngine createSWRLRuleEngine(@NonNull String ruleEngineName, @NonNull OWLOntology ontology)
+    throws SWRLRuleEngineException;
 
   /**
-   * @param ontology      An OWL ontology
-   * @param prefixManager A prefix manager
+   * @param ontology An OWL ontology
    * @return A SQWRL query engine
    * @throws SWRLRuleEngineException If an error occurs during creation
    */
-  @NonNull SQWRLQueryEngine createSQWRLQueryEngine(@NonNull OWLOntology ontology,
-    @NonNull DefaultPrefixManager prefixManager) throws SWRLRuleEngineException;
+  @NonNull SQWRLQueryEngine createSQWRLQueryEngine(@NonNull OWLOntology ontology) throws SWRLRuleEngineException;
 
   /**
    * @param ruleEngineName The name of a rule engine
    * @param ontology       An OWL ontology
-   * @param prefixManager  A prefix manager
    * @return A SQWRL query engine
    * @throws SWRLRuleEngineException If an error occurs during creation
    */
-  @NonNull SQWRLQueryEngine createSQWRLQueryEngine(@NonNull String ruleEngineName, @NonNull OWLOntology ontology,
-    @NonNull DefaultPrefixManager prefixManager) throws SWRLRuleEngineException;
+  @NonNull SQWRLQueryEngine createSQWRLQueryEngine(@NonNull String ruleEngineName, @NonNull OWLOntology ontology)
+    throws SWRLRuleEngineException;
 
   void tryToRegisterADefaultSWRLRuleEngine();
 }

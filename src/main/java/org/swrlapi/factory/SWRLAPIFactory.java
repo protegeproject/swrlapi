@@ -1,17 +1,14 @@
 package org.swrlapi.factory;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.semanticweb.owlapi.formats.PrefixDocumentFormat;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDataFactory;
-import org.semanticweb.owlapi.model.OWLDocumentFormat;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.SWRLAtom;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
-import org.semanticweb.owlapi.util.SimpleIRIMapper;
 import org.swrlapi.bridge.SWRLBridge;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.IRIResolver;
@@ -49,9 +46,7 @@ import org.swrlapi.ui.model.SWRLRulesTableModel;
 import javax.swing.*;
 import java.io.File;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -75,18 +70,6 @@ public class SWRLAPIFactory
   }
 
   /**
-   * @param ontology      An OWL ontology
-   * @param prefixManager A prefix manager
-   * @return A SWRL rule engine
-   * @throws SWRLRuleEngineException If an error occurs during rule engine creation
-   */
-  @NonNull public static SWRLRuleEngine createSWRLRuleEngine(@NonNull OWLOntology ontology,
-    @NonNull DefaultPrefixManager prefixManager) throws SWRLRuleEngineException
-  {
-    return swrlRuleAndQueryEngineFactory.createSWRLRuleEngine(ontology, prefixManager);
-  }
-
-  /**
    * @param ontology An OWL ontology
    * @return A SWRL rule engine
    * @throws SWRLRuleEngineException If an error occurs during rule engine creation
@@ -94,25 +77,7 @@ public class SWRLAPIFactory
   @NonNull public static SWRLRuleEngine createSWRLRuleEngine(@NonNull OWLOntology ontology)
     throws SWRLRuleEngineException
   {
-    DefaultPrefixManager prefixManager = new DefaultPrefixManager();
-    OWLDocumentFormat format = ontology.getOWLOntologyManager().getOntologyFormat(ontology);
-
-    if (format != null && format.isPrefixOWLOntologyFormat())
-      prefixManager.copyPrefixesFrom(format.asPrefixOWLOntologyFormat().getPrefixName2PrefixMap());
-
-    return swrlRuleAndQueryEngineFactory.createSWRLRuleEngine(ontology, prefixManager);
-  }
-
-  /**
-   * @param ontology      An OWL ontology
-   * @param prefixManager A prefix manager
-   * @return A SQWRL query engine
-   * @throws SWRLRuleEngineException If an error occurs during query engine creation
-   */
-  @NonNull public static SQWRLQueryEngine createSQWRLQueryEngine(@NonNull OWLOntology ontology,
-    @NonNull DefaultPrefixManager prefixManager) throws SWRLRuleEngineException
-  {
-    return swrlRuleAndQueryEngineFactory.createSQWRLQueryEngine(ontology, prefixManager);
+    return swrlRuleAndQueryEngineFactory.createSWRLRuleEngine(ontology);
   }
 
   /**
@@ -123,13 +88,7 @@ public class SWRLAPIFactory
   @NonNull public static SQWRLQueryEngine createSQWRLQueryEngine(@NonNull OWLOntology ontology)
     throws SWRLRuleEngineException
   {
-    DefaultPrefixManager prefixManager = new DefaultPrefixManager();
-    OWLDocumentFormat format = ontology.getOWLOntologyManager().getOntologyFormat(ontology);
-
-    if (format != null && format.isPrefixOWLOntologyFormat())
-      prefixManager.copyPrefixesFrom(format.asPrefixOWLOntologyFormat().getPrefixName2PrefixMap());
-
-    return swrlRuleAndQueryEngineFactory.createSQWRLQueryEngine(ontology, prefixManager);
+    return swrlRuleAndQueryEngineFactory.createSQWRLQueryEngine(ontology);
   }
 
   /**
@@ -225,9 +184,10 @@ public class SWRLAPIFactory
     return new DefaultSQWRLResultValueFactory(iriResolver);
   }
 
-  @NonNull public static SQWRLQuery createSQWRLQuery(@NonNull String queryName, @NonNull List<@NonNull SWRLAtom> bodyAtoms,
-    @NonNull List<@NonNull SWRLAtom> headAtoms, boolean active, @NonNull String comment, @NonNull LiteralFactory literalFactory,
-    @NonNull IRIResolver iriResolver) throws SQWRLException
+  @NonNull public static SQWRLQuery createSQWRLQuery(@NonNull String queryName,
+    @NonNull List<@NonNull SWRLAtom> bodyAtoms, @NonNull List<@NonNull SWRLAtom> headAtoms, boolean active,
+    @NonNull String comment, @NonNull LiteralFactory literalFactory, @NonNull IRIResolver iriResolver)
+    throws SQWRLException
   {
     return new DefaultSQWRLQuery(queryName, bodyAtoms, headAtoms, active, comment, literalFactory, iriResolver);
   }
@@ -242,7 +202,7 @@ public class SWRLAPIFactory
   }
 
   /**
-   * @param swrlRuleEngine   A SWRL rule engine
+   * @param swrlRuleEngine A SWRL rule engine
    * @return A SWRL rule table model
    */
   @NonNull public static SWRLRulesTableModel createSWRLRulesTableModel(@NonNull SWRLRuleEngine swrlRuleEngine)
@@ -330,13 +290,11 @@ public class SWRLAPIFactory
 
   /**
    * @param ontology      An OWL ontology
-   * @param prefixManager A prefix manager
    * @return A SQWRL query engine model
    */
-  @NonNull public static SQWRLQueryEngineModel createSQWRLQueryEngineModel(@NonNull OWLOntology ontology,
-    @NonNull DefaultPrefixManager prefixManager)
+  @NonNull public static SQWRLQueryEngineModel createSQWRLQueryEngineModel(@NonNull OWLOntology ontology)
   {
-    SQWRLQueryEngine queryEngine = createSQWRLQueryEngine(ontology, prefixManager);
+    SQWRLQueryEngine queryEngine = createSQWRLQueryEngine(ontology);
 
     return new DefaultSQWRLQueryEngineModel(queryEngine);
   }
@@ -409,16 +367,11 @@ public class SWRLAPIFactory
    * {@link org.semanticweb.owlapi.model.OWLOntology}.
    *
    * @param ontology      An OWLAPI-based ontology
-   * @param prefixManager A prefix manager
    * @return A SWRLAPI-based wrapper of an OWL ontology
    */
-  @NonNull public static SWRLAPIOWLOntology createSWRLAPIOntology(@NonNull OWLOntology ontology,
-    @NonNull DefaultPrefixManager prefixManager) throws SQWRLException
+  @NonNull public static SWRLAPIOWLOntology createSWRLAPIOntology(@NonNull OWLOntology ontology) throws SQWRLException
   {
-    addDefaultPrefixes(ontology, prefixManager);
-    addSWRLAPIBuiltInOntologies(ontology);
-
-    SWRLAPIOWLOntology swrlapiowlOntology = new DefaultSWRLAPIOWLOntology(ontology, prefixManager);
+    SWRLAPIOWLOntology swrlapiowlOntology = new DefaultSWRLAPIOWLOntology(ontology);
     swrlapiowlOntology.processOntology();
 
     return swrlapiowlOntology;
@@ -445,50 +398,6 @@ public class SWRLAPIFactory
     return new DefaultSWRLAutoCompleter(swrlapiowlOntology);
   }
 
-  private static void addDefaultPrefixes(@NonNull OWLOntology ontology, @NonNull DefaultPrefixManager prefixManager)
-  {
-    OWLOntologyManager owlOntologyManager = ontology.getOWLOntologyManager();
-    OWLDocumentFormat ontologyFormat = owlOntologyManager.getOntologyFormat(ontology);
-
-    if (ontologyFormat != null && ontologyFormat.isPrefixOWLOntologyFormat()) {
-      PrefixDocumentFormat prefixOntologyFormat = ontologyFormat.asPrefixOWLOntologyFormat();
-
-      Map<@NonNull String, String> map = prefixOntologyFormat.getPrefixName2PrefixMap();
-      for (String prefix : map.keySet())
-        prefixManager.setPrefix(prefix, map.get(prefix));
-    }
-    addSWRLAPIPrefixes(prefixManager);
-  }
-
-  private static void addSWRLAPIPrefixes(@NonNull DefaultPrefixManager prefixManager)
-  {
-    prefixManager.setPrefix("owl:", "http://www.w3.org/2002/07/owl#");
-    prefixManager.setPrefix("swrl:", "http://www.w3.org/2003/11/swrl#");
-    prefixManager.setPrefix("swrlb:", "http://www.w3.org/2003/11/swrlb#");
-    prefixManager.setPrefix("sqwrl:", "http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#");
-    prefixManager.setPrefix("swrlm:", "http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlm.owl#");
-    prefixManager.setPrefix("temporal:", "http://swrl.stanford.edu/ontologies/built-ins/3.3/temporal.owl#");
-    prefixManager.setPrefix("swrlx:", "http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#");
-    prefixManager.setPrefix("swrla:", "http://swrl.stanford.edu/ontologies/3.3/swrla.owl#");
-  }
-
-  private static void addSWRLAPIBuiltInOntologies(@NonNull OWLOntology ontology)
-  {
-    Map<@NonNull String, String> map = new HashMap<>();
-
-    map.put("http://www.w3.org/2003/11/swrl#", resourceName2File("owl/swrl.owl"));
-    map.put("http://www.w3.org/2003/11/swrlb#", resourceName2File("owl/swrlb.owl"));
-    map.put("http://swrl.stanford.edu/ontologies/3.3/swrla.owl", resourceName2File("owl/swrla.owl"));
-    map.put("http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlm.owl", resourceName2File("owl/swrlm.owl"));
-    map.put("http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl", resourceName2File("owl/swrlx.owl"));
-    map.put("http://swrl.stanford.edu/ontologies/built-ins/3.3/temporal.owl", resourceName2File("owl/temporal.owl"));
-    map.put("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl", resourceName2File("owl/sqwrl.owl"));
-
-    for (String key : map.keySet())
-      ontology.getOWLOntologyManager().getIRIMappers()
-        .add(new SimpleIRIMapper(IRI.create(key), IRI.create(map.get(key))));
-  }
-
   @NonNull private static OWLOntology createOWLOntology(@NonNull OWLOntologyManager ontologyManager, @NonNull File file)
     throws SWRLAPIException
   {
@@ -500,20 +409,5 @@ public class SWRLAPIFactory
           e.getMessage() :
           ""));
     }
-  }
-
-  // TODO This looks dodgy
-  @NonNull private static String resourceName2File(@NonNull String resourceName)
-  {
-    ClassLoader classLoader = SWRLAPIFactory.class.getClassLoader();
-
-    if (classLoader == null)
-      throw new SWRLAPIException("Could not find class loader");
-
-    URL url = classLoader.getResource(resourceName);
-    if (url == null)
-      throw new SWRLAPIException("Could not find resource " + resourceName);
-
-    return "file:///" + url.getFile();
   }
 }

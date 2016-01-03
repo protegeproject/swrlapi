@@ -47,18 +47,13 @@ This code illustrates how the API can be used to create a SWRL query engine usin
 created by the OWLAPI and then execute rules in that ontology.
 
 ```java
- // Create OWLOntology and DefaultPrefixManager instances using the OWLAPI
+ // Create OWLOntology instance using the OWLAPI
  File owlFile = new File("/ont/Ont1.owl");
  OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
  OWLOntology ontology = ontologyManager.loadOntologyFromOntologyDocument(owlFile);
- DefaultPrefixManager prefixManager = new DefaultPrefixManager();
- OWLDocumentFormat format = ontology.getOWLOntologyManager().getOntologyFormat(ontology);
-
- if (format.isPrefixOWLOntologyFormat())
-   prefixManager.copyPrefixesFrom(format.asPrefixOWLOntologyFormat().getPrefixName2PrefixMap());
 
  // Create a SWRL rule engine using the SWRLAPI
- SWRLRuleEngine swrlRuleEngine = SWRLAPIFactory.createSWRLRuleEngine(ontology, prefixManager);
+ SWRLRuleEngine swrlRuleEngine = SWRLAPIFactory.createSWRLRuleEngine(ontology);
 
  // Run the rule engine
  swrlRuleEngine.infer();
@@ -68,18 +63,13 @@ This example shows how the API can be used to create a SQWRL query engine, execu
 this engine, and then process the results.
 
 ```java
- // Create OWLOntology and DefaultPrefixManager instances using the OWLAPI
+ // Create OWLOntology instances using the OWLAPI
  File owlFile = new File("/ont/Ont1.owl");
  OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
  OWLOntology ontology = ontologyManager.loadOntologyFromOntologyDocument(owlFile);
- DefaultPrefixManager prefixManager = new DefaultPrefixManager();
- OWLDocumentFormat format = ontology.getOWLOntologyManager().getOntologyFormat(ontology);
-
- if (format.isPrefixOWLOntologyFormat())
-   prefixManager.copyPrefixesFrom(format.asPrefixOWLOntologyFormat().getPrefixName2PrefixMap());
 
  // Create SQWRL query engine using the SWRLAPI
- SQWRLQueryEngine queryEngine = SWRLAPIFactory.createSQWRLQueryEngine(ontology, prefixManager);
+ SQWRLQueryEngine queryEngine = SWRLAPIFactory.createSQWRLQueryEngine(ontology);
 
  // Create and execute a SQWRL query using the SWRLAPI
  SQWRLResult result = queryEngine.runSQWRLQuery("q1","swrlb:add(?x, 2, 2) -> sqwrl:select(?x)");

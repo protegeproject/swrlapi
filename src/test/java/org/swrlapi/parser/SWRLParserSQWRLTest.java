@@ -7,7 +7,6 @@ import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
-import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.factory.SWRLAPIFactory;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
@@ -32,8 +31,7 @@ public class SWRLParserSQWRLTest extends IntegrationTestBase
     throws SWRLParseException, SQWRLException, OWLOntologyCreationException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    DefaultPrefixManager prefixManager = createPrefixManager(ontology);
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology, prefixManager);
+    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(MALE), Declaration(P1));
 
@@ -44,8 +42,7 @@ public class SWRLParserSQWRLTest extends IntegrationTestBase
     throws SWRLParseException, SQWRLException, OWLOntologyCreationException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    DefaultPrefixManager prefixManager = createPrefixManager(ontology);
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology, prefixManager);
+    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(MALE));
 
@@ -55,8 +52,7 @@ public class SWRLParserSQWRLTest extends IntegrationTestBase
   @Test public void TestSetConstruction() throws SWRLParseException, SQWRLException, OWLOntologyCreationException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    DefaultPrefixManager prefixManager = createPrefixManager(ontology);
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology, prefixManager);
+    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(MALE));
 
@@ -67,8 +63,7 @@ public class SWRLParserSQWRLTest extends IntegrationTestBase
   @Test public void TestBooleanTrueRawLiteral() throws SWRLParseException, SQWRLException, OWLOntologyCreationException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    DefaultPrefixManager prefixManager = createPrefixManager(ontology);
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology, prefixManager);
+    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
 
     swrlapiOWLOntology
       .createSQWRLQuery("q1", "swrlb:booleanNot(?x, true) ^ swrlb:booleanNot(?y, ?x) -> sqwrl:select(?y)");
@@ -77,8 +72,7 @@ public class SWRLParserSQWRLTest extends IntegrationTestBase
   @Test public void TestBooleanFalseRawLiteral() throws SWRLParseException, SQWRLException, OWLOntologyCreationException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    DefaultPrefixManager prefixManager = createPrefixManager(ontology);
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology, prefixManager);
+    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
 
     swrlapiOWLOntology
       .createSQWRLQuery("q1", "swrlb:booleanNot(?x, false) ^ swrlb:booleanNot(?y, ?x) -> sqwrl:select(?y)");
@@ -88,8 +82,7 @@ public class SWRLParserSQWRLTest extends IntegrationTestBase
     throws SWRLParseException, SQWRLException, OWLOntologyCreationException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    DefaultPrefixManager prefixManager = createPrefixManager(ontology);
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology, prefixManager);
+    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
 
     swrlapiOWLOntology.createSQWRLQuery("q1",
       "swrlb:booleanNot(?x, \"false\"^^xsd:boolean) ^ swrlb:booleanNot(?y, ?x) -> sqwrl:select(?y)");
@@ -98,8 +91,7 @@ public class SWRLParserSQWRLTest extends IntegrationTestBase
   @Test public void TestUnboundVariableQuery() throws SWRLParseException, SQWRLException, OWLOntologyCreationException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    DefaultPrefixManager prefixManager = createPrefixManager(ontology);
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology, prefixManager);
+    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
 
     swrlapiOWLOntology.createSQWRLQuery("q1", "swrlb:add(?x, \"2.0\"^^xsd:double, \"2.0\"^^xsd:double) ^ "
       + "swrlb:multiply(?y, ?x, \"2.0\"^^xsd:double) -> sqwrl:select(?y)");
@@ -109,8 +101,7 @@ public class SWRLParserSQWRLTest extends IntegrationTestBase
     throws SWRLParseException, SQWRLException, OWLOntologyCreationException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    DefaultPrefixManager prefixManager = createPrefixManager(ontology);
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology, prefixManager);
+    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(PERSON), Declaration(HAS_SURNAME));
 
@@ -120,8 +111,7 @@ public class SWRLParserSQWRLTest extends IntegrationTestBase
   @Test public void TestOrderBy() throws SWRLParseException, SQWRLException, OWLOntologyCreationException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    DefaultPrefixManager prefixManager = createPrefixManager(ontology);
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology, prefixManager);
+    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(PERSON_NAMED_FRED));
 
@@ -131,8 +121,7 @@ public class SWRLParserSQWRLTest extends IntegrationTestBase
   @Test public void TestSelectDistinct() throws SWRLParseException, SQWRLException, OWLOntologyCreationException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    DefaultPrefixManager prefixManager = createPrefixManager(ontology);
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology, prefixManager);
+    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(PERSON), Declaration(S4), Declaration(HAS_ID));
 

@@ -2,7 +2,6 @@ package org.swrlapi.factory;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.OWLOntology;
-import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.bridge.SWRLBridge;
 import org.swrlapi.bridge.TargetSWRLRuleEngine;
 import org.swrlapi.bridge.TargetSWRLRuleEngineCreator;
@@ -34,13 +33,12 @@ public class DefaultSWRLRuleAndQueryEngineFactory implements SWRLRuleAndQueryEng
     // log.info("Rule engine '" + ruleEngineName + "' registered with the SWRLAPI rule engine manager.");
   }
 
-  @NonNull @Override public SWRLRuleEngine createSWRLRuleEngine(@NonNull OWLOntology ontology,
-    @NonNull DefaultPrefixManager prefixManager)
+  @NonNull @Override public SWRLRuleEngine createSWRLRuleEngine(@NonNull OWLOntology ontology)
   {
     if (this.ruleEngineManager.hasRegisteredRuleEngines()) {
       Optional<@NonNull String> ruleEngineName = this.ruleEngineManager.getAnyRegisteredRuleEngineName();
       if (ruleEngineName.isPresent())
-        return createSWRLRuleEngine(ruleEngineName.get(), ontology, prefixManager);
+        return createSWRLRuleEngine(ruleEngineName.get(), ontology);
       else
         throw new NoRegisteredSWRLRuleEnginesException();
     } else
@@ -48,11 +46,11 @@ public class DefaultSWRLRuleAndQueryEngineFactory implements SWRLRuleAndQueryEng
   }
 
   @NonNull @Override public SWRLRuleEngine createSWRLRuleEngine(@NonNull String ruleEngineName,
-    @NonNull OWLOntology ontology, @NonNull DefaultPrefixManager prefixManager)
+    @NonNull OWLOntology ontology)
   {
     if (this.ruleEngineManager.isRuleEngineRegistered(ruleEngineName)) {
       try {
-        SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology, prefixManager);
+        SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
         OWL2RLPersistenceLayer owl2RLPersistenceLayer = SWRLAPIFactory.createOWL2RLPersistenceLayer(ontology);
         SWRLBridge bridge = SWRLAPIFactory.createSWRLBridge(swrlapiOWLOntology, owl2RLPersistenceLayer);
         Optional<TargetSWRLRuleEngineCreator> targetSWRLRuleEngineCreator = this.ruleEngineManager
@@ -76,22 +74,21 @@ public class DefaultSWRLRuleAndQueryEngineFactory implements SWRLRuleAndQueryEng
       throw new InvalidSWRLRuleEngineNameException(ruleEngineName);
   }
 
-  @NonNull @Override public SQWRLQueryEngine createSQWRLQueryEngine(@NonNull OWLOntology ontology,
-    @NonNull DefaultPrefixManager prefixManager)
+  @NonNull @Override public SQWRLQueryEngine createSQWRLQueryEngine(@NonNull OWLOntology ontology)
   {
     Optional<@NonNull String> ruleEngineName = this.ruleEngineManager.getAnyRegisteredRuleEngineName();
     if (ruleEngineName.isPresent())
-      return createSQWRLQueryEngine(ruleEngineName.get(), ontology, prefixManager);
+      return createSQWRLQueryEngine(ruleEngineName.get(), ontology);
     else
       throw new NoRegisteredSWRLRuleEnginesException();
   }
 
   @NonNull @Override public SQWRLQueryEngine createSQWRLQueryEngine(@NonNull String queryEngineName,
-    @NonNull OWLOntology ontology, @NonNull DefaultPrefixManager prefixManager)
+    @NonNull OWLOntology ontology)
   {
     if (this.ruleEngineManager.isRuleEngineRegistered(queryEngineName)) {
       try {
-        SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology, prefixManager);
+        SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
         OWL2RLPersistenceLayer owl2RLPersistenceLayer = SWRLAPIFactory.createOWL2RLPersistenceLayer(ontology);
         SWRLBridge bridge = SWRLAPIFactory.createSWRLBridge(swrlapiOWLOntology, owl2RLPersistenceLayer);
         Optional<TargetSWRLRuleEngineCreator> targetSWRLRuleEngineCreator = this.ruleEngineManager
