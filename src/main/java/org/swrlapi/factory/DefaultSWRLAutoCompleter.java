@@ -30,7 +30,7 @@ class DefaultSWRLAutoCompleter implements SWRLAutoCompleter
     this.shortForms = new ArrayList<>();
 
     for (OWLEntity owlEntity : swrlapiowlOntology.getOWLOntology().getSignature(Imports.INCLUDED)) {
-      log.info("iri " + owlEntity.getIRI() + ", shortForm " + prefixManager.getShortForm(owlEntity.getIRI()));
+      //log.info("iri " + owlEntity.getIRI() + ", shortForm " + prefixManager.getShortForm(owlEntity.getIRI()));
       String shortForm = prefixManager.getShortForm(owlEntity.getIRI());
       if (shortForm != null) {
         if (shortForm.startsWith(":")) // Strip leading ":"

@@ -155,10 +155,9 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     this.annotationPropertyDeclarationAxioms = new HashMap<>();
 
     addDefaultSWRLBuiltIns();
-
     addSWRLAPIBuiltInOntologies(this.ontology);
-    addDefaultPrefixes(this.ontology, this.prefixManager);
-    addSWRLAPIPrefixes(this.prefixManager);
+
+    updatePrefixes(this.ontology, this.prefixManager);
 
     this.ontology.getOWLOntologyManager().addOntologyChangeListener(this);
   }
@@ -167,10 +166,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
   { // TODO If ontology has not changed do not reprocess; however, will break currently
 
     reset(); // Will reset hasOntologyChanged
-    prefixManager.clear();
-    addSWRLAPIBuiltInOntologies(this.ontology);
-    addDefaultPrefixes(this.ontology, this.prefixManager);
-    addSWRLAPIPrefixes(this.prefixManager);
+    updatePrefixes(this.ontology, this.prefixManager);
     processSWRLRulesAndSQWRLQueries();
     processOWLAxioms();
   }
@@ -1633,13 +1629,17 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
   @Override public void ontologiesChanged(@Nonnull List<? extends OWLOntologyChange> list) throws OWLException
   {
     this.hasOntologyChanged = true;
-    log.info("ontology changed");
+
+    //log.info("ontology changed " + ontology.getSignature());
+    updatePrefixes(this.ontology, this.prefixManager);
   }
 
-  private void addDefaultPrefixes(@NonNull OWLOntology ontology, @NonNull DefaultPrefixManager prefixManager)
+  private static void updatePrefixes(@NonNull OWLOntology ontology, @NonNull DefaultPrefixManager prefixManager)
   {
     OWLOntologyManager owlOntologyManager = ontology.getOWLOntologyManager();
     OWLDocumentFormat ontologyFormat = owlOntologyManager.getOntologyFormat(ontology);
+
+    prefixManager.clear();
 
     if (ontologyFormat != null && ontologyFormat.isPrefixOWLOntologyFormat()) {
       PrefixDocumentFormat prefixOntologyFormat = ontologyFormat.asPrefixOWLOntologyFormat();
@@ -1648,9 +1648,12 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
       for (String prefix : map.keySet())
         prefixManager.setPrefix(prefix, map.get(prefix));
     }
+    addSWRLAPIPrefixes(prefixManager);
+
+    //log.info("updated prefixes " + prefixManager.getPrefixName2PrefixMap());
   }
 
-  private void addSWRLAPIPrefixes(@NonNull DefaultPrefixManager prefixManager)
+  private static void addSWRLAPIPrefixes(@NonNull DefaultPrefixManager prefixManager)
   {
     prefixManager.setPrefix("owl:", "http://www.w3.org/2002/07/owl#");
     prefixManager.setPrefix("swrl:", "http://www.w3.org/2003/11/swrl#");
