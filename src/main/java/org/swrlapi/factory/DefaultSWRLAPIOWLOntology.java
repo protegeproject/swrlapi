@@ -53,6 +53,7 @@ import org.semanticweb.owlapi.model.OWLObjectPropertyRangeAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyChange;
 import org.semanticweb.owlapi.model.OWLOntologyChangeListener;
+import org.semanticweb.owlapi.model.OWLOntologyID;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.OWLReflexiveObjectPropertyAxiom;
 import org.semanticweb.owlapi.model.OWLSameIndividualAxiom;
@@ -1647,6 +1648,13 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
       Map<@NonNull String, String> map = prefixOntologyFormat.getPrefixName2PrefixMap();
       for (String prefix : map.keySet())
         prefixManager.setPrefix(prefix, map.get(prefix));
+
+      //log.info("oID " + ontology.getOntologyID());
+      OWLOntologyID ontologyID = ontology.getOntologyID();
+      if (ontologyID.getOntologyIRI().isPresent()) {
+        String namespace = ontologyID.getOntologyIRI().get().getNamespace();
+        prefixManager.setDefaultPrefix(namespace);
+      }
     }
     addSWRLAPIPrefixes(prefixManager);
 
