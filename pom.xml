@@ -238,6 +238,9 @@
           <instructions>
             <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
             <Include-Resource>{maven-resources}</Include-Resource>
+            <Embed-Dependency>
+              jep
+            </Embed-Dependency>
             <Import-Package>
               org.semanticweb.owlapi.*;version="[4.1.3,5.0.0)",
               *
