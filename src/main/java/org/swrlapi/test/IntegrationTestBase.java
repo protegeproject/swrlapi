@@ -37,8 +37,8 @@ public class IntegrationTestBase
       ontologyManager.addAxiom(ontology, axiom);
   }
 
-  protected static org.semanticweb.owlapi.model.IRI iri(String fragment)
+  protected static org.semanticweb.owlapi.model.IRI iri(String iri)
   {
-    return org.semanticweb.owlapi.model.IRI.create(fragment);
+    return org.semanticweb.owlapi.model.IRI.create(iri);
   }
 }

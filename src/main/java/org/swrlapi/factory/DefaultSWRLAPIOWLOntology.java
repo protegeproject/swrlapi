@@ -1631,7 +1631,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
   {
     this.hasOntologyChanged = true;
 
-    //log.info("ontology changed " + ontology.getSignature());
     updatePrefixes(this.ontology, this.prefixManager);
   }
 
@@ -1649,11 +1648,13 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
       for (String prefix : map.keySet())
         prefixManager.setPrefix(prefix, map.get(prefix));
 
-      //log.info("oID " + ontology.getOntologyID());
-      OWLOntologyID ontologyID = ontology.getOntologyID();
-      if (ontologyID.getOntologyIRI().isPresent()) {
-        String namespace = ontologyID.getOntologyIRI().get().getNamespace();
-        prefixManager.setDefaultPrefix(namespace);
+      if (prefixManager.getDefaultPrefix() == null) {
+        OWLOntologyID ontologyID = ontology.getOntologyID();
+        if (ontologyID.getOntologyIRI().isPresent()) {
+          // TODO This is a quick hack!!
+          String defaultPrefix = ontologyID.getOntologyIRI().get().toString() + "#";
+          prefixManager.setDefaultPrefix(defaultPrefix);
+        }
       }
     }
     addSWRLAPIPrefixes(prefixManager);
