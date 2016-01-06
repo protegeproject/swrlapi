@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Defines a base interface for a SWRL built-in library. All built-in library implementation must implement this
  * interface.
- * <p/>
+ * <p>
  * The class {@link org.swrlapi.builtins.AbstractSWRLBuiltInLibrary} provides a default implementation of this interface
  * and provides and array of methods for dealing with built-in arguments.
  *

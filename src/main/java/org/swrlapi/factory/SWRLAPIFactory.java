@@ -289,7 +289,7 @@ public class SWRLAPIFactory
   }
 
   /**
-   * @param ontology      An OWL ontology
+   * @param ontology An OWL ontology
    * @return A SQWRL query engine model
    */
   @NonNull public static SQWRLQueryEngineModel createSQWRLQueryEngineModel(@NonNull OWLOntology ontology)
@@ -366,8 +366,9 @@ public class SWRLAPIFactory
    * Create a {@link org.swrlapi.core.SWRLAPIOWLOntology} from an OWLAPI-based
    * {@link org.semanticweb.owlapi.model.OWLOntology}.
    *
-   * @param ontology      An OWLAPI-based ontology
+   * @param ontology An OWLAPI-based ontology
    * @return A SWRLAPI-based wrapper of an OWL ontology
+   * @throws SQWRLException If a SQWRL error occurs during ontology processing
    */
   @NonNull public static SWRLAPIOWLOntology createSWRLAPIOntology(@NonNull OWLOntology ontology) throws SQWRLException
   {

@@ -25,7 +25,7 @@ import java.util.Set;
 /**
  * Wraps the OWLAPI's {@link org.semanticweb.owlapi.model.OWLOntology} class with additional functionality used by the
  * SWRLAPI. Primarily it provides methods for dealing with SWRL rules and SQWRL queries.
- * <p/>
+ * <p>
  * The {@link org.swrlapi.core.SWRLAPIRule} class provides an equivalent wrapping of the OWLAPI's
  * {@link org.semanticweb.owlapi.model.SWRLRule}. The SWRLAPI also provides a range of types extending the OWLAPI's
  * {@link org.semanticweb.owlapi.model.SWRLDArgument} interface to define arguments to built-in atoms. This extension
@@ -33,7 +33,7 @@ import java.util.Set;
  * OWLAPI's {@link org.semanticweb.owlapi.model.SWRLDArgument} interface. A {@link org.swrlapi.core.SWRLAPIOWLOntology}
  * will construct SWRLAPI rules from the SWRL rules in an OWLAPI-based ontology to contain these additional built-in
  * argument types.
- * <p/>
+ * <p>
  * The {@link #startBulkConversion()}, {@link #completeBulkConversion()}, {@link #hasOntologyChanged()}, and
  * {@link #resetOntologyChanged()} methods can be used for optimization purposes. For example, in the Protege-OWL API
  * the {@link #startBulkConversion()} method turns off listener notification so that bulk transfer of OWL axioms can be

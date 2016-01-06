@@ -14,6 +14,7 @@ public interface TargetRuleEngineSQWRLQueryConverterEx<T> extends TargetRuleEngi
   /**
    * @param query A SQWRL query
    * @throws TargetSWRLRuleEngineException If an error occurs in the target rule engine
+   * @return The converted query
    */
   @NonNull T convert(@NonNull SQWRLQuery query) throws TargetSWRLRuleEngineException;
 }

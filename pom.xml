@@ -9,7 +9,7 @@
 
   <groupId>edu.stanford.swrl</groupId>
   <artifactId>swrlapi</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0-beta-1-SNAPSHOT</version>
   <packaging>bundle</packaging>
   <name>SWRLAPI</name>
   <description>Java API for working with SWRL rules and SQWRL queries</description>

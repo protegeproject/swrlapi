@@ -47,10 +47,10 @@ public class SWRLBuiltInLibraryManager
    * Invoke a SWRL built-in. This method is called from the invokeSWRLBuiltIn method in the
    * {@link org.swrlapi.bridge.SWRLRuleEngineBridge} and should not be called directly from a rule engine. The built-in
    * name should be the prefixed name of the built-in (e.g., swrlb:lessThanOrEqual).
-   * <p/>
+   * <p>
    * For built-ins that evaluate to true, this method will return a list of argument patterns, one pattern for each
    * combination of arguments that evaluates to true.
-   * <p/>
+   * <p>
    * If the built-in evaluates to false, it will return an empty argument pattern list.
    *
    * @param bridge         The built-in bridge
