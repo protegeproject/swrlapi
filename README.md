@@ -16,21 +16,23 @@ The following examples can be used to quickly get started with the API.
 
 First, either download the latest JAR from the project's GitHub Releases area or use your favourite dependency management tool to download it from Maven Central. Here is the Maven dependency for this library:
 
-
+```
   <dependency>
     <groupId>edu.stanford.swrl</groupId>
     <artifactId>swrlapi</artifactId>
     <version>1.0.0-beta-4</version>
   </dependency>
+```
 
 If you'd like to be able to execute SWRL rules or SQWRL queries you will need a SWRLAPI-based rule engine implementation. Currently, a [Drools-based SWRL rule engine implementation](https://github.com/protegeproject/swrlapi-drools-engine) is provided. This implementation is also hosted on Maven Central. It Maven dependency is:
 
-
+```
   <dependency>
     <groupId>edu.stanford.swrl</groupId>
     <artifactId>swrlapi-drools-engine</artifactId>
     <version>1.0.0-beta-6</version>
   </dependency>
+```
 
 The following example illustrates how the library can be used to create a SWRL query engine using an ontology 
 created by the OWLAPI and then execute rules in that ontology.
