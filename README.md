@@ -10,40 +10,29 @@ See the [SWRLAPI Wiki](https://github.com/protegeproject/swrlapi/wiki) for docum
 A standalone [SWRLTab](https://github.com/protegeproject/swrltab) application and a [Protégé-based](http://protege.stanford.edu/) 
 [SWRLTab Plugin](https://github.com/protegeproject/swrltab-plugin), both built using this API, are also available. 
 
-#### Building Prerequisites
-
-To build this library you must have the following items installed:
-
-+ [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
-+ A tool for checking out a [Git](http://git-scm.com/) repository
-+ Apache's [Maven](http://maven.apache.org/index.html)
-
-#### Building
-
-Get a copy of the latest code:
-
-    git clone https://github.com/protegeproject/swrlapi.git 
-
-Change into the swrlapi directory:
-
-    cd swrlapi
-
-Then build it with Maven:
-
-    mvn clean install
-
-On build completion your local Maven repository will contain the generated swrlapi-${version}.jar file.
-
-This JAR is used by the [Protégé](http://protege.stanford.edu/) [SWRLTab Plugin](https://github.com/protegeproject/swrltab-plugin)
-and by the standalone [SWRLTab](https://github.com/protegeproject/swrltab) tool.
-
-A [Build Project](https://github.com/protegeproject/swrltab-project) is provided to build core SWRLAPI-related components.
-
 #### Getting Started
 
 The following examples can be used to quickly get started with the API.
 
-The following example illustrates how the API can be used to create a SWRL query engine using an ontology 
+First, either download the latest JAR from the project's GitHub Releases area or use your favourite dependency management tool to download it from Maven Central. Here is the Maven dependency for this library:
+
+
+  <dependency>
+    <groupId>edu.stanford.swrl</groupId>
+    <artifactId>swrlapi</artifactId>
+    <version>1.0.0-beta-4</version>
+  </dependency>
+
+If you'd like to be able to execute SWRL rules or SQWRL queries you will need a SWRLAPI-based rule engine implementation. Currently, a [Drools-based SWRL rule engine implementation](https://github.com/protegeproject/swrlapi-drools-engine) is provided. This implementation is also hosted on Maven Central. It Maven dependency is:
+
+
+  <dependency>
+    <groupId>edu.stanford.swrl</groupId>
+    <artifactId>swrlapi-drools-engine</artifactId>
+    <version>1.0.0-beta-6</version>
+  </dependency>
+
+The following example illustrates how the library can be used to create a SWRL query engine using an ontology 
 created by the OWLAPI and then execute rules in that ontology.
 
 ```java
@@ -78,3 +67,32 @@ this engine, and then process the results.
 ```
 
 Extensive documentation on the SWRLAPI can be found on the [SWRLAPI Wiki](https://github.com/protegeproject/swrlapi/wiki).
+
+
+#### Building
+
+To build this library you must have the following items installed:
+
++ [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
++ A tool for checking out a [Git](http://git-scm.com/) repository
++ Apache's [Maven](http://maven.apache.org/index.html)
+
+Get a copy of the latest code:
+
+    git clone https://github.com/protegeproject/swrlapi.git 
+
+Change into the swrlapi directory:
+
+    cd swrlapi
+
+Then build it with Maven:
+
+    mvn clean install
+
+On build completion your local Maven repository will contain the generated swrlapi-${version}.jar file.
+
+This JAR is used by the [Protégé](http://protege.stanford.edu/) [SWRLTab Plugin](https://github.com/protegeproject/swrltab-plugin)
+and by the standalone [SWRLTab](https://github.com/protegeproject/swrltab) tool.
+
+A [Build Project](https://github.com/protegeproject/swrltab-project) is provided to build core SWRLAPI-related components.
+
