@@ -180,7 +180,7 @@
         <configuration>
           <source>${java.version}</source>
           <target>${java.version}</target>
-          <!--
+          <!-- Temporarily disabling Checker Framework. A small number Checker-identified issues remain.
               <fork>true</fork>
               <annotationProcessors>
               <annotationProcessor>org.checkerframework.checker.nullness.NullnessChecker</annotationProcessor>
@@ -193,7 +193,6 @@
       </plugin>
 
       <plugin>
-        <!-- This plugin will set properties values using dependency information -->
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
         <version>${maven.dependency.plugin.version}</version>
@@ -314,7 +313,6 @@
             </executions>
           </plugin>
 
-          <!-- See http://central.sonatype.org/pages/apache-maven.html -->
           <plugin>
             <groupId>org.sonatype.plugins</groupId>
             <artifactId>nexus-staging-maven-plugin</artifactId>

@@ -34,6 +34,7 @@ If you'd like to be able to execute SWRL rules or SQWRL queries you will need a 
   </dependency>
 ```
 
+The SWRLAPI uses the [OWLAPI](https://github.com/owlcs/owlapi) to manage OWL ontologies.
 The following example illustrates how the library can be used to create a SWRL query engine using an ontology 
 created by the OWLAPI and then execute rules in that ontology.
 
@@ -70,7 +71,6 @@ this engine, and then process the results.
 
 Extensive documentation on the SWRLAPI can be found on the [SWRLAPI Wiki](https://github.com/protegeproject/swrlapi/wiki).
 
-
 #### Building
 
 To build this library you must have the following items installed:
@@ -97,6 +97,7 @@ This JAR is used by the [Protégé](http://protege.stanford.edu/) [SWRLTab Plugi
 and by the standalone [SWRLTab](https://github.com/protegeproject/swrltab) tool.
 
 A [Build Project](https://github.com/protegeproject/swrltab-project) is provided to build core SWRLAPI-related components.
+A project containing a [library of integration tests](https://github.com/protegeproject/swrlapi-integration-tests) is also proviced.
 
 #### Questions
 
