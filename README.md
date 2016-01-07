@@ -24,7 +24,7 @@ First, either download the latest JAR from the project's GitHub Releases area or
   </dependency>
 ```
 
-If you'd like to be able to execute SWRL rules or SQWRL queries you will need a SWRLAPI-based rule engine implementation. Currently, a [Drools-based SWRL rule engine implementation](https://github.com/protegeproject/swrlapi-drools-engine) is provided. This implementation is also hosted on Maven Central. It Maven dependency is:
+If you'd like to be able to execute SWRL rules or SQWRL queries you will need a SWRLAPI-based rule engine implementation. Currently, a [Drools-based SWRL rule engine implementation](https://github.com/protegeproject/swrlapi-drools-engine) is provided. This implementation is also hosted on Maven Central. Its Maven dependency is:
 
 ```
   <dependency>
@@ -98,3 +98,9 @@ and by the standalone [SWRLTab](https://github.com/protegeproject/swrltab) tool.
 
 A [Build Project](https://github.com/protegeproject/swrltab-project) is provided to build core SWRLAPI-related components.
 
+#### Questions
+
+If you have questions about this library, please go to the main
+Protégé website and subscribe to the [Protégé Developer Support
+mailing list](http://protege.stanford.edu/support.php#mailingListSupport).
+After subscribing, send messages to protege-dev at lists.stanford.edu.
