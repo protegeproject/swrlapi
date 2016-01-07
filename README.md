@@ -14,7 +14,7 @@ A standalone [SWRLTab](https://github.com/protegeproject/swrltab) application an
 
 The following examples can be used to quickly get started with the API.
 
-First, either download the latest JAR from the project's GitHub Releases area or use your favourite dependency management tool to download it from Maven Central. Here is the Maven dependency for this library:
+First, either download the latest JAR from the [project's GitHub Release area](https://github.com/protegeproject/swrlapi/releases) or use your favourite dependency management tool to download it from Maven Central. Here is the Maven dependency for this library:
 
 ```
   <dependency>
