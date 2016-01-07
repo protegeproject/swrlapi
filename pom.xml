@@ -17,10 +17,8 @@
 
   <properties>
 
-    <java.version>1.8</java.version> 
-
     <owlapi.version>4.1.3</owlapi.version> 
-    <jep.version>2.4.0</jep.version>
+    <jep.version>2.4.2</jep.version>
     <axis.osgi.version>1.4_1</axis.osgi.version>
     <commons.discovery.osgi.version>0.4_1</commons.discovery.osgi.version>
     <com.google.guava.version>18.0</com.google.guava.version>
@@ -40,6 +38,8 @@
     <maven.javadoc.plugin.version>2.9.1</maven.javadoc.plugin.version>
     <maven.gpg.plugin.version>1.5</maven.gpg.plugin.version>
     <maven.scm.gitexe.version>1.9</maven.scm.gitexe.version>
+
+    <java.version>1.8</java.version> 
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
@@ -84,27 +84,7 @@
     <system>GitHub</system>
     <url>https://github.com/protegeproject/swrlapi/issues</url>
   </issueManagement>
-  
-  <repositories>
-
-    <!-- JARs not in public Maven repositories are put in local repository in ${project.basedir}/lib. -->
-    <!-- Each project ./lib directory can contain a repository of this type.                          -->
-    <!-- See: http://blog.dub.podval.org/2010/01/maven-in-project-repository.html                     -->
-    <repository>
-      <id>lib</id>
-      <name>lib</name>
-      <releases>
-        <enabled>true</enabled>
-        <checksumPolicy>ignore</checksumPolicy>
-      </releases>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-      <url>file://${project.basedir}/lib</url>
-    </repository>
-
-  </repositories>
-  
+    
   <dependencies>
 
     <dependency>
@@ -133,9 +113,8 @@
       <version>${com.google.guava.version}</version>
     </dependency>
     
-    <!-- In local project repository (./lib) because we could not find a public Maven repository containing it. -->
     <dependency>
-      <groupId>org.nfunk</groupId>
+      <groupId>org.scijava</groupId>
       <artifactId>jep</artifactId>
       <version>${jep.version}</version>
     </dependency>
@@ -238,9 +217,6 @@
           <instructions>
             <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
             <Include-Resource>{maven-resources}</Include-Resource>
-            <Embed-Dependency>
-              jep
-            </Embed-Dependency>
             <Import-Package>
               org.semanticweb.owlapi.*;version="[4.1.3,5.0.0)",
               *
