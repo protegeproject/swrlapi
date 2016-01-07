@@ -1,9 +1,8 @@
 SWRLAPI
 =======
 
-The SWRLAPI is a Java API for working with the [OWL](http://en.wikipedia.org/wiki/Web_Ontology_Language)-based [SWRL](http://www.w3.org/Submission/SWRL/) rule language. 
-It includes graphical tools for editing and executing rules. 
-A SWRL-based OWL query language called [SQWRL](https://github.com/protegeproject/swrlapi/wiki/SQWRL) is also provided.
+The SWRLAPI is a Java API for working with the [OWL](http://en.wikipedia.org/wiki/Web_Ontology_Language)-based [SWRL](http://www.w3.org/Submission/SWRL/) rule and [SQWRL](https://github.com/protegeproject/swrlapi/wiki/SQWRL) query langauges. 
+It includes graphical tools for editing and executing rules and queries.
 
 See the [SWRLAPI Wiki](https://github.com/protegeproject/swrlapi/wiki) for documentation.
 
@@ -46,7 +45,7 @@ created by the OWLAPI and then execute rules in that ontology.
  // Create a SWRL rule engine using the SWRLAPI
  SWRLRuleEngine swrlRuleEngine = SWRLAPIFactory.createSWRLRuleEngine(ontology);
 
- // Run the rule engine
+ // Run the SWRL rules in the ontology
  swrlRuleEngine.infer();
 ```
 
@@ -97,7 +96,7 @@ This JAR is used by the [Protégé](http://protege.stanford.edu/) [SWRLTab Plugi
 and by the standalone [SWRLTab](https://github.com/protegeproject/swrltab) tool.
 
 A [Build Project](https://github.com/protegeproject/swrltab-project) is provided to build core SWRLAPI-related components.
-A project containing a [library of integration tests](https://github.com/protegeproject/swrlapi-integration-tests) is also proviced.
+A project containing a [library of integration tests](https://github.com/protegeproject/swrlapi-integration-tests) is also provided.
 
 #### Questions
 
