@@ -27,110 +27,110 @@ import static org.junit.Assert.assertTrue;
  */
 public class SQWRLResultGeneratorTest
 {
-	private SQWRLResultManager resultManager;
+  private SQWRLResultManager resultManager;
 
-	private static final String TestPrefix = "test:";
-	private static final String TestNamespace = "http://example.org#";
+  private static final String TestPrefix = "test:";
+  private static final String TestNamespace = "http://example.org#";
 
-	private static final String columnName = "c";
+  private static final String columnName = "c";
 
-	@Rule public final ExpectedException thrown = ExpectedException.none();
+  @Rule public final ExpectedException thrown = ExpectedException.none();
 
-	@Before public void setUp() throws OWLOntologyCreationException
-	{
-		OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
-		OWLOntology ontology = ontologyManager.createOntology();
-		DefaultPrefixManager prefixManager = new DefaultPrefixManager();
+  @Before public void setUp() throws OWLOntologyCreationException
+  {
+    OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
+    OWLOntology ontology = ontologyManager.createOntology();
+    DefaultPrefixManager prefixManager = new DefaultPrefixManager();
 
-		prefixManager.setPrefix(TestPrefix, TestNamespace);
+    prefixManager.setPrefix(TestPrefix, TestNamespace);
 
     resultManager = SWRLAPIFactory.createSQWRLResultManager(prefixManager);
   }
 
-	@Test public void testAddColumns() throws Exception
-	{
-		List<String> columnNames = Stream.of("a", "b").collect(Collectors.toCollection(ArrayList::new));
-		resultManager.addColumns(columnNames);
-		resultManager.configured();
+  @Test public void testAddColumns() throws Exception
+  {
+    List<String> columnNames = Stream.of("a", "b").collect(Collectors.toCollection(ArrayList::new));
+    resultManager.addColumns(columnNames);
+    resultManager.configured();
 
-		assertEquals(columnNames, resultManager.getColumnNames());
-	}
+    assertEquals(columnNames, resultManager.getColumnNames());
+  }
 
-	@Test public void testAddColumn() throws Exception
-	{
-		resultManager.addColumn(columnName);
-		resultManager.configured();
+  @Test public void testAddColumn() throws Exception
+  {
+    resultManager.addColumn(columnName);
+    resultManager.configured();
 
-		assertEquals(columnName, resultManager.getColumnName(0));
-	}
+    assertEquals(columnName, resultManager.getColumnName(0));
+  }
 
-	@Test public void testGetColumnNamesPreConfiguration() throws Exception
-	{
-		thrown.expect(SQWRLException.class);
-		thrown.expectMessage("attempt to do post-configuration operations before configuration");
+  @Test public void testGetColumnNamesPreConfiguration() throws Exception
+  {
+    thrown.expect(SQWRLException.class);
+    thrown.expectMessage("attempt to do post-configuration operations before configuration");
 
-		resultManager.getColumnNames();
-	}
+    resultManager.getColumnNames();
+  }
 
-	@Test public void testGetColumnNamePreConfiguration() throws Exception
-	{
-		thrown.expect(SQWRLException.class);
-		thrown.expectMessage("attempt to do post-configuration operations before configuration");
+  @Test public void testGetColumnNamePreConfiguration() throws Exception
+  {
+    thrown.expect(SQWRLException.class);
+    thrown.expectMessage("attempt to do post-configuration operations before configuration");
 
-		resultManager.getColumnName(0);
-	}
+    resultManager.getColumnName(0);
+  }
 
-	@Test public void testEmptyResult() throws Exception
-	{
-		resultManager.configured();
-		resultManager.prepared();
+  @Test public void testEmptyResult() throws Exception
+  {
+    resultManager.configured();
+    resultManager.prepared();
 
-		assertTrue(resultManager.isConfigured());
-		assertTrue(resultManager.isPrepared());
-		assertEquals(resultManager.getNumberOfColumns(), 0);
-		assertEquals(resultManager.getNumberOfRows(), 0);
-	}
+    assertTrue(resultManager.isConfigured());
+    assertTrue(resultManager.isPrepared());
+    assertEquals(0, resultManager.getNumberOfColumns());
+    assertEquals(0, resultManager.getNumberOfRows());
+  }
 
-	@Test public void testPreparedWithoutConfigured() throws Exception
-	{
-		thrown.expect(SQWRLException.class);
-		thrown.expectMessage("attempt to do post-configuration operations before configuration");
+  @Test public void testPreparedWithoutConfigured() throws Exception
+  {
+    thrown.expect(SQWRLException.class);
+    thrown.expectMessage("attempt to do post-configuration operations before configuration");
 
-		resultManager.prepared();
-	}
+    resultManager.prepared();
+  }
 
-	@Test public void testDoubleConfigured() throws Exception
-	{
-		thrown.expect(SQWRLException.class);
-		thrown.expectMessage("attempt to configure already configured result");
+  @Test public void testDoubleConfigured() throws Exception
+  {
+    thrown.expect(SQWRLException.class);
+    thrown.expectMessage("attempt to configure already configured result");
 
-		resultManager.configured();
-		resultManager.configured();
-	}
+    resultManager.configured();
+    resultManager.configured();
+  }
 
-	@Test public void testDoublePrepared() throws Exception
-	{
-		thrown.expect(SQWRLException.class);
-		thrown.expectMessage("attempt to modify prepared result");
+  @Test public void testDoublePrepared() throws Exception
+  {
+    thrown.expect(SQWRLException.class);
+    thrown.expectMessage("attempt to modify prepared result");
 
-		resultManager.configured();
-		resultManager.prepared();
-		resultManager.prepared();
-	}
+    resultManager.configured();
+    resultManager.prepared();
+    resultManager.prepared();
+  }
 
-	@Test public void testInvalidOpenRow() throws Exception
-	{
-		thrown.expect(SQWRLException.class);
-		thrown.expectMessage("attempt to do post-configuration operations before configuration");
+  @Test public void testInvalidOpenRow() throws Exception
+  {
+    thrown.expect(SQWRLException.class);
+    thrown.expectMessage("attempt to do post-configuration operations before configuration");
 
-		resultManager.openRow();
-	}
+    resultManager.openRow();
+  }
 
-	@Test public void testIsRowOpen() throws Exception
-	{
-		resultManager.configured();
-		resultManager.prepared();
+  @Test public void testIsRowOpen() throws Exception
+  {
+    resultManager.configured();
+    resultManager.prepared();
 
-		assertFalse(resultManager.isRowOpen());
-	}
+    assertFalse(resultManager.isRowOpen());
+  }
 }

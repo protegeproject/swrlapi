@@ -20,14 +20,13 @@ public class LiteralFactoryTest
     this.literalFactory = SWRLAPIFactory.createLiteralFactory();
   }
 
-  @Test
-  public void testGetOWLLiteralBoolean() throws Exception
+  @Test public void testGetOWLLiteralBoolean() throws Exception
   {
     boolean b = true;
 
     Literal literal = this.literalFactory.getLiteral(b);
 
     assertTrue(literal.isBoolean());
-    assertEquals(literal.getBoolean(), true);
+    assertEquals(true, literal.getBoolean());
   }
 }

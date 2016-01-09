@@ -45,6 +45,6 @@ public class SWRLBuiltInArgumentFactoryTest
     OWLClass cls = this.dataFactory.getOWLClass(classIRI);
     SWRLClassBuiltInArgument classBuiltInArgument = this.builtInArgumentFactory.getClassBuiltInArgument(cls);
 
-    assertEquals(classBuiltInArgument.getIRI(), classIRI);
+    assertEquals(classIRI, classBuiltInArgument.getIRI());
   }
 }

@@ -1,7 +1,5 @@
 package org.swrlapi.factory;
 
-import static junit.framework.TestCase.assertEquals;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.semanticweb.owlapi.apibinding.OWLManager;
@@ -15,51 +13,50 @@ import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.core.IRIResolver;
 import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
 
+import static junit.framework.TestCase.assertEquals;
+
 /**
  * @see SQWRLResultValueFactory
  */
 public class SQWRLResultValueFactoryTest
 {
-	private static final String TestPrefix = "test";
-	private static final String TestNamespace = "http://example.org#";
+  private static final String TestPrefix = "test";
+  private static final String TestNamespace = "http://example.org#";
 
-	private OWLOntologyManager ontologyManager;
-	private DefaultPrefixManager prefixManager;
-	private IRIResolver iriResolver;
-	private SQWRLResultValueFactory resultValueFactory;
-	private SWRLBuiltInArgumentFactory builtInArgumentFactory;
-	private OWLDataFactory dataFactory;
+  private OWLOntologyManager ontologyManager;
+  private DefaultPrefixManager prefixManager;
+  private IRIResolver iriResolver;
+  private SQWRLResultValueFactory resultValueFactory;
+  private SWRLBuiltInArgumentFactory builtInArgumentFactory;
+  private OWLDataFactory dataFactory;
 
-	@Before
-	public void setUp() throws OWLOntologyCreationException
-	{
-		ontologyManager = OWLManager.createOWLOntologyManager();
-		dataFactory = ontologyManager.getOWLDataFactory();
-		prefixManager = new DefaultPrefixManager();
-		iriResolver = SWRLAPIFactory.createIRIResolver(prefixManager);
-		resultValueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(iriResolver);
-		builtInArgumentFactory = SWRLAPIFactory.createSWRLBuiltInArgumentFactory(iriResolver);
+  @Before public void setUp() throws OWLOntologyCreationException
+  {
+    ontologyManager = OWLManager.createOWLOntologyManager();
+    dataFactory = ontologyManager.getOWLDataFactory();
+    prefixManager = new DefaultPrefixManager();
+    iriResolver = SWRLAPIFactory.createIRIResolver(prefixManager);
+    resultValueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(iriResolver);
+    builtInArgumentFactory = SWRLAPIFactory.createSWRLBuiltInArgumentFactory(iriResolver);
 
-		prefixManager.setPrefix(TestPrefix, TestNamespace);
-	}
+    prefixManager.setPrefix(TestPrefix, TestNamespace);
+  }
 
-	@Test
-	public void testGetClassValueWithBuiltInArgument() throws Exception
-	{
-		IRI classIRI = IRI.create(TestNamespace + "AClass");
-		OWLClass cls = this.dataFactory.getOWLClass(classIRI);
-		SWRLClassBuiltInArgument classBuiltInArgument = this.builtInArgumentFactory.getClassBuiltInArgument(cls);
-		SQWRLClassResultValue value = this.resultValueFactory.getClassValue(classBuiltInArgument);
+  @Test public void testGetClassValueWithBuiltInArgument() throws Exception
+  {
+    IRI classIRI = IRI.create(TestNamespace + "AClass");
+    OWLClass cls = this.dataFactory.getOWLClass(classIRI);
+    SWRLClassBuiltInArgument classBuiltInArgument = this.builtInArgumentFactory.getClassBuiltInArgument(cls);
+    SQWRLClassResultValue value = this.resultValueFactory.getClassValue(classBuiltInArgument);
 
-		assertEquals(value.getIRI(), classIRI);
-	}
+    assertEquals(classIRI, value.getIRI());
+  }
 
-	@Test
-	public void testGetClassValueWithIRI() throws Exception
-	{
-		IRI classIRI = IRI.create(TestNamespace + "AClass");
-		SQWRLClassResultValue value = this.resultValueFactory.getClassValue(classIRI);
+  @Test public void testGetClassValueWithIRI() throws Exception
+  {
+    IRI classIRI = IRI.create(TestNamespace + "AClass");
+    SQWRLClassResultValue value = this.resultValueFactory.getClassValue(classIRI);
 
-		assertEquals(value.getIRI(), classIRI);
-	}
+    assertEquals(classIRI, value.getIRI());
+  }
 }

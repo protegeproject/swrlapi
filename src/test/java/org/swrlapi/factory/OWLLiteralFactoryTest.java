@@ -20,8 +20,7 @@ public class OWLLiteralFactoryTest
     this.datatypeFactory = SWRLAPIFactory.createOWLDatatypeFactory();
   }
 
-  @Test
-  public void testGetOWLLiteralBoolean() throws Exception
+  @Test public void testGetOWLLiteralBoolean() throws Exception
   {
     boolean b = true;
 

@@ -31,16 +31,16 @@ public class SWRLAPIBuiltInAtomTest
 
 	@Test public void testGetRuleName() throws Exception
 	{
-		assertEquals(atom.getRuleName(), ruleName);
+            assertEquals(ruleName, atom.getRuleName());
 	}
 
 	@Test public void testGetBuiltInPrefixedName() throws Exception
 	{
-		assertEquals(atom.getBuiltInPrefixedName(), builtInName);
+            assertEquals(builtInName, atom.getBuiltInPrefixedName());
 	}
 
 	@Test public void testGetBuiltInIRI() throws Exception
 	{
-		assertEquals(atom.getBuiltInIRI(), builtInIRI);
+            assertEquals(builtInIRI, atom.getBuiltInIRI());
 	}
 }

@@ -60,8 +60,8 @@ public class SWRLParserTest extends IntegrationTestBase
 
     SWRLAPIRule rule = swrlapiOWLOntology.createSWRLRule("r1", "-> Male(p1)");
 
-    assertEquals(rule.getBodyAtoms().size(), 0);
-    assertEquals(rule.getHeadAtoms().size(), 1);
+    assertEquals(0, rule.getBodyAtoms().size());
+    assertEquals(1, rule.getHeadAtoms().size());
     assertThat(rule.getHeadAtoms().get(0), instanceOf(SWRLClassAtom.class));
   }
 
@@ -75,8 +75,8 @@ public class SWRLParserTest extends IntegrationTestBase
 
     SWRLAPIRule rule = swrlapiOWLOntology.createSWRLRule("r1", "-> Male(p1)");
 
-    assertEquals(rule.getBodyAtoms().size(), 0);
-    assertEquals(rule.getHeadAtoms().size(), 1);
+    assertEquals(0, rule.getBodyAtoms().size());
+    assertEquals(1, rule.getHeadAtoms().size());
     assertThat(rule.getHeadAtoms().get(0), instanceOf(SWRLClassAtom.class));
   }
 
@@ -89,8 +89,8 @@ public class SWRLParserTest extends IntegrationTestBase
     addOWLAxioms(ontology, Declaration(MALE));
 
     SWRLAPIRule rule = swrlapiOWLOntology.createSWRLRule("r1", "Male(?m) -> ");
-    assertEquals(rule.getBodyAtoms().size(), 1);
-    assertEquals(rule.getHeadAtoms().size(), 0);
+    assertEquals(1, rule.getBodyAtoms().size());
+    assertEquals(0, rule.getHeadAtoms().size());
     assertThat(rule.getBodyAtoms().get(0), instanceOf(SWRLClassAtom.class));
   }
 
@@ -103,8 +103,8 @@ public class SWRLParserTest extends IntegrationTestBase
     addOWLAxioms(ontology, Declaration(MALE));
 
     SWRLAPIRule rule = swrlapiOWLOntology.createSWRLRule("r1", "Male(?m) -> ");
-    assertEquals(rule.getBodyAtoms().size(), 1);
-    assertEquals(rule.getHeadAtoms().size(), 0);
+    assertEquals(1, rule.getBodyAtoms().size());
+    assertEquals(0, rule.getHeadAtoms().size());
     assertThat(rule.getBodyAtoms().get(0), instanceOf(SWRLClassAtom.class));
   }
 
@@ -116,8 +116,8 @@ public class SWRLParserTest extends IntegrationTestBase
     addOWLAxioms(ontology, Declaration(MALE), Declaration(P1));
 
     SWRLAPIRule rule = swrlapiOWLOntology.createSWRLRule("r1", "Male(p1) -> ");
-    assertEquals(rule.getBodyAtoms().size(), 1);
-    assertEquals(rule.getHeadAtoms().size(), 0);
+    assertEquals(1, rule.getBodyAtoms().size());
+    assertEquals(0, rule.getHeadAtoms().size());
     assertThat(rule.getBodyAtoms().get(0), instanceOf(SWRLClassAtom.class));
   }
 
@@ -127,8 +127,8 @@ public class SWRLParserTest extends IntegrationTestBase
   // {
   // SWRLAPIRule rule = createSWRLRule("r1", "owl:Thing(?x) -> ");
   //
-  // assertEquals(rule.getBodyAtoms().size(), 1);
-  // assertEquals(rule.getHeadAtoms().size(), 0);
+  // assertEquals(1, rule.getBodyAtoms().size());
+  // assertEquals(0, rule.getHeadAtoms().size());
   // assertThat(rule.getHeadAtoms().get(0), instanceOf(SWRLClassAtom.class));
   // }
 
@@ -140,8 +140,8 @@ public class SWRLParserTest extends IntegrationTestBase
     addOWLAxioms(ontology, Declaration(HAS_NAME));
 
     SWRLAPIRule rule = swrlapiOWLOntology.createSWRLRule("r1", "hasName(?p, \"Fred\") ->");
-    assertEquals(rule.getBodyAtoms().size(), 1);
-    assertEquals(rule.getHeadAtoms().size(), 0);
+    assertEquals(1, rule.getBodyAtoms().size());
+    assertEquals(0, rule.getHeadAtoms().size());
     assertThat(rule.getBodyAtoms().get(0), instanceOf(SWRLDataPropertyAtom.class));
   }
 
@@ -154,8 +154,8 @@ public class SWRLParserTest extends IntegrationTestBase
     addOWLAxioms(ontology, Declaration(IS_FRENCH));
 
     SWRLAPIRule rule = swrlapiOWLOntology.createSWRLRule("r1", "isFrench(?f, true) ->");
-    assertEquals(rule.getBodyAtoms().size(), 1);
-    assertEquals(rule.getHeadAtoms().size(), 0);
+    assertEquals(1, rule.getBodyAtoms().size());
+    assertEquals(0, rule.getHeadAtoms().size());
     assertThat(rule.getBodyAtoms().get(0), instanceOf(SWRLDataPropertyAtom.class));
   }
 
@@ -168,8 +168,8 @@ public class SWRLParserTest extends IntegrationTestBase
     addOWLAxioms(ontology, Declaration(IS_FRENCH));
 
     SWRLAPIRule rule = swrlapiOWLOntology.createSWRLRule("r1", "isFrench(?f, false) ->");
-    assertEquals(rule.getBodyAtoms().size(), 1);
-    assertEquals(rule.getHeadAtoms().size(), 0);
+    assertEquals(1, rule.getBodyAtoms().size());
+    assertEquals(0, rule.getHeadAtoms().size());
     assertThat(rule.getBodyAtoms().get(0), instanceOf(SWRLDataPropertyAtom.class));
   }
 
@@ -559,8 +559,8 @@ public class SWRLParserTest extends IntegrationTestBase
 
     SWRLAPIRule rule = swrlapiOWLOntology.createSWRLRule("r1", "hasUncle(?p, ?u) -> ");
 
-    assertEquals(rule.getBodyAtoms().size(), 1);
-    assertEquals(rule.getHeadAtoms().size(), 0);
+    assertEquals(1, rule.getBodyAtoms().size());
+    assertEquals(0, rule.getHeadAtoms().size());
     assertThat(rule.getBodyAtoms().get(0), instanceOf(SWRLObjectPropertyAtom.class));
   }
 
@@ -573,8 +573,8 @@ public class SWRLParserTest extends IntegrationTestBase
     addOWLAxioms(ontology, Declaration(HAS_UNCLE), Declaration(P1), Declaration(P2));
 
     SWRLAPIRule rule = swrlapiOWLOntology.createSWRLRule("r1", "hasUncle(p1, p2) -> ");
-    assertEquals(rule.getBodyAtoms().size(), 1);
-    assertEquals(rule.getHeadAtoms().size(), 0);
+    assertEquals(1, rule.getBodyAtoms().size());
+    assertEquals(0, rule.getHeadAtoms().size());
     assertThat(rule.getBodyAtoms().get(0), instanceOf(SWRLObjectPropertyAtom.class));
   }
 
@@ -643,8 +643,8 @@ public class SWRLParserTest extends IntegrationTestBase
     SWRLAPIRule rule = swrlapiOWLOntology.createSWRLRule("r1",
       "swrlb:addDayTimeDurationToDateTime(?dt, \"1999-01-01T12:12:12\", \"P1Y\") -> hasLastAccessTime(p1, ?dt)");
 
-    assertEquals(rule.getBodyAtoms().size(), 1);
-    assertEquals(rule.getHeadAtoms().size(), 1);
+    assertEquals(1, rule.getBodyAtoms().size());
+    assertEquals(1, rule.getHeadAtoms().size());
     assertThat(rule.getBodyAtoms().get(0), instanceOf(SWRLBuiltInAtom.class));
     assertThat(rule.getHeadAtoms().get(0), instanceOf(SWRLDataPropertyAtom.class));
   }
@@ -659,8 +659,8 @@ public class SWRLParserTest extends IntegrationTestBase
 
     SWRLAPIRule rule = swrlapiOWLOntology.createSWRLRule("r1", "Person(?i2) ^ hasID(?i2, \"i2ID\") -> sameAs(i1, ?i2)");
 
-    assertEquals(rule.getBodyAtoms().size(), 2);
-    assertEquals(rule.getHeadAtoms().size(), 1);
+    assertEquals(2, rule.getBodyAtoms().size());
+    assertEquals(1, rule.getHeadAtoms().size());
     assertThat(rule.getBodyAtoms().get(0), instanceOf(SWRLClassAtom.class));
     assertThat(rule.getBodyAtoms().get(1), instanceOf(SWRLDataPropertyAtom.class));
     assertThat(rule.getHeadAtoms().get(0), instanceOf(SWRLSameIndividualAtom.class));

@@ -19,12 +19,11 @@ public class OWLDatatypeFactoryTest
     this.factory = SWRLAPIFactory.createOWLDatatypeFactory();
   }
 
-  @Test
-  public void testGetBooleanDatatype() throws Exception
+  @Test public void testGetBooleanDatatype() throws Exception
   {
     OWLDatatype datatype = this.factory.getBooleanDatatype();
 
-    Assert.assertEquals(datatype.getIRI(), XSDVocabulary.BOOLEAN.getIRI());
+    Assert.assertEquals(XSDVocabulary.BOOLEAN.getIRI(), datatype.getIRI());
     Assert.assertTrue(datatype.isBoolean());
   }
 }
