@@ -110,30 +110,6 @@ public class DefaultIRIResolver implements IRIResolver
     this.namedIndividualPrefixedNames.add(prefixedName);
   }
 
-  @Override public void recordOWLObjectProperty(@NonNull OWLEntity property)
-  {
-    IRI iri = property.getIRI();
-    String prefixedName = iri2PrefixedName(iri);
-
-    recordPrefixedName2IRIMapping(prefixedName, iri);
-  }
-
-  @Override public void recordOWLDataProperty(@NonNull OWLEntity property)
-  {
-    IRI iri = property.getIRI();
-    String prefixedName = iri2PrefixedName(iri);
-
-    recordPrefixedName2IRIMapping(prefixedName, iri);
-  }
-
-  @Override public void recordOWLAnnotationProperty(@NonNull OWLEntity property)
-  {
-    IRI iri = property.getIRI();
-    String prefixedName = iri2PrefixedName(iri);
-
-    recordPrefixedName2IRIMapping(prefixedName, iri);
-  }
-
   @Override public boolean isOWLNamedIndividual(@NonNull String prefixedName)
   {
     return this.namedIndividualPrefixedNames.contains(prefixedName);

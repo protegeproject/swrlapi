@@ -1104,7 +1104,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
       OWLEntity property = axiom.getEntity();
       this.objectPropertyDeclarationAxioms.put(property.getIRI(), axiom);
       this.assertedOWLAxioms.add(axiom);
-      recordOWLObjectProperty(property);
     }
   }
 
@@ -1115,7 +1114,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
 
       this.dataPropertyDeclarationAxioms.put(property.getIRI(), axiom);
       this.assertedOWLAxioms.add(axiom);
-      recordOWLDataProperty(property);
     }
   }
 
@@ -1126,7 +1124,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
 
       this.annotationPropertyDeclarationAxioms.put(property.getIRI(), axiom);
       this.assertedOWLAxioms.add(axiom);
-      recordOWLAnnotationProperty(property);
     }
   }
 
@@ -1367,7 +1364,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
         OWLDeclarationAxiom axiom = getSWRLAPIOWLDataFactory().getOWLObjectPropertyDeclarationAxiom(property);
         this.objectPropertyDeclarationAxioms.put(property.getIRI(), axiom);
         this.assertedOWLAxioms.add(axiom);
-        recordOWLObjectProperty(property);
       }
     }
   }
@@ -1380,7 +1376,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
         OWLDeclarationAxiom axiom = getSWRLAPIOWLDataFactory().getOWLDataPropertyDeclarationAxiom(property);
         this.dataPropertyDeclarationAxioms.put(property.getIRI(), axiom);
         this.assertedOWLAxioms.add(axiom);
-        recordOWLDataProperty(property);
       }
     }
   }
@@ -1610,21 +1605,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
   private void recordOWLNamedIndividual(@NonNull OWLEntity individual)
   {
     getIRIResolver().recordOWLNamedIndividual(individual);
-  }
-
-  private void recordOWLObjectProperty(@NonNull OWLEntity property)
-  {
-    getIRIResolver().recordOWLObjectProperty(property);
-  }
-
-  private void recordOWLDataProperty(@NonNull OWLEntity property)
-  {
-    getIRIResolver().recordOWLDataProperty(property);
-  }
-
-  private void recordOWLAnnotationProperty(@NonNull OWLEntity property)
-  {
-    getIRIResolver().recordOWLAnnotationProperty(property);
   }
 
   @Override public void ontologiesChanged(@Nonnull List<? extends OWLOntologyChange> list) throws OWLException

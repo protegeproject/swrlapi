@@ -35,11 +35,5 @@ public interface IRIResolver
 
   void recordOWLNamedIndividual(@NonNull OWLEntity individual);
 
-  void recordOWLObjectProperty(@NonNull OWLEntity property);
-
-  void recordOWLDataProperty(@NonNull OWLEntity property);
-
-  void recordOWLAnnotationProperty(@NonNull OWLEntity property);
-
   boolean isOWLNamedIndividual(@NonNull String prefixedName);
 }
