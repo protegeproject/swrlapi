@@ -4,19 +4,10 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.SWRLVariable;
-import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
 
 /**
  * For simplicity, SWRL rule engine implementations will typically use the prefixed names of OWL named objects to name
- * their representation of those objects. This interface contains calls to record and resolve those prefixed names.
- * Before invoking a rule engine a  {@link org.swrlapi.core.SWRLAPIOWLOntology} will process a source
- * OWL ontology and will call the appropriate record method in this interface
- * to record all named objects in an ontology together with their types. Rule engines can
- * then use this interface to determine the types of OWL entities using their prefixed name and to map those prefixed
- * names to IRIs.
+ * their representation of those objects.
  *
  * @see org.swrlapi.core.SWRLAPIOWLOntology
  */
@@ -50,25 +41,5 @@ public interface IRIResolver
 
   void recordOWLAnnotationProperty(@NonNull OWLEntity property);
 
-  void recordOWLDatatype(@NonNull OWLEntity datatype);
-
-  void recordOWLClass(@NonNull SWRLClassBuiltInArgument classArgument);
-
-  void recordOWLIndividual(@NonNull SWRLNamedIndividualBuiltInArgument individualArgument);
-
-  void recordOWLObjectProperty(@NonNull SWRLObjectPropertyBuiltInArgument propertyArgument);
-
-  void recordOWLDataProperty(@NonNull SWRLDataPropertyBuiltInArgument propertyArgument);
-
-  boolean isOWLClass(@NonNull String prefixedName);
-
   boolean isOWLNamedIndividual(@NonNull String prefixedName);
-
-  boolean isOWLObjectProperty(@NonNull String prefixedName);
-
-  boolean isOWLDataProperty(@NonNull String prefixedName);
-
-  boolean isOWLAnnotationProperty(@NonNull String prefixedName);
-
-  boolean isOWLDatatype(@NonNull String prefixedName);
 }
