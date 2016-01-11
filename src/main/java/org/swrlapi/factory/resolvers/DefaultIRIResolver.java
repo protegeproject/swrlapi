@@ -52,7 +52,7 @@ public class DefaultIRIResolver implements IRIResolver
         com.google.common.base.Optional<@NonNull String> remainder = iri.getRemainder();
         if (remainder.isPresent()) {
           if (namespace.isEmpty()) {
-            String prefixedName = ":" + remainder.get();
+            String prefixedName = remainder.get();
             this.iri2PrefixedNameCache.put(iri, prefixedName);
             return prefixedName;
           } else if (this.autogenNamespace2Prefix.containsKey(namespace)) {
