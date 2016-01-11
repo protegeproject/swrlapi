@@ -684,7 +684,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     } else {
       IRI variableIRI = swrlVariable.getIRI();
       SWRLVariableBuiltInArgument argument = getSWRLBuiltInArgumentFactory().getVariableBuiltInArgument(variableIRI);
-      getIRIResolver().recordSWRLVariable(swrlVariable);
 
       return argument;
     }

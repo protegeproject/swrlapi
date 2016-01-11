@@ -2,7 +2,6 @@ package org.swrlapi.core;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.IRI;
-import org.semanticweb.owlapi.model.SWRLVariable;
 
 /**
  * For simplicity, SWRL rule engine implementations will typically use the prefixed names of OWL named objects to name
@@ -27,6 +26,4 @@ public interface IRIResolver
    * @throws IllegalArgumentException If the prefixed name cannot be resolved
    */
   @NonNull IRI prefixedName2IRI(@NonNull String prefixedName);
-
-  void recordSWRLVariable(@NonNull SWRLVariable variable);
 }
