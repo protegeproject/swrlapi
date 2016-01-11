@@ -92,14 +92,6 @@ public class DefaultIRIResolver implements IRIResolver
     this.prefixedName2IRI.put(variablePrefixedName, iri);
   }
 
-  @Override public void recordOWLClass(@NonNull OWLEntity cls)
-  {
-    IRI iri = cls.getIRI();
-    String prefixedName = iri2PrefixedName(iri);
-
-    recordPrefixedName2IRIMapping(prefixedName, iri);
-  }
-
   @Override public void recordOWLNamedIndividual(@NonNull OWLEntity individual)
   {
     IRI iri = individual.getIRI();

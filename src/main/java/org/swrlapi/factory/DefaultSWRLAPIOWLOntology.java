@@ -1084,7 +1084,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
       OWLEntity cls = axiom.getEntity();
       this.classDeclarationAxioms.put(cls.getIRI(), axiom);
       this.assertedOWLAxioms.add(axiom);
-      recordOWLClass(cls);
     }
   }
 
@@ -1331,7 +1330,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
       OWLDeclarationAxiom axiom = getSWRLAPIOWLDataFactory().getOWLClassDeclarationAxiom(cls);
       this.classDeclarationAxioms.put(cls.getIRI(), axiom);
       this.assertedOWLAxioms.add(axiom);
-      recordOWLClass(cls);
     }
   }
 
@@ -1595,11 +1593,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     return getOWLOntology().getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream()
       .filter(owlDeclarationAxiom -> owlDeclarationAxiom.getEntity().isOWLAnnotationProperty())
       .collect(Collectors.toSet());
-  }
-
-  private void recordOWLClass(@NonNull OWLEntity cls)
-  {
-    getIRIResolver().recordOWLClass(cls);
   }
 
   private void recordOWLNamedIndividual(@NonNull OWLEntity individual)

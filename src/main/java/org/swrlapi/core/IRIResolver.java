@@ -31,8 +31,6 @@ public interface IRIResolver
 
   void recordSWRLVariable(@NonNull SWRLVariable variable);
 
-  void recordOWLClass(@NonNull OWLEntity cls);
-
   void recordOWLNamedIndividual(@NonNull OWLEntity individual);
 
   boolean isOWLNamedIndividual(@NonNull String prefixedName);
