@@ -1093,7 +1093,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
       OWLEntity individual = axiom.getEntity();
       this.individualDeclarationAxioms.put(individual.getIRI(), axiom);
       this.assertedOWLAxioms.add(axiom);
-      recordOWLNamedIndividual(individual);
     }
   }
 
@@ -1349,7 +1348,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
         .getOWLIndividualDeclarationAxiom(individual.asOWLNamedIndividual());
       this.individualDeclarationAxioms.put(individual.asOWLNamedIndividual().getIRI(), axiom);
       this.assertedOWLAxioms.add(axiom);
-      recordOWLNamedIndividual(individual.asOWLNamedIndividual());
     }
   }
 
@@ -1593,11 +1591,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     return getOWLOntology().getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream()
       .filter(owlDeclarationAxiom -> owlDeclarationAxiom.getEntity().isOWLAnnotationProperty())
       .collect(Collectors.toSet());
-  }
-
-  private void recordOWLNamedIndividual(@NonNull OWLEntity individual)
-  {
-    getIRIResolver().recordOWLNamedIndividual(individual);
   }
 
   @Override public void ontologiesChanged(@Nonnull List<? extends OWLOntologyChange> list) throws OWLException

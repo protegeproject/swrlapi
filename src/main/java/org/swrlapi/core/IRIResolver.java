@@ -2,7 +2,6 @@ package org.swrlapi.core;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.IRI;
-import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.SWRLVariable;
 
 /**
@@ -30,8 +29,4 @@ public interface IRIResolver
   @NonNull IRI prefixedName2IRI(@NonNull String prefixedName);
 
   void recordSWRLVariable(@NonNull SWRLVariable variable);
-
-  void recordOWLNamedIndividual(@NonNull OWLEntity individual);
-
-  boolean isOWLNamedIndividual(@NonNull String prefixedName);
 }

@@ -2,15 +2,12 @@ package org.swrlapi.factory.resolvers;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.IRI;
-import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.SWRLVariable;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.IRIResolver;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class DefaultIRIResolver implements IRIResolver
 {
@@ -18,7 +15,6 @@ public class DefaultIRIResolver implements IRIResolver
 
   @NonNull private final Map<@NonNull String, @NonNull IRI> prefixedName2IRI = new HashMap<>();
   @NonNull private final Map<@NonNull IRI, @NonNull String> iri2PrefixedNameCache = new HashMap<>();
-  @NonNull private final Set<@NonNull String> namedIndividualPrefixedNames = new HashSet<>();
 
   @NonNull private final Map<@NonNull String, @NonNull String> autogenNamespace2Prefix = new HashMap<>();
 
@@ -33,7 +29,6 @@ public class DefaultIRIResolver implements IRIResolver
   {
     this.prefixedName2IRI.clear();
     this.iri2PrefixedNameCache.clear();
-    this.namedIndividualPrefixedNames.clear();
 
     this.autogenNamespace2Prefix.clear();
     this.autogenPrefixNumber = 0;
@@ -90,21 +85,6 @@ public class DefaultIRIResolver implements IRIResolver
     IRI iri = variable.getIRI();
     String variablePrefixedName = iri2PrefixedName(iri);
     this.prefixedName2IRI.put(variablePrefixedName, iri);
-  }
-
-  @Override public void recordOWLNamedIndividual(@NonNull OWLEntity individual)
-  {
-    IRI iri = individual.getIRI();
-    String prefixedName = iri2PrefixedName(iri);
-
-    recordPrefixedName2IRIMapping(prefixedName, iri);
-
-    this.namedIndividualPrefixedNames.add(prefixedName);
-  }
-
-  @Override public boolean isOWLNamedIndividual(@NonNull String prefixedName)
-  {
-    return this.namedIndividualPrefixedNames.contains(prefixedName);
   }
 
   private void recordPrefixedName2IRIMapping(@NonNull String prefixedName, @NonNull IRI iri)

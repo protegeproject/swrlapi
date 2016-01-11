@@ -1572,7 +1572,6 @@ public abstract class AbstractSWRLBuiltInLibrary
     OWLNamedIndividual individual = getSWRLAPIOWLDataFactory().getInjectedOWLNamedIndividual();
     OWLDeclarationAxiom declarationAxiom = getSWRLAPIOWLDataFactory().getOWLIndividualDeclarationAxiom(individual);
     OWLClassAssertionAxiom classAssertionAxiom = getSWRLAPIOWLDataFactory().getOWLClassAssertionAxiom(cls, individual);
-    getBuiltInBridge().getIRIResolver().recordOWLNamedIndividual(individual);
     getBuiltInBridge().injectOWLAxiom(declarationAxiom);
     getBuiltInBridge().injectOWLAxiom(classAssertionAxiom);
 
