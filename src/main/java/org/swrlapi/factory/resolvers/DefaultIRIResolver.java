@@ -39,14 +39,14 @@ public class DefaultIRIResolver implements IRIResolver
         if (namespace.isEmpty()) {
           String prefixedName = remainder.get();
           return prefixedName;
-        } else if (this.autogenNamespace2Prefix.containsKey(namespace)) {
-          String prefixedName = this.autogenNamespace2Prefix.get(namespace) + remainder.get();
-          return prefixedName;
-        } else {
-          String autogenPrefix = "autogen" + this.autogenPrefixNumber++ + ":";
-          String prefixedName = autogenPrefix + remainder.get();
-          this.autogenNamespace2Prefix.put(namespace, autogenPrefix);
-          return prefixedName;
+        } else { // OWLAPI prefix manager does not have a prefixed form. We auto-generate a prefix for each namespace.
+          if (this.autogenNamespace2Prefix.containsKey(namespace)) {
+            return this.autogenNamespace2Prefix.get(namespace) + remainder.get();
+          } else {
+            String autogenPrefix = "autogen" + this.autogenPrefixNumber++ + ":";
+            this.autogenNamespace2Prefix.put(namespace, autogenPrefix);
+            return autogenPrefix + remainder.get();
+          }
         }
       } else
         throw new IllegalArgumentException("could not create prefixed name for IRI " + iri);
