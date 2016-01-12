@@ -186,7 +186,7 @@ public class SQWRLResultView extends JPanel implements SWRLAPIView
             SQWRLResultView.this.sqwrlResult.reset();
             writer.close();
             SQWRLResultView.this.sqwrlQueryControlView.appendToConsole(
-              "Sucessfully saved results of query " + SQWRLResultView.this.queryName + " to CSV file " + selectedFile
+              "Successfully saved results of query " + SQWRLResultView.this.queryName + " to CSV file " + selectedFile
                 .getPath() + ".\n");
           }
         }
