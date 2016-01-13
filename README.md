@@ -49,7 +49,7 @@ created by the OWLAPI and then execute rules in that ontology.
  swrlRuleEngine.infer();
 ```
 
-This example shows how the API can be used to create a SQWRL query engine, execute a SQWRL query using
+This example shows how the API can be used to create a SQWRL query engine, create and execute a SQWRL query using
 this engine, and then process the results.
 
 ```java
