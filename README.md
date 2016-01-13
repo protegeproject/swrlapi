@@ -1,6 +1,8 @@
 SWRLAPI
 =======
 
+[![Build Status](https://travis-ci.org/protegeproject/swrlapi.svg?branch=master)](https://travis-ci.org/protegeproject/swrlapi)
+
 The SWRLAPI is a Java API for working with the [OWL](http://en.wikipedia.org/wiki/Web_Ontology_Language)-based [SWRL](http://www.w3.org/Submission/SWRL/) rule and [SQWRL](https://github.com/protegeproject/swrlapi/wiki/SQWRL) query langauges. 
 It includes graphical tools for editing and executing rules and queries.
 
