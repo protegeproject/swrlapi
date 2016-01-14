@@ -103,7 +103,7 @@ A project containing a [library of integration tests](https://github.com/protege
 
 #### License
 
-The software is licensed under the [BSD 2-clause License](https://github.com/protegeproject/swrlapi/blob/master/license.xml).
+The software is licensed under the [BSD 2-clause License](https://github.com/protegeproject/swrlapi/blob/master/license.txt).
 
 #### Questions
 
