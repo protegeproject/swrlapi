@@ -101,6 +101,10 @@ and by the standalone [SWRLTab](https://github.com/protegeproject/swrltab) tool.
 A [Build Project](https://github.com/protegeproject/swrltab-project) is provided to build core SWRLAPI-related components.
 A project containing a [library of integration tests](https://github.com/protegeproject/swrlapi-integration-tests) is also provided.
 
+#### License
+
+The software is licensed under the [BSD 2-clause License](https://github.com/protegeproject/swrlapi/blob/master/license.xml).
+
 #### Questions
 
 If you have questions about this library, please go to the main
