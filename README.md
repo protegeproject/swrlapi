@@ -22,7 +22,7 @@ First, either download the latest JAR from the [project's GitHub Release area](h
   <dependency>
     <groupId>edu.stanford.swrl</groupId>
     <artifactId>swrlapi</artifactId>
-    <version>1.0.0-beta-6</version>
+    <version>1.0.0-beta-7</version>
   </dependency>
 ```
 
@@ -32,7 +32,7 @@ If you'd like to be able to execute SWRL rules or SQWRL queries you will need a 
   <dependency>
     <groupId>edu.stanford.swrl</groupId>
     <artifactId>swrlapi-drools-engine</artifactId>
-    <version>1.0.0-beta-7</version>
+    <version>1.0.0-beta-8</version>
   </dependency>
 ```
 
