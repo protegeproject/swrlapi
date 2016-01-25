@@ -156,7 +156,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     this.annotationPropertyDeclarationAxioms = new HashMap<>();
 
     addDefaultSWRLBuiltIns();
-    addSWRLAPIBuiltInOntologies(this.ontology);
+    addSWRLAPIOntologies(this.ontology);
 
     updatePrefixes(this.ontology, this.prefixManager);
 
@@ -1639,30 +1639,30 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     prefixManager.setPrefix("swrla:", "http://swrl.stanford.edu/ontologies/3.3/swrla.owl#");
   }
 
-  private static void addSWRLAPIBuiltInOntologies(@NonNull OWLOntology ontology)
+  private static void addSWRLAPIOntologies(@NonNull OWLOntology ontology)
   {
     List<SimpleIRIMapper> iriMappers = new ArrayList<>();
 
     iriMappers
-      .add(new SimpleIRIMapper(IRI.create("http://www.w3.org/2003/11/swrl#"), localResourceNamePath2IRI("owl/swrl.owl")));
+      .add(new SimpleIRIMapper(IRI.create("http://www.w3.org/2003/11/swrl#"), resourcePath2IRI("owl/swrl.owl")));
     iriMappers
-      .add(new SimpleIRIMapper(IRI.create("http://www.w3.org/2003/11/swrlb#"), localResourceNamePath2IRI("owl/swrlb.owl")));
+      .add(new SimpleIRIMapper(IRI.create("http://www.w3.org/2003/11/swrlb#"), resourcePath2IRI("owl/swrlb.owl")));
     iriMappers.add(new SimpleIRIMapper(IRI.create("http://swrl.stanford.edu/ontologies/3.3/swrla.owl"),
-      localResourceNamePath2IRI("owl/swrla.owl")));
+      resourcePath2IRI("owl/swrla.owl")));
     iriMappers.add(new SimpleIRIMapper(IRI.create("http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlm.owl"),
-      localResourceNamePath2IRI("owl/swrlm.owl")));
+      resourcePath2IRI("owl/swrlm.owl")));
     iriMappers.add(new SimpleIRIMapper(IRI.create("http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl"),
-      localResourceNamePath2IRI("owl/swrlx.owl")));
+      resourcePath2IRI("owl/swrlx.owl")));
     iriMappers.add(new SimpleIRIMapper(IRI.create("http://swrl.stanford.edu/ontologies/built-ins/3.3/temporal.owl"),
-      localResourceNamePath2IRI("owl/temporal.owl")));
+      resourcePath2IRI("owl/temporal.owl")));
     iriMappers.add(new SimpleIRIMapper(IRI.create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl"),
-      localResourceNamePath2IRI("owl/sqwrl.owl")));
+      resourcePath2IRI("owl/sqwrl.owl")));
 
     for (SimpleIRIMapper iriMapper : iriMappers)
       ontology.getOWLOntologyManager().getIRIMappers().add(iriMapper);
   }
 
-  @NonNull private static IRI localResourceNamePath2IRI(@NonNull String resourceName)
+  @NonNull private static IRI resourcePath2IRI(@NonNull String resourceName)
   {
     ClassLoader classLoader = DefaultSWRLAPIOWLOntology.class.getClassLoader();
 
