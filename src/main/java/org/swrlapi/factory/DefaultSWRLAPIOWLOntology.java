@@ -647,7 +647,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
    * classes represent named OWL concepts so have an IRI). So if we are processing built-in parameters and encounter
    * variables with an IRI referring to named OWL properties in the active ontology we can transform them to the
    * appropriate SWRLAPI built-in argument for the named entity.
-   * <p>
+   * <p/>
    * Note: An important restriction here is that variable names do not intersect with named properties in their OWL
    * ontology. A SWRL parser should check for this on inpit and report an error.
    *
@@ -701,7 +701,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
    * these additional argument types in a standards-conformant way, the SWRLAPI treats URI literal arguments specially.
    * It a URI literal argument is passed to a built-in we determine if it refers to an OWL named object in the active
    * ontology and if so we create specific SWRLAPI built-in argument types for it.
-   * <p>
+   * <p/>
    * The SWRLAPI allows SQWRL collection built-in arguments (represented by a
    * {@link org.swrlapi.builtins.arguments.SQWRLCollectionVariableBuiltInArgument}) and multi-value variables
    * (represented by a {@link org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument}). These two argument
@@ -1014,7 +1014,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
    * Process currently supported OWL axioms. The processing consists of recording any OWL properties in the processed
    * axioms (with an instance of the {@link DefaultIRIResolver} class) and generating declaration
    * axioms for these properties.
-   * <p>
+   * <p/>
    * TODO The current approach is clunky. A better approach would be to walk the axioms with a visitor and recordOWLClassExpression the
    * properties and generate the declaration axioms.
    */
@@ -1641,33 +1641,41 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
 
   private static void addSWRLAPIBuiltInOntologies(@NonNull OWLOntology ontology)
   {
-    Map<@NonNull String, String> map = new HashMap<>();
+    List<SimpleIRIMapper> iriMappers = new ArrayList<>();
 
-    map.put("http://www.w3.org/2003/11/swrl#", resourceName2File("owl/swrl.owl"));
-    map.put("http://www.w3.org/2003/11/swrlb#", resourceName2File("owl/swrlb.owl"));
-    map.put("http://swrl.stanford.edu/ontologies/3.3/swrla.owl", resourceName2File("owl/swrla.owl"));
-    map.put("http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlm.owl", resourceName2File("owl/swrlm.owl"));
-    map.put("http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl", resourceName2File("owl/swrlx.owl"));
-    map.put("http://swrl.stanford.edu/ontologies/built-ins/3.3/temporal.owl", resourceName2File("owl/temporal.owl"));
-    map.put("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl", resourceName2File("owl/sqwrl.owl"));
+    iriMappers
+      .add(new SimpleIRIMapper(IRI.create("http://www.w3.org/2003/11/swrl#"), localResourceNamePath2IRI("owl/swrl.owl")));
+    iriMappers
+      .add(new SimpleIRIMapper(IRI.create("http://www.w3.org/2003/11/swrlb#"), localResourceNamePath2IRI("owl/swrlb.owl")));
+    iriMappers.add(new SimpleIRIMapper(IRI.create("http://swrl.stanford.edu/ontologies/3.3/swrla.owl"),
+      localResourceNamePath2IRI("owl/swrla.owl")));
+    iriMappers.add(new SimpleIRIMapper(IRI.create("http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlm.owl"),
+      localResourceNamePath2IRI("owl/swrlm.owl")));
+    iriMappers.add(new SimpleIRIMapper(IRI.create("http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl"),
+      localResourceNamePath2IRI("owl/swrlx.owl")));
+    iriMappers.add(new SimpleIRIMapper(IRI.create("http://swrl.stanford.edu/ontologies/built-ins/3.3/temporal.owl"),
+      localResourceNamePath2IRI("owl/temporal.owl")));
+    iriMappers.add(new SimpleIRIMapper(IRI.create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl"),
+      localResourceNamePath2IRI("owl/sqwrl.owl")));
 
-    for (String key : map.keySet())
-      ontology.getOWLOntologyManager().getIRIMappers()
-        .add(new SimpleIRIMapper(IRI.create(key), IRI.create(map.get(key))));
+    for (SimpleIRIMapper iriMapper : iriMappers)
+      ontology.getOWLOntologyManager().getIRIMappers().add(iriMapper);
   }
 
-  // TODO This looks dodgy
-  @NonNull private static String resourceName2File(@NonNull String resourceName)
+  @NonNull private static IRI localResourceNamePath2IRI(@NonNull String resourceName)
   {
-    ClassLoader classLoader = SWRLAPIFactory.class.getClassLoader();
+    ClassLoader classLoader = DefaultSWRLAPIOWLOntology.class.getClassLoader();
 
     if (classLoader == null)
       throw new SWRLAPIException("Could not find class loader");
 
     URL url = classLoader.getResource(resourceName);
-    if (url == null)
-      throw new SWRLAPIException("Could not find resource " + resourceName);
 
-    return "file:///" + url.getFile();
+    if (url == null)
+      throw new SWRLAPIException("Could not find local resource " + resourceName);
+
+    //log.info("External form " + url.toExternalForm());
+
+    return IRI.create(url);
   }
 }
