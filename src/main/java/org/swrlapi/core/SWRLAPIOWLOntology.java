@@ -7,7 +7,6 @@ import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
-import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.exceptions.SWRLRuleException;
 import org.swrlapi.factory.SWRLAPIOWLDataFactory;
 import org.swrlapi.parser.SWRLParseException;
@@ -157,8 +156,6 @@ public interface SWRLAPIOWLOntology
   @NonNull IRIResolver getIRIResolver();
 
   @NonNull OWLOntologyManager getOWLOntologyManager();
-
-  @NonNull DefaultPrefixManager getPrefixManager();
 
   @NonNull OWLOntology getOWLOntology();
 

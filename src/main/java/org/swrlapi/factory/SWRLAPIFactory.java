@@ -8,7 +8,6 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.SWRLAtom;
-import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.bridge.SWRLBridge;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.IRIResolver;
@@ -93,33 +92,32 @@ public class SWRLAPIFactory
 
   /**
    * @param ontology      An OWL ontology
-   * @param prefixManager A prefix manager
+   * @param iriResolver   An IRI resolver
    * @return A SWRL rule renderer
    */
   @NonNull public static SWRLRuleRenderer createSWRLRuleRenderer(@NonNull OWLOntology ontology,
-    DefaultPrefixManager prefixManager)
+    @NonNull IRIResolver iriResolver)
   {
-    return new DefaultSWRLRuleAndQueryRenderer(ontology, prefixManager);
+    return new DefaultSWRLRuleAndQueryRenderer(ontology, iriResolver);
   }
 
   /**
    * @param ontology      An OWL ontology
-   * @param prefixManager A prefix manager
+   * @param iriResolver   An IRI resolver
    * @return A SQWRL query renderer
    */
   @NonNull public static SQWRLQueryRenderer createSQWRLQueryRenderer(@NonNull OWLOntology ontology,
-    DefaultPrefixManager prefixManager)
+    @NonNull IRIResolver iriResolver)
   {
-    return new DefaultSWRLRuleAndQueryRenderer(ontology, prefixManager);
+    return new DefaultSWRLRuleAndQueryRenderer(ontology, iriResolver);
   }
 
   /**
-   * @param prefixManager A prefix manager
    * @return An IRI resolver
    */
-  @NonNull public static IRIResolver createIRIResolver(@NonNull DefaultPrefixManager prefixManager)
+  @NonNull public static IRIResolver createIRIResolver()
   {
-    return new DefaultIRIResolver(prefixManager);
+    return new DefaultIRIResolver();
   }
 
   /**
@@ -128,15 +126,6 @@ public class SWRLAPIFactory
   @NonNull public static SWRLRuleEngineManager createSWRLRuleEngineManager()
   {
     return new DefaultSWRLRuleEngineManager();
-  }
-
-  /**
-   * @param prefixManager A prefix manager
-   * @return A SQWRL result
-   */
-  public static @NonNull SQWRLResultManager createSQWRLResultManager(@NonNull DefaultPrefixManager prefixManager)
-  {
-    return new DefaultSQWRLResultManager(prefixManager);
   }
 
   /**

@@ -36,8 +36,8 @@ import org.swrlapi.sqwrl.values.SQWRLResultValue;
  * private static final IRI i1IRI = IRI.create(TestNamespace + "i1");
  * private static final IRI 21IRI = IRI.create(TestNamespace + "i2");
  *
- * DefaultPrefixManager prefixManager = new DefaultPrefixManager();
- * SQWRLResultManager resultManager = SWRLAPIFactory.createSQWRLResultManager(prefixManager);
+ * IRIResolver iriResolver = SWRLAPIFactory.createIRIResolver();
+ * SQWRLResultManager resultManager = SWRLAPIFactory.createSQWRLResultManager(iriResolver);
  *
  * prefixManager.setPrefix(TestPrefix, TestNamespace);
  *

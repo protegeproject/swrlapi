@@ -4,11 +4,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.semanticweb.owlapi.apibinding.OWLManager;
-import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
-import org.semanticweb.owlapi.model.OWLOntologyManager;
-import org.semanticweb.owlapi.util.DefaultPrefixManager;
+import org.swrlapi.core.IRIResolver;
 import org.swrlapi.factory.SWRLAPIFactory;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
@@ -38,13 +35,11 @@ public class SQWRLResultGeneratorTest
 
   @Before public void setUp() throws OWLOntologyCreationException
   {
-    OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
-    OWLOntology ontology = ontologyManager.createOntology();
-    DefaultPrefixManager prefixManager = new DefaultPrefixManager();
+    IRIResolver iriResolver = SWRLAPIFactory.createIRIResolver();
 
-    prefixManager.setPrefix(TestPrefix, TestNamespace);
+    iriResolver.setPrefix(TestPrefix, TestNamespace);
 
-    resultManager = SWRLAPIFactory.createSQWRLResultManager(prefixManager);
+    resultManager = SWRLAPIFactory.createSQWRLResultManager(iriResolver);
   }
 
   @Test public void testAddColumns() throws Exception

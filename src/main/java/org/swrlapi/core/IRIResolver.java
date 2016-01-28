@@ -2,6 +2,7 @@ package org.swrlapi.core;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLOntology;
 
 /**
  * For simplicity, SWRL rule engine implementations will typically use the prefixed names of OWL named objects to name
@@ -26,4 +27,19 @@ public interface IRIResolver
    * @throws IllegalArgumentException If the prefixed name cannot be resolved
    */
   @NonNull IRI prefixedName2IRI(@NonNull String prefixedName);
+
+  @NonNull String getShortForm(@NonNull IRI iri);
+
+  /**
+   *
+   * @param ontology The ontology from which to extract prefixes
+   */
+  void updatePrefixes(@NonNull OWLOntology ontology);
+
+  /**
+   *
+   * @param prefix A prefix
+   * @param namespace A namespace
+   */
+  void setPrefix(@NonNull String prefix, @NonNull String namespace);
 }

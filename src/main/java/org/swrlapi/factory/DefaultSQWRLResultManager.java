@@ -2,7 +2,6 @@ package org.swrlapi.factory;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.dataflow.qual.SideEffectFree;
-import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.IRIResolver;
 import org.swrlapi.exceptions.SWRLAPIInternalException;
 import org.swrlapi.sqwrl.SQWRLResultManager;
@@ -57,11 +56,6 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
   @NonNull private List<@NonNull SQWRLResultValue> rowData; // List of SQWRLResultValue objects used when assembling a row.
   @NonNull private Map<@NonNull String, @NonNull List<@NonNull SQWRLResultValue>> columnValuesMap; // Column name -> List<@NonNull SQWRLResultValue>
   private int currentRowIndex;
-
-  public DefaultSQWRLResultManager(@NonNull DefaultPrefixManager prefixManager)
-  {
-    this(SWRLAPIFactory.createIRIResolver(prefixManager));
-  }
 
   public DefaultSQWRLResultManager(@NonNull IRIResolver iriResolver)
   {

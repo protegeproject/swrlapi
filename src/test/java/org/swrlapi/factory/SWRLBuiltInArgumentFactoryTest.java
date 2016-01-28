@@ -8,7 +8,6 @@ import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
-import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.core.IRIResolver;
 
@@ -22,7 +21,6 @@ public class SWRLBuiltInArgumentFactoryTest
   private static final String TestPrefix = "test";
   private static final String TestNamespace = "http://example.org#";
 
-  private DefaultPrefixManager prefixManager;
   private IRIResolver iriResolver;
   private SWRLBuiltInArgumentFactory builtInArgumentFactory;
   private OWLDataFactory dataFactory;
@@ -31,12 +29,10 @@ public class SWRLBuiltInArgumentFactoryTest
   {
     OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
     dataFactory = ontologyManager.getOWLDataFactory();
-    prefixManager = new DefaultPrefixManager();
-
-    iriResolver = SWRLAPIFactory.createIRIResolver(prefixManager);
+    iriResolver = SWRLAPIFactory.createIRIResolver();
     builtInArgumentFactory = SWRLAPIFactory.createSWRLBuiltInArgumentFactory(iriResolver);
 
-    prefixManager.setPrefix(TestPrefix, TestNamespace);
+    iriResolver.setPrefix(TestPrefix, TestNamespace);
   }
 
   @Test public void testGetClassValue() throws Exception

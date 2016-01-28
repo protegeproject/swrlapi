@@ -1,7 +1,6 @@
 package org.swrlapi.factory;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.semanticweb.owlapi.formats.PrefixDocumentFormat;
 import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotation;
@@ -28,7 +27,6 @@ import org.semanticweb.owlapi.model.OWLDisjointClassesAxiom;
 import org.semanticweb.owlapi.model.OWLDisjointDataPropertiesAxiom;
 import org.semanticweb.owlapi.model.OWLDisjointObjectPropertiesAxiom;
 import org.semanticweb.owlapi.model.OWLDisjointUnionAxiom;
-import org.semanticweb.owlapi.model.OWLDocumentFormat;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLEquivalentClassesAxiom;
 import org.semanticweb.owlapi.model.OWLEquivalentDataPropertiesAxiom;
@@ -53,7 +51,6 @@ import org.semanticweb.owlapi.model.OWLObjectPropertyRangeAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyChange;
 import org.semanticweb.owlapi.model.OWLOntologyChangeListener;
-import org.semanticweb.owlapi.model.OWLOntologyID;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.OWLReflexiveObjectPropertyAxiom;
 import org.semanticweb.owlapi.model.OWLSameIndividualAxiom;
@@ -72,7 +69,6 @@ import org.semanticweb.owlapi.model.SWRLPredicate;
 import org.semanticweb.owlapi.model.SWRLRule;
 import org.semanticweb.owlapi.model.SWRLVariable;
 import org.semanticweb.owlapi.model.parameters.Imports;
-import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.semanticweb.owlapi.util.SimpleIRIMapper;
 import org.semanticweb.owlapi.vocab.OWL2Datatype;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
@@ -115,7 +111,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
   private static final Logger log = LoggerFactory.getLogger(DefaultSWRLAPIOWLOntology.class);
 
   @NonNull private final OWLOntology ontology;
-  @NonNull private final DefaultPrefixManager prefixManager;
   @NonNull private final IRIResolver iriResolver;
   @NonNull private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
   @NonNull private final Set<@NonNull IRI> swrlBuiltInIRIs;
@@ -138,8 +133,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
   public DefaultSWRLAPIOWLOntology(@NonNull OWLOntology ontology)
   {
     this.ontology = ontology;
-    this.prefixManager = new DefaultPrefixManager();
-    this.iriResolver = new DefaultIRIResolver(this.prefixManager);
+    this.iriResolver = SWRLAPIFactory.createIRIResolver();
     this.swrlapiOWLDataFactory = SWRLAPIFactory.createSWRLAPIOWLDataFactory(this.iriResolver);
     this.swrlBuiltInIRIs = new HashSet<>();
 
@@ -158,7 +152,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     addDefaultSWRLBuiltIns();
     addSWRLAPIOntologies(this.ontology);
 
-    updatePrefixes(this.ontology, this.prefixManager);
+    iriResolver.updatePrefixes(ontology);
 
     this.ontology.getOWLOntologyManager().addOntologyChangeListener(this);
   }
@@ -167,7 +161,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
   { // TODO If ontology has not changed do not reprocess; however, will break currently
 
     reset(); // Will reset hasOntologyChanged
-    updatePrefixes(this.ontology, this.prefixManager);
+    this.iriResolver.updatePrefixes(this.ontology);
     processSWRLRulesAndSQWRLQueries();
     processOWLAxioms();
   }
@@ -310,11 +304,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     return this.ontology.getOWLOntologyManager();
   }
 
-  @NonNull @Override public DefaultPrefixManager getPrefixManager()
-  {
-    return this.prefixManager;
-  }
-
   @NonNull @Override public SWRLParser createSWRLParser()
   {
     return new SWRLParser(this);
@@ -327,12 +316,12 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
 
   @NonNull @Override public SWRLRuleRenderer createSWRLRuleRenderer()
   {
-    return SWRLAPIFactory.createSWRLRuleRenderer(this.getOWLOntology(), this.getPrefixManager());
+    return SWRLAPIFactory.createSWRLRuleRenderer(this.getOWLOntology(), this.getIRIResolver());
   }
 
   @NonNull @Override public SQWRLQueryRenderer createSQWRLQueryRenderer()
   {
-    return SWRLAPIFactory.createSQWRLQueryRenderer(this.getOWLOntology(), this.getPrefixManager());
+    return SWRLAPIFactory.createSQWRLQueryRenderer(this.getOWLOntology(), this.getIRIResolver());
   }
 
   @Override public int getNumberOfSWRLRules()
@@ -1596,47 +1585,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
   {
     this.hasOntologyChanged = true;
 
-    updatePrefixes(this.ontology, this.prefixManager);
-  }
-
-  private static void updatePrefixes(@NonNull OWLOntology ontology, @NonNull DefaultPrefixManager prefixManager)
-  {
-    OWLOntologyManager owlOntologyManager = ontology.getOWLOntologyManager();
-    OWLDocumentFormat ontologyFormat = owlOntologyManager.getOntologyFormat(ontology);
-
-    prefixManager.clear();
-
-    if (ontologyFormat != null && ontologyFormat.isPrefixOWLOntologyFormat()) {
-      PrefixDocumentFormat prefixOntologyFormat = ontologyFormat.asPrefixOWLOntologyFormat();
-
-      Map<@NonNull String, String> map = prefixOntologyFormat.getPrefixName2PrefixMap();
-      for (String prefix : map.keySet())
-        prefixManager.setPrefix(prefix, map.get(prefix));
-
-      if (prefixManager.getDefaultPrefix() == null) {
-        OWLOntologyID ontologyID = ontology.getOntologyID();
-        if (ontologyID.getOntologyIRI().isPresent()) {
-          // TODO This is a quick hack!!
-          String defaultPrefix = ontologyID.getOntologyIRI().get().toString() + "#";
-          prefixManager.setDefaultPrefix(defaultPrefix);
-        }
-      }
-    }
-    addSWRLAPIPrefixes(prefixManager);
-
-    //log.info("updated prefixes " + prefixManager.getPrefixName2PrefixMap());
-  }
-
-  private static void addSWRLAPIPrefixes(@NonNull DefaultPrefixManager prefixManager)
-  {
-    prefixManager.setPrefix("owl:", "http://www.w3.org/2002/07/owl#");
-    prefixManager.setPrefix("swrl:", "http://www.w3.org/2003/11/swrl#");
-    prefixManager.setPrefix("swrlb:", "http://www.w3.org/2003/11/swrlb#");
-    prefixManager.setPrefix("sqwrl:", "http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#");
-    prefixManager.setPrefix("swrlm:", "http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlm.owl#");
-    prefixManager.setPrefix("temporal:", "http://swrl.stanford.edu/ontologies/built-ins/3.3/temporal.owl#");
-    prefixManager.setPrefix("swrlx:", "http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#");
-    prefixManager.setPrefix("swrla:", "http://swrl.stanford.edu/ontologies/3.3/swrla.owl#");
+    this.iriResolver.updatePrefixes(this.ontology);
   }
 
   private static void addSWRLAPIOntologies(@NonNull OWLOntology ontology)

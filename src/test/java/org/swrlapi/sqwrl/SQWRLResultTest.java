@@ -6,7 +6,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
-import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.IRIResolver;
 import org.swrlapi.factory.SQWRLResultValueFactory;
 import org.swrlapi.factory.SWRLAPIFactory;
@@ -27,7 +26,6 @@ import static org.junit.Assert.assertTrue;
  */
 public class SQWRLResultTest
 {
-  private DefaultPrefixManager prefixManager;
   private IRIResolver iriResolver;
   private SQWRLResultManager resultManager;
   private SQWRLResultValueFactory valueFactory;
@@ -48,13 +46,12 @@ public class SQWRLResultTest
 
   @Before public void setUp() throws OWLOntologyCreationException
   {
-    prefixManager = new DefaultPrefixManager();
-    iriResolver = SWRLAPIFactory.createIRIResolver(prefixManager);
-    resultManager = SWRLAPIFactory.createSQWRLResultManager(prefixManager);
+    iriResolver = SWRLAPIFactory.createIRIResolver();
+    resultManager = SWRLAPIFactory.createSQWRLResultManager(iriResolver);
 
     valueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(iriResolver);
 
-    prefixManager.setPrefix(TestPrefix, TestNamespace);
+    iriResolver.setPrefix(TestPrefix, TestNamespace);
   }
 
   @Test public void testEmptyResult() throws Exception

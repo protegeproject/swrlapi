@@ -30,7 +30,6 @@ import org.semanticweb.owlapi.model.SWRLRule;
 import org.semanticweb.owlapi.model.SWRLSameIndividualAtom;
 import org.semanticweb.owlapi.model.SWRLVariable;
 import org.semanticweb.owlapi.model.parameters.Imports;
-import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
 import org.swrlapi.builtins.arguments.SQWRLCollectionVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument;
@@ -44,6 +43,7 @@ import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
+import org.swrlapi.core.IRIResolver;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
 import org.swrlapi.core.SWRLRuleRenderer;
 import org.swrlapi.parser.SWRLParser;
@@ -64,12 +64,12 @@ import java.util.Iterator;
 class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRenderer
 {
   @NonNull private final OWLOntology ontology;
-  @NonNull private final DefaultPrefixManager prefixManager;
+  @NonNull private final IRIResolver iriResolver;
 
-  public DefaultSWRLRuleAndQueryRenderer(@NonNull OWLOntology ontology, @NonNull DefaultPrefixManager prefixManager)
+  public DefaultSWRLRuleAndQueryRenderer(@NonNull OWLOntology ontology, @NonNull IRIResolver iriResolver)
   {
     this.ontology = ontology;
-    this.prefixManager = prefixManager;
+    this.iriResolver = iriResolver;
   }
 
   @NonNull @Override public String renderSWRLRule(@NonNull SWRLRule rule)
@@ -513,14 +513,14 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
 
   @NonNull private String getShortForm(IRI iri)
   {
-    String shortForm = this.prefixManager.getShortForm(iri);
+    String shortForm = getIRIResolver().getShortForm(iri);
 
     return shortForm != null ? shortForm : iri.getShortForm();
   }
 
   @NonNull private String getPrefixedName(IRI iri)
   {
-    String prefixedName = this.prefixManager.getPrefixIRI(iri);
+    String prefixedName = getIRIResolver().iri2PrefixedName(iri);
 
     return prefixedName != null ? prefixedName : iri.getShortForm();
   }
@@ -535,5 +535,10 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
   {
     return atom instanceof SWRLAPIBuiltInAtom && SQWRLNames
       .isSQWRLCollectionOperationBuiltIn(((SWRLAPIBuiltInAtom)atom).getBuiltInPrefixedName());
+  }
+
+  @NonNull private IRIResolver getIRIResolver()
+  {
+    return this.iriResolver;
   }
 }
