@@ -19,23 +19,11 @@ The following examples can be used to quickly get started with the API.
 
 First, either download the latest JAR from the [project's GitHub Release area](https://github.com/protegeproject/swrlapi/releases) or use your favourite dependency management tool to download it from Maven Central. Here is the Maven dependency for this library:
 
-```
-  <dependency>
-    <groupId>edu.stanford.swrl</groupId>
-    <artifactId>swrlapi</artifactId>
-    <version>1.0.0-beta-9</version>
-  </dependency>
-```
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/edu.stanford.swrl/swrlapi/badge.svg)](https://maven-badges.herokuapp.com/maven-central/edu.stanford.swrl/swrlapi)
 
 If you'd like to be able to execute SWRL rules or SQWRL queries you will need a SWRLAPI-based rule engine implementation. Currently, a [Drools-based SWRL rule engine implementation](https://github.com/protegeproject/swrlapi-drools-engine) is provided. This implementation is also hosted on Maven Central. Its Maven dependency is:
 
-```
-  <dependency>
-    <groupId>edu.stanford.swrl</groupId>
-    <artifactId>swrlapi-drools-engine</artifactId>
-    <version>1.0.0-beta-10</version>
-  </dependency>
-```
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/edu.stanford.swrl/swrlapi-drools-engine/badge.svg)](https://maven-badges.herokuapp.com/maven-central/edu.stanford.swrl/swrlapi-drools-engine)
 
 The SWRLAPI uses the [OWLAPI](https://github.com/owlcs/owlapi) to manage OWL ontologies.
 The following example illustrates how the library can be used to create a SWRL query engine using an ontology 
