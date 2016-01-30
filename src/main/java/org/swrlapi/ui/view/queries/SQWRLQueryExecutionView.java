@@ -2,7 +2,6 @@ package org.swrlapi.ui.view.queries;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.swrlapi.exceptions.SWRLAPIException;
-import org.swrlapi.factory.SWRLAPIFactory;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.ui.model.SQWRLQueryEngineModel;
 import org.swrlapi.ui.view.SWRLAPIView;
@@ -20,8 +19,6 @@ public class SQWRLQueryExecutionView extends JTabbedPane implements SWRLAPIView
   @NonNull private final SQWRLQueryEngineModel queryEngineModel;
   @NonNull private final SQWRLQuerySelector querySelector;
   @NonNull private final SQWRLQueryEngine queryEngine;
-  @NonNull private final Icon queryEngineIcon;
-  @NonNull private final Icon owl2RLIcon;
 
   public SQWRLQueryExecutionView(@NonNull SQWRLQueryEngineModel queryEngineModel,
       @NonNull SQWRLQuerySelector querySelector) throws SWRLAPIException
@@ -29,9 +26,6 @@ public class SQWRLQueryExecutionView extends JTabbedPane implements SWRLAPIView
     this.queryEngineModel = queryEngineModel;
     this.querySelector = querySelector;
     this.queryEngine = queryEngineModel.getSQWRLQueryEngine();
-    this.queryEngineIcon = queryEngine.getTargetQueryEngineIcon();
-    this.owl2RLIcon = SWRLAPIFactory.getOWL2RLReasonerIcon();
-
   }
 
   @Override public void initialize()
@@ -42,8 +36,8 @@ public class SQWRLQueryExecutionView extends JTabbedPane implements SWRLAPIView
     queryControlView.initialize();
     ruleTablesView.initialize();
 
-    addTab("SQWRL Queries", queryEngineIcon, queryControlView, "Control Panel");
-    addTab("OWL 2 RL", owl2RLIcon, ruleTablesView, "OWL 2 RL Tab");
+    addTab("SQWRL Queries", null, queryControlView, "SQWRL Queries Tab");
+    addTab("OWL 2 RL", null, ruleTablesView, "OWL 2 RL Tab");
   }
 
   @Override public void update()
