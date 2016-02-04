@@ -8,7 +8,7 @@ import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.factory.SWRLAPIOWLDataFactory;
-import org.swrlapi.factory.resolvers.DefaultIRIResolver;
+import org.swrlapi.factory.DefaultIRIResolver;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 

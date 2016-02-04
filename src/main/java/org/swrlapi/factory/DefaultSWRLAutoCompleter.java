@@ -4,7 +4,6 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.parameters.Imports;
-import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,8 +30,8 @@ class DefaultSWRLAutoCompleter implements SWRLAutoCompleter
     this.shortForms = new ArrayList<>();
 
     for (OWLEntity owlEntity : swrlapiowlOntology.getOWLOntology().getSignature(Imports.INCLUDED)) {
-      //log.info("iri " + owlEntity.getIRI() + ", shortForm " + prefixManager.getShortForm(owlEntity.getIRI()));
-      String shortForm = iriResolver.getShortForm(owlEntity.getIRI());
+      //log.info("iri " + owlEntity.getIRI() + ", shortForm " + prefixManager.iri2ShortForm(owlEntity.getIRI()));
+      String shortForm = iriResolver.iri2ShortForm(owlEntity.getIRI());
       if (shortForm != null) {
         if (shortForm.startsWith(":")) // Strip leading ":"
           this.shortForms.add(shortForm.substring(1));
@@ -41,7 +40,7 @@ class DefaultSWRLAutoCompleter implements SWRLAutoCompleter
     }
 
     for (IRI swrlBuiltInIRI : swrlapiowlOntology.getSWRLBuiltInIRIs()) {
-      String shortForm = iriResolver.getShortForm(swrlBuiltInIRI);
+      String shortForm = iriResolver.iri2ShortForm(swrlBuiltInIRI);
       if (shortForm != null) {
         if (shortForm.startsWith(":"))
           this.shortForms.add(shortForm.substring(1));

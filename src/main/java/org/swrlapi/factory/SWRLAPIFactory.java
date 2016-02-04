@@ -21,7 +21,6 @@ import org.swrlapi.core.SWRLRuleRenderer;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
 import org.swrlapi.exceptions.SWRLRuleEngineException;
-import org.swrlapi.factory.resolvers.DefaultIRIResolver;
 import org.swrlapi.factory.resolvers.DefaultOWLObjectResolver;
 import org.swrlapi.literal.Literal;
 import org.swrlapi.owl2rl.OWL2RLEngine;

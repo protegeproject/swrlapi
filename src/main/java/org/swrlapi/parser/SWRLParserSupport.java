@@ -318,7 +318,7 @@ class SWRLParserSupport
     try {
       IRI iri = getIRIResolver().prefixedName2IRI(iriString);
 
-      return getIRIResolver().getShortForm(iri);
+      return getIRIResolver().iri2ShortForm(iri);
     } catch (RuntimeException e) {
       if (interactiveParseOnly)
         throw new SWRLIncompleteRuleException("IRI " + iriString + " does not refer to a valid OWL entity");

@@ -83,7 +83,6 @@ import org.swrlapi.core.SWRLRuleRenderer;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.exceptions.SWRLAPIInternalException;
 import org.swrlapi.exceptions.SWRLRuleException;
-import org.swrlapi.factory.resolvers.DefaultIRIResolver;
 import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.sqwrl.SQWRLQuery;

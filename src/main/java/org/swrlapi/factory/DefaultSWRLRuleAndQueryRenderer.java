@@ -513,7 +513,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
 
   @NonNull private String getShortForm(IRI iri)
   {
-    String shortForm = getIRIResolver().getShortForm(iri);
+    String shortForm = getIRIResolver().iri2ShortForm(iri);
 
     return shortForm != null ? shortForm : iri.getShortForm();
   }
