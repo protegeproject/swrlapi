@@ -6,7 +6,8 @@ import org.semanticweb.owlapi.model.OWLOntology;
 
 /**
  * For simplicity, SWRL rule engine implementations will typically use the prefixed names of OWL entities to name
- * their representation of those objects.
+ * their representation of those objects. This interface provides resolving services for IRI to prefix name mapping
+ * and vice versa.
  *
  * @see org.swrlapi.core.SWRLAPIOWLOntology
  */

@@ -114,7 +114,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
   @NonNull private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
   @NonNull private final Set<@NonNull IRI> swrlBuiltInIRIs;
 
-  @NonNull private final Map<@NonNull String, @NonNull SWRLAPIRule> swrlRules; // SWRL rules and SQWRL queries extracted from ontolgy
+  @NonNull private final Map<@NonNull String, @NonNull SWRLAPIRule> swrlRules; // Rules and queries extracted from ontology
   @NonNull private final Map<@NonNull String, @NonNull SWRLRule> owlapiRules; // All SWRL rules in supplied ontology
   @NonNull private final Map<@NonNull String, @NonNull SQWRLQuery> sqwrlQueries;
 
@@ -129,10 +129,10 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
 
   private boolean hasOntologyChanged = true; // Ensure initial processing
 
-  public DefaultSWRLAPIOWLOntology(@NonNull OWLOntology ontology)
+  public DefaultSWRLAPIOWLOntology(@NonNull OWLOntology ontology, @NonNull IRIResolver iriResolver)
   {
     this.ontology = ontology;
-    this.iriResolver = SWRLAPIFactory.createIRIResolver();
+    this.iriResolver = iriResolver;
     this.swrlapiOWLDataFactory = SWRLAPIFactory.createSWRLAPIOWLDataFactory(this.iriResolver);
     this.swrlBuiltInIRIs = new HashSet<>();
 

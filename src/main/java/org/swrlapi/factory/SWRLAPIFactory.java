@@ -75,7 +75,19 @@ public class SWRLAPIFactory
   @NonNull public static SWRLRuleEngine createSWRLRuleEngine(@NonNull OWLOntology ontology)
     throws SWRLRuleEngineException
   {
-    return swrlRuleAndQueryEngineFactory.createSWRLRuleEngine(ontology);
+    IRIResolver iriResolver = createIRIResolver();
+    return swrlRuleAndQueryEngineFactory.createSWRLRuleEngine(ontology, iriResolver);
+  }
+
+  /**
+   * @param ontology An OWL ontology
+   * @return A SWRL rule engine
+   * @throws SWRLRuleEngineException If an error occurs during rule engine creation
+   */
+  @NonNull public static SWRLRuleEngine createSWRLRuleEngine(@NonNull OWLOntology ontology,
+    @NonNull IRIResolver iriResolver) throws SWRLRuleEngineException
+  {
+    return swrlRuleAndQueryEngineFactory.createSWRLRuleEngine(ontology, iriResolver);
   }
 
   /**
@@ -86,12 +98,25 @@ public class SWRLAPIFactory
   @NonNull public static SQWRLQueryEngine createSQWRLQueryEngine(@NonNull OWLOntology ontology)
     throws SWRLRuleEngineException
   {
-    return swrlRuleAndQueryEngineFactory.createSQWRLQueryEngine(ontology);
+    IRIResolver iriResolver = createIRIResolver();
+    return swrlRuleAndQueryEngineFactory.createSQWRLQueryEngine(ontology, iriResolver);
   }
 
   /**
-   * @param ontology      An OWL ontology
-   * @param iriResolver   An IRI resolver
+   * @param ontology    An OWL ontology
+   * @param iriResolver An IRI resolver
+   * @return A SQWRL query engine
+   * @throws SWRLRuleEngineException If an error occurs during query engine creation
+   */
+  @NonNull public static SQWRLQueryEngine createSQWRLQueryEngine(@NonNull OWLOntology ontology,
+    @NonNull IRIResolver iriResolver) throws SWRLRuleEngineException
+  {
+    return swrlRuleAndQueryEngineFactory.createSQWRLQueryEngine(ontology, iriResolver);
+  }
+
+  /**
+   * @param ontology    An OWL ontology
+   * @param iriResolver An IRI resolver
    * @return A SWRL rule renderer
    */
   @NonNull public static SWRLRuleRenderer createSWRLRuleRenderer(@NonNull OWLOntology ontology,
@@ -101,8 +126,8 @@ public class SWRLAPIFactory
   }
 
   /**
-   * @param ontology      An OWL ontology
-   * @param iriResolver   An IRI resolver
+   * @param ontology    An OWL ontology
+   * @param iriResolver An IRI resolver
    * @return A SQWRL query renderer
    */
   @NonNull public static SQWRLQueryRenderer createSQWRLQueryRenderer(@NonNull OWLOntology ontology,
@@ -354,13 +379,32 @@ public class SWRLAPIFactory
    * Create a {@link org.swrlapi.core.SWRLAPIOWLOntology} from an OWLAPI-based
    * {@link org.semanticweb.owlapi.model.OWLOntology}.
    *
+   * @param ontology    An OWLAPI-based ontology
+   * @param iriResolver An IRI resolver
+   * @return A SWRLAPI-based wrapper of an OWL ontology
+   * @throws SQWRLException If a SQWRL error occurs during ontology processing
+   */
+  @NonNull public static SWRLAPIOWLOntology createSWRLAPIOntology(@NonNull OWLOntology ontology,
+    @NonNull IRIResolver iriResolver) throws SQWRLException
+  {
+    SWRLAPIOWLOntology swrlapiowlOntology = new DefaultSWRLAPIOWLOntology(ontology, iriResolver);
+    swrlapiowlOntology.processOntology();
+
+    return swrlapiowlOntology;
+  }
+
+  /**
+   * Create a {@link org.swrlapi.core.SWRLAPIOWLOntology} from an OWLAPI-based
+   * {@link org.semanticweb.owlapi.model.OWLOntology}.
+   *
    * @param ontology An OWLAPI-based ontology
    * @return A SWRLAPI-based wrapper of an OWL ontology
    * @throws SQWRLException If a SQWRL error occurs during ontology processing
    */
   @NonNull public static SWRLAPIOWLOntology createSWRLAPIOntology(@NonNull OWLOntology ontology) throws SQWRLException
   {
-    SWRLAPIOWLOntology swrlapiowlOntology = new DefaultSWRLAPIOWLOntology(ontology);
+    IRIResolver iriResolver = createIRIResolver();
+    SWRLAPIOWLOntology swrlapiowlOntology = new DefaultSWRLAPIOWLOntology(ontology, iriResolver);
     swrlapiowlOntology.processOntology();
 
     return swrlapiowlOntology;
