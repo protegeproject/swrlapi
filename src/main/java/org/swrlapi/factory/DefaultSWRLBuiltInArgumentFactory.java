@@ -28,6 +28,7 @@ import org.swrlapi.literal.XSDTime;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFactory
 {
@@ -42,7 +43,7 @@ class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFactory
 
   @NonNull @Override public SWRLVariableBuiltInArgument getUnboundVariableBuiltInArgument(@NonNull IRI variableIRI)
   {
-    String variablePrefixedName = getIRIResolver().iri2PrefixedName(variableIRI);
+    String variablePrefixedName = iri2PrefixedName(variableIRI);
     SWRLVariableBuiltInArgument argument = new DefaultSWRLVariableBuiltInArgument(variableIRI, variablePrefixedName);
     argument.setUnbound();
     return argument;
@@ -50,7 +51,7 @@ class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFactory
 
   @NonNull @Override public SWRLVariableBuiltInArgument getVariableBuiltInArgument(@NonNull IRI variableIRI)
   {
-    String variablePrefixedName = getIRIResolver().iri2PrefixedName(variableIRI);
+    String variablePrefixedName = iri2PrefixedName(variableIRI);
     return new DefaultSWRLVariableBuiltInArgument(variableIRI, variablePrefixedName);
   }
 
@@ -161,7 +162,7 @@ class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFactory
   @NonNull @Override public SWRLMultiValueVariableBuiltInArgument getMultiValueVariableBuiltInArgument(
     @NonNull IRI variableIRI)
   {
-    String variablePrefixedName = getIRIResolver().iri2PrefixedName(variableIRI);
+    String variablePrefixedName = iri2PrefixedName(variableIRI);
 
     return new DefaultSWRLMultiValueVariableBuiltInArgument(variableIRI, variablePrefixedName);
   }
@@ -169,7 +170,7 @@ class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFactory
   @NonNull @Override public SWRLMultiValueVariableBuiltInArgument getMultiValueVariableBuiltInArgument(
     @NonNull IRI variableIRI, List<@NonNull SWRLBuiltInArgument> arguments)
   {
-    String variablePrefixedName = getIRIResolver().iri2PrefixedName(variableIRI);
+    String variablePrefixedName = iri2PrefixedName(variableIRI);
 
     return new DefaultSWRLMultiValueVariableBuiltInArgument(variableIRI, variablePrefixedName, arguments);
   }
@@ -178,7 +179,7 @@ class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFactory
     @NonNull IRI variableIRI, @NonNull String queryName, @NonNull String collectionName,
     @NonNull String collectionGroupID)
   {
-    String variablePrefixedName = getIRIResolver().iri2PrefixedName(variableIRI);
+    String variablePrefixedName = iri2PrefixedName(variableIRI);
 
     return new DefaultSQWRLCollectionVariableBuiltInArgument(variableIRI, variablePrefixedName, queryName,
       collectionName, collectionGroupID);
@@ -189,8 +190,13 @@ class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFactory
     return this.owlLiteralFactory;
   }
 
-  private IRIResolver getIRIResolver()
+  @NonNull private String iri2PrefixedName(IRI iri)
   {
-    return this.iriResolver;
+    Optional<@NonNull String> prefixedName = this.iriResolver.iri2PrefixedName(iri);
+
+    if (prefixedName.isPresent())
+      return prefixedName.get();
+    else
+      throw new IllegalArgumentException("could not get prefixed name for IRI " + iri);
   }
 }

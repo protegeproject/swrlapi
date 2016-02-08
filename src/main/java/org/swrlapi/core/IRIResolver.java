@@ -4,6 +4,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLOntology;
 
+import java.util.Optional;
+
 /**
  * For simplicity, SWRL rule engine implementations will typically use the prefixed names of OWL entities to name
  * their representation of those objects. This interface provides resolving services for IRI to prefix name mapping
@@ -18,23 +20,21 @@ public interface IRIResolver
   /**
    * @param prefixedName A prefixed name
    * @return The IRI resolved from the prefixed name
-   * @throws IllegalArgumentException If the prefixed name cannot be resolved
    */
-  @NonNull IRI prefixedName2IRI(@NonNull String prefixedName);
+  @NonNull Optional<@NonNull IRI> prefixedName2IRI(@NonNull String prefixedName);
 
   /**
    * @param iri An IRI
    * @return The prefixed form of the IRI
-   * @throws IllegalArgumentException If the IRI cannot be resolved to a prefixed name
    */
-  @NonNull String iri2PrefixedName(@NonNull IRI iri);
+  @NonNull Optional<@NonNull String> iri2PrefixedName(@NonNull IRI iri);
 
 
   /**
    * @param iri An OWL entity IRI
    * @return The short form of the IRI
    */
-  @NonNull String iri2ShortForm(@NonNull IRI iri);
+  @NonNull Optional<@NonNull String> iri2ShortForm(@NonNull IRI iri);
 
   /**
    *

@@ -1,14 +1,15 @@
 package org.swrlapi.bridge.converters;
 
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.semanticweb.owlapi.model.IRI;
 import org.swrlapi.bridge.SWRLRuleEngineBridge;
 import org.swrlapi.core.OWLObjectResolver;
-import org.swrlapi.core.IRIResolver;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
+import java.util.Optional;
 
 /**
- * This interface provides gives target rule engines access to {@link OWLObjectResolver} and {@link IRIResolver}
- * objects.
+ * This interface provides gives target rule engines access to {@link OWLObjectResolver} and the ability to resolve an
+ * IRI to a prefixed name.
  */
 public abstract class TargetRuleEngineConverterBase implements TargetRuleEngineConverter
 {
@@ -19,9 +20,14 @@ public abstract class TargetRuleEngineConverterBase implements TargetRuleEngineC
     this.bridge = bridge;
   }
 
-  @NonNull protected IRIResolver getIRIResolver()
+  @NonNull protected String iri2PrefixedName(IRI iri)
   {
-    return this.bridge.getIRIResolver();
+    Optional<@NonNull String> prefixedName = this.bridge.getIRIResolver().iri2PrefixedName(iri);
+
+    if (prefixedName.isPresent())
+      return prefixedName.get();
+    else
+      throw new IllegalArgumentException("could not get prefixed name for IRI " + iri);
   }
 
   @NonNull protected OWLObjectResolver getOWLObjectResolver()

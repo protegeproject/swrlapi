@@ -14,6 +14,7 @@ import org.swrlapi.ui.model.SWRLAutoCompleter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @see org.swrlapi.ui.dialog.SWRLRuleEditorDialog
@@ -22,51 +23,51 @@ class DefaultSWRLAutoCompleter implements SWRLAutoCompleter
 {
   private static final Logger log = LoggerFactory.getLogger(DefaultSWRLAutoCompleter.class);
 
-  @NonNull private final List<@NonNull String> shortForms;
+  @NonNull private final List<@NonNull String> renderings;
 
   public DefaultSWRLAutoCompleter(@NonNull SWRLAPIOWLOntology swrlapiowlOntology)
   {
     IRIResolver iriResolver = swrlapiowlOntology.getIRIResolver();
-    this.shortForms = new ArrayList<>();
+    this.renderings = new ArrayList<>();
 
     for (OWLEntity owlEntity : swrlapiowlOntology.getOWLOntology().getSignature(Imports.INCLUDED)) {
       //log.info("iri " + owlEntity.getIRI() + ", shortForm " + prefixManager.iri2ShortForm(owlEntity.getIRI()));
-      String shortForm = iriResolver.iri2ShortForm(owlEntity.getIRI());
-      if (shortForm != null) {
-        if (shortForm.startsWith(":")) // Strip leading ":"
-          this.shortForms.add(shortForm.substring(1));
-        this.shortForms.add(shortForm);
+      Optional<@NonNull String> shortForm = iriResolver.iri2ShortForm(owlEntity.getIRI());
+      if (shortForm.isPresent()) {
+        if (shortForm.get().startsWith(":")) // Strip leading ":"
+          this.renderings.add(shortForm.get().substring(1));
+        this.renderings.add(shortForm.get());
       }
     }
 
     for (IRI swrlBuiltInIRI : swrlapiowlOntology.getSWRLBuiltInIRIs()) {
-      String shortForm = iriResolver.iri2ShortForm(swrlBuiltInIRI);
-      if (shortForm != null) {
-        if (shortForm.startsWith(":"))
-          this.shortForms.add(shortForm.substring(1));
-        this.shortForms.add(shortForm);
+      Optional<@NonNull String> prefixedName = iriResolver.iri2PrefixedName(swrlBuiltInIRI);
+      if (prefixedName.isPresent()) {
+        if (prefixedName.get().startsWith(":"))
+          this.renderings.add(prefixedName.get().substring(1));
+        this.renderings.add(prefixedName.get());
       }
     }
 
     for (OWLRDFVocabulary v : OWLRDFVocabulary.values()) {
-      String shortForm = v.getPrefixedName();
-      if (shortForm != null)
-        this.shortForms.add(shortForm);
+      String prefixedName = v.getPrefixedName();
+      if (prefixedName != null)
+        this.renderings.add(prefixedName);
     }
 
-    this.shortForms.add("sameAs");
-    this.shortForms.add("differentFrom");
+    this.renderings.add("sameAs");
+    this.renderings.add("differentFrom");
 
-    Collections.sort(this.shortForms);
+    Collections.sort(this.renderings);
   }
 
   @NonNull @Override public List<@NonNull String> getCompletions(@NonNull String prefix)
   { // TODO Look at - not very efficient
     List<@NonNull String> completions = new ArrayList<>();
 
-    for (String shortForm : shortForms) {
-      if (shortForm.startsWith(prefix))
-        completions.add(shortForm);
+    for (String rendering : renderings) {
+      if (rendering.startsWith(prefix))
+        completions.add(rendering);
     }
     return completions;
   }

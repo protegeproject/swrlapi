@@ -485,6 +485,16 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     return this.iriResolver;
   }
 
+  @NonNull private String iri2PrefixedName(IRI iri)
+  {
+    Optional<@NonNull String> prefixedName = this.iriResolver.iri2PrefixedName(iri);
+
+    if (prefixedName.isPresent())
+      return prefixedName.get();
+    else
+      throw new IllegalArgumentException("could not get prefixed name for IRI " + iri);
+  }
+
   @Override public void startBulkConversion()
   {
     // TODO implement startBulkConversion
@@ -555,7 +565,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
       if (isSWRLBuiltInAtom(atom)) {
         SWRLBuiltInAtom builtInAtom = (SWRLBuiltInAtom)atom;
         IRI builtInIRI = builtInAtom.getPredicate();
-        String builtInPrefixedName = getIRIResolver().iri2PrefixedName(builtInIRI);
+        String builtInPrefixedName = iri2PrefixedName(builtInIRI);
         List<@NonNull SWRLDArgument> swrlDArguments = builtInAtom.getArguments();
         List<@NonNull SWRLBuiltInArgument> swrlBuiltInArguments = convertSWRLDArguments2SWRLBuiltInArguments(
           swrlDArguments);
@@ -570,7 +580,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
       if (isSWRLBuiltInAtom(atom)) {
         SWRLBuiltInAtom builtInAtom = (SWRLBuiltInAtom)atom;
         IRI builtInIRI = builtInAtom.getPredicate();
-        String builtInPrefixedName = getIRIResolver().iri2PrefixedName(builtInIRI);
+        String builtInPrefixedName = iri2PrefixedName(builtInIRI);
         List<@NonNull SWRLDArgument> swrlDArguments = builtInAtom.getArguments();
         List<@NonNull SWRLBuiltInArgument> swrlBuiltInArguments = convertSWRLDArguments2SWRLBuiltInArguments(
           swrlDArguments);

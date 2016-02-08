@@ -52,6 +52,7 @@ import org.swrlapi.sqwrl.SQWRLQuery;
 import org.swrlapi.sqwrl.SQWRLQueryRenderer;
 
 import java.util.Iterator;
+import java.util.Optional;
 
 /**
  * Default implementation of a renderer for {@link org.swrlapi.core.SWRLAPIRule} and
@@ -513,14 +514,14 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
 
   @NonNull private String getShortForm(IRI iri)
   {
-    String shortForm = getIRIResolver().iri2ShortForm(iri);
+    String shortForm = iri2ShortForm(iri);
 
     return shortForm != null ? shortForm : iri.getShortForm();
   }
 
   @NonNull private String getPrefixedName(IRI iri)
   {
-    String prefixedName = getIRIResolver().iri2PrefixedName(iri);
+    String prefixedName = iri2PrefixedName(iri);
 
     return prefixedName != null ? prefixedName : iri.getShortForm();
   }
@@ -537,8 +538,23 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
       .isSQWRLCollectionOperationBuiltIn(((SWRLAPIBuiltInAtom)atom).getBuiltInPrefixedName());
   }
 
-  @NonNull private IRIResolver getIRIResolver()
+  @NonNull private String iri2PrefixedName(IRI iri)
   {
-    return this.iriResolver;
+    Optional<@NonNull String> prefixedName = this.iriResolver.iri2PrefixedName(iri);
+
+    if (prefixedName.isPresent())
+      return prefixedName.get();
+    else
+      throw new IllegalArgumentException("could not get prefixed name for IRI " + iri);
+  }
+
+  @NonNull private String iri2ShortForm(IRI iri)
+  {
+    Optional<@NonNull String> shortForm = this.iriResolver.iri2ShortForm(iri);
+
+    if (shortForm.isPresent())
+      return shortForm.get();
+    else
+      throw new IllegalArgumentException("could not get short form for IRI " + iri);
   }
 }

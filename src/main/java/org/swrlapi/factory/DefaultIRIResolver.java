@@ -1,17 +1,18 @@
 package org.swrlapi.factory;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.semanticweb.owlapi.formats.PrefixDocumentFormat;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDocumentFormat;
 import org.semanticweb.owlapi.model.OWLOntology;
-import org.semanticweb.owlapi.model.OWLOntologyID;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.swrlapi.core.IRIResolver;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class DefaultIRIResolver implements IRIResolver
 {
@@ -20,10 +21,18 @@ public class DefaultIRIResolver implements IRIResolver
   @NonNull private final Map<@NonNull String, @NonNull String> autogenNamespace2Prefix = new HashMap<>();
 
   private int autogenPrefixNumber = 0;
+  @Nullable private String defaultPrefix;
 
   public DefaultIRIResolver()
   {
     this.prefixManager = new DefaultPrefixManager();
+  }
+
+  public DefaultIRIResolver(@NonNull String defaultPrefix)
+  {
+    this.prefixManager = new DefaultPrefixManager();
+    this.prefixManager.setDefaultPrefix(defaultPrefix);
+    this.defaultPrefix = defaultPrefix;
   }
 
   @Override public void reset()
@@ -32,49 +41,53 @@ public class DefaultIRIResolver implements IRIResolver
     this.autogenPrefixNumber = 0;
   }
 
-  @Override @NonNull public IRI prefixedName2IRI(@NonNull String prefixedName)
+  @Override @NonNull public Optional<@NonNull IRI> prefixedName2IRI(@NonNull String prefixedName)
   {
-    try {
-      return this.prefixManager.getIRI(prefixedName);
-    } catch (RuntimeException e) {
-      throw new IllegalArgumentException("could not find IRI for prefixed name " + prefixedName);
-    }
+    IRI iri = this.prefixManager.getIRI(prefixedName);
+
+    if (iri != null)
+      return Optional.of(iri);
+    else
+      return Optional.empty();
   }
 
-  @Override @NonNull public String iri2PrefixedName(@NonNull IRI iri)
+  @Override public @NonNull Optional<@NonNull String> iri2PrefixedName(@NonNull IRI iri)
   {
     String existingPrefixedName = this.prefixManager.getPrefixIRI(iri);
     if (existingPrefixedName != null)
-      return existingPrefixedName;
+      return Optional.of(existingPrefixedName);
     else {
       String namespace = iri.getNamespace();
       com.google.common.base.Optional<@NonNull String> remainder = iri.getRemainder();
       if (remainder.isPresent()) {
         if (namespace.isEmpty()) {
           String prefixedName = remainder.get();
-          return prefixedName;
+          return Optional.of(prefixedName);
         } else { // OWLAPI prefix manager does not have a prefixed form. We auto-generate a prefix for each namespace.
-          if (this.autogenNamespace2Prefix.containsKey(namespace)) {
-            return this.autogenNamespace2Prefix.get(namespace) + remainder.get();
-          } else {
-            String autogenPrefix = "autogen" + this.autogenPrefixNumber++ + ":";
-            this.autogenNamespace2Prefix.put(namespace, autogenPrefix);
-            return autogenPrefix + remainder.get();
-          }
+          //          if (this.autogenNamespace2Prefix.containsKey(namespace)) {
+          //            return Optional.of(this.autogenNamespace2Prefix.get(namespace) + remainder.get());
+          //          } else {
+          //            String autogenPrefix = "autogen" + this.autogenPrefixNumber++ + ":";
+          //            this.autogenNamespace2Prefix.put(namespace, autogenPrefix);
+          //            this.prefixManager.setPrefix(autogenPrefix, namespace);
+          //            return Optional.of(autogenPrefix + remainder.get());
+          //          }
+          // TODO This autogen seems odd
+          return Optional.empty();
         }
       } else
-        throw new IllegalArgumentException("could not get prefixed name for IRI " + iri);
+        return Optional.empty();
     }
   }
 
-  @Override @NonNull public String iri2ShortForm(@NonNull IRI iri)
+  @Override @NonNull public Optional<@NonNull String> iri2ShortForm(@NonNull IRI iri)
   {
     String shortForm = this.prefixManager.getShortForm(iri);
 
     if (shortForm == null || shortForm.isEmpty())
-      throw new IllegalArgumentException("could not get short from for IRI " + iri);
-
-    return shortForm;
+      return Optional.empty();
+    else
+      return Optional.of(shortForm);
   }
 
   @Override public void setPrefix(@NonNull String prefix, @NonNull String namespace)
@@ -88,6 +101,8 @@ public class DefaultIRIResolver implements IRIResolver
     OWLDocumentFormat ontologyFormat = owlOntologyManager.getOntologyFormat(ontology);
 
     this.prefixManager.clear();
+    if (this.defaultPrefix != null)
+      this.prefixManager.setDefaultPrefix(this.defaultPrefix);
 
     if (ontologyFormat != null && ontologyFormat.isPrefixOWLOntologyFormat()) {
       PrefixDocumentFormat prefixOntologyFormat = ontologyFormat.asPrefixOWLOntologyFormat();
@@ -95,15 +110,6 @@ public class DefaultIRIResolver implements IRIResolver
       Map<@NonNull String, String> map = prefixOntologyFormat.getPrefixName2PrefixMap();
       for (String prefix : map.keySet())
         this.prefixManager.setPrefix(prefix, map.get(prefix));
-
-      if (this.prefixManager.getDefaultPrefix() == null) {
-        OWLOntologyID ontologyID = ontology.getOntologyID();
-        if (ontologyID.getOntologyIRI().isPresent()) {
-          // TODO This is a quick hack!!
-          String defaultPrefix = ontologyID.getOntologyIRI().get().toString() + "#";
-          this.prefixManager.setDefaultPrefix(defaultPrefix);
-        }
-      }
     }
     addSWRLAPIPrefixes();
 

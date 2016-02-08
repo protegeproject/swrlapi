@@ -145,6 +145,15 @@ public class SWRLAPIFactory
   }
 
   /**
+   * @param defaultPrefix Default prefix
+   * @return An IRI resolver
+   */
+  @NonNull public static IRIResolver createIRIResolver(String defaultPrefix)
+  {
+    return new DefaultIRIResolver(defaultPrefix);
+  }
+
+  /**
    * @return A SWRL rule engine manager
    */
   @NonNull public static SWRLRuleEngineManager createSWRLRuleEngineManager()
