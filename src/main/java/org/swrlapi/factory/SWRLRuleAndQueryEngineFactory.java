@@ -28,7 +28,8 @@ public interface SWRLRuleAndQueryEngineFactory
   /**
    * Create an instance of a rule engine.
    *
-   * @param ontology A OWL ontology
+   * @param ontology    A OWL ontology
+   * @param iriResolver An IRI resolver
    * @return A SWRL rule engine
    * @throws SWRLRuleEngineException If an error occurs during creation
    */
@@ -38,6 +39,7 @@ public interface SWRLRuleAndQueryEngineFactory
   /**
    * @param ruleEngineName The name of a rule engine
    * @param ontology       An OWL ontology
+   * @param iriResolver    An IRI resolver
    * @return A SWRL rule engine
    * @throws SWRLRuleEngineException If an error occurs during creation
    */
@@ -45,7 +47,8 @@ public interface SWRLRuleAndQueryEngineFactory
     @NonNull IRIResolver iriResolver) throws SWRLRuleEngineException;
 
   /**
-   * @param ontology An OWL ontology
+   * @param ontology    An OWL ontology
+   * @param iriResolver An IRI resolver
    * @return A SQWRL query engine
    * @throws SWRLRuleEngineException If an error occurs during creation
    */
@@ -55,6 +58,7 @@ public interface SWRLRuleAndQueryEngineFactory
   /**
    * @param ruleEngineName The name of a rule engine
    * @param ontology       An OWL ontology
+   * @param iriResolver    An IRI resolver
    * @return A SQWRL query engine
    * @throws SWRLRuleEngineException If an error occurs during creation
    */
