@@ -28,7 +28,7 @@ public class SWRLRuleExecutionView extends JTabbedPane implements SWRLAPIView
     InferredOWLAxiomsView inferredOWLAxiomsView = new InferredOWLAxiomsView(this.swrlRuleEngineModel);
 
     ruleTablesView.initialize();
-    ;
+
     swrlRulesControlView.initialize();
     importedSWRLRulesView.initialize();
     assertedOWLAxiomsView.initialize();

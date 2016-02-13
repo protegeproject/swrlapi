@@ -55,12 +55,13 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
     consoleScrollPane.setPreferredSize(new Dimension(VIEW_PREFERRED_WIDTH, VIEW_PREFERRED_HEIGHT));
     add(BorderLayout.CENTER, consoleScrollPane);
 
-    JPanel panel = new JPanel(new FlowLayout());
-    JButton runButton = createButton("Run", "Run a SQWRL query", new RunSQWRLQueryActionListener(this.console, this));
-    panel.add(runButton);
-    add(BorderLayout.SOUTH, panel);
+    JPanel controlPanel = new JPanel(new FlowLayout());
+    JButton runSQWRLQueryButton = createButton("Run", "Run a SQWRL query",
+      new RunSQWRLQueryActionListener(this.console, this));
+    controlPanel.add(runSQWRLQueryButton);
+    add(BorderLayout.SOUTH, controlPanel);
 
-    console.append("Select a XXXXX SQWRL query from the list above and press the 'Run' button.\n");
+    console.append("Select a SQWRL query from the list above and press the 'Run' button.\n");
     console.append("If the selected query generates a result, the result will appear in a new sub tab.\n\n");
     console.append(
       "The SWRLAPI supports an OWL profile called OWL 2 RL and uses an OWL 2 RL-based reasoner to perform querying.\n");
