@@ -2,7 +2,6 @@ package org.swrlapi.ui.view.queries;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.swrlapi.exceptions.SWRLAPIException;
-import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.ui.model.SQWRLQueryEngineModel;
 import org.swrlapi.ui.view.SWRLAPIView;
 import org.swrlapi.ui.view.owl2rl.OWL2RLRuleTablesView;
@@ -18,14 +17,12 @@ public class SQWRLQueryExecutionView extends JTabbedPane implements SWRLAPIView
 
   @NonNull private final SQWRLQueryEngineModel queryEngineModel;
   @NonNull private final SQWRLQuerySelector querySelector;
-  @NonNull private final SQWRLQueryEngine queryEngine;
 
   public SQWRLQueryExecutionView(@NonNull SQWRLQueryEngineModel queryEngineModel,
-      @NonNull SQWRLQuerySelector querySelector) throws SWRLAPIException
+    @NonNull SQWRLQuerySelector querySelector) throws SWRLAPIException
   {
     this.queryEngineModel = queryEngineModel;
     this.querySelector = querySelector;
-    this.queryEngine = queryEngineModel.getSQWRLQueryEngine();
   }
 
   @Override public void initialize()

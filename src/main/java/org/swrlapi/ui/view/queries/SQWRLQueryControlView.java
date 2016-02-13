@@ -34,15 +34,16 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
   @NonNull private final SQWRLQueryEngineModel queryEngineModel;
   @NonNull private final SQWRLQuerySelector sqwrlQuerySelector;
   @NonNull private final JTextArea console;
-  @NonNull private final Icon queryEngineIcon;
+  @NonNull private final JScrollPane consoleScrollPane;
   @NonNull private final Map<@NonNull String, SQWRLResultView> sqwrlResultViews = new HashMap<>();
 
-  public SQWRLQueryControlView(@NonNull SQWRLQueryEngineModel queryEngineModel, SQWRLQuerySelector sqwrlQuerySelector)
+  public SQWRLQueryControlView(@NonNull SQWRLQueryEngineModel queryEngineModel,
+    @NonNull SQWRLQuerySelector sqwrlQuerySelector)
   {
     this.queryEngineModel = queryEngineModel;
-    this.queryEngineIcon = queryEngineModel.getSQWRLQueryEngine().getTargetQueryEngineIcon();
     this.sqwrlQuerySelector = sqwrlQuerySelector;
     this.console = new JTextArea(CONSOLE_ROWS, CONSOLE_COLUMNS);
+    this.consoleScrollPane = new JScrollPane(this.console);
   }
 
   @Override public void initialize()
@@ -51,23 +52,21 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
     console.setLineWrap(true);
     console.setBackground(Color.WHITE);
     console.setEditable(false);
-    JScrollPane scrollPane = new JScrollPane(this.console);
-    scrollPane.setPreferredSize(new Dimension(VIEW_PREFERRED_WIDTH, VIEW_PREFERRED_HEIGHT));
-    add(BorderLayout.CENTER, scrollPane);
+    consoleScrollPane.setPreferredSize(new Dimension(VIEW_PREFERRED_WIDTH, VIEW_PREFERRED_HEIGHT));
+    add(BorderLayout.CENTER, consoleScrollPane);
 
     JPanel panel = new JPanel(new FlowLayout());
-    JButton runButton = createButton("Run", "Run all SWRL rules and SQWRL queries",
-      new RunActionListener(this.console, this));
+    JButton runButton = createButton("Run", "Run a SQWRL query", new RunSQWRLQueryActionListener(this.console, this));
     panel.add(runButton);
     add(BorderLayout.SOUTH, panel);
 
-    appendToConsole("Select a SQWRL query from the list above and press the 'Run' button.\n");
-    appendToConsole("If the selected query generates a result, the result will appear in a new sub tab.\n\n");
-    appendToConsole(
+    console.append("Select a XXXXX SQWRL query from the list above and press the 'Run' button.\n");
+    console.append("If the selected query generates a result, the result will appear in a new sub tab.\n\n");
+    console.append(
       "The SWRLAPI supports an OWL profile called OWL 2 RL and uses an OWL 2 RL-based reasoner to perform querying.\n");
-    appendToConsole("See the 'OWL 2 RL' subtab for more information on this reasoner.\n\n");
-    appendToConsole("Executing queries in this tab does not modify the ontology.\n\n");
-    appendToConsole(
+    console.append("See the 'OWL 2 RL' subtab for more information on this reasoner.\n\n");
+    console.append("Executing queries in this tab does not modify the ontology.\n\n");
+    console.append(
       "Using " + this.queryEngineModel.getSQWRLQueryEngine().getRuleEngineName() + ", " + this.queryEngineModel
         .getSQWRLQueryEngine().getRuleEngineVersion() + " for query execution.\n\n");
   }
@@ -79,7 +78,14 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
 
   public void appendToConsole(@NonNull String text)
   {
-    this.console.append(text);
+    SwingUtilities.invokeLater(new Runnable()
+    {
+      public void run()
+      {
+        console.append(text);
+        console.setCaretPosition(console.getDocument().getLength());
+      }
+    });
   }
 
   public void removeSQWRLResultView(@NonNull String queryName)
@@ -128,9 +134,9 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
     }
   }
 
-  private class RunActionListener extends ListenerBase implements ActionListener
+  private class RunSQWRLQueryActionListener extends ListenerBase implements ActionListener
   {
-    public RunActionListener(@NonNull JTextArea console, @NonNull SQWRLQueryControlView sqwrlQueryControlView)
+    public RunSQWRLQueryActionListener(@NonNull JTextArea console, @NonNull SQWRLQueryControlView sqwrlQueryControlView)
     {
       super(console, sqwrlQueryControlView);
     }
@@ -219,11 +225,7 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
 
       sqwrlResultView.validate();
       this.sqwrlQueryControlView.getParent().validate();
-    }
-
-    private void appendToConsole(@NonNull String text)
-    {
-      this.console.append(text);
+      this.console.validate();
     }
   }
 }
