@@ -42,7 +42,7 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
   private static final long serialVersionUID = 1L;
 
   private static final String TITLE = "Edit SWRL Rule";
-  private static final String RULE_NAME_TITLE = "Rule";
+  private static final String RULE_NAME_TITLE = "Name";
   private static final String COMMENT_LABEL_TITLE = "Comment";
   private static final String STATUS_LABEL_TITLE = "Status";
   private static final String OK_BUTTON_TITLE = "Ok";
@@ -175,9 +175,16 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
 
   private void initializeComponents()
   {
+    JLabel ruleNameLabel = new JLabel(RULE_NAME_TITLE);
+    JLabel commentLabel = new JLabel(COMMENT_LABEL_TITLE);
+    JLabel statusLabel = new JLabel(STATUS_LABEL_TITLE);
+    JPanel upperPanel = new JPanel(new GridLayout(6, 2));
+    JButton cancelButton = new JButton(CANCEL_BUTTON_TITLE);
+    JPanel rulePanel = new JPanel(new GridLayout(1, 1));
+    JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+    JPanel surroundPanel = new JPanel(new BorderLayout());
     Container contentPane = getContentPane();
 
-    JLabel ruleNameLabel = new JLabel(RULE_NAME_TITLE);
     this.ruleNameTextField.setBorder(this.loweredBevelBorder);
 
     this.ruleTextTextArea.setLineWrap(true);
@@ -185,16 +192,13 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
     this.ruleTextTextArea.setBorder(this.loweredBevelBorder);
     this.ruleTextTextArea.setPreferredSize(new Dimension(300, 300));
 
-    JLabel commentLabel = new JLabel(COMMENT_LABEL_TITLE);
     this.commentTextField.setDisabledTextColor(Color.BLACK);
     this.commentTextField.setBorder(this.loweredBevelBorder);
 
-    JLabel statusLabel = new JLabel(STATUS_LABEL_TITLE);
     this.statusTextField.setDisabledTextColor(Color.BLACK);
     this.statusTextField.setEnabled(false);
     this.statusTextField.setBorder(this.loweredBevelBorder);
 
-    JButton cancelButton = new JButton(CANCEL_BUTTON_TITLE);
     cancelButton.setPreferredSize(new Dimension(BUTTON_PREFERRED_WIDTH, BUTTON_PREFERRED_HEIGHT));
     cancelButton.addActionListener(new CancelSWRLRuleEditActionListener(contentPane));
 
@@ -203,7 +207,6 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
 
     contentPane.setLayout(new BorderLayout());
 
-    JPanel upperPanel = new JPanel(new GridLayout(6, 2));
     upperPanel.setBorder(BorderFactory.createEmptyBorder(0, 3, 0, 3));
     upperPanel.add(ruleNameLabel);
     upperPanel.add(this.ruleNameTextField);
@@ -212,16 +215,12 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
     upperPanel.add(statusLabel);
     upperPanel.add(this.statusTextField);
 
-    //JPanel rulePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-    JPanel rulePanel = new JPanel(new GridLayout(1, 1));
     rulePanel.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
     rulePanel.add(this.ruleTextTextArea);
 
-    JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
     buttonPanel.add(cancelButton);
     buttonPanel.add(this.saveButton);
 
-    JPanel surroundPanel = new JPanel(new BorderLayout());
     surroundPanel.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
     contentPane.add(surroundPanel, BorderLayout.CENTER);
     surroundPanel.add(upperPanel, BorderLayout.NORTH);

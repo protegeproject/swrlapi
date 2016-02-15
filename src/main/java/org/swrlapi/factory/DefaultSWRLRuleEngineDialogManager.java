@@ -14,17 +14,20 @@ import java.io.File;
 
 public class DefaultSWRLRuleEngineDialogManager implements SWRLRuleEngineDialogManager
 {
-  @NonNull private final SWRLRuleEditorDialog swrlRuleEditorDialog;
+  @NonNull private final SWRLRuleEngineModel swrlRuleEngineModel;
+  @MonotonicNonNull private SWRLRuleEditorDialog swrlRuleEditorDialog;
   @MonotonicNonNull private File lastDirectory = null;
 
   public DefaultSWRLRuleEngineDialogManager(@NonNull SWRLRuleEngineModel swrlRuleEngineModel)
   {
+    this.swrlRuleEngineModel = swrlRuleEngineModel;
     this.swrlRuleEditorDialog = new SWRLRuleEditorDialog(swrlRuleEngineModel, this);
     this.swrlRuleEditorDialog.initialize();
   }
 
   @NonNull @Override public JDialog getSWRLRuleEditorDialog(@NonNull Component parent)
   {
+    createSWRLRuleEditorDialogIfNecessary();
     this.swrlRuleEditorDialog.setLocationRelativeTo(parent);
     return this.swrlRuleEditorDialog;
   }
@@ -32,6 +35,7 @@ public class DefaultSWRLRuleEngineDialogManager implements SWRLRuleEngineDialogM
   @NonNull @Override public JDialog getSWRLRuleEditorDialog(@NonNull Component parent, @NonNull String ruleName,
     @NonNull String ruleText, @NonNull String comment)
   {
+    createSWRLRuleEditorDialogIfNecessary();
     this.swrlRuleEditorDialog.setLocationRelativeTo(parent);
     this.swrlRuleEditorDialog.enableEditMode(ruleName, ruleText, comment);
 
@@ -139,5 +143,13 @@ public class DefaultSWRLRuleEngineDialogManager implements SWRLRuleEngineDialogM
       chooser.setFileFilter(new ExtensionFilter(fileExtension, fileDescription));
     }
     return chooser;
+  }
+
+  private void createSWRLRuleEditorDialogIfNecessary()
+  {
+    if (this.swrlRuleEditorDialog != null) {
+      this.swrlRuleEditorDialog = new SWRLRuleEditorDialog(swrlRuleEngineModel, this);
+      this.swrlRuleEditorDialog.initialize();
+    }
   }
 }
