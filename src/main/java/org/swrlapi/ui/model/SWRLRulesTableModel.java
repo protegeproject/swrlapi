@@ -29,6 +29,10 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
   public static final int RULE_TEXT_COLUMN = 2;
   public static final int RULE_COMMENT_COLUMN = 3;
 
+  private static final String RULE_NAME_COLUMN_TITLE = "Name";
+  private static final String RULE_TEXT_COLUMN_TITLE = "Rule";
+  private static final String RULE_COMMENT_COLUMN_TITLE = "Comment";
+
   public static final int NUMBER_OF_COLUMNS = 4;
 
   @NonNull private SWRLRuleEngine swrlRuleEngine;
@@ -50,7 +54,7 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
     updateRuleModels();
   }
 
-  public void updateModel(SWRLRuleEngine swrlRuleEngine)
+  public void updateModel(@NonNull SWRLRuleEngine swrlRuleEngine)
   {
     this.swrlRuleEngine = swrlRuleEngine;
     this.swrlRuleModels.clear();
@@ -137,11 +141,11 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
   @NonNull @Override public String getColumnName(int column)
   {
     if (column == RULE_NAME_COLUMN)
-      return "Name";
+      return RULE_NAME_COLUMN_TITLE;
     else if (column == RULE_TEXT_COLUMN)
-      return "Rule";
+      return RULE_TEXT_COLUMN_TITLE;
     else if (column == RULE_COMMENT_COLUMN)
-      return "Comment";
+      return RULE_COMMENT_COLUMN_TITLE;
     else if (column == ACTIVE_COLUMN)
       return "";
     else
