@@ -39,7 +39,7 @@ import org.swrlapi.ui.model.OWL2RLModel;
 import org.swrlapi.ui.model.SQWRLQueryEngineModel;
 import org.swrlapi.ui.model.SWRLAutoCompleter;
 import org.swrlapi.ui.model.SWRLRuleEngineModel;
-import org.swrlapi.ui.model.SWRLRulesTableModel;
+import org.swrlapi.ui.model.SWRLRulesAndSQWRLQueriesTableModel;
 
 import javax.swing.*;
 import java.io.File;
@@ -225,11 +225,12 @@ public class SWRLAPIFactory
 
   /**
    * @param swrlRuleEngine A SWRL rule engine
-   * @return A SWRL rule table model
+   * @return A SWRL rule and SQWRL query table model
    */
-  @NonNull public static SWRLRulesTableModel createSWRLRulesTableModel(@NonNull SWRLRuleEngine swrlRuleEngine)
+  public static @NonNull SWRLRulesAndSQWRLQueriesTableModel createSWRLRulesAndSQWRLQueriesTableModel(
+    @NonNull SWRLRuleEngine swrlRuleEngine)
   {
-    return new SWRLRulesTableModel(swrlRuleEngine);
+    return new SWRLRulesAndSQWRLQueriesTableModel(swrlRuleEngine);
   }
 
   @NonNull public static OWL2RLModel createOWL2RLModel(@NonNull OWL2RLEngine owl2RLEngine)

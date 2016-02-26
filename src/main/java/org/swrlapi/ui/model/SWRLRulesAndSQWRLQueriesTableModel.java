@@ -20,9 +20,14 @@ import java.util.TreeMap;
  * @see org.swrlapi.core.SWRLAPIRule
  * @see org.swrlapi.sqwrl.SQWRLQuery
  */
-public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIModel
+public class SWRLRulesAndSQWRLQueriesTableModel extends AbstractTableModel implements SWRLAPIModel
 {
   private static final long serialVersionUID = 1L;
+
+  public enum ContentMode
+  {
+    RuleContentOnly, QueryContentOnly, RuleAndQueryContent
+  }
 
   public static final int ACTIVE_COLUMN = 0;
   public static final int RULE_NAME_COLUMN = 1;
@@ -31,6 +36,8 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
 
   private static final String RULE_NAME_COLUMN_TITLE = "Name";
   private static final String RULE_TEXT_COLUMN_TITLE = "Rule";
+  private static final String QUERY_TEXT_COLUMN_TITLE = "Query";
+  private static final String RULE_AND_QUERY_TEXT_COLUMN_TITLE = "Body";
   private static final String RULE_COMMENT_COLUMN_TITLE = "Comment";
 
   public static final int NUMBER_OF_COLUMNS = 4;
@@ -38,14 +45,16 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
   @NonNull private SWRLRuleEngine swrlRuleEngine;
   @NonNull private final SortedMap<@NonNull String, @NonNull SWRLRuleModel> swrlRuleModels; // rule name -> SWRLRuleModel
   @NonNull private Optional<@NonNull SWRLAPIView> view = Optional.<@NonNull SWRLAPIView>empty();
+  private ContentMode contentMode;
 
   private boolean isModified;
 
-  public SWRLRulesTableModel(@NonNull SWRLRuleEngine swrlRuleEngine)
+  public SWRLRulesAndSQWRLQueriesTableModel(@NonNull SWRLRuleEngine swrlRuleEngine)
   {
     this.swrlRuleEngine = swrlRuleEngine;
     this.swrlRuleModels = new TreeMap<>();
     this.isModified = false;
+    this.contentMode = ContentMode.RuleAndQueryContent;
   }
 
   public void setView(@NonNull SWRLAPIView view)
@@ -142,9 +151,18 @@ public class SWRLRulesTableModel extends AbstractTableModel implements SWRLAPIMo
   {
     if (column == RULE_NAME_COLUMN)
       return RULE_NAME_COLUMN_TITLE;
-    else if (column == RULE_TEXT_COLUMN)
-      return RULE_TEXT_COLUMN_TITLE;
-    else if (column == RULE_COMMENT_COLUMN)
+    else if (column == RULE_TEXT_COLUMN) {
+      switch (this.contentMode) {
+      case RuleContentOnly:
+        return RULE_TEXT_COLUMN_TITLE;
+      case QueryContentOnly:
+        return QUERY_TEXT_COLUMN_TITLE;
+      case RuleAndQueryContent:
+        return RULE_AND_QUERY_TEXT_COLUMN_TITLE;
+      default:
+        return "INVALID";
+      }
+    } else if (column == RULE_COMMENT_COLUMN)
       return RULE_COMMENT_COLUMN_TITLE;
     else if (column == ACTIVE_COLUMN)
       return "";

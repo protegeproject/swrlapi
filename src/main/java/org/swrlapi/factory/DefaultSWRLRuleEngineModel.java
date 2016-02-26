@@ -15,7 +15,7 @@ import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.ui.model.OWL2RLModel;
 import org.swrlapi.ui.model.SWRLAutoCompleter;
 import org.swrlapi.ui.model.SWRLRuleEngineModel;
-import org.swrlapi.ui.model.SWRLRulesTableModel;
+import org.swrlapi.ui.model.SWRLRulesAndSQWRLQueriesTableModel;
 
 import java.io.File;
 
@@ -26,7 +26,7 @@ public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel
   @NonNull private SWRLRuleEngine swrlRuleEngine;
   @NonNull private OWL2RLEngine owl2RLEngine;
 
-  @NonNull private final SWRLRulesTableModel swrlRulesTableModel;
+  @NonNull private final SWRLRulesAndSQWRLQueriesTableModel swrlRulesAndSQWRLQueriesTableModel;
   @NonNull private final OWL2RLModel owl2RLModel;
 
   public DefaultSWRLRuleEngineModel(@NonNull SWRLRuleEngine swrlRuleEngine)
@@ -36,7 +36,7 @@ public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel
     this.swrlapiOWLOntology = swrlRuleEngine.getSWRLAPIOWLOntology();
     this.owl2RLEngine = this.swrlRuleEngine.getOWL2RLEngine();
 
-    this.swrlRulesTableModel = SWRLAPIFactory.createSWRLRulesTableModel(swrlRuleEngine);
+    this.swrlRulesAndSQWRLQueriesTableModel = SWRLAPIFactory.createSWRLRulesAndSQWRLQueriesTableModel(swrlRuleEngine);
     this.owl2RLModel = SWRLAPIFactory.createOWL2RLModel(owl2RLEngine);
   }
 
@@ -46,7 +46,7 @@ public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel
     this.swrlapiOWLOntology = ruleEngine.getSWRLAPIOWLOntology();
     this.owl2RLEngine = this.swrlRuleEngine.getOWL2RLEngine();
 
-    this.swrlRulesTableModel.updateModel(ruleEngine);
+    this.swrlRulesAndSQWRLQueriesTableModel.updateModel(ruleEngine);
     this.owl2RLModel.updateModel(owl2RLEngine);
 
     updateView();
@@ -89,9 +89,9 @@ public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel
     return this.swrlRuleEngine.createSWRLRuleRenderer();
   }
 
-  @NonNull @Override public SWRLRulesTableModel getSWRLRulesTableModel()
+  @Override public @NonNull SWRLRulesAndSQWRLQueriesTableModel getSWRLRulesTableModel()
   {
-    return this.swrlRulesTableModel;
+    return this.swrlRulesAndSQWRLQueriesTableModel;
   }
 
   @NonNull @Override public OWL2RLModel getOWL2RLModel()
@@ -101,12 +101,12 @@ public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel
 
   @Override public boolean areSWRLRulesModified()
   {
-    return this.swrlRulesTableModel.hasBeenModified();
+    return this.swrlRulesAndSQWRLQueriesTableModel.hasBeenModified();
   }
 
   @Override public void clearSWRLRulesModified()
   {
-    this.swrlRulesTableModel.clearModifiedStatus();
+    this.swrlRulesAndSQWRLQueriesTableModel.clearModifiedStatus();
   }
 
   @Override public boolean hasOntologyChanged()
@@ -119,7 +119,7 @@ public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel
     this.swrlapiOWLOntology.resetOntologyChanged();
   }
 
-  @Override public void updateView() { this.swrlRulesTableModel.updateView(); }
+  @Override public void updateView() { this.swrlRulesAndSQWRLQueriesTableModel.updateView(); }
 
   @NonNull private OWLOntology getOWLOntology()
   {

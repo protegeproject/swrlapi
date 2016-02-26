@@ -10,7 +10,7 @@ import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.ui.model.SWRLAutoCompleter;
 import org.swrlapi.ui.model.SWRLRuleEngineModel;
-import org.swrlapi.ui.model.SWRLRulesTableModel;
+import org.swrlapi.ui.model.SWRLRulesAndSQWRLQueriesTableModel;
 import org.swrlapi.ui.view.SWRLAPIView;
 
 import javax.swing.*;
@@ -21,6 +21,7 @@ import javax.swing.text.SimpleAttributeSet;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -65,6 +66,8 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
   private static final int RULE_EDIT_AREA_COLUMNS = 20;
   private static final int RULE_EDIT_AREA_ROWS = 60;
 
+  private static final KeyStroke controlSpace = KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, InputEvent.CTRL_MASK);
+
   private static final Logger log = LoggerFactory.getLogger(SWRLRuleEditorDialog.class);
 
   @NonNull private final SWRLRuleEngineModel swrlRuleEngineModel;
@@ -87,7 +90,6 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
     this.loweredBevelBorder = BorderFactory.createLoweredBevelBorder();
     this.yellowBorder = BorderFactory.createLineBorder(Color.YELLOW);
     this.ruleTextTextArea = new JTextArea("", RULE_EDIT_AREA_COLUMNS, RULE_EDIT_AREA_ROWS);
-    this.ruleTextTextArea.addKeyListener(new SWRLRuleEditorKeyAdapter());
     this.saveButton = new JButton(OK_BUTTON_TITLE);
     this.ruleNameTextField = new JTextField("");
     this.commentTextField = new JTextField("");
@@ -109,6 +111,18 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
       {
       }
     }); // Thwart user close
+
+    this.ruleTextTextArea.addKeyListener(new SWRLRuleEditorKeyAdapter());
+
+    this.ruleTextTextArea.getInputMap().put(controlSpace, "controlSpace");
+
+    this.ruleTextTextArea.getActionMap().put("controlSpace", new AbstractAction()
+    {
+      @Override public void actionPerformed(ActionEvent evt)
+      {
+        System.out.println(evt);
+      }
+    });
   }
 
   @Override public void setVisible(boolean b)
@@ -521,7 +535,7 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
     return this.swrlRuleEngineModel.createSWRLParser();
   }
 
-  @NonNull private SWRLRulesTableModel getSWRLRulesTableModel()
+  private @NonNull SWRLRulesAndSQWRLQueriesTableModel getSWRLRulesTableModel()
   {
     return this.swrlRuleEngineModel.getSWRLRulesTableModel();
   }

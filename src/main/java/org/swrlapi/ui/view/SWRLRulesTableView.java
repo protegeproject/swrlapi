@@ -5,7 +5,7 @@ import org.swrlapi.ui.action.DisableAllRulesAction;
 import org.swrlapi.ui.action.EnableAllRulesAction;
 import org.swrlapi.ui.dialog.SWRLRuleEngineDialogManager;
 import org.swrlapi.ui.model.SWRLRuleEngineModel;
-import org.swrlapi.ui.model.SWRLRulesTableModel;
+import org.swrlapi.ui.model.SWRLRulesAndSQWRLQueriesTableModel;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -21,7 +21,7 @@ import java.util.Optional;
 /**
  * Provides a model for graphical display of SWRL rules or SQWRL queries.
  *
- * @see org.swrlapi.ui.model.SWRLRulesTableModel
+ * @see SWRLRulesAndSQWRLQueriesTableModel
  */
 public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 {
@@ -108,14 +108,14 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
   {
     TableColumnModel columnModel = this.swrlRulesTable.getColumnModel();
 
-    columnModel.getColumn(SWRLRulesTableModel.ACTIVE_COLUMN).setPreferredWidth(ACTIVE_COLUMN_PREFERRED_WIDTH);
-    columnModel.getColumn(SWRLRulesTableModel.ACTIVE_COLUMN).setMaxWidth(ACTIVE_COLUMN_MAX_WIDTH);
-    columnModel.getColumn(SWRLRulesTableModel.RULE_NAME_COLUMN).setPreferredWidth(RULE_NAME_COLUMN_PREFERRED_WIDTH);
-    columnModel.getColumn(SWRLRulesTableModel.RULE_NAME_COLUMN).setMaxWidth(RULE_NAME_COLUMN_MAX_WIDTH);
-    columnModel.getColumn(SWRLRulesTableModel.RULE_TEXT_COLUMN).setPreferredWidth(RULE_TEXT_COLUMN_PREFERRED_WIDTH);
-    columnModel.getColumn(SWRLRulesTableModel.RULE_TEXT_COLUMN).setMaxWidth(RULE_TEXT_COLUMN_MAX_WIDTH);
-    columnModel.getColumn(SWRLRulesTableModel.RULE_COMMENT_COLUMN).setPreferredWidth(COMMENT_COLUMN_PREFERRED_WIDTH);
-    columnModel.getColumn(SWRLRulesTableModel.RULE_COMMENT_COLUMN).setMaxWidth(COMMENT_COLUMN_MAX_WIDTH);
+    columnModel.getColumn(SWRLRulesAndSQWRLQueriesTableModel.ACTIVE_COLUMN).setPreferredWidth(ACTIVE_COLUMN_PREFERRED_WIDTH);
+    columnModel.getColumn(SWRLRulesAndSQWRLQueriesTableModel.ACTIVE_COLUMN).setMaxWidth(ACTIVE_COLUMN_MAX_WIDTH);
+    columnModel.getColumn(SWRLRulesAndSQWRLQueriesTableModel.RULE_NAME_COLUMN).setPreferredWidth(RULE_NAME_COLUMN_PREFERRED_WIDTH);
+    columnModel.getColumn(SWRLRulesAndSQWRLQueriesTableModel.RULE_NAME_COLUMN).setMaxWidth(RULE_NAME_COLUMN_MAX_WIDTH);
+    columnModel.getColumn(SWRLRulesAndSQWRLQueriesTableModel.RULE_TEXT_COLUMN).setPreferredWidth(RULE_TEXT_COLUMN_PREFERRED_WIDTH);
+    columnModel.getColumn(SWRLRulesAndSQWRLQueriesTableModel.RULE_TEXT_COLUMN).setMaxWidth(RULE_TEXT_COLUMN_MAX_WIDTH);
+    columnModel.getColumn(SWRLRulesAndSQWRLQueriesTableModel.RULE_COMMENT_COLUMN).setPreferredWidth(COMMENT_COLUMN_PREFERRED_WIDTH);
+    columnModel.getColumn(SWRLRulesAndSQWRLQueriesTableModel.RULE_COMMENT_COLUMN).setMaxWidth(COMMENT_COLUMN_MAX_WIDTH);
   }
 
   private void addTableListeners()
@@ -203,7 +203,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
     return this.swrlRulesTable.getSelectedRow() != -1;
   }
 
-  @NonNull private SWRLRulesTableModel getSWRLRulesTableModel()
+  private @NonNull SWRLRulesAndSQWRLQueriesTableModel getSWRLRulesTableModel()
   {
     return this.swrlRuleEngineModel.getSWRLRulesTableModel();
   }

@@ -17,18 +17,19 @@ import javax.swing.*;
  */
 public class SQWRLQueriesView extends JSplitPane implements SWRLAPIView
 {
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	private static final double SPLIT_PANE_RESIZE_WEIGHT = 0.6;
+  private static final double SPLIT_PANE_RESIZE_WEIGHT = 0.6;
 
-	@NonNull private final SWRLRulesTableView swrlRulesTableView;
-	@NonNull private final SQWRLQueryExecutionView sqwrlQueryExecutionView;
+  @NonNull private final SWRLRulesTableView swrlRulesTableView;
+  @NonNull private final SQWRLQueryExecutionView sqwrlQueryExecutionView;
 
-	public SQWRLQueriesView(@NonNull SQWRLQueryEngineModel queryEngineModel, @NonNull SWRLRuleEngineDialogManager dialogManager)
-			throws SWRLAPIException
+  public SQWRLQueriesView(@NonNull SQWRLQueryEngineModel queryEngineModel,
+    @NonNull SWRLRuleEngineDialogManager dialogManager) throws SWRLAPIException
   {
     this.swrlRulesTableView = new SWRLRulesTableView(queryEngineModel, dialogManager);
-    this.sqwrlQueryExecutionView = new SQWRLQueryExecutionView(queryEngineModel, new SQWRLQuerySelector(this.swrlRulesTableView));
+    this.sqwrlQueryExecutionView = new SQWRLQueryExecutionView(queryEngineModel,
+      new SQWRLQuerySelector(this.swrlRulesTableView));
   }
 
   @Override public void initialize()
@@ -37,14 +38,14 @@ public class SQWRLQueriesView extends JSplitPane implements SWRLAPIView
     this.sqwrlQueryExecutionView.initialize();
 
     setOrientation(JSplitPane.VERTICAL_SPLIT);
-		setResizeWeight(SPLIT_PANE_RESIZE_WEIGHT);
-		setTopComponent(this.swrlRulesTableView);
-		setBottomComponent(this.sqwrlQueryExecutionView);
-	}
+    setResizeWeight(SPLIT_PANE_RESIZE_WEIGHT);
+    setTopComponent(this.swrlRulesTableView);
+    setBottomComponent(this.sqwrlQueryExecutionView);
+  }
 
-	@Override public void update()
-	{
-		this.swrlRulesTableView.update();
-		this.sqwrlQueryExecutionView.update();
-	}
+  @Override public void update()
+  {
+    this.swrlRulesTableView.update();
+    this.sqwrlQueryExecutionView.update();
+  }
 }

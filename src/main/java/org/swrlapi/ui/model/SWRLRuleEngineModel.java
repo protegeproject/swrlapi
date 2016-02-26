@@ -40,7 +40,7 @@ public interface SWRLRuleEngineModel extends OntologyModel
   /**
    * @return A SWRL rules table model
    */
-  @NonNull SWRLRulesTableModel getSWRLRulesTableModel();
+  @NonNull SWRLRulesAndSQWRLQueriesTableModel getSWRLRulesTableModel();
 
   /**
    * @return An OWL 2 RL model
