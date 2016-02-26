@@ -14,11 +14,6 @@ import java.util.Optional;
 public interface SWRLVariableBuiltInArgument extends SWRLBuiltInArgument, SWRLVariable
 {
   /**
-   * @return The prefixed name of the variable
-   */
-  @NonNull String getVariablePrefixedName();
-
-  /**
    * @return The name of the variable stripped of a ":" if it is a local prefixed name
    */
   @NonNull String getVariableName();

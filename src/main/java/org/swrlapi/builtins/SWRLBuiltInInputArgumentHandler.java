@@ -890,6 +890,6 @@ public interface SWRLBuiltInInputArgumentHandler
    * @return The prefixed name of a variable
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  @NonNull String getVariablePrefixedName(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+  @NonNull String getVariableName(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException;
 }

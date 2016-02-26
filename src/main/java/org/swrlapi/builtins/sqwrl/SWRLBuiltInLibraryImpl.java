@@ -36,7 +36,7 @@ import java.util.Set;
 
 /**
  * Implementation library for SQWRL built-ins.
- * <p>
+ * <p/>
  * Unlike other built-in libraries, queries that use built-ins in this library need to be preprocessed by a SQWRL-aware
  * processor. See the <tt>org.swrlapi.factory.DefaultSQWRLQuery</tt> class for an example of this processing.
  */
@@ -1572,7 +1572,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       .containsKey(collectionKey)) {
       // Collection variable already used in non collection context
       throw new SWRLBuiltInException(
-        "collection variable ?" + arguments.get(collectionArgumentNumber).asVariable().getVariablePrefixedName()
+        "collection variable ?" + arguments.get(collectionArgumentNumber).asVariable().getVariableName()
           + " already used in non collection context in query " + queryName);
     }
 
@@ -1612,9 +1612,9 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       return "";
   }
 
-  private String getCollectionGroupKeyInMultiOperandCollectionOperation(@NonNull List<@NonNull SWRLBuiltInArgument> arguments,
-    int collectionArgumentNumber, int coreNumberOfArguments, int groupArgumentOffset,
-    int numberOfRelevantGroupArguments) throws SWRLBuiltInException
+  private String getCollectionGroupKeyInMultiOperandCollectionOperation(
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments, int collectionArgumentNumber, int coreNumberOfArguments,
+    int groupArgumentOffset, int numberOfRelevantGroupArguments) throws SWRLBuiltInException
   {
     String queryName = getInvokingRuleName();
     String collectionName = getCollectionName(arguments, collectionArgumentNumber);
@@ -1633,9 +1633,10 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       return "";
   }
 
-  private boolean processSingleOperandCollectionOperationListResult(@NonNull List<@NonNull SWRLBuiltInArgument> arguments,
-    int resultCollectionArgumentNumber, int sourceCollectionArgumentNumber, int numberOfCoreArguments,
-    Collection<SWRLBuiltInArgument> resultList) throws SWRLBuiltInException
+  private boolean processSingleOperandCollectionOperationListResult(
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultCollectionArgumentNumber,
+    int sourceCollectionArgumentNumber, int numberOfCoreArguments, Collection<SWRLBuiltInArgument> resultList)
+    throws SWRLBuiltInException
   {
     String queryName = getInvokingRuleName();
     String sourceCollectionName = getCollectionName(arguments, sourceCollectionArgumentNumber);
@@ -1656,9 +1657,9 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       resultCollectionGroupKey, resultList);
   }
 
-  private boolean processListResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
-    @NonNull String resultListName, @NonNull String resultListID, @NonNull Collection<SWRLBuiltInArgument> resultList)
-    throws SWRLBuiltInException
+  private boolean processListResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments,
+    int resultArgumentNumber, @NonNull String resultListName, @NonNull String resultListID,
+    @NonNull Collection<SWRLBuiltInArgument> resultList) throws SWRLBuiltInException
   {
     checkArgumentNumber(resultArgumentNumber, arguments);
 
@@ -1696,8 +1697,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   }
 
   private Collection<SWRLBuiltInArgument> getCollectionInSingleCollectionOperation(
-    @NonNull List<@NonNull SWRLBuiltInArgument> arguments, int sourceCollectionArgumentNumber, int coreNumberOfArguments)
-    throws SWRLBuiltInException
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments, int sourceCollectionArgumentNumber,
+    int coreNumberOfArguments) throws SWRLBuiltInException
   {
     String queryName = getInvokingRuleName();
     String collectionName = getCollectionName(arguments, sourceCollectionArgumentNumber);
@@ -1707,8 +1708,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   }
 
   @NonNull private List<@NonNull SWRLBuiltInArgument> getSortedListInSingleOperandCollectionOperation(
-    @NonNull List<@NonNull SWRLBuiltInArgument> arguments, int sourceCollectionArgumentNumber, int coreNumberOfArguments)
-    throws SWRLBuiltInException
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments, int sourceCollectionArgumentNumber,
+    int coreNumberOfArguments) throws SWRLBuiltInException
   {
     String queryName = getInvokingRuleName();
     String collectionName = getCollectionName(arguments, sourceCollectionArgumentNumber);
@@ -1719,8 +1720,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
   // We do not cache because only one built-in will typically perform an operation on a particular collection per query.
   // Note: currently implementations may modify the returned collection.
-  @NonNull private List<@NonNull SWRLBuiltInArgument> getSortedList(@NonNull String queryName, @NonNull String collectionName,
-    @NonNull String collectionGroupKey) throws SWRLBuiltInException
+  @NonNull private List<@NonNull SWRLBuiltInArgument> getSortedList(@NonNull String queryName,
+    @NonNull String collectionName, @NonNull String collectionGroupKey) throws SWRLBuiltInException
   {
     Collection<SWRLBuiltInArgument> collection = getCollection(queryName, collectionName, collectionGroupKey);
     List<@NonNull SWRLBuiltInArgument> result = new ArrayList<>(collection);
@@ -1729,8 +1730,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     return result;
   }
 
-  @NonNull private List<@NonNull SWRLBuiltInArgument> createBag(@NonNull String queryName, @NonNull String collectionName,
-    @NonNull String collectionGroupKey) throws SWRLBuiltInException
+  @NonNull private List<@NonNull SWRLBuiltInArgument> createBag(@NonNull String queryName,
+    @NonNull String collectionName, @NonNull String collectionGroupKey) throws SWRLBuiltInException
   {
     List<@NonNull SWRLBuiltInArgument> bag = new ArrayList<>();
 
@@ -1739,8 +1740,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     return bag;
   }
 
-  @NonNull private Set<@NonNull SWRLBuiltInArgument> createSet(@NonNull String queryName, @NonNull String collectionName,
-    @NonNull String collectionGroupKey) throws SWRLBuiltInException
+  @NonNull private Set<@NonNull SWRLBuiltInArgument> createSet(@NonNull String queryName,
+    @NonNull String collectionName, @NonNull String collectionGroupKey) throws SWRLBuiltInException
   {
     Set<@NonNull SWRLBuiltInArgument> set = new HashSet<>();
 
@@ -1749,10 +1750,10 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     return set;
   }
 
-  @NonNull private String getCollectionName(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int collectionArgumentNumber)
-    throws SWRLBuiltInException
+  @NonNull private String getCollectionName(@NonNull List<@NonNull SWRLBuiltInArgument> arguments,
+    int collectionArgumentNumber) throws SWRLBuiltInException
   {
-    return getVariablePrefixedName(collectionArgumentNumber, arguments);
+    return getVariableName(collectionArgumentNumber, arguments);
   }
 
   private int getNumberOfGroupElements(@NonNull String queryName, @NonNull String collectionName)

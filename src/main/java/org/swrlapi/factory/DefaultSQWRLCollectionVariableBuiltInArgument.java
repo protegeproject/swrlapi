@@ -16,10 +16,10 @@ class DefaultSQWRLCollectionVariableBuiltInArgument extends DefaultSWRLVariableB
 
   @NonNull private final String queryName, collectionName, collectionGroupID;
 
-  public DefaultSQWRLCollectionVariableBuiltInArgument(@NonNull IRI variableIRI, @NonNull String variablePrefixedName,
-    @NonNull String queryName, @NonNull String collectionName, @NonNull String collectionGroupID)
+  public DefaultSQWRLCollectionVariableBuiltInArgument(@NonNull IRI variableIRI, @NonNull String queryName,
+    @NonNull String collectionName, @NonNull String collectionGroupID)
   {
-    super(variableIRI, variablePrefixedName);
+    super(variableIRI);
     this.queryName = queryName;
     this.collectionName = collectionName;
     this.collectionGroupID = collectionGroupID;

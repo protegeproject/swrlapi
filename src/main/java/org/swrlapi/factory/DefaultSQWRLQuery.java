@@ -39,8 +39,8 @@ class DefaultSQWRLQuery implements SQWRLQuery
   private boolean active; // Like a SWRL rule, a SQWRL query can also be active or inactive.
 
   public DefaultSQWRLQuery(@NonNull String queryName, @NonNull List<@NonNull SWRLAtom> bodyAtoms,
-      @NonNull List<@NonNull SWRLAtom> headAtoms, boolean active, @NonNull String comment,
-      @NonNull LiteralFactory literalFactory, @NonNull IRIResolver iriResolver) throws SQWRLException
+    @NonNull List<@NonNull SWRLAtom> headAtoms, boolean active, @NonNull String comment,
+    @NonNull LiteralFactory literalFactory, @NonNull IRIResolver iriResolver) throws SQWRLException
   {
     this.queryName = queryName;
     this.bodyAtoms = new ArrayList<>(bodyAtoms);
@@ -89,7 +89,7 @@ class DefaultSQWRLQuery implements SQWRLQuery
   }
 
   @NonNull @Override public List<@NonNull SWRLAPIBuiltInAtom> getBuiltInAtomsFromBody(
-      @NonNull Set<@NonNull String> builtInNames)
+    @NonNull Set<@NonNull String> builtInNames)
   {
     return getBuiltInAtoms(getBodyAtoms(), builtInNames);
   }
@@ -169,11 +169,11 @@ class DefaultSQWRLQuery implements SQWRLQuery
   @NonNull private List<@NonNull SWRLAPIBuiltInAtom> getBuiltInAtoms(@NonNull List<@NonNull SWRLAtom> atoms)
   {
     return atoms.stream().filter(atom -> atom instanceof SWRLAPIBuiltInAtom).map(atom -> (SWRLAPIBuiltInAtom)atom)
-        .collect(Collectors.toList());
+      .collect(Collectors.toList());
   }
 
   @NonNull private List<@NonNull SWRLAPIBuiltInAtom> getBuiltInAtoms(@NonNull List<@NonNull SWRLAtom> atoms,
-      @NonNull Set<@NonNull String> builtInNames)
+    @NonNull Set<@NonNull String> builtInNames)
   {
     List<@NonNull SWRLAPIBuiltInAtom> result = new ArrayList<>();
 
@@ -230,22 +230,22 @@ class DefaultSQWRLQuery implements SQWRLQuery
       throw new SQWRLException("slicing operator used without an order clause");
 
     if (builtInPrefixedName.equalsIgnoreCase(SQWRLNames.Least) || builtInPrefixedName
-        .equalsIgnoreCase(SQWRLNames.First)) {
+      .equalsIgnoreCase(SQWRLNames.First)) {
       if (!builtInAtom.getArguments().isEmpty())
         throw new SQWRLException("first or least do not accept arguments");
       this.sqwrlResult.setFirst();
     } else if (builtInPrefixedName.equalsIgnoreCase(SQWRLNames.NotLeast) || builtInPrefixedName
-        .equalsIgnoreCase(SQWRLNames.NotFirst)) {
+      .equalsIgnoreCase(SQWRLNames.NotFirst)) {
       if (!builtInAtom.getArguments().isEmpty())
         throw new SQWRLException("not first or least do not accept arguments");
       this.sqwrlResult.setNotFirst();
     } else if (builtInPrefixedName.equalsIgnoreCase(SQWRLNames.Greatest) || builtInPrefixedName
-        .equalsIgnoreCase(SQWRLNames.Last)) {
+      .equalsIgnoreCase(SQWRLNames.Last)) {
       if (!builtInAtom.getArguments().isEmpty())
         throw new SQWRLException("greatest or last do not accept arguments");
       this.sqwrlResult.setLast();
     } else if (builtInPrefixedName.equalsIgnoreCase(SQWRLNames.NotGreatest) || builtInPrefixedName
-        .equalsIgnoreCase(SQWRLNames.NotLast)) {
+      .equalsIgnoreCase(SQWRLNames.NotLast)) {
       if (!builtInAtom.getArguments().isEmpty())
         throw new SQWRLException("not greatest or last do not accept arguments");
       this.sqwrlResult.setNotLast();
@@ -261,7 +261,7 @@ class DefaultSQWRLQuery implements SQWRLQuery
           sliceN = literal.getInt();
           if (sliceN < 1)
             throw new SQWRLException(
-                "nth argument for slicing operator " + builtInPrefixedName + " must be a positive xsd:int");
+              "nth argument for slicing operator " + builtInPrefixedName + " must be a positive xsd:int");
         } else
           throw new SQWRLException("expecting integer for slicing operator " + builtInPrefixedName);
       } else
@@ -277,7 +277,7 @@ class DefaultSQWRLQuery implements SQWRLQuery
   }
 
   private void processHeadSliceOperationWithSliceSize(@NonNull SWRLAPIBuiltInAtom builtInAtom,
-      @NonNull String builtInName, int sliceN) throws SQWRLException
+    @NonNull String builtInName, int sliceN) throws SQWRLException
   {
     SWRLBuiltInArgument sliceSizeArgument = builtInAtom.getBuiltInArguments().get(1);
     int sliceSize;
@@ -289,7 +289,7 @@ class DefaultSQWRLQuery implements SQWRLQuery
         sliceSize = literal.getInt();
         if (sliceSize < 1)
           throw new SQWRLException(
-              "slice size argument to slicing operator " + builtInName + " must be a positive xsd:int");
+            "slice size argument to slicing operator " + builtInName + " must be a positive xsd:int");
       } else
         throw new SQWRLException("expecting integer to slicing operator " + builtInName);
     } else
@@ -300,10 +300,10 @@ class DefaultSQWRLQuery implements SQWRLQuery
     else if (builtInName.equalsIgnoreCase(SQWRLNames.NotNthSlice))
       this.sqwrlResult.setNotNthSlice(sliceN, sliceSize);
     else if (builtInName.equalsIgnoreCase(SQWRLNames.NthLastSlice) || builtInName
-        .equalsIgnoreCase(SQWRLNames.NthGreatestSlice))
+      .equalsIgnoreCase(SQWRLNames.NthGreatestSlice))
       this.sqwrlResult.setNthLastSlice(sliceN, sliceSize);
     else if (builtInName.equalsIgnoreCase(SQWRLNames.NotNthLastSlice) || builtInName
-        .equalsIgnoreCase(SQWRLNames.NotNthGreatestSlice))
+      .equalsIgnoreCase(SQWRLNames.NotNthGreatestSlice))
       this.sqwrlResult.setNotNthLastSlice(sliceN, sliceSize);
     else
       throw new SQWRLException("unknown slicing operator " + builtInName);
@@ -330,8 +330,7 @@ class DefaultSQWRLQuery implements SQWRLQuery
   }
 
   private void processBuiltInArguments(@NonNull SWRLAPIBuiltInAtom builtInAtom,
-      @NonNull Map<@NonNull String, @NonNull List<@NonNull Integer>> selectedVariable2ColumnIndices)
-      throws SQWRLException
+    @NonNull Map<@NonNull String, @NonNull List<@NonNull Integer>> selectedVariable2ColumnIndices) throws SQWRLException
   {
     String builtInName = builtInAtom.getBuiltInPrefixedName();
 
@@ -339,14 +338,14 @@ class DefaultSQWRLQuery implements SQWRLQuery
     for (SWRLBuiltInArgument argument : builtInAtom.getBuiltInArguments()) {
 
       if (SQWRLNames.isSQWRLHeadSelectionBuiltIn(builtInName) || SQWRLNames
-          .isSQWRLHeadAggregationBuiltIn(builtInName)) {
+        .isSQWRLHeadAggregationBuiltIn(builtInName)) {
         if (argument.isVariable()) {
-          String variablePrefixedName = argument.asVariable().getVariablePrefixedName();
-          if (selectedVariable2ColumnIndices.containsKey(variablePrefixedName))
-            selectedVariable2ColumnIndices.get(variablePrefixedName).add(columnIndex);
+          String variableName = argument.asVariable().getVariableName();
+          if (selectedVariable2ColumnIndices.containsKey(variableName))
+            selectedVariable2ColumnIndices.get(variableName).add(columnIndex);
           else {
-            selectedVariable2ColumnIndices.put(variablePrefixedName, new ArrayList<>());
-            selectedVariable2ColumnIndices.get(variablePrefixedName).add(columnIndex);
+            selectedVariable2ColumnIndices.put(variableName, new ArrayList<>());
+            selectedVariable2ColumnIndices.get(variableName).add(columnIndex);
           }
         }
         if (builtInName.equalsIgnoreCase(SQWRLNames.Select)) {
@@ -370,13 +369,13 @@ class DefaultSQWRLQuery implements SQWRLQuery
         } else if (builtInName.equalsIgnoreCase(SQWRLNames.OrderBy)) {
           if (!argument.isVariable())
             throw new SQWRLException(
-                "only variables allowed for ordered columns - found " + argument.getClass().getName());
+              "only variables allowed for ordered columns - found " + argument.getClass().getName());
 
           processOrderByArgument(selectedVariable2ColumnIndices, argument.asVariable());
         } else if (builtInName.equalsIgnoreCase(SQWRLNames.OrderByDescending)) {
           if (!argument.isVariable())
             throw new SQWRLException(
-                "only variables allowed for ordered columns - found " + argument.getClass().getName());
+              "only variables allowed for ordered columns - found " + argument.getClass().getName());
 
           processOrderByDescendingArgument(selectedVariable2ColumnIndices, argument.asVariable());
         } else if (builtInName.equalsIgnoreCase(SQWRLNames.ColumnNames)) {
@@ -482,28 +481,26 @@ class DefaultSQWRLQuery implements SQWRLQuery
   }
 
   private void processOrderByArgument(
-      @NonNull Map<@NonNull String, @NonNull List<@NonNull Integer>> selectedVariable2ColumnIndices,
-      @NonNull SWRLVariableBuiltInArgument argument) throws SQWRLException
+    @NonNull Map<@NonNull String, @NonNull List<@NonNull Integer>> selectedVariable2ColumnIndices,
+    @NonNull SWRLVariableBuiltInArgument argument) throws SQWRLException
   {
-    String variablePrefixedName = argument.getVariablePrefixedName();
     String variableName = argument.getVariableName();
 
-    if (selectedVariable2ColumnIndices.containsKey(variablePrefixedName)) {
-      for (int selectedColumnIndex : selectedVariable2ColumnIndices.get(variablePrefixedName))
+    if (selectedVariable2ColumnIndices.containsKey(variableName)) {
+      for (int selectedColumnIndex : selectedVariable2ColumnIndices.get(variableName))
         this.sqwrlResult.setOrderByColumn(selectedColumnIndex, true);
     } else
       throw new SQWRLException("variable ?" + variableName + " must be selected before it can be ordered");
   }
 
   private void processOrderByDescendingArgument(
-      @NonNull Map<@NonNull String, @NonNull List<@NonNull Integer>> selectedVariable2ColumnIndices,
-      @NonNull SWRLVariableBuiltInArgument argument) throws SQWRLException
+    @NonNull Map<@NonNull String, @NonNull List<@NonNull Integer>> selectedVariable2ColumnIndices,
+    @NonNull SWRLVariableBuiltInArgument argument) throws SQWRLException
   {
-    String variablePrefixedName = argument.getVariablePrefixedName();
     String variableName = argument.getVariableName();
 
-    if (selectedVariable2ColumnIndices.containsKey(variablePrefixedName)) {
-      for (int selectedColumnIndex : selectedVariable2ColumnIndices.get(variablePrefixedName))
+    if (selectedVariable2ColumnIndices.containsKey(variableName)) {
+      for (int selectedColumnIndex : selectedVariable2ColumnIndices.get(variableName))
         this.sqwrlResult.setOrderByColumn(selectedColumnIndex, false);
     } else
       throw new SQWRLException("variable ?" + variableName + " must be selected before it can be ordered");
@@ -526,7 +523,7 @@ class DefaultSQWRLQuery implements SQWRLQuery
   private void processSQWRLCollectionMakeBuiltIns(@NonNull Set<@NonNull String> collectionNames)
   {
     for (SWRLAPIBuiltInAtom builtInAtom : getBuiltInAtomsFromBody(SQWRLNames.getCollectionMakeBuiltInNames())) {
-      String collectionName = builtInAtom.getArgumentVariablePrefixedName(0); // First argument is the collection name
+      String collectionName = builtInAtom.getArgumentVariableName(0); // First argument is the collection name
 
       if (!collectionNames.contains(collectionName))
         collectionNames.add(collectionName);
@@ -537,10 +534,10 @@ class DefaultSQWRLQuery implements SQWRLQuery
   // appended to the collection
   // operation built-ins.
   private void processSQWRLCollectionGroupByBuiltIns(@NonNull Set<@NonNull String> collectionNames)
-      throws SQWRLException
+    throws SQWRLException
   {
     for (SWRLAPIBuiltInAtom builtInAtom : getBuiltInAtomsFromBody(SQWRLNames.getCollectionGroupByBuiltInNames())) {
-      String collectionName = builtInAtom.getArgumentVariablePrefixedName(0); // The first argument is the collection
+      String collectionName = builtInAtom.getArgumentVariableName(0); // The first argument is the collection
       // name.
       List<@NonNull SWRLBuiltInArgument> builtInArguments = builtInAtom.getBuiltInArguments();
       List<@NonNull SWRLBuiltInArgument> groupArguments = builtInArguments.subList(1, builtInArguments.size());
@@ -559,10 +556,10 @@ class DefaultSQWRLQuery implements SQWRLQuery
   }
 
   private void processSQWRLCollectionMakeGroupArguments(@NonNull Set<@NonNull String> collectionNames)
-      throws SQWRLException
+    throws SQWRLException
   {
     for (SWRLAPIBuiltInAtom builtInAtom : getBuiltInAtomsFromBody(SQWRLNames.getCollectionMakeBuiltInNames())) {
-      String collectionName = builtInAtom.getArgumentVariablePrefixedName(0); // First argument is the collection name
+      String collectionName = builtInAtom.getArgumentVariableName(0); // First argument is the collection name
 
       if (!collectionNames.contains(collectionName))
         throw new SQWRLException("groupBy applied to undefined collection " + collectionName);
@@ -574,42 +571,42 @@ class DefaultSQWRLQuery implements SQWRLQuery
   }
 
   private void processSQWRLCollectionOperationBuiltIns(@NonNull Set<@NonNull String> collectionNames,
-      @NonNull Set<@NonNull String> cascadedUnboundVariablePrefixedNames)
+    @NonNull Set<@NonNull String> cascadedUnboundVariableNames)
   {
     for (SWRLAPIBuiltInAtom builtInAtom : getBuiltInAtomsFromBody(SQWRLNames.getCollectionOperationBuiltInNames())) {
       List<@NonNull SWRLBuiltInArgument> allOperandCollectionGroupArguments = new ArrayList<>();
       // The group arguments form the operand collections
-      List<@NonNull String> variablePrefixedNames;
+      List<@NonNull String> variableNames;
 
       builtInAtom.setUsesSQWRLCollectionResults();
 
       if (builtInAtom.hasUnboundArguments()) {
         // Keep track of built-in's unbound arguments so that we can mark dependent built-ins.
-        Set<@NonNull String> unboundVariableNames = builtInAtom.getUnboundArgumentVariablePrefixedNames();
-        cascadedUnboundVariablePrefixedNames.addAll(unboundVariableNames);
+        Set<@NonNull String> unboundVariableNames = builtInAtom.getUnboundArgumentVariableNames();
+        cascadedUnboundVariableNames.addAll(unboundVariableNames);
       }
 
       // Append the group arguments to built-ins for each of its collection arguments; also append group arguments
       // to collections created by operation built-ins.
       if (isSQWRLCollectionCreateOperation(builtInAtom))
-        variablePrefixedNames = builtInAtom.getArgumentsVariableNamesExceptFirst();
+        variableNames = builtInAtom.getArgumentsVariableNamesExceptFirst();
       else
-        variablePrefixedNames = builtInAtom.getArgumentsVariablePrefixedNames();
+        variableNames = builtInAtom.getArgumentsVariableNames();
 
       // The variable refers to a grouped collection.
       // Append each collections's group arguments to built-in.
-      variablePrefixedNames.stream().filter(
-          variablePrefixedName -> collectionNames.contains(variablePrefixedName) && this.collectionGroupArgumentsMap
-              .containsKey(variablePrefixedName)).forEach(variablePrefixedName -> {
+      variableNames.stream().filter(
+        variableName -> collectionNames.contains(variableName) && this.collectionGroupArgumentsMap
+          .containsKey(variableName)).forEach(variableName -> {
         // The variable refers to a grouped collection.
-        builtInAtom.addArguments(this.collectionGroupArgumentsMap.get(variablePrefixedName));
+        builtInAtom.addArguments(this.collectionGroupArgumentsMap.get(variableName));
         // Append each collections's group arguments to built-in.
-        allOperandCollectionGroupArguments.addAll(this.collectionGroupArgumentsMap.get(variablePrefixedName));
+        allOperandCollectionGroupArguments.addAll(this.collectionGroupArgumentsMap.get(variableName));
       });
 
       if (isSQWRLCollectionCreateOperation(builtInAtom)) {
         // If a collection is created we need to recordOWLClassExpression it and store necessary group arguments.
-        String createdCollectionName = builtInAtom.getArgumentVariablePrefixedName(0); // The first argument is the
+        String createdCollectionName = builtInAtom.getArgumentVariableName(0); // The first argument is the
         // collection
         // name.
 
@@ -623,7 +620,7 @@ class DefaultSQWRLQuery implements SQWRLQuery
   }
 
   private void processBuiltInsThatUseSQWRLCollectionOperationResults(
-      @NonNull Set<@NonNull String> cascadedUnboundVariablePrefixedNames)
+    @NonNull Set<@NonNull String> cascadedUnboundVariableNames)
   {
     // Mark later non SQWRL built-ins that (directly or indirectly) use variables bound by collection operation
     // built-ins.
@@ -631,15 +628,15 @@ class DefaultSQWRLQuery implements SQWRLQuery
     // Cascade the dependency from this built-in to others using its arguments.
     // Record its unbound variables too.
     getBuiltInAtomsFromBody().stream().filter(builtInAtom -> !isSQWRLBuiltIn(builtInAtom))
-        .filter(builtInAtom -> builtInAtom.usesAtLeastOneVariableOf(cascadedUnboundVariablePrefixedNames))
-        .forEach(builtInAtom -> {
-          builtInAtom.setUsesSQWRLCollectionResults();
-          // Mark this built-in as dependent on collection built-in bindings.
-          if (builtInAtom.hasUnboundArguments())
-            // Cascade the dependency from this built-in to others using its arguments.
-            // Record its unbound variables too.
-            cascadedUnboundVariablePrefixedNames.addAll(builtInAtom.getUnboundArgumentVariablePrefixedNames());
-        });
+      .filter(builtInAtom -> builtInAtom.usesAtLeastOneVariableOf(cascadedUnboundVariableNames))
+      .forEach(builtInAtom -> {
+        builtInAtom.setUsesSQWRLCollectionResults();
+        // Mark this built-in as dependent on collection built-in bindings.
+        if (builtInAtom.hasUnboundArguments())
+          // Cascade the dependency from this built-in to others using its arguments.
+          // Record its unbound variables too.
+          cascadedUnboundVariableNames.addAll(builtInAtom.getUnboundArgumentVariableNames());
+      });
   }
 
   /**
@@ -684,12 +681,12 @@ class DefaultSQWRLQuery implements SQWRLQuery
   private void generateBuiltInAtomVariableDependencies()
   {
     Map<@NonNull String, @NonNull Set<@NonNull Set<@NonNull String>>> pathMap = new HashMap<>();
-    Set<@NonNull String> rootVariablePrefixedNames = new HashSet<>();
+    Set<@NonNull String> rootVariableNames = new HashSet<>();
 
     for (SWRLAtom atom : getBodyAtoms()) {
-      Set<@NonNull String> thisAtomReferencedVariablePrefixedNames = getReferencedVariablePrefixedNames(atom);
+      Set<@NonNull String> thisAtomReferencedVariableNames = getReferencedVariableNames(atom);
 
-      buildPaths(atom, rootVariablePrefixedNames, pathMap);
+      buildPaths(atom, rootVariableNames, pathMap);
 
       if (atom instanceof SWRLAPIBuiltInAtom) {
         SWRLAPIBuiltInAtom builtInAtom = (SWRLAPIBuiltInAtom)atom;
@@ -704,14 +701,14 @@ class DefaultSQWRLQuery implements SQWRLQuery
 
           for (String rootVariableName : pathMap.keySet()) {
             pathMap.get(rootVariableName).stream()
-                .filter(path -> !Collections.disjoint(path, thisAtomReferencedVariablePrefixedNames)).forEach(path -> {
+              .filter(path -> !Collections.disjoint(path, thisAtomReferencedVariableNames)).forEach(path -> {
               pathVariableNames.addAll(path);
               pathVariableNames.add(rootVariableName);
             });
           }
 
           if (!pathVariableNames.isEmpty()) {
-            pathVariableNames.removeAll(thisAtomReferencedVariablePrefixedNames); // Remove our own variables
+            pathVariableNames.removeAll(thisAtomReferencedVariableNames); // Remove our own variables
             /*
              * TODO: Need to think about correct operation of this if (builtInAtom.isSQWRLMakeCollection()) { String
              * collectionName = builtInAtom.getArgumentVariableName(0); // First argument is the collection name if
@@ -721,7 +718,7 @@ class DefaultSQWRLQuery implements SQWRLQuery
              * !pathVariableNames.containsAll(groupVariableNames)) throw new
              * BuiltInException("all group arguments must be on path for corresponding collection make"); } // if }
              */
-            builtInAtom.setPathVariablePrefixedNames(pathVariableNames);
+            builtInAtom.setPathVariableNames(pathVariableNames);
           }
         }
       }
@@ -730,32 +727,30 @@ class DefaultSQWRLQuery implements SQWRLQuery
 
   /**
    * Incrementally build variable dependency paths up to and including the current atom.
-   * <p>
+   * <p/>
    * Note: Sets of sets in Java require care because of hash code issues. The enclosed set should not be modified or the
    * outer set may return inconsistent results.
    */
   private void buildPaths(@NonNull SWRLAtom atom, @NonNull Set<@NonNull String> rootVariableNames,
-      @NonNull Map<@NonNull String, @NonNull Set<@NonNull Set<@NonNull String>>> pathMap)
+    @NonNull Map<@NonNull String, @NonNull Set<@NonNull Set<@NonNull String>>> pathMap)
   {
-    Set<@NonNull String> currentAtomReferencedVariablePrefixedNames = getReferencedVariablePrefixedNames(atom);
+    Set<@NonNull String> currentAtomReferencedVariableNames = getReferencedVariableNames(atom);
     Set<@NonNull String> matchingRootVariableNames;
 
-    if (currentAtomReferencedVariablePrefixedNames.size() == 1) { // Make root if we have not yet encountered it
-      String variablePrefixedName = currentAtomReferencedVariablePrefixedNames.iterator().next();
-      if (getMatchingPaths(pathMap, variablePrefixedName).isEmpty() && !rootVariableNames
-          .contains(variablePrefixedName)) {
-        pathMap.put(variablePrefixedName, new HashSet<>());
-        rootVariableNames.add(variablePrefixedName);
+    if (currentAtomReferencedVariableNames.size() == 1) { // Make root if we have not yet encountered it
+      String variableName = currentAtomReferencedVariableNames.iterator().next();
+      if (getMatchingPaths(pathMap, variableName).isEmpty() && !rootVariableNames.contains(variableName)) {
+        pathMap.put(variableName, new HashSet<>());
+        rootVariableNames.add(variableName);
       }
-    } else if (currentAtomReferencedVariablePrefixedNames.size() > 1) {
-      Set<@NonNull String> currentKnownAtomRootVariablePrefixedNames = new HashSet<>(
-          currentAtomReferencedVariablePrefixedNames);
-      currentKnownAtomRootVariablePrefixedNames.retainAll(rootVariableNames);
+    } else if (currentAtomReferencedVariableNames.size() > 1) {
+      Set<@NonNull String> currentKnownAtomRootVariableNames = new HashSet<>(currentAtomReferencedVariableNames);
+      currentKnownAtomRootVariableNames.retainAll(rootVariableNames);
 
-      if (!currentKnownAtomRootVariablePrefixedNames.isEmpty()) {
+      if (!currentKnownAtomRootVariableNames.isEmpty()) {
         // At least one of atom's variables reference already known root(s).
-        for (String rootVariableName : currentKnownAtomRootVariablePrefixedNames) {
-          Set<@NonNull String> dependentVariables = new HashSet<>(currentAtomReferencedVariablePrefixedNames);
+        for (String rootVariableName : currentKnownAtomRootVariableNames) {
+          Set<@NonNull String> dependentVariables = new HashSet<>(currentAtomReferencedVariableNames);
           dependentVariables.remove(rootVariableName);
 
           matchingRootVariableNames = getMatchingRootVariableNames(pathMap, dependentVariables);
@@ -764,7 +759,7 @@ class DefaultSQWRLQuery implements SQWRLQuery
             for (String matchingRootVariableName : matchingRootVariableNames) {
               Set<@NonNull Set<@NonNull String>> paths = pathMap.get(matchingRootVariableName);
               Set<@NonNull Set<@NonNull String>> matchedPaths = paths.stream()
-                  .filter(path -> !Collections.disjoint(path, dependentVariables)).collect(Collectors.toSet());
+                .filter(path -> !Collections.disjoint(path, dependentVariables)).collect(Collectors.toSet());
               for (Set<@NonNull String> matchedPath : matchedPaths) {
                 Set<@NonNull String> newPath = new HashSet<>(matchedPath);
                 newPath.addAll(dependentVariables);
@@ -779,20 +774,20 @@ class DefaultSQWRLQuery implements SQWRLQuery
           }
         }
       } else { // No known roots referenced by any of the atom's variables
-        matchingRootVariableNames = getMatchingRootVariableNames(pathMap, currentAtomReferencedVariablePrefixedNames);
+        matchingRootVariableNames = getMatchingRootVariableNames(pathMap, currentAtomReferencedVariableNames);
         if (!matchingRootVariableNames.isEmpty()) {
           // Found existing paths that use the atom's variables - add all the variables (none of which is a root) to
           // each path
           for (String matchingRootVariableName : matchingRootVariableNames) {
             Set<@NonNull Set<@NonNull String>> paths = pathMap.get(matchingRootVariableName);
             Set<@NonNull Set<@NonNull String>> matchedPaths = paths.stream()
-                .filter(path -> !Collections.disjoint(path, currentAtomReferencedVariablePrefixedNames))
-                .collect(Collectors.toSet());
+              .filter(path -> !Collections.disjoint(path, currentAtomReferencedVariableNames))
+              .collect(Collectors.toSet());
 
             for (Set<@NonNull String> matchedPath : matchedPaths) {
               // Add the new variables to the matched path and add it to this root's path
               Set<@NonNull String> newPath = new HashSet<>(matchedPath);
-              newPath.addAll(currentAtomReferencedVariablePrefixedNames);
+              newPath.addAll(currentAtomReferencedVariableNames);
               // Add all the non-root variable names to this path.
               paths.remove(matchedPath); // Remove the original matched path
               paths.add(Collections.unmodifiableSet(newPath)); // Add the updated path
@@ -800,9 +795,9 @@ class DefaultSQWRLQuery implements SQWRLQuery
           }
         } else { // No existing paths have variables from this atom - every variable becomes a root and depends on every
           // other root variable
-          for (String rootVariableName : currentAtomReferencedVariablePrefixedNames) {
+          for (String rootVariableName : currentAtomReferencedVariableNames) {
             Set<@NonNull Set<@NonNull String>> paths = new HashSet<>();
-            Set<@NonNull String> dependentVariables = new HashSet<>(currentAtomReferencedVariablePrefixedNames);
+            Set<@NonNull String> dependentVariables = new HashSet<>(currentAtomReferencedVariableNames);
             dependentVariables.remove(rootVariableName); // Remove the root from its own dependent variables
             paths.add(Collections.unmodifiableSet(dependentVariables));
             pathMap.put(rootVariableName, paths);
@@ -814,51 +809,50 @@ class DefaultSQWRLQuery implements SQWRLQuery
   }
 
   @NonNull private Set<@NonNull String> getMatchingPaths(
-      @NonNull Map<@NonNull String, @NonNull Set<@NonNull Set<@NonNull String>>> pathMap,
-      @NonNull String variablePrefixedName)
+    @NonNull Map<@NonNull String, @NonNull Set<@NonNull Set<@NonNull String>>> pathMap, @NonNull String variableName)
   {
-    return getMatchingRootVariableNames(pathMap, Collections.singleton(variablePrefixedName));
+    return getMatchingRootVariableNames(pathMap, Collections.singleton(variableName));
   }
 
   @NonNull private Set<@NonNull String> getMatchingRootVariableNames(
-      @NonNull Map<@NonNull String, @NonNull Set<@NonNull Set<@NonNull String>>> pathMap,
-      @NonNull Set<@NonNull String> variablePrefixedNames)
+    @NonNull Map<@NonNull String, @NonNull Set<@NonNull Set<@NonNull String>>> pathMap,
+    @NonNull Set<@NonNull String> variableNames)
   {
     Set<@NonNull String> matchingRootVariableNames = new HashSet<>();
 
     for (String rootVariableName : pathMap.keySet()) {
       Set<@NonNull Set<@NonNull String>> pathsWithSameRoot = pathMap.get(rootVariableName);
       matchingRootVariableNames.addAll(
-          pathsWithSameRoot.stream().filter(path -> !Collections.disjoint(path, variablePrefixedNames))
-              .map(path -> rootVariableName).collect(Collectors.toList()));
+        pathsWithSameRoot.stream().filter(path -> !Collections.disjoint(path, variableNames))
+          .map(path -> rootVariableName).collect(Collectors.toList()));
     }
     return matchingRootVariableNames;
   }
 
-  @NonNull private Set<@NonNull String> getReferencedVariablePrefixedNames(@NonNull SWRLAtom atom)
+  @NonNull private Set<@NonNull String> getReferencedVariableNames(@NonNull SWRLAtom atom)
   {
-    Set<@NonNull String> referencedVariablePrefixedNames = new HashSet<>();
+    Set<@NonNull String> referencedVariableNames = new HashSet<>();
 
     atom.getAllArguments().stream().filter(argument -> argument instanceof SWRLVariableBuiltInArgument)
-        .forEach(argument -> {
-          SWRLVariableBuiltInArgument variableBuiltInArgument = (SWRLVariableBuiltInArgument)argument;
-          referencedVariablePrefixedNames.add(variableBuiltInArgument.getVariablePrefixedName());
-        });
+      .forEach(argument -> {
+        SWRLVariableBuiltInArgument variableBuiltInArgument = (SWRLVariableBuiltInArgument)argument;
+        referencedVariableNames.add(variableBuiltInArgument.getVariableName());
+      });
 
-    return referencedVariablePrefixedNames;
+    return referencedVariableNames;
   }
 
   private boolean hasReferencedVariables(@NonNull SWRLAtom atom)
   {
-    return !getReferencedVariablePrefixedNames(atom).isEmpty();
+    return !getReferencedVariableNames(atom).isEmpty();
   }
 
   @SuppressWarnings("unused")
   // Used by commented-out group argument checking in processBuiltInArgumentDependencies
   private Set<@NonNull String> getVariableNames(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
-      throws SWRLBuiltInException
+    throws SWRLBuiltInException
   {
     return arguments.stream().filter(SWRLBuiltInArgument::isVariable)
-        .map(argument -> argument.asVariable().getVariableName()).collect(Collectors.toSet());
+      .map(argument -> argument.asVariable().getVariableName()).collect(Collectors.toSet());
   }
 }

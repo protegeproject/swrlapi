@@ -42,42 +42,42 @@ public interface TargetRuleEngineSWRLBodyAtomArgumentWithVariableNamesConverter<
   @NonNull T convert(@NonNull SWRLLiteralBuiltInArgument argument);
 
   @NonNull T convert(@NonNull SWRLVariableBuiltInArgument argument, @NonNull String fieldName,
-    @NonNull Set<@NonNull String> previouslyEncounteredVariablePrefixedNames);
+    @NonNull Set<@NonNull String> previouslyEncounteredVariableNames);
 
   @NonNull T convert(@NonNull SWRLVariable argument, @NonNull String fieldName,
-    @NonNull Set<@NonNull String> previouslyEncounteredVariablePrefixedNames);
+    @NonNull Set<@NonNull String> previouslyEncounteredVariableNames);
 
   @NonNull T convert(@NonNull SWRLIndividualArgument argument, @NonNull String fieldName,
-    @NonNull Set<@NonNull String> previouslyEncounteredVariablePrefixedNames);
+    @NonNull Set<@NonNull String> previouslyEncounteredVariableNames);
 
   @NonNull T convert(@NonNull SWRLLiteralArgument argument, @NonNull String fieldName,
-    @NonNull Set<@NonNull String> previouslyEncounteredVariablePrefixedNames);
+    @NonNull Set<@NonNull String> previouslyEncounteredVariableNames);
 
   @NonNull T convert(@NonNull SWRLClassBuiltInArgument argument, @NonNull String fieldName,
-    @NonNull Set<@NonNull String> previouslyEncounteredVariablePrefixedNames);
+    @NonNull Set<@NonNull String> previouslyEncounteredVariableNames);
 
   @NonNull T convert(@NonNull SWRLNamedIndividualBuiltInArgument argument, @NonNull String fieldName,
-    @NonNull Set<@NonNull String> previouslyEncounteredVariablePrefixedNames);
+    @NonNull Set<@NonNull String> previouslyEncounteredVariableNames);
 
   @NonNull T convert(@NonNull SWRLObjectPropertyBuiltInArgument argument, @NonNull String fieldName,
-    @NonNull Set<@NonNull String> previouslyEncounteredVariablePrefixedNames);
+    @NonNull Set<@NonNull String> previouslyEncounteredVariableNames);
 
   @NonNull T convert(@NonNull SWRLDataPropertyBuiltInArgument argument, @NonNull String fieldName,
-    @NonNull Set<@NonNull String> previouslyEncounteredVariablePrefixedNames);
+    @NonNull Set<@NonNull String> previouslyEncounteredVariableNames);
 
   @NonNull T convert(@NonNull SWRLAnnotationPropertyBuiltInArgument argument, @NonNull String fieldName,
-    @NonNull Set<@NonNull String> previouslyEncounteredVariablePrefixedNames);
+    @NonNull Set<@NonNull String> previouslyEncounteredVariableNames);
 
   @NonNull T convert(@NonNull SWRLLiteralBuiltInArgument argument, @NonNull String fieldName,
-    @NonNull Set<@NonNull String> previouslyEncounteredVariablePrefixedNames);
+    @NonNull Set<@NonNull String> previouslyEncounteredVariableNames);
 
   @NonNull T convert(@NonNull SWRLDatatypeBuiltInArgument datatypeArgument);
 
   @NonNull T convert(@NonNull SWRLDatatypeBuiltInArgument datatypeArgument, @NonNull String fieldName,
-    Set<@NonNull String> previouslyEncounteredVariablePrefixedNames);
+    Set<@NonNull String> previouslyEncounteredVariableNames);
 
   @NonNull T convert(@NonNull SQWRLCollectionVariableBuiltInArgument argument);
 
   @NonNull T convert(@NonNull SQWRLCollectionVariableBuiltInArgument argument, @NonNull String fieldName,
-    @NonNull Set<@NonNull String> previouslyEncounteredVariablePrefixedNames);
+    @NonNull Set<@NonNull String> previouslyEncounteredVariableNames);
 }

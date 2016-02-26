@@ -162,7 +162,7 @@ public interface SWRLBuiltInArgumentCreator
   @NonNull SWRLMultiValueVariableBuiltInArgument createSWRLMultiValueVariableBuiltInArgument(@NonNull IRI variableIRI);
 
   /**
-   * @param variableIRI The IRI of a variable
+   * @param variableIRI The IRI of a SWRL variable
    * @param arguments   A list of built-in arguments
    * @return A multi-variable built-in argument
    */
@@ -170,7 +170,7 @@ public interface SWRLBuiltInArgumentCreator
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments);
 
   /**
-   * @param variableIRI       The IRI of a variable
+   * @param variableIRI       The IRI of a SWRL variable
    * @param queryName         A SQWRL query name
    * @param collectionName    The name of a collection
    * @param collectionGroupID The group ID of the collection

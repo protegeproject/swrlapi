@@ -29,7 +29,6 @@ import org.semanticweb.owlapi.model.SWRLObjectPropertyAtom;
 import org.semanticweb.owlapi.model.SWRLRule;
 import org.semanticweb.owlapi.model.SWRLSameIndividualAtom;
 import org.semanticweb.owlapi.model.SWRLVariable;
-import org.semanticweb.owlapi.model.parameters.Imports;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
 import org.swrlapi.builtins.arguments.SQWRLCollectionVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument;
@@ -248,13 +247,12 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
   {
     IRI variableIRI = variable.getIRI();
 
-    if (this.ontology.containsEntityInSignature(variableIRI, Imports.INCLUDED)) {
-      String shortForm = getShortForm(variableIRI);
-      return shortForm.startsWith(":") ? shortForm.substring(1) : shortForm;
-    } else {
-      String variablePrefixedName = getPrefixedName(variableIRI);
-      return variablePrefixedName2VariableName(variablePrefixedName);
-    }
+    com.google.common.base.Optional<String> remainder = variableIRI.getRemainder();
+
+    if (remainder.isPresent())
+      return "?" + remainder.get();
+    else
+      throw new IllegalArgumentException("SWRL variable with IRI " + variableIRI + " has no remainder");
   }
 
   @NonNull @Override public String visit(@NonNull SWRLIndividualArgument individualArgument)
@@ -464,27 +462,22 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
   {
     IRI variableIRI = argument.getIRI();
 
-    if (this.ontology.containsEntityInSignature(variableIRI, Imports.INCLUDED)) {
-      String shortForm = getShortForm(variableIRI);
-      return shortForm.startsWith(":") ? shortForm.substring(1) : shortForm;
-    } else {
-      String variablePrefixedName = getPrefixedName(variableIRI);
-      return variablePrefixedName2VariableName(variablePrefixedName);
-    }
+    com.google.common.base.Optional<String> remainder = variableIRI.getRemainder();
+
+    if (remainder.isPresent())
+      return "?" + remainder.get();
+    else
+      throw new IllegalArgumentException("SWRL variable with IRI " + variableIRI + " has no remainder");
   }
 
   @NonNull @Override public String visit(@NonNull SWRLMultiValueVariableBuiltInArgument argument)
   {
-    String variablePrefixedName = argument.getVariablePrefixedName();
-
-    return variablePrefixedName2VariableName(variablePrefixedName);
+    return argument.getVariableName();
   }
 
   @NonNull @Override public String visit(@NonNull SQWRLCollectionVariableBuiltInArgument argument)
   {
-    String variablePrefixedName = argument.getVariablePrefixedName();
-
-    return variablePrefixedName2VariableName(variablePrefixedName);
+    return argument.getVariableName();
   }
 
   @NonNull private String visit(@NonNull OWLLiteral literal)
@@ -502,14 +495,6 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
       return value;
     else
       return "\"" + value + "\"^^" + visit(datatype);
-  }
-
-  @NonNull private String variablePrefixedName2VariableName(@NonNull String variablePrefixedName)
-  {
-    if (variablePrefixedName.startsWith(":"))
-      return "?" + variablePrefixedName.substring(1);
-    else
-      return "?" + variablePrefixedName;
   }
 
   @NonNull private String getShortForm(IRI iri)

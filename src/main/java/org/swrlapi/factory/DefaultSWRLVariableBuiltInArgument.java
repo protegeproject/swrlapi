@@ -30,23 +30,30 @@ class DefaultSWRLVariableBuiltInArgument extends DefaultSWRLBuiltInArgument impl
   // There is an equals methods defined for this class.
   private static final long serialVersionUID = 1L;
 
-  @NonNull private final IRI iri;
-  @NonNull private final String variablePrefixedName;
+  @NonNull private final IRI variableIRI;
+  @NonNull private final String variableName;
 
   @Nullable private SWRLBuiltInArgument builtInResult; // Used to store result of binding for unbound arguments
   private boolean isBound;
 
-  public DefaultSWRLVariableBuiltInArgument(@NonNull IRI iri, @NonNull String variablePrefixedName)
+  public DefaultSWRLVariableBuiltInArgument(@NonNull IRI variableIRI)
   {
-    this.iri = iri;
-    this.variablePrefixedName = variablePrefixedName;
+    this.variableIRI = variableIRI;
+
+    com.google.common.base.Optional<String> remainder = variableIRI.getRemainder();
+
+    if (remainder.isPresent())
+      variableName = remainder.get();
+    else
+      throw new IllegalArgumentException("SWRL variable with IRI " + variableIRI + " has no remainder");
+
     this.builtInResult = null;
     this.isBound = true;
   }
 
   @NonNull @Override public IRI getIRI()
   {
-    return this.iri;
+    return this.variableIRI;
   }
 
   @Override public boolean isVariable()
@@ -89,16 +96,9 @@ class DefaultSWRLVariableBuiltInArgument extends DefaultSWRLBuiltInArgument impl
     throw new SWRLAPIException("Not a SWRLNamedBuiltInArgument");
   }
 
-  @Override public String getVariablePrefixedName()
-  {
-    return this.variablePrefixedName;
-  }
-
   @NonNull @Override public String getVariableName()
   {
-    return this.variablePrefixedName.startsWith(":") ?
-      this.variablePrefixedName.substring(1) :
-      this.variablePrefixedName;
+    return this.variableName;
   }
 
   @Override public void setBuiltInResult(@NonNull SWRLBuiltInArgument builtInResult) throws SWRLBuiltInException
@@ -200,11 +200,9 @@ class DefaultSWRLVariableBuiltInArgument extends DefaultSWRLBuiltInArgument impl
 
     if (isBound != that.isBound)
       return false;
-    if (iri != null ? !iri.equals(that.iri) : that.iri != null)
+    if (variableIRI != null ? !variableIRI.equals(that.variableIRI) : that.variableIRI != null)
       return false;
-    if (variablePrefixedName != null ?
-      !variablePrefixedName.equals(that.variablePrefixedName) :
-      that.variablePrefixedName != null)
+    if (variableName != null ? !variableName.equals(that.variableName) : that.variableName != null)
       return false;
     return builtInResult != null ? builtInResult.equals(that.builtInResult) : that.builtInResult == null;
 
@@ -212,8 +210,8 @@ class DefaultSWRLVariableBuiltInArgument extends DefaultSWRLBuiltInArgument impl
 
   @SideEffectFree @Deterministic @Override public int hashCode()
   {
-    int result = iri != null ? iri.hashCode() : 0;
-    result = 31 * result + (variablePrefixedName != null ? variablePrefixedName.hashCode() : 0);
+    int result = variableIRI != null ? variableIRI.hashCode() : 0;
+    result = 31 * result + (variableName != null ? variableName.hashCode() : 0);
     result = 31 * result + (builtInResult != null ? builtInResult.hashCode() : 0);
     result = 31 * result + (isBound ? 1 : 0);
     return result;

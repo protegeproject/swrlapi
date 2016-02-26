@@ -20,16 +20,16 @@ class DefaultSWRLMultiValueVariableBuiltInArgument extends DefaultSWRLVariableBu
 
   @NonNull private List<@NonNull SWRLBuiltInArgument> arguments;
 
-  public DefaultSWRLMultiValueVariableBuiltInArgument(@NonNull IRI variableIRI, @NonNull String variablePrefixedName)
+  public DefaultSWRLMultiValueVariableBuiltInArgument(@NonNull IRI variableIRI)
   {
-    super(variableIRI, variablePrefixedName);
+    super(variableIRI);
     this.arguments = new ArrayList<>();
   }
 
-  public DefaultSWRLMultiValueVariableBuiltInArgument(@NonNull IRI variableIRI, @NonNull String variablePrefixedName,
+  public DefaultSWRLMultiValueVariableBuiltInArgument(@NonNull IRI variableIRI,
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
   {
-    super(variableIRI, variablePrefixedName);
+    super(variableIRI);
     this.arguments = arguments;
   }
 

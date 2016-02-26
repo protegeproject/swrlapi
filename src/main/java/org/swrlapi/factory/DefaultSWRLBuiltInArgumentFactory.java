@@ -43,16 +43,14 @@ class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFactory
 
   @NonNull @Override public SWRLVariableBuiltInArgument getUnboundVariableBuiltInArgument(@NonNull IRI variableIRI)
   {
-    String variablePrefixedName = iri2PrefixedName(variableIRI);
-    SWRLVariableBuiltInArgument argument = new DefaultSWRLVariableBuiltInArgument(variableIRI, variablePrefixedName);
+    SWRLVariableBuiltInArgument argument = new DefaultSWRLVariableBuiltInArgument(variableIRI);
     argument.setUnbound();
     return argument;
   }
 
   @NonNull @Override public SWRLVariableBuiltInArgument getVariableBuiltInArgument(@NonNull IRI variableIRI)
   {
-    String variablePrefixedName = iri2PrefixedName(variableIRI);
-    return new DefaultSWRLVariableBuiltInArgument(variableIRI, variablePrefixedName);
+    return new DefaultSWRLVariableBuiltInArgument(variableIRI);
   }
 
   @NonNull @Override public SWRLClassBuiltInArgument getClassBuiltInArgument(OWLClass cls)
@@ -162,27 +160,20 @@ class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFactory
   @NonNull @Override public SWRLMultiValueVariableBuiltInArgument getMultiValueVariableBuiltInArgument(
     @NonNull IRI variableIRI)
   {
-    String variablePrefixedName = iri2PrefixedName(variableIRI);
-
-    return new DefaultSWRLMultiValueVariableBuiltInArgument(variableIRI, variablePrefixedName);
+    return new DefaultSWRLMultiValueVariableBuiltInArgument(variableIRI);
   }
 
   @NonNull @Override public SWRLMultiValueVariableBuiltInArgument getMultiValueVariableBuiltInArgument(
     @NonNull IRI variableIRI, List<@NonNull SWRLBuiltInArgument> arguments)
   {
-    String variablePrefixedName = iri2PrefixedName(variableIRI);
-
-    return new DefaultSWRLMultiValueVariableBuiltInArgument(variableIRI, variablePrefixedName, arguments);
+    return new DefaultSWRLMultiValueVariableBuiltInArgument(variableIRI, arguments);
   }
 
   @NonNull @Override public SQWRLCollectionVariableBuiltInArgument getSQWRLCollectionVariableBuiltInArgument(
     @NonNull IRI variableIRI, @NonNull String queryName, @NonNull String collectionName,
     @NonNull String collectionGroupID)
   {
-    String variablePrefixedName = iri2PrefixedName(variableIRI);
-
-    return new DefaultSQWRLCollectionVariableBuiltInArgument(variableIRI, variablePrefixedName, queryName,
-      collectionName, collectionGroupID);
+    return new DefaultSQWRLCollectionVariableBuiltInArgument(variableIRI, queryName, collectionName, collectionGroupID);
   }
 
   @NonNull private OWLLiteralFactory getOWLLiteralFactory()

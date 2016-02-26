@@ -93,8 +93,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     if (arguments.size() > 2) {
       List<@NonNull SWRLBuiltInArgument> variableArguments = arguments.subList(2, arguments.size());
 
-      checkForUnboundArguments(variableArguments, "2nd and subequent arguments cannot be unbound");
-      checkThatArgumentsWereBoundVariables(variableArguments, "2nd and subequent arguments should be variables");
+      checkForUnboundArguments(variableArguments, "2nd and subsequent arguments cannot be unbound");
+      checkThatArgumentsWereBoundVariables(variableArguments, "2nd and subsequent arguments should be variables");
 
       for (SWRLBuiltInArgument argument : variableArguments) {
         Optional<String> variableName = argument.getBoundVariableName(); // We have checked that they are all variables
