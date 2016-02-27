@@ -15,9 +15,9 @@ A standalone [SWRLTab](https://github.com/protegeproject/swrltab) application an
 
 #### Getting Started
 
-The following examples can be used to quickly get started with the API.
+The following examples can be used to quickly get started with the API. A sample SWRLAPI-based project can also be found [here](https://github.com/protegeproject/swrlapi-example).
 
-First, either download the latest JAR from the [project's GitHub Release area](https://github.com/protegeproject/swrlapi/releases) or use your favourite dependency management tool to download it from Maven Central. Its dependency information can be found here:
+The library's dependency information can be found here:
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/edu.stanford.swrl/swrlapi/badge.svg)](https://maven-badges.herokuapp.com/maven-central/edu.stanford.swrl/swrlapi)
 
@@ -62,7 +62,7 @@ this engine, and then process the results.
 
 Extensive documentation on the SWRLAPI can be found on the [SWRLAPI Wiki](https://github.com/protegeproject/swrlapi/wiki).
 
-#### Building
+#### Building from Source
 
 To build this library you must have the following items installed:
 
