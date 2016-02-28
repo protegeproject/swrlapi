@@ -32,7 +32,7 @@
     <maven.compiler.plugin.version>3.5.1</maven.compiler.plugin.version>
     <maven.dependency.plugin.version>2.10</maven.dependency.plugin.version>
     <maven.bundle.plugin.version>3.0.1</maven.bundle.plugin.version>
-    <maven.source.plugin.version>2.4</maven.source.plugin.version>
+    <maven.source.plugin.version>3.0.0</maven.source.plugin.version>
     <maven.release.plugin.version>2.5.3</maven.release.plugin.version>
     <maven.nexus-staging.plugin.version>1.6.6</maven.nexus-staging.plugin.version>
     <maven.javadoc.plugin.version>2.10.3</maven.javadoc.plugin.version>
