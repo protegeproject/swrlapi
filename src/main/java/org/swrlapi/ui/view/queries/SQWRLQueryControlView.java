@@ -68,7 +68,7 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
     console.append("See the 'OWL 2 RL' subtab for more information on this reasoner.\n\n");
     console.append("Executing queries in this tab does not modify the ontology.\n\n");
     console.append(
-      "Using " + this.queryEngineModel.getSQWRLQueryEngine().getRuleEngineName() + ", " + this.queryEngineModel
+      "Using " + this.queryEngineModel.getSQWRLQueryEngine().getRuleEngineName() + ", version " + this.queryEngineModel
         .getSQWRLQueryEngine().getRuleEngineVersion() + " for query execution.\n\n");
   }
 
