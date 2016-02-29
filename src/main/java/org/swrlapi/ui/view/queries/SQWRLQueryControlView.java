@@ -67,9 +67,8 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
       "The SWRLAPI supports an OWL profile called OWL 2 RL and uses an OWL 2 RL-based reasoner to perform querying.\n");
     console.append("See the 'OWL 2 RL' subtab for more information on this reasoner.\n\n");
     console.append("Executing queries in this tab does not modify the ontology.\n\n");
-    console.append(
-      "Using " + this.queryEngineModel.getSQWRLQueryEngine().getRuleEngineName() + ", version " + this.queryEngineModel
-        .getSQWRLQueryEngine().getRuleEngineVersion() + " for query execution.\n\n");
+    console
+      .append("Using " + this.queryEngineModel.getSQWRLQueryEngine().getRuleEngineName() + " for query execution.\n\n");
   }
 
   @Override public void update()

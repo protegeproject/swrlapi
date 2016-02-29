@@ -21,7 +21,6 @@ import javax.swing.text.SimpleAttributeSet;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -65,8 +64,6 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
   private static final int BUTTON_PREFERRED_HEIGHT = 30;
   private static final int RULE_EDIT_AREA_COLUMNS = 20;
   private static final int RULE_EDIT_AREA_ROWS = 60;
-
-  private static final KeyStroke controlSpace = KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, InputEvent.CTRL_MASK);
 
   private static final Logger log = LoggerFactory.getLogger(SWRLRuleEditorDialog.class);
 
@@ -113,16 +110,6 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
     }); // Thwart user close
 
     this.ruleTextTextArea.addKeyListener(new SWRLRuleEditorKeyAdapter());
-
-    this.ruleTextTextArea.getInputMap().put(controlSpace, "controlSpace");
-
-    this.ruleTextTextArea.getActionMap().put("controlSpace", new AbstractAction()
-    {
-      @Override public void actionPerformed(ActionEvent evt)
-      {
-        System.out.println(evt);
-      }
-    });
   }
 
   @Override public void setVisible(boolean b)
@@ -249,7 +236,7 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
     @Override public void keyPressed(@NonNull KeyEvent event)
     {
       int code = event.getKeyCode();
-      if (code == KeyEvent.VK_TAB) {
+      if ((code == KeyEvent.VK_TAB) || (code == KeyEvent.VK_SPACE && event.isControlDown())) {
         autoComplete();
         event.consume();
       } else if (code == KeyEvent.VK_ESCAPE) {
