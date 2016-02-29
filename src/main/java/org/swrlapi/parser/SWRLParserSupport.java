@@ -26,6 +26,7 @@ import org.semanticweb.owlapi.model.SWRLRule;
 import org.semanticweb.owlapi.model.SWRLSameIndividualAtom;
 import org.semanticweb.owlapi.model.SWRLVariable;
 import org.semanticweb.owlapi.model.parameters.Imports;
+import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
 import org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
@@ -66,7 +67,9 @@ class SWRLParserSupport
   public boolean isOWLClass(@NonNull String shortName)
   {
     IRI classIRI = prefixedName2IRI(shortName);
-    return getOWLOntology().containsClassInSignature(classIRI, Imports.INCLUDED);
+
+    return getOWLOntology().containsClassInSignature(classIRI, Imports.INCLUDED) || classIRI
+      .equals(OWLRDFVocabulary.OWL_THING.getIRI()) || classIRI.equals(OWLRDFVocabulary.OWL_NOTHING.getIRI());
   }
 
   public boolean isOWLNamedIndividual(@NonNull String shortName)
@@ -425,7 +428,7 @@ class SWRLParserSupport
 
   @NonNull private String iri2ShortForm(IRI iri)
   {
-    Optional<@NonNull String> shortForm =  this.swrlapiOWLOntology.getIRIResolver().iri2ShortForm(iri);
+    Optional<@NonNull String> shortForm = this.swrlapiOWLOntology.getIRIResolver().iri2ShortForm(iri);
 
     if (shortForm.isPresent())
       return shortForm.get();
