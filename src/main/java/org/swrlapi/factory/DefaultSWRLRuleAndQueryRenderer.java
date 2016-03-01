@@ -78,7 +78,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
 
     sb.append(renderBodyAtoms(rule.getBody().iterator()));
 
-    sb.append(" " + SWRLParser.IMP_CHAR + " ");
+    sb.append(" " + SWRLParser.IMP_COMBINATION + " ");
 
     sb.append(renderHeadAtoms(rule.getHead().iterator()));
 
@@ -91,7 +91,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
 
     sb.append(renderBodyAtoms(query.getBodyAtoms().iterator()));
 
-    sb.append(" " + SWRLParser.IMP_CHAR + " ");
+    sb.append(" " + SWRLParser.IMP_COMBINATION + " ");
 
     sb.append(renderHeadAtoms(query.getHeadAtoms().iterator()));
 
