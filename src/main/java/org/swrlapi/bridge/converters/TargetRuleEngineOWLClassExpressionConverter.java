@@ -11,6 +11,7 @@ import org.semanticweb.owlapi.model.OWLDataSomeValuesFrom;
 import org.semanticweb.owlapi.model.OWLObjectAllValuesFrom;
 import org.semanticweb.owlapi.model.OWLObjectComplementOf;
 import org.semanticweb.owlapi.model.OWLObjectExactCardinality;
+import org.semanticweb.owlapi.model.OWLObjectHasSelf;
 import org.semanticweb.owlapi.model.OWLObjectHasValue;
 import org.semanticweb.owlapi.model.OWLObjectIntersectionOf;
 import org.semanticweb.owlapi.model.OWLObjectMaxCardinality;
@@ -59,4 +60,6 @@ public interface TargetRuleEngineOWLClassExpressionConverter<C> extends TargetRu
   @NonNull C convert(@NonNull OWLObjectAllValuesFrom objectAllValuesFrom);
 
   @NonNull C convert(@NonNull OWLDataAllValuesFrom dataAllValuesFrom);
+
+  @NonNull C convert(@NonNull OWLObjectHasSelf owbjectHasSelf);
 }
