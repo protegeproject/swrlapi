@@ -415,6 +415,15 @@ public interface SWRLBuiltInInputArgumentHandler
     throws SWRLBuiltInException;
 
   /**
+   * @param argumentNumber The 0-based index of the argument
+   * @param arguments      The built-in arguments
+   * @return A string representation of an argument
+   * @throws SWRLBuiltInException If an error occurs during processing
+   */
+  @NonNull String representArgumentAsAString(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException;
+
+  /**
    * @param arguments The built-in arguments
    * @return True if all arguments are strings
    * @throws SWRLBuiltInException If an error occurs during processing

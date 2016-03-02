@@ -1018,6 +1018,13 @@ public abstract class AbstractSWRLBuiltInLibrary
     return getArgumentAsALiteral(argumentNumber, arguments).getString();
   }
 
+  @NonNull @Override public String representArgumentAsAString(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    return "\"" + getArgumentAsALiteral(argumentNumber, arguments).getValue() + "\"^^" + getArgumentAsALiteral(
+      argumentNumber, arguments).getOWLDatatype();
+  }
+
   // Time
 
   @Override public void checkThatArgumentIsATime(int argumentNumber,
@@ -1229,8 +1236,9 @@ public abstract class AbstractSWRLBuiltInLibrary
         SWRLNamedIndividualBuiltInArgument individualArgument = (SWRLNamedIndividualBuiltInArgument)argument;
         message += "individual with IRI " + individualArgument.getIRI();
       } else if (argument instanceof SWRLLiteralBuiltInArgument) {
-        SWRLLiteralBuiltInArgument literal = (SWRLLiteralBuiltInArgument)argument;
-        message += "literal with value " + literal.toString();
+        SWRLLiteralBuiltInArgument literalBuiltInArgument = (SWRLLiteralBuiltInArgument)argument;
+        message += "literal with value " + literalBuiltInArgument.getLiteral().getLiteral().toString() + " and type "
+          + literalBuiltInArgument.getLiteral().getDatatype();
       } else
         message += "unknown type " + argument.getClass();
     }
