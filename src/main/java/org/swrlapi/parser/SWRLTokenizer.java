@@ -23,8 +23,8 @@ import java.util.Set;
  */
 class SWRLTokenizer
 {
-  @NonNull private static final char wordChars[] = { ':', '_', '/', '#' };
-  @NonNull private static final char ordinaryChars[] = { '-', '.', '^', '<', '>', '(', ')', '?' };
+  @NonNull private static final char wordChars[] = { ':', '_', '-', '/', '#' };
+  @NonNull private static final char ordinaryChars[] = { '.', '^', '<', '>', '(', ')', '?' };
 
   @NonNull private final MyStreamTokenizer tokenizer;
 
@@ -192,8 +192,6 @@ class SWRLTokenizer
 
   @NonNull private SWRLToken convertToken2SWRLToken(int tokenType) throws SWRLParseException, IOException
   {
-    boolean negativeNumeric = false;
-
     switch (tokenType) {
     case StreamTokenizer.TT_EOF:
       return new SWRLToken(SWRLToken.SWRLTokenType.END_OF_INPUT, "");
@@ -201,20 +199,20 @@ class SWRLTokenizer
       return new SWRLToken(SWRLToken.SWRLTokenType.END_OF_INPUT, "");
     case StreamTokenizer.TT_NUMBER:
       throw new SWRLParseException("internal error - not expecting a StreamTokenizer.TT_NUMBER");
-    case '-': {
-      int nextTokenType = this.tokenizer.nextToken();
-      if (nextTokenType == '>')
-        return new SWRLToken(SWRLToken.SWRLTokenType.IMP, "->");
-      else if (nextTokenType == StreamTokenizer.TT_EOF)
-        throw generateEndOfRuleException("Expecting '>' or integer or float after '-'");
-      else if (nextTokenType != StreamTokenizer.TT_WORD)
-        throw new SWRLParseException("Expecting '>' or integer or float after '-'");
-      else
-        negativeNumeric = true;
-      // Fall through to look for integer or float
-    }
     case StreamTokenizer.TT_WORD: {
       String value = this.tokenizer.getValue();
+      boolean negativeNumeric = false;
+      if (value.equals("-")) {
+        int nextTokenType = this.tokenizer.nextToken();
+        if (nextTokenType == '>')
+          return new SWRLToken(SWRLToken.SWRLTokenType.IMP, "->");
+        else if (nextTokenType == StreamTokenizer.TT_EOF)
+          throw generateEndOfRuleException("Expecting '>' or integer or float after '-'");
+        else if (nextTokenType != StreamTokenizer.TT_WORD)
+          throw new SWRLParseException("Expecting '>' or integer or float after '-'");
+        else
+          negativeNumeric = true;
+      }
       if (isInt(value)) {
         // See if it is followed by a '.', in which case it should be a float
         if (this.tokenizer.nextToken() == '.') { // Found a . so expecting rest of float
@@ -234,9 +232,9 @@ class SWRLTokenizer
           return new SWRLToken(SWRLToken.SWRLTokenType.INT, intValue);
         }
       } else { // Value is not an integer
-        if (negativeNumeric) // If negative, value should be an integer
+        if (negativeNumeric) // If negative, value should be an integer or float
           throw new SWRLParseException("Expecting integer or float");
-        else
+        else // Must be an identifier
           return new SWRLToken(SWRLToken.SWRLTokenType.SHORTNAME, value);
       }
     }
