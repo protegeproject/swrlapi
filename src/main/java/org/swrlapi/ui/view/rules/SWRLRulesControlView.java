@@ -17,12 +17,12 @@ public class SWRLRulesControlView extends JPanel implements SWRLAPIView
 
   private static final int VIEW_PREFERRED_WIDTH = 900;
   private static final int VIEW_PREFERRED_HEIGHT = 300;
-  private static final int TOOLTIP_PREFERRED_WIDTH = 160;
-  private static final int TOOLTIP_PREFERRED_HEIGHT = 30;
+  private static final int BUTTON_PREFERRED_WIDTH = 160;
+  private static final int BUTTON_PREFERRED_HEIGHT = 30;
   private static final int CONSOLE_ROWS = 10;
   private static final int CONSOLE_COLUMNS = 80;
 
-  private final @NonNull SWRLRuleEngineModel swrlRuleEngineModel;
+  @NonNull private final SWRLRuleEngineModel swrlRuleEngineModel;
 
   public SWRLRulesControlView(@NonNull SWRLRuleEngineModel swrlRuleEngineModel)
   {
@@ -75,7 +75,7 @@ public class SWRLRulesControlView extends JPanel implements SWRLAPIView
     JButton button = new JButton(text);
 
     button.setToolTipText(toolTipText);
-    button.setPreferredSize(new Dimension(TOOLTIP_PREFERRED_WIDTH, TOOLTIP_PREFERRED_HEIGHT));
+    button.setPreferredSize(new Dimension(BUTTON_PREFERRED_WIDTH, BUTTON_PREFERRED_HEIGHT));
     button.addActionListener(listener);
 
     return button;

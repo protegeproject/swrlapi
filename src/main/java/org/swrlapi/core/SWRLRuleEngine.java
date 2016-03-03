@@ -123,7 +123,7 @@ public interface SWRLRuleEngine
   @NonNull SWRLRuleRenderer createSWRLRuleRenderer();
 
   /**
-   * Get the name of the native rule engine implementing this SWRL rule engine.
+   * Get the name of this SWRL rule engine.
    *
    * @return A rule engine name
    */
