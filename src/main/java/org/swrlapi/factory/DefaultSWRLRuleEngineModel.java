@@ -18,6 +18,7 @@ import org.swrlapi.ui.model.SWRLRuleEngineModel;
 import org.swrlapi.ui.model.SWRLRulesAndSQWRLQueriesTableModel;
 
 import java.io.File;
+import java.util.Optional;
 
 public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel
 {
@@ -107,6 +108,11 @@ public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel
   @Override public void clearSWRLRulesModified()
   {
     this.swrlRulesAndSQWRLQueriesTableModel.clearModifiedStatus();
+  }
+
+  @Override public Optional<String> getNextRuleName()
+  {
+    return this.swrlapiOWLOntology.getNextRuleName();
   }
 
   @Override public boolean hasOntologyChanged()

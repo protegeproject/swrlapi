@@ -29,6 +29,8 @@ public class DefaultSWRLRuleEngineDialogManager implements SWRLRuleEngineDialogM
   {
     createSWRLRuleEditorDialogIfNecessary();
     this.swrlRuleEditorDialog.setLocationRelativeTo(parent);
+    this.swrlRuleEditorDialog.setCreateMode();
+
     return this.swrlRuleEditorDialog;
   }
 
@@ -37,7 +39,7 @@ public class DefaultSWRLRuleEngineDialogManager implements SWRLRuleEngineDialogM
   {
     createSWRLRuleEditorDialogIfNecessary();
     this.swrlRuleEditorDialog.setLocationRelativeTo(parent);
-    this.swrlRuleEditorDialog.enableEditMode(ruleName, ruleText, comment);
+    this.swrlRuleEditorDialog.setEditMode(ruleName, ruleText, comment);
 
     return this.swrlRuleEditorDialog;
   }

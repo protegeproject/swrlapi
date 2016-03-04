@@ -5,6 +5,8 @@ import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.core.SWRLRuleRenderer;
 import org.swrlapi.parser.SWRLParser;
 
+import java.util.Optional;
+
 /**
  * Provides a model that can be used to build an MVC-based GUI that uses a SWRL rule engine.
  */
@@ -15,7 +17,7 @@ public interface SWRLRuleEngineModel extends OntologyModel
    *
    * @param ruleEngine A new SWRL rule engine
    */
- void updateModel(@NonNull SWRLRuleEngine ruleEngine);
+  void updateModel(@NonNull SWRLRuleEngine ruleEngine);
 
   /**
    * @return A SWRL rule engine
@@ -57,4 +59,9 @@ public interface SWRLRuleEngineModel extends OntologyModel
    * Clear the modified status of SWRL rules. Used in conjunction with {@link #areSWRLRulesModified()}.
    */
   void clearSWRLRulesModified();
+
+  /**
+   * @return A rule name
+   */
+  @NonNull Optional<String> getNextRuleName();
 }

@@ -95,6 +95,11 @@ public interface SWRLAPIOWLOntology
 
   @NonNull SWRLRuleRenderer createSWRLRuleRenderer();
 
+  /**
+   * @return A rule name
+   */
+  @NonNull Optional<String> getNextRuleName();
+
   // Methods for handling SQWRL Queries
 
   @NonNull SQWRLQuery createSQWRLQuery(@NonNull String queryName, @NonNull String query)
