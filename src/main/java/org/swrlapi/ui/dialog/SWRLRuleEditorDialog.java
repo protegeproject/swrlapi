@@ -41,7 +41,7 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
 {
   private static final long serialVersionUID = 1L;
 
-  private static final String TITLE = "Edit SWRL Rule";
+  private static final String TITLE = "Edit";
   private static final String RULE_NAME_TITLE = "Name";
   private static final String COMMENT_LABEL_TITLE = "Comment";
   private static final String STATUS_LABEL_TITLE = "Status";
@@ -56,8 +56,8 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
   private static final String MISSING_RULE_NAME = "A name must be supplied!";
   private static final String QUIT_CONFIRM_TITLE = "Unsaved Changes";
   private static final String QUIT_CONFIRM_MESSAGE = "Are you sure you want discard your changes?";
-  private static final String DUPLICATE_RULE_TEXT = "A rule exists with this name - please pick another name.";
-  private static final String DUPLICATE_RULE_TITLE = "Duplicate Rule Name";
+  private static final String DUPLICATE_RULE_TEXT = "Name already in use - please pick another name.";
+  private static final String DUPLICATE_RULE_TITLE = "Duplicate Name";
   private static final String INTERNAL_ERROR_TITLE = "Internal Error";
 
   private static final int BUTTON_PREFERRED_WIDTH = 100;
@@ -72,7 +72,7 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
   @NonNull private final SWRLRuleEditorInitialDialogState initialDialogState = new SWRLRuleEditorInitialDialogState();
   @NonNull private final JTextField ruleNameTextField, commentTextField, statusTextField;
   @NonNull private final JTextArea ruleTextTextArea;
-  @NonNull private final JButton saveButton;
+  @NonNull private final JButton saveButton, cancelButton;
   @NonNull private final Border loweredBevelBorder;
   @NonNull private final Border yellowBorder;
 
@@ -88,6 +88,7 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
     this.yellowBorder = BorderFactory.createLineBorder(Color.YELLOW);
     this.ruleTextTextArea = new JTextArea("", RULE_EDIT_AREA_COLUMNS, RULE_EDIT_AREA_ROWS);
     this.saveButton = new JButton(OK_BUTTON_TITLE);
+    this.cancelButton = new JButton(CANCEL_BUTTON_TITLE);
     this.ruleNameTextField = new JTextField("");
     this.commentTextField = new JTextField("");
     this.statusTextField = new JTextField("");
@@ -95,6 +96,7 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
 
   @Override public void initialize()
   {
+    Container contentPane = getContentPane();
     setTitle(TITLE);
     setModal(true);
 
@@ -102,14 +104,11 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
 
     setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
-    addWindowListener(new WindowAdapter()
-    {
-      @Override public void windowClosing(WindowEvent we)
-      {
-      }
-    }); // Thwart user close
+    addWindowListener(new CloseWindowListener(contentPane));
 
     this.ruleTextTextArea.addKeyListener(new SWRLRuleEditorKeyAdapter());
+    this.cancelButton.addActionListener(new CancelSWRLRuleEditActionListener(contentPane));
+    this.saveButton.addActionListener(new SaveSWRLRuleActionListener(contentPane));
   }
 
   @Override public void setVisible(boolean b)
@@ -180,7 +179,6 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
     JLabel commentLabel = new JLabel(COMMENT_LABEL_TITLE);
     JLabel statusLabel = new JLabel(STATUS_LABEL_TITLE);
     JPanel upperPanel = new JPanel(new GridLayout(6, 2));
-    JButton cancelButton = new JButton(CANCEL_BUTTON_TITLE);
     JPanel rulePanel = new JPanel(new GridLayout(1, 1));
     JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
     JPanel surroundPanel = new JPanel(new BorderLayout());
@@ -200,11 +198,8 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
     this.statusTextField.setEnabled(false);
     this.statusTextField.setBorder(this.loweredBevelBorder);
 
-    cancelButton.setPreferredSize(new Dimension(BUTTON_PREFERRED_WIDTH, BUTTON_PREFERRED_HEIGHT));
-    cancelButton.addActionListener(new CancelSWRLRuleEditActionListener(contentPane));
-
+    this.cancelButton.setPreferredSize(new Dimension(BUTTON_PREFERRED_WIDTH, BUTTON_PREFERRED_HEIGHT));
     this.saveButton.setPreferredSize(new Dimension(BUTTON_PREFERRED_WIDTH, BUTTON_PREFERRED_HEIGHT));
-    this.saveButton.addActionListener(new SaveSWRLRuleActionListener(contentPane));
 
     contentPane.setLayout(new BorderLayout());
 
@@ -229,31 +224,6 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
     surroundPanel.add(buttonPanel, BorderLayout.SOUTH);
 
     pack();
-  }
-
-  private class SWRLRuleEditorKeyAdapter extends KeyAdapter
-  {
-    @Override public void keyPressed(@NonNull KeyEvent event)
-    {
-      int code = event.getKeyCode();
-      if ((code == KeyEvent.VK_TAB) || (code == KeyEvent.VK_SPACE && event.isControlDown())) {
-        autoComplete();
-        event.consume();
-      } else if (code == KeyEvent.VK_ESCAPE) {
-        cancelAutoCompleteIfNecessary();
-        event.consume();
-      } else if (code == KeyEvent.VK_DELETE) {
-        cancelAutoCompleteIfNecessary();
-      } else { // Any other key will disable auto-complete mode if it is active
-        disableAutoCompleteModeIfNecessary();
-        super.keyPressed(event);
-      }
-    }
-
-    @Override public void keyReleased(@NonNull KeyEvent event)
-    {
-      updateStatus();
-    }
   }
 
   private void autoComplete()
@@ -362,92 +332,6 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
     return this.swrlRuleEngineModel.createSWRLAutoCompleter();
   }
 
-  private class CancelSWRLRuleEditActionListener implements ActionListener
-  {
-    @NonNull private final Component parent;
-
-    public CancelSWRLRuleEditActionListener(@NonNull Component parent)
-    {
-      this.parent = parent;
-    }
-
-    @Override public void actionPerformed(@NonNull ActionEvent e)
-    {
-      boolean okToQuit;
-
-      okToQuit = !hasDialogStateChanged() || getDialogManager()
-        .showConfirmDialog(this.parent, QUIT_CONFIRM_MESSAGE, QUIT_CONFIRM_TITLE);
-
-      if (okToQuit) {
-        cancelEditMode();
-        setVisible(false);
-      }
-    }
-  }
-
-  private class SaveSWRLRuleActionListener implements ActionListener
-  {
-    @NonNull private final Component parent;
-
-    public SaveSWRLRuleActionListener(@NonNull Component parent)
-    {
-      this.parent = parent;
-    }
-
-    @Override public void actionPerformed(@NonNull ActionEvent e)
-    {
-      String ruleName = getRuleName();
-      String ruleText = getRuleText();
-      String comment = getComment();
-      boolean errorOccurred;
-
-      if (ruleName.trim().length() == 0) {
-        getDialogManager().showErrorMessageDialog(this.parent, MISSING_RULE_NAME, MISSING_RULE_NAME_TITLE);
-        errorOccurred = true;
-      } else if (ruleText.trim().length() == 0) {
-        getDialogManager().showErrorMessageDialog(this.parent, MISSING_RULE, MISSING_RULE);
-        errorOccurred = true;
-      } else if (getSWRLRulesTableModel().hasSWRLRule(ruleName) && !SWRLRuleEditorDialog.this.editMode) {
-        getDialogManager().showErrorMessageDialog(this.parent, DUPLICATE_RULE_TEXT, DUPLICATE_RULE_TITLE);
-        errorOccurred = true;
-      } else {
-        try {
-          if (SWRLRuleEditorDialog.this.editMode) {
-            deleteSWRLRule(SWRLRuleEditorDialog.this.initialDialogState.getRuleName());
-            createSWRLRule(ruleName, ruleText, comment, true);
-            errorOccurred = false;
-          } else {
-            if (getSWRLRulesTableModel().hasSWRLRule(ruleName)) {
-              getDialogManager().showErrorMessageDialog(this.parent, DUPLICATE_RULE_TEXT, DUPLICATE_RULE_TITLE);
-              errorOccurred = true;
-            } else {
-              createSWRLRule(ruleName, ruleText, comment, true);
-              errorOccurred = false;
-            }
-          }
-        } catch (SWRLParseException pe) {
-          getDialogManager()
-            .showErrorMessageDialog(this.parent, (pe.getMessage() != null ? pe.getMessage() : ""), INVALID_RULE_TITLE);
-          errorOccurred = true;
-        } catch (RuntimeException pe) {
-          getDialogManager().showErrorMessageDialog(this.parent, (pe.getMessage() != null ? pe.getMessage() : ""),
-            INTERNAL_ERROR_TITLE);
-          errorOccurred = true;
-          StringWriter sw = new StringWriter();
-          PrintWriter pw = new PrintWriter(sw);
-          pe.printStackTrace(pw);
-          log.warn(sw.toString());
-        }
-      }
-
-      if (!errorOccurred) {
-        setVisible(false);
-        cancelEditMode();
-      } else
-        updateStatus();
-    }
-  }
-
   private void disableSave()
   {
     this.saveButton.setEnabled(false);
@@ -539,5 +423,134 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
   private boolean hasDialogStateChanged()
   {
     return this.initialDialogState.hasStateChanged(getRuleName(), getComment(), getRuleText());
+  }
+
+  private void closeIfOk(@NonNull Component parent)
+  {
+    boolean okToQuit = !hasDialogStateChanged() || getDialogManager()
+      .showConfirmDialog(parent, QUIT_CONFIRM_MESSAGE, QUIT_CONFIRM_TITLE);
+
+    if (okToQuit) {
+      cancelEditMode();
+      setVisible(false);
+    }
+  }
+
+  private class SWRLRuleEditorKeyAdapter extends KeyAdapter
+  {
+    @Override public void keyPressed(@NonNull KeyEvent event)
+    {
+      int code = event.getKeyCode();
+      if ((code == KeyEvent.VK_TAB) || (code == KeyEvent.VK_SPACE && event.isControlDown())) {
+        autoComplete();
+        event.consume();
+      } else if (code == KeyEvent.VK_ESCAPE) {
+        cancelAutoCompleteIfNecessary();
+        event.consume();
+      } else if (code == KeyEvent.VK_DELETE) {
+        cancelAutoCompleteIfNecessary();
+      } else { // Any other key will disable auto-complete mode if it is active
+        disableAutoCompleteModeIfNecessary();
+        super.keyPressed(event);
+      }
+    }
+
+    @Override public void keyReleased(@NonNull KeyEvent event)
+    {
+      updateStatus();
+    }
+  }
+
+  class CloseWindowListener extends WindowAdapter
+  {
+    @NonNull private final Component parent;
+
+    public CloseWindowListener(@NonNull Component parent)
+    {
+      this.parent = parent;
+    }
+
+    @Override public void windowClosing(WindowEvent e)
+    {
+      closeIfOk(this.parent);
+    }
+  }
+
+  private class CancelSWRLRuleEditActionListener implements ActionListener
+  {
+    @NonNull private final Component parent;
+
+    public CancelSWRLRuleEditActionListener(@NonNull Component parent)
+    {
+      this.parent = parent;
+    }
+
+    @Override public void actionPerformed(@NonNull ActionEvent e)
+    {
+      closeIfOk(this.parent);
+    }
+  }
+
+  private class SaveSWRLRuleActionListener implements ActionListener
+  {
+    @NonNull private final Component parent;
+
+    public SaveSWRLRuleActionListener(@NonNull Component parent)
+    {
+      this.parent = parent;
+    }
+
+    @Override public void actionPerformed(@NonNull ActionEvent e)
+    {
+      String ruleName = getRuleName();
+      String ruleText = getRuleText();
+      String comment = getComment();
+      boolean errorOccurred;
+
+      if (ruleName.trim().length() == 0) {
+        getDialogManager().showErrorMessageDialog(this.parent, MISSING_RULE_NAME, MISSING_RULE_NAME_TITLE);
+        errorOccurred = true;
+      } else if (ruleText.trim().length() == 0) {
+        getDialogManager().showErrorMessageDialog(this.parent, MISSING_RULE, MISSING_RULE);
+        errorOccurred = true;
+      } else if (getSWRLRulesTableModel().hasSWRLRule(ruleName) && !SWRLRuleEditorDialog.this.editMode) {
+        getDialogManager().showErrorMessageDialog(this.parent, DUPLICATE_RULE_TEXT, DUPLICATE_RULE_TITLE);
+        errorOccurred = true;
+      } else {
+        try {
+          if (SWRLRuleEditorDialog.this.editMode) {
+            deleteSWRLRule(SWRLRuleEditorDialog.this.initialDialogState.getRuleName());
+            createSWRLRule(ruleName, ruleText, comment, true);
+            errorOccurred = false;
+          } else {
+            if (getSWRLRulesTableModel().hasSWRLRule(ruleName)) {
+              getDialogManager().showErrorMessageDialog(this.parent, DUPLICATE_RULE_TEXT, DUPLICATE_RULE_TITLE);
+              errorOccurred = true;
+            } else {
+              createSWRLRule(ruleName, ruleText, comment, true);
+              errorOccurred = false;
+            }
+          }
+        } catch (SWRLParseException pe) {
+          getDialogManager()
+            .showErrorMessageDialog(this.parent, (pe.getMessage() != null ? pe.getMessage() : ""), INVALID_RULE_TITLE);
+          errorOccurred = true;
+        } catch (RuntimeException pe) {
+          getDialogManager().showErrorMessageDialog(this.parent, (pe.getMessage() != null ? pe.getMessage() : ""),
+            INTERNAL_ERROR_TITLE);
+          errorOccurred = true;
+          StringWriter sw = new StringWriter();
+          PrintWriter pw = new PrintWriter(sw);
+          pe.printStackTrace(pw);
+          log.warn(sw.toString());
+        }
+      }
+
+      if (!errorOccurred) {
+        setVisible(false);
+        cancelEditMode();
+      } else
+        updateStatus();
+    }
   }
 }

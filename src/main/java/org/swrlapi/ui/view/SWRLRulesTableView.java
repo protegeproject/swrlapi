@@ -63,7 +63,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 
     setPreferredColumnWidths();
 
-    createComponents(dialogManager);
+    createComponents(this.dialogManager);
 
     createPopupMenu();
   }
@@ -108,13 +108,17 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
   {
     TableColumnModel columnModel = this.swrlRulesTable.getColumnModel();
 
-    columnModel.getColumn(SWRLRulesAndSQWRLQueriesTableModel.ACTIVE_COLUMN).setPreferredWidth(ACTIVE_COLUMN_PREFERRED_WIDTH);
+    columnModel.getColumn(SWRLRulesAndSQWRLQueriesTableModel.ACTIVE_COLUMN)
+      .setPreferredWidth(ACTIVE_COLUMN_PREFERRED_WIDTH);
     columnModel.getColumn(SWRLRulesAndSQWRLQueriesTableModel.ACTIVE_COLUMN).setMaxWidth(ACTIVE_COLUMN_MAX_WIDTH);
-    columnModel.getColumn(SWRLRulesAndSQWRLQueriesTableModel.RULE_NAME_COLUMN).setPreferredWidth(RULE_NAME_COLUMN_PREFERRED_WIDTH);
+    columnModel.getColumn(SWRLRulesAndSQWRLQueriesTableModel.RULE_NAME_COLUMN)
+      .setPreferredWidth(RULE_NAME_COLUMN_PREFERRED_WIDTH);
     columnModel.getColumn(SWRLRulesAndSQWRLQueriesTableModel.RULE_NAME_COLUMN).setMaxWidth(RULE_NAME_COLUMN_MAX_WIDTH);
-    columnModel.getColumn(SWRLRulesAndSQWRLQueriesTableModel.RULE_TEXT_COLUMN).setPreferredWidth(RULE_TEXT_COLUMN_PREFERRED_WIDTH);
+    columnModel.getColumn(SWRLRulesAndSQWRLQueriesTableModel.RULE_TEXT_COLUMN)
+      .setPreferredWidth(RULE_TEXT_COLUMN_PREFERRED_WIDTH);
     columnModel.getColumn(SWRLRulesAndSQWRLQueriesTableModel.RULE_TEXT_COLUMN).setMaxWidth(RULE_TEXT_COLUMN_MAX_WIDTH);
-    columnModel.getColumn(SWRLRulesAndSQWRLQueriesTableModel.RULE_COMMENT_COLUMN).setPreferredWidth(COMMENT_COLUMN_PREFERRED_WIDTH);
+    columnModel.getColumn(SWRLRulesAndSQWRLQueriesTableModel.RULE_COMMENT_COLUMN)
+      .setPreferredWidth(COMMENT_COLUMN_PREFERRED_WIDTH);
     columnModel.getColumn(SWRLRulesAndSQWRLQueriesTableModel.RULE_COMMENT_COLUMN).setMaxWidth(COMMENT_COLUMN_MAX_WIDTH);
   }
 
