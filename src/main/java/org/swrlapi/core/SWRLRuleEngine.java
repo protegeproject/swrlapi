@@ -35,7 +35,7 @@ public interface SWRLRuleEngine
   void infer() throws SWRLRuleEngineException;
 
   /**
-   * Load asserted OWL axioms (which include SWRL rules) from OWL ontology.
+   * Load asserted OWL axioms (which include SWRL rules) from a source OWL ontology.
    *
    * @throws SWRLRuleEngineException If an error occurs during inference
    */
@@ -49,9 +49,9 @@ public interface SWRLRuleEngine
   void run() throws SWRLRuleEngineException;
 
   /**
-   * Write OWL axioms inferred by rule engine back to OWL ontology.
+   * Write OWL axioms inferred by rule engine back to the source OWL ontology.
    *
-   * @throws SWRLRuleEngineException If an error occurs during inference
+   * @throws SWRLRuleEngineException If an error occurs during the export process
    */
   void exportInferredOWLAxioms() throws SWRLRuleEngineException;
 
