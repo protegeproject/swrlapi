@@ -4,8 +4,10 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
 import org.swrlapi.exceptions.SWRLAPIException;
+import org.swrlapi.exceptions.SWRLAPIInternalException;
 import org.swrlapi.factory.NaturalOrderComparator;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.util.Comparator;
 
@@ -50,11 +52,18 @@ public final class OWLLiteralComparator implements Comparator<OWLLiteral>
             Float f1 = Float.parseFloat(l1.getLiteral());
             Float f2 = Float.parseFloat(l2.getLiteral());
             return f1.compareTo(f2);
-          } else { // Double
+          } else if (l1.getDatatype().isDouble()) {
             Double d1 = Double.parseDouble(l1.getLiteral());
             Double d2 = Double.parseDouble(l2.getLiteral());
             return d1.compareTo(d2);
-          }
+          } else if (l1.getDatatype().getIRI().equals(XSDVocabulary.DECIMAL.getIRI())) {
+            BigDecimal d1 = new BigDecimal(l1.getLiteral());
+            BigDecimal d2 = new BigDecimal(l1.getLiteral());
+            return d1.compareTo(d2);
+          } else
+            throw new SWRLAPIInternalException(
+              "unexpected numeric datatype " + l1.getDatatype().getIRI() + " for OWL literal with value " + l1
+                .getLiteral());
         } else { // Types differ - use double for comparison
           Double d1 = Double.parseDouble(l1.getLiteral());
           Double d2 = Double.parseDouble(l2.getLiteral());
@@ -117,6 +126,7 @@ public final class OWLLiteralComparator implements Comparator<OWLLiteral>
     return literal.getDatatype().getIRI().equals(XSDVocabulary.BYTE.getIRI()) || literal.getDatatype().getIRI()
       .equals(XSDVocabulary.SHORT.getIRI()) || literal.getDatatype().getIRI().equals(XSDVocabulary.INT.getIRI())
       || literal.getDatatype().getIRI().equals(XSDVocabulary.LONG.getIRI()) || literal.getDatatype().getIRI()
-      .equals(XSDVocabulary.FLOAT.getIRI()) || literal.getDatatype().getIRI().equals(XSDVocabulary.DOUBLE.getIRI());
+      .equals(XSDVocabulary.FLOAT.getIRI()) || literal.getDatatype().getIRI().equals(XSDVocabulary.DOUBLE.getIRI())
+      || literal.getDatatype().getIRI().equals(XSDVocabulary.DECIMAL.getIRI());
   }
 }
