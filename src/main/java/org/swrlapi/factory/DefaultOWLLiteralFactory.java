@@ -11,6 +11,7 @@ import org.swrlapi.literal.XSDDuration;
 import org.swrlapi.literal.XSDTime;
 import uk.ac.manchester.cs.owl.owlapi.OWLLiteralImpl;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.util.List;
 
@@ -53,6 +54,11 @@ class DefaultOWLLiteralFactory implements OWLLiteralFactory
     return new OWLLiteralImpl("" + d, "", getOWLDatatypeFactory().getDoubleDatatype());
   }
 
+  @NonNull @Override public OWLLiteral getOWLLiteral(@NonNull BigDecimal d)
+  {
+    return new OWLLiteralImpl("" + d, "", getOWLDatatypeFactory().getDecimalDatatype());
+  }
+  
   @NonNull @Override public OWLLiteral getOWLLiteral(@NonNull String s)
   {
     return new OWLLiteralImpl(s, "", getOWLDatatypeFactory().getStringDatatype());

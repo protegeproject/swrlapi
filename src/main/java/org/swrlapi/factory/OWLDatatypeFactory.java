@@ -17,13 +17,15 @@ public interface OWLDatatypeFactory
 
   @NonNull OWLDatatype getShortDatatype();
 
-  @NonNull OWLDatatype getDoubleDatatype();
-
-  @NonNull OWLDatatype getFloatDatatype();
-
   @NonNull OWLDatatype getIntDatatype();
 
   @NonNull OWLDatatype getLongDatatype();
+
+  @NonNull OWLDatatype getFloatDatatype();
+
+  @NonNull OWLDatatype getDoubleDatatype();
+
+  @NonNull OWLDatatype getDecimalDatatype();
 
   @NonNull OWLDatatype getStringDatatype();
 

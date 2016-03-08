@@ -6,6 +6,7 @@ import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.swrlapi.exceptions.LiteralException;
 
+import java.math.BigDecimal;
 import java.net.URI;
 
 /**
@@ -28,6 +29,8 @@ public interface Literal
   boolean isFloat();
 
   boolean isDouble();
+
+  boolean isDecimal();
 
   boolean isString();
 
@@ -54,6 +57,8 @@ public interface Literal
   float getFloat() throws LiteralException;
 
   double getDouble() throws LiteralException;
+
+  @NonNull BigDecimal getDecimal() throws LiteralException;
 
   boolean getBoolean() throws LiteralException;
 

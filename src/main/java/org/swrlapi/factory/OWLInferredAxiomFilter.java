@@ -93,7 +93,7 @@ public class OWLInferredAxiomFilter implements OWLAxiomVisitorEx<Boolean>
   }
 
   /**
-   * Filter SCA(A, B) A is owl:Thing or where B is owl:Nothing or where there exists SCA(A, X) and SCA(X, B)
+   * Filter SCA(A, B) where A is owl:Thing or where B is owl:Nothing or where there exists SCA(A, X) and SCA(X, B)
    * where X is not owl:Thing, A, B
    *
    * @param axiom A subclass axiom
