@@ -10,6 +10,7 @@ import org.swrlapi.literal.XSDDuration;
 import org.swrlapi.literal.XSDTime;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.net.URI;
 import java.util.List;
 
@@ -42,6 +43,8 @@ public interface OWLLiteralFactory
   @NonNull OWLLiteral getOWLLiteral(double value);
 
   @NonNull OWLLiteral getOWLLiteral(@NonNull BigDecimal value);
+
+  @NonNull OWLLiteral getOWLLiteral(@NonNull BigInteger value);
 
   @NonNull OWLLiteral getOWLLiteral(@NonNull String value);
 

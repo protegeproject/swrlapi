@@ -7,6 +7,7 @@ import org.semanticweb.owlapi.model.OWLLiteral;
 import org.swrlapi.exceptions.LiteralException;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.net.URI;
 
 /**
@@ -31,6 +32,8 @@ public interface Literal
   boolean isDouble();
 
   boolean isDecimal();
+
+  boolean isInteger();
 
   boolean isString();
 
@@ -59,6 +62,8 @@ public interface Literal
   double getDouble() throws LiteralException;
 
   @NonNull BigDecimal getDecimal() throws LiteralException;
+
+  @NonNull BigInteger getInteger() throws LiteralException;
 
   boolean getBoolean() throws LiteralException;
 

@@ -23,6 +23,8 @@ public class IntegrationTestBase
   protected static final OWLDatatype XSD_LONG = Datatype(IRI(Namespaces.XSD + "long"));
   protected static final OWLDatatype XSD_FLOAT = Datatype(IRI(Namespaces.XSD + "float"));
   protected static final OWLDatatype XSD_DOUBLE = Datatype(IRI(Namespaces.XSD + "double"));
+  protected static final OWLDatatype XSD_INTEGER = Datatype(IRI(Namespaces.XSD + "integer"));
+  protected static final OWLDatatype XSD_DECIMAL = Datatype(IRI(Namespaces.XSD + "decimal"));
   protected static final OWLDatatype XSD_DATE = Datatype(IRI(Namespaces.XSD + "date"));
   protected static final OWLDatatype XSD_DATETIME = Datatype(IRI(Namespaces.XSD + "dateTime"));
   protected static final OWLDatatype XSD_TIME = Datatype(IRI(Namespaces.XSD + "time"));

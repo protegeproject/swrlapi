@@ -15,6 +15,7 @@ import org.swrlapi.literal.XSDDuration;
 import org.swrlapi.literal.XSDTime;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.net.URI;
 
 class DefaultLiteral implements Literal
@@ -33,7 +34,7 @@ class DefaultLiteral implements Literal
 
   @Override public boolean isNumeric()
   {
-    return isByte() || isShort() || isInt() || isLong() || isFloat() || isDouble() || isDecimal();
+    return isByte() || isShort() || isInt() || isLong() || isFloat() || isDouble() || isDecimal() || isInteger();
   }
 
   @Override public boolean isByte()
@@ -69,6 +70,11 @@ class DefaultLiteral implements Literal
   @Override public boolean isDecimal()
   {
     return this.literal.getDatatype().getIRI().equals(XSDVocabulary.DECIMAL.getIRI());
+  }
+
+  @Override public boolean isInteger()
+  {
+    return this.literal.getDatatype().getIRI().equals(XSDVocabulary.INTEGER.getIRI());
   }
 
   @Override public boolean isString()
@@ -259,6 +265,18 @@ class DefaultLiteral implements Literal
     }
   }
 
+  @Override public @NonNull BigInteger getInteger() throws LiteralException
+  {
+    try {
+      if (isNumeric())
+        return new BigInteger(this.literal.getLiteral());
+      else
+        throw new LiteralException("cannot convert value of type " + this.literal.getDatatype() + " to integer");
+    } catch (NumberFormatException e) {
+      throw new LiteralException(
+        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype() + " to integer");
+    }
+  }
 
   @NonNull @Override public URI getAnyURI() throws LiteralException
   {

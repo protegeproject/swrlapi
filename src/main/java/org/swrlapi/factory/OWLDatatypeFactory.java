@@ -27,6 +27,8 @@ public interface OWLDatatypeFactory
 
   @NonNull OWLDatatype getDecimalDatatype();
 
+  @NonNull OWLDatatype getIntegerDatatype();
+
   @NonNull OWLDatatype getStringDatatype();
 
   @NonNull OWLDatatype getBooleanDatatype();

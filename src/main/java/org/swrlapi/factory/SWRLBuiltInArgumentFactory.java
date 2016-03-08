@@ -25,6 +25,8 @@ import org.swrlapi.literal.XSDDateTime;
 import org.swrlapi.literal.XSDDuration;
 import org.swrlapi.literal.XSDTime;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.net.URI;
 import java.util.List;
 
@@ -131,6 +133,18 @@ public interface SWRLBuiltInArgumentFactory
    * @return A literal built-in argument
    */
   @NonNull SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(double d);
+
+  /**
+   * @param d A big decimal
+   * @return A literal built-in argument
+   */
+  @NonNull SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(@NonNull BigDecimal d);
+
+  /**
+   * @param d A big integer
+   * @return A literal built-in argument
+   */
+  @NonNull SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(@NonNull BigInteger d);
 
   /**
    * @param b A byte

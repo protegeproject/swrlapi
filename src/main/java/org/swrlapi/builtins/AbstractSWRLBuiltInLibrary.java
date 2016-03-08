@@ -42,6 +42,8 @@ import org.swrlapi.literal.XSDTime;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -300,7 +302,7 @@ public abstract class AbstractSWRLBuiltInLibrary
       checkThatArgumentIsNumeric(argumentNumber, arguments);
   }
 
-  @Override public void checkThatAllArgumentsAreIntegers(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+  @Override public void checkThatAllArgumentsAreInts(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
@@ -325,7 +327,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     return true;
   }
 
-  @Override public boolean areAllArgumentsIntegers(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+  @Override public boolean areAllArgumentsInts(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
@@ -361,6 +363,24 @@ public abstract class AbstractSWRLBuiltInLibrary
     return true;
   }
 
+  @Override public boolean areAllArgumentsDecimals(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException
+  {
+    for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
+      if (!isArgumentADecimal(argumentNumber, arguments))
+        return false;
+    return true;
+  }
+
+  @Override public boolean areAllArgumentsIntegers(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException
+  {
+    for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
+      if (!isArgumentAnInteger(argumentNumber, arguments))
+        return false;
+    return true;
+  }
+
   @Override public boolean isArgumentConvertibleToByte(int argumentNumber,
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
@@ -374,7 +394,7 @@ public abstract class AbstractSWRLBuiltInLibrary
       && isArgumentAShort(argumentNumber, arguments));
   }
 
-  @Override public boolean isArgumentConvertibleToInteger(int argumentNumber,
+  @Override public boolean isArgumentConvertibleToInt(int argumentNumber,
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return (isArgumentNumeric(argumentNumber, arguments) && isArgumentAByte(argumentNumber, arguments)
@@ -546,14 +566,6 @@ public abstract class AbstractSWRLBuiltInLibrary
     checkArgumentNumber(argumentNumber, arguments);
 
     return arguments.get(argumentNumber) instanceof SWRLNamedIndividualBuiltInArgument;
-  }
-
-  public boolean isArgumentALiterak(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
-    throws SWRLBuiltInException
-  {
-    checkArgumentNumber(argumentNumber, arguments);
-
-    return arguments.get(argumentNumber) instanceof SWRLLiteralBuiltInArgument;
   }
 
   @Override public void checkThatArgumentIsAnIndividual(int argumentNumber,
@@ -730,7 +742,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     // Will throw exception if invalid.
   }
 
-  // Integers
+  // Ints
 
   @Override public void checkThatArgumentIsAnInt(int argumentNumber,
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
@@ -760,9 +772,57 @@ public abstract class AbstractSWRLBuiltInLibrary
 
     if (i < 0)
       throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
-        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "expecting positive integer"));
+        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "expecting positive int"));
     return i;
   }
+
+  // xsd:integer
+
+  @NonNull @Override public BigInteger getArgumentAsAnInteger(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    return getArgumentAsALiteral(argumentNumber, arguments).getInteger();
+    // Will throw exception if invalid.
+  }
+
+  @NonNull @Override public BigInteger getArgumentAsAnInteger(@NonNull SWRLBuiltInArgument argument)
+    throws SWRLBuiltInException
+  {
+    return getArgumentAsALiteral(argument).getInteger();
+    // Will throw exception if invalid.
+  }
+
+  private boolean isArgumentAnInteger(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException
+  {
+    return isArgumentALiteral(argumentNumber, arguments) && (getArgumentAsALiteral(argumentNumber, arguments)
+      .isInteger());
+  }
+
+  // xsd:decimal
+
+  @NonNull @Override public BigDecimal getArgumentAsADecimal(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    return getArgumentAsALiteral(argumentNumber, arguments).getDecimal();
+    // Will throw exception if invalid.
+  }
+
+  @NonNull @Override public BigDecimal getArgumentAsADecimal(@NonNull SWRLBuiltInArgument argument)
+    throws SWRLBuiltInException
+  {
+    return getArgumentAsALiteral(argument).getDecimal();
+    // Will throw exception if invalid.
+  }
+
+  private boolean isArgumentADecimal(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException
+  {
+    return isArgumentALiteral(argumentNumber, arguments) && (getArgumentAsALiteral(argumentNumber, arguments)
+      .isDecimal());
+  }
+
+  // General
 
   @Override public boolean isArgumentALiteral(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
@@ -1237,7 +1297,7 @@ public abstract class AbstractSWRLBuiltInLibrary
         message += "individual with IRI " + individualArgument.getIRI();
       } else if (argument instanceof SWRLLiteralBuiltInArgument) {
         SWRLLiteralBuiltInArgument literalBuiltInArgument = (SWRLLiteralBuiltInArgument)argument;
-        message += "literal with value " + literalBuiltInArgument.getLiteral().getLiteral().toString() + " and type "
+        message += "literal with value " + literalBuiltInArgument.getLiteral().getLiteral() + " and type "
           + literalBuiltInArgument.getLiteral().getDatatype();
       } else
         message += "unknown type " + argument.getClass();
@@ -1401,6 +1461,18 @@ public abstract class AbstractSWRLBuiltInLibrary
   }
 
   @Override public boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments,
+    int resultArgumentNumber, BigDecimal resultArgument) throws SWRLBuiltInException
+  {
+    return processResultArgument(arguments, resultArgumentNumber, createLiteralBuiltInArgument(resultArgument));
+  }
+
+  @Override public boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments,
+    int resultArgumentNumber, BigInteger resultArgument) throws SWRLBuiltInException
+  {
+    return processResultArgument(arguments, resultArgumentNumber, createLiteralBuiltInArgument(resultArgument));
+  }
+
+  @Override public boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments,
     int resultArgumentNumber, @NonNull String resultArgument) throws SWRLBuiltInException
   {
     return processResultArgument(arguments, resultArgumentNumber, createLiteralBuiltInArgument(resultArgument));
@@ -1510,6 +1582,16 @@ public abstract class AbstractSWRLBuiltInLibrary
   }
 
   @NonNull @Override public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(double d)
+  {
+    return getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(d);
+  }
+
+  @NonNull @Override public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(BigDecimal d)
+  {
+    return getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(d);
+  }
+
+  @NonNull @Override public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(BigInteger d)
   {
     return getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(d);
   }

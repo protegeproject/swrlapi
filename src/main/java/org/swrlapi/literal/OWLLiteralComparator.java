@@ -8,6 +8,7 @@ import org.swrlapi.exceptions.SWRLAPIInternalException;
 import org.swrlapi.factory.NaturalOrderComparator;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.net.URI;
 import java.util.Comparator;
 
@@ -59,6 +60,10 @@ public final class OWLLiteralComparator implements Comparator<OWLLiteral>
           } else if (l1.getDatatype().getIRI().equals(XSDVocabulary.DECIMAL.getIRI())) {
             BigDecimal d1 = new BigDecimal(l1.getLiteral());
             BigDecimal d2 = new BigDecimal(l1.getLiteral());
+            return d1.compareTo(d2);
+          } else if (l1.getDatatype().getIRI().equals(XSDVocabulary.INTEGER.getIRI())) {
+            BigInteger d1 = new BigInteger(l1.getLiteral());
+            BigInteger d2 = new BigInteger(l1.getLiteral());
             return d1.compareTo(d2);
           } else
             throw new SWRLAPIInternalException(
@@ -127,6 +132,7 @@ public final class OWLLiteralComparator implements Comparator<OWLLiteral>
       .equals(XSDVocabulary.SHORT.getIRI()) || literal.getDatatype().getIRI().equals(XSDVocabulary.INT.getIRI())
       || literal.getDatatype().getIRI().equals(XSDVocabulary.LONG.getIRI()) || literal.getDatatype().getIRI()
       .equals(XSDVocabulary.FLOAT.getIRI()) || literal.getDatatype().getIRI().equals(XSDVocabulary.DOUBLE.getIRI())
-      || literal.getDatatype().getIRI().equals(XSDVocabulary.DECIMAL.getIRI());
+      || literal.getDatatype().getIRI().equals(XSDVocabulary.DECIMAL.getIRI()) || literal.getDatatype().getIRI()
+      .equals(XSDVocabulary.INTEGER.getIRI());
   }
 }

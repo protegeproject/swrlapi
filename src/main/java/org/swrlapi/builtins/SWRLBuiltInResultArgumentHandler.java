@@ -4,18 +4,20 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.literal.XSDDate;
 import org.swrlapi.literal.XSDDateTime;
 import org.swrlapi.literal.XSDDuration;
 import org.swrlapi.literal.XSDTime;
-import org.swrlapi.exceptions.SWRLBuiltInException;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Collection;
 import java.util.List;
 
 /**
  * Utility methods for built-in implementations to handle results.
- * <p>
+ * <p/>
  * Each method will take a list of built-in arguments, an index of a particular argument, and a generated result
  * argument of a particular type. It will determine if the specified argument and the generated result arguments are
  * equal, in which case it will evaluate to true; otherwise it will evaluate to false.
@@ -83,6 +85,26 @@ public interface SWRLBuiltInResultArgumentHandler
    */
   boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
     double generatedResultArgument) throws SWRLBuiltInException;
+
+  /**
+   * @param arguments               A list of built-in arguments
+   * @param resultArgumentNumber    The index of the result argument
+   * @param generatedResultArgument The generated big decimal result argument
+   * @return If the specified argument is equal to the generated result argument
+   * @throws SWRLBuiltInException If an error occurs during processing
+   */
+  boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+    BigDecimal generatedResultArgument) throws SWRLBuiltInException;
+
+  /**
+   * @param arguments               A list of built-in arguments
+   * @param resultArgumentNumber    The index of the result argument
+   * @param generatedResultArgument The generated big integer result argument
+   * @return If the specified argument is equal to the generated result argument
+   * @throws SWRLBuiltInException If an error occurs during processing
+   */
+  boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
+    BigInteger generatedResultArgument) throws SWRLBuiltInException;
 
   /**
    * @param arguments               A list of built-in arguments

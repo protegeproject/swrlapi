@@ -8,13 +8,15 @@ import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
+import org.swrlapi.exceptions.InvalidSWRLBuiltInArgumentNumberException;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.literal.XSDDate;
 import org.swrlapi.literal.XSDDateTime;
 import org.swrlapi.literal.XSDDuration;
 import org.swrlapi.literal.XSDTime;
-import org.swrlapi.exceptions.InvalidSWRLBuiltInArgumentNumberException;
-import org.swrlapi.exceptions.SWRLBuiltInException;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -624,14 +626,14 @@ public interface SWRLBuiltInInputArgumentHandler
    * @param arguments The built-in arguments
    * @throws SWRLBuiltInException If not all arguments are integers
    */
-  void checkThatAllArgumentsAreIntegers(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+  void checkThatAllArgumentsAreInts(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
   /**
    * @param arguments The built-in arguments
-   * @return True if all arguments are integers
+   * @return True if all arguments are ints
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  boolean areAllArgumentsIntegers(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+  boolean areAllArgumentsInts(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
   /**
    * @param argumentNumber The 0-based index of the argument
@@ -639,7 +641,7 @@ public interface SWRLBuiltInInputArgumentHandler
    * @return True if the specified argument is convertible to an int
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  boolean isArgumentConvertibleToInteger(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+  boolean isArgumentConvertibleToInt(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException;
 
   /**
@@ -801,6 +803,20 @@ public interface SWRLBuiltInInputArgumentHandler
   boolean areAllArgumentsDoubles(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
   /**
+   * @param arguments The built-in arguments
+   * @return True if all arguments are xsd:decimals
+   * @throws SWRLBuiltInException If an error occurs during processing
+   */
+  boolean areAllArgumentsDecimals(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+
+  /**
+   * @param arguments The built-in arguments
+   * @return True if all arguments are xsd:integers
+   * @throws SWRLBuiltInException If an error occurs during processing
+   */
+  boolean areAllArgumentsIntegers(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+
+  /**
    * @param argumentNumber The 0-based index of the argument
    * @param arguments      The built-in arguments
    * @return True if the specified argument is convertible to a double
@@ -841,6 +857,38 @@ public interface SWRLBuiltInInputArgumentHandler
    * @throws SWRLBuiltInException If the built-in argument cannot be converted to a double
    */
   double getArgumentAsADouble(SWRLBuiltInArgument argument) throws SWRLBuiltInException;
+
+  /**
+   * @param argumentNumber The 0-based index of the argument
+   * @param arguments      The built-in arguments
+   * @return A decimal representing the specified argument
+   * @throws SWRLBuiltInException If the specified argument cannot be converted to a double
+   */
+  @NonNull BigDecimal getArgumentAsADecimal(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException;
+
+  /**
+   * @param argument A built-in argument
+   * @return A decimal representation of the built-on argument
+   * @throws SWRLBuiltInException If the built-in argument cannot be converted to a double
+   */
+  @NonNull BigDecimal getArgumentAsADecimal(SWRLBuiltInArgument argument) throws SWRLBuiltInException;
+
+  /**
+   * @param argumentNumber The 0-based index of the argument
+   * @param arguments      The built-in arguments
+   * @return An integer representing the specified argument
+   * @throws SWRLBuiltInException If the specified argument cannot be converted to a double
+   */
+  @NonNull BigInteger getArgumentAsAnInteger(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException;
+
+  /**
+   * @param argument A built-in argument
+   * @return An integer representation of the built-on argument
+   * @throws SWRLBuiltInException If the built-in argument cannot be converted to a double
+   */
+  @NonNull BigInteger getArgumentAsAnInteger(SWRLBuiltInArgument argument) throws SWRLBuiltInException;
 
   void checkThatArgumentIsATime(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException;

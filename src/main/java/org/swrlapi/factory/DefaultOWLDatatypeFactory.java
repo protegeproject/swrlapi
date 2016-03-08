@@ -43,6 +43,12 @@ class DefaultOWLDatatypeFactory implements OWLDatatypeFactory
     return new OWLDatatypeImpl(iri);
   }
 
+  @NonNull @Override public OWLDatatype getIntegerDatatype()
+  {
+    IRI iri = XSDVocabulary.INTEGER.getIRI();
+    return new OWLDatatypeImpl(iri);
+  }
+
   @NonNull @Override public OWLDatatype getIntDatatype()
   {
     IRI iri = XSDVocabulary.INT.getIRI();

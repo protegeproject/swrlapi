@@ -26,6 +26,8 @@ import org.swrlapi.literal.XSDDateTime;
 import org.swrlapi.literal.XSDDuration;
 import org.swrlapi.literal.XSDTime;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -125,6 +127,16 @@ class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFactory
   @NonNull @Override public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(double d)
   {
     return new DefaultSWRLLiteralBuiltInArgument(getOWLLiteralFactory().getOWLLiteral(d));
+  }
+
+  @NonNull @Override public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(@NonNull BigDecimal d)
+  {
+    return new DefaultSWRLLiteralBuiltInArgument(getOWLLiteralFactory().getOWLLiteral(d));
+  }
+
+  @NonNull @Override public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(@NonNull BigInteger i)
+  {
+    return new DefaultSWRLLiteralBuiltInArgument(getOWLLiteralFactory().getOWLLiteral(i));
   }
 
   @NonNull @Override public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(byte b)
