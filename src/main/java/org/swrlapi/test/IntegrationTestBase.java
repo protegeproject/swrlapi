@@ -26,6 +26,14 @@ public class IntegrationTestBase
   protected static final OWLDatatype XSD_INTEGER = Datatype(IRI(Namespaces.XSD + "integer"));
   protected static final OWLDatatype XSD_DECIMAL = Datatype(IRI(Namespaces.XSD + "decimal"));
   protected static final OWLDatatype XSD_DATE = Datatype(IRI(Namespaces.XSD + "date"));
+  protected static final OWLDatatype XSD_NON_POSITIVE_INTEGER = Datatype(IRI(Namespaces.XSD + "nonPositiveInteger"));
+  protected static final OWLDatatype XSD_NON_NEGATIVE_INTEGER = Datatype(IRI(Namespaces.XSD + "nonNegativeInteger"));
+  protected static final OWLDatatype XSD_NEGATIVE_INTEGER = Datatype(IRI(Namespaces.XSD + "negativeInteger"));
+  protected static final OWLDatatype XSD_POSITIVE_INTEGER = Datatype(IRI(Namespaces.XSD + "positiveInteger"));
+  protected static final OWLDatatype XSD_UNSIGNED_LONG = Datatype(IRI(Namespaces.XSD + "unsignedLong"));
+  protected static final OWLDatatype XSD_UNSIGNED_INT = Datatype(IRI(Namespaces.XSD + "unsignedInt"));
+  protected static final OWLDatatype XSD_UNSIGNED_SHORT = Datatype(IRI(Namespaces.XSD + "unsignedShort"));
+  protected static final OWLDatatype XSD_UNSIGNED_BYTE = Datatype(IRI(Namespaces.XSD + "unsignedByte"));
   protected static final OWLDatatype XSD_DATETIME = Datatype(IRI(Namespaces.XSD + "dateTime"));
   protected static final OWLDatatype XSD_TIME = Datatype(IRI(Namespaces.XSD + "time"));
   protected static final OWLDatatype XSD_DURATION = Datatype(IRI(Namespaces.XSD + "duration"));

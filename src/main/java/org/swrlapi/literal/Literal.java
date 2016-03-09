@@ -51,6 +51,8 @@ public interface Literal
 
   boolean isNegativeInteger();
 
+  boolean isPositiveInteger();
+
   boolean isNonNegativeInteger();
 
   boolean isNonPositiveInteger();
@@ -92,6 +94,22 @@ public interface Literal
   @NonNull BigDecimal getDecimal() throws LiteralException;
 
   @NonNull BigInteger getInteger() throws LiteralException;
+
+  @NonNull BigInteger getNonNegativeInteger() throws LiteralException;
+
+  @NonNull BigInteger getNonPositiveInteger() throws LiteralException;
+
+  @NonNull BigInteger getNegativeInteger() throws LiteralException;
+
+  @NonNull BigInteger getPositiveInteger() throws LiteralException;
+
+  @NonNull long getUnsignedLong() throws LiteralException;
+
+  @NonNull long getUnsignedInt() throws LiteralException;
+
+  @NonNull int getUnsignedShort() throws LiteralException;
+
+  @NonNull short getUnsignedByte() throws LiteralException;
 
   @NonNull String getValue();
 

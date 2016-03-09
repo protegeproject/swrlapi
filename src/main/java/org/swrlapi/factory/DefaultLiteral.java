@@ -35,8 +35,8 @@ class DefaultLiteral implements Literal
   @Override public boolean isNumeric()
   {
     return isByte() || isShort() || isInt() || isLong() || isFloat() || isDouble() || isDecimal() || isInteger()
-      || isNegativeInteger() || isNonNegativeInteger() || isNonPositiveInteger() || isUnsignedLong() || isUnsignedInt()
-      || isUnsignedShort() || isUnsignedByte();
+      || isPositiveInteger() || isNegativeInteger() || isNonNegativeInteger() || isNonPositiveInteger()
+      || isUnsignedLong() || isUnsignedInt() || isUnsignedShort() || isUnsignedByte();
   }
 
   @Override public boolean isByte()
@@ -82,6 +82,11 @@ class DefaultLiteral implements Literal
   @Override public boolean isNegativeInteger()
   {
     return this.literal.getDatatype().getIRI().equals(XSDVocabulary.NEGATIVE_INTEGER.getIRI());
+  }
+
+  @Override public boolean isPositiveInteger()
+  {
+    return this.literal.getDatatype().getIRI().equals(XSDVocabulary.POSITIVE_INTEGER.getIRI());
   }
 
   @Override public boolean isNonNegativeInteger()
@@ -312,6 +317,122 @@ class DefaultLiteral implements Literal
     } catch (NumberFormatException e) {
       throw new LiteralException(
         "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype() + " to integer");
+    }
+  }
+
+  @Override public @NonNull BigInteger getNonNegativeInteger() throws LiteralException
+  {
+    try {
+      if (isNumeric())
+        return new BigInteger(this.literal.getLiteral());
+      else
+        throw new LiteralException(
+          "cannot convert value of type " + this.literal.getDatatype() + " to non negative integer");
+    } catch (NumberFormatException e) {
+      throw new LiteralException(
+        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype()
+          + " to non negative integer");
+    }
+  }
+
+  @Override public @NonNull BigInteger getNonPositiveInteger() throws LiteralException
+  {
+    try {
+      if (isNumeric())
+        return new BigInteger(this.literal.getLiteral());
+      else
+        throw new LiteralException(
+          "cannot convert value of type " + this.literal.getDatatype() + " to non positive integer");
+    } catch (NumberFormatException e) {
+      throw new LiteralException(
+        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype()
+          + " to non positive integer");
+    }
+  }
+
+  @Override public @NonNull BigInteger getNegativeInteger() throws LiteralException
+  {
+    try {
+      if (isNumeric())
+        return new BigInteger(this.literal.getLiteral());
+      else
+        throw new LiteralException(
+          "cannot convert value of type " + this.literal.getDatatype() + " to negative integer");
+    } catch (NumberFormatException e) {
+      throw new LiteralException(
+        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype()
+          + " to negative integer");
+    }
+  }
+
+  @Override public @NonNull BigInteger getPositiveInteger() throws LiteralException
+  {
+    try {
+      if (isNumeric())
+        return new BigInteger(this.literal.getLiteral());
+      else
+        throw new LiteralException(
+          "cannot convert value of type " + this.literal.getDatatype() + " to positive integer");
+    } catch (NumberFormatException e) {
+      throw new LiteralException(
+        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype()
+          + " to positive integer");
+    }
+  }
+
+  @Override public long getUnsignedLong() throws LiteralException
+  {
+    try {
+      if (isNumeric())
+        return Long.parseLong(this.literal.getLiteral());
+      else
+        throw new LiteralException("cannot convert value of type " + this.literal.getDatatype() + " to unsigned long");
+    } catch (NumberFormatException e) {
+      throw new LiteralException(
+        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype()
+          + " to unisigned long");
+    }
+  }
+
+  @Override public long getUnsignedInt() throws LiteralException
+  {
+    try {
+      if (isNumeric())
+        return Long.parseLong(this.literal.getLiteral());
+      else
+        throw new LiteralException("cannot convert value of type " + this.literal.getDatatype() + " to unsigned int");
+    } catch (NumberFormatException e) {
+      throw new LiteralException(
+        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype()
+          + " to unsigned int");
+    }
+  }
+
+  @Override public int getUnsignedShort() throws LiteralException
+  {
+    try {
+      if (isNumeric())
+        return Integer.parseInt(this.literal.getLiteral());
+      else
+        throw new LiteralException("cannot convert value of type " + this.literal.getDatatype() + " to unsigned short");
+    } catch (NumberFormatException e) {
+      throw new LiteralException(
+        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype()
+          + " to unsigned short");
+    }
+  }
+
+  @Override public short getUnsignedByte() throws LiteralException
+  {
+    try {
+      if (isNumeric())
+        return Short.parseShort(this.literal.getLiteral());
+      else
+        throw new LiteralException("cannot convert value of type " + this.literal.getDatatype() + " to unsigned byte");
+    } catch (NumberFormatException e) {
+      throw new LiteralException(
+        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype()
+          + " to unsigned byte");
     }
   }
 

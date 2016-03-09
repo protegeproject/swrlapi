@@ -141,6 +141,7 @@ public final class OWLLiteralComparator implements Comparator<OWLLiteral>
       .equals(XSDVocabulary.FLOAT.getIRI()) || literal.getDatatype().getIRI().equals(XSDVocabulary.DOUBLE.getIRI())
       || literal.getDatatype().getIRI().equals(XSDVocabulary.DECIMAL.getIRI()) || literal.getDatatype().getIRI()
       .equals(XSDVocabulary.INTEGER.getIRI()) || literal.getDatatype().getIRI()
+      .equals(XSDVocabulary.POSITIVE_INTEGER.getIRI()) || literal.getDatatype().getIRI()
       .equals(XSDVocabulary.NEGATIVE_INTEGER.getIRI()) || literal.getDatatype().getIRI()
       .equals(XSDVocabulary.NON_NEGATIVE_INTEGER.getIRI()) || literal.getDatatype().getIRI()
       .equals(XSDVocabulary.NON_POSITIVE_INTEGER.getIRI()) || literal.getDatatype().getIRI()
