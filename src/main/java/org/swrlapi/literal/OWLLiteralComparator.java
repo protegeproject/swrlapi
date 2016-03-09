@@ -37,15 +37,19 @@ public final class OWLLiteralComparator implements Comparator<OWLLiteral>
             Byte b1 = Byte.parseByte(l1.getLiteral());
             Byte b2 = Byte.parseByte(l2.getLiteral());
             return b1.compareTo(b2);
-          } else if (l1.getDatatype().getIRI().equals(XSDVocabulary.SHORT.getIRI())) {
+          } else if (l1.getDatatype().getIRI().equals(XSDVocabulary.SHORT.getIRI()) || l1.getDatatype().getIRI()
+            .equals(XSDVocabulary.UNSIGNED_BYTE.getIRI())) {
             Short s1 = Short.parseShort(l1.getLiteral());
             Short s2 = Short.parseShort(l2.getLiteral());
             return s1.compareTo(s2);
-          } else if (l1.getDatatype().getIRI().equals(XSDVocabulary.INT.getIRI())) {
+          } else if (l1.getDatatype().getIRI().equals(XSDVocabulary.INT.getIRI()) || l1.getDatatype().getIRI()
+            .equals(XSDVocabulary.UNSIGNED_SHORT.getIRI())) {
             Integer i1 = Integer.parseInt(l1.getLiteral());
             Integer i2 = Integer.parseInt(l2.getLiteral());
             return i1.compareTo(i2);
-          } else if (l1.getDatatype().getIRI().equals(XSDVocabulary.LONG.getIRI())) {
+          } else if (l1.getDatatype().getIRI().equals(XSDVocabulary.LONG.getIRI()) ||
+            l1.getDatatype().getIRI().equals(XSDVocabulary.UNSIGNED_LONG.getIRI()) ||
+            l1.getDatatype().getIRI().equals(XSDVocabulary.UNSIGNED_INT.getIRI())) {
             Long long1 = Long.parseLong(l1.getLiteral());
             Long long2 = Long.parseLong(l2.getLiteral());
             return long1.compareTo(long2);
@@ -61,7 +65,10 @@ public final class OWLLiteralComparator implements Comparator<OWLLiteral>
             BigDecimal d1 = new BigDecimal(l1.getLiteral());
             BigDecimal d2 = new BigDecimal(l1.getLiteral());
             return d1.compareTo(d2);
-          } else if (l1.getDatatype().getIRI().equals(XSDVocabulary.INTEGER.getIRI())) {
+          } else if (l1.getDatatype().getIRI().equals(XSDVocabulary.INTEGER.getIRI()) ||
+            l1.getDatatype().getIRI().equals(XSDVocabulary.NEGATIVE_INTEGER.getIRI()) ||
+            l1.getDatatype().getIRI().equals(XSDVocabulary.NON_NEGATIVE_INTEGER.getIRI()) ||
+            l1.getDatatype().getIRI().equals(XSDVocabulary.NON_POSITIVE_INTEGER.getIRI())) {
             BigInteger d1 = new BigInteger(l1.getLiteral());
             BigInteger d2 = new BigInteger(l1.getLiteral());
             return d1.compareTo(d2);
