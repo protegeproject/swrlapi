@@ -67,7 +67,7 @@ public final class OWLLiteralComparator implements Comparator<OWLLiteral>
             return d1.compareTo(d2);
           } else
             throw new SWRLAPIInternalException(
-              "unexpected numeric datatype " + l1.getDatatype().getIRI() + " for OWL literal with value " + l1
+              "unsupported numeric datatype " + l1.getDatatype().getIRI() + " for OWL literal with value " + l1
                 .getLiteral());
         } else { // Types differ - use double for comparison
           Double d1 = Double.parseDouble(l1.getLiteral());
@@ -133,6 +133,13 @@ public final class OWLLiteralComparator implements Comparator<OWLLiteral>
       || literal.getDatatype().getIRI().equals(XSDVocabulary.LONG.getIRI()) || literal.getDatatype().getIRI()
       .equals(XSDVocabulary.FLOAT.getIRI()) || literal.getDatatype().getIRI().equals(XSDVocabulary.DOUBLE.getIRI())
       || literal.getDatatype().getIRI().equals(XSDVocabulary.DECIMAL.getIRI()) || literal.getDatatype().getIRI()
-      .equals(XSDVocabulary.INTEGER.getIRI());
+      .equals(XSDVocabulary.INTEGER.getIRI()) || literal.getDatatype().getIRI()
+      .equals(XSDVocabulary.NEGATIVE_INTEGER.getIRI()) || literal.getDatatype().getIRI()
+      .equals(XSDVocabulary.NON_NEGATIVE_INTEGER.getIRI()) || literal.getDatatype().getIRI()
+      .equals(XSDVocabulary.NON_POSITIVE_INTEGER.getIRI()) || literal.getDatatype().getIRI()
+      .equals(XSDVocabulary.UNSIGNED_LONG.getIRI()) || literal.getDatatype().getIRI()
+      .equals(XSDVocabulary.UNSIGNED_INT.getIRI()) || literal.getDatatype().getIRI()
+      .equals(XSDVocabulary.UNSIGNED_SHORT.getIRI()) || literal.getDatatype().getIRI()
+      .equals(XSDVocabulary.UNSIGNED_BYTE.getIRI());
   }
 }

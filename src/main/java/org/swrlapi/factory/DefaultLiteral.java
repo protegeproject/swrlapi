@@ -34,7 +34,9 @@ class DefaultLiteral implements Literal
 
   @Override public boolean isNumeric()
   {
-    return isByte() || isShort() || isInt() || isLong() || isFloat() || isDouble() || isDecimal() || isInteger();
+    return isByte() || isShort() || isInt() || isLong() || isFloat() || isDouble() || isDecimal() || isInteger()
+      || isNegativeInteger() || isNonNegativeInteger() || isNonPositiveInteger() || isUnsignedLong() || isUnsignedInt()
+      || isUnsignedShort() || isUnsignedByte();
   }
 
   @Override public boolean isByte()
@@ -75,6 +77,41 @@ class DefaultLiteral implements Literal
   @Override public boolean isInteger()
   {
     return this.literal.getDatatype().getIRI().equals(XSDVocabulary.INTEGER.getIRI());
+  }
+
+  @Override public boolean isNegativeInteger()
+  {
+    return this.literal.getDatatype().getIRI().equals(XSDVocabulary.NEGATIVE_INTEGER.getIRI());
+  }
+
+  @Override public boolean isNonNegativeInteger()
+  {
+    return this.literal.getDatatype().getIRI().equals(XSDVocabulary.NON_NEGATIVE_INTEGER.getIRI());
+  }
+
+  @Override public boolean isNonPositiveInteger()
+  {
+    return this.literal.getDatatype().getIRI().equals(XSDVocabulary.NON_POSITIVE_INTEGER.getIRI());
+  }
+
+  @Override public boolean isUnsignedLong()
+  {
+    return this.literal.getDatatype().getIRI().equals(XSDVocabulary.UNSIGNED_LONG.getIRI());
+  }
+
+  @Override public boolean isUnsignedInt()
+  {
+    return this.literal.getDatatype().getIRI().equals(XSDVocabulary.UNSIGNED_INT.getIRI());
+  }
+
+  @Override public boolean isUnsignedShort()
+  {
+    return this.literal.getDatatype().getIRI().equals(XSDVocabulary.UNSIGNED_SHORT.getIRI());
+  }
+
+  @Override public boolean isUnsignedByte()
+  {
+    return this.literal.getDatatype().getIRI().equals(XSDVocabulary.UNSIGNED_BYTE.getIRI());
   }
 
   @Override public boolean isString()

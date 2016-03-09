@@ -31,10 +31,6 @@ public interface Literal
 
   boolean isDouble();
 
-  boolean isDecimal();
-
-  boolean isInteger();
-
   boolean isString();
 
   boolean isBoolean();
@@ -49,6 +45,24 @@ public interface Literal
 
   boolean isDuration();
 
+  boolean isDecimal();
+
+  boolean isInteger();
+
+  boolean isNegativeInteger();
+
+  boolean isNonNegativeInteger();
+
+  boolean isNonPositiveInteger();
+
+  boolean isUnsignedLong();
+
+  boolean isUnsignedInt();
+
+  boolean isUnsignedShort();
+
+  boolean isUnsignedByte();
+
   byte getByte() throws LiteralException;
 
   short getShort() throws LiteralException;
@@ -60,10 +74,6 @@ public interface Literal
   float getFloat() throws LiteralException;
 
   double getDouble() throws LiteralException;
-
-  @NonNull BigDecimal getDecimal() throws LiteralException;
-
-  @NonNull BigInteger getInteger() throws LiteralException;
 
   boolean getBoolean() throws LiteralException;
 
@@ -78,6 +88,10 @@ public interface Literal
   @NonNull XSDDateTime getDateTime() throws LiteralException;
 
   @NonNull XSDDuration getDuration() throws LiteralException;
+
+  @NonNull BigDecimal getDecimal() throws LiteralException;
+
+  @NonNull BigInteger getInteger() throws LiteralException;
 
   @NonNull String getValue();
 
