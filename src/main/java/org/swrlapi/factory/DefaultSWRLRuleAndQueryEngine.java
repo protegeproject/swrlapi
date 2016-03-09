@@ -5,6 +5,7 @@ import org.semanticweb.owlapi.model.AddAxiom;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyChange;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import org.swrlapi.bridge.SWRLRuleEngineBridgeController;
@@ -30,6 +31,7 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.ui.model.SWRLAutoCompleter;
 
 import javax.swing.*;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -408,22 +410,16 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
   private void writeOWLAxioms2OWLOntology(@NonNull Set<@NonNull OWLAxiom> axioms) throws SWRLRuleEngineException
   {
     OWLInferredAxiomFilter inferredAxiomFilter = new OWLInferredAxiomFilter(axioms);
-    Set<OWLAxiom> filteredAxioms = axioms.stream().filter(a -> !a.accept(inferredAxiomFilter))
-      .collect(Collectors.toSet());
+    List<OWLAxiom> filteredAxioms = axioms.stream().filter(a -> !a.accept(inferredAxiomFilter))
+      .collect(Collectors.toList());
+    List<? extends OWLOntologyChange> changes = filteredAxioms.stream().map(a -> new AddAxiom(getOWLOntology(), a))
+      .collect(Collectors.toList());
 
     try {
-      for (OWLAxiom axiom : filteredAxioms)
-        writeOWLAxiom2OWLOntology(axiom);
+      getOWLOntologyManager().applyChanges(changes);
     } catch (RuntimeException e) {
       throw new SWRLRuleEngineException("Error writing OWL axioms to ontology", e);
     }
-  }
-
-  private void writeOWLAxiom2OWLOntology(@NonNull OWLAxiom axiom)
-  {
-    AddAxiom addAxiomChange = new AddAxiom(getOWLOntology(), axiom);
-
-    getOWLOntologyManager().applyChange(addAxiomChange);
   }
 
   @NonNull private OWLOntologyManager getOWLOntologyManager()
