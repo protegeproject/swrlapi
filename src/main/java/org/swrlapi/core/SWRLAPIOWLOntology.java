@@ -17,6 +17,7 @@ import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.ui.model.SWRLAutoCompleter;
+import org.swrlapi.ui.model.SWRLRuleEngineModel;
 
 import java.util.Optional;
 import java.util.Set;
@@ -33,9 +34,9 @@ import java.util.Set;
  * will construct SWRLAPI rules from the SWRL rules in an OWLAPI-based ontology to contain these additional built-in
  * argument types.
  * <p>
- * The {@link #startBulkConversion()}, {@link #completeBulkConversion()}, {@link #hasOntologyChanged()}, and
+ * The {@link #startEventFreezeMode()}, {@link #finishEventFreezeMode()}, {@link #hasOntologyChanged()}, and
  * {@link #resetOntologyChanged()} methods can be used for optimization purposes. For example, in the Protege-OWL API
- * the {@link #startBulkConversion()} method turns off listener notification so that bulk transfer of OWL axioms can be
+ * the {@link #startEventFreezeMode()} method turns off listener notification so that bulk transfer of OWL axioms can be
  * performed more efficiently. The {@link #hasOntologyChanged()} method can be used by rule engines to avoid unnecessary
  * regeneration of knowledge.
  *
@@ -45,6 +46,19 @@ import java.util.Set;
  */
 public interface SWRLAPIOWLOntology
 {
+  /**
+   *
+   * @param swrlRuleEngineModel A SWRL rule engine model
+   */
+  void registerRuleEngineModel(SWRLRuleEngineModel swrlRuleEngineModel);
+
+  /**
+   *
+   * @param swrlRuleEngineModel A SWRL rule engine model
+   */
+  void unregisterRuleEngineModel(SWRLRuleEngineModel swrlRuleEngineModel);
+
+
   // Methods for handling SWRL Rules
 
   @NonNull Set<@NonNull SWRLAPIRule> getSWRLRules();
@@ -69,6 +83,19 @@ public interface SWRLAPIOWLOntology
    */
   @NonNull SWRLAPIRule createSWRLRule(@NonNull String ruleName, @NonNull String rule, @NonNull String comment,
       boolean isActive) throws SWRLParseException;
+
+  /**
+   *
+   * @param originalRuleName The original name of the rule
+   * @param ruleName The new name of the rule
+   * @param rule     The rule text
+   * @param comment  A comment associated with the rule
+   * @param isActive Is the rule active
+   * @return
+   * @throws SWRLParseException
+   */
+  void replaceSWRLRule(@NonNull String originalRuleName, @NonNull String ruleName, @NonNull String rule,
+    @NonNull String comment, boolean isActive) throws SWRLParseException;
 
   void deleteSWRLRule(@NonNull String ruleName);
 
@@ -128,9 +155,9 @@ public interface SWRLAPIOWLOntology
 
   // Optimization methods
 
-  void startBulkConversion(); // Can be used, for example, to switch off notification during bulk conversion.
+  void startEventFreezeMode(); // Can be used, for example, to switch off notification during bulk conversion.
 
-  void completeBulkConversion();
+  void finishEventFreezeMode();
 
   boolean hasOntologyChanged();
 

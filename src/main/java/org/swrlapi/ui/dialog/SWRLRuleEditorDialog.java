@@ -3,7 +3,6 @@ package org.swrlapi.ui.dialog;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.parser.SWRLIncompleteRuleException;
 import org.swrlapi.parser.SWRLParseException;
@@ -41,6 +40,8 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
 {
   private static final long serialVersionUID = 1L;
 
+  private static final Logger log = LoggerFactory.getLogger(SWRLRuleEditorDialog.class);
+
   private static final String TITLE = "Edit";
   private static final String RULE_NAME_TITLE = "Name";
   private static final String COMMENT_LABEL_TITLE = "Comment";
@@ -64,8 +65,6 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
   private static final int BUTTON_PREFERRED_HEIGHT = 30;
   private static final int RULE_EDIT_AREA_COLUMNS = 20;
   private static final int RULE_EDIT_AREA_ROWS = 60;
-
-  private static final Logger log = LoggerFactory.getLogger(SWRLRuleEditorDialog.class);
 
   @NonNull private final SWRLRuleEngineModel swrlRuleEngineModel;
   @NonNull private final SWRLRuleEngineDialogManager dialogManager;
@@ -391,27 +390,17 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
       .replaceAll(Character.toString(SWRLParser.RING_CHAR), ".");
   }
 
-  private void createSWRLRule(@NonNull String ruleName, @NonNull String rule, @NonNull String comment, boolean isActive)
-    throws SWRLParseException
-  {
-    SWRLAPIRule swrlapiRule = getSWRLRuleEngine().createSWRLRule(ruleName, rule, comment, isActive);
-
-    if (swrlapiRule.isSQWRLQuery())
-      getSWRLRuleEngine().createSWRLRule(ruleName, rule, comment, isActive);
-
-    getSWRLRulesTableModel().updateView();
-  }
-
-  private void deleteSWRLRule(@NonNull String ruleName)
-  {
-    this.swrlRuleEngineModel.getSWRLRuleEngine().deleteSWRLRule(ruleName);
-    getSWRLRulesTableModel().updateView();
-  }
-
   @NonNull private SWRLRuleEngine getSWRLRuleEngine()
   {
     return this.swrlRuleEngineModel.getSWRLRuleEngine();
   }
+
+  @NonNull private SWRLRuleEngineModel getSWRLRuleEngineModel()
+  {
+    return this.swrlRuleEngineModel;
+  }
+
+  @NonNull private SWRLRuleEditorInitialDialogState getInitialDialogState() { return this.initialDialogState; }
 
   @NonNull private SWRLParser createSWRLParser()
   {
@@ -532,15 +521,15 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
       } else {
         try {
           if (SWRLRuleEditorDialog.this.editMode) {
-            deleteSWRLRule(SWRLRuleEditorDialog.this.initialDialogState.getRuleName());
-            createSWRLRule(ruleName, ruleText, comment, true);
+            getSWRLRuleEngineModel().getSWRLRuleEngine()
+              .replaceSWRLRule(getInitialDialogState().getRuleName(), ruleName, ruleText, comment, true);
             errorOccurred = false;
           } else {
             if (getSWRLRulesTableModel().hasSWRLRule(ruleName)) {
               getDialogManager().showErrorMessageDialog(this.parent, DUPLICATE_RULE_TEXT, DUPLICATE_RULE_TITLE);
               errorOccurred = true;
             } else {
-              createSWRLRule(ruleName, ruleText, comment, true);
+              getSWRLRuleEngine().createSWRLRule(ruleName, ruleText, comment, true);
               errorOccurred = false;
             }
           }

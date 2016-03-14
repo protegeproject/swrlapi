@@ -239,6 +239,17 @@ public class SWRLRulesAndSQWRLQueriesTableModel extends AbstractTableModel imple
     }
   }
 
+  @Override public String toString()
+  {
+    return "SWRLRulesAndSQWRLQueriesTableModel{" +
+      "swrlRuleEngine=" + swrlRuleEngine +
+      ", swrlRuleModels=" + swrlRuleModels +
+      ", view=" + view +
+      ", contentMode=" + contentMode +
+      ", isModified=" + isModified +
+      '}';
+  }
+
   private class SWRLRuleModel
   {
     @NonNull private final String ruleName, ruleText, comment;

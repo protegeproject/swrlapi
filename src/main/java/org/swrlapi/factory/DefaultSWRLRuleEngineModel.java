@@ -7,6 +7,8 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.core.SWRLRuleRenderer;
@@ -22,6 +24,8 @@ import java.util.Optional;
 
 public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel
 {
+  private static final Logger log = LoggerFactory.getLogger(DefaultSWRLRuleEngineModel.class);
+
   @NonNull private final OWLOntologyManager ontologyManager;
   @NonNull private SWRLAPIOWLOntology swrlapiOWLOntology;
   @NonNull private SWRLRuleEngine swrlRuleEngine;
@@ -49,6 +53,27 @@ public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel
 
     this.swrlRulesAndSQWRLQueriesTableModel.updateModel(ruleEngine);
     this.owl2RLModel.updateModel(owl2RLEngine);
+
+
+    updateView();
+  }
+
+  @Override public void registerOntologyListener()
+  {
+    this.swrlapiOWLOntology.registerRuleEngineModel(this);
+  }
+
+  @Override public void unregisterOntologyListener()
+  {
+    this.swrlapiOWLOntology.unregisterRuleEngineModel(this);
+  }
+
+  @Override public void updateModel()
+  {
+    this.swrlRulesAndSQWRLQueriesTableModel.updateModel(this.swrlRuleEngine);
+    this.owl2RLModel.updateModel(owl2RLEngine);
+
+    log.warn("update rule engine model");
 
     updateView();
   }

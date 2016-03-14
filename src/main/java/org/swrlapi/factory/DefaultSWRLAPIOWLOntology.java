@@ -92,6 +92,7 @@ import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.exceptions.SQWRLInvalidQueryNameException;
 import org.swrlapi.ui.model.SWRLAutoCompleter;
+import org.swrlapi.ui.model.SWRLRuleEngineModel;
 
 import javax.annotation.Nonnull;
 import java.net.URL;
@@ -129,7 +130,10 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
   @NonNull private final Map<@NonNull IRI, @NonNull OWLDeclarationAxiom> dataPropertyDeclarationAxioms;
   @NonNull private final Map<@NonNull IRI, @NonNull OWLDeclarationAxiom> annotationPropertyDeclarationAxioms;
 
+  @NonNull private final Set<SWRLRuleEngineModel> swrlRuleEngineModels;
+
   private boolean hasOntologyChanged = true; // Ensure initial processing
+  private boolean eventFreezeMode = false;
 
   public DefaultSWRLAPIOWLOntology(@NonNull OWLOntology ontology, @NonNull IRIResolver iriResolver)
   {
@@ -150,21 +154,21 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     this.dataPropertyDeclarationAxioms = new HashMap<>();
     this.annotationPropertyDeclarationAxioms = new HashMap<>();
 
+    this.swrlRuleEngineModels = new HashSet<>();
+
     addDefaultSWRLBuiltIns();
     addSWRLAPIOntologies(this.ontology);
 
     iriResolver.updatePrefixes(ontology);
-
-    this.ontology.getOWLOntologyManager().addOntologyChangeListener(this);
   }
 
   @Override public void processOntology() throws SQWRLException
-  { // TODO If ontology has not changed do not reprocess; however, will break currently
-
+  {
     reset(); // Will reset hasOntologyChanged
     this.iriResolver.updatePrefixes(this.ontology);
     processSWRLRulesAndSQWRLQueries();
     processOWLAxioms();
+    notifyRegisteredRuleEngineModels();
   }
 
   @Override public void reset()
@@ -186,6 +190,21 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     this.hasOntologyChanged = false;
   }
 
+  @Override public void registerRuleEngineModel(SWRLRuleEngineModel swrlRuleEngineModel)
+  {
+    if (this.swrlRuleEngineModels.isEmpty())
+      this.ontology.getOWLOntologyManager().addOntologyChangeListener(this);
+
+    this.swrlRuleEngineModels.add(swrlRuleEngineModel);
+  }
+
+  @Override public void unregisterRuleEngineModel(SWRLRuleEngineModel swrlRuleEngineModel)
+  {
+    this.swrlRuleEngineModels.remove(swrlRuleEngineModel);
+    if (this.swrlRuleEngineModels.isEmpty())
+      this.ontology.getOWLOntologyManager().removeOntologyChangeListener(this);
+  }
+
   @NonNull @Override public SWRLAPIRule createSWRLRule(@NonNull String ruleName, @NonNull String rule)
     throws SWRLParseException
   {
@@ -196,6 +215,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     @NonNull String comment, boolean isActive) throws SWRLParseException
   {
     Optional<SWRLRule> owlapiRule = createSWRLParser().parseSWRLRule(rule, false, ruleName, comment);
+    log.warn("Creating rile " + ruleName);
 
     if (owlapiRule.isPresent()) {
       SWRLAPIRule swrlapiRule = convertOWLAPIRule2SWRLAPIRule(owlapiRule.get(), ruleName, comment, isActive);
@@ -205,6 +225,32 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
       return swrlapiRule;
     } else
       throw new SWRLParseException("Unknown error - parser failed to generate a rule");
+  }
+
+  @Override public void replaceSWRLRule(@NonNull String originalRuleName, @NonNull String ruleName,
+    @NonNull String rule, @NonNull String comment, boolean isActive) throws SWRLParseException
+  {
+    startEventFreezeMode();
+    deleteSWRLRule(originalRuleName);
+    finishEventFreezeMode();
+
+    createSWRLRule(ruleName, rule, comment, isActive);
+  }
+
+  @Override public void deleteSWRLRule(@NonNull String ruleName)
+  {
+    if (this.swrlRules.containsKey(ruleName)) {
+      SWRLAPIRule rule = this.swrlRules.get(ruleName);
+      SWRLRule owlapiRule = this.owlapiRules.get(ruleName);
+
+      if (rule.isSQWRLQuery())
+        this.sqwrlQueries.remove(ruleName);
+
+      this.swrlRules.remove(ruleName);
+      this.owlapiRules.remove(ruleName);
+
+      this.ontology.getOWLOntologyManager().removeAxiom(this.ontology, owlapiRule);
+    }
   }
 
   @NonNull @Override public SQWRLQuery createSQWRLQuery(@NonNull String queryName, @NonNull String query)
@@ -247,11 +293,15 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     this.sqwrlQueries.clear();
 
     for (SWRLRule owlapiRule : getOWLOntology().getAxioms(AxiomType.SWRL_RULE, Imports.INCLUDED)) {
+      log.warn("rule " + owlapiRule);
       Optional<@NonNull String> ruleName = getRuleName(owlapiRule);
       boolean isActive = getIsRuleEnabled(owlapiRule);
       String comment = getRuleComment(owlapiRule);
 
-      String finalRuleName = ruleName.isPresent() ? ruleName.get() : "R" + ++ruleNameIndex;
+      log.warn("ruleName " + ruleName);
+      log.warn("ruleCommnent " + comment);
+
+      String finalRuleName = ruleName.isPresent() ? ruleName.get() : "S" + ++ruleNameIndex;
 
       SWRLAPIRule swrlapiRule = convertOWLAPIRule2SWRLAPIRule(owlapiRule, finalRuleName, comment, isActive);
 
@@ -277,22 +327,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
       return Optional.<@NonNull SWRLAPIRule>empty();
     else
       return Optional.of(this.swrlRules.get(ruleName));
-  }
-
-  @Override public void deleteSWRLRule(@NonNull String ruleName)
-  {
-    if (this.swrlRules.containsKey(ruleName)) {
-      SWRLAPIRule rule = this.swrlRules.get(ruleName);
-      SWRLRule owlapiRule = this.owlapiRules.get(ruleName);
-
-      if (rule.isSQWRLQuery())
-        this.sqwrlQueries.remove(ruleName);
-
-      this.swrlRules.remove(ruleName);
-      this.owlapiRules.remove(ruleName);
-
-      this.ontology.getOWLOntologyManager().removeAxiom(this.ontology, owlapiRule);
-    }
   }
 
   @NonNull @Override public OWLOntology getOWLOntology()
@@ -331,7 +365,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     }
     return Optional.empty();
   }
-
 
   @NonNull @Override public SQWRLQueryRenderer createSQWRLQueryRenderer()
   {
@@ -510,14 +543,14 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
       throw new IllegalArgumentException("could not get prefixed name for IRI " + iri);
   }
 
-  @Override public void startBulkConversion()
+  @Override public void startEventFreezeMode()
   {
-    // TODO implement startBulkConversion
+    this.eventFreezeMode = true;
   }
 
-  @Override public void completeBulkConversion()
+  @Override public void finishEventFreezeMode()
   {
-    // TODO implement completeBulkConversion
+    this.eventFreezeMode = false;
   }
 
   @Override public boolean hasOntologyChanged()
@@ -1609,7 +1642,22 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
   {
     this.hasOntologyChanged = true;
 
-    this.iriResolver.updatePrefixes(this.ontology);
+    if (!eventFreezeMode) {
+      try {
+        log.warn("reprocessing ontology");
+        processOntology();
+      } catch (SQWRLException e) {
+        String message = "error processing SQWRL queries in ontology: " + e.getMessage();
+        log.warn(message);
+        throw new OWLException(message);
+      }
+    }
+  }
+
+  private void notifyRegisteredRuleEngineModels()
+  {
+    for (SWRLRuleEngineModel swrlRuleEngineModel : this.swrlRuleEngineModels)
+      swrlRuleEngineModel.updateModel();
   }
 
   private static void addSWRLAPIOntologies(@NonNull OWLOntology ontology)

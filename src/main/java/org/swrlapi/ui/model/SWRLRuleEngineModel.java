@@ -20,6 +20,11 @@ public interface SWRLRuleEngineModel extends OntologyModel
   void updateModel(@NonNull SWRLRuleEngine ruleEngine);
 
   /**
+   * Update the model
+   */
+  void updateModel();
+
+  /**
    * @return A SWRL rule engine
    */
   @NonNull SWRLRuleEngine getSWRLRuleEngine();
@@ -64,4 +69,15 @@ public interface SWRLRuleEngineModel extends OntologyModel
    * @return A rule name
    */
   @NonNull Optional<String> getNextRuleName();
+
+  /**
+   * Register this model with underlying OWL ontology to get change events
+   */
+  void registerOntologyListener();
+
+  /**
+   * Unregister the model's listener from the underlying OWL ontology
+   */
+  void unregisterOntologyListener();
+
 }

@@ -18,7 +18,7 @@ import java.util.Set;
 
 /**
  * This interface defines methods that must be provided by a SWRL rule engine in the SWRLAPI.
- * <p>
+ * <p/>
  * A native rule engine implementation must also implement the {@link org.swrlapi.bridge.TargetSWRLRuleEngine} interface.
  *
  * @see org.swrlapi.core.SWRLAPIRule
@@ -72,7 +72,20 @@ public interface SWRLRuleEngine
    * @throws SWRLParseException If an error occurs during parsing
    */
   @NonNull SWRLAPIRule createSWRLRule(@NonNull String ruleName, @NonNull String rule, @NonNull String comment,
-      boolean isActive) throws SWRLParseException;
+    boolean isActive) throws SWRLParseException;
+
+  /**
+   *
+   * @param originalRuleName The original name of the rule
+   * @param ruleName The new name of the rule
+   * @param rule     The rule text
+   * @param comment  A comment associated with the rule
+   * @param isActive Is the rule active
+   * @return
+   * @throws SWRLParseException
+   */
+  void replaceSWRLRule(@NonNull String originalRuleName, @NonNull String ruleName, @NonNull String rule,
+    @NonNull String comment, boolean isActive) throws SWRLParseException;
 
   /**
    * @return A collection of SWRL rules

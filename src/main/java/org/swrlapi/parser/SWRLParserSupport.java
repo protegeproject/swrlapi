@@ -28,6 +28,8 @@ import org.semanticweb.owlapi.model.SWRLVariable;
 import org.semanticweb.owlapi.model.parameters.Imports;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
@@ -51,6 +53,8 @@ import java.util.Set;
  */
 class SWRLParserSupport
 {
+  private static final Logger log = LoggerFactory.getLogger(SWRLParserSupport.class);
+
   @NonNull private final SWRLAPIOWLOntology swrlapiOWLOntology;
 
   public SWRLParserSupport(@NonNull SWRLAPIOWLOntology swrlapiOWLOntology)
@@ -209,6 +213,8 @@ class SWRLParserSupport
   {
     Set<@NonNull OWLAnnotation> annotations = this.swrlapiOWLOntology
       .generateRuleAnnotations(ruleName, comment, isEnabled);
+
+    log.warn("****************create n ps " + ruleName);
 
     return getOWLDataFactory().getSWRLRule(body, head, annotations);
   }
