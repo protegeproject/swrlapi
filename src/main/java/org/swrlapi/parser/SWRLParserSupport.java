@@ -214,8 +214,6 @@ class SWRLParserSupport
     Set<@NonNull OWLAnnotation> annotations = this.swrlapiOWLOntology
       .generateRuleAnnotations(ruleName, comment, isEnabled);
 
-    log.warn("****************create n ps " + ruleName);
-
     return getOWLDataFactory().getSWRLRule(body, head, annotations);
   }
 

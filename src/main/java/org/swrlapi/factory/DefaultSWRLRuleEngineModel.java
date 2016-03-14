@@ -73,8 +73,6 @@ public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel
     this.swrlRulesAndSQWRLQueriesTableModel.updateModel(this.swrlRuleEngine);
     this.owl2RLModel.updateModel(owl2RLEngine);
 
-    log.warn("update rule engine model");
-
     updateView();
   }
 

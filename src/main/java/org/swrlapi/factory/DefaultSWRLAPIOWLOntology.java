@@ -215,7 +215,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     @NonNull String comment, boolean isActive) throws SWRLParseException
   {
     Optional<SWRLRule> owlapiRule = createSWRLParser().parseSWRLRule(rule, false, ruleName, comment);
-    log.warn("Creating rile " + ruleName);
 
     if (owlapiRule.isPresent()) {
       SWRLAPIRule swrlapiRule = convertOWLAPIRule2SWRLAPIRule(owlapiRule.get(), ruleName, comment, isActive);
@@ -293,14 +292,9 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     this.sqwrlQueries.clear();
 
     for (SWRLRule owlapiRule : getOWLOntology().getAxioms(AxiomType.SWRL_RULE, Imports.INCLUDED)) {
-      log.warn("rule " + owlapiRule);
       Optional<@NonNull String> ruleName = getRuleName(owlapiRule);
       boolean isActive = getIsRuleEnabled(owlapiRule);
       String comment = getRuleComment(owlapiRule);
-
-      log.warn("ruleName " + ruleName);
-      log.warn("ruleCommnent " + comment);
-
       String finalRuleName = ruleName.isPresent() ? ruleName.get() : "S" + ++ruleNameIndex;
 
       SWRLAPIRule swrlapiRule = convertOWLAPIRule2SWRLAPIRule(owlapiRule, finalRuleName, comment, isActive);
@@ -1644,11 +1638,9 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
 
     if (!eventFreezeMode) {
       try {
-        log.warn("reprocessing ontology");
         processOntology();
       } catch (SQWRLException e) {
         String message = "error processing SQWRL queries in ontology: " + e.getMessage();
-        log.warn(message);
         throw new OWLException(message);
       }
     }
