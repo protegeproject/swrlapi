@@ -4,7 +4,7 @@
   <parent>
     <groupId>edu.stanford.swrl</groupId>
     <artifactId>swrlapi-parent</artifactId>
-    <version>1.0.0-beta-25-SNAPSHOT</version>
+    <version>1.0.0-beta-25</version>
   </parent>
   
   <groupId>edu.stanford.swrl</groupId>
@@ -18,7 +18,7 @@
     <connection>scm:git:git@github.com:protegeproject/swrlapi.git</connection>
     <developerConnection>scm:git:git@github.com:protegeproject/swrlapi.git</developerConnection>
     <url>https://github.com/protegeproject/swrlapi</url>
-    <tag>HEAD</tag>
+    <tag>swrlapi-1.0.0-beta-25</tag>
   </scm>
 
   <issueManagement>
