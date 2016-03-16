@@ -33,13 +33,11 @@
       <artifactId>owlapi-osgidistribution</artifactId>
     </dependency>
 
-    <!-- OSGi Bundle for Axis 1.4 -->
     <dependency>
       <groupId>org.apache.geronimo.bundles</groupId>
       <artifactId>axis</artifactId>
     </dependency>
 
-    <!-- OSGi Bundle for Apache Commons Discovery 0.4  -->
     <dependency>
       <groupId>org.apache.geronimo.bundles</groupId>
       <artifactId>commons-discovery</artifactId>
@@ -55,8 +53,6 @@
       <artifactId>jep</artifactId>
     </dependency>
 
-    <!-- Start of Checker Framework Dependencies -->
-    
     <dependency>
       <groupId>org.checkerframework</groupId>
       <artifactId>checker</artifactId>
@@ -72,8 +68,6 @@
       <artifactId>jdk8</artifactId>
     </dependency>
 
-    <!-- End of Checker Framework Dependencies -->
-
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -84,7 +78,6 @@
       <groupId>org.hamcrest</groupId>
       <artifactId>hamcrest-core</artifactId>
     </dependency>
-
 
     <dependency>
       <groupId>org.slf4j</groupId>
