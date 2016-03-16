@@ -2,11 +2,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.sonatype.oss</groupId>
-    <artifactId>oss-parent</artifactId>
-    <version>7</version>
+    <groupId>edu.stanford.swrl</groupId>
+    <artifactId>swrlapi-parent</artifactId>
+    <version>1.0.0</version>
   </parent>
-
+  
   <groupId>edu.stanford.swrl</groupId>
   <artifactId>swrlapi</artifactId>
   <version>1.0.0-beta-25-SNAPSHOT</version>
@@ -14,64 +14,6 @@
   <name>SWRLAPI</name>
   <description>Java API for working with SWRL rules and SQWRL queries</description>
   <url>https://github.com/protegeproject/swrlapi/wiki</url>
-
-  <properties>
-
-    <owlapi.version>4.2.1</owlapi.version> 
-    <jep.version>2.4.2</jep.version>
-    <axis.osgi.version>1.4_2</axis.osgi.version>
-    <commons.discovery.osgi.version>0.4_1</commons.discovery.osgi.version>
-    <com.google.guava.version>19.0</com.google.guava.version>
-
-    <checker.framework.version>1.9.12</checker.framework.version>
-    <annotatedJdk>${org.checkerframework:jdk8:jar}</annotatedJdk>
-    <junit.version>4.12</junit.version>
-    <org.hamcrest.core.version>1.3</org.hamcrest.core.version>
-    <slf4j.version>1.7.18</slf4j.version>
-    
-    <maven.compiler.plugin.version>3.5.1</maven.compiler.plugin.version>
-    <maven.dependency.plugin.version>2.10</maven.dependency.plugin.version>
-    <maven.bundle.plugin.version>3.0.1</maven.bundle.plugin.version>
-    <maven.source.plugin.version>3.0.0</maven.source.plugin.version>
-    <maven.release.plugin.version>2.5.3</maven.release.plugin.version>
-    <maven.nexus-staging.plugin.version>1.6.7</maven.nexus-staging.plugin.version>
-    <maven.javadoc.plugin.version>2.10.3</maven.javadoc.plugin.version>
-    <maven.gpg.plugin.version>1.6</maven.gpg.plugin.version>
-    <maven.scm.gitexe.version>1.9.4</maven.scm.gitexe.version>
-
-    <java.version>1.8</java.version> 
-
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-  </properties>
-
-  <developers>
-    <developer>
-      <name>Martin O'Connor</name>
-      <email>martin.oconnor@stanford.edu</email>
-      <organization>Stanford Center for Biomedical Informatics Research</organization>
-      <organizationUrl>http://bmir.stanford.edu</organizationUrl>
-    </developer>
-  </developers>
-
-  <licenses>
-    <license>
-      <name>BSD 2-Clause License</name>
-      <url>http://opensource.org/licenses/BSD-2-Clause</url>
-    </license>
-  </licenses>  
-
-  <!-- SWRLAPI libraries are hosted on Sonatype OSSRH (OSS Repository Hosting Service). -->
-  <distributionManagement>
-    <snapshotRepository>
-      <id>sonatype-nexus-snapshots</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-    <repository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-  </distributionManagement>
 
   <scm>
     <connection>scm:git:git@github.com:protegeproject/swrlapi.git</connection>
@@ -84,7 +26,7 @@
     <system>GitHub</system>
     <url>https://github.com/protegeproject/swrlapi/issues</url>
   </issueManagement>
-  
+
   <dependencies>
 
     <dependency>
@@ -97,26 +39,22 @@
     <dependency>
       <groupId>org.apache.geronimo.bundles</groupId>
       <artifactId>axis</artifactId>
-      <version>${axis.osgi.version}</version>
     </dependency>
 
     <!-- OSGi Bundle for Apache Commons Discovery 0.4  -->
     <dependency>
       <groupId>org.apache.geronimo.bundles</groupId>
       <artifactId>commons-discovery</artifactId>
-      <version>${commons.discovery.osgi.version}</version>
     </dependency>
 
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <version>${com.google.guava.version}</version>
     </dependency>
     
     <dependency>
       <groupId>org.scijava</groupId>
       <artifactId>jep</artifactId>
-      <version>${jep.version}</version>
     </dependency>
 
     <!-- Start of Checker Framework Dependencies -->
@@ -124,19 +62,16 @@
     <dependency>
       <groupId>org.checkerframework</groupId>
       <artifactId>checker</artifactId>
-      <version>${checker.framework.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.checkerframework</groupId>
       <artifactId>checker-qual</artifactId>
-      <version>${checker.framework.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.checkerframework</groupId>
       <artifactId>jdk8</artifactId>
-      <version>${checker.framework.version}</version>
     </dependency>
 
     <!-- End of Checker Framework Dependencies -->
@@ -144,27 +79,23 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>org.hamcrest</groupId>
       <artifactId>hamcrest-core</artifactId>
-      <version>${org.hamcrest.core.version}</version>
     </dependency>
 
 
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>${slf4j.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
-      <version>${slf4j.version}</version>
       <scope>test</scope>
     </dependency>
 
@@ -174,37 +105,6 @@
 
     <plugins>
 
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>${maven.compiler.plugin.version}</version>
-        <configuration>
-          <source>${java.version}</source>
-          <target>${java.version}</target>
-          <!-- Temporarily disabling Checker Framework. A small number Checker-identified issues remain.
-              <fork>true</fork>
-              <annotationProcessors>
-              <annotationProcessor>org.checkerframework.checker.nullness.NullnessChecker</annotationProcessor>
-              </annotationProcessors>
-              <compilerArgs>
-              <arg>-Xbootclasspath/p:${annotatedJdk}</arg>
-              </compilerArgs>
-          -->
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <version>${maven.dependency.plugin.version}</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>properties</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-
       <plugin>   
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
@@ -212,7 +112,6 @@
         <extensions>true</extensions>
 
         <configuration>
-
           <instructions>
             <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
             <Include-Resource>{maven-resources}</Include-Resource>
@@ -227,7 +126,6 @@
             <Embed-Transitive>true</Embed-Transitive>
             <Embed-Dependency>jep;version="${jep.version}"</Embed-Dependency>
           </instructions>
-
         </configuration>
 
         <executions>
@@ -242,94 +140,7 @@
 
       </plugin>
 
-      <plugin>
-        <artifactId>maven-release-plugin</artifactId>
-        <version>${maven.release.plugin.version}</version>
-        <dependencies>
-          <dependency>
-            <groupId>org.apache.maven.scm</groupId>
-            <artifactId>maven-scm-provider-gitexe</artifactId>
-	    <version>${maven.scm.gitexe.version}</version>
-          </dependency>
-        </dependencies>
-      </plugin>
-
     </plugins>
-
   </build>
-
-  <profiles>
-    <profile>
-      <id>release</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-source-plugin</artifactId>
-            <version>${maven.source.plugin.version}</version>
-            <executions>
-              <execution>
-                <id>attach-sources</id>
-                <goals>
-                  <goal>jar</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-javadoc-plugin</artifactId>
-            <version>${maven.javadoc.plugin.version}</version>
-            <executions>
-              <execution>
-                <id>attach-javadocs</id>
-                <goals>
-                  <goal>jar</goal>
-                </goals>
-                <configuration>
-                  <failOnError>false</failOnError>
-                  <quiet>true</quiet>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-          
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-gpg-plugin</artifactId>
-            <version>${maven.gpg.plugin.version}</version>
-            <executions>
-              <execution>
-                <id>sign-artifacts</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>sign</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-
-          <plugin>
-            <groupId>org.sonatype.plugins</groupId>
-            <artifactId>nexus-staging-maven-plugin</artifactId>
-            <version>${maven.nexus-staging.plugin.version}</version>
-            <extensions>true</extensions>
-            <configuration>
-              <serverId>ossrh</serverId>
-              <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-              <description>${project.version}</description>
-              <autoReleaseAfterClose>true</autoReleaseAfterClose>
-            </configuration>
-          </plugin>
-
-        </plugins>
-
-      </build>
-    </profile>
-  </profiles>
 
 </project>
