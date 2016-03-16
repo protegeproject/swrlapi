@@ -31,7 +31,6 @@
     <dependency>
       <groupId>net.sourceforge.owlapi</groupId>
       <artifactId>owlapi-osgidistribution</artifactId>
-      <version>${owlapi.version}</version>
     </dependency>
 
     <!-- OSGi Bundle for Axis 1.4 -->
