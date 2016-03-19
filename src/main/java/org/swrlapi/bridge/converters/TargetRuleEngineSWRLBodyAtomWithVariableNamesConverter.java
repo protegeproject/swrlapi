@@ -37,7 +37,8 @@ public interface TargetRuleEngineSWRLBodyAtomWithVariableNamesConverter<T> exten
   @NonNull T convert(@NonNull SWRLDifferentIndividualsAtom atom,
     @NonNull Set<@NonNull String> previouslyEncounteredVariableNames);
 
-  @NonNull T convert(@NonNull SWRLAPIBuiltInAtom atom, @NonNull Set<@NonNull String> previouslyEncounteredVariableNames);
+  @NonNull T convert(@NonNull SWRLAPIBuiltInAtom atom,
+    @NonNull Set<@NonNull String> previouslyEncounteredVariableNames);
 
   @NonNull T convert(@NonNull SWRLDataRangeAtom atom, @NonNull Set<@NonNull String> previouslyEncounteredVariableNames);
 }
