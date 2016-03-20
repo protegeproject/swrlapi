@@ -42,7 +42,7 @@ import java.util.Set;
  */
 public class SWRLParser
 {
-  public final static char AND_CHAR = '\u2227'; // ^
+  public final static char AND_CHAR = '^';
   public final static String IMP_COMBINATION = "->";
   public final static char RING_CHAR = '\u02da'; // .
 
