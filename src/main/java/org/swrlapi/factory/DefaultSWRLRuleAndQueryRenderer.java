@@ -243,30 +243,33 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
     return sb.toString();
   }
 
-/**
- * The OWLAPI follows the OWL Specification and does not explicitly allow named OWL entities as arguments to
- * built-ins. However, if OWLAPI parsers encounter OWL entities as parameters they appear to represent them as SWRL
- * variables - with the variable IRI set to the IRI of the entity ({@link org.semanticweb.owlapi.model.OWLEntity}
- * classes represent named OWL concepts so have an IRI). So if we are processing built-in parameters and encounter
- * variables with an IRI referring to OWL entities in the active ontology we can transform them to the
- * appropriate SWRLAPI built-in argument for the named entity.
- *
- * @see org.swrlapi.parser.SWRLParser#parseShortNameSWRLDArgument(org.swrlapi.parser.SWRLTokenizer, boolean, String)
- * @see DefaultSWRLAPIOWLOntology#convertSWRLVariable2SWRLBuiltInArgument(SWRLVariable)
-*/
+  /**
+   * The OWLAPI follows the OWL Specification and does not explicitly allow named OWL entities as arguments to
+   * built-ins. However, if OWLAPI parsers encounter OWL entities as parameters they appear to represent them as SWRL
+   * variables - with the variable IRI set to the IRI of the entity ({@link org.semanticweb.owlapi.model.OWLEntity}
+   * classes represent named OWL concepts so have an IRI). So if we are processing built-in parameters and encounter
+   * variables with an IRI referring to OWL entities in the active ontology we can transform them to the
+   * appropriate short form for the named entity.
+   *
+   * @see org.swrlapi.parser.SWRLParser#parseShortNameSWRLDArgument(org.swrlapi.parser.SWRLTokenizer, boolean, String)
+   * @see DefaultSWRLAPIOWLOntology#convertSWRLVariable2SWRLBuiltInArgument(SWRLVariable)
+   */
   @NonNull @Override public String visit(@NonNull SWRLVariable variable)
   {
     IRI argumentIRI = variable.getIRI();
 
-    com.google.common.base.Optional<String> remainder = argumentIRI.getRemainder();
+    if (getOWLOntology().containsEntityInSignature(argumentIRI)) {
+      String shortForm = getShortForm(argumentIRI);
 
-// TODO 
+      return shortForm.startsWith(":") ? shortForm.substring(1) : shortForm;
+    } else {
+      com.google.common.base.Optional<String> remainder = argumentIRI.getRemainder();
 
-
-    if (remainder.isPresent()) {
-      return "?" + remainder.get();
-    } else
-      throw new IllegalArgumentException("SWRL variable with IRI " + argumentIRI + " has no remainder");
+      if (remainder.isPresent())
+        return "?" + remainder.get();
+      else
+        throw new IllegalArgumentException("SWRL variable with IRI " + argumentIRI + " has no remainder");
+    }
   }
 
   @NonNull @Override public String visit(@NonNull SWRLIndividualArgument individualArgument)
@@ -556,4 +559,6 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
     else
       throw new IllegalArgumentException("could not get short form for IRI " + iri);
   }
+
+  @NonNull private OWLOntology getOWLOntology() { return this.ontology; }
 }

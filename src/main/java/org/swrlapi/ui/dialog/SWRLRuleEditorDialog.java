@@ -386,8 +386,7 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
 
   @NonNull private String getRuleText()
   { // We replace the Unicode characters when parsing
-    return this.ruleTextTextArea.getText().replaceAll(Character.toString(SWRLParser.AND_CHAR), "^")
-      .replaceAll(Character.toString(SWRLParser.RING_CHAR), ".");
+    return this.ruleTextTextArea.getText().replaceAll(Character.toString(SWRLParser.RING_CHAR), ".");
   }
 
   @NonNull private SWRLRuleEngine getSWRLRuleEngine()
