@@ -347,7 +347,7 @@ public class SWRLParser
         Optional.of(this.swrlParserSupport.createXSDFloatSWRLLiteralArgument(token.getValue())) :
         Optional.<@NonNull SWRLDArgument>empty();
     } else
-      throw new SWRLParseException("Expecting variable or OWL literal, got '" + token.getValue() + "'");
+      throw new SWRLParseException("Expecting variable, literal or OWL entity name, got '" + token.getValue() + "'");
   }
 
   private Optional<@NonNull SWRLDArgument> parseLiteralSWRLDArgument(@NonNull SWRLTokenizer tokenizer,
@@ -373,6 +373,17 @@ public class SWRLParser
         Optional.<@NonNull SWRLDArgument>empty();
   }
 
+  /**
+   * The OWLAPI follows the OWL Specification and does not explicitly allow named OWL entities as arguments to
+   * built-ins. However, if OWLAPI parsers encounter OWL entities as parameters they appear to represent them as SWRL
+   * variables - with the variable IRI set to the IRI of the entity ({@link org.semanticweb.owlapi.model.OWLEntity}
+   * classes represent named OWL concepts so have an IRI). So if we are processing built-in parameters and encounter
+   * variables with an IRI referring to OWL entities in the active ontology we can transform them to the
+   * appropriate SWRLAPI built-in argument for the named entity.
+   *
+   * @see org.swrlapi.parser.SWRLParser#parseShortNameSWRLDArgument(SWRLTokenizer, boolean, String)
+   * @see org.swrlapi.factory.DefaultSWRLRuleAndQueryRenderer#visit(SWRLVariable)
+   */
   private Optional<@NonNull SWRLDArgument> parseShortNameSWRLDArgument(@NonNull SWRLTokenizer tokenizer,
     boolean isInBuiltIn, @NonNull String shortName) throws SWRLParseException
   {
