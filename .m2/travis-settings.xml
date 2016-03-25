@@ -8,6 +8,7 @@
       <id>ci</id>
 
       <repositories>
+        <!-- Use BMIR's Nexus server for artifact resolution (in addition to default Maven Central) -->
         <repository>
           <id>bmir-nexus-snapshots</id>
           <url>https://nexus.bmir.stanford.edu/content/repositories/snapshots</url>
