@@ -29,13 +29,13 @@
   <servers>
     <server>
       <id>bmir-nexus-snapshots</id>
-      <username>${env.CI_DEPLOY_USERNAME}</username>
-      <password>${env.CI_DEPLOY_PASSWORD}</password>
+      <username>${env.BMIR_NEXUS_USERNAME}</username>
+      <password>${env.BMIR_NEXUS_PASSWORD}</password>
     </server>
     <server>
       <id>bmir-nexus-staging</id>
-      <username>${env.CI_DEPLOY_USERNAME}</username>
-      <password>${env.CI_DEPLOY_PASSWORD}</password>
+      <username>${env.BMIR_NEXUS_USERNAME}</username>
+      <password>${env.BMIR_NEXUS_PASSWORD}</password>
     </server>
   </servers>
 
