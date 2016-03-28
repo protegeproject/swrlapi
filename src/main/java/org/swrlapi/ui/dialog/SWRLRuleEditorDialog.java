@@ -530,6 +530,7 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
               errorOccurred = true;
             } else {
               getSWRLRuleEngine().createSWRLRule(ruleName, ruleText, comment, true);
+              getSWRLRulesTableModel().updateView();
               errorOccurred = false;
             }
           }
