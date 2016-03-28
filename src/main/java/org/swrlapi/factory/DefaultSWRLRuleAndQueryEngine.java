@@ -16,7 +16,6 @@ import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.core.SWRLRuleRenderer;
 import org.swrlapi.exceptions.SWRLAPIException;
-import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLRuleEngineException;
 import org.swrlapi.exceptions.SWRLRuleException;
 import org.swrlapi.exceptions.TargetSWRLRuleEngineException;
@@ -84,13 +83,7 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
 
   @Override public void run() throws SWRLRuleEngineException
   {
-    try {
-      this.swrlapiOWLOntology.processOntology();
-      getTargetSWRLRuleEngine().runRuleEngine();
-    } catch (@NonNull SWRLBuiltInException | SWRLAPIException e) {
-      throw new SWRLRuleEngineException("error running rule engine: " + (e.getMessage() != null ? e.getMessage() : ""),
-        e);
-    }
+    getTargetSWRLRuleEngine().runRuleEngine();
   }
 
   @Override public void exportInferredOWLAxioms() throws SWRLRuleEngineException
@@ -260,7 +253,7 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
     return this.swrlapiOWLOntology.createSWRLRule(ruleName, rule, comment, isActive);
   }
 
-   @Override public void replaceSWRLRule(@NonNull String originalRuleName, @NonNull String ruleName,
+  @Override public void replaceSWRLRule(@NonNull String originalRuleName, @NonNull String ruleName,
     @NonNull String rule, @NonNull String comment, boolean isActive) throws SWRLParseException
   {
     this.swrlapiOWLOntology.replaceSWRLRule(originalRuleName, ruleName, rule, comment, isActive);
