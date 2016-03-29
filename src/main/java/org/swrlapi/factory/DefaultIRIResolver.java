@@ -190,7 +190,6 @@ public class DefaultIRIResolver implements IRIResolver
     String autogenPrefix = autoGeneratePrefix(namespace);
     String autogenPrefixedName = autogenPrefix + remainder;
     this.autogenPrefixedName2IRI.put(autogenPrefixedName, iri);
-    log.warn("prefixedName " + autogenPrefixedName + " IRI " + iri);
 
     return autogenPrefixedName;
   }
