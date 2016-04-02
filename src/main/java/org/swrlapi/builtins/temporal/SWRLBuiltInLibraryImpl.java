@@ -679,8 +679,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
         throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
           "expecting xsd:string, xsd:date, or xsd:dateTime got " + arguments.get(argumentNumber));
       return new Period(this.temporal, datetimeString, datetimeString, granularity);
-    } else if (isArgumentAnIndividual(argumentNumber, arguments)) {
-      IRI individualIRI = getArgumentAsAnIndividualIRI(argumentNumber, arguments);
+    } else if (isArgumentAnOWLNamedIndividual(argumentNumber, arguments)) {
+      IRI individualIRI = getArgumentAsANamedIndividualIRI(argumentNumber, arguments);
       if (isOWLIndividualOfType(individualIRI, createIRI(ValidInstantClassName))) {
         Instant instant = validInstantIndividual2Instant(individualIRI, granularity);
         return new Period(this.temporal, instant, granularity);
@@ -714,8 +714,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
         throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
           "expecting xsd:string, xsd:date, or xsd:dateTime got " + arguments.get(argumentNumber));
       return new Instant(this.temporal, datetimeString, granularity);
-    } else if (isArgumentAnIndividual(argumentNumber, arguments)) {
-      IRI individualIRI = getArgumentAsAnIndividualIRI(argumentNumber, arguments);
+    } else if (isArgumentAnOWLNamedIndividual(argumentNumber, arguments)) {
+      IRI individualIRI = getArgumentAsANamedIndividualIRI(argumentNumber, arguments);
       if (isOWLIndividualOfType(individualIRI, createIRI(ValidInstantClassName))) {
         return validInstantIndividual2Instant(individualIRI, granularity);
       } else if (isOWLIndividualOfType(individualIRI, createIRI(ExtendedPropositionClassName))) {
@@ -736,8 +736,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     if (isArgumentALiteral(argumentNumber, arguments)) {
       String granularityName = getArgumentAsAString(argumentNumber, arguments);
       return Temporal.getIntegerGranularityRepresentation(granularityName);
-    } else if (isArgumentAnIndividual(argumentNumber, arguments)) {
-      SWRLNamedIndividualBuiltInArgument individualArgument = getArgumentAsAnIndividual(argumentNumber, arguments);
+    } else if (isArgumentAnOWLNamedIndividual(argumentNumber, arguments)) {
+      SWRLNamedIndividualBuiltInArgument individualArgument = getArgumentAsANamedIndividual(argumentNumber, arguments);
       IRI individualIRI = individualArgument.getIRI();
       String fullName = individualIRI.toString();
       String granularityName;
@@ -762,8 +762,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     if (isArgumentAString(argumentNumber, arguments)) {
       String granularityName = getArgumentAsAString(argumentNumber, arguments);
       return Temporal.isValidGranularityString(granularityName);
-    } else if (isArgumentAnIndividual(argumentNumber, arguments)) {
-      IRI individualIRI = getArgumentAsAnIndividualIRI(argumentNumber, arguments);
+    } else if (isArgumentAnOWLNamedIndividual(argumentNumber, arguments)) {
+      IRI individualIRI = getArgumentAsANamedIndividualIRI(argumentNumber, arguments);
       return isOWLIndividualOfType(individualIRI, createIRI(GranularityClassName));
     } else
       return false;

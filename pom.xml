@@ -4,12 +4,12 @@
   <parent>
     <groupId>edu.stanford.swrl</groupId>
     <artifactId>swrlapi-parent</artifactId>
-    <version>1.0.0-beta-51</version>
+    <version>1.0.0-beta-52</version>
   </parent>
   
   <groupId>edu.stanford.swrl</groupId>
   <artifactId>swrlapi</artifactId>
-  <version>1.0.0-beta-51</version>
+  <version>1.0.0-beta-52</version>
   <packaging>bundle</packaging>
   <name>SWRLAPI</name>
   <description>Java API for working with SWRL rules and SQWRL queries</description>
@@ -19,7 +19,7 @@
     <connection>scm:git:git@github.com:protegeproject/swrlapi.git</connection>
     <developerConnection>scm:git:git@github.com:protegeproject/swrlapi.git</developerConnection>
     <url>https://github.com/protegeproject/swrlapi</url>
-    <tag>release-1.0.0-beta-51</tag>
+    <tag>release-1.0.0-beta-52</tag>
   </scm>
 
   <issueManagement>
