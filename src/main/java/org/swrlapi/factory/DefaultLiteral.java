@@ -167,7 +167,8 @@ class DefaultLiteral implements Literal
   @NonNull @Override public String getString() throws LiteralException
   {
     if (!isString())
-      throw new LiteralException("cannot convert value of type " + this.literal.getDatatype() + " to String");
+      throw new LiteralException(
+        "cannot convert value of type " + this.literal.getDatatype() + " to " + XSDVocabulary.STRING.getPrefixedName());
 
     return getOWLLiteral().getLiteral();
   }
@@ -175,7 +176,9 @@ class DefaultLiteral implements Literal
   @Override public boolean getBoolean() throws LiteralException
   {
     if (!isBoolean())
-      throw new LiteralException("cannot convert value of type " + this.literal.getDatatype() + " to boolean");
+      throw new LiteralException(
+        "cannot convert value of type " + this.literal.getDatatype() + " to " + XSDVocabulary.BOOLEAN
+          .getPrefixedName());
 
     return Boolean.parseBoolean(this.literal.getLiteral());
   }
@@ -185,11 +188,12 @@ class DefaultLiteral implements Literal
     try {
       if (!isByte())
         throw new LiteralException(
-          "cannot convert value of type " + this.literal.getDatatype() + " to " + XSDVocabulary.BYTE);
+          "cannot convert value of type " + this.literal.getDatatype() + " to " + XSDVocabulary.BYTE.getPrefixedName());
       return Byte.parseByte(this.literal.getLiteral());
     } catch (NumberFormatException e) {
       throw new LiteralException(
-        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype() + " to byte");
+        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype()
+          + XSDVocabulary.BYTE.getPrefixedName());
     }
   }
 
@@ -201,10 +205,13 @@ class DefaultLiteral implements Literal
       else if (isByte())
         return Byte.parseByte(this.literal.getLiteral());
       else
-        throw new LiteralException("cannot convert value of type " + this.literal.getDatatype() + " to short");
+        throw new LiteralException(
+          "cannot convert value of type " + this.literal.getDatatype() + " to " + XSDVocabulary.SHORT
+            .getPrefixedName());
     } catch (NumberFormatException e) {
       throw new LiteralException(
-        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype() + " to short");
+        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype() + " to "
+          + XSDVocabulary.SHORT.getPrefixedName());
     }
   }
 
@@ -218,10 +225,12 @@ class DefaultLiteral implements Literal
       else if (isByte())
         return Byte.parseByte(this.literal.getLiteral());
       else
-        throw new LiteralException("cannot convert value of type " + this.literal.getDatatype() + " to int");
+        throw new LiteralException(
+          "cannot convert value of type " + this.literal.getDatatype() + " to " + XSDVocabulary.INT.getPrefixedName());
     } catch (NumberFormatException e) {
       throw new LiteralException(
-        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype() + " to integer");
+        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype() + " to "
+          + XSDVocabulary.INT.getPrefixedName());
     }
   }
 
@@ -237,10 +246,12 @@ class DefaultLiteral implements Literal
       else if (isByte())
         return Byte.parseByte(this.literal.getLiteral());
       else
-        throw new LiteralException("cannot convert value of type " + this.literal.getDatatype() + " to long");
+        throw new LiteralException(
+          "cannot convert value of type " + this.literal.getDatatype() + " to " + XSDVocabulary.LONG.getPrefixedName());
     } catch (NumberFormatException e) {
       throw new LiteralException(
-        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype() + " to long");
+        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype() + " to "
+          + XSDVocabulary.LONG.getPrefixedName());
     }
   }
 
@@ -262,10 +273,13 @@ class DefaultLiteral implements Literal
       else if (isByte())
         return Byte.parseByte(this.literal.getLiteral());
       else
-        throw new LiteralException("cannot convert value of type " + this.literal.getDatatype() + " to float");
+        throw new LiteralException(
+          "cannot convert value of type " + this.literal.getDatatype() + " to " + XSDVocabulary.FLOAT
+            .getPrefixedName());
     } catch (NumberFormatException e) {
       throw new LiteralException(
-        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype() + " to float");
+        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype() + " to "
+          + XSDVocabulary.FLOAT);
     }
   }
 
@@ -287,40 +301,49 @@ class DefaultLiteral implements Literal
       else if (isByte())
         return Byte.parseByte(this.literal.getLiteral());
       else
-        throw new LiteralException("cannot convert value of type " + this.literal.getDatatype() + " to double");
+        throw new LiteralException(
+          "cannot convert value of type " + this.literal.getDatatype() + " to " + XSDVocabulary.DOUBLE
+            .getPrefixedName());
     } catch (NumberFormatException e) {
       throw new LiteralException(
-        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype() + " to double");
+        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype() + " to "
+          + XSDVocabulary.DOUBLE);
     }
   }
 
-  @Override public @NonNull BigDecimal getDecimal() throws LiteralException
+  @NonNull @Override public BigDecimal getDecimal() throws LiteralException
   {
     try {
       if (isNumeric())
         return new BigDecimal(this.literal.getLiteral());
       else
-        throw new LiteralException("cannot convert value of type " + this.literal.getDatatype() + " to decimal");
+        throw new LiteralException(
+          "cannot convert value of type " + this.literal.getDatatype() + " to " + XSDVocabulary.DECIMAL
+            .getPrefixedName());
     } catch (NumberFormatException e) {
       throw new LiteralException(
-        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype() + " to decimal");
+        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype() + " to "
+          + XSDVocabulary.DECIMAL.getPrefixedName());
     }
   }
 
-  @Override public @NonNull BigInteger getInteger() throws LiteralException
+  @NonNull @Override public BigInteger getInteger() throws LiteralException
   {
     try {
       if (isNumeric())
         return new BigInteger(this.literal.getLiteral());
       else
-        throw new LiteralException("cannot convert value of type " + this.literal.getDatatype() + " to integer");
+        throw new LiteralException(
+          "cannot convert value of type " + this.literal.getDatatype() + " to " + XSDVocabulary.INTEGER
+            .getPrefixedName());
     } catch (NumberFormatException e) {
       throw new LiteralException(
-        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype() + " to integer");
+        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype() + " to "
+          + XSDVocabulary.INTEGER.getPrefixedName());
     }
   }
 
-  @Override public @NonNull BigInteger getNonNegativeInteger() throws LiteralException
+  @NonNull @Override public BigInteger getNonNegativeInteger() throws LiteralException
   {
     try {
       if (isNumeric()) {
@@ -328,18 +351,20 @@ class DefaultLiteral implements Literal
         if (i.signum() != -1)
           return i;
         else
-          throw new LiteralException("invalid value " + getValue() + " for non negative integer");
+          throw new LiteralException(
+            "invalid value " + getValue() + " for " + XSDVocabulary.NON_NEGATIVE_INTEGER.getPrefixedName());
       } else
         throw new LiteralException(
-          "cannot convert value of type " + this.literal.getDatatype() + " to non negative integer");
+          "cannot convert value of type " + this.literal.getDatatype() + " to " + XSDVocabulary.NON_NEGATIVE_INTEGER
+            .getPrefixedName());
     } catch (NumberFormatException e) {
       throw new LiteralException(
-        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype()
-          + " to non negative integer");
+        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype() + " to "
+          + XSDVocabulary.NON_NEGATIVE_INTEGER.getPrefixedName());
     }
   }
 
-  @Override public @NonNull BigInteger getNonPositiveInteger() throws LiteralException
+  @NonNull @Override public BigInteger getNonPositiveInteger() throws LiteralException
   {
     try {
       if (isNumeric()) {
@@ -347,18 +372,20 @@ class DefaultLiteral implements Literal
         if (i.signum() != 1)
           return i;
         else
-          throw new LiteralException("invalid value " + getValue() + " for non positive integer");
+          throw new LiteralException(
+            "invalid value " + getValue() + " for " + XSDVocabulary.NON_POSITIVE_INTEGER.getPrefixedName());
       } else
         throw new LiteralException(
-          "cannot convert value of type " + this.literal.getDatatype() + " to non positive integer");
+          "cannot convert value of type " + this.literal.getDatatype() + " to " + XSDVocabulary.NON_POSITIVE_INTEGER
+            .getPrefixedName());
     } catch (NumberFormatException e) {
       throw new LiteralException(
-        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype()
-          + " to non positive integer");
+        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype() + " to "
+          + XSDVocabulary.NON_POSITIVE_INTEGER.getPrefixedName());
     }
   }
 
-  @Override public @NonNull BigInteger getNegativeInteger() throws LiteralException
+  @NonNull @Override public BigInteger getNegativeInteger() throws LiteralException
   {
     try {
       if (isNumeric()) {
@@ -366,18 +393,20 @@ class DefaultLiteral implements Literal
         if (i.signum() == -1)
           return i;
         else
-          throw new LiteralException("invalid value " + getValue() + " for negative integer");
+          throw new LiteralException(
+            "invalid value " + getValue() + " for " + XSDVocabulary.NEGATIVE_INTEGER.getPrefixedName());
       } else
         throw new LiteralException(
-          "cannot convert value of type " + this.literal.getDatatype() + " to negative integer");
+          "cannot convert value of type " + this.literal.getDatatype() + " to " + XSDVocabulary.NEGATIVE_INTEGER
+            .getPrefixedName());
     } catch (NumberFormatException e) {
       throw new LiteralException(
-        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype()
-          + " to negative integer");
+        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype() + " to "
+          + XSDVocabulary.NEGATIVE_INTEGER.getPrefixedName());
     }
   }
 
-  @Override public @NonNull BigInteger getPositiveInteger() throws LiteralException
+  @NonNull @Override public BigInteger getPositiveInteger() throws LiteralException
   {
     try {
       if (isNumeric()) {
@@ -385,14 +414,16 @@ class DefaultLiteral implements Literal
         if (i.signum() == 1)
           return i;
         else
-          throw new LiteralException("invalid value " + getValue() + " for negative integer");
+          throw new LiteralException(
+            "invalid value " + getValue() + " for " + XSDVocabulary.POSITIVE_INTEGER.getPrefixedName());
       } else
         throw new LiteralException(
-          "cannot convert value of type " + this.literal.getDatatype() + " to positive integer");
+          "cannot convert value of type " + this.literal.getDatatype() + " to " + XSDVocabulary.POSITIVE_INTEGER
+            .getPrefixedName());
     } catch (NumberFormatException e) {
       throw new LiteralException(
-        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype()
-          + " to positive integer");
+        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype() + " to "
+          + XSDVocabulary.POSITIVE_INTEGER.getPrefixedName());
     }
   }
 
@@ -404,13 +435,16 @@ class DefaultLiteral implements Literal
         if (l >= 0)
           return l;
         else
-          throw new LiteralException("negative value " + getValue() + " for unsigned long literal");
+          throw new LiteralException(
+            "negative value " + getValue() + " for " + XSDVocabulary.UNSIGNED_LONG.getPrefixedName());
       } else
-        throw new LiteralException("cannot convert value of type " + this.literal.getDatatype() + " to unsigned long");
+        throw new LiteralException(
+          "cannot convert value of type " + this.literal.getDatatype() + " to " + XSDVocabulary.UNSIGNED_LONG
+            .getPrefixedName());
     } catch (NumberFormatException e) {
       throw new LiteralException(
-        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype()
-          + " to unisigned long");
+        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype() + " to "
+          + XSDVocabulary.UNSIGNED_LONG.getPrefixedName());
     }
   }
 
@@ -422,13 +456,16 @@ class DefaultLiteral implements Literal
         if (l >= 0)
           return l;
         else
-          throw new LiteralException("negative value " + getValue() + " for unsigned int literal");
+          throw new LiteralException(
+            "negative value " + getValue() + " for " + XSDVocabulary.UNSIGNED_INT.getPrefixedName());
       } else
-        throw new LiteralException("cannot convert value of type " + this.literal.getDatatype() + " to unsigned int");
+        throw new LiteralException(
+          "cannot convert value of type " + this.literal.getDatatype() + " to " + XSDVocabulary.UNSIGNED_INT
+            .getPrefixedName());
     } catch (NumberFormatException e) {
       throw new LiteralException(
-        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype()
-          + " to unsigned int");
+        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype() + " to "
+          + XSDVocabulary.UNSIGNED_INT.getPrefixedName());
     }
   }
 
@@ -440,13 +477,16 @@ class DefaultLiteral implements Literal
         if (i >= 0)
           return i;
         else
-          throw new LiteralException("negative value " + getValue() + " for unsigned short literal");
+          throw new LiteralException(
+            "negative value " + getValue() + " for " + XSDVocabulary.UNSIGNED_SHORT.getPrefixedName());
       } else
-        throw new LiteralException("cannot convert value of type " + this.literal.getDatatype() + " to unsigned short");
+        throw new LiteralException(
+          "cannot convert value of type " + this.literal.getDatatype() + " to " + XSDVocabulary.UNSIGNED_SHORT
+            .getPrefixedName());
     } catch (NumberFormatException e) {
       throw new LiteralException(
-        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype()
-          + " to unsigned short");
+        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype() + " to "
+          + XSDVocabulary.UNSIGNED_SHORT.getPrefixedName());
     }
   }
 
@@ -458,13 +498,16 @@ class DefaultLiteral implements Literal
         if (s >= 0)
           return s;
         else
-          throw new LiteralException("negative value " + getValue() + " for unsigned byte literal");
+          throw new LiteralException(
+            "negative value " + getValue() + " for " + XSDVocabulary.UNSIGNED_BYTE.getPrefixedName());
       } else
-        throw new LiteralException("cannot convert value of type " + this.literal.getDatatype() + " to unsigned byte");
+        throw new LiteralException(
+          "cannot convert value of type " + this.literal.getDatatype() + " to " + XSDVocabulary.UNSIGNED_BYTE
+            .getPrefixedName());
     } catch (NumberFormatException e) {
       throw new LiteralException(
-        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype()
-          + " to unsigned byte");
+        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype() + " to "
+          + XSDVocabulary.UNSIGNED_BYTE.getPrefixedName());
     }
   }
 
@@ -473,11 +516,13 @@ class DefaultLiteral implements Literal
     try {
       if (!isAnyURI())
         throw new LiteralException(
-          "cannot convert value of type " + this.literal.getDatatype() + " to " + XSDVocabulary.ANY_URI);
+          "cannot convert value of type " + this.literal.getDatatype() + " to " + XSDVocabulary.ANY_URI
+            .getPrefixedName());
       return URI.create(this.literal.getLiteral());
     } catch (IllegalArgumentException e) {
       throw new LiteralException(
-        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype() + " to URI");
+        "cannot convert value " + this.literal.getLiteral() + " of type " + this.literal.getDatatype() + " to "
+          + XSDVocabulary.ANY_URI.getPrefixedName());
     }
   }
 
@@ -485,7 +530,7 @@ class DefaultLiteral implements Literal
   {
     if (!isTime())
       throw new LiteralException(
-        "cannot convert value of type " + this.literal.getDatatype() + " to " + XSDVocabulary.TIME);
+        "cannot convert value of type " + this.literal.getDatatype() + " to " + XSDVocabulary.TIME.getPrefixedName());
     return new XSDTime(this.literal.getLiteral());
   }
 
@@ -493,7 +538,7 @@ class DefaultLiteral implements Literal
   {
     if (!isDate())
       throw new LiteralException(
-        "cannot convert value of type " + this.literal.getDatatype() + " to " + XSDVocabulary.DATE);
+        "cannot convert value of type " + this.literal.getDatatype() + " to " + XSDVocabulary.DATE.getPrefixedName());
     return new XSDDate(this.literal.getLiteral());
   }
 
@@ -501,7 +546,8 @@ class DefaultLiteral implements Literal
   {
     if (!isDateTime())
       throw new LiteralException(
-        "cannot convert value of type " + this.literal.getDatatype() + " to " + XSDVocabulary.DATE_TIME);
+        "cannot convert value of type " + this.literal.getDatatype() + " to " + XSDVocabulary.DATE_TIME
+          .getPrefixedName());
     return new XSDDateTime(this.literal.getLiteral());
   }
 
@@ -523,6 +569,11 @@ class DefaultLiteral implements Literal
   @NonNull @Override public OWLDatatype getOWLDatatype()
   {
     return this.literal.getDatatype();
+  }
+
+  @NonNull @Override public String getOWLDatatypeName()
+  {
+    return getOWLDatatype().toString();
   }
 
   @SideEffectFree @NonNull @Override public String toString()

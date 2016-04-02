@@ -124,4 +124,6 @@ public interface Literal
   @NonNull OWLLiteral getOWLLiteral();
 
   @NonNull OWLDatatype getOWLDatatype();
+
+  @NonNull String getOWLDatatypeName();
 }

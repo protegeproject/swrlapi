@@ -92,7 +92,7 @@ public interface SWRLBuiltInInputArgumentHandler
    * @param message   The exception message used if non bound variables are found
    * @throws SWRLBuiltInException If not all argument are bound variables
    */
-  void checkThatArgumentsWereBoundVariables(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, @NonNull String message)
+  void checkThatAllArgumentsAreBoundVariables(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, @NonNull String message)
     throws SWRLBuiltInException;
 
   /**
@@ -206,7 +206,7 @@ public interface SWRLBuiltInInputArgumentHandler
    * @return True if the specified argument is an individual
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  boolean isArgumentAnIndividual(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+  boolean isArgumentAnOWLNamedIndividual(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException;
 
   /**
@@ -214,7 +214,7 @@ public interface SWRLBuiltInInputArgumentHandler
    * @param arguments      The built-in arguments
    * @throws SWRLBuiltInException If the specified argument is not an individual
    */
-  void checkThatArgumentIsAnIndividual(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+  void checkThatArgumentIsANamedIndividual(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException;
 
   /**
@@ -223,7 +223,7 @@ public interface SWRLBuiltInInputArgumentHandler
    * @return The IRI of the OWL individual argument
    * @throws SWRLBuiltInException If the argument cannot be represented as an IRI
    */
-  @NonNull IRI getArgumentAsAnIndividualIRI(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+  @NonNull IRI getArgumentAsANamedIndividualIRI(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException;
 
   /**
@@ -232,7 +232,7 @@ public interface SWRLBuiltInInputArgumentHandler
    * @return A named individual built-in argument
    * @throws SWRLBuiltInException If the argument cannot be represented as an individual built-in argument
    */
-  @NonNull SWRLNamedIndividualBuiltInArgument getArgumentAsAnIndividual(int argumentNumber,
+  @NonNull SWRLNamedIndividualBuiltInArgument getArgumentAsANamedIndividual(int argumentNumber,
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
   /**
@@ -317,7 +317,7 @@ public interface SWRLBuiltInInputArgumentHandler
    * @param arguments The built-in arguments
    * @throws SWRLBuiltInException If not all arguments are literals
    */
-  void checkThatAllArgumentsAreLiterals(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+  void checkThatAllArgumentsAreOWLLiterals(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
   /**
    * @param arguments The built-in arguments

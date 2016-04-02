@@ -3,6 +3,7 @@ package org.swrlapi.builtins.swrlm;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.nfunk.jep.JEP;
+import org.semanticweb.owlapi.vocab.XSDVocabulary;
 import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.exceptions.SWRLBuiltInException;
@@ -86,21 +87,37 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    */
   public boolean eval(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
-    checkNumberOfArgumentsAtLeast(2, arguments.size());
+    final int minimumNumberoOfArguments = 2;
+    final int expressionArgumentIndex = 1;
+    final int resultArgumentIndex = 0;
 
-    String expression = getArgumentAsAString(1, arguments);
+    checkNumberOfArgumentsAtLeast(minimumNumberoOfArguments, arguments.size());
 
-    if (arguments.size() > 2) {
-      List<@NonNull SWRLBuiltInArgument> variableArguments = arguments.subList(2, arguments.size());
+    String expression = getArgumentAsAString(expressionArgumentIndex, arguments);
+
+    if (arguments.size() > minimumNumberoOfArguments) {
+      List<@NonNull SWRLBuiltInArgument> variableArguments = arguments
+        .subList(minimumNumberoOfArguments, arguments.size());
 
       checkForUnboundArguments(variableArguments, "2nd and subsequent arguments cannot be unbound");
-      checkThatArgumentsWereBoundVariables(variableArguments, "2nd and subsequent arguments should be variables");
+      checkThatAllArgumentsAreBoundVariables(variableArguments, "2nd and subsequent arguments should be variables");
 
-      for (SWRLBuiltInArgument argument : variableArguments) {
-        Optional<String> variableName = argument.getBoundVariableName(); // We have checked that they are all variables
+      int currentVariableArgumentIndex = minimumNumberoOfArguments;
+      for (SWRLBuiltInArgument variableArgument : variableArguments) {
+        Optional<String> variableName = variableArgument
+          .getBoundVariableName(); // We have checked that they are all variables
         if (variableName.isPresent()) {
-          double variableValue = getArgumentAsADouble(argument);
-          getJEP().addVariable(variableName.get(), variableValue);
+          if (isArgumentConvertibleToDouble(currentVariableArgumentIndex, arguments)) {
+            double variableValue = getArgumentAsADouble(variableArgument);
+            getJEP().addVariable(variableName.get(), variableValue);
+          } else {
+            String message = "exception processing expression '" + expression + "': " +
+              "variable ?" + variableName.get() + " with type " + getLiteralArgumentDatatypeName(
+              currentVariableArgumentIndex, arguments) +
+              " cannot be converted to " + XSDVocabulary.DOUBLE.getPrefixedName();
+            throw new SWRLBuiltInException(message);
+          }
+          currentVariableArgumentIndex++;
         }
       }
     }
@@ -115,11 +132,16 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     if (getJEP().hasError())
       throw new SWRLBuiltInException("exception parsing expression '" + expression + "': " + getJEP().getErrorInfo());
 
-    if (isUnboundArgument(0, arguments)) {
-      arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument(value));
+    if (isUnboundArgument(resultArgumentIndex, arguments)) {
+      arguments.get(resultArgumentIndex).asVariable().setBuiltInResult(createLiteralBuiltInArgument(value));
       return true;
-    } else {
-      return value == getArgumentAsADouble(0, arguments);
+    } else { // Explicit argument present - check that it can be converted to an xsd:double
+      if (isArgumentConvertibleToDouble(resultArgumentIndex, arguments))
+        return value == getArgumentAsADouble(resultArgumentIndex, arguments);
+      else
+        throw new SWRLBuiltInException("exception processing expression '" + expression + "': " +
+          "result argument with type " + getLiteralArgumentDatatypeName(resultArgumentIndex, arguments)
+          + " cannot be converted to " + XSDVocabulary.DOUBLE.getPrefixedName());
     }
   }
 
