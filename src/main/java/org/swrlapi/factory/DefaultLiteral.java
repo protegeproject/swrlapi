@@ -9,6 +9,7 @@ import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
 import org.swrlapi.exceptions.LiteralException;
 import org.swrlapi.literal.Literal;
+import org.swrlapi.literal.OWLLiteralComparator;
 import org.swrlapi.literal.XSDDate;
 import org.swrlapi.literal.XSDDateTime;
 import org.swrlapi.literal.XSDDuration;
@@ -34,9 +35,7 @@ class DefaultLiteral implements Literal
 
   @Override public boolean isNumeric()
   {
-    return isByte() || isShort() || isInt() || isLong() || isFloat() || isDouble() || isDecimal() || isInteger()
-      || isPositiveInteger() || isNegativeInteger() || isNonNegativeInteger() || isNonPositiveInteger()
-      || isUnsignedLong() || isUnsignedInt() || isUnsignedShort() || isUnsignedByte();
+    return OWLLiteralComparator.isNumeric(literal);
   }
 
   @Override public boolean isByte()

@@ -31,11 +31,29 @@ public final class OWLLiteralComparator implements Comparator<OWLLiteral>
     return compareOWLLiterals(l1, l2);
   }
 
+  public static boolean isNumeric(@NonNull OWLLiteral literal)
+  {
+    return literal.getDatatype().getIRI().equals(XSDVocabulary.BYTE.getIRI()) || literal.getDatatype().getIRI()
+      .equals(XSDVocabulary.SHORT.getIRI()) || literal.getDatatype().getIRI().equals(XSDVocabulary.INT.getIRI())
+      || literal.getDatatype().getIRI().equals(XSDVocabulary.LONG.getIRI()) || literal.getDatatype().getIRI()
+      .equals(XSDVocabulary.FLOAT.getIRI()) || literal.getDatatype().getIRI().equals(XSDVocabulary.DOUBLE.getIRI())
+      || literal.getDatatype().getIRI().equals(XSDVocabulary.DECIMAL.getIRI()) || literal.getDatatype().getIRI()
+      .equals(XSDVocabulary.INTEGER.getIRI()) || literal.getDatatype().getIRI()
+      .equals(XSDVocabulary.POSITIVE_INTEGER.getIRI()) || literal.getDatatype().getIRI()
+      .equals(XSDVocabulary.NEGATIVE_INTEGER.getIRI()) || literal.getDatatype().getIRI()
+      .equals(XSDVocabulary.NON_NEGATIVE_INTEGER.getIRI()) || literal.getDatatype().getIRI()
+      .equals(XSDVocabulary.NON_POSITIVE_INTEGER.getIRI()) || literal.getDatatype().getIRI()
+      .equals(XSDVocabulary.UNSIGNED_LONG.getIRI()) || literal.getDatatype().getIRI()
+      .equals(XSDVocabulary.UNSIGNED_INT.getIRI()) || literal.getDatatype().getIRI()
+      .equals(XSDVocabulary.UNSIGNED_SHORT.getIRI()) || literal.getDatatype().getIRI()
+      .equals(XSDVocabulary.UNSIGNED_BYTE.getIRI());
+  }
+
   private int compareOWLLiterals(@NonNull OWLLiteral l1, @NonNull OWLLiteral l2)
   {
     try {
-      if (allNumeric(l1, l2)) {
-        if (identicalTypes(l1, l2)) {
+      if (areAllLiteralsNumeric(l1, l2)) {
+        if (areTypesIdentical(l1, l2)) {
           if (l1.getDatatype().getIRI().equals(XSDVocabulary.BYTE.getIRI())) {
             Byte b1 = Byte.parseByte(l1.getLiteral());
             Byte b2 = Byte.parseByte(l2.getLiteral());
@@ -85,7 +103,7 @@ public final class OWLLiteralComparator implements Comparator<OWLLiteral>
           return d1.compareTo(d2);
         }
       } else { // Non numeric type; types should be the same
-        if (!identicalTypes(l1, l2))
+        if (!areTypesIdentical(l1, l2))
           return -1;
         else {
           if (l1.getDatatype().isBoolean()) {
@@ -123,12 +141,12 @@ public final class OWLLiteralComparator implements Comparator<OWLLiteral>
     }
   }
 
-  private boolean identicalTypes(@NonNull OWLLiteral literal1, @NonNull OWLLiteral literal2)
+  private boolean areTypesIdentical(@NonNull OWLLiteral literal1, @NonNull OWLLiteral literal2)
   {
     return literal1.getDatatype().getIRI().equals(literal2.getDatatype().getIRI());
   }
 
-  private boolean allNumeric(@NonNull OWLLiteral... literals)
+  private boolean areAllLiteralsNumeric(@NonNull OWLLiteral... literals)
   {
     for (OWLLiteral literal : literals)
       if (!isNumeric(literal))
@@ -136,21 +154,4 @@ public final class OWLLiteralComparator implements Comparator<OWLLiteral>
     return true;
   }
 
-  private boolean isNumeric(@NonNull OWLLiteral literal)
-  {
-    return literal.getDatatype().getIRI().equals(XSDVocabulary.BYTE.getIRI()) || literal.getDatatype().getIRI()
-      .equals(XSDVocabulary.SHORT.getIRI()) || literal.getDatatype().getIRI().equals(XSDVocabulary.INT.getIRI())
-      || literal.getDatatype().getIRI().equals(XSDVocabulary.LONG.getIRI()) || literal.getDatatype().getIRI()
-      .equals(XSDVocabulary.FLOAT.getIRI()) || literal.getDatatype().getIRI().equals(XSDVocabulary.DOUBLE.getIRI())
-      || literal.getDatatype().getIRI().equals(XSDVocabulary.DECIMAL.getIRI()) || literal.getDatatype().getIRI()
-      .equals(XSDVocabulary.INTEGER.getIRI()) || literal.getDatatype().getIRI()
-      .equals(XSDVocabulary.POSITIVE_INTEGER.getIRI()) || literal.getDatatype().getIRI()
-      .equals(XSDVocabulary.NEGATIVE_INTEGER.getIRI()) || literal.getDatatype().getIRI()
-      .equals(XSDVocabulary.NON_NEGATIVE_INTEGER.getIRI()) || literal.getDatatype().getIRI()
-      .equals(XSDVocabulary.NON_POSITIVE_INTEGER.getIRI()) || literal.getDatatype().getIRI()
-      .equals(XSDVocabulary.UNSIGNED_LONG.getIRI()) || literal.getDatatype().getIRI()
-      .equals(XSDVocabulary.UNSIGNED_INT.getIRI()) || literal.getDatatype().getIRI()
-      .equals(XSDVocabulary.UNSIGNED_SHORT.getIRI()) || literal.getDatatype().getIRI()
-      .equals(XSDVocabulary.UNSIGNED_BYTE.getIRI());
-  }
 }
