@@ -1465,7 +1465,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       List<@NonNull SWRLBuiltInArgument> boundInputArguments = arguments.subList(1, arguments.size());
 
       if (builtInName.equalsIgnoreCase(SWRLB_SIN) || builtInName.equalsIgnoreCase(SWRLB_COS) || builtInName
-        .equalsIgnoreCase(SWRLB_TAN))
+        .equalsIgnoreCase(SWRLB_TAN)) // Use xsd:double for the trigonometric arguments
         arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument(operationResult));
       else {
         SWRLBuiltInArgument resultArgument = createLeastNarrowNumericLiteralBuiltInArgument(operationResult,
