@@ -1696,7 +1696,7 @@ public abstract class AbstractSWRLBuiltInLibrary
 
   @NonNull private OWLLiteral createLeastNarrowNumericOWLLiteral(double value,
     @NonNull List<@NonNull SWRLBuiltInArgument> boundInputNumericArguments) throws SWRLBuiltInException
-  {
+  { // TODO Check for overflow
     if (isWidestNumericArgumentAByte(boundInputNumericArguments))
       return getOWLLiteralFactory().getOWLLiteral((byte)value);
     else if (isWidestNumericArgumentAShort(boundInputNumericArguments))
