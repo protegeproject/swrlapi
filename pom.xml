@@ -12,7 +12,7 @@
   <version>1.0.0-beta-53-SNAPSHOT</version>
   <packaging>bundle</packaging>
   <name>SWRLAPI</name>
-  <description>Java API for working with SWRL rules and SQWRL queries</description>
+  <description>Java  API for working with SWRL rules and SQWRL queries</description>
   <url>https://github.com/protegeproject/swrlapi/wiki</url>
 
   <scm>
