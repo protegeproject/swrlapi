@@ -14,10 +14,11 @@ import java.util.Comparator;
 
 /**
  * A very basic literal comparator. Not fully spec conformant.
- *
+ * <p/>
  * See:
  * http://xmlbeans.apache.org/docs/2.1.0/guide/conXMLBeansSupportBuiltInSchemaTypes.html
  * http://iswc2011.semanticweb.org/fileadmin/iswc/Papers/Workshops/SSWS/Emmons-et-all-SSWS2011.pdf
+ * https://msdn.microsoft.com/en-us/library/ms191231.aspx
  *
  * @see org.semanticweb.owlapi.model.OWLLiteral
  */
@@ -69,9 +70,8 @@ public final class OWLLiteralComparator implements Comparator<OWLLiteral>
             Integer i1 = Integer.parseInt(l1.getLiteral());
             Integer i2 = Integer.parseInt(l2.getLiteral());
             return i1.compareTo(i2);
-          } else if (l1.getDatatype().getIRI().equals(XSDVocabulary.LONG.getIRI()) ||
-            l1.getDatatype().getIRI().equals(XSDVocabulary.UNSIGNED_LONG.getIRI()) ||
-            l1.getDatatype().getIRI().equals(XSDVocabulary.UNSIGNED_INT.getIRI())) {
+          } else if (l1.getDatatype().getIRI().equals(XSDVocabulary.LONG.getIRI()) || l1.getDatatype().getIRI()
+            .equals(XSDVocabulary.UNSIGNED_INT.getIRI())) {
             Long long1 = Long.parseLong(l1.getLiteral());
             Long long2 = Long.parseLong(l2.getLiteral());
             return long1.compareTo(long2);
@@ -91,7 +91,8 @@ public final class OWLLiteralComparator implements Comparator<OWLLiteral>
             l1.getDatatype().getIRI().equals(XSDVocabulary.POSITIVE_INTEGER.getIRI()) ||
             l1.getDatatype().getIRI().equals(XSDVocabulary.NON_NEGATIVE_INTEGER.getIRI()) ||
             l1.getDatatype().getIRI().equals(XSDVocabulary.NEGATIVE_INTEGER.getIRI()) ||
-            l1.getDatatype().getIRI().equals(XSDVocabulary.NON_POSITIVE_INTEGER.getIRI())) {
+            l1.getDatatype().getIRI().equals(XSDVocabulary.NON_POSITIVE_INTEGER.getIRI()) ||
+            l1.getDatatype().getIRI().equals(XSDVocabulary.UNSIGNED_LONG.getIRI())) {
             BigInteger d1 = new BigInteger(l1.getLiteral());
             BigInteger d2 = new BigInteger(l1.getLiteral());
             return d1.compareTo(d2);
