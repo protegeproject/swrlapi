@@ -16,6 +16,7 @@ import java.util.Comparator;
  * A very basic literal comparator. Not fully spec conformant.
  *
  * See:
+ * http://xmlbeans.apache.org/docs/2.1.0/guide/conXMLBeansSupportBuiltInSchemaTypes.html
  * http://iswc2011.semanticweb.org/fileadmin/iswc/Papers/Workshops/SSWS/Emmons-et-all-SSWS2011.pdf
  *
  * @see org.semanticweb.owlapi.model.OWLLiteral
@@ -87,8 +88,9 @@ public final class OWLLiteralComparator implements Comparator<OWLLiteral>
             BigDecimal d2 = new BigDecimal(l1.getLiteral());
             return d1.compareTo(d2);
           } else if (l1.getDatatype().getIRI().equals(XSDVocabulary.INTEGER.getIRI()) ||
-            l1.getDatatype().getIRI().equals(XSDVocabulary.NEGATIVE_INTEGER.getIRI()) ||
+            l1.getDatatype().getIRI().equals(XSDVocabulary.POSITIVE_INTEGER.getIRI()) ||
             l1.getDatatype().getIRI().equals(XSDVocabulary.NON_NEGATIVE_INTEGER.getIRI()) ||
+            l1.getDatatype().getIRI().equals(XSDVocabulary.NEGATIVE_INTEGER.getIRI()) ||
             l1.getDatatype().getIRI().equals(XSDVocabulary.NON_POSITIVE_INTEGER.getIRI())) {
             BigInteger d1 = new BigInteger(l1.getLiteral());
             BigInteger d2 = new BigInteger(l1.getLiteral());
