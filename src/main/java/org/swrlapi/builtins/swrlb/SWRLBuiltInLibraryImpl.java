@@ -1439,9 +1439,9 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       argument3 = getArgumentAsADouble(2, arguments);
       operationResult = java.lang.Math.pow(argument2, argument3);
     } else if (builtInName.equalsIgnoreCase(SWRLB_UNARY_PLUS))
-      operationResult = argument2;
+      operationResult = +argument2; // TODO Not correct since already a double so xsd:int conversion logic missed
     else if (builtInName.equalsIgnoreCase(SWRLB_UNARY_MINUS))
-      operationResult = -argument2;
+      operationResult = -argument2; // TODO Not correct since already a double so xsd:int conversion logic missed
     else if (builtInName.equalsIgnoreCase(SWRLB_ABS))
       operationResult = java.lang.Math.abs(argument2);
     else if (builtInName.equalsIgnoreCase(SWRLB_CEILING))
