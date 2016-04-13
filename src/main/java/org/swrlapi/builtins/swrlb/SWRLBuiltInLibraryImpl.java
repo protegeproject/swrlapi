@@ -31,7 +31,7 @@ import java.util.regex.PatternSyntaxException;
 /**
  * Implementations library for the core SWRL built-in methods. These built-ins are defined <a
  * href="http://www.daml.org/2004/04/swrl/builtins.html">here</a>.
- * <p/>
+ * <p>
  * Built-ins for lists and URIs not yet implemented.
  */
 public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary

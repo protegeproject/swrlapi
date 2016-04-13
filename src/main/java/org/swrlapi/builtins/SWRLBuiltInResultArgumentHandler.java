@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * Utility methods for built-in implementations to handle results.
- * <p/>
+ * <p>
  * Each method will take a list of built-in arguments, an index of a particular argument, and a generated result
  * argument of a particular type. It will determine if the specified argument and the generated result arguments are
  * equal, in which case it will evaluate to true; otherwise it will evaluate to false.

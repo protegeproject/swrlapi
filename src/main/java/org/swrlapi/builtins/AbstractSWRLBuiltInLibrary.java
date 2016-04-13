@@ -53,7 +53,7 @@ import java.util.Map;
 
 /**
  * A class that must be subclassed by a class implementing a library of SWRL built-in methods.
- * <p/>
+ * <p>
  * Provides invocation context for invoked built-ins (such the name of invoking rule, whether the invocation is in the
  * consequent or the antecedent) and access to the invoking {@link org.swrlapi.builtins.SWRLBuiltInBridge}. Also
  * provides implementations for a large number of SWRL built-in argument processing methods.

@@ -14,7 +14,7 @@ import java.util.Comparator;
 
 /**
  * A very basic literal comparator. Not fully spec conformant.
- * <p/>
+ * <p>
  * See:
  * http://xmlbeans.apache.org/docs/2.1.0/guide/conXMLBeansSupportBuiltInSchemaTypes.html
  * http://iswc2011.semanticweb.org/fileadmin/iswc/Papers/Workshops/SSWS/Emmons-et-all-SSWS2011.pdf
