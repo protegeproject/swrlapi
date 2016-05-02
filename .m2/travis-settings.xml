@@ -2,40 +2,16 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
                               http://maven.apache.org/xsd/settings-1.0.0.xsd">
-
-  <profiles>
-    <profile>
-      <id>ci</id>
-
-      <repositories>
-        <!-- Use BMIR's Nexus server for artifact resolution (in addition to default Maven Central) -->
-        <repository>
-          <id>bmir-nexus-snapshots</id>
-          <url>https://nexus.bmir.stanford.edu/content/repositories/snapshots</url>
-        </repository>
-        <repository>
-          <id>bmir-nexus-releases</id>
-          <url>https://nexus.bmir.stanford.edu/content/repositories/releases</url>
-        </repository>
-      </repositories>
-      
-    </profile>
-  </profiles>
-
-  <activeProfiles>
-    <activeProfile>ci</activeProfile>
-  </activeProfiles>
-
   <servers>
     <server>
-      <id>bmir-nexus-snapshots</id>
-      <username>${env.BMIR_NEXUS_USERNAME}</username>
-      <password>${env.BMIR_NEXUS_PASSWORD}</password>
+      <id>oss-nexus-snapshots</id>
+      <username>${env.MAVEN_CENTRAL_USERNAME}</username>
+      <password>${env.MAVEN_CENTRAL_PASSWORD}</password>
     </server>
     <server>
-      <id>bmir-nexus-staging</id>
-      <username>${env.BMIR_NEXUS_USERNAME}</username>
-      <password>${env.BMIR_NEXUS_PASSWORD}</password>
+      <id>oss-nexus-staging</id>
+      <username>${env.MAVEN_CENTRAL_USERNAME}</username>
+      <password>${env.MAVEN_CENTRAL_PASSWORD}</password>
     </server>
   </servers>
 
