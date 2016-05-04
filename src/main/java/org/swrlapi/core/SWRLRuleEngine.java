@@ -18,7 +18,7 @@ import java.util.Set;
 
 /**
  * This interface defines methods that must be provided by a SWRL rule engine in the SWRLAPI.
- * <p/>
+ * <p>
  * A native rule engine implementation must also implement the {@link org.swrlapi.bridge.TargetSWRLRuleEngine} interface.
  *
  * @see org.swrlapi.core.SWRLAPIRule

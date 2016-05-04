@@ -10,9 +10,8 @@ notifications:
     - martin.oconnor@stanford.edu
     on_success: never
     on_failure: always
-script: '[ ${TRAVIS_PULL_REQUEST} = ''false'' ] && mvn -X clean deploy --settings
-  .m2/travis-settings.xml'
+script: '[ ${TRAVIS_PULL_REQUEST} = ''false'' ] && mvn clean deploy --settings .m2/travis-settings.xml'
 env:
   global:
-  - secure: YTQR3KK5/FXpdlhzq+hdG9KDpnKyPKf98QmTaot6K9Qn2HOcsSe/lF3xjTqN0dscnZLoqNQY4ndOzN9Z9pqvmtY7cNnb+Pfuk9XtOTv00gH6g+cvGv7bzVsQQ6ncrLg/S0swXyuOCijBMd/OP6S2g93HlZ4VAXIm8rKUt20oxkk=
-  - secure: oryH/Jay/vSuu9CXyyDNuP4KGC4aHXZncCBE5SjsVpZVWXz6/kzPXqLFdmqvn+zzBfAK+PN108MXmCrprbAT5s/oTKxAe1i0+Bet9xCFBQsfqm7c3BH3il91TUDASmzXdbueLHf9LCTOWB5aR7Y5DtRIR9VMts1Tt2fyzJ+brss=
+  - secure: RGufhiWpsdTwB9yrvIeGleF04CqFkf/peG4aOp+vYzeH6IYRQaiexQil9NHa2FOugPF2dweR7HeN+x2PHZac+fMaqmgvu4HBqifkovf5vmLAwcet371Q/iwvn1TQdzfBqOf3+Jcgfc4gtjdARjNS9B6UCmQfJm2lDN2atMwVWZs=
+  - secure: GnCCceeNJFZ4K8/AzfEumo7NdT63+0tnv+KSnYJWIkSb7NTjKJFIJzF/ToytHf5wZvuYHl1bYVMdH+wLrP2ZqV61rjz61gZkAlwrtGtHKy5V6GfhPkE51y8C/o+eo8RPAX91aHq0zoAe01pcigJTYWjg/9Ds0tkkVJjaSOjfQOk=

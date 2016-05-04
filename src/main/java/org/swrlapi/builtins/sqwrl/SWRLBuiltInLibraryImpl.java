@@ -36,7 +36,7 @@ import java.util.Set;
 
 /**
  * Implementation library for SQWRL built-ins.
- * <p/>
+ * <p>
  * Unlike other built-in libraries, queries that use built-ins in this library need to be preprocessed by a SQWRL-aware
  * processor. See the <tt>org.swrlapi.factory.DefaultSQWRLQuery</tt> class for an example of this processing.
  */

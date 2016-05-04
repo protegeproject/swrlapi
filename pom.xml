@@ -4,22 +4,22 @@
   <parent>
     <groupId>edu.stanford.swrl</groupId>
     <artifactId>swrlapi-parent</artifactId>
-    <version>1.0.0-beta-52</version>
+    <version>1.0.0</version>
   </parent>
   
   <groupId>edu.stanford.swrl</groupId>
   <artifactId>swrlapi</artifactId>
-  <version>1.0.0-beta-52</version>
+  <version>1.0.0</version>
   <packaging>bundle</packaging>
   <name>SWRLAPI</name>
-  <description>Java API for working with SWRL rules and SQWRL queries</description>
+  <description>Java  API for working with SWRL rules and SQWRL queries</description>
   <url>https://github.com/protegeproject/swrlapi/wiki</url>
 
   <scm>
     <connection>scm:git:git@github.com:protegeproject/swrlapi.git</connection>
     <developerConnection>scm:git:git@github.com:protegeproject/swrlapi.git</developerConnection>
     <url>https://github.com/protegeproject/swrlapi</url>
-    <tag>release-1.0.0-beta-52</tag>
+    <tag>release-1.0.0</tag>
   </scm>
 
   <issueManagement>
@@ -37,7 +37,6 @@
     <dependency>
       <groupId>com.google.code.findbugs</groupId>
       <artifactId>jsr305</artifactId>
-      <version>2.0.1</version>
     </dependency>
 
     <dependency>

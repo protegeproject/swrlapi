@@ -53,7 +53,7 @@ public class SWRLRulesControlView extends JPanel implements SWRLAPIView
     buttonsPanel.add(button);
     add(BorderLayout.SOUTH, buttonsPanel);
 
-    console.append("Using the " + ruleEngineName + " rule engine, " + ruleEngineVersion + ".\n\n");
+    console.append("Using the " + ruleEngineName + " rule engine.\n\n");
     console.append("Press the 'OWL+SWRL->" + ruleEngineName
       + "' button to transfer SWRL rules and relevant OWL knowledge to the rule engine.\n");
     console.append("Press the 'Run " + ruleEngineName + "' button to run the rule engine.\n");

@@ -3,6 +3,7 @@ package org.swrlapi.builtins.swrlb;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLLiteral;
 import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
@@ -11,6 +12,7 @@ import org.swrlapi.exceptions.InvalidSWRLBuiltInArgumentException;
 import org.swrlapi.exceptions.InvalidSWRLBuiltInNameException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLBuiltInNotImplementedException;
+import org.swrlapi.literal.OWLLiteralComparator;
 import org.swrlapi.literal.XSDDate;
 import org.swrlapi.literal.XSDDateTime;
 import org.swrlapi.literal.XSDDuration;
@@ -29,7 +31,7 @@ import java.util.regex.PatternSyntaxException;
 /**
  * Implementations library for the core SWRL built-in methods. These built-ins are defined <a
  * href="http://www.daml.org/2004/04/swrl/builtins.html">here</a>.
- * <p/>
+ * <p>
  * Built-ins for lists and URIs not yet implemented.
  */
 public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
@@ -1379,58 +1381,15 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   private int compareTwoNumericArguments(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
-    int result;
+    final int argument1Index = 0;
+    final int argument2Index = 1;
 
     checkThatAllArgumentsAreNumeric(arguments);
 
-    if (isWidestNumericArgumentAShort(arguments)) {
-      short s1 = getArgumentAsAShort(0, arguments);
-      short s2 = getArgumentAsAShort(1, arguments);
-      if (s1 < s2)
-        result = -1;
-      else if (s1 > s2)
-        result = 1;
-      else
-        result = 0;
-    } else if (isWidestNumericArgumentAnInt(arguments)) {
-      int i1 = getArgumentAsAnInt(0, arguments);
-      int i2 = getArgumentAsAnInt(1, arguments);
-      if (i1 < i2)
-        result = -1;
-      else if (i1 > i2)
-        result = 1;
-      else
-        result = 0;
-    } else if (isWidestNumericArgumentALong(arguments)) {
-      long l1 = getArgumentAsALong(0, arguments);
-      long l2 = getArgumentAsALong(1, arguments);
-      if (l1 < l2)
-        result = -1;
-      else if (l1 > l2)
-        result = 1;
-      else
-        result = 0;
-    } else if (isWidestNumericArgumentAFloat(arguments)) {
-      float f1 = getArgumentAsAFloat(0, arguments);
-      float f2 = getArgumentAsAFloat(1, arguments);
-      if (f1 < f2)
-        result = -1;
-      else if (f1 > f2)
-        result = 1;
-      else
-        result = 0;
-    } else {
-      double d1 = getArgumentAsADouble(0, arguments);
-      double d2 = getArgumentAsADouble(1, arguments);
-      if (d1 < d2)
-        result = -1;
-      else if (d1 > d2)
-        result = 1;
-      else
-        result = 0;
-    }
+    OWLLiteral literal1 = getArgumentAsAnOWLLiteral(argument1Index, arguments);
+    OWLLiteral literal2 = getArgumentAsAnOWLLiteral(argument2Index, arguments);
 
-    return result;
+    return OWLLiteralComparator.COMPARATOR.compare(literal1, literal2);
   }
 
   private boolean mathOperation(@NonNull String builtInName, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
@@ -1480,9 +1439,9 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       argument3 = getArgumentAsADouble(2, arguments);
       operationResult = java.lang.Math.pow(argument2, argument3);
     } else if (builtInName.equalsIgnoreCase(SWRLB_UNARY_PLUS))
-      operationResult = argument2;
+      operationResult = +argument2; // TODO Not correct since already a double so xsd:int conversion logic missed
     else if (builtInName.equalsIgnoreCase(SWRLB_UNARY_MINUS))
-      operationResult = -argument2;
+      operationResult = -argument2; // TODO Not correct since already a double so xsd:int conversion logic missed
     else if (builtInName.equalsIgnoreCase(SWRLB_ABS))
       operationResult = java.lang.Math.abs(argument2);
     else if (builtInName.equalsIgnoreCase(SWRLB_CEILING))
@@ -1506,7 +1465,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       List<@NonNull SWRLBuiltInArgument> boundInputArguments = arguments.subList(1, arguments.size());
 
       if (builtInName.equalsIgnoreCase(SWRLB_SIN) || builtInName.equalsIgnoreCase(SWRLB_COS) || builtInName
-        .equalsIgnoreCase(SWRLB_TAN))
+        .equalsIgnoreCase(SWRLB_TAN)) // Use xsd:double for the trigonometric arguments
         arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument(operationResult));
       else {
         SWRLBuiltInArgument resultArgument = createLeastNarrowNumericLiteralBuiltInArgument(operationResult,
