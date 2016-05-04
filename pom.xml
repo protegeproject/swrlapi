@@ -9,7 +9,7 @@
   
   <groupId>edu.stanford.swrl</groupId>
   <artifactId>swrlapi</artifactId>
-  <version>1.0.2</version>
+  <version>1.0.3-SNAPSHOT</version>
   <packaging>bundle</packaging>
   <name>SWRLAPI</name>
   <description>Java  API for working with SWRL rules and SQWRL queries</description>
@@ -19,7 +19,7 @@
     <connection>scm:git:git@github.com:protegeproject/swrlapi.git</connection>
     <developerConnection>scm:git:git@github.com:protegeproject/swrlapi.git</developerConnection>
     <url>https://github.com/protegeproject/swrlapi</url>
-    <tag>release-1.0.2</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <issueManagement>
