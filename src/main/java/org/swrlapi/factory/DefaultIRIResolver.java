@@ -106,8 +106,8 @@ public class DefaultIRIResolver implements IRIResolver
   {
     String shortForm = this.prefixManager.getShortForm(iri);
 
-    if (shortForm == null || shortForm.isEmpty())
-      return Optional.empty();
+    if (shortForm == null || shortForm.isEmpty() || shortForm.startsWith("<"))
+      return iri2PrefixedName(iri);
     else
       return Optional.of(shortForm);
   }
