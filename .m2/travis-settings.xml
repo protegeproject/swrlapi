@@ -4,12 +4,12 @@
                               http://maven.apache.org/xsd/settings-1.0.0.xsd">
   <servers>
     <server>
-      <id>oss-nexus-snapshots</id>
+      <id>central-nexus-snapshots</id>
       <username>${env.MAVEN_CENTRAL_USERNAME}</username>
       <password>${env.MAVEN_CENTRAL_PASSWORD}</password>
     </server>
     <server>
-      <id>oss-nexus-staging</id>
+      <id>central-nexus-staging</id>
       <username>${env.MAVEN_CENTRAL_USERNAME}</username>
       <password>${env.MAVEN_CENTRAL_PASSWORD}</password>
     </server>
