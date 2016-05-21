@@ -33,7 +33,8 @@ public class SQWRLNames
   public static final String CountDistinctAggregateFunction = "countDistinct";
   public static final String Limit = SQWRLPrefix + "limit";
 
-  // Aggregation
+  // Aggregation functions
+
   public static final String MinAggregateFunction = "min";
   public static final String MaxAggregateFunction = "max";
   public static final String SumAggregateFunction = "sum";
@@ -46,13 +47,15 @@ public class SQWRLNames
   public static final String GroupBy = SQWRLPrefix + "groupBy";
 
   // Collection operations
+
+  // Core collection operations
   public static final String Size = SQWRLPrefix + "size";
   public static final String IsEmpty = SQWRLPrefix + "isEmpty";
   public static final String NotIsEmpty = SQWRLPrefix + "notIsEmpty";
   public static final String Element = SQWRLPrefix + "element";
   public static final String NotElement = SQWRLPrefix + "notElement";
 
-  // First and last
+  // First and last collection operations
   public static final String Last = SQWRLPrefix + "last";
   public static final String NotLast = SQWRLPrefix + "notLast";
   public static final String LastN = SQWRLPrefix + "lastN";
@@ -62,13 +65,13 @@ public class SQWRLNames
   public static final String FirstN = SQWRLPrefix + "firstN";
   public static final String NotFirstN = SQWRLPrefix + "notFirstN";
 
-  // nth
+  // nth collection operations
   public static final String Nth = SQWRLPrefix + "nth";
   public static final String NotNth = SQWRLPrefix + "notNth";
   public static final String NthLast = SQWRLPrefix + "nthLast";
   public static final String NotNthLast = SQWRLPrefix + "notNthLast";
 
-  // Slicing
+  // Slicing collection operations
   public static final String NthSlice = SQWRLPrefix + "nthSlice";
   public static final String NotNthSlice = SQWRLPrefix + "notNthSlice";
   public static final String NthLastSlice = SQWRLPrefix + "nthLastSlice";
