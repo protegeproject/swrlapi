@@ -614,37 +614,6 @@ public class SQWRLResultTest
     assertEquals(30, resultManager.getLiteral(0).getInt());
   }
 
-  @Test public void testSetFirst() throws Exception
-  {
-    resultManager.addColumn(columnName);
-
-    resultManager.setFirst();
-
-    resultManager.configured();
-
-    resultManager.openRow();
-    resultManager.addCell(valueFactory.getLiteralValue(20));
-    resultManager.closeRow();
-
-    resultManager.openRow();
-    resultManager.addCell(valueFactory.getLiteralValue(40));
-    resultManager.closeRow();
-
-    resultManager.openRow();
-    resultManager.addCell(valueFactory.getLiteralValue(30));
-    resultManager.closeRow();
-
-    resultManager.prepared();
-
-    assertEquals(1, resultManager.getNumberOfColumns());
-    assertEquals(1, resultManager.getNumberOfRows());
-
-    resultManager.next();
-
-    assertTrue(resultManager.getLiteral(0).isInt());
-    assertEquals(20, resultManager.getLiteral(0).getInt());
-  }
-
   @Test public void testSetFirstN() throws Exception
   {
     resultManager.addColumn(columnName);

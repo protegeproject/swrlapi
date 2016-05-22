@@ -56,12 +56,8 @@ public class SQWRLNames
   public static final String NotElement = SQWRLPrefix + "notElement";
 
   // First and last collection operations
-  public static final String Last = SQWRLPrefix + "last";
-  public static final String NotLast = SQWRLPrefix + "notLast";
   public static final String LastN = SQWRLPrefix + "lastN";
   public static final String NotLastN = SQWRLPrefix + "notLastN";
-  public static final String First = SQWRLPrefix + "first";
-  public static final String NotFirst = SQWRLPrefix + "notFirst";
   public static final String FirstN = SQWRLPrefix + "firstN";
   public static final String NotFirstN = SQWRLPrefix + "notFirstN";
 
@@ -92,12 +88,8 @@ public class SQWRLNames
   public static final String NotContains = SQWRLPrefix + "notContains";
 
   // Aliases for first and last operators
-  public static final String Greatest = SQWRLPrefix + "greatest";
-  public static final String NotGreatest = SQWRLPrefix + "notGreatest";
   public static final String GreatestN = SQWRLPrefix + "greatestN";
   public static final String NotGreatestN = SQWRLPrefix + "notGreatestN";
-  public static final String Least = SQWRLPrefix + "least";
-  public static final String NotLeast = SQWRLPrefix + "notLeast";
   public static final String LeastN = SQWRLPrefix + "leastN";
   public static final String NotLeastN = SQWRLPrefix + "notLeastN";
   public static final String NthGreatest = SQWRLPrefix + "nthGreatest";
@@ -111,20 +103,17 @@ public class SQWRLNames
 
   private static final String headSlicingBuiltInNamesArray[] = { Limit, Nth, NthGreatest, NthLast, NthSlice,
     NthLastSlice, NthGreatestSlice, NotNthGreatestSlice, NotNthLastSlice, NotNthSlice, NotNth, NotNthLast,
-    NotNthGreatest, NotFirst, NotFirstN, NotLast, NotLastN, NotGreatestN, NotGreatest, NotLeastN, NotLeast, LastN,
-    FirstN, LeastN, GreatestN };
+    NotNthGreatest, NotFirstN, NotLastN, NotGreatestN, NotLeastN, LastN, FirstN, LeastN, GreatestN };
 
   private static final String collectionMakeBuiltInNamesArray[] = { MakeSet, MakeBag };
   private static final String collectionGroupByBuiltInNamesArray[] = { GroupBy };
 
   private static final String singleCollectionOperationWithoutCollectionCreateBuiltInNamesArray[] = { Size, IsEmpty,
-    NotIsEmpty, Element, NotElement, First, Last, Least, Greatest, Min, Max, Sum, Avg, Median, Nth, NthGreatest,
-    NthLast };
+    NotIsEmpty, Element, NotElement, Min, Max, Sum, Avg, Median, Nth, NthGreatest, NthLast };
 
   private static final String singleCollectionOperationWithCollectionCreateBuiltInNamesArray[] = { NthSlice,
     NthLastSlice, NthGreatestSlice, NotNthGreatestSlice, NotNthLastSlice, NotNthSlice, NotNth, NotNthLast,
-    NotNthGreatest, NotFirst, NotFirstN, NotLast, NotLastN, NotGreatestN, NotGreatest, NotLeastN, NotLeast, LastN,
-    FirstN, LeastN, GreatestN };
+    NotNthGreatest, NotFirstN, NotLastN, NotGreatestN, NotLeastN, LastN, FirstN, LeastN, GreatestN };
 
   private static final String multiCollectionOperationWithoutCollectionCreateBuiltInNamesArray[] = { Intersects,
     NotIntersects, Equal, NotEqual, Contains, NotContains };

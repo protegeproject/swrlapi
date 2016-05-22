@@ -140,7 +140,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
     throwExceptionIfAlreadyConfigured();
 
     if (this.numberOfColumns == 0)
-      throw new SQWRLException("orderedBy clause cannot be used without a select clause");
+      throw new SQWRLException("ordered clause cannot be used without a select clause");
 
     if (orderedColumnIndex < 0 || orderedColumnIndex >= this.allColumnNames.size())
       throw new SQWRLException("ordered column index " + orderedColumnIndex + " out of range");
@@ -564,12 +564,6 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
     this.nth = nth;
   }
 
-  @Override public void setFirst()
-  {
-    this.firstSelection = true;
-    this.firstN = 1;
-  }
-
   @Override public void setFirst(int n)
   {
     this.firstSelection = true;
@@ -588,22 +582,10 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
     this.lastN = n;
   }
 
-  @Override public void setNotFirst()
-  {
-    this.notFirstSelection = true;
-    this.firstN = 1;
-  }
-
   @Override public void setNotFirst(int n)
   {
     this.notFirstSelection = true;
     this.firstN = n;
-  }
-
-  @Override public void setNotLast()
-  {
-    this.notLastSelection = true;
-    this.lastN = 1;
   }
 
   @Override public void setNotLast(int n)

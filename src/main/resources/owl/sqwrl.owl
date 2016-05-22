@@ -45,11 +45,8 @@
   <swrl:Builtin rdf:ID="intersection"/>
   <swrl:Builtin rdf:ID="append"/>
 
-  <swrl:Builtin rdf:ID="last"/>
-  <swrl:Builtin rdf:ID="notLast"/>
   <swrl:Builtin rdf:ID="lastN"/>
   <swrl:Builtin rdf:ID="notLastN"/>
-  <swrl:Builtin rdf:ID="first"/>
   <swrl:Builtin rdf:ID="notFirst"/>
   <swrl:Builtin rdf:ID="firstN"/>
   <swrl:Builtin rdf:ID="notFirstN"/>
@@ -64,11 +61,8 @@
   <swrl:Builtin rdf:ID="nthLastSlice"/>
   <swrl:Builtin rdf:ID="notNthLastSlice"/>
 
-  <swrl:Builtin rdf:ID="greatest"/>
-  <swrl:Builtin rdf:ID="notGreatest"/>
   <swrl:Builtin rdf:ID="greatestN"/>
   <swrl:Builtin rdf:ID="notGreatestN"/>
-  <swrl:Builtin rdf:ID="least"/>
   <swrl:Builtin rdf:ID="notLeast"/>
   <swrl:Builtin rdf:ID="leastN"/>
   <swrl:Builtin rdf:ID="notLeastN"/>
