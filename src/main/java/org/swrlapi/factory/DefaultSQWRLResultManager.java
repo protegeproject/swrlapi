@@ -139,6 +139,9 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
   {
     throwExceptionIfAlreadyConfigured();
 
+    if (this.numberOfColumns == 0)
+      throw new SQWRLException("orderedBy clause cannot be used without a select clause");
+
     if (orderedColumnIndex < 0 || orderedColumnIndex >= this.allColumnNames.size())
       throw new SQWRLException("ordered column index " + orderedColumnIndex + " out of range");
 

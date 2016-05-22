@@ -263,9 +263,9 @@ class DefaultSQWRLQuery implements SQWRLQuery
             throw new SQWRLException(
               "nth argument for slicing operator " + builtInPrefixedName + " must be a positive xsd:int");
         } else
-          throw new SQWRLException("expecting integer for slicing operator " + builtInPrefixedName);
+          throw new SQWRLException("expecting xsd:int argument for slicing operator " + builtInPrefixedName);
       } else
-        throw new SQWRLException("expecting integer for slicing operator " + builtInPrefixedName);
+        throw new SQWRLException("expecting xsd:int argument for slicing operator " + builtInPrefixedName);
 
       if (builtInAtom.getNumberOfArguments() == 1) {
         processHeadSliceOperationWithoutSliceSize(builtInPrefixedName, sliceN);
@@ -291,9 +291,9 @@ class DefaultSQWRLQuery implements SQWRLQuery
           throw new SQWRLException(
             "slice size argument to slicing operator " + builtInName + " must be a positive xsd:int");
       } else
-        throw new SQWRLException("expecting integer to slicing operator " + builtInName);
+        throw new SQWRLException("expecting xsd:int argument for slicing operator " + builtInName);
     } else
-      throw new SQWRLException("expecting integer to slicing operator " + builtInName);
+      throw new SQWRLException("expecting xsd:int argument for slicing operator " + builtInName);
 
     if (builtInName.equalsIgnoreCase(SQWRLNames.NthSlice))
       this.sqwrlResult.setNthSlice(sliceN, sliceSize);
