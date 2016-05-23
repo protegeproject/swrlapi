@@ -206,7 +206,8 @@ class DefaultSQWRLQuery implements SQWRLQuery
 
   private void processSQWRLHeadBuiltIns() throws SQWRLException
   {
-    // A variable can be selected multiple times. We recordOWLClassExpression its positions in case of a sqwrl:orderBy clause.
+    // A variable can be selected multiple times.
+    // We recordOWLClassExpression its positions in case of a sqwrl:orderBy clause.
     Map<@NonNull String, @NonNull List<@NonNull Integer>> selectedVariable2ColumnIndices = new HashMap<>();
 
     assignBuiltInIndexes();
@@ -226,54 +227,35 @@ class DefaultSQWRLQuery implements SQWRLQuery
   {
     String builtInPrefixedName = builtInAtom.getBuiltInPrefixedName();
 
+    if (this.sqwrlResult.getCurrentNumberOfColumns() == 0)
+      throw new SQWRLException("slicing operator used without a select clause");
+
     if (!this.sqwrlResult.isOrdered() && !builtInPrefixedName.equals(SQWRLNames.Limit))
       throw new SQWRLException("slicing operator used without an order clause");
 
-    if (builtInPrefixedName.equalsIgnoreCase(SQWRLNames.Least) || builtInPrefixedName
-      .equalsIgnoreCase(SQWRLNames.First)) {
-      if (!builtInAtom.getArguments().isEmpty())
-        throw new SQWRLException("first or least do not accept arguments");
-      this.sqwrlResult.setFirst();
-    } else if (builtInPrefixedName.equalsIgnoreCase(SQWRLNames.NotLeast) || builtInPrefixedName
-      .equalsIgnoreCase(SQWRLNames.NotFirst)) {
-      if (!builtInAtom.getArguments().isEmpty())
-        throw new SQWRLException("not first or least do not accept arguments");
-      this.sqwrlResult.setNotFirst();
-    } else if (builtInPrefixedName.equalsIgnoreCase(SQWRLNames.Greatest) || builtInPrefixedName
-      .equalsIgnoreCase(SQWRLNames.Last)) {
-      if (!builtInAtom.getArguments().isEmpty())
-        throw new SQWRLException("greatest or last do not accept arguments");
-      this.sqwrlResult.setLast();
-    } else if (builtInPrefixedName.equalsIgnoreCase(SQWRLNames.NotGreatest) || builtInPrefixedName
-      .equalsIgnoreCase(SQWRLNames.NotLast)) {
-      if (!builtInAtom.getArguments().isEmpty())
-        throw new SQWRLException("not greatest or last do not accept arguments");
-      this.sqwrlResult.setNotLast();
-    } else {
-      SWRLBuiltInArgument nArgument = builtInAtom.getBuiltInArguments().get(0);
-      int sliceN;
+    SWRLBuiltInArgument nArgument = builtInAtom.getBuiltInArguments().get(0);
+    int sliceN;
 
-      if (nArgument instanceof SWRLLiteralBuiltInArgument) {
-        SWRLLiteralBuiltInArgument sliceNArgument = (SWRLLiteralBuiltInArgument)nArgument;
-        Literal literal = this.literalFactory.getLiteral(sliceNArgument.getLiteral());
+    if (nArgument instanceof SWRLLiteralBuiltInArgument) {
+      SWRLLiteralBuiltInArgument sliceNArgument = (SWRLLiteralBuiltInArgument)nArgument;
+      Literal literal = this.literalFactory.getLiteral(sliceNArgument.getLiteral());
 
-        if (literal.isInt()) {
-          sliceN = literal.getInt();
-          if (sliceN < 1)
-            throw new SQWRLException(
-              "nth argument for slicing operator " + builtInPrefixedName + " must be a positive xsd:int");
-        } else
-          throw new SQWRLException("expecting integer for slicing operator " + builtInPrefixedName);
+      if (literal.isInt()) {
+        sliceN = literal.getInt();
+        if (sliceN < 1)
+          throw new SQWRLException(
+            "nth argument for slicing operator " + builtInPrefixedName + " must be a positive xsd:int");
       } else
-        throw new SQWRLException("expecting integer for slicing operator " + builtInPrefixedName);
+        throw new SQWRLException("expecting xsd:int argument for slicing operator " + builtInPrefixedName);
+    } else
+      throw new SQWRLException("expecting xsd:int argument for slicing operator " + builtInPrefixedName);
 
-      if (builtInAtom.getNumberOfArguments() == 1) {
-        processHeadSliceOperationWithoutSliceSize(builtInPrefixedName, sliceN);
-      } else if (builtInAtom.getNumberOfArguments() == 2) {
-        processHeadSliceOperationWithSliceSize(builtInAtom, builtInPrefixedName, sliceN);
-      } else
-        throw new SQWRLException("slicing operator " + builtInPrefixedName + " expecting a maximum of 2 arguments");
-    }
+    if (builtInAtom.getNumberOfArguments() == 1) {
+      processHeadSliceOperationWithoutSliceSize(builtInPrefixedName, sliceN);
+    } else if (builtInAtom.getNumberOfArguments() == 2) {
+      processHeadSliceOperationWithSliceSize(builtInAtom, builtInPrefixedName, sliceN);
+    } else
+      throw new SQWRLException("slicing operator " + builtInPrefixedName + " expecting a maximum of 2 arguments");
   }
 
   private void processHeadSliceOperationWithSliceSize(@NonNull SWRLAPIBuiltInAtom builtInAtom,
@@ -291,9 +273,9 @@ class DefaultSQWRLQuery implements SQWRLQuery
           throw new SQWRLException(
             "slice size argument to slicing operator " + builtInName + " must be a positive xsd:int");
       } else
-        throw new SQWRLException("expecting integer to slicing operator " + builtInName);
+        throw new SQWRLException("expecting xsd:int argument for slicing operator " + builtInName);
     } else
-      throw new SQWRLException("expecting integer to slicing operator " + builtInName);
+      throw new SQWRLException("expecting xsd:int argument for slicing operator " + builtInName);
 
     if (builtInName.equalsIgnoreCase(SQWRLNames.NthSlice))
       this.sqwrlResult.setNthSlice(sliceN, sliceSize);
@@ -531,14 +513,12 @@ class DefaultSQWRLQuery implements SQWRLQuery
   }
 
   // We store the group arguments for each collection specified in the make operation; these arguments are later
-  // appended to the collection
-  // operation built-ins.
+  // appended to the collection operation built-ins.
   private void processSQWRLCollectionGroupByBuiltIns(@NonNull Set<@NonNull String> collectionNames)
     throws SQWRLException
   {
     for (SWRLAPIBuiltInAtom builtInAtom : getBuiltInAtomsFromBody(SQWRLNames.getCollectionGroupByBuiltInNames())) {
-      String collectionName = builtInAtom.getArgumentVariableName(0); // The first argument is the collection
-      // name.
+      String collectionName = builtInAtom.getArgumentVariableName(0); // First argument is the collection name
       List<@NonNull SWRLBuiltInArgument> builtInArguments = builtInAtom.getBuiltInArguments();
       List<@NonNull SWRLBuiltInArgument> groupArguments = builtInArguments.subList(1, builtInArguments.size());
 
@@ -547,7 +527,7 @@ class DefaultSQWRLQuery implements SQWRLQuery
       if (!collectionNames.contains(collectionName))
         throw new SQWRLException("groupBy applied to undefined collection " + collectionName);
       if (this.collectionGroupArgumentsMap.containsKey(collectionName))
-        throw new SQWRLException("groupBy specified more than once for same collection " + collectionName);
+        throw new SQWRLException("groupBy specified more than once for collection " + collectionName);
       if (hasUnboundArgument(groupArguments))
         throw new SQWRLException("unbound group argument passed to groupBy for collection " + collectionName);
 
@@ -727,7 +707,7 @@ class DefaultSQWRLQuery implements SQWRLQuery
 
   /**
    * Incrementally build variable dependency paths up to and including the current atom.
-   * <p>
+   * <p/>
    * Note: Sets of sets in Java require care because of hash code issues. The enclosed set should not be modified or the
    * outer set may return inconsistent results.
    */

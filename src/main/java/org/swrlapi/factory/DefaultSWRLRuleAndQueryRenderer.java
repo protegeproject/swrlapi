@@ -111,14 +111,14 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
         if (collectionMakeEncountered)
           sb.append(" " + SWRLParser.AND_CHAR + " ");
         else {
-          sb.append(SWRLParser.RING_CHAR);
+          sb.append(" " + SWRLParser.RING_CHAR + " ");
           collectionMakeEncountered = true;
         }
       } else if (isSQWRLCollectionOperateBuiltInAtom(atom)) {
         if (collectionOperationEncountered)
           sb.append(" " + SWRLParser.AND_CHAR + " ");
         else {
-          sb.append(SWRLParser.RING_CHAR);
+          sb.append(" " + SWRLParser.RING_CHAR + " ");
           collectionOperationEncountered = true;
         }
       } else {
