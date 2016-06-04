@@ -48,4 +48,9 @@ public interface IRIResolver
    * @param namespace A namespace
    */
   void setPrefix(@NonNull String prefix, @NonNull String namespace);
+
+  /**
+   * @return A generated unique IRI
+   */
+  IRI generateIRI();
 }

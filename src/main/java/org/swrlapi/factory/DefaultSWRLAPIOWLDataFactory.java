@@ -102,21 +102,13 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
 
   @NonNull @Override public OWLClass getInjectedOWLClass()
   {
-    // TODO Implement getInjectedOWLClass
-    IRI iri = IRI
-      // .create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + UUID.randomUUID().toString());
-      .create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + "fred");
-
+    IRI iri = this.iriResolver.generateIRI();
     return getOWLClass(iri);
   }
 
   @NonNull @Override public OWLNamedIndividual getInjectedOWLNamedIndividual()
   {
-    // TODO Implement getInjectedOWLNamedIndividual
-    IRI iri = IRI
-      // .create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + UUID.randomUUID().toString());
-      .create("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" + "fred");
-
+    IRI iri = this.iriResolver.generateIRI();
     return getOWLNamedIndividual(iri);
   }
 }
