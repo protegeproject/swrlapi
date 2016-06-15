@@ -870,6 +870,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     addSWRLBuiltIn(IRI.create(prefix, "substringAfter"));
     addSWRLBuiltIn(IRI.create(prefix, "matches"));
     addSWRLBuiltIn(IRI.create(prefix, "replace"));
+    addSWRLBuiltIn(IRI.create(prefix, "tokenize"));
     addSWRLBuiltIn(IRI.create(prefix, "yearMonthDuration"));
     addSWRLBuiltIn(IRI.create(prefix, "dayTimeDuration"));
     addSWRLBuiltIn(IRI.create(prefix, "dateTime"));

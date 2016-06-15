@@ -65,6 +65,12 @@ public interface Literal
 
   boolean isUnsignedByte();
 
+  boolean isRDFPlainLiteral();
+
+  boolean isRDFSLiteral();
+
+  boolean isRDFXMLLiteral();
+
   byte getByte() throws LiteralException;
 
   short getShort() throws LiteralException;
@@ -110,6 +116,12 @@ public interface Literal
   @NonNull int getUnsignedShort() throws LiteralException;
 
   @NonNull short getUnsignedByte() throws LiteralException;
+
+  @NonNull String getRDFPlainLiteral() throws LiteralException;
+
+  @NonNull String getRDFSLiteral() throws LiteralException;
+
+  @NonNull String getRDFXMLLiteral() throws LiteralException;
 
   @NonNull String getValue();
 

@@ -5,6 +5,7 @@ import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.parameters.Imports;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
+import org.semanticweb.owlapi.vocab.XSDVocabulary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.swrlapi.core.IRIResolver;
@@ -50,6 +51,12 @@ class DefaultSWRLAutoCompleter implements SWRLAutoCompleter
     }
 
     for (OWLRDFVocabulary v : OWLRDFVocabulary.values()) {
+      String prefixedName = v.getPrefixedName();
+      if (prefixedName != null)
+        this.renderings.add(prefixedName);
+    }
+
+    for (XSDVocabulary v : XSDVocabulary.values()) {
       String prefixedName = v.getPrefixedName();
       if (prefixedName != null)
         this.renderings.add(prefixedName);

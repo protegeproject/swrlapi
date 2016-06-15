@@ -102,12 +102,15 @@ class SWRLParserSupport
 
   public boolean isOWLDatatype(@NonNull String shortName)
   {
-    try {
-      XSDVocabulary.parseShortName(shortName);
+    if (shortName.equals("rdf:PlainLiteral") || shortName.equals("rdfs:Literal") || shortName.equals("rdf:XMLLiteral"))
       return true;
-    } catch (IllegalArgumentException e) {
-      return false;
-    }
+    else
+      try {
+        XSDVocabulary.parseShortName(shortName);
+        return true;
+      } catch (IllegalArgumentException e) {
+        return false;
+      }
   }
 
   public boolean isSWRLBuiltIn(@NonNull String shortName)

@@ -6,6 +6,7 @@ import org.checkerframework.dataflow.qual.Deterministic;
 import org.checkerframework.dataflow.qual.SideEffectFree;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
+import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
 import org.swrlapi.exceptions.LiteralException;
 import org.swrlapi.literal.Literal;
@@ -118,6 +119,21 @@ class DefaultLiteral implements Literal
     return this.literal.getDatatype().getIRI().equals(XSDVocabulary.UNSIGNED_BYTE.getIRI());
   }
 
+  @Override public boolean isRDFPlainLiteral()
+  {
+    return this.literal.getDatatype().getIRI().equals(OWLRDFVocabulary.RDF_PLAIN_LITERAL.getIRI());
+  }
+
+  @Override public boolean isRDFSLiteral()
+  {
+    return this.literal.getDatatype().getIRI().equals(OWLRDFVocabulary.RDFS_LITERAL.getIRI());
+  }
+
+  @Override public boolean isRDFXMLLiteral()
+  {
+    return this.literal.getDatatype().getIRI().equals(OWLRDFVocabulary.RDF_XML_LITERAL.getIRI());
+  }
+
   @Override public boolean isString()
   {
     return this.literal.getDatatype().isString();
@@ -168,6 +184,36 @@ class DefaultLiteral implements Literal
     if (!isString())
       throw new LiteralException(
         "cannot convert value of type " + this.literal.getDatatype() + " to " + XSDVocabulary.STRING.getPrefixedName());
+
+    return getOWLLiteral().getLiteral();
+  }
+
+  @NonNull @Override public String getRDFPlainLiteral() throws LiteralException
+  {
+    if (!isRDFPlainLiteral())
+      throw new LiteralException(
+        "cannot convert value of type " + this.literal.getDatatype() + " to " + OWLRDFVocabulary.RDF_PLAIN_LITERAL
+          .getPrefixedName());
+
+    return getOWLLiteral().getLiteral();
+  }
+
+  @NonNull @Override public String getRDFSLiteral() throws LiteralException
+  {
+    if (!isRDFSLiteral())
+      throw new LiteralException(
+        "cannot convert value of type " + this.literal.getDatatype() + " to " + OWLRDFVocabulary.RDFS_LITERAL
+          .getPrefixedName());
+
+    return getOWLLiteral().getLiteral();
+  }
+
+  @NonNull @Override public String getRDFXMLLiteral() throws LiteralException
+  {
+    if (!isRDFXMLLiteral())
+      throw new LiteralException(
+        "cannot convert value of type " + this.literal.getDatatype() + " to " + OWLRDFVocabulary.RDF_XML_LITERAL
+          .getPrefixedName());
 
     return getOWLLiteral().getLiteral();
   }
