@@ -523,6 +523,7 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
           if (SWRLRuleEditorDialog.this.editMode) {
             getSWRLRuleEngineModel().getSWRLRuleEngine()
               .replaceSWRLRule(getInitialDialogState().getRuleName(), ruleName, ruleText, comment, true);
+            getSWRLRulesTableModel().updateView();
             errorOccurred = false;
           } else {
             if (getSWRLRulesTableModel().hasSWRLRule(ruleName)) {
