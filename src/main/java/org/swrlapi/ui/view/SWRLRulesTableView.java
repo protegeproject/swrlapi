@@ -149,9 +149,9 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
       @Override public void valueChanged(ListSelectionEvent e)
       {
         if (hasSelectedRule())
-          enableEditAndDelete();
+          enableEditAndCloneAndDelete();
         else
-          disableEditAndDelete();
+          disableEditAndCloneAndDelete();
       }
     });
   }
@@ -212,21 +212,21 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
     this.deleteButton.addActionListener(new DeleteSWRLRuleActionListener(this, dialogManager));
     buttonPanel.add(this.deleteButton);
 
-    disableEditAndDelete(); // Will get enabled by listener on rule table if a rule is selected
+    disableEditAndCloneAndDelete(); // Will get enabled by listener on rule table if a rule is selected
 
     add(scrollPane, BorderLayout.CENTER);
 
     validate();
   }
 
-  private void enableEditAndDelete()
+  private void enableEditAndCloneAndDelete()
   {
     this.editButton.setEnabled(true);
     this.cloneButton.setEnabled(true);
     this.deleteButton.setEnabled(true);
   }
 
-  private void disableEditAndDelete()
+  private void disableEditAndCloneAndDelete()
   {
     this.editButton.setEnabled(false);
     this.cloneButton.setEnabled(false);

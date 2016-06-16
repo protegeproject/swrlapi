@@ -14,7 +14,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 /**
- * This class models a list of SWRL rules or SQWRL queries in an ontology for tabular display.
+ * This class models a list of SWRL rules and SQWRL queries in an ontology for tabular display.
  *
  * @see org.swrlapi.ui.model.SWRLRuleEngineModel
  * @see org.swrlapi.core.SWRLAPIRule
