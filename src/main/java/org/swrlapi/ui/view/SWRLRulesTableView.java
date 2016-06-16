@@ -1,6 +1,9 @@
 package org.swrlapi.ui.view;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.ui.action.DisableAllRulesAction;
 import org.swrlapi.ui.action.EnableAllRulesAction;
 import org.swrlapi.ui.dialog.SWRLRuleEngineDialogManager;
@@ -27,8 +30,12 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 {
   private static final long serialVersionUID = 1L;
 
+  private static final Logger log = LoggerFactory.getLogger(SWRLRulesTableView.class);
+
+  private static final String NEW_BUTTON_TITLE = "New";
   private static final String EDIT_BUTTON_TITLE = "Edit";
   private static final String DELETE_BUTTON_TITLE = "Delete";
+  private static final String CLONE_BUTTON_TITLE = "Clone";
 
   private static final int ACTIVE_COLUMN_PREFERRED_WIDTH = 30;
   private static final int ACTIVE_COLUMN_MAX_WIDTH = 50;
@@ -42,7 +49,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
   @NonNull private final SWRLRuleEngineModel swrlRuleEngineModel;
   @NonNull private final SWRLRuleEngineDialogManager dialogManager;
   @NonNull private final JTable swrlRulesTable;
-  @NonNull private final JButton editButton, deleteButton;
+  @NonNull private final JButton newButton, cloneButton, editButton, deleteButton;
 
   public SWRLRulesTableView(@NonNull SWRLRuleEngineModel swrlRuleEngineModel,
     @NonNull SWRLRuleEngineDialogManager dialogManager)
@@ -53,6 +60,8 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
     this.swrlRulesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     this.deleteButton = new JButton(DELETE_BUTTON_TITLE);
     this.editButton = new JButton(EDIT_BUTTON_TITLE);
+    this.cloneButton = new JButton(CLONE_BUTTON_TITLE);
+    this.newButton = new JButton(NEW_BUTTON_TITLE);
   }
 
   @Override public void initialize()
@@ -158,6 +167,24 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
     }
   }
 
+  private void cloneSelectedSWRLRule()
+  {
+    if (this.swrlRulesTable.getSelectedRow() != -1) {
+      Optional<String> ruleName = getSWRLRuleEngineModel().getNextRuleName();
+      if (ruleName.isPresent()) {
+        String ruleText = getSelectedSWRLRuleText().get();
+        String ruleComment = getSelectedSWRLRuleComment().get();
+
+        try {
+          getSWRLRuleEngineModel().getSWRLRuleEngine().createSWRLRule(ruleName.get(), ruleText, ruleComment, true);
+          getSWRLRuleEngineModel().updateView();
+        } catch (SWRLParseException e) {
+          log.warn("Error cloning rule " + ruleName + ": " + e.getMessage());
+        }
+      }
+    }
+  }
+
   private void createComponents(SWRLRuleEngineDialogManager dialogManager)
   {
     JScrollPane scrollPane = new JScrollPane(this.swrlRulesTable);
@@ -170,18 +197,20 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
 
     viewport.setBackground(this.swrlRulesTable.getBackground());
 
-    JPanel buttonPanel = new JPanel(new BorderLayout());
+    JPanel buttonPanel = new JPanel(new GridLayout(1, 4));
     headingPanel.add(buttonPanel, BorderLayout.EAST);
 
-    JButton newButton = new JButton("New");
-    newButton.addActionListener(new NewSWRLRuleActionListener(this, dialogManager));
-    buttonPanel.add(newButton, BorderLayout.WEST);
+    this.newButton.addActionListener(new NewSWRLRuleActionListener(this, dialogManager));
+    buttonPanel.add(newButton);
 
     this.editButton.addActionListener(new EditSWRLRuleActionListener(this, dialogManager));
-    buttonPanel.add(this.editButton, BorderLayout.CENTER);
+    buttonPanel.add(this.editButton);
+
+    this.cloneButton.addActionListener(new CloneSWRLRuleActionListener(this, dialogManager));
+    buttonPanel.add(this.cloneButton);
 
     this.deleteButton.addActionListener(new DeleteSWRLRuleActionListener(this, dialogManager));
-    buttonPanel.add(this.deleteButton, BorderLayout.EAST);
+    buttonPanel.add(this.deleteButton);
 
     disableEditAndDelete(); // Will get enabled by listener on rule table if a rule is selected
 
@@ -193,12 +222,14 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
   private void enableEditAndDelete()
   {
     this.editButton.setEnabled(true);
+    this.cloneButton.setEnabled(true);
     this.deleteButton.setEnabled(true);
   }
 
   private void disableEditAndDelete()
   {
     this.editButton.setEnabled(false);
+    this.cloneButton.setEnabled(false);
     this.deleteButton.setEnabled(false);
   }
 
@@ -254,6 +285,20 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
       editSelectedSWRLRule();
     }
   }
+
+  private class CloneSWRLRuleActionListener extends ActionListenerBase
+  {
+    public CloneSWRLRuleActionListener(@NonNull Component parent, @NonNull SWRLRuleEngineDialogManager dialogManager)
+    {
+      super(parent, dialogManager);
+    }
+
+    @Override public void actionPerformed(@NonNull ActionEvent e)
+    {
+      cloneSelectedSWRLRule();
+    }
+  }
+
 
   private class DeleteSWRLRuleActionListener extends ActionListenerBase
   {
