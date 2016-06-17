@@ -7,6 +7,7 @@ import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLDataProperty;
+import org.semanticweb.owlapi.model.OWLDataRange;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
@@ -17,6 +18,7 @@ import org.semanticweb.owlapi.model.SWRLBuiltInAtom;
 import org.semanticweb.owlapi.model.SWRLClassAtom;
 import org.semanticweb.owlapi.model.SWRLDArgument;
 import org.semanticweb.owlapi.model.SWRLDataPropertyAtom;
+import org.semanticweb.owlapi.model.SWRLDataRangeAtom;
 import org.semanticweb.owlapi.model.SWRLDifferentIndividualsAtom;
 import org.semanticweb.owlapi.model.SWRLIArgument;
 import org.semanticweb.owlapi.model.SWRLIndividualArgument;
@@ -100,6 +102,7 @@ class SWRLParserSupport
     return getOWLOntology().containsAnnotationPropertyInSignature(propertyIRI, Imports.INCLUDED);
   }
 
+  // TODO This is very arbitrary. See if we can find a method in the OWLAPI to determine if a shortName is a datatype.
   public boolean isOWLDatatype(@NonNull String shortName)
   {
     if (shortName.equals("rdf:PlainLiteral") || shortName.equals("rdfs:Literal") || shortName.equals("rdf:XMLLiteral"))
@@ -252,6 +255,14 @@ class SWRLParserSupport
     OWLDataProperty dataProperty = createOWLDataProperty(dataPropertyShortName);
 
     return getOWLDataFactory().getSWRLDataPropertyAtom(dataProperty, iArgument, dArgument);
+  }
+
+  public @NonNull SWRLDataRangeAtom createSWRLDataRangeAtom(@NonNull String datatypeShortName,
+    @NonNull SWRLDArgument dArgument) throws SWRLParseException
+  {
+    OWLDataRange dataRange = createOWLDatatype(datatypeShortName);
+
+    return getOWLDataFactory().getSWRLDataRangeAtom(dataRange, dArgument);
   }
 
   @NonNull public SWRLBuiltInAtom createSWRLBuiltInAtom(@NonNull String builtInPrefixedName,
