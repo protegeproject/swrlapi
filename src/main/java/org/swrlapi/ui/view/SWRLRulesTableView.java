@@ -120,7 +120,8 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
     TableColumnModel columnModel = this.swrlRulesTable.getColumnModel();
 
     if (this.tableModel.hasRuleActiveColumn()) {
-      columnModel.getColumn(this.tableModel.getRuleActiveColumnNumber()).setPreferredWidth(ACTIVE_COLUMN_PREFERRED_WIDTH);
+      columnModel.getColumn(this.tableModel.getRuleActiveColumnNumber())
+        .setPreferredWidth(ACTIVE_COLUMN_PREFERRED_WIDTH);
       columnModel.getColumn(this.tableModel.getRuleActiveColumnNumber()).setMaxWidth(ACTIVE_COLUMN_MAX_WIDTH);
     }
     columnModel.getColumn(this.tableModel.getRuleNameColumnNumber())
@@ -301,7 +302,6 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
       cloneSelectedSWRLRule();
     }
   }
-
 
   private class DeleteSWRLRuleActionListener extends ActionListenerBase
   {

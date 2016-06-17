@@ -16,6 +16,7 @@ import java.util.TreeMap;
 /**
  * This class models a list of SWRL rules and SQWRL queries in an ontology for tabular display.
  *
+ * @see org.swrlapi.ui.view.SWRLRulesTableView
  * @see org.swrlapi.ui.model.SWRLRuleEngineModel
  * @see org.swrlapi.core.SWRLAPIRule
  * @see org.swrlapi.sqwrl.SQWRLQuery
@@ -176,7 +177,6 @@ public class SWRLRulesAndSQWRLQueriesTableModel extends AbstractTableModel imple
     return getNumberOfColumns();
   }
 
-
   @NonNull @Override public String getColumnName(int column)
   {
     if (column == getRuleNameColumnNumber())
@@ -205,21 +205,26 @@ public class SWRLRulesAndSQWRLQueriesTableModel extends AbstractTableModel imple
     if ((row < 0 || row >= getRowCount()) || ((column < 0 || column >= getColumnCount())))
       return "OUT OF BOUNDS";
     else {
+      SWRLRuleModel swrlRuleModel = (SWRLRuleModel)this.swrlRuleModels.values().toArray()[row];
       if (column == getRuleTextColumnNumber())
-        return ((SWRLRuleModel)this.swrlRuleModels.values().toArray()[row]).getRuleText();
+        return swrlRuleModel.getRuleText();
       else if (column == getRuleNameColumnNumber())
-        return ((SWRLRuleModel)this.swrlRuleModels.values().toArray()[row]).getRuleName();
+        return swrlRuleModel.getRuleName();
       else if (column == getRuleCommentColumnNumber())
-        return ((SWRLRuleModel)this.swrlRuleModels.values().toArray()[row]).getComment();
+        return swrlRuleModel.getComment();
       else if (column == getRuleActiveColumnNumber())
-        return ((SWRLRuleModel)this.swrlRuleModels.values().toArray()[row]).isActive();
+        return swrlRuleModel.isActive() && !swrlRuleModel.isSQWRLQuery();
       return "INVALID COLUMN";
     }
   }
 
   @Override public boolean isCellEditable(int rowIndex, int columnIndex)
   {
-    return columnIndex == getRuleActiveColumnNumber();
+    if (hasRuleActiveColumn() && columnIndex == getRuleActiveColumnNumber()) {
+      SWRLRuleModel swrlRuleModel = (SWRLRuleModel)this.swrlRuleModels.values().toArray()[rowIndex];
+      return !swrlRuleModel.isSQWRLQuery();
+    } else
+      return false;
   }
 
   @Override public Class<?> getColumnClass(int columnIndex)
@@ -264,7 +269,8 @@ public class SWRLRulesAndSQWRLQueriesTableModel extends AbstractTableModel imple
       String ruleName = swrlapiRule.getRuleName();
       String ruleText = this.swrlRuleEngine.createSWRLRuleRenderer().renderSWRLRule(swrlapiRule);
       String comment = swrlapiRule.getComment();
-      SWRLRuleModel swrlRuleModel = new SWRLRuleModel(ruleName, ruleText, comment);
+      boolean isSQWRLQuery = swrlapiRule.isSQWRLQuery();
+      SWRLRuleModel swrlRuleModel = new SWRLRuleModel(ruleName, ruleText, comment, isSQWRLQuery);
       this.swrlRuleModels.put(ruleName, swrlRuleModel);
     }
   }
@@ -283,14 +289,17 @@ public class SWRLRulesAndSQWRLQueriesTableModel extends AbstractTableModel imple
   private class SWRLRuleModel
   {
     @NonNull private final String ruleName, ruleText, comment;
+    private final boolean isSQWRLQuery;
     private boolean active;
 
-    public SWRLRuleModel(@NonNull String ruleName, @NonNull String ruleText, @NonNull String comment)
+    public SWRLRuleModel(@NonNull String ruleName, @NonNull String ruleText, @NonNull String comment,
+      boolean isSQWRLQuery)
     {
       this.active = true;
       this.ruleText = ruleText;
       this.ruleName = ruleName;
       this.comment = comment;
+      this.isSQWRLQuery = isSQWRLQuery;
     }
 
     public void setActive(boolean active)
@@ -301,6 +310,11 @@ public class SWRLRulesAndSQWRLQueriesTableModel extends AbstractTableModel imple
     public boolean isActive()
     {
       return this.active;
+    }
+
+    public boolean isSQWRLQuery()
+    {
+      return this.isSQWRLQuery;
     }
 
     @NonNull public String getRuleText()
