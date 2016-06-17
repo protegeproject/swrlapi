@@ -47,7 +47,7 @@ public class SWRLRulesAndSQWRLQueriesTableModel extends AbstractTableModel imple
     this.swrlRuleEngine = swrlRuleEngine;
     this.swrlRuleModels = new TreeMap<>();
     this.isModified = false;
-    this.contentMode = ContentMode.RuleAndQueryContent;
+    this.contentMode = ContentMode.RuleContentOnly;
   }
 
   public void setView(@NonNull SWRLAPIView view)
@@ -62,6 +62,12 @@ public class SWRLRulesAndSQWRLQueriesTableModel extends AbstractTableModel imple
     this.swrlRuleModels.clear();
     this.isModified = false;
 
+    updateView();
+  }
+
+  public void setContentMode(ContentMode contentMode)
+  {
+    this.contentMode = contentMode;
     updateView();
   }
 

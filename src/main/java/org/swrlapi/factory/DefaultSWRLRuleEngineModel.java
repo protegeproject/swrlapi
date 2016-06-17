@@ -31,7 +31,7 @@ public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel
   @NonNull private SWRLRuleEngine swrlRuleEngine;
   @NonNull private OWL2RLEngine owl2RLEngine;
 
-  @NonNull private final SWRLRulesAndSQWRLQueriesTableModel swrlRulesAndSQWRLQueriesTableModel;
+  @NonNull protected final SWRLRulesAndSQWRLQueriesTableModel swrlRulesAndSQWRLQueriesTableModel;
   @NonNull private final OWL2RLModel owl2RLModel;
 
   public DefaultSWRLRuleEngineModel(@NonNull SWRLRuleEngine swrlRuleEngine)

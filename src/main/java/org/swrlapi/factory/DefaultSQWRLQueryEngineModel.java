@@ -3,6 +3,7 @@ package org.swrlapi.factory;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.ui.model.SQWRLQueryEngineModel;
+import org.swrlapi.ui.model.SWRLRulesAndSQWRLQueriesTableModel;
 
 class DefaultSQWRLQueryEngineModel extends DefaultSWRLRuleEngineModel implements SQWRLQueryEngineModel
 {
@@ -12,6 +13,8 @@ class DefaultSQWRLQueryEngineModel extends DefaultSWRLRuleEngineModel implements
   {
     super(sqwrlQueryEngine);
     this.queryEngine = sqwrlQueryEngine;
+    this.swrlRulesAndSQWRLQueriesTableModel
+      .setContentMode(SWRLRulesAndSQWRLQueriesTableModel.ContentMode.QueryContentOnly);
   }
 
   @Override public void updateModel(@NonNull SQWRLQueryEngine queryEngine)
