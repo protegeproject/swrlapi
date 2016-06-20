@@ -23,17 +23,17 @@ import java.util.Set;
 /**
  * A basic SWRL and SQWRL parser. It provides in interactive parsing mode for incomplete rules and queries and provides
  * feedback on the next token that it is expecting.
- * <p/>
+ * <p>
  * This parser will throw a {@link org.swrlapi.parser.SWRLParseException} if there is an error in the rule or query. In
  * interactive parse mode, if the rule or query is correct but incomplete a
  * {@link org.swrlapi.parser.SWRLIncompleteRuleException} (which is a subclass of
  * {@link org.swrlapi.parser.SWRLParseException}) will be thrown.
- * <p/>
+ * <p>
  * The {@link #parseSWRLRule(String, boolean, String, String)} method parses a rule or query. If
  * <code>interactiveParseOnly</code> argument is <code>true</code>, only checking is performed - no SWRL rules are
  * created; if it is false, a {@link org.semanticweb.owlapi.model.SWRLRule} object is created.
- * <p/>
- * The parser does not yet parse OWL class expressions or data ranges.
+ * <p>
+ * The parser does not yet parse OWL class expressions and only supports a basic form of data range atoms.
  *
  * @see org.semanticweb.owlapi.model.SWRLRule
  * @see org.swrlapi.parser.SWRLTokenizer
