@@ -1,6 +1,7 @@
 package org.swrlapi.factory;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.semanticweb.owlapi.io.OWLObjectRenderer;
 import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotation;
@@ -114,6 +115,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
 
   @NonNull private final OWLOntology ontology;
   @NonNull private final IRIResolver iriResolver;
+  @NonNull private final OWLObjectRenderer owlObjectRenderer;
   @NonNull private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
   @NonNull private final Set<@NonNull IRI> swrlBuiltInIRIs;
 
@@ -135,10 +137,12 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
   private boolean hasOntologyChanged = true; // Ensure initial processing
   private boolean eventFreezeMode = false;
 
-  public DefaultSWRLAPIOWLOntology(@NonNull OWLOntology ontology, @NonNull IRIResolver iriResolver)
+  public DefaultSWRLAPIOWLOntology(@NonNull OWLOntology ontology, @NonNull IRIResolver iriResolver,
+    @NonNull OWLObjectRenderer owlObjectRenderer)
   {
     this.ontology = ontology;
     this.iriResolver = iriResolver;
+    this.owlObjectRenderer = owlObjectRenderer;
     this.swrlapiOWLDataFactory = SWRLAPIFactory.createSWRLAPIOWLDataFactory(this.iriResolver);
     this.swrlBuiltInIRIs = new HashSet<>();
 
@@ -345,7 +349,8 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
 
   @NonNull @Override public SWRLRuleRenderer createSWRLRuleRenderer()
   {
-    return SWRLAPIFactory.createSWRLRuleRenderer(this.getOWLOntology(), this.getIRIResolver());
+    return SWRLAPIFactory
+      .createSWRLRuleRenderer(this.getOWLOntology(), this.getIRIResolver(), this.getOWLObjectRenderer());
   }
 
   @Override public Optional<String> getNextRuleName()
@@ -362,7 +367,8 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
 
   @NonNull @Override public SQWRLQueryRenderer createSQWRLQueryRenderer()
   {
-    return SWRLAPIFactory.createSQWRLQueryRenderer(this.getOWLOntology(), this.getIRIResolver());
+    return SWRLAPIFactory
+      .createSQWRLQueryRenderer(this.getOWLOntology(), this.getIRIResolver(), getOWLObjectRenderer());
   }
 
   @Override public int getNumberOfSWRLRules()
@@ -527,6 +533,11 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     return this.iriResolver;
   }
 
+  @Override public @NonNull OWLObjectRenderer getOWLObjectRenderer()
+  {
+    return this.owlObjectRenderer;
+  }
+
   @NonNull private String iri2PrefixedName(IRI iri)
   {
     Optional<@NonNull String> prefixedName = this.iriResolver.iri2PrefixedName(iri);
@@ -687,7 +698,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
    * classes represent named OWL concepts so have an IRI). So if we are processing built-in parameters and encounter
    * variables with an IRI referring to OWL entities in the active ontology we can transform them to the
    * appropriate SWRLAPI built-in argument for the named entity.
-   * <p>
+   * <p/>
    * Note: An important restriction here is that variable names do not intersect with named properties in their OWL
    * ontology. A SWRL parser should check for this on input and report an error.
    *
@@ -742,7 +753,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
    * these additional argument types in a standards-conformant way, the SWRLAPI treats URI literal arguments specially.
    * It a URI literal argument is passed to a built-in we determine if it refers to an OWL named object in the active
    * ontology and if so we create specific SWRLAPI built-in argument types for it.
-   * <p>
+   * <p/>
    * The SWRLAPI allows SQWRL collection built-in arguments (represented by a
    * {@link org.swrlapi.builtins.arguments.SQWRLCollectionVariableBuiltInArgument}) and multi-value variables
    * (represented by a {@link org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument}). These two argument
@@ -1056,7 +1067,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
    * Process currently supported OWL axioms. The processing consists of recording any OWL properties in the processed
    * axioms (with an instance of the {@link DefaultIRIResolver} class) and generating declaration
    * axioms for these properties.
-   * <p>
+   * <p/>
    * TODO The current approach is clunky. A better approach would be to walk the axioms with a visitor and recordOWLClassExpression the
    * properties and generate the declaration axioms.
    */

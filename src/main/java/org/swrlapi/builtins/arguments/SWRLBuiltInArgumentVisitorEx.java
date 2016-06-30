@@ -10,11 +10,17 @@ public interface SWRLBuiltInArgumentVisitorEx<T>
 {
   @NonNull T visit(@NonNull SWRLClassBuiltInArgument argument);
 
+  @NonNull T visit(@NonNull SWRLClassExpressionBuiltInArgument argument);
+
   @NonNull T visit(@NonNull SWRLNamedIndividualBuiltInArgument argument);
 
   @NonNull T visit(@NonNull SWRLObjectPropertyBuiltInArgument argument);
 
+  @NonNull T visit(@NonNull SWRLObjectPropertyExpressionBuiltInArgument argument);
+
   @NonNull T visit(@NonNull SWRLDataPropertyBuiltInArgument argument);
+
+  @NonNull T visit(@NonNull SWRLDataPropertyExpressionBuiltInArgument argument);
 
   @NonNull T visit(@NonNull SWRLAnnotationPropertyBuiltInArgument argument);
 

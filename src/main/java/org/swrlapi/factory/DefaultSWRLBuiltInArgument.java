@@ -2,6 +2,7 @@ package org.swrlapi.factory;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLAnonymousIndividual;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;
@@ -9,12 +10,18 @@ import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
+import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.semanticweb.owlapi.model.OWLObjectVisitor;
+import org.semanticweb.owlapi.model.OWLObjectVisitorEx;
+import org.semanticweb.owlapi.model.SWRLObjectVisitor;
+import org.semanticweb.owlapi.model.SWRLObjectVisitorEx;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.exceptions.SWRLAPIException;
 
+import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
@@ -106,6 +113,36 @@ abstract class DefaultSWRLBuiltInArgument implements SWRLBuiltInArgument
   @NonNull @Override public Set<@NonNull OWLClassExpression> getNestedClassExpressions()
   {
     return Collections.<@NonNull OWLClassExpression>emptySet(); // TODO implement getNestedClassExpressions
+  }
+
+  @Override public void accept(@NonNull SWRLObjectVisitor swrlObjectVisitor)
+  {
+    // TODO implement accept(SWRLObjectVisitor)
+  }
+
+  @Nonnull @Override public <O> O accept(@NonNull SWRLObjectVisitorEx<O> swrlObjectVisitorEx)
+  {
+    return null; // TODO implement accept(SWRLObjectVisitor)
+  }
+
+  @Override public void accept(@NonNull OWLObjectVisitor owlObjectVisitor)
+  {
+    // TODO implement accept(OWLObjectVisitor)
+  }
+
+  @Nonnull @Override public <O> O accept(@NonNull OWLObjectVisitorEx<O> owlObjectVisitorEx)
+  {
+    return null; // TODO implement accept(owlObjectVisitor)
+  }
+
+  @Override public int compareTo(OWLObject o)
+  {
+    return -1;  // TODO implement compareTo(OWLObject
+  }
+
+  @Nonnull @Override public Set<OWLAnnotationProperty> getAnnotationPropertiesInSignature()
+  {
+    return Collections.emptySet(); // TODO getAnnotationPropertiesInSignature
   }
 
   @Override public boolean isTopEntity()

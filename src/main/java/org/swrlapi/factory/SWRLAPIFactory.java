@@ -1,6 +1,7 @@
 package org.swrlapi.factory;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.semanticweb.owlapi.io.OWLObjectRenderer;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLLiteral;
@@ -8,6 +9,7 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.SWRLAtom;
+import org.semanticweb.owlapi.util.SimpleRenderer;
 import org.swrlapi.bridge.SWRLBridge;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.IRIResolver;
@@ -120,9 +122,9 @@ public class SWRLAPIFactory
    * @return A SWRL rule renderer
    */
   @NonNull public static SWRLRuleRenderer createSWRLRuleRenderer(@NonNull OWLOntology ontology,
-    @NonNull IRIResolver iriResolver)
+    @NonNull IRIResolver iriResolver, @NonNull OWLObjectRenderer owlObjectRenderer)
   {
-    return new DefaultSWRLRuleAndQueryRenderer(ontology, iriResolver);
+    return new DefaultSWRLRuleAndQueryRenderer(ontology, iriResolver, owlObjectRenderer);
   }
 
   /**
@@ -131,9 +133,9 @@ public class SWRLAPIFactory
    * @return A SQWRL query renderer
    */
   @NonNull public static SQWRLQueryRenderer createSQWRLQueryRenderer(@NonNull OWLOntology ontology,
-    @NonNull IRIResolver iriResolver)
+    @NonNull IRIResolver iriResolver, @NonNull OWLObjectRenderer owlObjectRenderer)
   {
-    return new DefaultSWRLRuleAndQueryRenderer(ontology, iriResolver);
+    return new DefaultSWRLRuleAndQueryRenderer(ontology, iriResolver, owlObjectRenderer);
   }
 
   /**
@@ -142,6 +144,14 @@ public class SWRLAPIFactory
   @NonNull public static IRIResolver createIRIResolver()
   {
     return new DefaultIRIResolver();
+  }
+
+  /**
+   * @return An OWL object renderer
+   */
+  @NonNull public static OWLObjectRenderer createOWLObjectRenderer()
+  {
+    return new SimpleRenderer();
   }
 
   /**
@@ -397,7 +407,8 @@ public class SWRLAPIFactory
   @NonNull public static SWRLAPIOWLOntology createSWRLAPIOntology(@NonNull OWLOntology ontology,
     @NonNull IRIResolver iriResolver) throws SQWRLException
   {
-    SWRLAPIOWLOntology swrlapiowlOntology = new DefaultSWRLAPIOWLOntology(ontology, iriResolver);
+    SWRLAPIOWLOntology swrlapiowlOntology = new DefaultSWRLAPIOWLOntology(ontology, iriResolver,
+      createOWLObjectRenderer());
     swrlapiowlOntology.processOntology();
 
     return swrlapiowlOntology;
@@ -414,7 +425,8 @@ public class SWRLAPIFactory
   @NonNull public static SWRLAPIOWLOntology createSWRLAPIOntology(@NonNull OWLOntology ontology) throws SQWRLException
   {
     IRIResolver iriResolver = createIRIResolver();
-    SWRLAPIOWLOntology swrlapiowlOntology = new DefaultSWRLAPIOWLOntology(ontology, iriResolver);
+    OWLObjectRenderer owlObjectRenderer = createOWLObjectRenderer();
+    SWRLAPIOWLOntology swrlapiowlOntology = new DefaultSWRLAPIOWLOntology(ontology, iriResolver, owlObjectRenderer);
     swrlapiowlOntology.processOntology();
 
     return swrlapiowlOntology;
