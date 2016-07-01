@@ -83,6 +83,7 @@ import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLRuleRenderer;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.exceptions.SWRLAPIInternalException;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLRuleException;
 import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.parser.SWRLParser;
@@ -166,7 +167,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     iriResolver.updatePrefixes(ontology);
   }
 
-  @Override public void processOntology() throws SQWRLException
+  @Override public void processOntology() throws SQWRLException, SWRLBuiltInException
   {
     reset(); // Will reset hasOntologyChanged
     this.iriResolver.updatePrefixes(this.ontology);
@@ -210,13 +211,13 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
   }
 
   @NonNull @Override public SWRLAPIRule createSWRLRule(@NonNull String ruleName, @NonNull String rule)
-    throws SWRLParseException
+    throws SWRLParseException, SWRLBuiltInException
   {
     return createSWRLRule(ruleName, rule, "", true);
   }
 
   @NonNull @Override public SWRLAPIRule createSWRLRule(@NonNull String ruleName, @NonNull String rule,
-    @NonNull String comment, boolean isActive) throws SWRLParseException
+    @NonNull String comment, boolean isActive) throws SWRLParseException, SWRLBuiltInException
   {
     Optional<SWRLRule> owlapiRule = createSWRLParser().parseSWRLRule(rule, false, ruleName, comment);
 
@@ -231,7 +232,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
   }
 
   @Override public void replaceSWRLRule(@NonNull String originalRuleName, @NonNull String ruleName,
-    @NonNull String rule, @NonNull String comment, boolean isActive) throws SWRLParseException
+    @NonNull String rule, @NonNull String comment, boolean isActive) throws SWRLParseException, SWRLBuiltInException
   {
     startEventFreezeMode();
     deleteSWRLRule(originalRuleName);
@@ -257,13 +258,13 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
   }
 
   @NonNull @Override public SQWRLQuery createSQWRLQuery(@NonNull String queryName, @NonNull String query)
-    throws SWRLParseException, SQWRLException
+    throws SWRLParseException, SQWRLException, SWRLBuiltInException
   {
     return createSQWRLQuery(queryName, query, "", true);
   }
 
   @NonNull @Override public SQWRLQuery createSQWRLQuery(@NonNull String queryName, @NonNull String queryText,
-    @NonNull String comment, boolean isActive) throws SWRLParseException, SQWRLException
+    @NonNull String comment, boolean isActive) throws SWRLParseException, SQWRLException, SWRLBuiltInException
   {
     Optional<SWRLRule> owlapiRule = createSWRLParser().parseSWRLRule(queryText, false, queryName, comment);
 
@@ -287,7 +288,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     return new HashSet<>(this.swrlRules.values());
   }
 
-  private void processSWRLRulesAndSQWRLQueries() throws SQWRLException
+  private void processSWRLRulesAndSQWRLQueries() throws SQWRLException, SWRLBuiltInException
   {
     int ruleNameIndex = 0;
 
@@ -444,7 +445,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     return this.sqwrlQueries.get(queryName).getSQWRLResultGenerator();
   }
 
-  @NonNull private SQWRLQuery createSQWRLQueryFromSWRLRule(@NonNull SWRLAPIRule rule) throws SQWRLException
+  @NonNull private SQWRLQuery createSQWRLQueryFromSWRLRule(@NonNull SWRLAPIRule rule) throws SWRLBuiltInException
   {
     String queryName = rule.getRuleName();
     boolean active = rule.isActive();
@@ -607,7 +608,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
    * @see org.swrlapi.core.SWRLAPIRule
    */
   @NonNull private SWRLAPIRule convertOWLAPIRule2SWRLAPIRule(@NonNull SWRLRule owlapiRule, @NonNull String ruleName,
-    @NonNull String comment, boolean isActive)
+    @NonNull String comment, boolean isActive) throws SWRLBuiltInException
   {
     List<@NonNull SWRLAtom> owlapiBodyAtoms = new ArrayList<>(owlapiRule.getBody());
     List<@NonNull SWRLAtom> owlapiHeadAtoms = new ArrayList<>(owlapiRule.getHead());
@@ -1652,7 +1653,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     if (!eventFreezeMode) {
       try {
         processOntology();
-      } catch (SQWRLException e) {
+      } catch (SWRLBuiltInException e) {
         String message = "error processing SQWRL queries in ontology: " + e.getMessage();
         throw new OWLException(message);
       }

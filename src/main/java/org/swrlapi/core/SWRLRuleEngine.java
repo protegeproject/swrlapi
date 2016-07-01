@@ -5,6 +5,7 @@ import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLRuleEngineException;
 import org.swrlapi.exceptions.SWRLRuleException;
 import org.swrlapi.owl2rl.OWL2RLEngine;
@@ -61,7 +62,8 @@ public interface SWRLRuleEngine
    * @return A SWRL rule
    * @throws SWRLParseException If an error occurs during parsing
    */
-  @NonNull SWRLAPIRule createSWRLRule(@NonNull String ruleName, @NonNull String rule) throws SWRLParseException;
+  @NonNull SWRLAPIRule createSWRLRule(@NonNull String ruleName, @NonNull String rule) throws SWRLParseException,
+    SWRLBuiltInException;
 
   /**
    * @param ruleName The name of the rule
@@ -72,7 +74,7 @@ public interface SWRLRuleEngine
    * @throws SWRLParseException If an error occurs during parsing
    */
   @NonNull SWRLAPIRule createSWRLRule(@NonNull String ruleName, @NonNull String rule, @NonNull String comment,
-    boolean isActive) throws SWRLParseException;
+    boolean isActive) throws SWRLParseException, SWRLBuiltInException;
 
   /**
    *
@@ -85,7 +87,7 @@ public interface SWRLRuleEngine
    * @throws SWRLParseException
    */
   void replaceSWRLRule(@NonNull String originalRuleName, @NonNull String ruleName, @NonNull String rule,
-    @NonNull String comment, boolean isActive) throws SWRLParseException;
+    @NonNull String comment, boolean isActive) throws SWRLParseException, SWRLBuiltInException;
 
   /**
    * @return A collection of SWRL rules

@@ -8,6 +8,7 @@ import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLRuleException;
 import org.swrlapi.factory.SWRLAPIOWLDataFactory;
 import org.swrlapi.parser.SWRLParseException;
@@ -72,7 +73,8 @@ public interface SWRLAPIOWLOntology
    * @return The rule representation
    * @throws SWRLParseException If an error occurs during parsing
    */
-  @NonNull SWRLAPIRule createSWRLRule(@NonNull String ruleName, @NonNull String rule) throws SWRLParseException;
+  @NonNull SWRLAPIRule createSWRLRule(@NonNull String ruleName, @NonNull String rule) throws SWRLParseException,
+    SWRLBuiltInException;
 
   /**
    * @param ruleName The name of the rule
@@ -83,7 +85,7 @@ public interface SWRLAPIOWLOntology
    * @throws SWRLParseException If an error occurs during parsing
    */
   @NonNull SWRLAPIRule createSWRLRule(@NonNull String ruleName, @NonNull String rule, @NonNull String comment,
-      boolean isActive) throws SWRLParseException;
+      boolean isActive) throws SWRLParseException, SWRLBuiltInException;
 
   /**
    *
@@ -96,7 +98,7 @@ public interface SWRLAPIOWLOntology
    * @throws SWRLParseException
    */
   void replaceSWRLRule(@NonNull String originalRuleName, @NonNull String ruleName, @NonNull String rule,
-    @NonNull String comment, boolean isActive) throws SWRLParseException;
+    @NonNull String comment, boolean isActive) throws SWRLParseException, SWRLBuiltInException;
 
   void deleteSWRLRule(@NonNull String ruleName);
 
@@ -131,10 +133,10 @@ public interface SWRLAPIOWLOntology
   // Methods for handling SQWRL Queries
 
   @NonNull SQWRLQuery createSQWRLQuery(@NonNull String queryName, @NonNull String query)
-      throws SWRLParseException, SQWRLException;
+      throws SWRLParseException, SQWRLException, SWRLBuiltInException;
 
   @NonNull SQWRLQuery createSQWRLQuery(@NonNull String queryName, @NonNull String query, @NonNull String comment,
-      boolean isActive) throws SWRLParseException, SQWRLException;
+      boolean isActive) throws SWRLParseException, SQWRLException, SWRLBuiltInException;
 
   @NonNull SQWRLResult getSQWRLResult(@NonNull String queryName) throws SQWRLException;
 
@@ -152,7 +154,7 @@ public interface SWRLAPIOWLOntology
 
   void reset();
 
-  void processOntology() throws SQWRLException;
+  void processOntology() throws SQWRLException, SWRLBuiltInException;
 
   // Optimization methods
 

@@ -3,6 +3,7 @@ package org.swrlapi.visitors;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.OWLAxiomVisitor;
 import org.swrlapi.core.SWRLAPIRule;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 
 /**
  * SWRLAPI OWL axiom visitor customized to deal with {@link org.swrlapi.core.SWRLAPIRule}s instead of OWLAPI-based
@@ -14,5 +15,5 @@ import org.swrlapi.core.SWRLAPIRule;
  */
 public interface SWRLAPIOWLAxiomVisitor extends OWLAxiomVisitor
 {
-  void visit(@NonNull SWRLAPIRule swrlapiRule);
+  void visit(@NonNull SWRLAPIRule swrlapiRule) throws SWRLBuiltInException;
 }

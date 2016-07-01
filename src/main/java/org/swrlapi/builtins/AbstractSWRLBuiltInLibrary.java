@@ -53,7 +53,7 @@ import java.util.Map;
 
 /**
  * A class that must be subclassed by a class implementing a library of SWRL built-in methods.
- * <p>
+ * <p/>
  * Provides invocation context for invoked built-ins (such the name of invoking rule, whether the invocation is in the
  * consequent or the antecedent) and access to the invoking {@link org.swrlapi.builtins.SWRLBuiltInBridge}. Also
  * provides implementations for a large number of SWRL built-in argument processing methods.
@@ -1194,6 +1194,7 @@ public abstract class AbstractSWRLBuiltInLibrary
   // Unbound argument processing methods.
 
   @Override public boolean hasUnboundArguments(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException
   {
     for (SWRLBuiltInArgument argument : arguments)
       if (argument.isVariable() && argument.asVariable().isUnbound())
@@ -1236,6 +1237,7 @@ public abstract class AbstractSWRLBuiltInLibrary
    * Get 0-offset position of first unbound argument; return -1 if no unbound arguments are found.
    */
   @Override public int getFirstUnboundArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException
   {
     for (int index = 0; index < arguments.size(); index++)
       if (arguments.get(index).isVariable() && arguments.get(index).asVariable().isUnbound())
@@ -1287,7 +1289,7 @@ public abstract class AbstractSWRLBuiltInLibrary
   }
 
   @NonNull private String makeInvalidArgumentTypeMessage(@NonNull SWRLBuiltInArgument argument,
-    @NonNull String expectedTypeName)
+    @NonNull String expectedTypeName) throws SWRLBuiltInException
   {
     String message = "expecting " + expectedTypeName + ", got ";
 

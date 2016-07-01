@@ -2,6 +2,7 @@ package org.swrlapi.builtins.arguments;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.SWRLDArgument;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.factory.SWRLAPIOWLDataFactory;
 
 import java.util.Optional;
@@ -11,18 +12,18 @@ import java.util.Optional;
  * {@link org.semanticweb.owlapi.model.SWRLDArgument} interface to define an interface representing arguments to SWRL
  * built-ins. In addition to the {@link org.swrlapi.core.SWRLAPIRule} and {@link org.swrlapi.core.SWRLAPIBuiltInAtom}
  * interfaces, this interface is the SWRLAPI's primary OWLAPI extension point.
- * <p>
+ * <p/>
  * The {@link org.swrlapi.builtins.arguments.SWRLBuiltInArgument} interface represents SWRL built-in atom arguments in
  * the SWRLAPI, which has a wider range of built-in argument types than the OWLAPI. The OWLAPI envisions built-in
  * arguments as simple literals or variables only. In addition to literals and variables, the SWRLAPI allows OWL named
  * objects (classes, individuals, properties, and datatypes) as well as SQWRL collection arguments. The
  * {@link org.swrlapi.core.SWRLAPIRule} class represents SWRL rules in the SWRLAPI.
- * <p>
+ * <p/>
  * Since an OWLAPI ontology (represented by the OWLAPI class {@link org.semanticweb.owlapi.model.OWLOntology}) or an OWL
  * data factory (represented by the OWLAPI class {@link org.semanticweb.owlapi.model.OWLDataFactory}), will not be aware
  * of these types a {@link org.swrlapi.core.SWRLAPIOWLOntology} (in conjunction with an
  * {@link SWRLAPIOWLDataFactory}) must be used to extract SWRLAPI SWRL rules.
- * <p>
+ * <p/>
  * Similarly, a SWRLAPI-aware parser is required to generate SWRLAPI rules from rule text.
  *
  * @see org.swrlapi.core.SWRLAPIRule
@@ -48,6 +49,11 @@ public interface SWRLBuiltInArgument extends SWRLDArgument
   boolean isVariable();
 
   /**
+   * @return True if the built-in argument is a variable representing a collection
+   */
+  boolean isCollectionVariable();
+
+  /**
    * @return True if the built-in argument is a multi-value variable
    */
   boolean isMultiValueVariable();
@@ -63,24 +69,91 @@ public interface SWRLBuiltInArgument extends SWRLDArgument
   boolean isNamed();
 
   /**
+   * @return True if the built-in argument is an OWL named class
+   */
+  boolean isClass();
+
+  /**
+   * @return True if the built-in argument is an OWL class expression
+   */
+  boolean isClassExpression();
+
+  /**
+   * @return True if the built-in argument is an OWL object property
+   */
+  boolean isObjectProperty();
+
+  /**
+   * @return True if the built-in argument is an OWL object property expression
+   */
+  boolean isObjectPropertyExpression();
+
+  /**
+   * @return True if the built-in argument is an OWL data property
+   */
+  boolean isDataProperty();
+
+  /**
+   * @return True if the built-in argument is an OWL data property expression
+   */
+  boolean isDataPropertyExpression();
+
+  /**
    * @return The argument as a SWRL variable built-in argument
    */
-  @NonNull SWRLVariableBuiltInArgument asVariable();
+  @NonNull SWRLVariableBuiltInArgument asVariable() throws SWRLBuiltInException;
+
+  /**
+   * @return The argument as a SQWRL collection variable built-in argument
+   */
+  @NonNull SQWRLCollectionVariableBuiltInArgument asCollectionVariable() throws SWRLBuiltInException;
 
   /**
    * @return The argument as a SWRL multi-value variable built-in argument
    */
-  @NonNull SWRLMultiValueVariableBuiltInArgument asMultiValueVariable();
+  @NonNull SWRLMultiValueVariableBuiltInArgument asMultiValueVariable() throws SWRLBuiltInException;
 
   /**
    * @return The argument as a SWRL literal built-in argument
    */
-  @NonNull SWRLLiteralBuiltInArgument asSWRLLiteralBuiltInArgument();
+  @NonNull SWRLLiteralBuiltInArgument asSWRLLiteralBuiltInArgument() throws SWRLBuiltInException;
 
   /**
    * @return The argument as a SWRL named built-in argument
    */
-  @NonNull SWRLNamedBuiltInArgument asSWRLNamedBuiltInArgument();
+  @NonNull SWRLNamedBuiltInArgument asSWRLNamedBuiltInArgument() throws SWRLBuiltInException;
+
+  /**
+   * @return The argument as a SWRL class built-in argument
+   */
+  @NonNull SWRLClassBuiltInArgument asSWRLClassBuiltInArgument() throws SWRLBuiltInException;
+
+  /**
+   * @return The argument as a SWRL class expression built-in argument
+   */
+  @NonNull SWRLClassExpressionBuiltInArgument asSWRLClassExpressionBuiltInArgument() throws SWRLBuiltInException;
+
+  /**
+   * @return The argument as a SWRL object property built-in argument
+   */
+  @NonNull SWRLObjectPropertyBuiltInArgument asSWRLObjectPropertyBuiltInArgument() throws SWRLBuiltInException;
+
+  /**
+   * @return The argument as a SWRL object property expression built-in argument
+   */
+  @NonNull SWRLObjectPropertyExpressionBuiltInArgument asSWRLObjectPropertyExpressionBuiltInArgument()
+    throws SWRLBuiltInException;
+
+  /**
+   * @return The argument as a SWRL data property built-in argument
+   */
+  @NonNull SWRLDataPropertyBuiltInArgument asSWRLDataPropertyBuiltInArgument() throws SWRLBuiltInException;
+
+  /**
+   * @return The argument as a SWRL data property expression built-in argument
+   */
+  @NonNull SWRLDataPropertyExpressionBuiltInArgument asSWRLDataPropertyExpressionBuiltInArgument()
+    throws SWRLBuiltInException;
 
   /**
    * @return True if the argument is a variable and was bound
@@ -103,7 +176,7 @@ public interface SWRLBuiltInArgument extends SWRLDArgument
   void accept(@NonNull SWRLBuiltInArgumentVisitor visitor);
 
   /**
-   * @param <T> Type returned by the visitor
+   * @param <T>     Type returned by the visitor
    * @param visitor A visitor
    * @return A result generate by the visitor
    */

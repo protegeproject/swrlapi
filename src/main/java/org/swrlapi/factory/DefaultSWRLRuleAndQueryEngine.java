@@ -16,6 +16,7 @@ import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.core.SWRLRuleRenderer;
 import org.swrlapi.exceptions.SWRLAPIException;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLRuleEngineException;
 import org.swrlapi.exceptions.SWRLRuleException;
 import org.swrlapi.exceptions.TargetSWRLRuleEngineException;
@@ -68,7 +69,8 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
     }
   }
 
-  @Override public void importSQWRLQueryAndOWLAxioms(@NonNull String queryName) throws SWRLRuleEngineException
+  @Override public void importSQWRLQueryAndOWLAxioms(@NonNull String queryName)
+    throws SWRLRuleEngineException, SWRLBuiltInException
   {
     reset();
 
@@ -113,7 +115,7 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
       importSQWRLQueryAndOWLAxioms(queryName);
       run();
       return getSQWRLResult(queryName);
-    } catch (SWRLAPIException e) {
+    } catch (SWRLAPIException | SWRLBuiltInException e) {
       throw new SQWRLException("error running SQWRL queries: " + (e.getMessage() != null ? e.getMessage() : ""), e);
     }
   }
@@ -123,7 +125,7 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
     try {
       importAssertedOWLAxioms();
       exportSQWRLQueries2TargetRuleEngine();
-    } catch (SWRLRuleEngineException | TargetSWRLRuleEngineException e) {
+    } catch (SWRLRuleEngineException | TargetSWRLRuleEngineException | SWRLBuiltInException e) {
       throw new SQWRLException("error processing SQWRL queries: " + (e.getMessage() != null ? e.getMessage() : ""), e);
     }
 
@@ -139,7 +141,7 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
   {
     try {
       return this.swrlapiOWLOntology.createSQWRLQuery(queryName, queryText);
-    } catch (RuntimeException e) {
+    } catch (RuntimeException | SWRLBuiltInException e) {
       throw new SQWRLException("error creating SQWRL query: " + (e.getMessage() != null ? e.getMessage() : ""), e);
     }
   }
@@ -242,19 +244,19 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
   }
 
   @NonNull @Override public SWRLAPIRule createSWRLRule(@NonNull String ruleName, @NonNull String rule)
-    throws SWRLParseException
+    throws SWRLParseException, SWRLBuiltInException
   {
     return this.swrlapiOWLOntology.createSWRLRule(ruleName, rule);
   }
 
   @NonNull @Override public SWRLAPIRule createSWRLRule(@NonNull String ruleName, @NonNull String rule,
-    @NonNull String comment, boolean isActive) throws SWRLParseException
+    @NonNull String comment, boolean isActive) throws SWRLParseException, SWRLBuiltInException
   {
     return this.swrlapiOWLOntology.createSWRLRule(ruleName, rule, comment, isActive);
   }
 
   @Override public void replaceSWRLRule(@NonNull String originalRuleName, @NonNull String ruleName,
-    @NonNull String rule, @NonNull String comment, boolean isActive) throws SWRLParseException
+    @NonNull String rule, @NonNull String comment, boolean isActive) throws SWRLParseException, SWRLBuiltInException
   {
     this.swrlapiOWLOntology.replaceSWRLRule(originalRuleName, ruleName, rule, comment, isActive);
   }
@@ -361,14 +363,14 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
       getBuiltInBridgeController().reset();
       getOWL2RLEngine().resetRuleSelectionChanged();
       this.swrlapiOWLOntology.processOntology();
-    } catch (SQWRLException e) {
+    } catch (SWRLBuiltInException e) {
       throw new SWRLRuleEngineException("error running rule engine: " + (e.getMessage() != null ? e.getMessage() : ""),
         e);
     }
   }
 
   private void exportSQWRLQuery2TargetRuleEngine(@NonNull String activeQueryName)
-    throws SWRLRuleEngineException, TargetSWRLRuleEngineException
+    throws SWRLRuleEngineException, TargetSWRLRuleEngineException, SWRLBuiltInException
   {
     for (SQWRLQuery query : this.swrlapiOWLOntology.getSQWRLQueries()) {
       query.setActive(query.getQueryName().equalsIgnoreCase(activeQueryName));
@@ -376,7 +378,8 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
     }
   }
 
-  private void exportSQWRLQueries2TargetRuleEngine() throws SWRLRuleEngineException, TargetSWRLRuleEngineException
+  private void exportSQWRLQueries2TargetRuleEngine()
+    throws SWRLRuleEngineException, TargetSWRLRuleEngineException, SWRLBuiltInException
   {
     for (SQWRLQuery query : this.swrlapiOWLOntology.getSQWRLQueries()) {
       query.setActive(true);
@@ -385,7 +388,7 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
   }
 
   private void exportSQWRLQuery2TargetRuleEngine(@NonNull SQWRLQuery query)
-    throws SWRLRuleEngineException, TargetSWRLRuleEngineException
+    throws SWRLRuleEngineException, TargetSWRLRuleEngineException, SWRLBuiltInException
   {
     getTargetSWRLRuleEngine().defineSQWRLQuery(query);
   }

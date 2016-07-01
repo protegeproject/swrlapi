@@ -4,6 +4,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.SWRLBuiltInAtom;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 
 import java.util.List;
 import java.util.Set;
@@ -40,7 +41,7 @@ public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtom
    * @param variableNames A set of prefixed variable names
    * @return True if the built-in uses at lease one of the supplied variables
    */
-  boolean usesAtLeastOneVariableOf(Set<@NonNull String> variableNames);
+  boolean usesAtLeastOneVariableOf(Set<@NonNull String> variableNames) throws SWRLBuiltInException;
 
   /**
    * @return A list of built-in arguments
@@ -62,12 +63,12 @@ public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtom
    * @param argumentNumber A argument index
    * @return If the specified argument is unbound
    */
-  boolean isArgumentUnbound(int argumentNumber);
+  boolean isArgumentUnbound(int argumentNumber) throws SWRLBuiltInException;
 
   /**
    * @return True if at least once argument is unbound
    */
-  boolean hasUnboundArguments();
+  boolean hasUnboundArguments() throws SWRLBuiltInException;
 
   /**
    * @return True if at least one argument is a variable
@@ -77,23 +78,23 @@ public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtom
   /**
    * @return The prefixed names of the unbound variable arguments
    */
-  @NonNull Set<@NonNull String> getUnboundArgumentVariableNames();
+  @NonNull Set<@NonNull String> getUnboundArgumentVariableNames() throws SWRLBuiltInException;
 
   /**
    * @param argumentNumber An argument index
    * @return A prefixed variable name
    */
-  String getArgumentVariableName(int argumentNumber);
+  String getArgumentVariableName(int argumentNumber) throws SWRLBuiltInException;
 
   /**
    * @return A list of variable prefixed names
    */
-  @NonNull List<@NonNull String> getArgumentsVariableNames();
+  @NonNull List<@NonNull String> getArgumentsVariableNames() throws SWRLBuiltInException;
 
   /**
    * @return A list of variable prefixed names
    */
-  @NonNull List<@NonNull String> getArgumentsVariableNamesExceptFirst();
+  @NonNull List<@NonNull String> getArgumentsVariableNamesExceptFirst() throws SWRLBuiltInException;
 
   /**
    * @return The name of the rule

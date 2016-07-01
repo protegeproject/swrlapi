@@ -22,6 +22,7 @@ import org.swrlapi.core.SWRLRuleEngineManager;
 import org.swrlapi.core.SWRLRuleRenderer;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLRuleEngineException;
 import org.swrlapi.factory.resolvers.DefaultOWLObjectResolver;
 import org.swrlapi.literal.Literal;
@@ -219,7 +220,7 @@ public class SWRLAPIFactory
   @NonNull public static SQWRLQuery createSQWRLQuery(@NonNull String queryName,
     @NonNull List<@NonNull SWRLAtom> bodyAtoms, @NonNull List<@NonNull SWRLAtom> headAtoms, boolean active,
     @NonNull String comment, @NonNull LiteralFactory literalFactory, @NonNull IRIResolver iriResolver)
-    throws SQWRLException
+    throws SWRLBuiltInException
   {
     return new DefaultSQWRLQuery(queryName, bodyAtoms, headAtoms, active, comment, literalFactory, iriResolver);
   }
@@ -384,7 +385,7 @@ public class SWRLAPIFactory
 
   @NonNull public static SWRLAPIRule createSWRLAPIRule(@NonNull String ruleName,
     @NonNull List<? extends SWRLAtom> bodyAtoms, @NonNull List<? extends SWRLAtom> headAtoms, @NonNull String comment,
-    boolean isActive)
+    boolean isActive) throws SWRLBuiltInException
   {
     return new DefaultSWRLAPIRule(ruleName, bodyAtoms, headAtoms, comment, isActive);
   }
@@ -405,7 +406,7 @@ public class SWRLAPIFactory
    * @throws SQWRLException If a SQWRL error occurs during ontology processing
    */
   @NonNull public static SWRLAPIOWLOntology createSWRLAPIOntology(@NonNull OWLOntology ontology,
-    @NonNull IRIResolver iriResolver) throws SQWRLException
+    @NonNull IRIResolver iriResolver) throws SWRLBuiltInException
   {
     SWRLAPIOWLOntology swrlapiowlOntology = new DefaultSWRLAPIOWLOntology(ontology, iriResolver,
       createOWLObjectRenderer());
@@ -422,7 +423,8 @@ public class SWRLAPIFactory
    * @return A SWRLAPI-based wrapper of an OWL ontology
    * @throws SQWRLException If a SQWRL error occurs during ontology processing
    */
-  @NonNull public static SWRLAPIOWLOntology createSWRLAPIOntology(@NonNull OWLOntology ontology) throws SQWRLException
+  @NonNull public static SWRLAPIOWLOntology createSWRLAPIOntology(@NonNull OWLOntology ontology)
+    throws SWRLBuiltInException
   {
     IRIResolver iriResolver = createIRIResolver();
     OWLObjectRenderer owlObjectRenderer = createOWLObjectRenderer();
