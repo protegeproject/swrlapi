@@ -25,10 +25,10 @@ public class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
   private static final long serialVersionUID = 1L;
 
   @NonNull private final String ruleName;
-  @NonNull private final boolean active;
   @NonNull private final String comment;
   @NonNull private final List<@NonNull SWRLAtom> bodyAtoms; // Body atoms can be reorganized during processing
   @NonNull private final List<@NonNull SWRLAtom> headAtoms;
+  @NonNull private boolean active;
 
   public DefaultSWRLAPIRule(@NonNull String ruleName, @NonNull List<? extends @NonNull SWRLAtom> bodyAtoms,
     @NonNull List<? extends @NonNull SWRLAtom> headAtoms, @NonNull String comment, boolean isActive)
@@ -50,6 +50,11 @@ public class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
   @Override public boolean isActive()
   {
     return this.active;
+  }
+
+  @Override public void setActive(boolean active)
+  {
+    this.active = active;
   }
 
   @Override public boolean isSQWRLQuery()
