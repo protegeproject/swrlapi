@@ -9,5 +9,5 @@ import android.annotation.NonNull;
  */
 public interface SQWRLExpressionResultValue extends SQWRLResultValue
 {
-  @NonNull public String getRendering();
+  @NonNull String getRendering();
 }

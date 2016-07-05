@@ -5,18 +5,26 @@ import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLClassExpressionBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLDataPropertyExpressionBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLDatatypeBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLObjectPropertyExpressionBuiltInArgument;
 import org.swrlapi.literal.XSDDate;
 import org.swrlapi.literal.XSDDateTime;
 import org.swrlapi.literal.XSDDuration;
 import org.swrlapi.literal.XSDTime;
 import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue;
+import org.swrlapi.sqwrl.values.SQWRLClassExpressionResultValue;
 import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
+import org.swrlapi.sqwrl.values.SQWRLDataPropertyExpressionResultValue;
 import org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue;
-import org.swrlapi.sqwrl.values.SQWRLNamedIndividualResultValue;
+import org.swrlapi.sqwrl.values.SQWRLDatatypeResultValue;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
+import org.swrlapi.sqwrl.values.SQWRLNamedIndividualResultValue;
+import org.swrlapi.sqwrl.values.SQWRLObjectPropertyExpressionResultValue;
 import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
 
 import java.net.URI;
@@ -33,8 +41,11 @@ public interface SQWRLResultValueFactory
 
   @NonNull SQWRLClassResultValue getClassValue(@NonNull IRI classIRI);
 
+  @NonNull SQWRLClassExpressionResultValue getClassValue(
+    @NonNull SWRLClassExpressionBuiltInArgument classExpressionArgument);
+
   @NonNull SQWRLNamedIndividualResultValue getNamedIndividualValue(
-      @NonNull SWRLNamedIndividualBuiltInArgument individualArgument);
+    @NonNull SWRLNamedIndividualBuiltInArgument individualArgument);
 
   @NonNull SQWRLNamedIndividualResultValue getNamedIndividualValue(@NonNull IRI individualIRI);
 
@@ -43,14 +54,25 @@ public interface SQWRLResultValueFactory
 
   @NonNull SQWRLObjectPropertyResultValue getObjectPropertyValue(@NonNull IRI propertyIRI);
 
-  @NonNull SQWRLDataPropertyResultValue getDataPropertyValue(@NonNull SWRLDataPropertyBuiltInArgument dataPropertyArgument);
+  @NonNull SQWRLObjectPropertyExpressionResultValue getObjectPropertyExpressionValue(
+    SWRLObjectPropertyExpressionBuiltInArgument objectPropertyExpressionArgument);
+
+  @NonNull SQWRLDataPropertyResultValue getDataPropertyValue(
+    @NonNull SWRLDataPropertyBuiltInArgument dataPropertyArgument);
 
   @NonNull SQWRLDataPropertyResultValue getDataPropertyValue(@NonNull IRI propertyIRI);
+
+  @NonNull SQWRLDataPropertyExpressionResultValue getDataPropertyExpressionValue(
+    SWRLDataPropertyExpressionBuiltInArgument dataPropertyExpressionArgument);
 
   @NonNull SQWRLAnnotationPropertyResultValue getAnnotationPropertyValue(
     SWRLAnnotationPropertyBuiltInArgument dataPropertyArgument);
 
   @NonNull SQWRLAnnotationPropertyResultValue getAnnotationPropertyValue(IRI propertyIRI);
+
+  @NonNull SQWRLDatatypeResultValue getDatatypeValue(SWRLDatatypeBuiltInArgument datatypeArgument);
+
+  @NonNull SQWRLDatatypeResultValue getDatatypeValue(IRI propertyIRI);
 
   @NonNull SQWRLLiteralResultValue getLiteralValue(byte b);
 
