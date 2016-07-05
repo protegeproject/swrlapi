@@ -79,6 +79,11 @@ public interface SWRLBuiltInArgument extends SWRLDArgument
   boolean isClassExpression();
 
   /**
+   * @return True if the built-in argument is an OWL named individual
+   */
+  boolean isNamedIndividual();
+
+  /**
    * @return True if the built-in argument is an OWL object property
    */
   boolean isObjectProperty();
@@ -97,6 +102,16 @@ public interface SWRLBuiltInArgument extends SWRLDArgument
    * @return True if the built-in argument is an OWL data property expression
    */
   boolean isDataPropertyExpression();
+
+  /**
+   * @return True if the built-in argument is an OWL annotation property
+   */
+  boolean isAnnotationProperty();
+
+  /**
+   * @return True if the built-in argument is an OWL datatype
+   */
+  boolean isDatatype();
 
   /**
    * @return The argument as a SWRL variable built-in argument
@@ -134,6 +149,11 @@ public interface SWRLBuiltInArgument extends SWRLDArgument
   @NonNull SWRLClassExpressionBuiltInArgument asSWRLClassExpressionBuiltInArgument() throws SWRLBuiltInException;
 
   /**
+   * @return The argument as a SWRL named individual built-in argument
+   */
+  @NonNull SWRLNamedIndividualBuiltInArgument asSWRLNamedIndividualBuiltInArgument() throws SWRLBuiltInException;
+
+  /**
    * @return The argument as a SWRL object property built-in argument
    */
   @NonNull SWRLObjectPropertyBuiltInArgument asSWRLObjectPropertyBuiltInArgument() throws SWRLBuiltInException;
@@ -154,6 +174,16 @@ public interface SWRLBuiltInArgument extends SWRLDArgument
    */
   @NonNull SWRLDataPropertyExpressionBuiltInArgument asSWRLDataPropertyExpressionBuiltInArgument()
     throws SWRLBuiltInException;
+
+  /**
+   * @return The argument as a SWRL annotation property built-in argument
+   */
+  @NonNull SWRLAnnotationPropertyBuiltInArgument asSWRLAnnotationPropertyBuiltInArgument() throws SWRLBuiltInException;
+
+  /**
+   * @return The argument as a SWRL datatype built-in argument
+   */
+  @NonNull SWRLDatatypeBuiltInArgument asSWRLDatatypeBuiltInArgument() throws SWRLBuiltInException;
 
   /**
    * @return True if the argument is a variable and was bound

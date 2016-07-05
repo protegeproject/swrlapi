@@ -6,22 +6,28 @@ import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDataProperty;
+import org.semanticweb.owlapi.model.OWLDataPropertyExpression;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.swrlapi.builtins.arguments.SQWRLCollectionVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLClassExpressionBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLDataPropertyExpressionBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDatatypeBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLObjectPropertyExpressionBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLPropertyBuiltInArgument;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.exceptions.InvalidSWRLBuiltInArgumentException;
@@ -1523,7 +1529,13 @@ public abstract class AbstractSWRLBuiltInLibrary
     return getSWRLBuiltInArgumentFactory().getClassBuiltInArgument(cls);
   }
 
-  @NonNull @Override public SWRLNamedIndividualBuiltInArgument createIndividualBuiltInArgument(
+  @Override public @NonNull SWRLClassExpressionBuiltInArgument createClassExpressionBuiltInArgument(
+    OWLClassExpression ce)
+  {
+    return getSWRLBuiltInArgumentFactory().getClassExpressionBuiltInArgument(ce);
+  }
+
+  @NonNull @Override public SWRLNamedIndividualBuiltInArgument createNamedIndividualBuiltInArgument(
     OWLNamedIndividual individual)
   {
     return getSWRLBuiltInArgumentFactory().getNamedIndividualBuiltInArgument(individual);
@@ -1535,9 +1547,21 @@ public abstract class AbstractSWRLBuiltInLibrary
     return getSWRLBuiltInArgumentFactory().getObjectPropertyBuiltInArgument(property);
   }
 
+  @Override public @NonNull SWRLObjectPropertyExpressionBuiltInArgument createObjectPropertyExpressionBuiltInArgument(
+    OWLObjectPropertyExpression pe)
+  {
+    return getSWRLBuiltInArgumentFactory().getObjectPropertyExpressionBuiltInArgument(pe);
+  }
+
   @NonNull @Override public SWRLDataPropertyBuiltInArgument createDataPropertyBuiltInArgument(OWLDataProperty property)
   {
     return getSWRLBuiltInArgumentFactory().getDataPropertyBuiltInArgument(property);
+  }
+
+  @NonNull @Override public SWRLDataPropertyExpressionBuiltInArgument createDataPropertyExpressionBuiltInArgument(
+    OWLDataPropertyExpression pe)
+  {
+    return getSWRLBuiltInArgumentFactory().getDataPropertyExpressionBuiltInArgument(pe);
   }
 
   @NonNull @Override public SWRLAnnotationPropertyBuiltInArgument createAnnotationPropertyBuiltInArgument(

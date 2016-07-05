@@ -5,6 +5,7 @@ import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 
 class DefaultSWRLNamedIndividualBuiltInArgument extends DefaultSWRLNamedBuiltInArgument
   implements SWRLNamedIndividualBuiltInArgument
@@ -24,6 +25,14 @@ class DefaultSWRLNamedIndividualBuiltInArgument extends DefaultSWRLNamedBuiltInA
   @NonNull @Override public <@NonNull T> T accept(@NonNull SWRLBuiltInArgumentVisitorEx<@NonNull T> visitor)
   {
     return visitor.visit(this);
+  }
+
+  @Override public boolean isNamedIndividual() { return true; }
+
+  @NonNull @Override public SWRLNamedIndividualBuiltInArgument asSWRLNamedIndividualBuiltInArgument() throws
+    SWRLBuiltInException
+  {
+    return this;
   }
 
   @Override public void accept(@NonNull SWRLBuiltInArgumentVisitor visitor)

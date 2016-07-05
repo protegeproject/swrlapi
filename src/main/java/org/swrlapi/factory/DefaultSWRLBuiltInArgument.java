@@ -17,12 +17,17 @@ import org.semanticweb.owlapi.model.OWLObjectVisitorEx;
 import org.semanticweb.owlapi.model.SWRLObjectVisitor;
 import org.semanticweb.owlapi.model.SWRLObjectVisitorEx;
 import org.swrlapi.builtins.arguments.SQWRLCollectionVariableBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLClassExpressionBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDataPropertyExpressionBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLDatatypeBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLNamedBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyExpressionBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
@@ -78,7 +83,17 @@ abstract class DefaultSWRLBuiltInArgument implements SWRLBuiltInArgument
     this.boundVariableName = boundVariableName;
   }
 
+  @Override public boolean isLiteral()
+  {
+    return false;
+  }
+
   @Override public boolean isCollectionVariable()
+  {
+    return false;
+  }
+
+  @Override public boolean isNamed()
   {
     return false;
   }
@@ -89,6 +104,11 @@ abstract class DefaultSWRLBuiltInArgument implements SWRLBuiltInArgument
   }
 
   @Override public boolean isClassExpression()
+  {
+    return false;
+  }
+
+  @Override public boolean isNamedIndividual()
   {
     return false;
   }
@@ -113,10 +133,36 @@ abstract class DefaultSWRLBuiltInArgument implements SWRLBuiltInArgument
     return false;
   }
 
+  @Override public boolean isAnnotationProperty()
+  {
+    return false;
+  }
+
+  @Override public boolean isDatatype()
+  {
+    return false;
+  }
+
   @NonNull @Override public SQWRLCollectionVariableBuiltInArgument asCollectionVariable() throws SWRLBuiltInException
   {
     throw new SWRLBuiltInException(
       getClass().getName() + " is not an " + SQWRLCollectionVariableBuiltInArgument.class.getName());
+  }
+
+  @NonNull @Override public SWRLLiteralBuiltInArgument asSWRLLiteralBuiltInArgument() throws SWRLBuiltInException
+  {
+    throw new SWRLBuiltInException(getClass().getName() + " is not an " + SWRLLiteralBuiltInArgument.class.getName());
+  }
+
+  @NonNull @Override public SWRLNamedBuiltInArgument asSWRLNamedBuiltInArgument() throws SWRLBuiltInException
+  {
+    throw new SWRLBuiltInException(getClass().getName() + " is not an " + SWRLNamedBuiltInArgument.class.getName());
+  }
+
+  @Override public @NonNull SWRLNamedIndividualBuiltInArgument asSWRLNamedIndividualBuiltInArgument() throws SWRLBuiltInException
+  {
+    throw new SWRLBuiltInException(
+      getClass().getName() + " is not an " + SWRLNamedIndividualBuiltInArgument.class.getName());
   }
 
   @NonNull @Override public SWRLClassBuiltInArgument asSWRLClassBuiltInArgument() throws SWRLBuiltInException
@@ -131,32 +177,44 @@ abstract class DefaultSWRLBuiltInArgument implements SWRLBuiltInArgument
       getClass().getName() + " is not an " + SWRLClassExpressionBuiltInArgument.class.getName());
   }
 
-  @Override public @NonNull SWRLObjectPropertyBuiltInArgument asSWRLObjectPropertyBuiltInArgument()
+  @NonNull @Override public SWRLObjectPropertyBuiltInArgument asSWRLObjectPropertyBuiltInArgument()
     throws SWRLBuiltInException
   {
     throw new SWRLBuiltInException(
       getClass().getName() + " is not an " + SWRLObjectPropertyBuiltInArgument.class.getName());
   }
 
-  @Override public @NonNull SWRLObjectPropertyExpressionBuiltInArgument asSWRLObjectPropertyExpressionBuiltInArgument()
+  @NonNull @Override public SWRLObjectPropertyExpressionBuiltInArgument asSWRLObjectPropertyExpressionBuiltInArgument()
     throws SWRLBuiltInException
   {
     throw new SWRLBuiltInException(
       getClass().getName() + " is not an " + SWRLObjectPropertyExpressionBuiltInArgument.class.getName());
   }
 
-  @Override public @NonNull SWRLDataPropertyBuiltInArgument asSWRLDataPropertyBuiltInArgument()
+  @NonNull @Override public SWRLDataPropertyBuiltInArgument asSWRLDataPropertyBuiltInArgument()
     throws SWRLBuiltInException
   {
     throw new SWRLBuiltInException(
       getClass().getName() + " is not an " + SWRLDataPropertyBuiltInArgument.class.getName());
   }
 
-  @Override public @NonNull SWRLDataPropertyExpressionBuiltInArgument asSWRLDataPropertyExpressionBuiltInArgument()
+  @NonNull @Override public SWRLDataPropertyExpressionBuiltInArgument asSWRLDataPropertyExpressionBuiltInArgument()
     throws SWRLBuiltInException
   {
     throw new SWRLBuiltInException(
       getClass().getName() + " is not an " + SWRLDataPropertyExpressionBuiltInArgument.class.getName());
+  }
+
+  @NonNull @Override public SWRLDatatypeBuiltInArgument asSWRLDatatypeBuiltInArgument() throws SWRLBuiltInException
+  {
+    throw new SWRLBuiltInException(getClass().getName() + " is not an " + SWRLDatatypeBuiltInArgument.class.getName());
+  }
+
+  @NonNull @Override public SWRLAnnotationPropertyBuiltInArgument asSWRLAnnotationPropertyBuiltInArgument()
+    throws SWRLBuiltInException
+  {
+    throw new SWRLBuiltInException(
+      getClass().getName() + " is not an " + SWRLAnnotationPropertyBuiltInArgument.class.getName());
   }
 
   @Override public boolean containsEntityInSignature(@NonNull OWLEntity owlEntity)

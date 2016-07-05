@@ -1,14 +1,11 @@
 package org.swrlapi.factory;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLDataPropertyExpression;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
 import org.swrlapi.builtins.arguments.SWRLDataPropertyExpressionBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLNamedBuiltInArgument;
-import org.swrlapi.exceptions.SWRLAPIException;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 
 class DefaultSWRLDataPropertyExpressionBuiltInArgument extends DefaultSWRLBuiltInArgument
   implements SWRLDataPropertyExpressionBuiltInArgument
@@ -32,24 +29,15 @@ class DefaultSWRLDataPropertyExpressionBuiltInArgument extends DefaultSWRLBuiltI
     return visitor.visit(this);
   }
 
-  @Override public boolean isLiteral()
+  @Override public boolean isDataPropertyExpression()
   {
-    return false;
+    return true;
   }
 
-  @Override public boolean isNamed()
+  @NonNull @Override public SWRLDataPropertyExpressionBuiltInArgument asSWRLDataPropertyExpressionBuiltInArgument()
+    throws SWRLBuiltInException
   {
-    return false;
-  }
-
-  @Override public @NonNull SWRLLiteralBuiltInArgument asSWRLLiteralBuiltInArgument()
-  {
-    throw new SWRLAPIException("Not a SWRLLiteralBuiltInArgument");
-  }
-
-  @Override public @NonNull SWRLNamedBuiltInArgument asSWRLNamedBuiltInArgument()
-  {
-    throw new SWRLAPIException("Not a SWRLNamedBuiltInArgument");
+    return this;
   }
 
   @Override public void accept(@NonNull SWRLBuiltInArgumentVisitor visitor)

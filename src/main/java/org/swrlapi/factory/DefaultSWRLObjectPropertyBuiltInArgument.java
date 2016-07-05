@@ -5,6 +5,7 @@ import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 
 class DefaultSWRLObjectPropertyBuiltInArgument extends DefaultSWRLNamedBuiltInArgument
   implements SWRLObjectPropertyBuiltInArgument
@@ -24,6 +25,17 @@ class DefaultSWRLObjectPropertyBuiltInArgument extends DefaultSWRLNamedBuiltInAr
   @Override @NonNull public <@NonNull T> T accept(@NonNull SWRLBuiltInArgumentVisitorEx<@NonNull T> visitor)
   {
     return visitor.visit(this);
+  }
+
+  @Override public boolean isObjectProperty()
+  {
+    return true;
+  }
+
+  @Override public @NonNull SWRLObjectPropertyBuiltInArgument asSWRLObjectPropertyBuiltInArgument()
+    throws SWRLBuiltInException
+  {
+    return this;
   }
 
   @Override public void accept(@NonNull SWRLBuiltInArgumentVisitor visitor)

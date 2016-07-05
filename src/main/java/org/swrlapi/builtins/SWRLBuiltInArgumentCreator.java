@@ -4,21 +4,27 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDataProperty;
+import org.semanticweb.owlapi.model.OWLDataPropertyExpression;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.swrlapi.builtins.arguments.SQWRLCollectionVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLClassExpressionBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLDataPropertyExpressionBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDatatypeBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLObjectPropertyExpressionBuiltInArgument;
 import org.swrlapi.literal.XSDDate;
 import org.swrlapi.literal.XSDDateTime;
 import org.swrlapi.literal.XSDDuration;
@@ -43,10 +49,17 @@ public interface SWRLBuiltInArgumentCreator
   @NonNull SWRLClassBuiltInArgument createClassBuiltInArgument(@NonNull OWLClass cls);
 
   /**
+   * @param ce An OWL class expression
+   * @return A class expression built-in argument
+   */
+  @NonNull SWRLClassExpressionBuiltInArgument createClassExpressionBuiltInArgument(@NonNull OWLClassExpression ce);
+
+  /**
    * @param individual An OWL individual
    * @return An individual built-in argument
    */
-  @NonNull SWRLNamedIndividualBuiltInArgument createIndividualBuiltInArgument(@NonNull OWLNamedIndividual individual);
+  @NonNull SWRLNamedIndividualBuiltInArgument createNamedIndividualBuiltInArgument(
+    @NonNull OWLNamedIndividual individual);
 
   /**
    * @param property An OWL object property
@@ -55,10 +68,24 @@ public interface SWRLBuiltInArgumentCreator
   @NonNull SWRLObjectPropertyBuiltInArgument createObjectPropertyBuiltInArgument(@NonNull OWLObjectProperty property);
 
   /**
+   * @param pe An OWL object property expression
+   * @return An object property expression built-in argument
+   */
+  @NonNull SWRLObjectPropertyExpressionBuiltInArgument createObjectPropertyExpressionBuiltInArgument(
+    @NonNull OWLObjectPropertyExpression pe);
+
+  /**
    * @param property An OWL data property
    * @return A data property built-in argument
    */
   @NonNull SWRLDataPropertyBuiltInArgument createDataPropertyBuiltInArgument(@NonNull OWLDataProperty property);
+
+  /**
+   * @param pe An OWL data property expression
+   * @return An data property expression built-in argument
+   */
+  @NonNull SWRLDataPropertyExpressionBuiltInArgument createDataPropertyExpressionBuiltInArgument(
+    @NonNull OWLDataPropertyExpression pe);
 
   /**
    * @param property An OWL annotation property

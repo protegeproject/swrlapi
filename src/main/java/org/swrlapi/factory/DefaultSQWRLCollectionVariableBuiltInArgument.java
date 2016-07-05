@@ -8,6 +8,7 @@ import org.semanticweb.owlapi.model.IRI;
 import org.swrlapi.builtins.arguments.SQWRLCollectionVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 
 class DefaultSQWRLCollectionVariableBuiltInArgument extends DefaultSWRLVariableBuiltInArgument
   implements SQWRLCollectionVariableBuiltInArgument
@@ -38,6 +39,11 @@ class DefaultSQWRLCollectionVariableBuiltInArgument extends DefaultSWRLVariableB
   @NonNull @Override public String getCollectionName()
   {
     return this.collectionName;
+  }
+
+  @NonNull @Override public SQWRLCollectionVariableBuiltInArgument asCollectionVariable() throws SWRLBuiltInException
+  {
+    return this;
   }
 
   @NonNull @Override public <@NonNull T> T accept(@NonNull SWRLBuiltInArgumentVisitorEx<@NonNull T> visitor)

@@ -131,6 +131,12 @@ public interface SWRLBuiltInArgumentFactory
   @NonNull SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(boolean b);
 
   /**
+   * @param b A byte
+   * @return A literal built-in argument
+   */
+  @NonNull SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(byte b);
+
+  /**
    * @param s A String
    * @return A literal built-in argument
    */
@@ -171,12 +177,6 @@ public interface SWRLBuiltInArgumentFactory
    * @return A literal built-in argument
    */
   @NonNull SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(@NonNull BigInteger d);
-
-  /**
-   * @param b A byte
-   * @return A literal built-in argument
-   */
-  @NonNull SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(byte b);
 
   /**
    * @param iri An IRI

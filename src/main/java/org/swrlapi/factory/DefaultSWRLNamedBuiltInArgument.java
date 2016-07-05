@@ -12,9 +12,7 @@ import org.semanticweb.owlapi.model.OWLObjectVisitor;
 import org.semanticweb.owlapi.model.OWLObjectVisitorEx;
 import org.semanticweb.owlapi.model.SWRLObjectVisitor;
 import org.semanticweb.owlapi.model.SWRLObjectVisitorEx;
-import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedBuiltInArgument;
-import org.swrlapi.exceptions.SWRLAPIException;
 
 import java.util.Collections;
 import java.util.Set;
@@ -40,19 +38,9 @@ abstract class DefaultSWRLNamedBuiltInArgument extends DefaultSWRLBuiltInArgumen
     return this.entity.getIRI();
   }
 
-  public @Override boolean isLiteral()
-  {
-    return false;
-  }
-
   public @Override boolean isNamed()
   {
     return true;
-  }
-
-  @NonNull @Override public SWRLLiteralBuiltInArgument asSWRLLiteralBuiltInArgument()
-  {
-    throw new SWRLAPIException("Not a SWRLLiteralBuiltInArgument");
   }
 
   @NonNull @Override public SWRLNamedBuiltInArgument asSWRLNamedBuiltInArgument()

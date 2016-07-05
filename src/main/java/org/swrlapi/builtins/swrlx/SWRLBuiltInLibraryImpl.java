@@ -93,7 +93,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
         getBuiltInBridge().injectOWLAxiom(declarationAxiom);
         this.individualInvocationMap.put(createInvocationPattern, individual);
       }
-      arguments.get(0).asVariable().setBuiltInResult(createIndividualBuiltInArgument(individual)); // Bind the result to
+      arguments.get(0).asVariable().setBuiltInResult(createNamedIndividualBuiltInArgument(individual)); // Bind the result to
       // the first
       // parameter
     }

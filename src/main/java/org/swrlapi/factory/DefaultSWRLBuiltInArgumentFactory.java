@@ -95,11 +95,10 @@ class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFactory
     return new DefaultSWRLDataPropertyExpressionBuiltInArgument(propertyExpression);
   }
 
-
   @NonNull @Override public SWRLAnnotationPropertyBuiltInArgument getAnnotationPropertyBuiltInArgument(
     @NonNull OWLAnnotationProperty property)
   {
-    return new DefaultDefaultSWRLAnnotationPropertyBuiltInArgument(property);
+    return new DefaultSWRLAnnotationPropertyBuiltInArgument(property);
   }
 
   @NonNull @Override public SWRLDatatypeBuiltInArgument getDatatypeBuiltInArgument(@NonNull OWLDatatype datatype)
@@ -133,6 +132,11 @@ class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFactory
     return new DefaultSWRLLiteralBuiltInArgument(getOWLLiteralFactory().getOWLLiteral(s));
   }
 
+  @NonNull @Override public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(byte b)
+  {
+    return new DefaultSWRLLiteralBuiltInArgument(getOWLLiteralFactory().getOWLLiteral(b));
+  }
+
   @NonNull @Override public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(int i)
   {
     return new DefaultSWRLLiteralBuiltInArgument(getOWLLiteralFactory().getOWLLiteral(i));
@@ -162,12 +166,6 @@ class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFactory
   {
     return new DefaultSWRLLiteralBuiltInArgument(getOWLLiteralFactory().getOWLLiteral(i));
   }
-
-  @NonNull @Override public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(byte b)
-  {
-    return new DefaultSWRLLiteralBuiltInArgument(getOWLLiteralFactory().getOWLLiteral(b));
-  }
-
   @NonNull @Override public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(@NonNull URI uri)
   {
     return new DefaultSWRLLiteralBuiltInArgument(getOWLLiteralFactory().getOWLLiteral(uri));
