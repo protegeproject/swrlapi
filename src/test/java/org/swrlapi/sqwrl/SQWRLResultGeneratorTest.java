@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.semanticweb.owlapi.io.OWLObjectRenderer;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.swrlapi.core.IRIResolver;
 import org.swrlapi.factory.SWRLAPIFactory;
@@ -36,10 +37,11 @@ public class SQWRLResultGeneratorTest
   @Before public void setUp() throws OWLOntologyCreationException
   {
     IRIResolver iriResolver = SWRLAPIFactory.createIRIResolver();
+    OWLObjectRenderer owlObjectRenderer = SWRLAPIFactory.createOWLObjectRenderer();
 
     iriResolver.setPrefix(TestPrefix, TestNamespace);
 
-    resultManager = SWRLAPIFactory.createSQWRLResultManager(iriResolver);
+    resultManager = SWRLAPIFactory.createSQWRLResultManager(iriResolver, owlObjectRenderer);
   }
 
   @Test public void testAddColumns() throws Exception

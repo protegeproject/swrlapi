@@ -1,6 +1,7 @@
 package org.swrlapi.factory;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.semanticweb.owlapi.io.OWLObjectRenderer;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLClass;
@@ -21,20 +22,22 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
   private static final long serialVersionUID = 1L;
 
   @NonNull private final IRIResolver iriResolver;
+  @NonNull private final OWLObjectRenderer owlObjectRenderer;
   @NonNull private final OWLLiteralFactory owlLiteralFactory;
   @NonNull private final OWLDatatypeFactory owlDatatypeFactory;
   @NonNull private final LiteralFactory literalFactory;
   @NonNull private final SWRLBuiltInArgumentFactory swrlBuiltInArgumentFactory;
   @NonNull private final SQWRLResultValueFactory sqwrlResultValueFactory;
 
-  public DefaultSWRLAPIOWLDataFactory(@NonNull IRIResolver iriResolver)
+  public DefaultSWRLAPIOWLDataFactory(@NonNull IRIResolver iriResolver, @NonNull OWLObjectRenderer owlObjectRenderer)
   {
     this.iriResolver = iriResolver;
+    this.owlObjectRenderer = owlObjectRenderer;
     this.owlDatatypeFactory = SWRLAPIFactory.createOWLDatatypeFactory();
     this.owlLiteralFactory = SWRLAPIFactory.createOWLLiteralFactory();
     this.literalFactory = SWRLAPIFactory.createLiteralFactory();
     this.swrlBuiltInArgumentFactory = SWRLAPIFactory.createSWRLBuiltInArgumentFactory(this.iriResolver);
-    this.sqwrlResultValueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(this.iriResolver);
+    this.sqwrlResultValueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(this.iriResolver, this.owlObjectRenderer);
   }
 
   @NonNull @Override public SWRLBuiltInArgumentFactory getSWRLBuiltInArgumentFactory()

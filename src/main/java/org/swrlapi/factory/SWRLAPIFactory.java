@@ -176,9 +176,10 @@ public class SWRLAPIFactory
    * @param iriResolver An IRI resolver
    * @return A SQWRL result
    */
-  public static @NonNull SQWRLResultManager createSQWRLResultManager(@NonNull IRIResolver iriResolver)
+  public static @NonNull SQWRLResultManager createSQWRLResultManager(@NonNull IRIResolver iriResolver,
+    @NonNull OWLObjectRenderer owlObjectRenderer)
   {
-    return new DefaultSQWRLResultManager(iriResolver);
+    return new DefaultSQWRLResultManager(iriResolver, owlObjectRenderer);
   }
 
   /**
@@ -209,29 +210,34 @@ public class SWRLAPIFactory
   }
 
   /**
-   * @param iriResolver An IRI resolver
+   * @param iriResolver       An IRI resolver
+   * @param owlObjectRenderer An OWL object renderer
    * @return A SQWRL result value factory
    */
-  @NonNull public static SQWRLResultValueFactory createSQWRLResultValueFactory(@NonNull IRIResolver iriResolver)
+  @NonNull public static SQWRLResultValueFactory createSQWRLResultValueFactory(@NonNull IRIResolver iriResolver,
+    @NonNull OWLObjectRenderer owlObjectRenderer)
   {
-    return new DefaultSQWRLResultValueFactory(iriResolver);
+    return new DefaultSQWRLResultValueFactory(iriResolver, owlObjectRenderer);
   }
 
   @NonNull public static SQWRLQuery createSQWRLQuery(@NonNull String queryName,
     @NonNull List<@NonNull SWRLAtom> bodyAtoms, @NonNull List<@NonNull SWRLAtom> headAtoms, boolean active,
-    @NonNull String comment, @NonNull LiteralFactory literalFactory, @NonNull IRIResolver iriResolver)
-    throws SWRLBuiltInException
+    @NonNull String comment, @NonNull LiteralFactory literalFactory, @NonNull IRIResolver iriResolver,
+    @NonNull OWLObjectRenderer owlObjectRenderer) throws SWRLBuiltInException
   {
-    return new DefaultSQWRLQuery(queryName, bodyAtoms, headAtoms, active, comment, literalFactory, iriResolver);
+    return new DefaultSQWRLQuery(queryName, bodyAtoms, headAtoms, active, comment, literalFactory, iriResolver,
+      owlObjectRenderer);
   }
 
   /**
-   * @param iriResolver An IRI resolver
+   * @param iriResolver       An IRI resolver
+   * @param owlObjectRenderer An OWL object renderer
    * @return A SWRLAPI-based OWL data factory
    */
-  @NonNull public static SWRLAPIOWLDataFactory createSWRLAPIOWLDataFactory(@NonNull IRIResolver iriResolver)
+  @NonNull public static SWRLAPIOWLDataFactory createSWRLAPIOWLDataFactory(@NonNull IRIResolver iriResolver,
+    @NonNull OWLObjectRenderer owlObjectRenderer)
   {
-    return new DefaultSWRLAPIOWLDataFactory(iriResolver);
+    return new DefaultSWRLAPIOWLDataFactory(iriResolver, owlObjectRenderer);
   }
 
   /**
@@ -277,9 +283,10 @@ public class SWRLAPIFactory
    * @param iriResolver An IRI resolver
    * @return A SQWRL result generator
    */
-  @NonNull public static SQWRLResultGenerator createSQWRLResultGenerator(IRIResolver iriResolver)
+  @NonNull public static SQWRLResultGenerator createSQWRLResultGenerator(@NonNull IRIResolver iriResolver,
+    @NonNull OWLObjectRenderer owlObjectRenderer)
   {
-    return new DefaultSQWRLResultManager(iriResolver);
+    return new DefaultSQWRLResultManager(iriResolver, owlObjectRenderer);
   }
 
   /**

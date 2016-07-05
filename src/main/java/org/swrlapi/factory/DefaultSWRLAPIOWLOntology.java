@@ -144,7 +144,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     this.ontology = ontology;
     this.iriResolver = iriResolver;
     this.owlObjectRenderer = owlObjectRenderer;
-    this.swrlapiOWLDataFactory = SWRLAPIFactory.createSWRLAPIOWLDataFactory(this.iriResolver);
+    this.swrlapiOWLDataFactory = SWRLAPIFactory.createSWRLAPIOWLDataFactory(this.iriResolver, this.owlObjectRenderer);
     this.swrlBuiltInIRIs = new HashSet<>();
 
     this.swrlRules = new HashMap<>();
@@ -452,7 +452,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     String comment = rule.getComment();
 
     return SWRLAPIFactory.createSQWRLQuery(queryName, rule.getBodyAtoms(), rule.getHeadAtoms(), active, comment,
-      getSWRLAPIOWLDataFactory().getLiteralFactory(), getIRIResolver());
+      getSWRLAPIOWLDataFactory().getLiteralFactory(), getIRIResolver(), getOWLObjectRenderer());
   }
 
   @NonNull private Optional<@NonNull String> getRuleName(@NonNull SWRLRule owlapiRule)
@@ -596,7 +596,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
 
   @NonNull @Override public SQWRLResultGenerator createSQWRLResultGenerator()
   {
-    return SWRLAPIFactory.createSQWRLResultGenerator(this.iriResolver);
+    return SWRLAPIFactory.createSQWRLResultGenerator(this.iriResolver, this.owlObjectRenderer);
   }
 
   /**

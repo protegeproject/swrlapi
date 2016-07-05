@@ -1,6 +1,7 @@
 package org.swrlapi.factory;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.semanticweb.owlapi.io.OWLObjectRenderer;
 import org.semanticweb.owlapi.model.SWRLArgument;
 import org.semanticweb.owlapi.model.SWRLAtom;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
@@ -41,14 +42,15 @@ class DefaultSQWRLQuery implements SQWRLQuery
 
   public DefaultSQWRLQuery(@NonNull String queryName, @NonNull List<@NonNull SWRLAtom> bodyAtoms,
     @NonNull List<@NonNull SWRLAtom> headAtoms, boolean active, @NonNull String comment,
-    @NonNull LiteralFactory literalFactory, @NonNull IRIResolver iriResolver) throws SWRLBuiltInException
+    @NonNull LiteralFactory literalFactory, @NonNull IRIResolver iriResolver,
+    @NonNull OWLObjectRenderer owlObjectRenderer) throws SWRLBuiltInException
   {
     this.queryName = queryName;
     this.bodyAtoms = new ArrayList<>(bodyAtoms);
     this.headAtoms = new ArrayList<>(headAtoms);
     this.active = active;
     this.comment = comment;
-    this.sqwrlResult = SWRLAPIFactory.createSQWRLResultManager(iriResolver);
+    this.sqwrlResult = SWRLAPIFactory.createSQWRLResultManager(iriResolver, owlObjectRenderer);
     this.collectionGroupArgumentsMap = new HashMap<>();
     this.literalFactory = literalFactory;
 
@@ -610,16 +612,16 @@ class DefaultSQWRLQuery implements SQWRLQuery
     // Mark this built-in as dependent on collection built-in bindings.
     // Cascade the dependency from this built-in to others using its arguments.
     // Record its unbound variables too.
-//    getBuiltInAtomsFromBody().stream().filter(builtInAtom -> !isSQWRLBuiltIn(builtInAtom))
-//      .filter(builtInAtom -> builtInAtom.usesAtLeastOneVariableOf(cascadedUnboundVariableNames))
-//      .forEach(builtInAtom -> {
-//        builtInAtom.setUsesSQWRLCollectionResults();
-//        // Mark this built-in as dependent on collection built-in bindings.
-//        if (builtInAtom.hasUnboundArguments())
-//          // Cascade the dependency from this built-in to others using its arguments.
-//          // Record its unbound variables too.
-//          cascadedUnboundVariableNames.addAll(builtInAtom.getUnboundArgumentVariableNames());
-//      });
+    //    getBuiltInAtomsFromBody().stream().filter(builtInAtom -> !isSQWRLBuiltIn(builtInAtom))
+    //      .filter(builtInAtom -> builtInAtom.usesAtLeastOneVariableOf(cascadedUnboundVariableNames))
+    //      .forEach(builtInAtom -> {
+    //        builtInAtom.setUsesSQWRLCollectionResults();
+    //        // Mark this built-in as dependent on collection built-in bindings.
+    //        if (builtInAtom.hasUnboundArguments())
+    //          // Cascade the dependency from this built-in to others using its arguments.
+    //          // Record its unbound variables too.
+    //          cascadedUnboundVariableNames.addAll(builtInAtom.getUnboundArgumentVariableNames());
+    //      });
     for (SWRLAPIBuiltInAtom builtInAtom : getBuiltInAtomsFromBody()) {
       if (!isSQWRLBuiltIn(builtInAtom)) {
         if (builtInAtom.usesAtLeastOneVariableOf(cascadedUnboundVariableNames)) {

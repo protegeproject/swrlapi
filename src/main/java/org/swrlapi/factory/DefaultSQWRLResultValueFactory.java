@@ -1,6 +1,7 @@
 package org.swrlapi.factory;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.semanticweb.owlapi.io.OWLObjectRenderer;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDataPropertyExpression;
@@ -41,11 +42,13 @@ import java.util.stream.Collectors;
 public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
 {
   @NonNull private final IRIResolver iriResolver;
+  @NonNull private final OWLObjectRenderer owlObjectRenderer;
   @NonNull private final OWLLiteralFactory owlLiteralFactory;
 
-  public DefaultSQWRLResultValueFactory(@NonNull IRIResolver iriResolver)
+  public DefaultSQWRLResultValueFactory(@NonNull IRIResolver iriResolver, @NonNull OWLObjectRenderer owlObjectRenderer)
   {
     this.iriResolver = iriResolver;
+    this.owlObjectRenderer = owlObjectRenderer;
     this.owlLiteralFactory = SWRLAPIFactory.createOWLLiteralFactory();
   }
 
@@ -61,11 +64,11 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
     return new DefaultSQWRLClassResultValue(classIRI, prefixedName);
   }
 
-  @NonNull @Override public SQWRLClassExpressionResultValue getClassValue(
+  @NonNull @Override public SQWRLClassExpressionResultValue getClassExpressionValue(
     @NonNull SWRLClassExpressionBuiltInArgument classExpressionArgument)
   {
     OWLClassExpression ce = classExpressionArgument.getOWLClassExpression();
-    String rendering = "TODO";
+    String rendering = getOWLObjectRenderer().render(ce);
 
     return new DefaultSQWRLClassExpressionResultValue(rendering);
   }
@@ -102,7 +105,7 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
     SWRLObjectPropertyExpressionBuiltInArgument objectPropertyExpressionArgument)
   {
     OWLObjectPropertyExpression pe = objectPropertyExpressionArgument.getOWLObjectPropertyExpression();
-    String rendering = "TODO";
+    String rendering = getOWLObjectRenderer().render(pe);
 
     return new DefaultSQWRLObjectPropertyExpressionResultValue(rendering);
   }
@@ -126,7 +129,7 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
     SWRLDataPropertyExpressionBuiltInArgument dataPropertyExpressionArgument)
   {
     OWLDataPropertyExpression pe = dataPropertyExpressionArgument.getOWLDataPropertyExpression();
-    String rendering = "TODO";
+    String rendering = getOWLObjectRenderer().render(pe);
 
     return new DefaultSQWRLDataPropertyExpressionResultValue(rendering);
   }
@@ -257,11 +260,6 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
     return getLiteralValue(literal);
   }
 
-  @NonNull private OWLLiteralFactory getOWLLiteralFactory()
-  {
-    return this.owlLiteralFactory;
-  }
-
   @NonNull private String iri2PrefixedName(IRI iri)
   {
     Optional<@NonNull String> prefixedName = this.iriResolver.iri2PrefixedName(iri);
@@ -271,4 +269,11 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
     else
       throw new IllegalArgumentException("could not get prefixed name for IRI " + iri);
   }
+
+  @NonNull private OWLLiteralFactory getOWLLiteralFactory()
+  {
+    return this.owlLiteralFactory;
+  }
+
+  @NonNull private OWLObjectRenderer getOWLObjectRenderer() { return this.owlObjectRenderer; }
 }

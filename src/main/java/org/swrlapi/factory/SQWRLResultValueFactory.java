@@ -41,7 +41,7 @@ public interface SQWRLResultValueFactory
 
   @NonNull SQWRLClassResultValue getClassValue(@NonNull IRI classIRI);
 
-  @NonNull SQWRLClassExpressionResultValue getClassValue(
+  @NonNull SQWRLClassExpressionResultValue getClassExpressionValue(
     @NonNull SWRLClassExpressionBuiltInArgument classExpressionArgument);
 
   @NonNull SQWRLNamedIndividualResultValue getNamedIndividualValue(

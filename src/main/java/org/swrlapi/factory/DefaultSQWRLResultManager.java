@@ -2,6 +2,7 @@ package org.swrlapi.factory;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.dataflow.qual.SideEffectFree;
+import org.semanticweb.owlapi.io.OWLObjectRenderer;
 import org.swrlapi.core.IRIResolver;
 import org.swrlapi.exceptions.SWRLAPIInternalException;
 import org.swrlapi.sqwrl.SQWRLResultManager;
@@ -57,9 +58,9 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
   @NonNull private Map<@NonNull String, @NonNull List<@NonNull SQWRLResultValue>> columnValuesMap; // Column name -> List<@NonNull SQWRLResultValue>
   private int currentRowIndex;
 
-  public DefaultSQWRLResultManager(@NonNull IRIResolver iriResolver)
+  public DefaultSQWRLResultManager(@NonNull IRIResolver iriResolver, @NonNull OWLObjectRenderer owlObjectRenderer)
   {
-    this.sqwrlResultValueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(iriResolver);
+    this.sqwrlResultValueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(iriResolver, owlObjectRenderer);
 
     this.isConfigured = false;
     this.isPrepared = false;
