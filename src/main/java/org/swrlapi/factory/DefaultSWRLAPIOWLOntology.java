@@ -1039,6 +1039,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
 
     addSWRLBuiltIn(IRI.create(prefix, "makeOWLClass"));
     addSWRLBuiltIn(IRI.create(prefix, "makeOWLIndividual"));
+    addSWRLBuiltIn(IRI.create(prefix, "ca"));
     addSWRLBuiltIn(IRI.create(prefix, "makeOWLThing"));
     addSWRLBuiltIn(IRI.create(prefix, "createOWLThing"));
     addSWRLBuiltIn(IRI.create(prefix, "invokeSWRLBuiltIn"));

@@ -2,6 +2,7 @@ package org.swrlapi.builtins.swrlx;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.AxiomType;
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLClassExpression;
@@ -12,6 +13,10 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.parameters.Imports;
 import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLClassExpressionBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 
 import java.util.HashMap;
@@ -74,21 +79,48 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     return true;
   }
 
+  // swrlx:ca(?c, ?i) -> sqwrl:select(?c, ?i)
+  
   public boolean ca(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(2, arguments.size());
+
+    IRI classVariableIRI = arguments.get(0).asVariable().getIRI();
+    IRI individualVariableIRI = arguments.get(1).asVariable().getIRI();
 
     OWLOntology ontology = getBuiltInBridge().getSWRLAPIOWLOntology().getOWLOntology();
 
     Set<OWLClassAssertionAxiom> axioms =  ontology.getAxioms(AxiomType.CLASS_ASSERTION, Imports.INCLUDED);
 
+    SWRLMultiValueVariableBuiltInArgument classesResultArgument = createSWRLMultiValueVariableBuiltInArgument(
+      classVariableIRI);
+    SWRLMultiValueVariableBuiltInArgument individualsResultArgument = createSWRLMultiValueVariableBuiltInArgument(
+      individualVariableIRI);
+
+
     for (OWLClassAssertionAxiom axiom : axioms) {
-      OWLClassExpression c = axiom.getClassExpression();
+      OWLClassExpression ce = axiom.getClassExpression();
       OWLIndividual i = axiom.getIndividual();
+
+      if (i.isAnonymous())
+        continue;
+
+      OWLNamedIndividual ni = i.asOWLNamedIndividual();
+      SWRLNamedIndividualBuiltInArgument individualBuiltInArgument = createNamedIndividualBuiltInArgument(ni);
+      individualsResultArgument.addArgument(individualBuiltInArgument);
+
+      if (ce.isAnonymous()) {
+        SWRLClassExpressionBuiltInArgument classExpressionBuiltInArgument = createClassExpressionBuiltInArgument(ce);
+        classesResultArgument.addArgument(classExpressionBuiltInArgument);
+      } else {
+        SWRLClassBuiltInArgument classBuiltInArgument = createClassBuiltInArgument(ce.asOWLClass());
+        classesResultArgument.addArgument(classBuiltInArgument);
+      }
     }
 
+    arguments.get(0).asVariable().setBuiltInResult(classesResultArgument);
+    arguments.get(1).asVariable().setBuiltInResult(individualsResultArgument);
     return true;
-
   }
 
   /**
