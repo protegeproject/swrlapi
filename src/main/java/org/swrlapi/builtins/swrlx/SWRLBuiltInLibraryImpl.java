@@ -79,8 +79,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     return true;
   }
 
-  // swrlx:ca(?c, ?i) -> sqwrl:select(?c, ?i)
-  
+  // swrlx:ca(?c, ?i) -> sqwrl:select(?c, ?i) ^ sqwrl:orderBy(?c, ?i)
+
   public boolean ca(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(2, arguments.size());
@@ -90,37 +90,40 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
     OWLOntology ontology = getBuiltInBridge().getSWRLAPIOWLOntology().getOWLOntology();
 
-    Set<OWLClassAssertionAxiom> axioms =  ontology.getAxioms(AxiomType.CLASS_ASSERTION, Imports.INCLUDED);
+    Set<OWLClassAssertionAxiom> axioms = ontology.getAxioms(AxiomType.CLASS_ASSERTION, Imports.INCLUDED);
 
-    SWRLMultiValueVariableBuiltInArgument classesResultArgument = createSWRLMultiValueVariableBuiltInArgument(
-      classVariableIRI);
-    SWRLMultiValueVariableBuiltInArgument individualsResultArgument = createSWRLMultiValueVariableBuiltInArgument(
-      individualVariableIRI);
+    if (!axioms.isEmpty()) {
+      SWRLMultiValueVariableBuiltInArgument classesResultArgument = createSWRLMultiValueVariableBuiltInArgument(
+        classVariableIRI);
+      SWRLMultiValueVariableBuiltInArgument individualsResultArgument = createSWRLMultiValueVariableBuiltInArgument(
+        individualVariableIRI);
 
+      for (OWLClassAssertionAxiom axiom : axioms) {
+        OWLClassExpression ce = axiom.getClassExpression();
+        OWLIndividual individual = axiom.getIndividual();
 
-    for (OWLClassAssertionAxiom axiom : axioms) {
-      OWLClassExpression ce = axiom.getClassExpression();
-      OWLIndividual i = axiom.getIndividual();
+        if (individual.isAnonymous())
+          continue;
 
-      if (i.isAnonymous())
-        continue;
+        OWLNamedIndividual namedIndividual = individual.asOWLNamedIndividual();
+        SWRLNamedIndividualBuiltInArgument namedIndividualBuiltInArgument = createNamedIndividualBuiltInArgument(
+          namedIndividual);
+        individualsResultArgument.addArgument(namedIndividualBuiltInArgument);
 
-      OWLNamedIndividual ni = i.asOWLNamedIndividual();
-      SWRLNamedIndividualBuiltInArgument individualBuiltInArgument = createNamedIndividualBuiltInArgument(ni);
-      individualsResultArgument.addArgument(individualBuiltInArgument);
-
-      if (ce.isAnonymous()) {
-        SWRLClassExpressionBuiltInArgument classExpressionBuiltInArgument = createClassExpressionBuiltInArgument(ce);
-        classesResultArgument.addArgument(classExpressionBuiltInArgument);
-      } else {
-        SWRLClassBuiltInArgument classBuiltInArgument = createClassBuiltInArgument(ce.asOWLClass());
-        classesResultArgument.addArgument(classBuiltInArgument);
+        if (ce.isAnonymous()) {
+          SWRLClassExpressionBuiltInArgument classExpressionBuiltInArgument = createClassExpressionBuiltInArgument(ce);
+          classesResultArgument.addArgument(classExpressionBuiltInArgument);
+        } else {
+          SWRLClassBuiltInArgument classBuiltInArgument = createClassBuiltInArgument(ce.asOWLClass());
+          classesResultArgument.addArgument(classBuiltInArgument);
+        }
       }
-    }
 
-    arguments.get(0).asVariable().setBuiltInResult(classesResultArgument);
-    arguments.get(1).asVariable().setBuiltInResult(individualsResultArgument);
-    return true;
+      arguments.get(0).asVariable().setBuiltInResult(classesResultArgument);
+      arguments.get(1).asVariable().setBuiltInResult(individualsResultArgument);
+      return true;
+    } else
+      return false;
   }
 
   /**

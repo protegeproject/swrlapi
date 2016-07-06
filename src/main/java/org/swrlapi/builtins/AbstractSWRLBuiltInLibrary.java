@@ -613,7 +613,7 @@ public abstract class AbstractSWRLBuiltInLibrary
   {
     checkThatArgumentIsANamedIndividual(argumentNumber, arguments);
 
-    return (SWRLNamedIndividualBuiltInArgument)arguments.get(argumentNumber);
+    return arguments.get(argumentNumber).asSWRLNamedIndividualBuiltInArgument();
   }
 
   @NonNull @Override public IRI getArgumentAsAClassIRI(int argumentNumber,
@@ -632,6 +632,14 @@ public abstract class AbstractSWRLBuiltInLibrary
     return (SWRLClassBuiltInArgument)arguments.get(argumentNumber);
   }
 
+  @NonNull @Override public SWRLClassExpressionBuiltInArgument getArgumentAsAClassExpression(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    checkThatArgumentIsAClassExpression(argumentNumber, arguments);
+
+    return arguments.get(argumentNumber).asSWRLClassExpressionBuiltInArgument();
+  }
+
   @NonNull public SWRLPropertyBuiltInArgument getArgumentAsAProperty(int argumentNumber,
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
@@ -648,6 +656,14 @@ public abstract class AbstractSWRLBuiltInLibrary
     return (SWRLObjectPropertyBuiltInArgument)arguments.get(argumentNumber);
   }
 
+  @NonNull @Override public SWRLObjectPropertyExpressionBuiltInArgument getArgumentAsAnObjectPropertyExpression(
+    int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    checkThatArgumentIsAnObjectPropertyExpression(argumentNumber, arguments);
+
+    return arguments.get(argumentNumber).asSWRLObjectPropertyExpressionBuiltInArgument();
+  }
+
   @NonNull @Override public SWRLDataPropertyBuiltInArgument getArgumentAsADataProperty(int argumentNumber,
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
@@ -656,10 +672,18 @@ public abstract class AbstractSWRLBuiltInLibrary
     return (SWRLDataPropertyBuiltInArgument)arguments.get(argumentNumber);
   }
 
+  @NonNull @Override public SWRLDataPropertyExpressionBuiltInArgument getArgumentAsADataPropertyExpression(
+    int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    checkThatArgumentIsADataPropertyExpression(argumentNumber, arguments);
+
+    return arguments.get(argumentNumber).asSWRLDataPropertyExpressionBuiltInArgument();
+  }
+
   @NonNull @Override public IRI getArgumentAsAnIRI(int argumentNumber,
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
-    checkThatArgumentIsAClassPropertyOrIndividual(argumentNumber, arguments);
+    checkThatArgumentIsAClassPropertyOrNamedIndividual(argumentNumber, arguments);
 
     if (isArgumentAClass(argumentNumber, arguments))
       return ((SWRLClassBuiltInArgument)arguments.get(argumentNumber)).getIRI();
@@ -862,12 +886,28 @@ public abstract class AbstractSWRLBuiltInLibrary
     return (arguments.get(argumentNumber) instanceof SWRLDataPropertyBuiltInArgument);
   }
 
+  @Override public boolean isArgumentADataPropertyExpression(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    checkThatArgumentIsBound(argumentNumber, arguments);
+
+    return arguments.get(argumentNumber).isDataPropertyExpression();
+  }
+
   @Override public boolean isArgumentAnObjectProperty(int argumentNumber,
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatArgumentIsBound(argumentNumber, arguments);
 
     return (arguments.get(argumentNumber) instanceof SWRLObjectPropertyBuiltInArgument);
+  }
+
+  @Override public boolean isArgumentAnObjectPropertyExpression(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    checkThatArgumentIsBound(argumentNumber, arguments);
+
+    return arguments.get(argumentNumber).isObjectPropertyExpression();
   }
 
   @Override public void checkThatArgumentIsAProperty(int argumentNumber,
@@ -886,6 +926,14 @@ public abstract class AbstractSWRLBuiltInLibrary
         makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "object property"));
   }
 
+  @Override public void checkThatArgumentIsAnObjectPropertyExpression(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    if (!isArgumentAnObjectPropertyExpression(argumentNumber, arguments))
+      throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
+        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "object property expression"));
+  }
+
   @Override public void checkThatArgumentIsADataProperty(int argumentNumber,
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
@@ -894,15 +942,23 @@ public abstract class AbstractSWRLBuiltInLibrary
         makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "data property"));
   }
 
-  @Override public void checkThatArgumentIsAClassPropertyOrIndividual(int argumentNumber,
+  @Override public void checkThatArgumentIsADataPropertyExpression(int argumentNumber,
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
-    if (!isArgumentAClassPropertyOrIndividual(argumentNumber, arguments))
+    if (!isArgumentADataPropertyExpression(argumentNumber, arguments))
+      throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
+        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "data property expression"));
+  }
+
+  @Override public void checkThatArgumentIsAClassPropertyOrNamedIndividual(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    if (!isArgumentAClassPropertyOrNamedIndividual(argumentNumber, arguments))
       throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
         makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "class, property, or individual"));
   }
 
-  @Override public boolean isArgumentAClassPropertyOrIndividual(int argumentNumber,
+  @Override public boolean isArgumentAClassPropertyOrNamedIndividual(int argumentNumber,
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return isArgumentAClass(argumentNumber, arguments) || isArgumentAProperty(argumentNumber, arguments)
@@ -917,12 +973,28 @@ public abstract class AbstractSWRLBuiltInLibrary
     return (arguments.get(argumentNumber) instanceof SWRLClassBuiltInArgument);
   }
 
+  @Override public boolean isArgumentAClassExpression(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    checkThatArgumentIsBound(argumentNumber, arguments);
+
+    return arguments.get(argumentNumber).isClassExpression();
+  }
+
   @Override public void checkThatArgumentIsAClass(int argumentNumber,
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     if (!isArgumentAClass(argumentNumber, arguments))
       throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
         makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "class"));
+  }
+
+  @Override public void checkThatArgumentIsAClassExpression(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    if (!isArgumentAClassExpression(argumentNumber, arguments))
+      throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
+        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "class expression"));
   }
 
   @NonNull @Override public OWLLiteral getArgumentAsAnOWLLiteral(int argumentNumber,
