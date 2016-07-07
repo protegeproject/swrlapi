@@ -10,6 +10,7 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.swrlapi.core.IRIResolver;
 import org.swrlapi.factory.SQWRLResultValueFactory;
 import org.swrlapi.factory.SWRLAPIFactory;
+import org.swrlapi.factory.SWRLAPIInternalFactory;
 import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
 import org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue;
@@ -49,9 +50,9 @@ public class SQWRLResultTest
   @Before public void setUp() throws OWLOntologyCreationException
   {
     iriResolver = SWRLAPIFactory.createIRIResolver();
-    owlObjectRenderer = SWRLAPIFactory.createOWLObjectRenderer();
-    resultManager = SWRLAPIFactory.createSQWRLResultManager(iriResolver, owlObjectRenderer);
-    valueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(iriResolver, owlObjectRenderer);
+    owlObjectRenderer = SWRLAPIInternalFactory.createOWLObjectRenderer();
+    resultManager = SWRLAPIInternalFactory.createSQWRLResultManager(iriResolver, owlObjectRenderer);
+    valueFactory = SWRLAPIInternalFactory.createSQWRLResultValueFactory(iriResolver, owlObjectRenderer);
 
     iriResolver.setPrefix(TestPrefix, TestNamespace);
   }

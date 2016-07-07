@@ -67,7 +67,7 @@ public class DefaultSWRLBridge implements SWRLBridge
   {
     this.swrlapiOWLOntology = swrlapiOWLOntology;
     this.owl2RLPersistenceLayer = owl2RLPersistenceLayer;
-    this.owlObjectResolver = SWRLAPIFactory.createOWLObjectResolver(swrlapiOWLOntology.getOWLDataFactory());
+    this.owlObjectResolver = SWRLAPIInternalFactory.createOWLObjectResolver(swrlapiOWLOntology.getOWLDataFactory());
     this.builtInLibraryManager = new SWRLBuiltInLibraryManager();
 
     this.inferredOWLAxioms = new HashSet<>();

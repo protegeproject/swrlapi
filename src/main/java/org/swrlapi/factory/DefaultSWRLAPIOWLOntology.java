@@ -144,7 +144,8 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     this.ontology = ontology;
     this.iriResolver = iriResolver;
     this.owlObjectRenderer = owlObjectRenderer;
-    this.swrlapiOWLDataFactory = SWRLAPIFactory.createSWRLAPIOWLDataFactory(this.iriResolver, this.owlObjectRenderer);
+    this.swrlapiOWLDataFactory = SWRLAPIInternalFactory
+      .createSWRLAPIOWLDataFactory(this.iriResolver, this.owlObjectRenderer);
     this.swrlBuiltInIRIs = new HashSet<>();
 
     this.swrlRules = new HashMap<>();
@@ -345,12 +346,12 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
 
   @NonNull @Override public SWRLAutoCompleter createSWRLAutoCompleter()
   {
-    return SWRLAPIFactory.createSWRLAutoCompleter(this);
+    return SWRLAPIInternalFactory.createSWRLAutoCompleter(this);
   }
 
   @NonNull @Override public SWRLRuleRenderer createSWRLRuleRenderer()
   {
-    return SWRLAPIFactory
+    return SWRLAPIInternalFactory
       .createSWRLRuleRenderer(this.getOWLOntology(), this.getIRIResolver(), this.getOWLObjectRenderer());
   }
 
@@ -368,7 +369,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
 
   @NonNull @Override public SQWRLQueryRenderer createSQWRLQueryRenderer()
   {
-    return SWRLAPIFactory
+    return SWRLAPIInternalFactory
       .createSQWRLQueryRenderer(this.getOWLOntology(), this.getIRIResolver(), getOWLObjectRenderer());
   }
 
@@ -451,7 +452,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     boolean active = rule.isActive();
     String comment = rule.getComment();
 
-    return SWRLAPIFactory.createSQWRLQuery(queryName, rule.getBodyAtoms(), rule.getHeadAtoms(), active, comment,
+    return SWRLAPIInternalFactory.createSQWRLQuery(queryName, rule.getBodyAtoms(), rule.getHeadAtoms(), active, comment,
       getSWRLAPIOWLDataFactory().getLiteralFactory(), getIRIResolver(), getOWLObjectRenderer());
   }
 
@@ -596,7 +597,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
 
   @NonNull @Override public SQWRLResultGenerator createSQWRLResultGenerator()
   {
-    return SWRLAPIFactory.createSQWRLResultGenerator(this.iriResolver, this.owlObjectRenderer);
+    return SWRLAPIInternalFactory.createSQWRLResultGenerator(this.iriResolver, this.owlObjectRenderer);
   }
 
   /**
@@ -644,7 +645,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
       } else
         swrlapiHeadAtoms.add(atom); // Only built-in atoms are converted; other atoms remain the same
     }
-    return SWRLAPIFactory.createSWRLAPIRule(ruleName, swrlapiBodyAtoms, swrlapiHeadAtoms, comment, isActive);
+    return SWRLAPIInternalFactory.createSWRLAPIRule(ruleName, swrlapiBodyAtoms, swrlapiHeadAtoms, comment, isActive);
   }
 
   /**

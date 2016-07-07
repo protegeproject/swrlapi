@@ -60,7 +60,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
 
   public DefaultSQWRLResultManager(@NonNull IRIResolver iriResolver, @NonNull OWLObjectRenderer owlObjectRenderer)
   {
-    this.sqwrlResultValueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(iriResolver, owlObjectRenderer);
+    this.sqwrlResultValueFactory = SWRLAPIInternalFactory.createSQWRLResultValueFactory(iriResolver, owlObjectRenderer);
 
     this.isConfigured = false;
     this.isPrepared = false;

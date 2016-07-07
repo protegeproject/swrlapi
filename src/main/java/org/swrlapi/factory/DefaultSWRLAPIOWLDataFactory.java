@@ -33,11 +33,12 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
   {
     this.iriResolver = iriResolver;
     this.owlObjectRenderer = owlObjectRenderer;
-    this.owlDatatypeFactory = SWRLAPIFactory.createOWLDatatypeFactory();
-    this.owlLiteralFactory = SWRLAPIFactory.createOWLLiteralFactory();
-    this.literalFactory = SWRLAPIFactory.createLiteralFactory();
-    this.swrlBuiltInArgumentFactory = SWRLAPIFactory.createSWRLBuiltInArgumentFactory(this.iriResolver);
-    this.sqwrlResultValueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(this.iriResolver, this.owlObjectRenderer);
+    this.owlDatatypeFactory = SWRLAPIInternalFactory.createOWLDatatypeFactory();
+    this.owlLiteralFactory = SWRLAPIInternalFactory.createOWLLiteralFactory();
+    this.literalFactory = SWRLAPIInternalFactory.createLiteralFactory();
+    this.swrlBuiltInArgumentFactory = SWRLAPIInternalFactory.createSWRLBuiltInArgumentFactory(this.iriResolver);
+    this.sqwrlResultValueFactory = SWRLAPIInternalFactory
+      .createSQWRLResultValueFactory(this.iriResolver, this.owlObjectRenderer);
   }
 
   @NonNull @Override public SWRLBuiltInArgumentFactory getSWRLBuiltInArgumentFactory()
@@ -48,7 +49,7 @@ public class DefaultSWRLAPIOWLDataFactory extends OWLDataFactoryImpl implements 
   @NonNull @Override public SWRLAPIBuiltInAtom getSWRLAPIBuiltInAtom(@NonNull String ruleName, @NonNull IRI builtInIRI,
     @NonNull String builtInPrefixedName, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
   {
-    return SWRLAPIFactory.createSWRLAPIBuiltInAtom(ruleName, builtInIRI, builtInPrefixedName, arguments);
+    return SWRLAPIInternalFactory.createSWRLAPIBuiltInAtom(ruleName, builtInIRI, builtInPrefixedName, arguments);
   }
 
   @NonNull @Override public SQWRLResultValueFactory getSQWRLResultValueFactory()

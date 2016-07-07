@@ -16,8 +16,8 @@ public class OWLLiteralFactoryTest
 
   @Before public void setUp() throws OWLOntologyCreationException
   {
-    this.literalFactory = SWRLAPIFactory.createOWLLiteralFactory();
-    this.datatypeFactory = SWRLAPIFactory.createOWLDatatypeFactory();
+    this.literalFactory = SWRLAPIInternalFactory.createOWLLiteralFactory();
+    this.datatypeFactory = SWRLAPIInternalFactory.createOWLDatatypeFactory();
   }
 
   @Test public void testGetOWLLiteralBoolean() throws Exception

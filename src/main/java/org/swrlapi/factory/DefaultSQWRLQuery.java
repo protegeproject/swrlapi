@@ -50,7 +50,7 @@ class DefaultSQWRLQuery implements SQWRLQuery
     this.headAtoms = new ArrayList<>(headAtoms);
     this.active = active;
     this.comment = comment;
-    this.sqwrlResult = SWRLAPIFactory.createSQWRLResultManager(iriResolver, owlObjectRenderer);
+    this.sqwrlResult = SWRLAPIInternalFactory.createSQWRLResultManager(iriResolver, owlObjectRenderer);
     this.collectionGroupArgumentsMap = new HashMap<>();
     this.literalFactory = literalFactory;
 

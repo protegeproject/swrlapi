@@ -17,8 +17,8 @@ public class SWRLAPIOWLDataFactoryTest
 	@Before public void setUp() throws OWLOntologyCreationException
 	{
     IRIResolver iriResolver = SWRLAPIFactory.createIRIResolver();
-		OWLObjectRenderer owlObjectRenderer = SWRLAPIFactory.createOWLObjectRenderer();
-		this.factory = SWRLAPIFactory.createSWRLAPIOWLDataFactory(iriResolver, owlObjectRenderer);
+		OWLObjectRenderer owlObjectRenderer = SWRLAPIInternalFactory.createOWLObjectRenderer();
+		this.factory = SWRLAPIInternalFactory.createSWRLAPIOWLDataFactory(iriResolver, owlObjectRenderer);
 	}
 
 	@Test public void testGetSWRLBuiltInArgumentFactory() throws Exception

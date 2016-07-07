@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
-import org.swrlapi.factory.SWRLAPIFactory;
+import org.swrlapi.factory.SWRLAPIInternalFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ public class SWRLAPIBuiltInAtomTest
 
 	@Before public void setUp() throws OWLOntologyCreationException
 	{
-		this.atom = SWRLAPIFactory.createSWRLAPIBuiltInAtom(ruleName, builtInIRI, builtInName, arguments);
+		this.atom = SWRLAPIInternalFactory.createSWRLAPIBuiltInAtom(ruleName, builtInIRI, builtInName, arguments);
 	}
 
 	@Test public void testGetRuleName() throws Exception

@@ -41,8 +41,8 @@ public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel
     this.swrlapiOWLOntology = swrlRuleEngine.getSWRLAPIOWLOntology();
     this.owl2RLEngine = this.swrlRuleEngine.getOWL2RLEngine();
 
-    this.swrlRulesAndSQWRLQueriesTableModel = SWRLAPIFactory.createSWRLRulesAndSQWRLQueriesTableModel(swrlRuleEngine);
-    this.owl2RLModel = SWRLAPIFactory.createOWL2RLModel(owl2RLEngine);
+    this.swrlRulesAndSQWRLQueriesTableModel = SWRLAPIInternalFactory.createSWRLRulesAndSQWRLQueriesTableModel(swrlRuleEngine);
+    this.owl2RLModel = SWRLAPIInternalFactory.createOWL2RLModel(owl2RLEngine);
   }
 
   @Override public void updateModel(@NonNull SWRLRuleEngine ruleEngine)

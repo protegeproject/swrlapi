@@ -35,9 +35,9 @@ public class SQWRLResultValueFactoryTest
     ontologyManager = OWLManager.createOWLOntologyManager();
     dataFactory = ontologyManager.getOWLDataFactory();
     iriResolver = SWRLAPIFactory.createIRIResolver();
-    owlObjectRenderer = SWRLAPIFactory.createOWLObjectRenderer();
-    resultValueFactory = SWRLAPIFactory.createSQWRLResultValueFactory(iriResolver, owlObjectRenderer);
-    builtInArgumentFactory = SWRLAPIFactory.createSWRLBuiltInArgumentFactory(iriResolver);
+    owlObjectRenderer = SWRLAPIInternalFactory.createOWLObjectRenderer();
+    resultValueFactory = SWRLAPIInternalFactory.createSQWRLResultValueFactory(iriResolver, owlObjectRenderer);
+    builtInArgumentFactory = SWRLAPIInternalFactory.createSWRLBuiltInArgumentFactory(iriResolver);
 
     iriResolver.setPrefix(TestPrefix, TestNamespace);
   }

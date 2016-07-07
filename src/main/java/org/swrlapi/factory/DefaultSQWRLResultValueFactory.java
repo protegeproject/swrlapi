@@ -49,7 +49,7 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
   {
     this.iriResolver = iriResolver;
     this.owlObjectRenderer = owlObjectRenderer;
-    this.owlLiteralFactory = SWRLAPIFactory.createOWLLiteralFactory();
+    this.owlLiteralFactory = SWRLAPIInternalFactory.createOWLLiteralFactory();
   }
 
   @NonNull @Override public SQWRLClassResultValue getClassValue(@NonNull SWRLClassBuiltInArgument classArgument)

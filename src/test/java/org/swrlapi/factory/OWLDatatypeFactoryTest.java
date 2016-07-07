@@ -16,7 +16,7 @@ public class OWLDatatypeFactoryTest
 
   @Before public void setUp() throws OWLOntologyCreationException
   {
-    this.factory = SWRLAPIFactory.createOWLDatatypeFactory();
+    this.factory = SWRLAPIInternalFactory.createOWLDatatypeFactory();
   }
 
   @Test public void testGetBooleanDatatype() throws Exception

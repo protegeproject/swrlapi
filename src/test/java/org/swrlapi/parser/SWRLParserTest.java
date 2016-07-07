@@ -26,7 +26,7 @@ import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.DataP
 import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.Declaration;
 import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.NamedIndividual;
 import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.ObjectProperty;
-import static org.swrlapi.factory.SWRLAPIFactory.createSWRLAPIOntology;
+import static org.swrlapi.factory.SWRLAPIInternalFactory.createSWRLAPIOntology;
 
 public class SWRLParserTest extends IntegrationTestBase
 {
