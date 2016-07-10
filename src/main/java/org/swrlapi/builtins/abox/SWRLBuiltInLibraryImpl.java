@@ -5,8 +5,8 @@ import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLClassAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLClassExpression;
-import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
+import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.parameters.Imports;
 import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
@@ -17,7 +17,9 @@ import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -40,48 +42,58 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   public boolean caa(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(2, arguments.size());
-    IRI classVariableIRI = arguments.get(0).asVariable().getIRI();
-    IRI individualVariableIRI = arguments.get(1).asVariable().getIRI();
 
-    OWLOntology ontology = getBuiltInBridge().getSWRLAPIOWLOntology().getOWLOntology();
-
+    OWLOntology ontology = getBuiltInBridge().getOWLOntology();
     Set<OWLClassAssertionAxiom> axioms = ontology.getAxioms(AxiomType.CLASS_ASSERTION, Imports.INCLUDED);
 
     if (!axioms.isEmpty()) {
-      SWRLMultiValueVariableBuiltInArgument classesResultArgument = createSWRLMultiValueVariableBuiltInArgument(
-        classVariableIRI);
-      SWRLMultiValueVariableBuiltInArgument individualsResultArgument = createSWRLMultiValueVariableBuiltInArgument(
-        individualVariableIRI);
+      Map<Integer, OWLObject> argumentValues = new HashMap<>();
+      Map<Integer, SWRLMultiValueVariableBuiltInArgument> resultMultiArguments = new HashMap<>();
 
-      for (OWLClassAssertionAxiom axiom : axioms) {
-        OWLClassExpression ce = axiom.getClassExpression();
-        OWLIndividual individual = axiom.getIndividual();
-
-        if (individual.isAnonymous())
-          continue;
-
-        OWLNamedIndividual namedIndividual = individual.asOWLNamedIndividual();
-        SWRLNamedIndividualBuiltInArgument namedIndividualBuiltInArgument = createNamedIndividualBuiltInArgument(
-          namedIndividual);
-        individualsResultArgument.addArgument(namedIndividualBuiltInArgument);
-
-        if (ce.isAnonymous()) {
-          SWRLClassExpressionBuiltInArgument classExpressionBuiltInArgument = createClassExpressionBuiltInArgument(ce);
-          classesResultArgument.addArgument(classExpressionBuiltInArgument);
+      for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++) {
+        if (arguments.get(argumentNumber).isVariable()) {
+          IRI variableIRI = arguments.get(0).asVariable().getIRI();
+          resultMultiArguments.put(argumentNumber, createSWRLMultiValueVariableBuiltInArgument(variableIRI));
         } else {
-          SWRLClassBuiltInArgument classBuiltInArgument = createClassBuiltInArgument(ce.asOWLClass());
-          classesResultArgument.addArgument(classBuiltInArgument);
+          if (argumentNumber == 0) {
+            checkThatArgumentIsAClassExpression(argumentNumber, arguments);
+            argumentValues.put(argumentNumber,
+              arguments.get(argumentNumber).asSWRLClassExpressionBuiltInArgument().getOWLClassExpression());
+          } else if (argumentNumber == 1) {
+            checkThatArgumentIsANamedIndividual(argumentNumber, arguments);
+            argumentValues.put(argumentNumber,
+              arguments.get(argumentNumber).asSWRLNamedIndividualBuiltInArgument().getOWLNamedIndividual());
+          }
         }
       }
 
-      if (!classesResultArgument.hasNoArguments()) {
-        arguments.get(0).asVariable().setBuiltInResult(classesResultArgument);
-        arguments.get(1).asVariable().setBuiltInResult(individualsResultArgument);
+      for (OWLClassAssertionAxiom axiom : axioms) {
+        OWLClassExpression crav1 = axiom.getClassExpression();
+        OWLNamedIndividual crav2 = axiom.getIndividual().asOWLNamedIndividual(); // We do not handle anonymous
+
+        // TODO See if argumentValues.get(0).equals(crav1) etc. with bound handling
+
+        if (crav1.isAnonymous()) {
+          SWRLClassExpressionBuiltInArgument ra1 = createClassExpressionBuiltInArgument(crav1);
+          resultMultiArguments.get(0).addArgument(ra1);
+        } else {
+          SWRLClassBuiltInArgument ra2 = createClassBuiltInArgument(crav1.asOWLClass());
+          resultMultiArguments.get(0).addArgument(ra2);
+        }
+
+        SWRLNamedIndividualBuiltInArgument ra2 = createNamedIndividualBuiltInArgument(crav2);
+        resultMultiArguments.get(1).addArgument(ra2);
+      }
+
+      if (!resultMultiArguments.isEmpty()) {
+        for (Integer argumentNumber : resultMultiArguments.keySet()) {
+          if (resultMultiArguments.containsKey(argumentNumber))
+            arguments.get(argumentNumber).asVariable().setBuiltInResult(resultMultiArguments.get(argumentNumber));
+        }
         return true;
       } else
         return false;
     } else
       return false;
   }
-
 }

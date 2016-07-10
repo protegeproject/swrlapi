@@ -29,7 +29,6 @@ import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyExpressionBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLPropertyBuiltInArgument;
-import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.exceptions.InvalidSWRLBuiltInArgumentException;
 import org.swrlapi.exceptions.InvalidSWRLBuiltInArgumentNumberException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
@@ -1753,11 +1752,6 @@ public abstract class AbstractSWRLBuiltInLibrary
     OWLLiteral literal = createLeastNarrowNumericOWLLiteral(value, boundInputNumericArguments);
 
     return getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(literal);
-  }
-
-  @NonNull protected SWRLAPIOWLOntology getSWRLAPIOWLOntology() throws SWRLBuiltInLibraryException
-  {
-    return getBuiltInBridge().getSWRLAPIOWLOntology();
   }
 
   @NonNull protected SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory() throws SWRLBuiltInLibraryException

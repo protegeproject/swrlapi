@@ -41,7 +41,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     IRI subClassVariableIRI = arguments.get(0).asVariable().getIRI();
     IRI superClassVariableIRI = arguments.get(1).asVariable().getIRI();
 
-    OWLOntology ontology = getBuiltInBridge().getSWRLAPIOWLOntology().getOWLOntology();
+    OWLOntology ontology = getBuiltInBridge().getOWLOntology();
 
     Set<OWLSubClassOfAxiom> axioms = ontology.getAxioms(AxiomType.SUBCLASS_OF, Imports.INCLUDED);
 

@@ -88,7 +88,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     IRI classVariableIRI = arguments.get(0).asVariable().getIRI();
     IRI individualVariableIRI = arguments.get(1).asVariable().getIRI();
 
-    OWLOntology ontology = getBuiltInBridge().getSWRLAPIOWLOntology().getOWLOntology();
+    OWLOntology ontology = getBuiltInBridge().getOWLOntology();
 
     Set<OWLClassAssertionAxiom> axioms = ontology.getAxioms(AxiomType.CLASS_ASSERTION, Imports.INCLUDED);
 
