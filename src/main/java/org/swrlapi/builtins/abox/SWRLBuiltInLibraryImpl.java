@@ -11,8 +11,6 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.parameters.Imports;
 import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLClassExpressionBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.exceptions.SWRLBuiltInException;
@@ -79,7 +77,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
         if (crav1.isAnonymous())
           resultMultiArguments.get(0).addArgument(createClassExpressionBuiltInArgument(crav1));
         else
-          resultMultiArguments.get(0).addArgument(createClassBuiltInArgument(crav1.asOWLClass());
+          resultMultiArguments.get(0).addArgument(createClassBuiltInArgument(crav1.asOWLClass()));
 
         SWRLNamedIndividualBuiltInArgument ra2 = createNamedIndividualBuiltInArgument(crav2);
         resultMultiArguments.get(1).addArgument(ra2);
@@ -92,7 +90,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
         }
         return true;
       } else
-        return false; 
+        return false;
     } else
       return false;
   }
