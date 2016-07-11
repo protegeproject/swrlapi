@@ -71,7 +71,10 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
         OWLClassExpression crav1 = axiom.getClassExpression();
         OWLNamedIndividual crav2 = axiom.getIndividual().asOWLNamedIndividual(); // We do not handle anonymous
 
-        // TODO See if argumentValues.get(0).equals(crav1) etc. with bound handling
+        if (argumentValues.containsKey(0) && !arguments.get(0).equals(crav1))
+          continue;
+        if (argumentValues.containsKey(1) && !arguments.get(1).equals(crav2))
+          continue;
 
         if (crav1.isAnonymous()) {
           SWRLClassExpressionBuiltInArgument ra1 = createClassExpressionBuiltInArgument(crav1);

@@ -6,6 +6,7 @@ import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
 import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLClassExpressionBuiltInArgument;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 
 class DefaultSWRLClassBuiltInArgument extends DefaultSWRLNamedBuiltInArgument implements SWRLClassBuiltInArgument
@@ -38,6 +39,12 @@ class DefaultSWRLClassBuiltInArgument extends DefaultSWRLNamedBuiltInArgument im
   }
 
   @NonNull @Override public SWRLClassBuiltInArgument asSWRLClassBuiltInArgument() throws SWRLBuiltInException
+  {
+    return this;
+  }
+
+  @Override public @NonNull SWRLClassExpressionBuiltInArgument asSWRLClassExpressionBuiltInArgument()
+    throws SWRLBuiltInException
   {
     return this;
   }
