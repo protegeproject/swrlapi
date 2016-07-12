@@ -839,6 +839,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     addSWRLMBuiltIns();
     addSWRLTBoxBuiltIns();
     addSWRLABoxBuiltIns();
+    addSWRLRBoxBuiltIns();
   }
 
   private void addCoreSWRLBuiltIns()
@@ -1060,6 +1061,12 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     String prefix = "http://swrl.stanford.edu/ontologies/built-ins/5.0.0/abox.owl#";
 
     addSWRLBuiltIn(IRI.create(prefix, "caa"));
+  }
+
+  private void addSWRLRBoxBuiltIns()
+  {
+    String prefix = "http://swrl.stanford.edu/ontologies/built-ins/5.0.0/rbox.owl#";
+
   }
 
   private void addSWRLMBuiltIns()

@@ -212,6 +212,7 @@ public class DefaultIRIResolver implements IRIResolver
     this.prefixManager.setPrefix("swrlx:", "http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#");
     this.prefixManager.setPrefix("abox:", "http://swrl.stanford.edu/ontologies/built-ins/5.0.0/abox.owl#");
     this.prefixManager.setPrefix("tbox:", "http://swrl.stanford.edu/ontologies/built-ins/5.0.0/tbox.owl#");
+    this.prefixManager.setPrefix("rbox:", "http://swrl.stanford.edu/ontologies/built-ins/5.0.0/rbox.owl#");
     this.prefixManager.setPrefix("swrla:", "http://swrl.stanford.edu/ontologies/3.3/swrla.owl#");
   }
 }

@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Implementations library for SWRL ABox built-ins
+ * Implementation library for SWRL ABox built-ins
  */
 public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 {
@@ -34,6 +34,9 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   @Override public void reset()
   {
   }
+
+  // CLASS_ASSERTION, SAME_INDIVIDUAL, DIFFERENT_INDIVIDUALS, OBJECT_PROPERTY_ASSERTION, NEGATIVE_OBJECT_PROPERTY_ASSERTION,
+  // DATA_PROPERTY_ASSERTION, NEGATIVE_DATA_PROPERTY_ASSERTION
 
   public boolean caa(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
