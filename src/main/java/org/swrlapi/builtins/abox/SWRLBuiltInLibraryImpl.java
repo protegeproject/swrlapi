@@ -35,7 +35,6 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   {
   }
 
-  // TODO Initial implementation - only supports case where both arguments are unbound
   public boolean caa(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(2, arguments.size());
@@ -50,7 +49,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
       for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++) {
         if (arguments.get(argumentNumber).isVariable()) {
-          IRI variableIRI = arguments.get(0).asVariable().getIRI();
+          IRI variableIRI = arguments.get(argumentNumber).asVariable().getIRI();
           unboundResultArguments.put(argumentNumber, createSWRLMultiValueVariableBuiltInArgument(variableIRI));
         } else {
           if (argumentNumber == 0) {
@@ -70,8 +69,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
         OWLNamedIndividual crav2 = axiom.getIndividual().asOWLNamedIndividual(); // We do not handle anonymous
 
         atLeastOneBoundArgumentUnequal =
-          (boundArgumentValues.containsKey(0) && !arguments.get(0).equals(crav1)) || (boundArgumentValues.containsKey(1)
-            && !arguments.get(1).equals(crav2));
+          (boundArgumentValues.containsKey(0) && !boundArgumentValues.get(0).equals(crav1)) || (boundArgumentValues.containsKey(1)
+            && !boundArgumentValues.get(1).equals(crav2));
 
         if (atLeastOneBoundArgumentUnequal)
           break;
