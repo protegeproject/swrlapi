@@ -561,12 +561,12 @@ public class Period
     return this.startInstant.equals(this.finishInstant, Temporal.FINEST);
   }
 
-  @SideEffectFree @NonNull public String toString(int granularity) throws TemporalException
+   @NonNull @SideEffectFree public String toString(int granularity) throws TemporalException
   {
     return "(" + this.startInstant.toString(granularity) + ", " + this.finishInstant.toString(granularity) + ")";
   }
 
-  @SideEffectFree @NonNull @Override public String toString()
+   @NonNull @SideEffectFree @Override public String toString()
   {
     try {
       return toString(Temporal.FINEST);

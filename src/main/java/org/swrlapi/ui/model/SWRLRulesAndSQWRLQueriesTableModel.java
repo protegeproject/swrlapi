@@ -328,7 +328,7 @@ public class SWRLRulesAndSQWRLQueriesTableModel extends AbstractTableModel imple
       return this.rule.getComment();
     }
 
-    @SideEffectFree @NonNull @Override public String toString()
+     @NonNull @SideEffectFree @Override public String toString()
     {
       return "(ruleName: " + getRuleName() + ", ruleText: " + getRuleText() + ", comment: " + getComment()
         + ", active: " + isActive() + ")";

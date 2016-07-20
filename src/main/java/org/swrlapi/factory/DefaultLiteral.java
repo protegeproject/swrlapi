@@ -621,7 +621,7 @@ class DefaultLiteral implements Literal
     return getOWLDatatype().toString();
   }
 
-  @SideEffectFree @NonNull @Override public String toString()
+   @NonNull @SideEffectFree @Override public String toString()
   {
     return this.literal.toString();
   }

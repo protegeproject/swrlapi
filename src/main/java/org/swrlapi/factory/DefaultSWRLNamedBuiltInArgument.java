@@ -101,7 +101,7 @@ abstract class DefaultSWRLNamedBuiltInArgument extends DefaultSWRLBuiltInArgumen
     return visitor.visit(this);
   }
 
-  @SideEffectFree @NonNull @Override public String toString()
+   @NonNull @SideEffectFree @Override public String toString()
   {
     return this.entity.toString();
   }

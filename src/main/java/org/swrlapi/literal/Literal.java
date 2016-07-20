@@ -129,7 +129,7 @@ public interface Literal
 
   boolean isQuotableType();
 
-  @SideEffectFree @NonNull @Override String toString();
+   @NonNull @SideEffectFree @Override String toString();
 
   @NonNull String toQuotedString();
 

@@ -838,7 +838,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
     }
   }
 
-  @SideEffectFree @NonNull @Override public String toString()
+   @NonNull @SideEffectFree @Override public String toString()
   {
     String result =
       "[numberOfColumns: " + this.numberOfColumns + ", isConfigured: " + this.isConfigured + ", isPrepared: "

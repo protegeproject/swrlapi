@@ -20,7 +20,7 @@ abstract class XSDType<T extends @NonNull Object> implements Comparable<T>
 
   @NonNull public String getContent() { return this.content; }
 
-  @SideEffectFree @NonNull @Override public String toString()
+   @NonNull @SideEffectFree @Override public String toString()
   {
     return this.content;
   }

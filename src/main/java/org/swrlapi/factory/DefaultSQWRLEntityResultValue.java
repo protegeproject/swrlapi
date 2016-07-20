@@ -70,7 +70,7 @@ abstract class DefaultSQWRLEntityResultValue extends DefaultSQWRLResultValue imp
     return this.iri.compareTo(o.getIRI());
   }
 
-  @SideEffectFree @NonNull @Override public String toString()
+   @NonNull @SideEffectFree @Override public String toString()
   {
     return this.prefixedName;
   }
