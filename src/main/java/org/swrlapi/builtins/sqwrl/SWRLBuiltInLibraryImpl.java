@@ -8,6 +8,7 @@ import org.swrlapi.builtins.arguments.SQWRLCollectionVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLClassExpressionBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
@@ -18,6 +19,7 @@ import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.sqwrl.SQWRLNames;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue;
+import org.swrlapi.sqwrl.values.SQWRLClassExpressionResultValue;
 import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
 import org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
@@ -119,6 +121,10 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
         SQWRLAnnotationPropertyResultValue annotationPropertyValue = getSQWRLResultValueFactory()
           .getAnnotationPropertyValue(annotationPropertyArgument);
         resultGenerator.addCell(annotationPropertyValue);
+      } else if (argument instanceof SWRLClassExpressionBuiltInArgument) {
+        SWRLClassExpressionBuiltInArgument classExpressionArgument = (SWRLClassExpressionBuiltInArgument)argument;
+        SQWRLClassExpressionResultValue classExpressionValue = getSQWRLResultValueFactory().getClassExpressionValue(classExpressionArgument);
+        resultGenerator.addCell(classExpressionValue);
       } else if (argument instanceof SQWRLCollectionVariableBuiltInArgument) {
         throw new InvalidSWRLBuiltInArgumentException(argumentIndex, "collections cannot be selected");
       } else

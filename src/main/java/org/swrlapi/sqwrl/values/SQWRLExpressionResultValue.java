@@ -7,7 +7,7 @@ import android.annotation.NonNull;
  *
  * @see org.swrlapi.sqwrl.SQWRLResult
  */
-public interface SQWRLExpressionResultValue extends SQWRLResultValue
+public interface SQWRLExpressionResultValue extends SQWRLResultValue, Comparable<SQWRLExpressionResultValue>
 {
   @NonNull String getRendering();
 }

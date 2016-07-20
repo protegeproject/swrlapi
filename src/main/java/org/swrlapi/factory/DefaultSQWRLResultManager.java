@@ -16,6 +16,7 @@ import org.swrlapi.sqwrl.exceptions.SQWRLInvalidQueryException;
 import org.swrlapi.sqwrl.exceptions.SQWRLInvalidRowIndexException;
 import org.swrlapi.sqwrl.exceptions.SQWRLResultStateException;
 import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue;
+import org.swrlapi.sqwrl.values.SQWRLClassExpressionResultValue;
 import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
 import org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
@@ -429,6 +430,19 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
     return getClass(getColumnName(columnIndex));
   }
 
+  @Override public @NonNull SQWRLClassExpressionResultValue getClassExpression(@NonNull String columnName)
+    throws SQWRLException
+  {
+    if (!hasClassExpressionValue(columnName))
+      throw new SQWRLInvalidColumnTypeException("expecting class expression type for column " + columnName);
+    return (SQWRLClassExpressionResultValue)getValue(columnName);
+  }
+
+  @NonNull @Override public SQWRLClassExpressionResultValue getClassExpression(int columnIndex) throws SQWRLException
+  {
+    return getClassExpression(getColumnName(columnIndex));
+  }
+
   @NonNull @Override public SQWRLObjectPropertyResultValue getObjectProperty(int columnIndex) throws SQWRLException
   {
     return getObjectProperty(getColumnName(columnIndex));
@@ -517,6 +531,16 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
   @Override public boolean hasClassValue(int columnIndex) throws SQWRLException
   {
     return getValue(columnIndex) instanceof SQWRLClassResultValue;
+  }
+
+  @Override public boolean hasClassExpressionValue(@NonNull String columnName) throws SQWRLException
+  {
+    return getValue(columnName) instanceof SQWRLClassExpressionResultValue;
+  }
+
+  @Override public boolean hasClassExpressionValue(int columnIndex) throws SQWRLException
+  {
+    return getValue(columnIndex) instanceof SQWRLClassExpressionResultValue;
   }
 
   @Override public boolean hasObjectPropertyValue(@NonNull String columnName) throws SQWRLException
@@ -838,7 +862,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
     }
   }
 
-   @NonNull @SideEffectFree @Override public String toString()
+  @NonNull @SideEffectFree @Override public String toString()
   {
     String result =
       "[numberOfColumns: " + this.numberOfColumns + ", isConfigured: " + this.isConfigured + ", isPrepared: "
@@ -1254,9 +1278,11 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
         SQWRLResultValue value2 = row2.get(columnIndex);
         int diff;
 
-        try {
+        try { // Note that an entity is a class expression (but not necessarily the reverse) so we compare first
           if (value1.isLiteral() && value2.isLiteral())
             diff = value1.asLiteralResult().compareTo(value2.asLiteralResult());
+          else if (value1.isClassExpression() && value2.isClassExpression())
+            diff = value1.asClassExpressionResult().compareTo(value2.asClassExpressionResult());
           else if (value1.isEntity() && value2.isEntity())
             diff = value1.asEntityResult().compareTo(value2.asEntityResult());
           else
