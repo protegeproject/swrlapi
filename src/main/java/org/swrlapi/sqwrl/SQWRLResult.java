@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  * Interface that defines methods to process results from a SQWRL query.
- * <p/>
+ * <p>
  * See the {@link org.swrlapi.sqwrl.SQWRLResultManager} interface for detailed comments on using this interface.
  *
  * @see org.swrlapi.sqwrl.SQWRLQuery

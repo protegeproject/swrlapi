@@ -1278,7 +1278,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
         SQWRLResultValue value2 = row2.get(columnIndex);
         int diff;
 
-        try { // Note that an entity is a class expression (but not necessarily the reverse) so we compare first
+        try { // Note: an entity is a class expression (but not necessarily the reverse) so we compare class expressions first
           if (value1.isLiteral() && value2.isLiteral())
             diff = value1.asLiteralResult().compareTo(value2.asLiteralResult());
           else if (value1.isClassExpression() && value2.isClassExpression())

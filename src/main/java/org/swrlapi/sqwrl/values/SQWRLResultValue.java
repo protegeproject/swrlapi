@@ -8,11 +8,15 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
  *
  * @see org.swrlapi.sqwrl.values.SQWRLEntityResultValue
  * @see org.swrlapi.sqwrl.values.SQWRLClassResultValue
- * @see SQWRLNamedIndividualResultValue
+ * @see org.swrlapi.sqwrl.values.SQWRLNamedIndividualResultValue
  * @see org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue
  * @see org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue
  * @see org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue
  * @see org.swrlapi.sqwrl.values.SQWRLLiteralResultValue
+ * @see org.swrlapi.sqwrl.values.SQWRLClassExpressionResultValue
+ * @see org.swrlapi.sqwrl.values.SQWRLObjectPropertyExpressionResultValue
+ * @see org.swrlapi.sqwrl.values.SQWRLDataPropertyExpressionResultValue
+ *
  */
 public interface SQWRLResultValue
 {
