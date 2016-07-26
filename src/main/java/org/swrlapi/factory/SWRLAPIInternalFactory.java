@@ -87,7 +87,7 @@ public class SWRLAPIInternalFactory
   /**
    * @return A SWRL rule engine manager
    */
-  public static @NonNull SWRLRuleEngineManager createSWRLRuleEngineManager()
+  @NonNull public static SWRLRuleEngineManager createSWRLRuleEngineManager()
   {
     return new DefaultSWRLRuleEngineManager();
   }
@@ -96,7 +96,7 @@ public class SWRLAPIInternalFactory
    * @param iriResolver An IRI resolver
    * @return A SQWRL result
    */
-  public static @NonNull SQWRLResultManager createSQWRLResultManager(@NonNull IRIResolver iriResolver,
+  @NonNull public static SQWRLResultManager createSQWRLResultManager(@NonNull IRIResolver iriResolver,
     @NonNull OWLObjectRenderer owlObjectRenderer)
   {
     return new DefaultSQWRLResultManager(iriResolver, owlObjectRenderer);
@@ -106,7 +106,7 @@ public class SWRLAPIInternalFactory
    * @param dataFactory An OWL data factory
    * @return An OWL object resolver
    */
-  public static @NonNull OWLObjectResolver createOWLObjectResolver(@NonNull OWLDataFactory dataFactory)
+  @NonNull public static OWLObjectResolver createOWLObjectResolver(@NonNull OWLDataFactory dataFactory)
   {
     return new DefaultOWLObjectResolver(dataFactory);
   }
@@ -115,7 +115,7 @@ public class SWRLAPIInternalFactory
    * @param ontology An OWL ontology
    * @return An OWL 2 RL persistence layer
    */
-  public static @NonNull OWL2RLPersistenceLayer createOWL2RLPersistenceLayer(@NonNull OWLOntology ontology)
+  @NonNull public static OWL2RLPersistenceLayer createOWL2RLPersistenceLayer(@NonNull OWLOntology ontology)
   {
     return new DefaultOWL2RLPersistenceLayer(ontology);
   }
