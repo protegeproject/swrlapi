@@ -11,11 +11,11 @@ import org.swrlapi.builtins.SWRLBuiltInBridge;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
-import org.swrlapi.literal.XSDDate;
-import org.swrlapi.literal.XSDDateTime;
 import org.swrlapi.exceptions.InvalidSWRLBuiltInArgumentException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLBuiltInLibraryException;
+import org.swrlapi.literal.XSDDate;
+import org.swrlapi.literal.XSDDateTime;
 
 import java.util.HashSet;
 import java.util.List;
@@ -365,7 +365,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notDurationLessThanOrEqualTo(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notDurationLessThanOrEqualTo(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException
   {
     return !durationLessThanOrEqualTo(arguments);
   }
@@ -385,7 +386,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean notDurationGreaterThan(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean notDurationGreaterThan(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException
   {
     return !durationGreaterThan(arguments);
   }
@@ -472,7 +474,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean durationLessThanOrEqualTo(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean durationLessThanOrEqualTo(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException
   {
     checkNumberOfArgumentsInRange(3, 4, arguments.size());
     checkForUnboundArguments(arguments);
@@ -540,7 +543,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  public boolean durationGreaterThanOrEqualTo(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean durationGreaterThanOrEqualTo(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException
   {
     checkNumberOfArgumentsInRange(3, 4, arguments.size());
     checkForUnboundArguments(arguments);
@@ -650,7 +654,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   }
 
   @NonNull private Period getTwoInstantArgumentsAsAPeriod(int firstArgumentNumber, int secondArgumentNumber,
-    @NonNull List<@NonNull SWRLBuiltInArgument> arguments, int granularity) throws SWRLBuiltInException, TemporalException
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments, int granularity)
+    throws SWRLBuiltInException, TemporalException
   {
     if (firstArgumentNumber >= arguments.size())
       throw new InvalidSWRLBuiltInArgumentException(firstArgumentNumber, "out of range");
@@ -663,8 +668,9 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     return new Period(this.temporal, i1, i2, granularity);
   }
 
-  @NonNull private Period getArgumentAsAPeriod(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments,
-    int granularity) throws SWRLBuiltInException, TemporalException
+  @NonNull private Period getArgumentAsAPeriod(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments, int granularity)
+    throws SWRLBuiltInException, TemporalException
   {
     if (isArgumentALiteral(argumentNumber, arguments)) {
       String datetimeString;
@@ -677,7 +683,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
         datetimeString = getArgumentAsADateTime(argumentNumber, arguments).getContent();
       } else
         throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
-          "expecting xsd:string, xsd:date, or xsd:dateTime got " + arguments.get(argumentNumber));
+          "expecting an xsd:date, an xsd:dateTime, or an xsd:string containing a correctly-formatted XSD date or datetime value, got "
+            + arguments.get(argumentNumber));
       return new Period(this.temporal, datetimeString, datetimeString, granularity);
     } else if (isArgumentAnOWLNamedIndividual(argumentNumber, arguments)) {
       IRI individualIRI = getArgumentAsANamedIndividualIRI(argumentNumber, arguments);
@@ -698,8 +705,9 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
           + ExtendedPropositionClassName + " individual, got " + arguments.get(argumentNumber));
   }
 
-  @NonNull private Instant getArgumentAsAnInstant(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments,
-    int granularity) throws SWRLBuiltInException, TemporalException
+  @NonNull private Instant getArgumentAsAnInstant(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments, int granularity)
+    throws SWRLBuiltInException, TemporalException
   {
     if (isArgumentALiteral(argumentNumber, arguments)) {
       String datetimeString;
@@ -712,7 +720,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
         datetimeString = getArgumentAsADateTime(argumentNumber, arguments).getContent();
       } else
         throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
-          "expecting xsd:string, xsd:date, or xsd:dateTime got " + arguments.get(argumentNumber));
+          "expecting an xsd:date, an xsd:dateTime, or an xsd:string containing a correctly-formatted XSD date or datetime value, got "
+            + arguments.get(argumentNumber));
       return new Instant(this.temporal, datetimeString, granularity);
     } else if (isArgumentAnOWLNamedIndividual(argumentNumber, arguments)) {
       IRI individualIRI = getArgumentAsANamedIndividualIRI(argumentNumber, arguments);
@@ -730,8 +739,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
           + " individual, got " + arguments.get(argumentNumber));
   }
 
-  private int getBuiltInArgumentAsAGranularity(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
-    throws TemporalException, SWRLBuiltInException
+  private int getBuiltInArgumentAsAGranularity(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws TemporalException, SWRLBuiltInException
   {
     if (isArgumentALiteral(argumentNumber, arguments)) {
       String granularityName = getArgumentAsAString(argumentNumber, arguments);
@@ -756,8 +765,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
         "expecting a " + GranularityClassName + " individual" + ", got " + arguments.get(argumentNumber));
   }
 
-  private boolean isBuiltInArgumentAGranularity(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
-    throws SWRLBuiltInException
+  private boolean isBuiltInArgumentAGranularity(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     if (isArgumentAString(argumentNumber, arguments)) {
       String granularityName = getArgumentAsAString(argumentNumber, arguments);
