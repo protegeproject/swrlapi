@@ -38,6 +38,7 @@ import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDatatypeBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
+import org.swrlapi.core.IRIResolver;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.factory.OWLLiteralFactory;
 import org.swrlapi.factory.SWRLAPIOWLDataFactory;
@@ -446,7 +447,7 @@ class SWRLParserSupport
 
   @NonNull private String iri2ShortForm(IRI iri)
   {
-    Optional<@NonNull String> shortForm = this.swrlapiOWLOntology.getIRIResolver().iri2ShortForm(iri);
+    Optional<@NonNull String> shortForm = getIRIResolver().iri2ShortForm(iri);
 
     if (shortForm.isPresent())
       return shortForm.get();
@@ -456,11 +457,16 @@ class SWRLParserSupport
 
   @NonNull private IRI prefixedName2IRI(String prefixedName)
   {
-    Optional<@NonNull IRI> iri = this.swrlapiOWLOntology.getIRIResolver().prefixedName2IRI(prefixedName);
+    Optional<@NonNull IRI> iri = getIRIResolver().prefixedName2IRI(prefixedName);
 
     if (iri.isPresent())
       return iri.get();
     else
       throw new IllegalArgumentException("could not find IRI for prefixed name " + prefixedName);
+  }
+
+  private @NonNull IRIResolver getIRIResolver()
+  {
+    return this.swrlapiOWLOntology.getIRIResolver();
   }
 }
