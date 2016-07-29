@@ -4,7 +4,6 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.IRIResolver;
-import org.swrlapi.core.OWLObjectResolver;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLRuleEngineBridgeException;
 import org.swrlapi.factory.OWLDatatypeFactory;
@@ -94,13 +93,6 @@ public interface SWRLRuleEngineBridge
    * @return An IRI resolver
    */
   @NonNull IRIResolver getIRIResolver();
-
-  /**
-   * An OWL object resolver can be used by a target rule engine to resolve OWL objects.
-   *
-   * @return An OWL object resolver
-   */
-  @NonNull OWLObjectResolver getOWLObjectResolver();
 
   /**
    * Get the underlying persistence layer for the OWL 2 RL reasoner used by the rule and query engine.

@@ -30,8 +30,8 @@ public abstract class TargetRuleEngineConverterBase implements TargetRuleEngineC
       throw new IllegalArgumentException("could not get prefixed name for IRI " + iri);
   }
 
-  @NonNull protected OWLObjectResolver getOWLObjectResolver()
+  @NonNull protected SWRLRuleEngineBridge getBridge()
   {
-    return this.bridge.getOWLObjectResolver();
+    return this.bridge;
   }
 }
