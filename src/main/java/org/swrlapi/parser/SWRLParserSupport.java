@@ -194,11 +194,12 @@ class SWRLParserSupport
 
   @NonNull public SWRLVariable createSWRLVariable(@NonNull String variableName) throws SWRLParseException
   {
-    IRI iri = prefixedName2IRI(variableName);
-
     if (isOWLEntity(variableName))
       throw new SWRLParseException(
         variableName + " cannot be used as a SWRL variable name because it refers to an existing OWL entity");
+
+    IRI iri = prefixedName2IRI(variableName);
+
     return getOWLDataFactory().getSWRLVariable(iri);
   }
 
