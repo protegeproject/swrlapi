@@ -3,7 +3,6 @@ package org.swrlapi.bridge.converters;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.swrlapi.bridge.SWRLRuleEngineBridge;
-import org.swrlapi.core.OWLObjectResolver;
 
 import java.util.Optional;
 

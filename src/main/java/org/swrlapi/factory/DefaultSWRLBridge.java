@@ -12,7 +12,6 @@ import org.swrlapi.bridge.TargetSWRLRuleEngine;
 import org.swrlapi.builtins.SWRLBuiltInLibraryManager;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.IRIResolver;
-import org.swrlapi.core.OWLObjectResolver;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
@@ -40,7 +39,6 @@ public class DefaultSWRLBridge implements SWRLBridge
 {
   @NonNull private final SWRLAPIOWLOntology swrlapiOWLOntology;
   @NonNull private final OWL2RLPersistenceLayer owl2RLPersistenceLayer;
-  @NonNull private final OWLObjectResolver owlObjectResolver;
   @NonNull private final SWRLBuiltInLibraryManager builtInLibraryManager;
 
   /**
@@ -67,7 +65,6 @@ public class DefaultSWRLBridge implements SWRLBridge
   {
     this.swrlapiOWLOntology = swrlapiOWLOntology;
     this.owl2RLPersistenceLayer = owl2RLPersistenceLayer;
-    this.owlObjectResolver = SWRLAPIInternalFactory.createOWLObjectResolver(swrlapiOWLOntology.getOWLDataFactory());
     this.builtInLibraryManager = new SWRLBuiltInLibraryManager();
 
     this.inferredOWLAxioms = new HashSet<>();

@@ -3,7 +3,6 @@ package org.swrlapi.factory;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.io.OWLObjectRenderer;
 import org.semanticweb.owlapi.model.IRI;
-import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
@@ -13,7 +12,6 @@ import org.semanticweb.owlapi.util.SimpleRenderer;
 import org.swrlapi.bridge.SWRLBridge;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.IRIResolver;
-import org.swrlapi.core.OWLObjectResolver;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIRule;
@@ -23,7 +21,6 @@ import org.swrlapi.core.SWRLRuleRenderer;
 import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
-import org.swrlapi.factory.resolvers.DefaultOWLObjectResolver;
 import org.swrlapi.literal.Literal;
 import org.swrlapi.owl2rl.OWL2RLEngine;
 import org.swrlapi.owl2rl.OWL2RLPersistenceLayer;
@@ -100,15 +97,6 @@ public class SWRLAPIInternalFactory
     @NonNull OWLObjectRenderer owlObjectRenderer)
   {
     return new DefaultSQWRLResultManager(iriResolver, owlObjectRenderer);
-  }
-
-  /**
-   * @param dataFactory An OWL data factory
-   * @return An OWL object resolver
-   */
-  @NonNull public static OWLObjectResolver createOWLObjectResolver(@NonNull OWLDataFactory dataFactory)
-  {
-    return new DefaultOWLObjectResolver(dataFactory);
   }
 
   /**
