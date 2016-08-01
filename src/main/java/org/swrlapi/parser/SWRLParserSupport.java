@@ -123,23 +123,6 @@ class SWRLParserSupport
     return getSWRLAPIOWLOntology().isSWRLBuiltIn(builtInIRI);
   }
 
-  private boolean isValidSWRLVariableName(@NonNull String candidateVariableName)
-  {
-    if (candidateVariableName.length() == 0)
-      return false;
-
-    if (!Character.isJavaIdentifierStart(candidateVariableName.charAt(0)))
-      return false;
-
-    for (int i = 1; i < candidateVariableName.length(); i++) {
-      char c = candidateVariableName.charAt(i);
-      if (!(Character.isJavaIdentifierPart(c) || c == ':' || c == '-')) {
-        return false;
-      }
-    }
-    return true;
-  }
-
   public void checkThatSWRLVariableNameIsValid(@NonNull String variableName) throws SWRLParseException
   {
     if (!isValidSWRLVariableName(variableName))
@@ -148,6 +131,17 @@ class SWRLParserSupport
     if (isOWLEntity(variableName))
       throw new SWRLParseException("Invalid SWRL variable name " + variableName
         + " - cannot use name of existing OWL class, individual, property, or datatype");
+  }
+
+  public @NonNull SWRLVariable createSWRLVariable(@NonNull String variableName) throws SWRLParseException
+  {
+    if (isOWLEntity(variableName))
+      throw new SWRLParseException(
+        variableName + " cannot be used as a SWRL variable name because it refers to an existing OWL entity");
+
+    IRI iri = prefixedName2IRI(variableName);
+
+    return getOWLDataFactory().getSWRLVariable(iri);
   }
 
   @NonNull public SWRLLiteralArgument createXSDStringSWRLLiteralArgument(@NonNull String lexicalValue)
@@ -190,17 +184,6 @@ class SWRLParserSupport
     } catch (NumberFormatException e) {
       throw new SWRLParseException(lexicalValue + " is not a valid xsd:float");
     }
-  }
-
-  @NonNull public SWRLVariable createSWRLVariable(@NonNull String variableName) throws SWRLParseException
-  {
-    if (isOWLEntity(variableName))
-      throw new SWRLParseException(
-        variableName + " cannot be used as a SWRL variable name because it refers to an existing OWL entity");
-
-    IRI iri = prefixedName2IRI(variableName);
-
-    return getOWLDataFactory().getSWRLVariable(iri);
   }
 
   @NonNull public SWRLLiteralArgument createSWRLLiteralArgument(@NonNull String lexicalValue,
@@ -464,6 +447,30 @@ class SWRLParserSupport
       return iri.get();
     else
       throw new IllegalArgumentException("could not find IRI for prefixed name " + prefixedName);
+  }
+
+  /**
+   * Check that a variable name is a valid SWRL variable. Somewhat arbitrary at the moment.
+   * We allow the same characters as a Java variable plus the ':' and '-' characters.
+   *
+   * @param candidateSWRLVariableName The candidate variable name
+   * @return True if variable name is valid, false otherwise
+   */
+  private boolean isValidSWRLVariableName(@NonNull String candidateSWRLVariableName)
+  {
+    if (candidateSWRLVariableName.length() == 0)
+      return false;
+
+    if (!Character.isJavaIdentifierStart(candidateSWRLVariableName.charAt(0)))
+      return false;
+
+    for (int i = 1; i < candidateSWRLVariableName.length(); i++) {
+      char c = candidateSWRLVariableName.charAt(i);
+      if (!(Character.isJavaIdentifierPart(c) || c == ':' || c == '-')) {
+        return false;
+      }
+    }
+    return true;
   }
 
   private @NonNull IRIResolver getIRIResolver()

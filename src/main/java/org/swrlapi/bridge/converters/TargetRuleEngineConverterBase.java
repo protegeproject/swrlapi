@@ -7,8 +7,7 @@ import org.swrlapi.bridge.SWRLRuleEngineBridge;
 import java.util.Optional;
 
 /**
- * This interface provides gives target rule engines access to {@link OWLObjectResolver} and the ability to resolve an
- * IRI to a prefixed name.
+ * This interface provides gives target rule engines the ability to resolve an IRI to a prefixed name.
  */
 public abstract class TargetRuleEngineConverterBase implements TargetRuleEngineConverter
 {
