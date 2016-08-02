@@ -139,9 +139,12 @@ class SWRLParserSupport
       throw new SWRLParseException(
         variableName + " cannot be used as a SWRL variable name because it refers to an existing OWL entity");
 
-    IRI iri = getIRIResolver().variableName2IRI(variableName);
+    Optional<IRI> iri = getIRIResolver().variableName2IRI(variableName);
 
-    return getOWLDataFactory().getSWRLVariable(iri);
+    if (iri.isPresent())
+      return getOWLDataFactory().getSWRLVariable(iri.get());
+    else
+      throw new SWRLParseException("error creating SWRL variable " + variableName);
   }
 
   @NonNull public SWRLLiteralArgument createXSDStringSWRLLiteralArgument(@NonNull String lexicalValue)

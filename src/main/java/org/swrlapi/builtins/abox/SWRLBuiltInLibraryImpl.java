@@ -35,9 +35,6 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   {
   }
 
-  // CLASS_ASSERTION, SAME_INDIVIDUAL, DIFFERENT_INDIVIDUALS, OBJECT_PROPERTY_ASSERTION, NEGATIVE_OBJECT_PROPERTY_ASSERTION,
-  // DATA_PROPERTY_ASSERTION, NEGATIVE_DATA_PROPERTY_ASSERTION
-
   public boolean caa(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(2, arguments.size());
@@ -72,8 +69,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
         OWLNamedIndividual crav2 = axiom.getIndividual().asOWLNamedIndividual(); // We do not handle anonymous
 
         atLeastOneBoundArgumentUnequal =
-          (boundArgumentValues.containsKey(0) && !boundArgumentValues.get(0).equals(crav1)) || (boundArgumentValues.containsKey(1)
-            && !boundArgumentValues.get(1).equals(crav2));
+          (boundArgumentValues.containsKey(0) && !boundArgumentValues.get(0).equals(crav1)) || (
+            boundArgumentValues.containsKey(1) && !boundArgumentValues.get(1).equals(crav2));
 
         if (atLeastOneBoundArgumentUnequal)
           break;
@@ -99,4 +96,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     } else
       return false;
   }
+
+  // SAME_INDIVIDUAL, DIFFERENT_INDIVIDUALS, OBJECT_PROPERTY_ASSERTION, NEGATIVE_OBJECT_PROPERTY_ASSERTION,
+  // DATA_PROPERTY_ASSERTION, NEGATIVE_DATA_PROPERTY_ASSERTION
 }
