@@ -6,9 +6,9 @@ import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
 
 class DefaultSQWRLClassResultValue extends DefaultSQWRLEntityResultValue implements SQWRLClassResultValue
 {
-  public DefaultSQWRLClassResultValue(@NonNull IRI classIRI, @NonNull String prefixedName)
+  public DefaultSQWRLClassResultValue(@NonNull IRI classIRI, @NonNull String prefixedName, @NonNull String shortForm)
   {
-    super(classIRI, prefixedName);
+    super(classIRI, prefixedName, shortForm);
   }
 
   @Override public boolean isClass()

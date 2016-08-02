@@ -7,9 +7,10 @@ import org.swrlapi.sqwrl.values.SQWRLDatatypeResultValue;
 
 class DefaultSQWRLDatatypeResultValue extends DefaultSQWRLEntityResultValue implements SQWRLDatatypeResultValue
 {
-  public DefaultSQWRLDatatypeResultValue(@NonNull IRI datatypeIRI, @NonNull String prefixedName)
+  public DefaultSQWRLDatatypeResultValue(@NonNull IRI datatypeIRI, @NonNull String prefixedName,
+    @NonNull String shortForm)
   {
-    super(datatypeIRI, prefixedName);
+    super(datatypeIRI, prefixedName, shortForm);
   }
 
   @Override public boolean isDatatype()

@@ -12,11 +12,13 @@ abstract class DefaultSQWRLEntityResultValue extends DefaultSQWRLResultValue imp
 {
   @NonNull private final IRI iri;
   @NonNull private final String prefixedName;
+  @NonNull private final String shortForm;
 
-  DefaultSQWRLEntityResultValue(@NonNull IRI iri, @NonNull String prefixedName)
+  DefaultSQWRLEntityResultValue(@NonNull IRI iri, @NonNull String prefixedName, @NonNull String shortForm)
   {
     this.iri = iri;
     this.prefixedName = prefixedName;
+    this.shortForm = shortForm;
   }
 
   @NonNull @Override public IRI getIRI()
@@ -31,7 +33,7 @@ abstract class DefaultSQWRLEntityResultValue extends DefaultSQWRLResultValue imp
 
   @NonNull @Override public String getShortName()
   {
-    return this.prefixedName.startsWith(":") ? this.prefixedName.substring(1) : this.prefixedName;
+    return this.shortForm;
   }
 
   @Override public boolean isEntity()

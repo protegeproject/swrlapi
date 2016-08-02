@@ -60,8 +60,9 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
   @NonNull @Override public SQWRLClassResultValue getClassValue(@NonNull IRI classIRI)
   {
     String prefixedName = iri2PrefixedName(classIRI);
+    String shortForm = iri2ShortForm(classIRI);
 
-    return new DefaultSQWRLClassResultValue(classIRI, prefixedName);
+    return new DefaultSQWRLClassResultValue(classIRI, prefixedName, shortForm);
   }
 
   @NonNull @Override public SQWRLClassExpressionResultValue getClassExpressionValue(
@@ -77,15 +78,17 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
     @NonNull SWRLNamedIndividualBuiltInArgument individualArgument)
   {
     String prefixedName = iri2PrefixedName(individualArgument.getIRI());
+    String shortForm = iri2ShortForm(individualArgument.getIRI());
 
-    return new DefaultSQWRLNamedIndividualResultValue(individualArgument.getIRI(), prefixedName);
+    return new DefaultSQWRLNamedIndividualResultValue(individualArgument.getIRI(), prefixedName, shortForm);
   }
 
   @Override public @NonNull SQWRLNamedIndividualResultValue getNamedIndividualValue(@NonNull IRI individualIRI)
   {
     String prefixedName = iri2PrefixedName(individualIRI);
+    String shortForm = iri2ShortForm(individualIRI);
 
-    return new DefaultSQWRLNamedIndividualResultValue(individualIRI, prefixedName);
+    return new DefaultSQWRLNamedIndividualResultValue(individualIRI, prefixedName, shortForm);
   }
 
   @NonNull @Override public SQWRLObjectPropertyResultValue getObjectPropertyValue(
@@ -97,8 +100,9 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
   @NonNull @Override public SQWRLObjectPropertyResultValue getObjectPropertyValue(@NonNull IRI propertyIRI)
   {
     String prefixedName = iri2PrefixedName(propertyIRI);
+    String shortForm = iri2ShortForm(propertyIRI);
 
-    return new DefaultSQWRLObjectPropertyResultValue(propertyIRI, prefixedName);
+    return new DefaultSQWRLObjectPropertyResultValue(propertyIRI, prefixedName, shortForm);
   }
 
   @NonNull @Override public SQWRLObjectPropertyExpressionResultValue getObjectPropertyExpressionValue(
@@ -114,15 +118,17 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
     @NonNull SWRLDataPropertyBuiltInArgument dataPropertyArgument)
   {
     String prefixedName = iri2PrefixedName(dataPropertyArgument.getIRI());
+    String shortForm = iri2ShortForm(dataPropertyArgument.getIRI());
 
-    return new DefaultSQWRLDataPropertyResultValue(dataPropertyArgument.getIRI(), prefixedName);
+    return new DefaultSQWRLDataPropertyResultValue(dataPropertyArgument.getIRI(), prefixedName, shortForm);
   }
 
   @NonNull @Override public SQWRLDataPropertyResultValue getDataPropertyValue(@NonNull IRI propertyIRI)
   {
     String prefixedName = iri2PrefixedName(propertyIRI);
+    String shortForm = iri2ShortForm(propertyIRI);
 
-    return new DefaultSQWRLDataPropertyResultValue(propertyIRI, prefixedName);
+    return new DefaultSQWRLDataPropertyResultValue(propertyIRI, prefixedName, shortForm);
   }
 
   @Override public @NonNull SQWRLDataPropertyExpressionResultValue getDataPropertyExpressionValue(
@@ -138,30 +144,34 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
     @NonNull SWRLAnnotationPropertyBuiltInArgument annotationPropertyArgument)
   {
     String prefixedName = iri2PrefixedName(annotationPropertyArgument.getIRI());
+    String shortForm = iri2ShortForm(annotationPropertyArgument.getIRI());
 
-    return new DefaultSQWRLAnnotationPropertyResultValue(annotationPropertyArgument.getIRI(), prefixedName);
+    return new DefaultSQWRLAnnotationPropertyResultValue(annotationPropertyArgument.getIRI(), prefixedName, shortForm);
   }
 
   @NonNull @Override public SQWRLAnnotationPropertyResultValue getAnnotationPropertyValue(@NonNull IRI propertyIRI)
   {
     String prefixedName = iri2PrefixedName(propertyIRI);
+    String shortForm = iri2ShortForm(propertyIRI);
 
-    return new DefaultSQWRLAnnotationPropertyResultValue(propertyIRI, prefixedName);
+    return new DefaultSQWRLAnnotationPropertyResultValue(propertyIRI, prefixedName, shortForm);
   }
 
   @NonNull @Override public SQWRLDatatypeResultValue getDatatypeValue(SWRLDatatypeBuiltInArgument datatypeArgument)
   {
     IRI propertyIRI = datatypeArgument.getOWLDatatype().getIRI();
     String prefixedName = iri2PrefixedName(propertyIRI);
+    String shortForm = iri2ShortForm(propertyIRI);
 
-    return new DefaultSQWRLDatatypeResultValue(propertyIRI, prefixedName);
+    return new DefaultSQWRLDatatypeResultValue(propertyIRI, prefixedName, shortForm);
   }
 
   @NonNull @Override public SQWRLDatatypeResultValue getDatatypeValue(IRI propertyIRI)
   {
     String prefixedName = iri2PrefixedName(propertyIRI);
+    String shortForm = iri2ShortForm(propertyIRI);
 
-    return new DefaultSQWRLDatatypeResultValue(propertyIRI, prefixedName);
+    return new DefaultSQWRLDatatypeResultValue(propertyIRI, prefixedName, shortForm);
   }
 
   @NonNull @Override public SQWRLLiteralResultValue getLiteralValue(byte b)
@@ -268,6 +278,16 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
       return prefixedName.get();
     else
       throw new IllegalArgumentException("could not get prefixed name for IRI " + iri);
+  }
+
+  @NonNull private String iri2ShortForm(IRI iri)
+  {
+    Optional<@NonNull String> shortshortForm = this.iriResolver.iri2ShortForm(iri);
+
+    if (shortshortForm.isPresent())
+      return shortshortForm.get();
+    else
+      throw new IllegalArgumentException("could not get short form for IRI " + iri);
   }
 
   @NonNull private OWLLiteralFactory getOWLLiteralFactory()
