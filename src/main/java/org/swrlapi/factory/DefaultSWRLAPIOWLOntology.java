@@ -73,6 +73,7 @@ import org.semanticweb.owlapi.model.parameters.Imports;
 import org.semanticweb.owlapi.util.SimpleIRIMapper;
 import org.semanticweb.owlapi.vocab.OWL2Datatype;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
+import org.semanticweb.owlapi.vocab.SWRLVocabulary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
@@ -168,7 +169,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     iriResolver.updatePrefixes(ontology);
   }
 
-  @Override public void processOntology() throws SQWRLException, SWRLBuiltInException
+  @Override public void processOntology() throws SWRLBuiltInException
   {
     reset(); // Will reset hasOntologyChanged
     this.iriResolver.updatePrefixes(this.ontology);
@@ -289,7 +290,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     return new HashSet<>(this.swrlRules.values());
   }
 
-  private void processSWRLRulesAndSQWRLQueries() throws SQWRLException, SWRLBuiltInException
+  private void processSWRLRulesAndSQWRLQueries() throws SWRLBuiltInException
   {
     int ruleNameIndex = 0;
 
@@ -1134,9 +1135,17 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
   private void processOWLClassAssertionAxioms()
   {
     for (OWLClassAssertionAxiom axiom : getOWLClassAssertionAxioms()) {
+
+      if (!axiom.getClassExpression().isAnonymous() && axiom.getClassExpression().asOWLClass().getIRI()
+        .equals(SWRLVocabulary.BUILT_IN_CLASS.getIRI())) {
+        if (axiom.getIndividual().isNamed())
+          addSWRLBuiltIn(axiom.getIndividual().asOWLNamedIndividual().getIRI());
+      }
+
       generateOWLIndividualDeclarationAxiomIfNecessary(axiom.getIndividual());
       this.assertedOWLAxioms.add(axiom);
     }
+
   }
 
   private void processOWLObjectPropertyAssertionAxioms()
