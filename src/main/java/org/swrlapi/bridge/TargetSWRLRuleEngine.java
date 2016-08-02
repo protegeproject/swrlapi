@@ -3,6 +3,7 @@ package org.swrlapi.bridge;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.TargetSWRLRuleEngineException;
 import org.swrlapi.owl2rl.OWL2RLEngine;
 import org.swrlapi.sqwrl.SQWRLQuery;
@@ -40,7 +41,7 @@ public interface TargetSWRLRuleEngine
    * @param query A SQWRL query to define
    * @throws TargetSWRLRuleEngineException If an error occurs in the target rule engine
    */
-  void defineSQWRLQuery(SQWRLQuery query) throws TargetSWRLRuleEngineException;
+  void defineSQWRLQuery(SQWRLQuery query) throws TargetSWRLRuleEngineException, SWRLBuiltInException;
 
   /**
    * Run the rule engine.

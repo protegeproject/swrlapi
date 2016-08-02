@@ -4,6 +4,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.dataflow.qual.SideEffectFree;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLRuleEngine;
+import org.swrlapi.core.SWRLRuleRenderer;
 import org.swrlapi.ui.view.SWRLAPIView;
 
 import javax.swing.table.AbstractTableModel;
@@ -37,6 +38,7 @@ public class SWRLRulesAndSQWRLQueriesTableModel extends AbstractTableModel imple
   private static final String RULE_COMMENT_COLUMN_TITLE = "Comment";
 
   @NonNull private SWRLRuleEngine swrlRuleEngine;
+  @NonNull private SWRLRuleRenderer swrlRuleRenderer;
   @NonNull private final SortedMap<@NonNull String, @NonNull SWRLRuleModel> swrlRuleModels; // rule name -> SWRLRuleModel
   @NonNull private Optional<@NonNull SWRLAPIView> view = Optional.<@NonNull SWRLAPIView>empty();
   private ContentMode contentMode;
@@ -46,6 +48,7 @@ public class SWRLRulesAndSQWRLQueriesTableModel extends AbstractTableModel imple
   public SWRLRulesAndSQWRLQueriesTableModel(@NonNull SWRLRuleEngine swrlRuleEngine)
   {
     this.swrlRuleEngine = swrlRuleEngine;
+    this.swrlRuleRenderer = this.swrlRuleEngine.createSWRLRuleRenderer();
     this.swrlRuleModels = new TreeMap<>();
     this.isModified = false;
     this.contentMode = ContentMode.RuleContentOnly;
@@ -60,6 +63,7 @@ public class SWRLRulesAndSQWRLQueriesTableModel extends AbstractTableModel imple
   public void updateModel(@NonNull SWRLRuleEngine swrlRuleEngine)
   {
     this.swrlRuleEngine = swrlRuleEngine;
+    this.swrlRuleRenderer = this.swrlRuleEngine.createSWRLRuleRenderer();
     this.swrlRuleModels.clear();
     this.isModified = false;
 
@@ -253,6 +257,8 @@ public class SWRLRulesAndSQWRLQueriesTableModel extends AbstractTableModel imple
     }
   }
 
+  @NonNull private SWRLRuleRenderer getSWRLRuleRenderer() { return this.swrlRuleRenderer; }
+
   @NonNull private Optional<@NonNull SWRLRuleModel> getSWRLRuleModelByIndex(int ruleIndex)
   {
     if (ruleIndex >= 0 && ruleIndex < this.swrlRuleModels.values().size())
@@ -267,10 +273,7 @@ public class SWRLRulesAndSQWRLQueriesTableModel extends AbstractTableModel imple
 
     for (SWRLAPIRule swrlapiRule : this.swrlRuleEngine.getSWRLRules()) {
       String ruleName = swrlapiRule.getRuleName();
-      String ruleText = this.swrlRuleEngine.createSWRLRuleRenderer().renderSWRLRule(swrlapiRule);
-      String comment = swrlapiRule.getComment();
-      boolean isSQWRLQuery = swrlapiRule.isSQWRLQuery();
-      SWRLRuleModel swrlRuleModel = new SWRLRuleModel(ruleName, ruleText, comment, isSQWRLQuery);
+      SWRLRuleModel swrlRuleModel = new SWRLRuleModel(swrlapiRule);
       this.swrlRuleModels.put(ruleName, swrlRuleModel);
     }
   }
@@ -288,54 +291,47 @@ public class SWRLRulesAndSQWRLQueriesTableModel extends AbstractTableModel imple
 
   private class SWRLRuleModel
   {
-    @NonNull private final String ruleName, ruleText, comment;
-    private final boolean isSQWRLQuery;
-    private boolean active;
+    @NonNull private final SWRLAPIRule rule;
 
-    public SWRLRuleModel(@NonNull String ruleName, @NonNull String ruleText, @NonNull String comment,
-      boolean isSQWRLQuery)
+    public SWRLRuleModel(@NonNull SWRLAPIRule rule)
     {
-      this.active = true;
-      this.ruleText = ruleText;
-      this.ruleName = ruleName;
-      this.comment = comment;
-      this.isSQWRLQuery = isSQWRLQuery;
+      this.rule = rule;
     }
 
     public void setActive(boolean active)
     {
-      this.active = active;
+      this.rule.setActive(active);
     }
 
     public boolean isActive()
     {
-      return this.active;
+      return this.rule.isActive();
     }
 
     public boolean isSQWRLQuery()
     {
-      return this.isSQWRLQuery;
+      return this.rule.isSQWRLQuery();
     }
 
     @NonNull public String getRuleText()
     {
-      return this.ruleText;
+      return getSWRLRuleRenderer().renderSWRLRule(this.rule);
     }
 
     @NonNull public String getRuleName()
     {
-      return this.ruleName;
+      return this.rule.getRuleName();
     }
 
     @NonNull public String getComment()
     {
-      return this.comment;
+      return this.rule.getComment();
     }
 
-    @SideEffectFree @NonNull @Override public String toString()
+     @NonNull @SideEffectFree @Override public String toString()
     {
-      return "(ruleName: " + this.ruleName + ", ruleText: " + this.ruleText + ", comment: " + this.comment
-        + ", active: " + this.active + ")";
+      return "(ruleName: " + getRuleName() + ", ruleText: " + getRuleText() + ", comment: " + getComment()
+        + ", active: " + isActive() + ")";
     }
   }
 }

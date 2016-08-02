@@ -4,6 +4,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.swrlapi.core.SWRLRuleEngine;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.parser.SWRLIncompleteRuleException;
 import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.parser.SWRLParser;
@@ -535,7 +536,7 @@ public class SWRLRuleEditorDialog extends JDialog implements SWRLAPIView
               errorOccurred = false;
             }
           }
-        } catch (SWRLParseException pe) {
+        } catch (SWRLParseException | SWRLBuiltInException pe) {
           getDialogManager()
             .showErrorMessageDialog(this.parent, (pe.getMessage() != null ? pe.getMessage() : ""), INVALID_RULE_TITLE);
           errorOccurred = true;

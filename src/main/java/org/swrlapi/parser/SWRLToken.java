@@ -101,7 +101,7 @@ class SWRLToken
     return this.tokenType == SWRLTokenType.END_OF_INPUT;
   }
 
-  @SideEffectFree @NonNull @Override public String toString()
+   @NonNull @SideEffectFree @Override public String toString()
   {
     return "[" + this.tokenType.getName() + " with value '" + this.value + "']";
   }

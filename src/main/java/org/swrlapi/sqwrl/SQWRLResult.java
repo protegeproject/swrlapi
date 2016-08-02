@@ -3,6 +3,7 @@ package org.swrlapi.sqwrl;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue;
+import org.swrlapi.sqwrl.values.SQWRLClassExpressionResultValue;
 import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
 import org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
@@ -83,6 +84,20 @@ public interface SQWRLResult
    * @throws SQWRLException If an error occurs
    */
   @NonNull SQWRLClassResultValue getClass(int columnIndex) throws SQWRLException;
+
+  /**
+   * @param columnName A column name
+   * @return A class expression result value
+   * @throws SQWRLException If an error occurs
+   */
+  @NonNull SQWRLClassExpressionResultValue getClassExpression(@NonNull String columnName) throws SQWRLException;
+
+  /**
+   * @param columnIndex A column index
+   * @return A class expression result value
+   * @throws SQWRLException If an error occurs
+   */
+  @NonNull SQWRLClassExpressionResultValue getClassExpression(int columnIndex) throws SQWRLException;
 
   /**
    * @param columnName A column name
@@ -167,6 +182,20 @@ public interface SQWRLResult
    * @throws SQWRLException If an error occurs
    */
   boolean hasClassValue(int columnIndex) throws SQWRLException;
+
+  /**
+   * @param columnName A column name A column name
+   * @return True if the value of the specified column is a class expression
+   * @throws SQWRLException If an error occurs
+   */
+  boolean hasClassExpressionValue(@NonNull String columnName) throws SQWRLException;
+
+  /**
+   * @param columnIndex A column index
+   * @return True if the value of the specified column is a class expression
+   * @throws SQWRLException If an error occurs
+   */
+  boolean hasClassExpressionValue(int columnIndex) throws SQWRLException;
 
   /**
    * @param columnName A column name A column name

@@ -207,12 +207,12 @@ class Instant
     return (this.granuleCount == 0);
   }
 
-  @SideEffectFree @NonNull public String toString(int g) throws TemporalException
+   @NonNull @SideEffectFree public String toString(int g) throws TemporalException
   {
     return getDatetimeString(g);
   }
 
-  @SideEffectFree @NonNull @Override public String toString()
+   @NonNull @SideEffectFree @Override public String toString()
   {
     try {
       return toString(Temporal.FINEST);

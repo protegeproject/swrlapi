@@ -5,7 +5,6 @@ import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.swrlapi.bridge.SWRLRuleEngineBridge;
 import org.swrlapi.bridge.converters.TargetRuleEngineConverterBase;
-import org.swrlapi.core.OWLObjectResolver;
 import org.swrlapi.factory.OWLDatatypeFactory;
 import org.swrlapi.factory.OWLLiteralFactory;
 import org.swrlapi.factory.SWRLAPIOWLDataFactory;
@@ -64,11 +63,6 @@ public abstract class TargetRuleEngineExtractorBase implements TargetRuleEngineE
       return iri.get();
     else
       throw new IllegalArgumentException("could not find IRI for prefixed name " + prefixedName);
-  }
-
-  protected @NonNull OWLObjectResolver getOWLObjectResolver()
-  {
-    return getBridge().getOWLObjectResolver();
   }
 
   @NonNull private SWRLRuleEngineBridge getBridge()

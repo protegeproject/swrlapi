@@ -4,21 +4,27 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDataProperty;
+import org.semanticweb.owlapi.model.OWLDataPropertyExpression;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.swrlapi.builtins.arguments.SQWRLCollectionVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLClassExpressionBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLDataPropertyExpressionBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDatatypeBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLObjectPropertyExpressionBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.core.IRIResolver;
 import org.swrlapi.literal.XSDDate;
@@ -40,7 +46,7 @@ class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFactory
   public DefaultSWRLBuiltInArgumentFactory(@NonNull IRIResolver iriResolver)
   {
     this.iriResolver = iriResolver;
-    this.owlLiteralFactory = SWRLAPIFactory.createOWLLiteralFactory();
+    this.owlLiteralFactory = SWRLAPIInternalFactory.createOWLLiteralFactory();
   }
 
   @NonNull @Override public SWRLVariableBuiltInArgument getUnboundVariableBuiltInArgument(@NonNull IRI variableIRI)
@@ -60,10 +66,21 @@ class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFactory
     return new DefaultSWRLClassBuiltInArgument(cls);
   }
 
+  @Override public @NonNull SWRLClassExpressionBuiltInArgument getClassExpressionBuiltInArgument(OWLClassExpression ce)
+  {
+    return new DefaultSWRLClassExpressionBuiltInArgument(ce);
+  }
+
   @NonNull @Override public SWRLObjectPropertyBuiltInArgument getObjectPropertyBuiltInArgument(
     @NonNull OWLObjectProperty property)
   {
     return new DefaultSWRLObjectPropertyBuiltInArgument(property);
+  }
+
+  @Override public @NonNull SWRLObjectPropertyExpressionBuiltInArgument getObjectPropertyExpressionBuiltInArgument(
+    @NonNull OWLObjectPropertyExpression propertyExpression)
+  {
+    return new DefaultSWRLObjectPropertyExpressionBuiltInArgument(propertyExpression);
   }
 
   @NonNull @Override public SWRLDataPropertyBuiltInArgument getDataPropertyBuiltInArgument(
@@ -72,10 +89,16 @@ class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFactory
     return new DefaultSWRLDataPropertyBuiltInArgument(property);
   }
 
+  @Override public @NonNull SWRLDataPropertyExpressionBuiltInArgument getDataPropertyExpressionBuiltInArgument(
+    @NonNull OWLDataPropertyExpression propertyExpression)
+  {
+    return new DefaultSWRLDataPropertyExpressionBuiltInArgument(propertyExpression);
+  }
+
   @NonNull @Override public SWRLAnnotationPropertyBuiltInArgument getAnnotationPropertyBuiltInArgument(
     @NonNull OWLAnnotationProperty property)
   {
-    return new DefaultDefaultSWRLAnnotationPropertyBuiltInArgument(property);
+    return new DefaultSWRLAnnotationPropertyBuiltInArgument(property);
   }
 
   @NonNull @Override public SWRLDatatypeBuiltInArgument getDatatypeBuiltInArgument(@NonNull OWLDatatype datatype)
@@ -109,6 +132,11 @@ class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFactory
     return new DefaultSWRLLiteralBuiltInArgument(getOWLLiteralFactory().getOWLLiteral(s));
   }
 
+  @NonNull @Override public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(byte b)
+  {
+    return new DefaultSWRLLiteralBuiltInArgument(getOWLLiteralFactory().getOWLLiteral(b));
+  }
+
   @NonNull @Override public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(int i)
   {
     return new DefaultSWRLLiteralBuiltInArgument(getOWLLiteralFactory().getOWLLiteral(i));
@@ -138,12 +166,6 @@ class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFactory
   {
     return new DefaultSWRLLiteralBuiltInArgument(getOWLLiteralFactory().getOWLLiteral(i));
   }
-
-  @NonNull @Override public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(byte b)
-  {
-    return new DefaultSWRLLiteralBuiltInArgument(getOWLLiteralFactory().getOWLLiteral(b));
-  }
-
   @NonNull @Override public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(@NonNull URI uri)
   {
     return new DefaultSWRLLiteralBuiltInArgument(getOWLLiteralFactory().getOWLLiteral(uri));

@@ -8,8 +8,8 @@ import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.swrlapi.core.SWRLAPIOWLOntology;
-import org.swrlapi.factory.SWRLAPIFactory;
-import org.swrlapi.sqwrl.exceptions.SQWRLException;
+import org.swrlapi.exceptions.SWRLBuiltInException;
+import org.swrlapi.factory.SWRLAPIInternalFactory;
 import org.swrlapi.test.IntegrationTestBase;
 
 import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.Class;
@@ -28,10 +28,10 @@ public class SWRLParserSQWRLTest extends IntegrationTestBase
   private static final OWLDataProperty HAS_ID = DataProperty(iri("hasID"));
 
   @Test public void TestClassAtomInAntecedentWithNamedIndividual()
-    throws SWRLParseException, SQWRLException, OWLOntologyCreationException
+    throws SWRLParseException, SWRLBuiltInException, OWLOntologyCreationException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIInternalFactory.createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(MALE), Declaration(P1));
 
@@ -39,20 +39,20 @@ public class SWRLParserSQWRLTest extends IntegrationTestBase
   }
 
   @Test public void TestClassAtomInAntecedentWithVariable()
-    throws SWRLParseException, SQWRLException, OWLOntologyCreationException
+    throws SWRLParseException, SWRLBuiltInException, OWLOntologyCreationException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIInternalFactory.createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(MALE));
 
     swrlapiOWLOntology.createSQWRLQuery("q1", "Male(?m) -> sqwrl:select(?m)");
   }
 
-  @Test public void TestSetConstruction() throws SWRLParseException, SQWRLException, OWLOntologyCreationException
+  @Test public void TestSetConstruction() throws SWRLParseException, SWRLBuiltInException, OWLOntologyCreationException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIInternalFactory.createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(MALE));
 
@@ -60,68 +60,71 @@ public class SWRLParserSQWRLTest extends IntegrationTestBase
       .createSQWRLQuery("q1", "Male(?m) . sqwrl:makeSet(?s, ?m) . sqwrl:element(?e, ?s) -> sqwrl:select(?e)");
   }
 
-  @Test public void TestBooleanTrueRawLiteral() throws SWRLParseException, SQWRLException, OWLOntologyCreationException
+  @Test public void TestBooleanTrueRawLiteral()
+    throws SWRLParseException, SWRLBuiltInException, OWLOntologyCreationException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIInternalFactory.createSWRLAPIOntology(ontology);
 
     swrlapiOWLOntology
       .createSQWRLQuery("q1", "swrlb:booleanNot(?x, true) ^ swrlb:booleanNot(?y, ?x) -> sqwrl:select(?y)");
   }
 
-  @Test public void TestBooleanFalseRawLiteral() throws SWRLParseException, SQWRLException, OWLOntologyCreationException
+  @Test public void TestBooleanFalseRawLiteral()
+    throws SWRLParseException, SWRLBuiltInException, OWLOntologyCreationException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIInternalFactory.createSWRLAPIOntology(ontology);
 
     swrlapiOWLOntology
       .createSQWRLQuery("q1", "swrlb:booleanNot(?x, false) ^ swrlb:booleanNot(?y, ?x) -> sqwrl:select(?y)");
   }
 
   @Test public void TestBooleanQualifiedLiteral()
-    throws SWRLParseException, SQWRLException, OWLOntologyCreationException
+    throws SWRLParseException, SWRLBuiltInException, OWLOntologyCreationException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIInternalFactory.createSWRLAPIOntology(ontology);
 
     swrlapiOWLOntology.createSQWRLQuery("q1",
       "swrlb:booleanNot(?x, \"false\"^^xsd:boolean) ^ swrlb:booleanNot(?y, ?x) -> sqwrl:select(?y)");
   }
 
-  @Test public void TestUnboundVariableQuery() throws SWRLParseException, SQWRLException, OWLOntologyCreationException
+  @Test public void TestUnboundVariableQuery()
+    throws SWRLParseException, SWRLBuiltInException, OWLOntologyCreationException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIInternalFactory.createSWRLAPIOntology(ontology);
 
     swrlapiOWLOntology.createSQWRLQuery("q1", "swrlb:add(?x, \"2.0\"^^xsd:double, \"2.0\"^^xsd:double) ^ "
       + "swrlb:multiply(?y, ?x, \"2.0\"^^xsd:double) -> sqwrl:select(?y)");
   }
 
   @Test public void TestBasicDatatypeSelectionQuery()
-    throws SWRLParseException, SQWRLException, OWLOntologyCreationException
+    throws SWRLParseException, SWRLBuiltInException, OWLOntologyCreationException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIInternalFactory.createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(PERSON), Declaration(HAS_SURNAME));
 
     swrlapiOWLOntology.createSQWRLQuery("q1", "Person(?p) ^ hasSurname(?p, \"Gunderson\") -> sqwrl:select(?p)");
   }
 
-  @Test public void TestOrderBy() throws SWRLParseException, SQWRLException, OWLOntologyCreationException
+  @Test public void TestOrderBy() throws SWRLParseException, SWRLBuiltInException, OWLOntologyCreationException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIInternalFactory.createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(PERSON_NAMED_FRED));
 
     swrlapiOWLOntology.createSQWRLQuery("q1", "PersonNamedFred(?fp) -> sqwrl:select(?fp) ^ sqwrl:orderBy(?fp)");
   }
 
-  @Test public void TestSelectDistinct() throws SWRLParseException, SQWRLException, OWLOntologyCreationException
+  @Test public void TestSelectDistinct() throws SWRLParseException, SWRLBuiltInException, OWLOntologyCreationException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIInternalFactory.createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(PERSON), Declaration(S4), Declaration(HAS_ID));
 

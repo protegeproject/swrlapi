@@ -15,8 +15,7 @@ import org.semanticweb.owlapi.model.SWRLObjectPropertyAtom;
 import org.semanticweb.owlapi.model.SWRLSameIndividualAtom;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLAPIRule;
-import org.swrlapi.factory.SWRLAPIFactory;
-import org.swrlapi.sqwrl.exceptions.SQWRLException;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.test.IntegrationTestBase;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -27,6 +26,7 @@ import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.DataP
 import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.Declaration;
 import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.NamedIndividual;
 import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.ObjectProperty;
+import static org.swrlapi.factory.SWRLAPIInternalFactory.createSWRLAPIOntology;
 
 public class SWRLParserTest extends IntegrationTestBase
 {
@@ -52,10 +52,10 @@ public class SWRLParserTest extends IntegrationTestBase
   private static final OWLDataProperty HAS_LAST_ACCESS_TIME = DataProperty(iri("hasLastAccessTime"));
 
   @Test public void TestClassAtomInConsequentWithShortNamedIndividual()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
     addOWLAxioms(ontology, Declaration(MALE), Declaration(P1));
 
     SWRLAPIRule rule = swrlapiOWLOntology.createSWRLRule("r1", "-> Male(p1)");
@@ -66,10 +66,10 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestClassAtomInConsequentWithPrefixedNamedIndividual()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(MALE), Declaration(P1));
 
@@ -81,10 +81,10 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestClassAtomInAntecedentWithVariable()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(MALE));
 
@@ -95,10 +95,10 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestClassAtomInAntecedentWithPrefixedVariable()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(MALE));
 
@@ -109,10 +109,10 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestClassAtomInAntecedentWithName()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
     addOWLAxioms(ontology, Declaration(MALE), Declaration(P1));
 
     SWRLAPIRule rule = swrlapiOWLOntology.createSWRLRule("r1", "Male(p1) -> ");
@@ -132,10 +132,10 @@ public class SWRLParserTest extends IntegrationTestBase
   // assertThat(rule.getHeadAtoms().get(0), instanceOf(SWRLClassAtom.class));
   // }
 
-  @Test public void TestStringLiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+  @Test public void TestStringLiteral() throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_NAME));
 
@@ -146,10 +146,10 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestRawBooleanTrueLowerCaseLiteral()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(IS_FRENCH));
 
@@ -160,10 +160,10 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestRawBooleanFalseLowerCaseLiteral()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(IS_FRENCH));
 
@@ -174,10 +174,10 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestRawBooleanTrueUpperCaseLiteral()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(IS_FRENCH));
 
@@ -185,10 +185,10 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestRawBooleanFalseUpperCaseLiteral()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(IS_FRENCH));
 
@@ -196,30 +196,31 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestBooleanTrueQualifiedLiteral()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(IS_FRENCH));
 
     swrlapiOWLOntology.createSWRLRule("r1", "isFrench(?f, \"true\"^^xsd:boolean) ->");
   }
 
-  @Test public void TestByteLiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+  @Test public void TestByteLiteral() throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_AGE));
 
     swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, \"34\"^^xsd:byte) ->");
   }
 
-  @Test public void TestNegativeByteLiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+  @Test public void TestNegativeByteLiteral()
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(YEARS_TO_BIRTH));
 
@@ -227,30 +228,31 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test(expected = SWRLParseException.class) public void TestInvalidByteLiteral()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_AGE));
 
     swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, \"b34\"^^xsd:byte) ->");
   }
 
-  @Test public void TestShortLiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+  @Test public void TestShortLiteral() throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_AGE));
 
     swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, \"34\"^^xsd:short) ->");
   }
 
-  @Test public void TestNegativeShortLiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+  @Test public void TestNegativeShortLiteral()
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_AGE));
 
@@ -258,40 +260,42 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test(expected = SWRLParseException.class) public void TestInvalidShortLiteral()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_AGE));
 
     swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, \"b34\"^^xsd:short) ->");
   }
 
-  @Test public void TestRawIntLiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+  @Test public void TestRawIntLiteral() throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_AGE));
 
     swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, 34) ->");
   }
 
-  @Test public void TestRawNegativeIntLiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+  @Test public void TestRawNegativeIntLiteral()
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_AGE));
 
     swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, -34) ->");
   }
 
-  @Test public void TestIntQualifiedLiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+  @Test public void TestIntQualifiedLiteral()
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_AGE));
 
@@ -299,10 +303,10 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestNegativeIntQualifiedLiteral()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_AGE));
 
@@ -310,49 +314,50 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test(expected = SWRLParseException.class) public void TestInvalidIntLiteral()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_AGE));
 
     swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, \"b34\"^^xsd:int) ->");
   }
 
-  @Test public void TestLongLiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+  @Test public void TestLongLiteral() throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_AGE));
 
     swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, \"34\"^^xsd:long) ->");
   }
 
-  @Test public void TestNegativeLongLiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+  @Test public void TestNegativeLongLiteral()
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
     addOWLAxioms(ontology, Declaration(HAS_AGE));
 
     swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, \"-34\"^^xsd:long) ->");
   }
 
   @Test(expected = SWRLParseException.class) public void TestInvalidLongLiteral()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
     addOWLAxioms(ontology, Declaration(HAS_AGE));
 
     swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, \"b34\"^^xsd:long) ->");
   }
 
-  @Test public void TestFloatRawLiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+  @Test public void TestFloatRawLiteral() throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_HEIGHT));
 
@@ -360,20 +365,21 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestNegativeFloatRawLiteral()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_HEIGHT));
 
     swrlapiOWLOntology.createSWRLRule("r1", "hasHeight(?p, -34.5) ->");
   }
 
-  @Test public void TestFloatQualifiedLiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+  @Test public void TestFloatQualifiedLiteral()
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_HEIGHT));
 
@@ -381,10 +387,10 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestNegativeFloatQualifiedLiteral()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_HEIGHT));
 
@@ -392,20 +398,21 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test(expected = SWRLParseException.class) public void TestInvalidFloatLiteral()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_HEIGHT));
 
     swrlapiOWLOntology.createSWRLRule("r1", "hasHeight(?p, \"x34.0\"^^xsd:float) ->");
   }
 
-  @Test public void TestDoubleQualifiedLiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+  @Test public void TestDoubleQualifiedLiteral()
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_HEIGHT));
 
@@ -413,10 +420,10 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestNegativeDoubleQualifiedLiteral()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_HEIGHT));
 
@@ -424,20 +431,20 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test(expected = SWRLParseException.class) public void TestInvalidDoubleLiteral()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_HEIGHT));
 
     swrlapiOWLOntology.createSWRLRule("r1", "hasHeight(?p, \"x34.0\"^^xsd:double) ->");
   }
 
-  @Test public void TestURILiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+  @Test public void TestURILiteral() throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_HOME_PAGE));
 
@@ -445,20 +452,20 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test(expected = SWRLParseException.class) public void TestInvalidURILiteral()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_HOME_PAGE));
 
     swrlapiOWLOntology.createSWRLRule("r1", "hasHomePage(?p, \":stanford.edu/~fred\"^^xsd:anyURI) ->");
   }
 
-  @Test public void TestDateLiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+  @Test public void TestDateLiteral() throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_DOB));
 
@@ -466,20 +473,20 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test(expected = SWRLParseException.class) public void TestInvalidDateLiteral()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_DOB));
 
     swrlapiOWLOntology.createSWRLRule("r1", "hasDOB(?p, \"x199-11-22\"^^xsd:date) ->");
   }
 
-  @Test public void TestTimeLiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+  @Test public void TestTimeLiteral() throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_TOB));
 
@@ -487,20 +494,20 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test(expected = SWRLParseException.class) public void TestInvalidTimeLiteral()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_TOB));
 
     swrlapiOWLOntology.createSWRLRule("r1", "hasTOB(?p, \"10:0:10.23\"^^xsd:time) ->");
   }
 
-  @Test public void TestDateTimeLiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+  @Test public void TestDateTimeLiteral() throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_TOB));
 
@@ -508,20 +515,20 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test(expected = SWRLParseException.class) public void TestInvalidDateTimeLiteral()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_TOB));
 
     swrlapiOWLOntology.createSWRLRule("r1", "hasTOB(?p, \"x1999-11-22T10:10:10.23\"^^xsd:dateTime) ->");
   }
 
-  @Test public void TestDurationLiteral() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+  @Test public void TestDurationLiteral() throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_AGE));
 
@@ -529,10 +536,10 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test(expected = SWRLParseException.class) public void TestInvalidDurationLiteral()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_AGE));
 
@@ -540,20 +547,20 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestAddAndEqualsTemporalBuiltIns()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     swrlapiOWLOntology.createSWRLRule("r1", "temporal:add(?x, \"1999-11-01T10:00:00\"^^xsd:dateTime, 4, \"Years\") ^ "
       + "temporal:equals(?x, \"2003-11-01T10:00:00.0\"^^xsd:dateTime) " + "-> sqwrl:select(\"Yes!\")");
   }
 
   @Test public void TestObjectPropertyInAntecedentWithVariables()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_UNCLE));
 
@@ -565,10 +572,10 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestObjectPropertyInAntecedentWithNamedIndividuals()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_UNCLE), Declaration(P1), Declaration(P2));
 
@@ -579,10 +586,10 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestObjectPropertyInConsequentWithNamedIndividals()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_UNCLE), Declaration(P1), Declaration(P2));
 
@@ -590,10 +597,10 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestDataPropertyInAntecedent()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_AGE), Declaration(P3));
 
@@ -601,10 +608,10 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestDataPropertyInConsequent()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_AGE), Declaration(P4));
 
@@ -612,20 +619,21 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestClassAtomInAntecedentWithNamedIndividual()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(MALE), Declaration(P1));
 
     swrlapiOWLOntology.createSWRLRule("r1", "Male(p1) ->");
   }
 
-  @Test public void TestClassAtomInConsequent() throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+  @Test public void TestClassAtomInConsequent()
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(MALE), Declaration(P1));
 
@@ -633,10 +641,10 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestBuiltInWithLiteralsAndVariables()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(HAS_LAST_ACCESS_TIME), Declaration(P1));
 
@@ -650,10 +658,10 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestSameAsInConsequentWithNamedIndividualAndVariable()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(PERSON), Declaration(HAS_ID), Declaration(I1));
 
@@ -667,19 +675,19 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestSameAsInAntecedentWithVariables()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     swrlapiOWLOntology.createSWRLRule("r1", "sameAs(?i1, ?i2) ->");
   }
 
   @Test public void TestSameAsInAntecedentWithNamedIndividual()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(I1), Declaration(I2));
 
@@ -687,10 +695,10 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestSameAsInConsequentWithNamedIndividual()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(I1), Declaration(I2));
 
@@ -698,19 +706,19 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestDifferentFromInAntecedentWithVariables()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     swrlapiOWLOntology.createSWRLRule("r1", "differentFrom(?i1, ?i2) ->");
   }
 
   @Test public void TestDifferentFromInAntecedentWithNamedIndividual()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(I1), Declaration(I2));
 
@@ -718,10 +726,10 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestDifferentFromInConsequentWithNamedIndividual()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(I1), Declaration(I2));
 
@@ -729,10 +737,10 @@ public class SWRLParserTest extends IntegrationTestBase
   }
 
   @Test public void TestClassAndDataPropertyAtom()
-    throws SWRLParseException, OWLOntologyCreationException, SQWRLException
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIFactory.createSWRLAPIOntology(ontology);
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
 
     addOWLAxioms(ontology, Declaration(PERSON), Declaration(HAS_ID), Declaration(HAS_FIRST_NAME));
 

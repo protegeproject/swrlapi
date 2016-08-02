@@ -2,13 +2,13 @@ package org.swrlapi.builtins;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLOntology;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.IRIResolver;
-import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.exceptions.SWRLBuiltInBridgeException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
-import org.swrlapi.factory.SWRLAPIOWLDataFactory;
 import org.swrlapi.factory.DefaultIRIResolver;
+import org.swrlapi.factory.SWRLAPIOWLDataFactory;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
@@ -22,12 +22,15 @@ import java.util.List;
 public interface SWRLBuiltInBridge
 {
   /**
-   * This call is used by SWRL built-ins to inject OWL axioms into the bridge.
+   * This call can be used by built-ins to access the current active ontology. In general, built-ins should not directly
+   * access the active ontology. A built-in should be able to evaluate its arguments directly without access to the
+   * ontology. However, some specialized built-ins may require directly ontology access (e.g.,
+   * ABox, TBox, and RBox built-ins).
    *
-   * @param axiom The axiom to inject
-   * @throws SWRLBuiltInBridgeException If an error occurs during inhection
+   * @return An OWL ontology
    */
-  void injectOWLAxiom(@NonNull OWLAxiom axiom) throws SWRLBuiltInBridgeException;
+
+  @NonNull OWLOntology getOWLOntology();
 
   /**
    * This call is used by the SQWRL built-in library to get the result generator for a SQWRL query that is currently
@@ -56,16 +59,6 @@ public interface SWRLBuiltInBridge
   @NonNull IRIResolver getIRIResolver();
 
   /**
-   * This call can be used by built-ins to access the current active ontology. In general, built-ins should not directly
-   * access the active ontology. A built-in should be able to evaluate its arguments directly without access to the
-   * ontology. However, some specialized ABox and TBox built-ins may require directy ontology access (e.g.,
-   * thox:isNamedIndividual(?i)).
-   *
-   * @return A SWRLAPI-based OWL ontology
-   */
-  @NonNull SWRLAPIOWLOntology getSWRLAPIOWLOntology();
-
-  /**
    * This call can be used by built-ins to invoke another built-in. Unless you really know what you are doing its use
    * should be avoided. It is currently used only by the swrlx built-in library.
    *
@@ -78,6 +71,14 @@ public interface SWRLBuiltInBridge
    * @throws SWRLBuiltInException If an error occurs during processing
    */
   @NonNull List<@NonNull List<@NonNull SWRLBuiltInArgument>> invokeSWRLBuiltIn(@NonNull String ruleName,
-      @NonNull String builtInName, int builtInIndex, boolean isInConsequent,
-      @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+    @NonNull String builtInName, int builtInIndex, boolean isInConsequent,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+
+  /**
+   * This call is used by SWRL built-ins to inject OWL axioms into the bridge.
+   *
+   * @param axiom The axiom to inject
+   * @throws SWRLBuiltInBridgeException If an error occurs during inhection
+   */
+  void injectOWLAxiom(@NonNull OWLAxiom axiom) throws SWRLBuiltInBridgeException;
 }

@@ -2,6 +2,7 @@ package org.swrlapi.bridge.converters;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDataAllValuesFrom;
 import org.semanticweb.owlapi.model.OWLDataExactCardinality;
 import org.semanticweb.owlapi.model.OWLDataHasValue;
@@ -27,6 +28,8 @@ import org.semanticweb.owlapi.model.OWLObjectUnionOf;
  */
 public interface TargetRuleEngineOWLClassExpressionConverter<C> extends TargetRuleEngineConverter
 {
+  @NonNull C convert(@NonNull OWLClassExpression classExpression);
+
   @NonNull C convert(@NonNull OWLClass cls);
 
   @NonNull C convert(@NonNull OWLObjectOneOf objectOneOf);

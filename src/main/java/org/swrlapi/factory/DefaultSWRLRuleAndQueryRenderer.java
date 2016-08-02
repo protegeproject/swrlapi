@@ -1,6 +1,7 @@
 package org.swrlapi.factory;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.semanticweb.owlapi.io.OWLObjectRenderer;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLClass;
@@ -35,12 +36,15 @@ import org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
 import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLClassExpressionBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLDataPropertyExpressionBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDatatypeBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLObjectPropertyExpressionBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.core.IRIResolver;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
@@ -65,11 +69,14 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
 {
   @NonNull private final OWLOntology ontology;
   @NonNull private final IRIResolver iriResolver;
+  @NonNull private final OWLObjectRenderer owlObjectRenderer;
 
-  public DefaultSWRLRuleAndQueryRenderer(@NonNull OWLOntology ontology, @NonNull IRIResolver iriResolver)
+  public DefaultSWRLRuleAndQueryRenderer(@NonNull OWLOntology ontology, @NonNull IRIResolver iriResolver,
+    @NonNull OWLObjectRenderer owlObjectRenderer)
   {
     this.ontology = ontology;
     this.iriResolver = iriResolver;
+    this.owlObjectRenderer = owlObjectRenderer;
   }
 
   @NonNull @Override public String renderSWRLRule(@NonNull SWRLRule rule)
@@ -426,6 +433,13 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
     return classNameShortForm.startsWith(":") ? classNameShortForm.substring(1) : classNameShortForm;
   }
 
+  @Override public String visit(SWRLClassExpressionBuiltInArgument argument)
+  {
+    OWLClassExpression ce = argument.getOWLClassExpression();
+
+    return this.owlObjectRenderer.render(ce);
+  }
+
   @NonNull @Override public String visit(@NonNull SWRLNamedIndividualBuiltInArgument argument)
   {
     OWLNamedIndividual individual = argument.getOWLNamedIndividual();
@@ -444,6 +458,13 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
       objectPropertyNameShortForm;
   }
 
+  @Override public String visit(SWRLObjectPropertyExpressionBuiltInArgument argument)
+  {
+    OWLObjectPropertyExpression pe = argument.getOWLObjectPropertyExpression();
+
+    return this.owlObjectRenderer.render(pe);
+  }
+
   @NonNull @Override public String visit(@NonNull SWRLDataPropertyBuiltInArgument argument)
   {
     OWLDataProperty property = argument.getOWLDataProperty();
@@ -452,6 +473,13 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
     return dataPropertyNameShortForm.startsWith(":") ?
       dataPropertyNameShortForm.substring(1) :
       dataPropertyNameShortForm;
+  }
+
+  @Override public String visit(SWRLDataPropertyExpressionBuiltInArgument argument)
+  {
+    OWLDataPropertyExpression pe = argument.getOWLDataPropertyExpression();
+
+    return this.owlObjectRenderer.render(pe);
   }
 
   @NonNull @Override public String visit(@NonNull SWRLAnnotationPropertyBuiltInArgument argument)

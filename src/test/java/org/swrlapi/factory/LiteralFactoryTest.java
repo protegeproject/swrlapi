@@ -17,7 +17,7 @@ public class LiteralFactoryTest
 
   @Before public void setUp() throws OWLOntologyCreationException
   {
-    this.literalFactory = SWRLAPIFactory.createLiteralFactory();
+    this.literalFactory = SWRLAPIInternalFactory.createLiteralFactory();
   }
 
   @Test public void testGetOWLLiteralBoolean() throws Exception

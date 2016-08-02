@@ -6,6 +6,7 @@ import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
 import org.swrlapi.exceptions.SWRLAPIException;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 import uk.ac.manchester.cs.owl.owlapi.SWRLBuiltInAtomImpl;
 
 import java.util.ArrayList;
@@ -89,6 +90,7 @@ class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SWRLAPIBu
   }
 
   @Override public boolean usesAtLeastOneVariableOf(@NonNull Set<@NonNull String> variableNames)
+    throws SWRLBuiltInException
   {
     Set<@NonNull String> s = new HashSet<>(variableNames);
 
@@ -104,7 +106,7 @@ class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SWRLAPIBu
     return this.arguments.get(argumentNumber) instanceof SWRLVariableBuiltInArgument;
   }
 
-  @Override public boolean isArgumentUnbound(int argumentNumber)
+  @Override public boolean isArgumentUnbound(int argumentNumber) throws SWRLBuiltInException
   {
     checkArgumentNumber(argumentNumber);
 
@@ -112,7 +114,7 @@ class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SWRLAPIBu
       .isUnbound();
   }
 
-  @Override public boolean hasUnboundArguments()
+  @Override public boolean hasUnboundArguments() throws SWRLBuiltInException
   {
     for (SWRLBuiltInArgument argument : this.arguments)
       if (argument.isVariable() && argument.asVariable().isUnbound())
@@ -128,7 +130,7 @@ class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SWRLAPIBu
     return false;
   }
 
-  @NonNull @Override public Set<@NonNull String> getUnboundArgumentVariableNames()
+  @NonNull @Override public Set<@NonNull String> getUnboundArgumentVariableNames() throws SWRLBuiltInException
   {
     Set<@NonNull String> unboundArgumentVariablePrefixNames = new HashSet<>();
     for (SWRLBuiltInArgument argument : this.arguments) {
@@ -138,7 +140,7 @@ class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SWRLAPIBu
     return unboundArgumentVariablePrefixNames;
   }
 
-  @NonNull @Override public String getArgumentVariableName(int argumentNumber)
+  @NonNull @Override public String getArgumentVariableName(int argumentNumber) throws SWRLBuiltInException
   {
     checkArgumentNumber(argumentNumber);
 
@@ -148,7 +150,7 @@ class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SWRLAPIBu
     return this.arguments.get(argumentNumber).asVariable().getVariableName();
   }
 
-  @NonNull @Override public List<@NonNull String> getArgumentsVariableNames()
+  @NonNull @Override public List<@NonNull String> getArgumentsVariableNames() throws SWRLBuiltInException
   {
     List<@NonNull String> argumentsVariablePrefixNames = new ArrayList<>();
     for (SWRLBuiltInArgument argument : this.arguments) {
@@ -158,7 +160,7 @@ class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SWRLAPIBu
     return argumentsVariablePrefixNames;
   }
 
-  @NonNull @Override public List<@NonNull String> getArgumentsVariableNamesExceptFirst()
+  @NonNull @Override public List<@NonNull String> getArgumentsVariableNamesExceptFirst() throws SWRLBuiltInException
   {
     List<@NonNull String> result = new ArrayList<>();
     int argumentCount = 0;

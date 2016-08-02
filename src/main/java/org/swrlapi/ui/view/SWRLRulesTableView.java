@@ -3,6 +3,7 @@ package org.swrlapi.ui.view;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.ui.action.DisableAllRulesAction;
 import org.swrlapi.ui.action.EnableAllRulesAction;
@@ -182,7 +183,7 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
         try {
           getSWRLRuleEngineModel().getSWRLRuleEngine().createSWRLRule(ruleName.get(), ruleText, ruleComment, true);
           getSWRLRuleEngineModel().updateView();
-        } catch (SWRLParseException e) {
+        } catch (SWRLParseException | SWRLBuiltInException e) {
           log.warn("Error cloning rule " + ruleName + ": " + e.getMessage());
         }
       }

@@ -8,11 +8,16 @@ import org.semanticweb.owlapi.model.OWLLiteral;
 import org.swrlapi.literal.OWLLiteralComparator;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue;
+import org.swrlapi.sqwrl.values.SQWRLClassExpressionResultValue;
 import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
+import org.swrlapi.sqwrl.values.SQWRLDataPropertyExpressionResultValue;
 import org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue;
+import org.swrlapi.sqwrl.values.SQWRLDatatypeResultValue;
 import org.swrlapi.sqwrl.values.SQWRLEntityResultValue;
+import org.swrlapi.sqwrl.values.SQWRLExpressionResultValue;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLNamedIndividualResultValue;
+import org.swrlapi.sqwrl.values.SQWRLObjectPropertyExpressionResultValue;
 import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
 
 import java.util.Comparator;
@@ -34,12 +39,32 @@ class DefaultSQWRLLiteralResultValue extends DefaultLiteral implements SQWRLLite
     return this.datatypePrefixedName;
   }
 
+  @Override public boolean isLiteral()
+  {
+    return true;
+  }
+
+  @NonNull @Override public SQWRLLiteralResultValue asLiteralResult()
+  {
+    return this;
+  }
+
   @Override public boolean isEntity()
   {
     return false;
   }
 
+  @Override public boolean isExpression()
+  {
+    return false;
+  }
+
   @Override public boolean isClass()
+  {
+    return false;
+  }
+
+  @Override public boolean isClassExpression()
   {
     return false;
   }
@@ -54,7 +79,17 @@ class DefaultSQWRLLiteralResultValue extends DefaultLiteral implements SQWRLLite
     return false;
   }
 
+  @Override public boolean isObjectPropertyExpression()
+  {
+    return false;
+  }
+
   @Override public boolean isDataProperty()
+  {
+    return false;
+  }
+
+  @Override public boolean isDataPropertyExpression()
   {
     return false;
   }
@@ -64,19 +99,29 @@ class DefaultSQWRLLiteralResultValue extends DefaultLiteral implements SQWRLLite
     return false;
   }
 
-  @Override public boolean isLiteral()
+  @Override public boolean isDatatype()
   {
-    return true;
+    return false;
   }
 
-  @NonNull @Override public SQWRLClassResultValue asEntityResult() throws SQWRLException
+  @NonNull @Override public SQWRLEntityResultValue asEntityResult() throws SQWRLException
   {
     throw new SQWRLException(getClass().getName() + " is not a " + SQWRLEntityResultValue.class.getName());
   }
 
-  @NonNull @Override public SQWRLClassResultValue asClassResult() throws SQWRLException
+  @Override public @NonNull SQWRLExpressionResultValue asExpressionResult() throws SQWRLException
+  {
+    throw new SQWRLException(getClass().getName() + " is not a " + SQWRLExpressionResultValue.class.getName());
+  }
+
+  @Override public @NonNull SQWRLClassResultValue asClassResult() throws SQWRLException
   {
     throw new SQWRLException(getClass().getName() + " is not a " + SQWRLClassResultValue.class.getName());
+  }
+
+  @Override public @NonNull SQWRLClassExpressionResultValue asClassExpressionResult() throws SQWRLException
+  {
+    throw new SQWRLException(getClass().getName() + " is not a " + SQWRLClassExpressionResultValue.class.getName());
   }
 
   @Override public @NonNull SQWRLNamedIndividualResultValue asNamedIndividualResult() throws SQWRLException
@@ -84,24 +129,38 @@ class DefaultSQWRLLiteralResultValue extends DefaultLiteral implements SQWRLLite
     throw new SQWRLException(getClass().getName() + " is not a " + SQWRLNamedIndividualResultValue.class.getName());
   }
 
-  @NonNull @Override public SQWRLObjectPropertyResultValue asObjectPropertyResult() throws SQWRLException
+  @Override public @NonNull SQWRLObjectPropertyResultValue asObjectPropertyResult() throws SQWRLException
   {
     throw new SQWRLException(getClass().getName() + " is not an " + SQWRLObjectPropertyResultValue.class.getName());
   }
 
-  @NonNull @Override public SQWRLDataPropertyResultValue asDataPropertyResult() throws SQWRLException
+  @Override public @NonNull SQWRLObjectPropertyExpressionResultValue asObjectPropertyExpressionResult()
+    throws SQWRLException
+  {
+    throw new SQWRLException(
+      getClass().getName() + " is not an " + SQWRLObjectPropertyExpressionResultValue.class.getName());
+  }
+
+  @Override public @NonNull SQWRLDataPropertyResultValue asDataPropertyResult() throws SQWRLException
   {
     throw new SQWRLException(getClass().getName() + " is not an " + SQWRLDataPropertyResultValue.class.getName());
   }
 
-  @NonNull @Override public SQWRLAnnotationPropertyResultValue asAnnotationPropertyResult() throws SQWRLException
+  @Override public @NonNull SQWRLDataPropertyExpressionResultValue asDataPropertyExpressionResult()
+    throws SQWRLException
+  {
+    throw new SQWRLException(
+      getClass().getName() + " is not an " + SQWRLDataPropertyExpressionResultValue.class.getName());
+  }
+
+  @Override public @NonNull SQWRLAnnotationPropertyResultValue asAnnotationPropertyResult() throws SQWRLException
   {
     throw new SQWRLException(getClass().getName() + " is not an " + SQWRLAnnotationPropertyResultValue.class.getName());
   }
 
-  @NonNull @Override public SQWRLLiteralResultValue asLiteralResult()
+  @Override public @NonNull SQWRLDatatypeResultValue asDatatypeResult() throws SQWRLException
   {
-    return this;
+    throw new SQWRLException(getClass().getName() + " is not a " + SQWRLDatatypeResultValue.class.getName());
   }
 
   @SideEffectFree @Deterministic @Override public boolean equals(@Nullable Object obj)

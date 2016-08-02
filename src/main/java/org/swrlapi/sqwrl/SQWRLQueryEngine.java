@@ -2,6 +2,7 @@ package org.swrlapi.sqwrl;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.swrlapi.core.SWRLRuleEngine;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLRuleEngineException;
 import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
@@ -94,7 +95,7 @@ public interface SQWRLQueryEngine extends SWRLRuleEngine
    * @param queryName The name of the query
    * @throws SWRLRuleEngineException If an error occurs during importation
    */
-  void importSQWRLQueryAndOWLAxioms(@NonNull String queryName) throws SWRLRuleEngineException;
+  void importSQWRLQueryAndOWLAxioms(@NonNull String queryName) throws SWRLRuleEngineException, SWRLBuiltInException;
 
   /**
    * Returns the name of the underlying target query engine.

@@ -20,7 +20,7 @@ import java.util.Set;
  * These SWRLAPI rules are extracted from an OWL ontology by the
  * {@link org.swrlapi.core.SWRLAPIOWLOntology#getSWRLRules()} method.
  *
- * A {@link org.swrlapi.core.SWRLRuleRenderer} can be used to print a rule.
+ * A {@link org.swrlapi.core.SWRLRuleRenderer} can be used to display a rule.
  * 
  * @see org.swrlapi.core.SWRLAPIBuiltInAtom
  * @see org.swrlapi.builtins.arguments.SWRLBuiltInArgument
@@ -43,6 +43,12 @@ public interface SWRLAPIRule extends SWRLRule
    * @return True if the rule is active
    */
   boolean isActive();
+
+  /**
+   *
+   * @param active The active state
+   */
+  void setActive(boolean active);
 
   /**
    * @return True if this is a SQWRL query

@@ -30,7 +30,7 @@ public class SWRLBuiltInArgumentFactoryTest
     OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
     dataFactory = ontologyManager.getOWLDataFactory();
     iriResolver = SWRLAPIFactory.createIRIResolver();
-    builtInArgumentFactory = SWRLAPIFactory.createSWRLBuiltInArgumentFactory(iriResolver);
+    builtInArgumentFactory = SWRLAPIInternalFactory.createSWRLBuiltInArgumentFactory(iriResolver);
 
     iriResolver.setPrefix(TestPrefix, TestNamespace);
   }

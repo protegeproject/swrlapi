@@ -58,6 +58,11 @@ class DefaultSWRLMultiValueVariableBuiltInArgument extends DefaultSWRLVariableBu
     return this.arguments.size();
   }
 
+  @Override public boolean hasArguments()
+  {
+    return this.arguments.size() != 0;
+  }
+
   @Override public boolean hasNoArguments()
   {
     return this.arguments.size() == 0;

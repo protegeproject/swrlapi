@@ -8,6 +8,7 @@ import org.semanticweb.owlapi.model.SWRLDifferentIndividualsAtom;
 import org.semanticweb.owlapi.model.SWRLObjectPropertyAtom;
 import org.semanticweb.owlapi.model.SWRLSameIndividualAtom;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 
 import java.util.Set;
 
@@ -38,7 +39,7 @@ public interface TargetRuleEngineSWRLBodyAtomWithVariableNamesConverter<T> exten
     @NonNull Set<@NonNull String> previouslyEncounteredVariableNames);
 
   @NonNull T convert(@NonNull SWRLAPIBuiltInAtom atom,
-    @NonNull Set<@NonNull String> previouslyEncounteredVariableNames);
+    @NonNull Set<@NonNull String> previouslyEncounteredVariableNames) throws SWRLBuiltInException;
 
   @NonNull T convert(@NonNull SWRLDataRangeAtom atom, @NonNull Set<@NonNull String> previouslyEncounteredVariableNames);
 }

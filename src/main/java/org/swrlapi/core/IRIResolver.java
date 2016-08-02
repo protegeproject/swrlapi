@@ -24,6 +24,12 @@ public interface IRIResolver
   @NonNull Optional<@NonNull IRI> prefixedName2IRI(@NonNull String prefixedName);
 
   /**
+   * @param variableName A variable name
+   * @return The IRI created from the variable name
+   */
+  @NonNull Optional<@NonNull IRI> variableName2IRI(@NonNull String variableName);
+
+  /**
    * @param iri An IRI
    * @return The prefixed form of the IRI
    */

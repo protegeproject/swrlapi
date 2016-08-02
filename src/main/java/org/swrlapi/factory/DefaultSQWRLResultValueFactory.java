@@ -1,14 +1,22 @@
 package org.swrlapi.factory;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.semanticweb.owlapi.io.OWLObjectRenderer;
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLClassExpression;
+import org.semanticweb.owlapi.model.OWLDataPropertyExpression;
 import org.semanticweb.owlapi.model.OWLLiteral;
+import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
 import org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLClassExpressionBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLDataPropertyExpressionBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLDatatypeBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLObjectPropertyExpressionBuiltInArgument;
 import org.swrlapi.core.IRIResolver;
 import org.swrlapi.literal.Literal;
 import org.swrlapi.literal.XSDDate;
@@ -16,10 +24,14 @@ import org.swrlapi.literal.XSDDateTime;
 import org.swrlapi.literal.XSDDuration;
 import org.swrlapi.literal.XSDTime;
 import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue;
+import org.swrlapi.sqwrl.values.SQWRLClassExpressionResultValue;
 import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
+import org.swrlapi.sqwrl.values.SQWRLDataPropertyExpressionResultValue;
 import org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue;
+import org.swrlapi.sqwrl.values.SQWRLDatatypeResultValue;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLNamedIndividualResultValue;
+import org.swrlapi.sqwrl.values.SQWRLObjectPropertyExpressionResultValue;
 import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
 
 import java.net.URI;
@@ -30,12 +42,14 @@ import java.util.stream.Collectors;
 public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
 {
   @NonNull private final IRIResolver iriResolver;
+  @NonNull private final OWLObjectRenderer owlObjectRenderer;
   @NonNull private final OWLLiteralFactory owlLiteralFactory;
 
-  public DefaultSQWRLResultValueFactory(@NonNull IRIResolver iriResolver)
+  public DefaultSQWRLResultValueFactory(@NonNull IRIResolver iriResolver, @NonNull OWLObjectRenderer owlObjectRenderer)
   {
     this.iriResolver = iriResolver;
-    this.owlLiteralFactory = SWRLAPIFactory.createOWLLiteralFactory();
+    this.owlObjectRenderer = owlObjectRenderer;
+    this.owlLiteralFactory = SWRLAPIInternalFactory.createOWLLiteralFactory();
   }
 
   @NonNull @Override public SQWRLClassResultValue getClassValue(@NonNull SWRLClassBuiltInArgument classArgument)
@@ -48,6 +62,15 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
     String prefixedName = iri2PrefixedName(classIRI);
 
     return new DefaultSQWRLClassResultValue(classIRI, prefixedName);
+  }
+
+  @NonNull @Override public SQWRLClassExpressionResultValue getClassExpressionValue(
+    @NonNull SWRLClassExpressionBuiltInArgument classExpressionArgument)
+  {
+    OWLClassExpression ce = classExpressionArgument.getOWLClassExpression();
+    String rendering = getOWLObjectRenderer().render(ce);
+
+    return new DefaultSQWRLClassExpressionResultValue(rendering);
   }
 
   @Override public @NonNull SQWRLNamedIndividualResultValue getNamedIndividualValue(
@@ -78,6 +101,15 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
     return new DefaultSQWRLObjectPropertyResultValue(propertyIRI, prefixedName);
   }
 
+  @NonNull @Override public SQWRLObjectPropertyExpressionResultValue getObjectPropertyExpressionValue(
+    SWRLObjectPropertyExpressionBuiltInArgument objectPropertyExpressionArgument)
+  {
+    OWLObjectPropertyExpression pe = objectPropertyExpressionArgument.getOWLObjectPropertyExpression();
+    String rendering = getOWLObjectRenderer().render(pe);
+
+    return new DefaultSQWRLObjectPropertyExpressionResultValue(rendering);
+  }
+
   @NonNull @Override public SQWRLDataPropertyResultValue getDataPropertyValue(
     @NonNull SWRLDataPropertyBuiltInArgument dataPropertyArgument)
   {
@@ -93,6 +125,15 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
     return new DefaultSQWRLDataPropertyResultValue(propertyIRI, prefixedName);
   }
 
+  @Override public @NonNull SQWRLDataPropertyExpressionResultValue getDataPropertyExpressionValue(
+    SWRLDataPropertyExpressionBuiltInArgument dataPropertyExpressionArgument)
+  {
+    OWLDataPropertyExpression pe = dataPropertyExpressionArgument.getOWLDataPropertyExpression();
+    String rendering = getOWLObjectRenderer().render(pe);
+
+    return new DefaultSQWRLDataPropertyExpressionResultValue(rendering);
+  }
+
   @NonNull @Override public SQWRLAnnotationPropertyResultValue getAnnotationPropertyValue(
     @NonNull SWRLAnnotationPropertyBuiltInArgument annotationPropertyArgument)
   {
@@ -106,6 +147,21 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
     String prefixedName = iri2PrefixedName(propertyIRI);
 
     return new DefaultSQWRLAnnotationPropertyResultValue(propertyIRI, prefixedName);
+  }
+
+  @NonNull @Override public SQWRLDatatypeResultValue getDatatypeValue(SWRLDatatypeBuiltInArgument datatypeArgument)
+  {
+    IRI propertyIRI = datatypeArgument.getOWLDatatype().getIRI();
+    String prefixedName = iri2PrefixedName(propertyIRI);
+
+    return new DefaultSQWRLDatatypeResultValue(propertyIRI, prefixedName);
+  }
+
+  @NonNull @Override public SQWRLDatatypeResultValue getDatatypeValue(IRI propertyIRI)
+  {
+    String prefixedName = iri2PrefixedName(propertyIRI);
+
+    return new DefaultSQWRLDatatypeResultValue(propertyIRI, prefixedName);
   }
 
   @NonNull @Override public SQWRLLiteralResultValue getLiteralValue(byte b)
@@ -204,11 +260,6 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
     return getLiteralValue(literal);
   }
 
-  @NonNull private OWLLiteralFactory getOWLLiteralFactory()
-  {
-    return this.owlLiteralFactory;
-  }
-
   @NonNull private String iri2PrefixedName(IRI iri)
   {
     Optional<@NonNull String> prefixedName = this.iriResolver.iri2PrefixedName(iri);
@@ -218,4 +269,11 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
     else
       throw new IllegalArgumentException("could not get prefixed name for IRI " + iri);
   }
+
+  @NonNull private OWLLiteralFactory getOWLLiteralFactory()
+  {
+    return this.owlLiteralFactory;
+  }
+
+  @NonNull private OWLObjectRenderer getOWLObjectRenderer() { return this.owlObjectRenderer; }
 }

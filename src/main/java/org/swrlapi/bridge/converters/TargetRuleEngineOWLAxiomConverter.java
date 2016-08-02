@@ -40,6 +40,7 @@ import org.semanticweb.owlapi.model.OWLSubPropertyChainOfAxiom;
 import org.semanticweb.owlapi.model.OWLSymmetricObjectPropertyAxiom;
 import org.semanticweb.owlapi.model.OWLTransitiveObjectPropertyAxiom;
 import org.swrlapi.core.SWRLAPIRule;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 
 /**
  * This interface describes methods that can be implemented by a target rule engine to convert OWL axioms to a native
@@ -50,7 +51,7 @@ import org.swrlapi.core.SWRLAPIRule;
  */
 public interface TargetRuleEngineOWLAxiomConverter extends TargetRuleEngineConverter
 {
-  void convert(@NonNull SWRLAPIRule axiom);
+  void convert(@NonNull SWRLAPIRule axiom) throws SWRLBuiltInException;
 
   void convert(@NonNull OWLDeclarationAxiom axiom);
 

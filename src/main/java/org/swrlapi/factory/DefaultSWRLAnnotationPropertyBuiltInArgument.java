@@ -5,13 +5,14 @@ import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 
-class DefaultDefaultSWRLAnnotationPropertyBuiltInArgument extends DefaultSWRLNamedBuiltInArgument
+class DefaultSWRLAnnotationPropertyBuiltInArgument extends DefaultSWRLNamedBuiltInArgument
   implements SWRLAnnotationPropertyBuiltInArgument
 {
   private static final long serialVersionUID = 1L;
 
-  public DefaultDefaultSWRLAnnotationPropertyBuiltInArgument(@NonNull OWLAnnotationProperty property)
+  public DefaultSWRLAnnotationPropertyBuiltInArgument(@NonNull OWLAnnotationProperty property)
   {
     super(property);
   }
@@ -24,6 +25,17 @@ class DefaultDefaultSWRLAnnotationPropertyBuiltInArgument extends DefaultSWRLNam
   @NonNull @Override public <@NonNull T> T accept(@NonNull SWRLBuiltInArgumentVisitorEx<@NonNull T> visitor)
   {
     return visitor.visit(this);
+  }
+
+  @Override public boolean isAnnotationProperty()
+  {
+    return true;
+  }
+
+  @NonNull @Override public SWRLAnnotationPropertyBuiltInArgument asSWRLAnnotationPropertyBuiltInArgument()
+    throws SWRLBuiltInException
+  {
+    return this;
   }
 
   @Override public void accept(@NonNull SWRLBuiltInArgumentVisitor visitor)

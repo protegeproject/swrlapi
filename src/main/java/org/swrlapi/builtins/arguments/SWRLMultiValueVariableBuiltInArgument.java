@@ -20,6 +20,11 @@ public interface SWRLMultiValueVariableBuiltInArgument extends SWRLVariableBuilt
   int getNumberOfArguments();
 
   /**
+   * @return True of there are arguments
+   */
+  boolean hasArguments();
+
+  /**
    * @return True of there are no arguments
    */
   boolean hasNoArguments();

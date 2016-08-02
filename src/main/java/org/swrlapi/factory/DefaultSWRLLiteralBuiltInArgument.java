@@ -14,10 +14,7 @@ import org.semanticweb.owlapi.model.SWRLObjectVisitorEx;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
 import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLNamedBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
-import org.swrlapi.exceptions.SWRLAPIException;
+import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.literal.OWLLiteralComparator;
 
 import java.util.Collections;
@@ -42,44 +39,14 @@ class DefaultSWRLLiteralBuiltInArgument extends DefaultSWRLBuiltInArgument imple
     return this.literal;
   }
 
-  @Override public boolean isVariable()
-  {
-    return false;
-  }
-
-  @Override public boolean isMultiValueVariable()
-  {
-    return false;
-  }
-
   public @Override boolean isLiteral()
-  {
-    return false;
-  }
-
-  public @Override boolean isNamed()
   {
     return true;
   }
 
-  @NonNull @Override public SWRLVariableBuiltInArgument asVariable()
-  {
-    throw new SWRLAPIException("Not a SWRLVariableBuiltInArgument");
-  }
-
-  @NonNull @Override public SWRLMultiValueVariableBuiltInArgument asMultiValueVariable()
-  {
-    throw new SWRLAPIException("Not a SWRLMultiVariableBuiltInArgument");
-  }
-
-  @NonNull @Override public SWRLLiteralBuiltInArgument asSWRLLiteralBuiltInArgument()
+  @NonNull @Override public SWRLLiteralBuiltInArgument asSWRLLiteralBuiltInArgument() throws SWRLBuiltInException
   {
     return this;
-  }
-
-  @NonNull @Override public SWRLNamedBuiltInArgument asSWRLNamedBuiltInArgument()
-  {
-    throw new SWRLAPIException("Not a SWRLNamedBuiltInArgument");
   }
 
   @SideEffectFree @Deterministic @Override public boolean equals(@Nullable Object o)
@@ -144,7 +111,7 @@ class DefaultSWRLLiteralBuiltInArgument extends DefaultSWRLBuiltInArgument imple
     visitor.visit(this);
   }
 
-  @SideEffectFree @NonNull @Override public String toString()
+   @NonNull @SideEffectFree @Override public String toString()
   {
     return this.literal.getLiteral();
   }
