@@ -1,7 +1,6 @@
 package org.swrlapi.factory;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
@@ -36,7 +35,7 @@ public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel
 
   public DefaultSWRLRuleEngineModel(@NonNull SWRLRuleEngine swrlRuleEngine)
   {
-    this.ontologyManager = OWLManager.createOWLOntologyManager();
+    this.ontologyManager = swrlRuleEngine.getSWRLAPIOWLOntology().getOWLOntologyManager();
     this.swrlRuleEngine = swrlRuleEngine;
     this.swrlapiOWLOntology = swrlRuleEngine.getSWRLAPIOWLOntology();
     this.owl2RLEngine = this.swrlRuleEngine.getOWL2RLEngine();
