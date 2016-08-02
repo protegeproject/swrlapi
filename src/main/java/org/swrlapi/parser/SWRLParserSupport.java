@@ -139,7 +139,7 @@ class SWRLParserSupport
       throw new SWRLParseException(
         variableName + " cannot be used as a SWRL variable name because it refers to an existing OWL entity");
 
-    IRI iri = prefixedName2IRI(variableName);
+    IRI iri = getIRIResolver().variableName2IRI(variableName);
 
     return getOWLDataFactory().getSWRLVariable(iri);
   }
@@ -473,7 +473,7 @@ class SWRLParserSupport
     return true;
   }
 
-  private @NonNull IRIResolver getIRIResolver()
+  @NonNull private IRIResolver getIRIResolver()
   {
     return this.swrlapiOWLOntology.getIRIResolver();
   }

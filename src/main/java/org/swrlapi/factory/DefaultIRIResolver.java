@@ -54,7 +54,16 @@ public class DefaultIRIResolver implements IRIResolver
     this.autogenPrefixNumber = 0;
   }
 
-  @Override @NonNull public Optional<@NonNull IRI> prefixedName2IRI(@NonNull String prefixedName)
+  @NonNull @Override public Optional<@NonNull IRI> variableName2IRI(@NonNull String variableName)
+  {
+    String defaultPrefix = prefixManager.getDefaultPrefix();
+    if (defaultPrefix != null && defaultPrefix.matches(".*[0-9A-Za-z]^$"))
+      return Optional.of(this.prefixManager.getIRI("#" + variableName));
+    else
+      return Optional.of(this.prefixManager.getIRI(variableName));
+  }
+
+  @NonNull @Override public Optional<@NonNull IRI> prefixedName2IRI(@NonNull String prefixedName)
   {
     if (this.autogenPrefixedName2IRI.containsKey(prefixedName))
       return Optional.of(this.autogenPrefixedName2IRI.get(prefixedName));
