@@ -6,8 +6,8 @@ import org.swrlapi.sqwrl.values.SQWRLPropertyResultValue;
 
 abstract class DefaultSQWRLPropertyResultValue extends DefaultSQWRLEntityResultValue implements SQWRLPropertyResultValue
 {
-  DefaultSQWRLPropertyResultValue(@NonNull IRI propertyIRI, @NonNull String prefixedName)
+  DefaultSQWRLPropertyResultValue(@NonNull IRI propertyIRI, @NonNull String prefixedName, @NonNull String shortForm)
   {
-    super(propertyIRI, prefixedName);
+    super(propertyIRI, prefixedName, shortForm);
   }
 }

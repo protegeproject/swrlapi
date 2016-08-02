@@ -7,9 +7,10 @@ import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
 class DefaultSQWRLObjectPropertyResultValue extends DefaultSQWRLPropertyResultValue
   implements SQWRLObjectPropertyResultValue
 {
-  public DefaultSQWRLObjectPropertyResultValue(@NonNull IRI propertyIRI, @NonNull String prefixedName)
+  public DefaultSQWRLObjectPropertyResultValue(@NonNull IRI propertyIRI, @NonNull String prefixedName,
+    @NonNull String shortForm)
   {
-    super(propertyIRI, prefixedName);
+    super(propertyIRI, prefixedName, shortForm);
   }
 
   @Override public boolean isObjectProperty()

@@ -2,6 +2,8 @@ package org.swrlapi.ui.view.queries;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
@@ -31,6 +33,8 @@ import java.io.OutputStreamWriter;
  */
 public class SQWRLResultView extends JPanel implements SWRLAPIView
 {
+  private static final Logger log = LoggerFactory.getLogger(SQWRLResultView.class);
+
   private static final long serialVersionUID = 1L;
 
   @NonNull private final SQWRLQueryEngineModel queryEngineModel;
