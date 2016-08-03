@@ -32,10 +32,12 @@ import java.util.Optional;
  * @see org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument
  * @see org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument
  * @see org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument
+ * @see org.swrlapi.builtins.arguments.SWRLClassExpressionBuiltInArgument
  * @see org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument
  * @see org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument
+ * @see org.swrlapi.builtins.arguments.SWRLObjectPropertyExpressionBuiltInArgument
  * @see org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument
- * @see org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument
+ * @see org.swrlapi.builtins.arguments.SWRLDataPropertyExpressionBuiltInArgument
  * @see org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument
  * @see org.swrlapi.builtins.arguments.SWRLDatatypeBuiltInArgument
  * @see org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument
@@ -44,74 +46,15 @@ import java.util.Optional;
 public interface SWRLBuiltInArgument extends SWRLDArgument
 {
   /**
-   * @return True if the built-in argument is a variable
+   * @return The argument type
+   */
+  @NonNull SWRLBuiltInArgumentType<?> getSWRLBuiltInArgumentType();
+
+  /**
+   *
+   * @return True if the argument is a variable (plain variable, collection, or multi-value)
    */
   boolean isVariable();
-
-  /**
-   * @return True if the built-in argument is a variable representing a collection
-   */
-  boolean isCollectionVariable();
-
-  /**
-   * @return True if the built-in argument is a multi-value variable
-   */
-  boolean isMultiValueVariable();
-
-  /**
-   * @return True if the built-in argument is a literal
-   */
-  boolean isLiteral();
-
-  /**
-   * @return True if the built-in argument is named
-   */
-  boolean isNamed();
-
-  /**
-   * @return True if the built-in argument is an OWL named class
-   */
-  boolean isClass();
-
-  /**
-   * @return True if the built-in argument is an OWL class expression
-   */
-  boolean isClassExpression();
-
-  /**
-   * @return True if the built-in argument is an OWL named individual
-   */
-  boolean isNamedIndividual();
-
-  /**
-   * @return True if the built-in argument is an OWL object property
-   */
-  boolean isObjectProperty();
-
-  /**
-   * @return True if the built-in argument is an OWL object property expression
-   */
-  boolean isObjectPropertyExpression();
-
-  /**
-   * @return True if the built-in argument is an OWL data property
-   */
-  boolean isDataProperty();
-
-  /**
-   * @return True if the built-in argument is an OWL data property expression
-   */
-  boolean isDataPropertyExpression();
-
-  /**
-   * @return True if the built-in argument is an OWL annotation property
-   */
-  boolean isAnnotationProperty();
-
-  /**
-   * @return True if the built-in argument is an OWL datatype
-   */
-  boolean isDatatype();
 
   /**
    * @return The argument as a SWRL variable built-in argument

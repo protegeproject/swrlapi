@@ -1,16 +1,8 @@
-package org.swrlapi.builtins;
+package org.swrlapi.builtins.arguments;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLLiteral;
-import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLClassExpressionBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLDataPropertyExpressionBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLObjectPropertyExpressionBuiltInArgument;
 import org.swrlapi.exceptions.InvalidSWRLBuiltInArgumentNumberException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.literal.XSDDate;

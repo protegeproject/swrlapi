@@ -19,6 +19,7 @@ import org.semanticweb.owlapi.model.SWRLObjectVisitorEx;
 import org.swrlapi.builtins.arguments.SQWRLCollectionVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentType;
 import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLClassExpressionBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
@@ -47,12 +48,9 @@ abstract class DefaultSWRLBuiltInArgument implements SWRLBuiltInArgument
 
   @Override public boolean isVariable()
   {
-    return false;
-  }
-
-  @Override public boolean isMultiValueVariable()
-  {
-    return false;
+    return getSWRLBuiltInArgumentType() == SWRLBuiltInArgumentType.VARIABLE ||
+      getSWRLBuiltInArgumentType() == SWRLBuiltInArgumentType.MULTI_VALUE_VARIABLE ||
+      getSWRLBuiltInArgumentType() == SWRLBuiltInArgumentType.COLLECTION_VARIABLE;
   }
 
   @NonNull @Override public SWRLVariableBuiltInArgument asVariable()
@@ -83,66 +81,6 @@ abstract class DefaultSWRLBuiltInArgument implements SWRLBuiltInArgument
     this.boundVariableName = boundVariableName;
   }
 
-  @Override public boolean isLiteral()
-  {
-    return false;
-  }
-
-  @Override public boolean isCollectionVariable()
-  {
-    return false;
-  }
-
-  @Override public boolean isNamed()
-  {
-    return false;
-  }
-
-  @Override public boolean isClass()
-  {
-    return false;
-  }
-
-  @Override public boolean isClassExpression()
-  {
-    return false;
-  }
-
-  @Override public boolean isNamedIndividual()
-  {
-    return false;
-  }
-
-  @Override public boolean isObjectProperty()
-  {
-    return false;
-  }
-
-  @Override public boolean isObjectPropertyExpression()
-  {
-    return false;
-  }
-
-  @Override public boolean isDataProperty()
-  {
-    return false;
-  }
-
-  @Override public boolean isDataPropertyExpression()
-  {
-    return false;
-  }
-
-  @Override public boolean isAnnotationProperty()
-  {
-    return false;
-  }
-
-  @Override public boolean isDatatype()
-  {
-    return false;
-  }
-
   @NonNull @Override public SQWRLCollectionVariableBuiltInArgument asCollectionVariable() throws SWRLBuiltInException
   {
     throw new SWRLBuiltInException(
@@ -159,7 +97,8 @@ abstract class DefaultSWRLBuiltInArgument implements SWRLBuiltInArgument
     throw new SWRLBuiltInException(getClass().getName() + " is not an " + SWRLNamedBuiltInArgument.class.getName());
   }
 
-  @Override public @NonNull SWRLNamedIndividualBuiltInArgument asSWRLNamedIndividualBuiltInArgument() throws SWRLBuiltInException
+  @Override public @NonNull SWRLNamedIndividualBuiltInArgument asSWRLNamedIndividualBuiltInArgument()
+    throws SWRLBuiltInException
   {
     throw new SWRLBuiltInException(
       getClass().getName() + " is not an " + SWRLNamedIndividualBuiltInArgument.class.getName());

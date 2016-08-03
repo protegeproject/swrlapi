@@ -7,7 +7,6 @@ import org.semanticweb.owlapi.model.OWLClassAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObject;
-import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.parameters.Imports;
 import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
@@ -39,26 +38,27 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   {
     checkNumberOfArgumentsEqualTo(2, arguments.size());
 
-    OWLOntology ontology = getBuiltInBridge().getOWLOntology();
-    Set<OWLClassAssertionAxiom> axioms = ontology.getAxioms(AxiomType.CLASS_ASSERTION, Imports.INCLUDED);
+    Set<OWLClassAssertionAxiom> axioms = getBuiltInBridge().getOWLOntology()
+      .getAxioms(AxiomType.CLASS_ASSERTION, Imports.INCLUDED);
     boolean atLeastOneBoundArgumentUnequal = false;
 
     if (!axioms.isEmpty()) {
-      Map<Integer, OWLObject> boundArgumentValues = new HashMap<>();
-      Map<Integer, SWRLMultiValueVariableBuiltInArgument> unboundResultArguments = new HashMap<>();
+      Map<Integer, OWLObject> boundInputArgumentValues = new HashMap<>();
+      Map<Integer, SWRLMultiValueVariableBuiltInArgument> unboundOutputArguments = new HashMap<>();
 
+      // Build maps of input (bound) and output (unbound) arguments
       for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++) {
         if (arguments.get(argumentNumber).isVariable()) {
           IRI variableIRI = arguments.get(argumentNumber).asVariable().getIRI();
-          unboundResultArguments.put(argumentNumber, createSWRLMultiValueVariableBuiltInArgument(variableIRI));
+          unboundOutputArguments.put(argumentNumber, createSWRLMultiValueVariableBuiltInArgument(variableIRI));
         } else {
           if (argumentNumber == 0) {
             checkThatArgumentIsAClassExpression(argumentNumber, arguments);
-            boundArgumentValues.put(argumentNumber,
+            boundInputArgumentValues.put(argumentNumber,
               arguments.get(argumentNumber).asSWRLClassExpressionBuiltInArgument().getOWLClassExpression());
           } else if (argumentNumber == 1) {
             checkThatArgumentIsANamedIndividual(argumentNumber, arguments);
-            boundArgumentValues.put(argumentNumber,
+            boundInputArgumentValues.put(argumentNumber,
               arguments.get(argumentNumber).asSWRLNamedIndividualBuiltInArgument().getOWLNamedIndividual());
           }
         }
@@ -69,28 +69,28 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
         OWLNamedIndividual crav2 = axiom.getIndividual().asOWLNamedIndividual(); // We do not handle anonymous
 
         atLeastOneBoundArgumentUnequal =
-          (boundArgumentValues.containsKey(0) && !boundArgumentValues.get(0).equals(crav1)) || (
-            boundArgumentValues.containsKey(1) && !boundArgumentValues.get(1).equals(crav2));
+          (boundInputArgumentValues.containsKey(0) && !boundInputArgumentValues.get(0).equals(crav1)) || (
+            boundInputArgumentValues.containsKey(1) && !boundInputArgumentValues.get(1).equals(crav2));
 
         if (atLeastOneBoundArgumentUnequal)
           break;
 
-        if (unboundResultArguments.containsKey(0)) {
+        if (unboundOutputArguments.containsKey(0)) {
           if (crav1.isAnonymous())
-            unboundResultArguments.get(0).addArgument(createClassExpressionBuiltInArgument(crav1));
+            unboundOutputArguments.get(0).addArgument(createClassExpressionBuiltInArgument(crav1));
           else
-            unboundResultArguments.get(0).addArgument(createClassBuiltInArgument(crav1.asOWLClass()));
+            unboundOutputArguments.get(0).addArgument(createClassBuiltInArgument(crav1.asOWLClass()));
         }
 
-        if (unboundResultArguments.containsKey(1))
-          unboundResultArguments.get(1).addArgument(createNamedIndividualBuiltInArgument(crav2));
+        if (unboundOutputArguments.containsKey(1))
+          unboundOutputArguments.get(1).addArgument(createNamedIndividualBuiltInArgument(crav2));
       }
 
       if (atLeastOneBoundArgumentUnequal)
         return false;
       else {
-        for (Integer argumentNumber : unboundResultArguments.keySet())
-          arguments.get(argumentNumber).asVariable().setBuiltInResult(unboundResultArguments.get(argumentNumber));
+        for (Integer argumentNumber : unboundOutputArguments.keySet())
+          arguments.get(argumentNumber).asVariable().setBuiltInResult(unboundOutputArguments.get(argumentNumber));
         return true;
       }
     } else

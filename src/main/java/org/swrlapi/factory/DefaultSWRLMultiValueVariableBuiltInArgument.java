@@ -3,6 +3,7 @@ package org.swrlapi.factory;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentType;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
 import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
@@ -31,6 +32,11 @@ class DefaultSWRLMultiValueVariableBuiltInArgument extends DefaultSWRLVariableBu
   {
     super(variableIRI);
     this.arguments = arguments;
+  }
+
+  @NonNull @Override public SWRLBuiltInArgumentType<?> getSWRLBuiltInArgumentType()
+  {
+    return SWRLBuiltInArgumentType.MULTI_VALUE_VARIABLE;
   }
 
   @NonNull @Override public SWRLMultiValueVariableBuiltInArgument asMultiValueVariable()

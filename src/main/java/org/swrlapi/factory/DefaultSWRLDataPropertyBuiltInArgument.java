@@ -3,6 +3,7 @@ package org.swrlapi.factory;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLDataPropertyExpression;
+import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentType;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
 import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
@@ -18,6 +19,11 @@ class DefaultSWRLDataPropertyBuiltInArgument extends DefaultSWRLNamedBuiltInArgu
     super(property);
   }
 
+  @NonNull @Override public SWRLBuiltInArgumentType<?> getSWRLBuiltInArgumentType()
+  {
+    return SWRLBuiltInArgumentType.DATA_PROPERTY;
+  }
+
   @NonNull @Override public OWLDataProperty getOWLDataProperty()
   {
     return getOWLEntity().asOWLDataProperty();
@@ -31,11 +37,6 @@ class DefaultSWRLDataPropertyBuiltInArgument extends DefaultSWRLNamedBuiltInArgu
   @NonNull @Override public <@NonNull T> T accept(@NonNull SWRLBuiltInArgumentVisitorEx<@NonNull T> visitor)
   {
     return visitor.visit(this);
-  }
-
-  @Override public boolean isDataProperty()
-  {
-    return true;
   }
 
   @NonNull @Override public SWRLDataPropertyBuiltInArgument asSWRLDataPropertyBuiltInArgument()

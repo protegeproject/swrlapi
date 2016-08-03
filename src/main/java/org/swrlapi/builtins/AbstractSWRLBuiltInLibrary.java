@@ -18,6 +18,10 @@ import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.swrlapi.builtins.arguments.SQWRLCollectionVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentCreator;
+import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentType;
+import org.swrlapi.builtins.arguments.SWRLBuiltInInputArgumentHandler;
+import org.swrlapi.builtins.arguments.SWRLBuiltInResultArgumentHandler;
 import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLClassExpressionBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
@@ -58,7 +62,7 @@ import java.util.Map;
 
 /**
  * A class that must be subclassed by a class implementing a library of SWRL built-in methods.
- * <p>
+ * <p/>
  * Provides invocation context for invoked built-ins (such the name of invoking rule, whether the invocation is in the
  * consequent or the antecedent) and access to the invoking {@link org.swrlapi.builtins.SWRLBuiltInBridge}. Also
  * provides implementations for a large number of SWRL built-in argument processing methods.
@@ -67,7 +71,7 @@ import java.util.Map;
  * @see org.swrlapi.builtins.SWRLBuiltInContext
  * @see SWRLBuiltInInputArgumentHandler
  * @see SWRLBuiltInResultArgumentHandler
- * @see org.swrlapi.builtins.SWRLBuiltInArgumentCreator
+ * @see SWRLBuiltInArgumentCreator
  */
 public abstract class AbstractSWRLBuiltInLibrary
   implements SWRLBuiltInLibrary, SWRLBuiltInInputArgumentHandler, SWRLBuiltInResultArgumentHandler,
@@ -890,7 +894,9 @@ public abstract class AbstractSWRLBuiltInLibrary
   {
     checkThatArgumentIsBound(argumentNumber, arguments);
 
-    return arguments.get(argumentNumber).isDataPropertyExpression();
+    return
+      arguments.get(argumentNumber).getSWRLBuiltInArgumentType() == SWRLBuiltInArgumentType.DATA_PROPERTY_EXPRESSION
+        || arguments.get(argumentNumber).getSWRLBuiltInArgumentType() == SWRLBuiltInArgumentType.DATA_PROPERTY;
   }
 
   @Override public boolean isArgumentAnObjectProperty(int argumentNumber,
@@ -898,7 +904,7 @@ public abstract class AbstractSWRLBuiltInLibrary
   {
     checkThatArgumentIsBound(argumentNumber, arguments);
 
-    return (arguments.get(argumentNumber) instanceof SWRLObjectPropertyBuiltInArgument);
+    return arguments.get(argumentNumber).getSWRLBuiltInArgumentType() == SWRLBuiltInArgumentType.OBJECT_PROPERTY;
   }
 
   @Override public boolean isArgumentAnObjectPropertyExpression(int argumentNumber,
@@ -906,7 +912,9 @@ public abstract class AbstractSWRLBuiltInLibrary
   {
     checkThatArgumentIsBound(argumentNumber, arguments);
 
-    return arguments.get(argumentNumber).isObjectPropertyExpression();
+    return
+      arguments.get(argumentNumber).getSWRLBuiltInArgumentType() == SWRLBuiltInArgumentType.OBJECT_PROPERTY_EXPRESSION
+        || arguments.get(argumentNumber).getSWRLBuiltInArgumentType() == SWRLBuiltInArgumentType.OBJECT_PROPERTY;
   }
 
   @Override public void checkThatArgumentIsAProperty(int argumentNumber,
@@ -969,7 +977,7 @@ public abstract class AbstractSWRLBuiltInLibrary
   {
     checkThatArgumentIsBound(argumentNumber, arguments);
 
-    return (arguments.get(argumentNumber) instanceof SWRLClassBuiltInArgument);
+    return arguments.get(argumentNumber).getSWRLBuiltInArgumentType() == SWRLBuiltInArgumentType.CLASS;
   }
 
   @Override public boolean isArgumentAClassExpression(int argumentNumber,
@@ -977,7 +985,8 @@ public abstract class AbstractSWRLBuiltInLibrary
   {
     checkThatArgumentIsBound(argumentNumber, arguments);
 
-    return arguments.get(argumentNumber).isClassExpression();
+    return arguments.get(argumentNumber).getSWRLBuiltInArgumentType() == SWRLBuiltInArgumentType.CLASS_EXPRESSION
+      || arguments.get(argumentNumber).getSWRLBuiltInArgumentType() == SWRLBuiltInArgumentType.CLASS;
   }
 
   @Override public void checkThatArgumentIsAClass(int argumentNumber,
@@ -1445,7 +1454,8 @@ public abstract class AbstractSWRLBuiltInLibrary
         throw new SWRLBuiltInException(
           "built-in " + builtInName + " in rule " + ruleName + " " + "returned with unbound argument ?" + argument
             .asVariable().getVariableName());
-      else if (argument.isMultiValueVariable() && argument.asMultiValueVariable().hasNoArguments())
+      else if (argument.getSWRLBuiltInArgumentType() == SWRLBuiltInArgumentType.MULTI_VALUE_VARIABLE && argument
+        .asMultiValueVariable().hasNoArguments())
         throw new SWRLBuiltInException(
           "built-in " + builtInName + " in rule " + ruleName + " " + "returned with empty multi-argument ?" + argument
             .asVariable().getVariableName());

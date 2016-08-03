@@ -18,8 +18,6 @@ public interface SWRLVariableBuiltInArgument extends SWRLBuiltInArgument, SWRLVa
    */
   @NonNull String getVariableName();
 
-  @Override boolean isVariable();
-
   /**
    * @return True if the variable has a built-in result attached
    */
