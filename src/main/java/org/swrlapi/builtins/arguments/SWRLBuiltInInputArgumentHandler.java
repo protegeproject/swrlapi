@@ -388,6 +388,58 @@ public interface SWRLBuiltInInputArgumentHandler
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
   /**
+   * @param argumentNumber The 0-based index of the argument
+   * @param arguments      The built-in arguments
+   * @return True if the specified argument is an annotation property
+   * @throws SWRLBuiltInException If an error occurs during processing
+   */
+  boolean isArgumentAnAnnotationProperty(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException;
+
+  /**
+   * @param argumentNumber The 0-based index of the argument
+   * @param arguments      The built-in arguments
+   * @return An annotation property built-in argument
+   * @throws SWRLBuiltInException If an error occurs during processing
+   */
+  @NonNull SWRLAnnotationPropertyBuiltInArgument getArgumentAsAnAnnotationProperty(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+
+  /**
+   * @param argumentNumber The 0-based index of the argument
+   * @param arguments      The built-in arguments
+   * @throws SWRLBuiltInException If the specified argument is not an annotation property
+   */
+  void checkThatArgumentIsAnAnnotationProperty(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+
+  /**
+   * @param argumentNumber The 0-based index of the argument
+   * @param arguments      The built-in arguments
+   * @return True if the specified argument is a datatype
+   * @throws SWRLBuiltInException If an error occurs during processing
+   */
+  boolean isArgumentADatatype(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException;
+
+  /**
+   * @param argumentNumber The 0-based index of the argument
+   * @param arguments      The built-in arguments
+   * @return A datatype built-in argument
+   * @throws SWRLBuiltInException If an error occurs during processing
+   */
+  @NonNull SWRLDatatypeBuiltInArgument getArgumentAsADatatype(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+
+  /**
+   * @param argumentNumber The 0-based index of the argument
+   * @param arguments      The built-in arguments
+   * @throws SWRLBuiltInException If the specified argument is not a datatype
+   */
+  void checkThatArgumentIsADatatype(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException;
+
+  /**
    * @param arguments The built-in arguments
    * @throws SWRLBuiltInException If not all arguments are literals
    */

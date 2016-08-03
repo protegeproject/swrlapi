@@ -683,6 +683,22 @@ public abstract class AbstractSWRLBuiltInLibrary
     return arguments.get(argumentNumber).asSWRLDataPropertyExpressionBuiltInArgument();
   }
 
+  @NonNull @Override public SWRLAnnotationPropertyBuiltInArgument getArgumentAsAnAnnotationProperty(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    checkThatArgumentIsAnAnnotationProperty(argumentNumber, arguments);
+
+    return (SWRLAnnotationPropertyBuiltInArgument)arguments.get(argumentNumber);
+  }
+
+  @NonNull @Override public SWRLDatatypeBuiltInArgument getArgumentAsADatatype(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    checkThatArgumentIsADatatype(argumentNumber, arguments);
+
+    return (SWRLDatatypeBuiltInArgument)arguments.get(argumentNumber);
+  }
+
   @NonNull @Override public IRI getArgumentAsAnIRI(int argumentNumber,
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
@@ -889,6 +905,22 @@ public abstract class AbstractSWRLBuiltInLibrary
     return (arguments.get(argumentNumber) instanceof SWRLDataPropertyBuiltInArgument);
   }
 
+  @Override public boolean isArgumentAnAnnotationProperty(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    checkThatArgumentIsBound(argumentNumber, arguments);
+
+    return (arguments.get(argumentNumber) instanceof SWRLAnnotationPropertyBuiltInArgument);
+  }
+
+  @Override public boolean isArgumentADatatype(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    checkThatArgumentIsBound(argumentNumber, arguments);
+
+    return (arguments.get(argumentNumber) instanceof SWRLDatatypeBuiltInArgument);
+  }
+
   @Override public boolean isArgumentADataPropertyExpression(int argumentNumber,
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
@@ -947,6 +979,22 @@ public abstract class AbstractSWRLBuiltInLibrary
     if (!isArgumentADataProperty(argumentNumber, arguments))
       throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
         makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "data property"));
+  }
+
+  @Override public void checkThatArgumentIsAnAnnotationProperty(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    if (!isArgumentAnAnnotationProperty(argumentNumber, arguments))
+      throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
+        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "annotation property"));
+  }
+
+  @Override public void checkThatArgumentIsADatatype(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    if (!isArgumentADatatype(argumentNumber, arguments))
+      throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
+        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "datatype"));
   }
 
   @Override public void checkThatArgumentIsADataPropertyExpression(int argumentNumber,

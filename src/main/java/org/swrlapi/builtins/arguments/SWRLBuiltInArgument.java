@@ -23,7 +23,7 @@ import java.util.Optional;
  * data factory (represented by the OWLAPI class {@link org.semanticweb.owlapi.model.OWLDataFactory}), will not be aware
  * of these types a {@link org.swrlapi.core.SWRLAPIOWLOntology} (in conjunction with an
  * {@link SWRLAPIOWLDataFactory}) must be used to extract SWRLAPI SWRL rules.
- * <p/>
+ * <p>
  * Similarly, a SWRLAPI-aware parser is required to generate SWRLAPI rules from rule text.
  *
  * @see org.swrlapi.core.SWRLAPIRule
@@ -46,12 +46,11 @@ import java.util.Optional;
 public interface SWRLBuiltInArgument extends SWRLDArgument
 {
   /**
-   * @return The argument type
+   * @return The built-in argument type
    */
   @NonNull SWRLBuiltInArgumentType<?> getSWRLBuiltInArgumentType();
 
   /**
-   *
    * @return True if the argument is a variable (plain variable, collection, or multi-value)
    */
   boolean isVariable();
