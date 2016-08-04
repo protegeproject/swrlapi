@@ -4,6 +4,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.OWLClassAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLClassExpression;
+import org.semanticweb.owlapi.model.OWLDifferentIndividualsAxiom;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.model.OWLSameIndividualAxiom;
@@ -131,6 +132,42 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     }
   }
 
-  // DIFFERENT_INDIVIDUALS, OBJECT_PROPERTY_ASSERTION, NEGATIVE_OBJECT_PROPERTY_ASSERTION,
+  public boolean dia(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    checkNumberOfArgumentsEqualTo(2, arguments.size());
+
+    Set<OWLDifferentIndividualsAxiom> axioms = getBuiltInBridge().getOWLOntology()
+      .getAxioms(AxiomType.DIFFERENT_INDIVIDUALS, Imports.INCLUDED).stream().flatMap(a -> a.asPairwiseAxioms().stream())
+      .collect(Collectors.toSet());
+
+    if (axioms.isEmpty())
+      return false;
+    else {
+      Map<@NonNull Integer, @NonNull OWLObject> inputArgumentValues = getInputArgumentValues(arguments,
+        SWRLBuiltInArgumentType.NAMED_INDIVIDUAL, SWRLBuiltInArgumentType.NAMED_INDIVIDUAL);
+      Map<@NonNull Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> outputMultiValueArguments = createOutputMultiValueArguments(
+        arguments);
+
+      for (OWLDifferentIndividualsAxiom axiom : axioms) {
+        OWLNamedIndividual candidateValue1 = axiom.getIndividualsAsList().get(0).asOWLNamedIndividual();
+        OWLNamedIndividual candidateValue2 = axiom.getIndividualsAsList().get(1).asOWLNamedIndividual();
+
+        if (!noBoundArgumentsMismatch(inputArgumentValues, candidateValue1, candidateValue2)) {
+          if (outputMultiValueArguments.isEmpty())
+            return true; // We have a match and there are no unbound arguments - return immediately
+          else { // We have a match so update any unbound arguments with the matched values
+            if (outputMultiValueArguments.containsKey(0))
+              outputMultiValueArguments.get(0).addArgument(createNamedIndividualBuiltInArgument(candidateValue1));
+
+            if (outputMultiValueArguments.containsKey(1))
+              outputMultiValueArguments.get(1).addArgument(createNamedIndividualBuiltInArgument(candidateValue2));
+          }
+        }
+      }
+      return processOutputMultiValueArguments(arguments, outputMultiValueArguments);
+    }
+  }
+
+  // OBJECT_PROPERTY_ASSERTION, NEGATIVE_OBJECT_PROPERTY_ASSERTION,
   // DATA_PROPERTY_ASSERTION, NEGATIVE_DATA_PROPERTY_ASSERTION
 }
