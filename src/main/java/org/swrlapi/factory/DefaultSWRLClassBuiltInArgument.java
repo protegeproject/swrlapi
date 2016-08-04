@@ -39,13 +39,13 @@ class DefaultSWRLClassBuiltInArgument extends DefaultSWRLNamedBuiltInArgument im
     return this;
   }
 
-  @Override public @NonNull SWRLClassExpressionBuiltInArgument asSWRLClassExpressionBuiltInArgument()
+  @NonNull @Override public SWRLClassExpressionBuiltInArgument asSWRLClassExpressionBuiltInArgument()
     throws SWRLBuiltInException
   {
     return this;
   }
 
-  @Override public @NonNull OWLClassExpression getOWLClassExpression()
+  @NonNull @Override public OWLClassExpression getOWLClassExpression()
   {
     return getOWLClass();
   }

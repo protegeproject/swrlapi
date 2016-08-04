@@ -4,9 +4,16 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.OWLClassAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLClassExpression;
+import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLDataPropertyExpression;
 import org.semanticweb.owlapi.model.OWLDifferentIndividualsAxiom;
+import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
+import org.semanticweb.owlapi.model.OWLNegativeDataPropertyAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLNegativeObjectPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLObject;
+import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.model.OWLSameIndividualAxiom;
 import org.semanticweb.owlapi.model.parameters.Imports;
 import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
@@ -168,6 +175,167 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     }
   }
 
-  // OBJECT_PROPERTY_ASSERTION, NEGATIVE_OBJECT_PROPERTY_ASSERTION,
-  // DATA_PROPERTY_ASSERTION, NEGATIVE_DATA_PROPERTY_ASSERTION
+  public boolean opaa(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    checkNumberOfArgumentsEqualTo(3, arguments.size());
+
+    Set<OWLObjectPropertyAssertionAxiom> axioms = getBuiltInBridge().getOWLOntology()
+      .getAxioms(AxiomType.OBJECT_PROPERTY_ASSERTION, Imports.INCLUDED);
+
+    if (axioms.isEmpty())
+      return false;
+    else {
+      Map<@NonNull Integer, @NonNull OWLObject> inputArgumentValues = getInputArgumentValues(arguments,
+        SWRLBuiltInArgumentType.NAMED_INDIVIDUAL, SWRLBuiltInArgumentType.OBJECT_PROPERTY_EXPRESSION,
+        SWRLBuiltInArgumentType.NAMED_INDIVIDUAL);
+      Map<@NonNull Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> outputMultiValueArguments = createOutputMultiValueArguments(
+        arguments);
+
+      for (OWLObjectPropertyAssertionAxiom axiom : axioms) {
+        OWLNamedIndividual candidateValue1 = axiom.getSubject().asOWLNamedIndividual();
+        OWLObjectPropertyExpression candidateValue2 = axiom.getProperty();
+        OWLNamedIndividual candidateValue3 = axiom.getObject().asOWLNamedIndividual();
+
+        if (!noBoundArgumentsMismatch(inputArgumentValues, candidateValue1, candidateValue2, candidateValue3)) {
+          if (outputMultiValueArguments.isEmpty())
+            return true; // We have a match and there are no unbound arguments - return immediately
+          else { // We have a match so update any unbound arguments with the matched values
+            if (outputMultiValueArguments.containsKey(0))
+              outputMultiValueArguments.get(0).addArgument(createNamedIndividualBuiltInArgument(candidateValue1));
+
+            if (outputMultiValueArguments.containsKey(1))
+              outputMultiValueArguments.get(1)
+                .addArgument(createObjectPropertyExpressionBuiltInArgument(candidateValue2));
+
+            if (outputMultiValueArguments.containsKey(2))
+              outputMultiValueArguments.get(2).addArgument(createNamedIndividualBuiltInArgument(candidateValue3));
+          }
+        }
+      }
+      return processOutputMultiValueArguments(arguments, outputMultiValueArguments);
+    }
+  }
+
+  public boolean nopaa(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    checkNumberOfArgumentsEqualTo(3, arguments.size());
+
+    Set<OWLNegativeObjectPropertyAssertionAxiom> axioms = getBuiltInBridge().getOWLOntology()
+      .getAxioms(AxiomType.NEGATIVE_OBJECT_PROPERTY_ASSERTION, Imports.INCLUDED);
+
+    if (axioms.isEmpty())
+      return false;
+    else {
+      Map<@NonNull Integer, @NonNull OWLObject> inputArgumentValues = getInputArgumentValues(arguments,
+        SWRLBuiltInArgumentType.NAMED_INDIVIDUAL, SWRLBuiltInArgumentType.OBJECT_PROPERTY_EXPRESSION,
+        SWRLBuiltInArgumentType.NAMED_INDIVIDUAL);
+      Map<@NonNull Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> outputMultiValueArguments = createOutputMultiValueArguments(
+        arguments);
+
+      for (OWLNegativeObjectPropertyAssertionAxiom axiom : axioms) {
+        OWLNamedIndividual candidateValue1 = axiom.getSubject().asOWLNamedIndividual();
+        OWLObjectPropertyExpression candidateValue2 = axiom.getProperty();
+        OWLNamedIndividual candidateValue3 = axiom.getObject().asOWLNamedIndividual();
+
+        if (!noBoundArgumentsMismatch(inputArgumentValues, candidateValue1, candidateValue2, candidateValue3)) {
+          if (outputMultiValueArguments.isEmpty())
+            return true; // We have a match and there are no unbound arguments - return immediately
+          else { // We have a match so update any unbound arguments with the matched values
+            if (outputMultiValueArguments.containsKey(0))
+              outputMultiValueArguments.get(0).addArgument(createNamedIndividualBuiltInArgument(candidateValue1));
+
+            if (outputMultiValueArguments.containsKey(1))
+              outputMultiValueArguments.get(1)
+                .addArgument(createObjectPropertyExpressionBuiltInArgument(candidateValue2));
+
+            if (outputMultiValueArguments.containsKey(2))
+              outputMultiValueArguments.get(2).addArgument(createNamedIndividualBuiltInArgument(candidateValue3));
+          }
+        }
+      }
+      return processOutputMultiValueArguments(arguments, outputMultiValueArguments);
+    }
+  }
+
+  public boolean dpaa(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    checkNumberOfArgumentsEqualTo(3, arguments.size());
+
+    Set<OWLDataPropertyAssertionAxiom> axioms = getBuiltInBridge().getOWLOntology()
+      .getAxioms(AxiomType.DATA_PROPERTY_ASSERTION, Imports.INCLUDED);
+
+    if (axioms.isEmpty())
+      return false;
+    else {
+      Map<@NonNull Integer, @NonNull OWLObject> inputArgumentValues = getInputArgumentValues(arguments,
+        SWRLBuiltInArgumentType.NAMED_INDIVIDUAL, SWRLBuiltInArgumentType.DATA_PROPERTY_EXPRESSION,
+        SWRLBuiltInArgumentType.LITERAL);
+      Map<@NonNull Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> outputMultiValueArguments = createOutputMultiValueArguments(
+        arguments);
+
+      for (OWLDataPropertyAssertionAxiom axiom : axioms) {
+        OWLNamedIndividual candidateValue1 = axiom.getSubject().asOWLNamedIndividual();
+        OWLDataPropertyExpression candidateValue2 = axiom.getProperty();
+        OWLLiteral candidateValue3 = axiom.getObject();
+
+        if (!noBoundArgumentsMismatch(inputArgumentValues, candidateValue1, candidateValue2, candidateValue3)) {
+          if (outputMultiValueArguments.isEmpty())
+            return true; // We have a match and there are no unbound arguments - return immediately
+          else { // We have a match so update any unbound arguments with the matched values
+            if (outputMultiValueArguments.containsKey(0))
+              outputMultiValueArguments.get(0).addArgument(createNamedIndividualBuiltInArgument(candidateValue1));
+
+            if (outputMultiValueArguments.containsKey(1))
+              outputMultiValueArguments.get(1)
+                .addArgument(createDataPropertyExpressionBuiltInArgument(candidateValue2));
+
+            if (outputMultiValueArguments.containsKey(2))
+              outputMultiValueArguments.get(2).addArgument(createLiteralBuiltInArgument(candidateValue3));
+          }
+        }
+      }
+      return processOutputMultiValueArguments(arguments, outputMultiValueArguments);
+    }
+  }
+
+  public boolean ndpaa(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    checkNumberOfArgumentsEqualTo(3, arguments.size());
+
+    Set<OWLNegativeDataPropertyAssertionAxiom> axioms = getBuiltInBridge().getOWLOntology()
+      .getAxioms(AxiomType.NEGATIVE_DATA_PROPERTY_ASSERTION, Imports.INCLUDED);
+
+    if (axioms.isEmpty())
+      return false;
+    else {
+      Map<@NonNull Integer, @NonNull OWLObject> inputArgumentValues = getInputArgumentValues(arguments,
+        SWRLBuiltInArgumentType.NAMED_INDIVIDUAL, SWRLBuiltInArgumentType.DATA_PROPERTY_EXPRESSION,
+        SWRLBuiltInArgumentType.LITERAL);
+      Map<@NonNull Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> outputMultiValueArguments = createOutputMultiValueArguments(
+        arguments);
+
+      for (OWLNegativeDataPropertyAssertionAxiom axiom : axioms) {
+        OWLNamedIndividual candidateValue1 = axiom.getSubject().asOWLNamedIndividual();
+        OWLDataPropertyExpression candidateValue2 = axiom.getProperty();
+        OWLLiteral candidateValue3 = axiom.getObject();
+
+        if (!noBoundArgumentsMismatch(inputArgumentValues, candidateValue1, candidateValue2, candidateValue3)) {
+          if (outputMultiValueArguments.isEmpty())
+            return true; // We have a match and there are no unbound arguments - return immediately
+          else { // We have a match so update any unbound arguments with the matched values
+            if (outputMultiValueArguments.containsKey(0))
+              outputMultiValueArguments.get(0).addArgument(createNamedIndividualBuiltInArgument(candidateValue1));
+
+            if (outputMultiValueArguments.containsKey(1))
+              outputMultiValueArguments.get(1)
+                .addArgument(createDataPropertyExpressionBuiltInArgument(candidateValue2));
+
+            if (outputMultiValueArguments.containsKey(2))
+              outputMultiValueArguments.get(2).addArgument(createLiteralBuiltInArgument(candidateValue3));
+          }
+        }
+      }
+      return processOutputMultiValueArguments(arguments, outputMultiValueArguments);
+    }
+  }
 }

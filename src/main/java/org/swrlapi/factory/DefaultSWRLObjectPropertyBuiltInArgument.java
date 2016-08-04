@@ -24,12 +24,12 @@ class DefaultSWRLObjectPropertyBuiltInArgument extends DefaultSWRLNamedBuiltInAr
     return SWRLBuiltInArgumentType.OBJECT_PROPERTY;
   }
 
-  @Override public @NonNull OWLObjectProperty getOWLObjectProperty()
+  @NonNull @Override public OWLObjectProperty getOWLObjectProperty()
   {
     return getOWLEntity().asOWLObjectProperty();
   }
 
-  @Override public @NonNull OWLObjectPropertyExpression getOWLObjectPropertyExpression()
+  @NonNull @Override public OWLObjectPropertyExpression getOWLObjectPropertyExpression()
   {
     return getOWLObjectProperty();
   }
@@ -39,7 +39,13 @@ class DefaultSWRLObjectPropertyBuiltInArgument extends DefaultSWRLNamedBuiltInAr
     return visitor.visit(this);
   }
 
-  @Override public @NonNull SWRLObjectPropertyBuiltInArgument asSWRLObjectPropertyBuiltInArgument()
+  @NonNull @Override public SWRLObjectPropertyBuiltInArgument asSWRLObjectPropertyBuiltInArgument()
+    throws SWRLBuiltInException
+  {
+    return this;
+  }
+
+  @NonNull @Override public SWRLObjectPropertyBuiltInArgument asSWRLObjectPropertyExpressionBuiltInArgument()
     throws SWRLBuiltInException
   {
     return this;

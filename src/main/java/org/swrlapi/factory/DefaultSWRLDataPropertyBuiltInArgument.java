@@ -45,6 +45,12 @@ class DefaultSWRLDataPropertyBuiltInArgument extends DefaultSWRLNamedBuiltInArgu
     return this;
   }
 
+  @NonNull @Override public SWRLDataPropertyBuiltInArgument asSWRLDataPropertyExpressionBuiltInArgument()
+    throws SWRLBuiltInException
+  {
+    return this;
+  }
+
   @Override public void accept(@NonNull SWRLBuiltInArgumentVisitor visitor)
   {
     visitor.visit(this);
