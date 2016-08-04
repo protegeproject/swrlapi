@@ -1829,21 +1829,21 @@ public abstract class AbstractSWRLBuiltInLibrary
     return individual;
   }
 
-  @NonNull protected Map<Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> createUnboundOutputMultiValueArguments(
+  @NonNull protected Map<Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> createOutputMultiValueArguments(
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
-    Map<Integer, SWRLMultiValueVariableBuiltInArgument> unboundOutputMultiValueArguments = new HashMap<>();
+    Map<Integer, SWRLMultiValueVariableBuiltInArgument> outputMultiValueArguments = new HashMap<>();
 
     for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++) {
       if (arguments.get(argumentNumber).isVariable()) {
         IRI variableIRI = arguments.get(argumentNumber).asVariable().getIRI();
-        unboundOutputMultiValueArguments.put(argumentNumber, createSWRLMultiValueVariableBuiltInArgument(variableIRI));
+        outputMultiValueArguments.put(argumentNumber, createSWRLMultiValueVariableBuiltInArgument(variableIRI));
       }
     }
-    return unboundOutputMultiValueArguments;
+    return outputMultiValueArguments;
   }
 
-  @NonNull protected Map<Integer, @NonNull OWLObject> getBoundInputArgumentValues(
+  @NonNull protected Map<Integer, @NonNull OWLObject> getInputArgumentValues(
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments, @NonNull SWRLBuiltInArgumentType<?>... builtInArgumentTypes)
     throws SWRLBuiltInException
   {

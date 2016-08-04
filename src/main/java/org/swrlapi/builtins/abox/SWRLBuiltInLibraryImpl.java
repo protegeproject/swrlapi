@@ -33,20 +33,15 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   {
   }
 
-  private boolean atLeastOneBoundArgumentUnequal(Map<Integer, @NonNull OWLObject> boundInputArgumentValues,
+  private boolean atLeastOneBoundArgumentUnequal(Map<Integer, @NonNull OWLObject> inputArgumentValues,
     OWLObject... candidateValues) throws SWRLBuiltInException
   {
-    if (boundInputArgumentValues.size() != candidateValues.length)
-      throw new SWRLBuiltInException(
-        "internal error: expecting " + boundInputArgumentValues.size() + " candidates for bound argument values, got"
-          + candidateValues.length);
-
-    for (int argumentNumber : boundInputArgumentValues.keySet()) {
-      OWLObject owlObject = boundInputArgumentValues.get(argumentNumber);
-      if (!owlObject.equals(candidateValues[argumentNumber]))
-        return false;
+    for (int argumentNumber : inputArgumentValues.keySet()) {
+      OWLObject inputArgumentValue = inputArgumentValues.get(argumentNumber);
+      if (!inputArgumentValue.equals(candidateValues[argumentNumber]))
+        return true;
     }
-    return true;
+    return false;
   }
 
   public boolean caa(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
@@ -59,28 +54,27 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     if (axioms.isEmpty())
       return false;
     else {
-      Map<Integer, @NonNull OWLObject> boundInputArgumentValues = getBoundInputArgumentValues(arguments,
+      Map<Integer, @NonNull OWLObject> inputArgumentValues = getInputArgumentValues(arguments,
         SWRLBuiltInArgumentType.CLASS, SWRLBuiltInArgumentType.NAMED_INDIVIDUAL);
-      Map<Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> unboundOutputMultiValueArguments = createUnboundOutputMultiValueArguments(
+      Map<Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> outputMultiValueArguments = createOutputMultiValueArguments(
         arguments);
 
       for (OWLClassAssertionAxiom axiom : axioms) {
         OWLClassExpression candidateValue1 = axiom.getClassExpression();
         OWLNamedIndividual candidateValue2 = axiom.getIndividual().asOWLNamedIndividual();
 
-        if (atLeastOneBoundArgumentUnequal(boundInputArgumentValues, candidateValue1, candidateValue2))
+        if (atLeastOneBoundArgumentUnequal(inputArgumentValues, candidateValue1, candidateValue2))
           return false;
 
-        if (unboundOutputMultiValueArguments.containsKey(0))
-          unboundOutputMultiValueArguments.get(0).addArgument(createClassExpressionBuiltInArgument(candidateValue1));
+        if (outputMultiValueArguments.containsKey(0))
+          outputMultiValueArguments.get(0).addArgument(createClassExpressionBuiltInArgument(candidateValue1));
 
-        if (unboundOutputMultiValueArguments.containsKey(1))
-          unboundOutputMultiValueArguments.get(1).addArgument(createNamedIndividualBuiltInArgument(candidateValue2));
+        if (outputMultiValueArguments.containsKey(1))
+          outputMultiValueArguments.get(1).addArgument(createNamedIndividualBuiltInArgument(candidateValue2));
       }
 
-      for (Integer argumentNumber : unboundOutputMultiValueArguments.keySet())
-        arguments.get(argumentNumber).asVariable()
-          .setBuiltInResult(unboundOutputMultiValueArguments.get(argumentNumber));
+      for (Integer argumentNumber : outputMultiValueArguments.keySet())
+        arguments.get(argumentNumber).asVariable().setBuiltInResult(outputMultiValueArguments.get(argumentNumber));
       return true;
     }
   }
