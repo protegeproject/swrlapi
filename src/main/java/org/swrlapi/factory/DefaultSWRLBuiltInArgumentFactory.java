@@ -68,7 +68,10 @@ class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFactory
 
   @Override public @NonNull SWRLClassExpressionBuiltInArgument getClassExpressionBuiltInArgument(OWLClassExpression ce)
   {
-    return new DefaultSWRLClassExpressionBuiltInArgument(ce);
+    if (ce.isAnonymous())
+      return new DefaultSWRLClassExpressionBuiltInArgument(ce);
+    else
+      return new DefaultSWRLClassBuiltInArgument(ce.asOWLClass());
   }
 
   @NonNull @Override public SWRLObjectPropertyBuiltInArgument getObjectPropertyBuiltInArgument(
@@ -80,7 +83,10 @@ class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFactory
   @Override public @NonNull SWRLObjectPropertyExpressionBuiltInArgument getObjectPropertyExpressionBuiltInArgument(
     @NonNull OWLObjectPropertyExpression propertyExpression)
   {
-    return new DefaultSWRLObjectPropertyExpressionBuiltInArgument(propertyExpression);
+    if (propertyExpression.isAnonymous())
+      return new DefaultSWRLObjectPropertyExpressionBuiltInArgument(propertyExpression);
+    else
+      return new DefaultSWRLObjectPropertyBuiltInArgument(propertyExpression.asOWLObjectProperty());
   }
 
   @NonNull @Override public SWRLDataPropertyBuiltInArgument getDataPropertyBuiltInArgument(
@@ -92,7 +98,10 @@ class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFactory
   @Override public @NonNull SWRLDataPropertyExpressionBuiltInArgument getDataPropertyExpressionBuiltInArgument(
     @NonNull OWLDataPropertyExpression propertyExpression)
   {
-    return new DefaultSWRLDataPropertyExpressionBuiltInArgument(propertyExpression);
+    if (propertyExpression.isAnonymous())
+      return new DefaultSWRLDataPropertyExpressionBuiltInArgument(propertyExpression);
+    else
+      return new DefaultSWRLDataPropertyBuiltInArgument(propertyExpression.asOWLDataProperty());
   }
 
   @NonNull @Override public SWRLAnnotationPropertyBuiltInArgument getAnnotationPropertyBuiltInArgument(
@@ -166,6 +175,7 @@ class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFactory
   {
     return new DefaultSWRLLiteralBuiltInArgument(getOWLLiteralFactory().getOWLLiteral(i));
   }
+
   @NonNull @Override public SWRLLiteralBuiltInArgument getLiteralBuiltInArgument(@NonNull URI uri)
   {
     return new DefaultSWRLLiteralBuiltInArgument(getOWLLiteralFactory().getOWLLiteral(uri));

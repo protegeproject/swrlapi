@@ -1829,18 +1829,18 @@ public abstract class AbstractSWRLBuiltInLibrary
     return individual;
   }
 
-  @NonNull protected Map<Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> getUnboundOutputArguments(
+  @NonNull protected Map<Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> createUnboundOutputMultiValueArguments(
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
-    Map<Integer, SWRLMultiValueVariableBuiltInArgument> unboundOutputArguments = new HashMap<>();
+    Map<Integer, SWRLMultiValueVariableBuiltInArgument> unboundOutputMultiValueArguments = new HashMap<>();
 
     for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++) {
       if (arguments.get(argumentNumber).isVariable()) {
         IRI variableIRI = arguments.get(argumentNumber).asVariable().getIRI();
-        unboundOutputArguments.put(argumentNumber, createSWRLMultiValueVariableBuiltInArgument(variableIRI));
+        unboundOutputMultiValueArguments.put(argumentNumber, createSWRLMultiValueVariableBuiltInArgument(variableIRI));
       }
     }
-    return unboundOutputArguments;
+    return unboundOutputMultiValueArguments;
   }
 
   @NonNull protected Map<Integer, @NonNull OWLObject> getBoundInputArgumentValues(

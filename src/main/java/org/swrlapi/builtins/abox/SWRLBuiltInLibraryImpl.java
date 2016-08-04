@@ -33,6 +33,22 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   {
   }
 
+  private boolean atLeastOneBoundArgumentUnequal(Map<Integer, @NonNull OWLObject> boundInputArgumentValues,
+    OWLObject... candidateValues) throws SWRLBuiltInException
+  {
+    if (boundInputArgumentValues.size() != candidateValues.length)
+      throw new SWRLBuiltInException(
+        "internal error: expecting " + boundInputArgumentValues.size() + " candidates for bound argument values, got"
+          + candidateValues.length);
+
+    for (int argumentNumber : boundInputArgumentValues.keySet()) {
+      OWLObject owlObject = boundInputArgumentValues.get(argumentNumber);
+      if (!owlObject.equals(candidateValues[argumentNumber]))
+        return false;
+    }
+    return true;
+  }
+
   public boolean caa(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(2, arguments.size());
@@ -43,43 +59,29 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     if (axioms.isEmpty())
       return false;
     else {
-      Map<Integer, OWLObject> boundInputArgumentValues = getBoundInputArgumentValues(arguments,
+      Map<Integer, @NonNull OWLObject> boundInputArgumentValues = getBoundInputArgumentValues(arguments,
         SWRLBuiltInArgumentType.CLASS, SWRLBuiltInArgumentType.NAMED_INDIVIDUAL);
-      Map<Integer, SWRLMultiValueVariableBuiltInArgument> unboundOutputArguments = getUnboundOutputArguments(arguments);
-      boolean atLeastOneBoundArgumentUnequal = false;
+      Map<Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> unboundOutputMultiValueArguments = createUnboundOutputMultiValueArguments(
+        arguments);
 
       for (OWLClassAssertionAxiom axiom : axioms) {
-        OWLClassExpression candidateResultArgumentValue1 = axiom.getClassExpression();
-        OWLNamedIndividual candidateResultArgumentValue2 = axiom.getIndividual().asOWLNamedIndividual();
+        OWLClassExpression candidateValue1 = axiom.getClassExpression();
+        OWLNamedIndividual candidateValue2 = axiom.getIndividual().asOWLNamedIndividual();
 
-        atLeastOneBoundArgumentUnequal = (boundInputArgumentValues.containsKey(0) && !boundInputArgumentValues.get(0)
-          .equals(candidateResultArgumentValue1)) || (boundInputArgumentValues.containsKey(1)
-          && !boundInputArgumentValues.get(1).equals(candidateResultArgumentValue2));
+        if (atLeastOneBoundArgumentUnequal(boundInputArgumentValues, candidateValue1, candidateValue2))
+          return false;
 
-        if (atLeastOneBoundArgumentUnequal)
-          break;
+        if (unboundOutputMultiValueArguments.containsKey(0))
+          unboundOutputMultiValueArguments.get(0).addArgument(createClassExpressionBuiltInArgument(candidateValue1));
 
-        if (unboundOutputArguments.containsKey(0)) {
-          if (candidateResultArgumentValue1.isAnonymous())
-            unboundOutputArguments.get(0)
-              .addArgument(createClassExpressionBuiltInArgument(candidateResultArgumentValue1));
-          else
-            unboundOutputArguments.get(0)
-              .addArgument(createClassBuiltInArgument(candidateResultArgumentValue1.asOWLClass()));
-        }
-
-        if (unboundOutputArguments.containsKey(1))
-          unboundOutputArguments.get(1)
-            .addArgument(createNamedIndividualBuiltInArgument(candidateResultArgumentValue2));
+        if (unboundOutputMultiValueArguments.containsKey(1))
+          unboundOutputMultiValueArguments.get(1).addArgument(createNamedIndividualBuiltInArgument(candidateValue2));
       }
 
-      if (atLeastOneBoundArgumentUnequal)
-        return false;
-      else {
-        for (Integer argumentNumber : unboundOutputArguments.keySet())
-          arguments.get(argumentNumber).asVariable().setBuiltInResult(unboundOutputArguments.get(argumentNumber));
-        return true;
-      }
+      for (Integer argumentNumber : unboundOutputMultiValueArguments.keySet())
+        arguments.get(argumentNumber).asVariable()
+          .setBuiltInResult(unboundOutputMultiValueArguments.get(argumentNumber));
+      return true;
     }
   }
 
