@@ -1062,6 +1062,12 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     String prefix = "http://swrl.stanford.edu/ontologies/built-ins/5.0.0/abox.owl#";
 
     addSWRLBuiltIn(IRI.create(prefix, "caa"));
+    addSWRLBuiltIn(IRI.create(prefix, "sia"));
+    addSWRLBuiltIn(IRI.create(prefix, "dia"));
+    addSWRLBuiltIn(IRI.create(prefix, "opaa"));
+    addSWRLBuiltIn(IRI.create(prefix, "nopaa"));
+    addSWRLBuiltIn(IRI.create(prefix, "dpaa"));
+    addSWRLBuiltIn(IRI.create(prefix, "ndpaa"));
   }
 
   private void addSWRLRBoxBuiltIns()
