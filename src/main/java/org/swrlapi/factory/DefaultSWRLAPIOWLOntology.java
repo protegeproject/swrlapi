@@ -1090,13 +1090,14 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     addSWRLBuiltIn(IRI.create(prefix, "djopa"));
     addSWRLBuiltIn(IRI.create(prefix, "sopa"));
     addSWRLBuiltIn(IRI.create(prefix, "eopa"));
-    addSWRLBuiltIn(IRI.create(prefix, "iopa"));
     addSWRLBuiltIn(IRI.create(prefix, "sopa"));
+    addSWRLBuiltIn(IRI.create(prefix, "spa"));
     addSWRLBuiltIn(IRI.create(prefix, "aopa"));
     addSWRLBuiltIn(IRI.create(prefix, "ropa"));
+    addSWRLBuiltIn(IRI.create(prefix, "iropa"));
     addSWRLBuiltIn(IRI.create(prefix, "iopa"));
     addSWRLBuiltIn(IRI.create(prefix, "djdpa"));
-    addSWRLBuiltIn(IRI.create(prefix, "sdpa"));
+    addSWRLBuiltIn(IRI.create(prefix, "dpda"));
     addSWRLBuiltIn(IRI.create(prefix, "edpa"));
     addSWRLBuiltIn(IRI.create(prefix, "spoca"));
   }

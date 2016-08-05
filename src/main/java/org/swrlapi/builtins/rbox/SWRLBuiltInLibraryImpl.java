@@ -49,7 +49,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
   public boolean topa(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
-    checkNumberOfArgumentsEqualTo(2, arguments.size());
+    checkNumberOfArgumentsEqualTo(1, arguments.size());
 
     Set<OWLTransitiveObjectPropertyAxiom> axioms = getBuiltInBridge().getOWLOntology()
       .getAxioms(AxiomType.TRANSITIVE_OBJECT_PROPERTY, Imports.INCLUDED);
@@ -63,6 +63,134 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
         arguments);
 
       for (OWLTransitiveObjectPropertyAxiom axiom : axioms) {
+        OWLObjectPropertyExpression candidateValue1 = axiom.getProperty();
+
+        if (!noBoundArgumentsMismatch(inputArgumentValues, candidateValue1)) {
+          if (outputMultiValueArguments.isEmpty())
+            return true; // We have a match and there are no unbound arguments - return immediately
+          else { // We have a match so update any unbound arguments with the matched values
+            if (outputMultiValueArguments.containsKey(0))
+              outputMultiValueArguments.get(0)
+                .addArgument(createObjectPropertyExpressionBuiltInArgument(candidateValue1));
+          }
+        }
+      }
+      return processOutputMultiValueArguments(arguments, outputMultiValueArguments);
+    }
+  }
+
+  public boolean spa(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    checkNumberOfArgumentsEqualTo(1, arguments.size());
+
+    Set<OWLSymmetricObjectPropertyAxiom> axioms = getBuiltInBridge().getOWLOntology()
+      .getAxioms(AxiomType.SYMMETRIC_OBJECT_PROPERTY, Imports.INCLUDED);
+
+    if (axioms.isEmpty())
+      return false;
+    else {
+      Map<@NonNull Integer, @NonNull OWLObject> inputArgumentValues = getInputArgumentValues(arguments,
+        SWRLBuiltInArgumentType.OBJECT_PROPERTY_EXPRESSION);
+      Map<@NonNull Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> outputMultiValueArguments = createOutputMultiValueArguments(
+        arguments);
+
+      for (OWLSymmetricObjectPropertyAxiom axiom : axioms) {
+        OWLObjectPropertyExpression candidateValue1 = axiom.getProperty();
+
+        if (!noBoundArgumentsMismatch(inputArgumentValues, candidateValue1)) {
+          if (outputMultiValueArguments.isEmpty())
+            return true; // We have a match and there are no unbound arguments - return immediately
+          else { // We have a match so update any unbound arguments with the matched values
+            if (outputMultiValueArguments.containsKey(0))
+              outputMultiValueArguments.get(0)
+                .addArgument(createObjectPropertyExpressionBuiltInArgument(candidateValue1));
+          }
+        }
+      }
+      return processOutputMultiValueArguments(arguments, outputMultiValueArguments);
+    }
+  }
+
+  public boolean aopa(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    checkNumberOfArgumentsEqualTo(1, arguments.size());
+
+    Set<OWLAsymmetricObjectPropertyAxiom> axioms = getBuiltInBridge().getOWLOntology()
+      .getAxioms(AxiomType.ASYMMETRIC_OBJECT_PROPERTY, Imports.INCLUDED);
+
+    if (axioms.isEmpty())
+      return false;
+    else {
+      Map<@NonNull Integer, @NonNull OWLObject> inputArgumentValues = getInputArgumentValues(arguments,
+        SWRLBuiltInArgumentType.OBJECT_PROPERTY_EXPRESSION);
+      Map<@NonNull Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> outputMultiValueArguments = createOutputMultiValueArguments(
+        arguments);
+
+      for (OWLAsymmetricObjectPropertyAxiom axiom : axioms) {
+        OWLObjectPropertyExpression candidateValue1 = axiom.getProperty();
+
+        if (!noBoundArgumentsMismatch(inputArgumentValues, candidateValue1)) {
+          if (outputMultiValueArguments.isEmpty())
+            return true; // We have a match and there are no unbound arguments - return immediately
+          else { // We have a match so update any unbound arguments with the matched values
+            if (outputMultiValueArguments.containsKey(0))
+              outputMultiValueArguments.get(0)
+                .addArgument(createObjectPropertyExpressionBuiltInArgument(candidateValue1));
+          }
+        }
+      }
+      return processOutputMultiValueArguments(arguments, outputMultiValueArguments);
+    }
+  }
+
+  public boolean ropa(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    checkNumberOfArgumentsEqualTo(1, arguments.size());
+
+    Set<OWLReflexiveObjectPropertyAxiom> axioms = getBuiltInBridge().getOWLOntology()
+      .getAxioms(AxiomType.REFLEXIVE_OBJECT_PROPERTY, Imports.INCLUDED);
+
+    if (axioms.isEmpty())
+      return false;
+    else {
+      Map<@NonNull Integer, @NonNull OWLObject> inputArgumentValues = getInputArgumentValues(arguments,
+        SWRLBuiltInArgumentType.OBJECT_PROPERTY_EXPRESSION);
+      Map<@NonNull Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> outputMultiValueArguments = createOutputMultiValueArguments(
+        arguments);
+
+      for (OWLReflexiveObjectPropertyAxiom axiom : axioms) {
+        OWLObjectPropertyExpression candidateValue1 = axiom.getProperty();
+
+        if (!noBoundArgumentsMismatch(inputArgumentValues, candidateValue1)) {
+          if (outputMultiValueArguments.isEmpty())
+            return true; // We have a match and there are no unbound arguments - return immediately
+          else { // We have a match so update any unbound arguments with the matched values
+            if (outputMultiValueArguments.containsKey(0))
+              outputMultiValueArguments.get(0)
+                .addArgument(createObjectPropertyExpressionBuiltInArgument(candidateValue1));
+          }
+        }
+      }
+      return processOutputMultiValueArguments(arguments, outputMultiValueArguments);
+    }
+  }
+
+  public boolean iropa(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    checkNumberOfArgumentsEqualTo(1, arguments.size());
+
+    Set<OWLIrreflexiveObjectPropertyAxiom> axioms = getBuiltInBridge().getOWLOntology()
+      .getAxioms(AxiomType.IRREFLEXIVE_OBJECT_PROPERTY, Imports.INCLUDED);
+
+    if (axioms.isEmpty())
+      return false;
+    else {
+      Map<@NonNull Integer, @NonNull OWLObject> inputArgumentValues = getInputArgumentValues(arguments,
+        SWRLBuiltInArgumentType.OBJECT_PROPERTY_EXPRESSION);
+      Map<@NonNull Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> outputMultiValueArguments = createOutputMultiValueArguments(
+        arguments);
+
+      for (OWLIrreflexiveObjectPropertyAxiom axiom : axioms) {
         OWLObjectPropertyExpression candidateValue1 = axiom.getProperty();
 
         if (!noBoundArgumentsMismatch(inputArgumentValues, candidateValue1)) {
@@ -109,134 +237,6 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
             if (outputMultiValueArguments.containsKey(1))
               outputMultiValueArguments.get(1)
                 .addArgument(createObjectPropertyExpressionBuiltInArgument(candidateValue2));
-          }
-        }
-      }
-      return processOutputMultiValueArguments(arguments, outputMultiValueArguments);
-    }
-  }
-
-  public boolean spa(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
-  {
-    checkNumberOfArgumentsEqualTo(2, arguments.size());
-
-    Set<OWLSymmetricObjectPropertyAxiom> axioms = getBuiltInBridge().getOWLOntology()
-      .getAxioms(AxiomType.SYMMETRIC_OBJECT_PROPERTY, Imports.INCLUDED);
-
-    if (axioms.isEmpty())
-      return false;
-    else {
-      Map<@NonNull Integer, @NonNull OWLObject> inputArgumentValues = getInputArgumentValues(arguments,
-        SWRLBuiltInArgumentType.OBJECT_PROPERTY_EXPRESSION);
-      Map<@NonNull Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> outputMultiValueArguments = createOutputMultiValueArguments(
-        arguments);
-
-      for (OWLSymmetricObjectPropertyAxiom axiom : axioms) {
-        OWLObjectPropertyExpression candidateValue1 = axiom.getProperty();
-
-        if (!noBoundArgumentsMismatch(inputArgumentValues, candidateValue1)) {
-          if (outputMultiValueArguments.isEmpty())
-            return true; // We have a match and there are no unbound arguments - return immediately
-          else { // We have a match so update any unbound arguments with the matched values
-            if (outputMultiValueArguments.containsKey(0))
-              outputMultiValueArguments.get(0)
-                .addArgument(createObjectPropertyExpressionBuiltInArgument(candidateValue1));
-          }
-        }
-      }
-      return processOutputMultiValueArguments(arguments, outputMultiValueArguments);
-    }
-  }
-
-  public boolean aopa(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
-  {
-    checkNumberOfArgumentsEqualTo(2, arguments.size());
-
-    Set<OWLAsymmetricObjectPropertyAxiom> axioms = getBuiltInBridge().getOWLOntology()
-      .getAxioms(AxiomType.ASYMMETRIC_OBJECT_PROPERTY, Imports.INCLUDED);
-
-    if (axioms.isEmpty())
-      return false;
-    else {
-      Map<@NonNull Integer, @NonNull OWLObject> inputArgumentValues = getInputArgumentValues(arguments,
-        SWRLBuiltInArgumentType.OBJECT_PROPERTY_EXPRESSION);
-      Map<@NonNull Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> outputMultiValueArguments = createOutputMultiValueArguments(
-        arguments);
-
-      for (OWLAsymmetricObjectPropertyAxiom axiom : axioms) {
-        OWLObjectPropertyExpression candidateValue1 = axiom.getProperty();
-
-        if (!noBoundArgumentsMismatch(inputArgumentValues, candidateValue1)) {
-          if (outputMultiValueArguments.isEmpty())
-            return true; // We have a match and there are no unbound arguments - return immediately
-          else { // We have a match so update any unbound arguments with the matched values
-            if (outputMultiValueArguments.containsKey(0))
-              outputMultiValueArguments.get(0)
-                .addArgument(createObjectPropertyExpressionBuiltInArgument(candidateValue1));
-          }
-        }
-      }
-      return processOutputMultiValueArguments(arguments, outputMultiValueArguments);
-    }
-  }
-
-  public boolean ropa(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
-  {
-    checkNumberOfArgumentsEqualTo(2, arguments.size());
-
-    Set<OWLReflexiveObjectPropertyAxiom> axioms = getBuiltInBridge().getOWLOntology()
-      .getAxioms(AxiomType.REFLEXIVE_OBJECT_PROPERTY, Imports.INCLUDED);
-
-    if (axioms.isEmpty())
-      return false;
-    else {
-      Map<@NonNull Integer, @NonNull OWLObject> inputArgumentValues = getInputArgumentValues(arguments,
-        SWRLBuiltInArgumentType.OBJECT_PROPERTY_EXPRESSION);
-      Map<@NonNull Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> outputMultiValueArguments = createOutputMultiValueArguments(
-        arguments);
-
-      for (OWLReflexiveObjectPropertyAxiom axiom : axioms) {
-        OWLObjectPropertyExpression candidateValue1 = axiom.getProperty();
-
-        if (!noBoundArgumentsMismatch(inputArgumentValues, candidateValue1)) {
-          if (outputMultiValueArguments.isEmpty())
-            return true; // We have a match and there are no unbound arguments - return immediately
-          else { // We have a match so update any unbound arguments with the matched values
-            if (outputMultiValueArguments.containsKey(0))
-              outputMultiValueArguments.get(0)
-                .addArgument(createObjectPropertyExpressionBuiltInArgument(candidateValue1));
-          }
-        }
-      }
-      return processOutputMultiValueArguments(arguments, outputMultiValueArguments);
-    }
-  }
-
-  public boolean iropa(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
-  {
-    checkNumberOfArgumentsEqualTo(2, arguments.size());
-
-    Set<OWLIrreflexiveObjectPropertyAxiom> axioms = getBuiltInBridge().getOWLOntology()
-      .getAxioms(AxiomType.IRREFLEXIVE_OBJECT_PROPERTY, Imports.INCLUDED);
-
-    if (axioms.isEmpty())
-      return false;
-    else {
-      Map<@NonNull Integer, @NonNull OWLObject> inputArgumentValues = getInputArgumentValues(arguments,
-        SWRLBuiltInArgumentType.OBJECT_PROPERTY_EXPRESSION);
-      Map<@NonNull Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> outputMultiValueArguments = createOutputMultiValueArguments(
-        arguments);
-
-      for (OWLIrreflexiveObjectPropertyAxiom axiom : axioms) {
-        OWLObjectPropertyExpression candidateValue1 = axiom.getProperty();
-
-        if (!noBoundArgumentsMismatch(inputArgumentValues, candidateValue1)) {
-          if (outputMultiValueArguments.isEmpty())
-            return true; // We have a match and there are no unbound arguments - return immediately
-          else { // We have a match so update any unbound arguments with the matched values
-            if (outputMultiValueArguments.containsKey(0))
-              outputMultiValueArguments.get(0)
-                .addArgument(createObjectPropertyExpressionBuiltInArgument(candidateValue1));
           }
         }
       }
