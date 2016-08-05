@@ -3,9 +3,14 @@ package org.swrlapi.builtins.tbox;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.OWLClassExpression;
+import org.semanticweb.owlapi.model.OWLDataPropertyExpression;
 import org.semanticweb.owlapi.model.OWLDisjointClassesAxiom;
 import org.semanticweb.owlapi.model.OWLEquivalentClassesAxiom;
+import org.semanticweb.owlapi.model.OWLFunctionalDataPropertyAxiom;
+import org.semanticweb.owlapi.model.OWLFunctionalObjectPropertyAxiom;
+import org.semanticweb.owlapi.model.OWLInverseFunctionalObjectPropertyAxiom;
 import org.semanticweb.owlapi.model.OWLObject;
+import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
 import org.semanticweb.owlapi.model.parameters.Imports;
 import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
@@ -13,6 +18,7 @@ import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentType;
 import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.exceptions.SWRLBuiltInException;
+import org.swrlapi.exceptions.SWRLBuiltInNotImplementedException;
 
 import java.util.List;
 import java.util.Map;
@@ -142,10 +148,115 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     }
   }
 
-  // OBJECT_PROPERTY_DOMAIN, OBJECT_PROPERTY_RANGE, FUNCTIONAL_OBJECT_PROPERTY, INVERSE_FUNCTIONAL_OBJECT_PROPERTY,
-  // DATA_PROPERTY_DOMAIN, DATA_PROPERTY_RANGE, FUNCTIONAL_DATA_PROPERTY,
-  // DISJOINT_UNION,
-  // DATATYPE_DEFINITION,
-  // HAS_KEY
+  public boolean fopa(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    checkNumberOfArgumentsEqualTo(1, arguments.size());
 
+    Set<OWLFunctionalObjectPropertyAxiom> axioms = getBuiltInBridge().getOWLOntology()
+      .getAxioms(AxiomType.FUNCTIONAL_OBJECT_PROPERTY, Imports.INCLUDED);
+
+    if (axioms.isEmpty())
+      return false;
+    else {
+      Map<@NonNull Integer, @NonNull OWLObject> inputArgumentValues = getInputArgumentValues(arguments,
+        SWRLBuiltInArgumentType.OBJECT_PROPERTY_EXPRESSION);
+      Map<@NonNull Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> outputMultiValueArguments = createOutputMultiValueArguments(
+        arguments);
+
+      for (OWLFunctionalObjectPropertyAxiom axiom : axioms) {
+        OWLObjectPropertyExpression candidateValue1 = axiom.getProperty();
+
+        if (!noBoundArgumentsMismatch(inputArgumentValues, candidateValue1)) {
+          if (outputMultiValueArguments.isEmpty())
+            return true; // We have a match and there are no unbound arguments - return immediately
+          else { // We have a match so update any unbound arguments with the matched values
+            if (outputMultiValueArguments.containsKey(0))
+              outputMultiValueArguments.get(0).addArgument(createObjectPropertyExpressionBuiltInArgument(candidateValue1));
+          }
+        }
+      }
+      return processOutputMultiValueArguments(arguments, outputMultiValueArguments);
+    }
+  }
+
+  public boolean ifopa(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    checkNumberOfArgumentsEqualTo(1, arguments.size());
+
+    Set<OWLInverseFunctionalObjectPropertyAxiom> axioms = getBuiltInBridge().getOWLOntology()
+      .getAxioms(AxiomType.INVERSE_FUNCTIONAL_OBJECT_PROPERTY, Imports.INCLUDED);
+
+    if (axioms.isEmpty())
+      return false;
+    else {
+      Map<@NonNull Integer, @NonNull OWLObject> inputArgumentValues = getInputArgumentValues(arguments,
+        SWRLBuiltInArgumentType.OBJECT_PROPERTY_EXPRESSION);
+      Map<@NonNull Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> outputMultiValueArguments = createOutputMultiValueArguments(
+        arguments);
+
+      for (OWLInverseFunctionalObjectPropertyAxiom axiom : axioms) {
+        OWLObjectPropertyExpression candidateValue1 = axiom.getProperty();
+
+        if (!noBoundArgumentsMismatch(inputArgumentValues, candidateValue1)) {
+          if (outputMultiValueArguments.isEmpty())
+            return true; // We have a match and there are no unbound arguments - return immediately
+          else { // We have a match so update any unbound arguments with the matched values
+            if (outputMultiValueArguments.containsKey(0))
+              outputMultiValueArguments.get(0).addArgument(createObjectPropertyExpressionBuiltInArgument(candidateValue1));
+          }
+        }
+      }
+      return processOutputMultiValueArguments(arguments, outputMultiValueArguments);
+    }
+  }
+
+
+  public boolean fdpa(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    checkNumberOfArgumentsEqualTo(1, arguments.size());
+
+    Set<OWLFunctionalDataPropertyAxiom> axioms = getBuiltInBridge().getOWLOntology()
+      .getAxioms(AxiomType.FUNCTIONAL_DATA_PROPERTY, Imports.INCLUDED);
+
+    if (axioms.isEmpty())
+      return false;
+    else {
+      Map<@NonNull Integer, @NonNull OWLObject> inputArgumentValues = getInputArgumentValues(arguments,
+        SWRLBuiltInArgumentType.DATA_PROPERTY_EXPRESSION);
+      Map<@NonNull Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> outputMultiValueArguments = createOutputMultiValueArguments(
+        arguments);
+
+      for (OWLFunctionalDataPropertyAxiom axiom : axioms) {
+        OWLDataPropertyExpression candidateValue1 = axiom.getProperty();
+
+        if (!noBoundArgumentsMismatch(inputArgumentValues, candidateValue1)) {
+          if (outputMultiValueArguments.isEmpty())
+            return true; // We have a match and there are no unbound arguments - return immediately
+          else { // We have a match so update any unbound arguments with the matched values
+            if (outputMultiValueArguments.containsKey(0))
+              outputMultiValueArguments.get(0).addArgument(createDataPropertyExpressionBuiltInArgument(candidateValue1));
+          }
+        }
+      }
+      return processOutputMultiValueArguments(arguments, outputMultiValueArguments);
+    }
+  }
+
+  // OBJECT_PROPERTY_DOMAIN, OBJECT_PROPERTY_RANGE,
+  // DATA_PROPERTY_DOMAIN, DATA_PROPERTY_RANGE,
+
+  public boolean dua(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    throw new SWRLBuiltInNotImplementedException("tbox:dua built-in not implemented");
+  }
+
+  public boolean dda(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    throw new SWRLBuiltInNotImplementedException("tbox:dda built-in not implemented");
+  }
+
+  public boolean hka(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    throw new SWRLBuiltInNotImplementedException("tbox:hka axiom not implemented");
+  }
 }
