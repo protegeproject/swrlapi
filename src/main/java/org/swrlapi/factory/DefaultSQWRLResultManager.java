@@ -19,6 +19,7 @@ import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLClassExpressionResultValue;
 import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
 import org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue;
+import org.swrlapi.sqwrl.values.SQWRLDataRangeResultValue;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLNamedIndividualResultValue;
 import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
@@ -483,6 +484,18 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
     return (SQWRLAnnotationPropertyResultValue)getValue(columnName);
   }
 
+  @NonNull @Override public SQWRLDataRangeResultValue getDataRange(int columnIndex) throws SQWRLException
+  {
+    return getDataRange(getColumnName(columnIndex));
+  }
+
+  @Override public @NonNull SQWRLDataRangeResultValue getDataRange(@NonNull String columnName) throws SQWRLException
+  {
+    if (!hasDataRangeValue(columnName))
+      throw new SQWRLInvalidColumnTypeException("expecting OWL data range in column " + columnName);
+    return (SQWRLDataRangeResultValue)getValue(columnName);
+  }
+
   @NonNull @Override public SQWRLLiteralResultValue getLiteral(int columnIndex) throws SQWRLException
   {
     return getLiteral(getColumnName(columnIndex));
@@ -566,6 +579,16 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
   @Override public boolean hasAnnotationPropertyValue(@NonNull String columnName) throws SQWRLException
   {
     return getValue(columnName) instanceof SQWRLAnnotationPropertyResultValue;
+  }
+
+  @Override public boolean hasDataRangeValue(int columnIndex) throws SQWRLException
+  {
+    return getValue(columnIndex) instanceof SQWRLDataRangeResultValue;
+  }
+
+  @Override public boolean hasDataRangeValue(@NonNull String columnName) throws SQWRLException
+  {
+    return getValue(columnName) instanceof SQWRLDataRangeResultValue;
   }
 
   @Override public boolean hasAnnotationPropertyValue(int columnIndex) throws SQWRLException

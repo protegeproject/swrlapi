@@ -352,7 +352,10 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     }
   }
 
-  // TODO DATA_PROPERTY_RANGE - tbox:dpra
+  public boolean dpra(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    throw new SWRLBuiltInNotImplementedException("tbox:dpra built-in not implemented");
+  }
 
   public boolean dua(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
