@@ -60,6 +60,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * A class that must be subclassed by a class implementing a library of SWRL built-in methods.
@@ -1906,6 +1907,31 @@ public abstract class AbstractSWRLBuiltInLibrary
       }
     }
     return boundInputArgumentValues;
+  }
+
+  protected boolean noBoundArgumentsMismatch(Map<Integer, @NonNull OWLObject> inputArgumentValues,
+    OWLObject... candidateValues) throws SWRLBuiltInException
+  {
+    for (int argumentNumber : inputArgumentValues.keySet()) {
+      OWLObject inputArgumentValue = inputArgumentValues.get(argumentNumber);
+      if (!inputArgumentValue.equals(candidateValues[argumentNumber]))
+        return true;
+    }
+    return false;
+  }
+
+  protected boolean processOutputMultiValueArguments(@NonNull List<@NonNull SWRLBuiltInArgument> arguments,
+    Map<@NonNull Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> outputMultiValueArguments)
+    throws SWRLBuiltInException
+  {
+    if (outputMultiValueArguments.values().stream().filter(a -> a.hasArguments()).collect(Collectors.toSet())
+      .isEmpty()) // No output multi-value arguments have content
+      return false;
+    else {
+      for (Integer argumentNumber : outputMultiValueArguments.keySet())
+        arguments.get(argumentNumber).asVariable().setBuiltInResult(outputMultiValueArguments.get(argumentNumber));
+      return true;
+    }
   }
 
   private void checkThatArgumentIsALiteral(SWRLBuiltInArgument argument) throws SWRLBuiltInException

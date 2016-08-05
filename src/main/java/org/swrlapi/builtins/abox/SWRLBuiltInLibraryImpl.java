@@ -43,31 +43,6 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   {
   }
 
-  private boolean noBoundArgumentsMismatch(Map<Integer, @NonNull OWLObject> inputArgumentValues,
-    OWLObject... candidateValues) throws SWRLBuiltInException
-  {
-    for (int argumentNumber : inputArgumentValues.keySet()) {
-      OWLObject inputArgumentValue = inputArgumentValues.get(argumentNumber);
-      if (!inputArgumentValue.equals(candidateValues[argumentNumber]))
-        return true;
-    }
-    return false;
-  }
-
-  private boolean processOutputMultiValueArguments(@NonNull List<@NonNull SWRLBuiltInArgument> arguments,
-    Map<@NonNull Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> outputMultiValueArguments)
-    throws SWRLBuiltInException
-  {
-    if (outputMultiValueArguments.values().stream().filter(a -> a.hasArguments()).collect(Collectors.toSet())
-      .isEmpty()) // No output multi-value arguments have content
-      return false;
-    else {
-      for (Integer argumentNumber : outputMultiValueArguments.keySet())
-        arguments.get(argumentNumber).asVariable().setBuiltInResult(outputMultiValueArguments.get(argumentNumber));
-      return true;
-    }
-  }
-
   public boolean caa(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(2, arguments.size());

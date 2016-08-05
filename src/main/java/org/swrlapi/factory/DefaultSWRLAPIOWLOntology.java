@@ -1055,6 +1055,18 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     String prefix = "http://swrl.stanford.edu/ontologies/built-ins/5.0.0/tbox.owl#";
 
     addSWRLBuiltIn(IRI.create(prefix, "sca"));
+    addSWRLBuiltIn(IRI.create(prefix, "eca"));
+    addSWRLBuiltIn(IRI.create(prefix, "dca"));
+    addSWRLBuiltIn(IRI.create(prefix, "opda"));
+    addSWRLBuiltIn(IRI.create(prefix, "opra"));
+    addSWRLBuiltIn(IRI.create(prefix, "fopa"));
+    addSWRLBuiltIn(IRI.create(prefix, "idopa"));
+    addSWRLBuiltIn(IRI.create(prefix, "dpda"));
+    addSWRLBuiltIn(IRI.create(prefix, "dpra"));
+    addSWRLBuiltIn(IRI.create(prefix, "fdpa"));
+    addSWRLBuiltIn(IRI.create(prefix, "dda"));
+    addSWRLBuiltIn(IRI.create(prefix, "dua"));
+    addSWRLBuiltIn(IRI.create(prefix, "hka"));
   }
 
   private void addSWRLABoxBuiltIns()
