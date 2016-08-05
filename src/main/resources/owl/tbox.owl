@@ -10,4 +10,16 @@
   xml:base="http://swrl.stanford.edu/ontologies/built-ins/5.0.0/tbox.owl">
   <owl:Ontology rdf:about=""/>
   <swrl:Builtin rdf:ID="sca"/>
+  <swrl:Builtin rdf:ID="eca"/>
+  <swrl:Builtin rdf:ID="dca"/>
+  <swrl:Builtin rdf:ID="fopa"/>
+  <swrl:Builtin rdf:ID="ifopa"/>
+  <swrl:Builtin rdf:ID="fdpa"/>
+  <swrl:Builtin rdf:ID="opda"/>
+  <swrl:Builtin rdf:ID="opra"/>
+  <swrl:Builtin rdf:ID="dpda"/>
+  <swrl:Builtin rdf:ID="dpra"/>
+  <swrl:Builtin rdf:ID="dda"/>
+  <swrl:Builtin rdf:ID="dua"/>
+  <swrl:Builtin rdf:ID="hka"/>
 </rdf:RDF>

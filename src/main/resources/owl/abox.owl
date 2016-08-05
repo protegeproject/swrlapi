@@ -9,5 +9,11 @@
     xmlns:owl="http://www.w3.org/2002/07/owl#"
   xml:base="http://swrl.stanford.edu/ontologies/built-ins/5.0.0/abox.owl">
   <owl:Ontology rdf:about=""/>
-  <swrl:Builtin rdf:ID="ca"/>
+  <swrl:Builtin rdf:ID="caa"/>
+  <swrl:Builtin rdf:ID="sia"/>
+  <swrl:Builtin rdf:ID="dia"/>
+  <swrl:Builtin rdf:ID="opaa"/>
+  <swrl:Builtin rdf:ID="nopaa"/>
+  <swrl:Builtin rdf:ID="dpaa"/>
+  <swrl:Builtin rdf:ID="dspaa"/>
 </rdf:RDF>
