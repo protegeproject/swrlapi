@@ -88,7 +88,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
       for (OWLEquivalentClassesAxiom axiom : axioms) {
         OWLClassExpression candidateValue1 = axiom.getClassExpressionsAsList().get(0);
-        OWLClassExpression candidateValue2 = axiom.getClassExpressionsAsList().get(2);
+        OWLClassExpression candidateValue2 = axiom.getClassExpressionsAsList().get(1);
 
         if (!noBoundArgumentsMismatch(inputArgumentValues, candidateValue1, candidateValue2)) {
           if (outputMultiValueArguments.isEmpty())
@@ -124,7 +124,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
       for (OWLDisjointClassesAxiom axiom : axioms) {
         OWLClassExpression candidateValue1 = axiom.getClassExpressionsAsList().get(0);
-        OWLClassExpression candidateValue2 = axiom.getClassExpressionsAsList().get(2);
+        OWLClassExpression candidateValue2 = axiom.getClassExpressionsAsList().get(1);
 
         if (!noBoundArgumentsMismatch(inputArgumentValues, candidateValue1, candidateValue2)) {
           if (outputMultiValueArguments.isEmpty())
