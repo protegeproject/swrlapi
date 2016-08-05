@@ -13,7 +13,6 @@
   <swrl:Builtin rdf:ID="djopa"/>
   <swrl:Builtin rdf:ID="sopa"/>
   <swrl:Builtin rdf:ID="eopa"/>
-  <swrl:Builtin rdf:ID="sopa"/>
   <swrl:Builtin rdf:ID="spa"/>
   <swrl:Builtin rdf:ID="aopa"/>
   <swrl:Builtin rdf:ID="ropa"/>
@@ -21,7 +20,6 @@
   <swrl:Builtin rdf:ID="iopa"/>
   <swrl:Builtin rdf:ID="djdpa"/>
   <swrl:Builtin rdf:ID="sdpa"/>
-  <swrl:Builtin rdf:ID="dpda"/>
   <swrl:Builtin rdf:ID="edpa"/>
   <swrl:Builtin rdf:ID="spoca"/>
 </rdf:RDF>
