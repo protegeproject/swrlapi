@@ -9,6 +9,7 @@ import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.exceptions.SQWRLInvalidQueryNameException;
 import org.swrlapi.sqwrl.values.SQWRLClassExpressionResultValue;
+import org.swrlapi.sqwrl.values.SQWRLDataPropertyExpressionResultValue;
 import org.swrlapi.sqwrl.values.SQWRLEntityResultValue;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLObjectPropertyExpressionResultValue;
@@ -265,6 +266,9 @@ public class SQWRLResultView extends JPanel implements SWRLAPIView
         } else   if (sqwrlResultValue != null && sqwrlResultValue.isObjectPropertyExpression()) {
           SQWRLObjectPropertyExpressionResultValue sqwrlObjectPropertyExpressionResultValue = sqwrlResultValue.asObjectPropertyExpressionResult();
           return sqwrlObjectPropertyExpressionResultValue.getRendering();
+        } else   if (sqwrlResultValue != null && sqwrlResultValue.isDataPropertyExpression()) {
+          SQWRLDataPropertyExpressionResultValue sqwrlDataPropertyExpressionResultValue = sqwrlResultValue.asDataPropertyExpressionResult();
+          return sqwrlDataPropertyExpressionResultValue.getRendering();
         } else if (sqwrlResultValue != null && sqwrlResultValue.isLiteral()) {
           SQWRLLiteralResultValue sqwrLiteralResultValue = sqwrlResultValue.asLiteralResult();
           if (sqwrLiteralResultValue.isInt() || sqwrLiteralResultValue.isFloat() || sqwrLiteralResultValue.isString()
