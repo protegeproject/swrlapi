@@ -3,6 +3,7 @@ package org.swrlapi.factory;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentType;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
 import org.swrlapi.exceptions.SWRLBuiltInException;
@@ -17,6 +18,11 @@ class DefaultSWRLAnnotationPropertyBuiltInArgument extends DefaultSWRLNamedBuilt
     super(property);
   }
 
+  @NonNull @Override public SWRLBuiltInArgumentType<?> getSWRLBuiltInArgumentType()
+  {
+    return SWRLBuiltInArgumentType.ANNOTATION_PROPERTY;
+  }
+
   @NonNull @Override public OWLAnnotationProperty getOWLAnnotationProperty()
   {
     return getOWLEntity().asOWLAnnotationProperty();
@@ -25,11 +31,6 @@ class DefaultSWRLAnnotationPropertyBuiltInArgument extends DefaultSWRLNamedBuilt
   @NonNull @Override public <@NonNull T> T accept(@NonNull SWRLBuiltInArgumentVisitorEx<@NonNull T> visitor)
   {
     return visitor.visit(this);
-  }
-
-  @Override public boolean isAnnotationProperty()
-  {
-    return true;
   }
 
   @NonNull @Override public SWRLAnnotationPropertyBuiltInArgument asSWRLAnnotationPropertyBuiltInArgument()

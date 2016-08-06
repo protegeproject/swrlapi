@@ -3,6 +3,7 @@ package org.swrlapi.factory;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;
+import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentType;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
 import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
@@ -28,14 +29,9 @@ class DefaultSWRLClassBuiltInArgument extends DefaultSWRLNamedBuiltInArgument im
     return visitor.visit(this);
   }
 
-  @Override public boolean isClass()
+  @NonNull @Override public SWRLBuiltInArgumentType<?> getSWRLBuiltInArgumentType()
   {
-    return true;
-  }
-
-  @Override public boolean isClassExpression()
-  {
-    return true;
+    return SWRLBuiltInArgumentType.CLASS;
   }
 
   @NonNull @Override public SWRLClassBuiltInArgument asSWRLClassBuiltInArgument() throws SWRLBuiltInException
@@ -43,13 +39,13 @@ class DefaultSWRLClassBuiltInArgument extends DefaultSWRLNamedBuiltInArgument im
     return this;
   }
 
-  @Override public @NonNull SWRLClassExpressionBuiltInArgument asSWRLClassExpressionBuiltInArgument()
+  @NonNull @Override public SWRLClassExpressionBuiltInArgument asSWRLClassExpressionBuiltInArgument()
     throws SWRLBuiltInException
   {
     return this;
   }
 
-  @Override public @NonNull OWLClassExpression getOWLClassExpression()
+  @NonNull @Override public OWLClassExpression getOWLClassExpression()
   {
     return getOWLClass();
   }

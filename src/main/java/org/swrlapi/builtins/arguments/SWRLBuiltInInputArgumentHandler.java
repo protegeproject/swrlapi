@@ -1,16 +1,8 @@
-package org.swrlapi.builtins;
+package org.swrlapi.builtins.arguments;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLLiteral;
-import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLClassExpressionBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLDataPropertyExpressionBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLObjectPropertyExpressionBuiltInArgument;
 import org.swrlapi.exceptions.InvalidSWRLBuiltInArgumentNumberException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.literal.XSDDate;
@@ -394,6 +386,58 @@ public interface SWRLBuiltInInputArgumentHandler
    */
   void checkThatArgumentIsADataPropertyExpression(int argumentNumber,
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+
+  /**
+   * @param argumentNumber The 0-based index of the argument
+   * @param arguments      The built-in arguments
+   * @return True if the specified argument is an annotation property
+   * @throws SWRLBuiltInException If an error occurs during processing
+   */
+  boolean isArgumentAnAnnotationProperty(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException;
+
+  /**
+   * @param argumentNumber The 0-based index of the argument
+   * @param arguments      The built-in arguments
+   * @return An annotation property built-in argument
+   * @throws SWRLBuiltInException If an error occurs during processing
+   */
+  @NonNull SWRLAnnotationPropertyBuiltInArgument getArgumentAsAnAnnotationProperty(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+
+  /**
+   * @param argumentNumber The 0-based index of the argument
+   * @param arguments      The built-in arguments
+   * @throws SWRLBuiltInException If the specified argument is not an annotation property
+   */
+  void checkThatArgumentIsAnAnnotationProperty(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+
+  /**
+   * @param argumentNumber The 0-based index of the argument
+   * @param arguments      The built-in arguments
+   * @return True if the specified argument is a datatype
+   * @throws SWRLBuiltInException If an error occurs during processing
+   */
+  boolean isArgumentADatatype(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException;
+
+  /**
+   * @param argumentNumber The 0-based index of the argument
+   * @param arguments      The built-in arguments
+   * @return A datatype built-in argument
+   * @throws SWRLBuiltInException If an error occurs during processing
+   */
+  @NonNull SWRLDatatypeBuiltInArgument getArgumentAsADatatype(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+
+  /**
+   * @param argumentNumber The 0-based index of the argument
+   * @param arguments      The built-in arguments
+   * @throws SWRLBuiltInException If the specified argument is not a datatype
+   */
+  void checkThatArgumentIsADatatype(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException;
 
   /**
    * @param arguments The built-in arguments

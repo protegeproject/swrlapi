@@ -5,7 +5,7 @@ SWRLAPI
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/edu.stanford.swrl/swrlapi/badge.svg)](https://maven-badges.herokuapp.com/maven-central/edu.stanford.swrl/swrlapi)
 [![Dependency Status](https://www.versioneye.com/user/projects/56a249619b5998003d000022/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56a249619b5998003d000022)
 
-The SWRLAPI is a Java API for working with the [OWL](http://en.wikipedia.org/wiki/Web_Ontology_Language)-based [SWRL](http://www.w3.org/Submission/SWRL/) rule and [SQWRL](https://github.com/protegeproject/swrlapi/wiki/SQWRL) query langauges. 
+The SWRLAPI is a Java API for working with the [OWL](http://en.wikipedia.org/wiki/Web_Ontology_Language)-based [SWRL](http://www.w3.org/Submission/SWRL/) rule and [SQWRL](https://github.com/protegeproject/swrlapi/wiki/SQWRL) query languages. 
 It includes graphical tools for editing and executing rules and queries.
 
 See the [SWRLAPI Wiki](https://github.com/protegeproject/swrlapi/wiki) for documentation.

@@ -13,11 +13,16 @@ import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
+import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.swrlapi.builtins.arguments.SQWRLCollectionVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentCreator;
+import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentType;
+import org.swrlapi.builtins.arguments.SWRLBuiltInInputArgumentHandler;
+import org.swrlapi.builtins.arguments.SWRLBuiltInResultArgumentHandler;
 import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLClassExpressionBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
@@ -55,10 +60,11 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * A class that must be subclassed by a class implementing a library of SWRL built-in methods.
- * <p>
+ * <p/>
  * Provides invocation context for invoked built-ins (such the name of invoking rule, whether the invocation is in the
  * consequent or the antecedent) and access to the invoking {@link org.swrlapi.builtins.SWRLBuiltInBridge}. Also
  * provides implementations for a large number of SWRL built-in argument processing methods.
@@ -67,7 +73,7 @@ import java.util.Map;
  * @see org.swrlapi.builtins.SWRLBuiltInContext
  * @see SWRLBuiltInInputArgumentHandler
  * @see SWRLBuiltInResultArgumentHandler
- * @see org.swrlapi.builtins.SWRLBuiltInArgumentCreator
+ * @see SWRLBuiltInArgumentCreator
  */
 public abstract class AbstractSWRLBuiltInLibrary
   implements SWRLBuiltInLibrary, SWRLBuiltInInputArgumentHandler, SWRLBuiltInResultArgumentHandler,
@@ -679,6 +685,22 @@ public abstract class AbstractSWRLBuiltInLibrary
     return arguments.get(argumentNumber).asSWRLDataPropertyExpressionBuiltInArgument();
   }
 
+  @NonNull @Override public SWRLAnnotationPropertyBuiltInArgument getArgumentAsAnAnnotationProperty(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    checkThatArgumentIsAnAnnotationProperty(argumentNumber, arguments);
+
+    return (SWRLAnnotationPropertyBuiltInArgument)arguments.get(argumentNumber);
+  }
+
+  @NonNull @Override public SWRLDatatypeBuiltInArgument getArgumentAsADatatype(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    checkThatArgumentIsADatatype(argumentNumber, arguments);
+
+    return (SWRLDatatypeBuiltInArgument)arguments.get(argumentNumber);
+  }
+
   @NonNull @Override public IRI getArgumentAsAnIRI(int argumentNumber,
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
@@ -885,12 +907,30 @@ public abstract class AbstractSWRLBuiltInLibrary
     return (arguments.get(argumentNumber) instanceof SWRLDataPropertyBuiltInArgument);
   }
 
+  @Override public boolean isArgumentAnAnnotationProperty(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    checkThatArgumentIsBound(argumentNumber, arguments);
+
+    return (arguments.get(argumentNumber) instanceof SWRLAnnotationPropertyBuiltInArgument);
+  }
+
+  @Override public boolean isArgumentADatatype(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    checkThatArgumentIsBound(argumentNumber, arguments);
+
+    return (arguments.get(argumentNumber) instanceof SWRLDatatypeBuiltInArgument);
+  }
+
   @Override public boolean isArgumentADataPropertyExpression(int argumentNumber,
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkThatArgumentIsBound(argumentNumber, arguments);
 
-    return arguments.get(argumentNumber).isDataPropertyExpression();
+    return
+      arguments.get(argumentNumber).getSWRLBuiltInArgumentType() == SWRLBuiltInArgumentType.DATA_PROPERTY_EXPRESSION
+        || arguments.get(argumentNumber).getSWRLBuiltInArgumentType() == SWRLBuiltInArgumentType.DATA_PROPERTY;
   }
 
   @Override public boolean isArgumentAnObjectProperty(int argumentNumber,
@@ -898,7 +938,7 @@ public abstract class AbstractSWRLBuiltInLibrary
   {
     checkThatArgumentIsBound(argumentNumber, arguments);
 
-    return (arguments.get(argumentNumber) instanceof SWRLObjectPropertyBuiltInArgument);
+    return arguments.get(argumentNumber).getSWRLBuiltInArgumentType() == SWRLBuiltInArgumentType.OBJECT_PROPERTY;
   }
 
   @Override public boolean isArgumentAnObjectPropertyExpression(int argumentNumber,
@@ -906,7 +946,9 @@ public abstract class AbstractSWRLBuiltInLibrary
   {
     checkThatArgumentIsBound(argumentNumber, arguments);
 
-    return arguments.get(argumentNumber).isObjectPropertyExpression();
+    return
+      arguments.get(argumentNumber).getSWRLBuiltInArgumentType() == SWRLBuiltInArgumentType.OBJECT_PROPERTY_EXPRESSION
+        || arguments.get(argumentNumber).getSWRLBuiltInArgumentType() == SWRLBuiltInArgumentType.OBJECT_PROPERTY;
   }
 
   @Override public void checkThatArgumentIsAProperty(int argumentNumber,
@@ -941,6 +983,22 @@ public abstract class AbstractSWRLBuiltInLibrary
         makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "data property"));
   }
 
+  @Override public void checkThatArgumentIsAnAnnotationProperty(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    if (!isArgumentAnAnnotationProperty(argumentNumber, arguments))
+      throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
+        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "annotation property"));
+  }
+
+  @Override public void checkThatArgumentIsADatatype(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    if (!isArgumentADatatype(argumentNumber, arguments))
+      throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
+        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "datatype"));
+  }
+
   @Override public void checkThatArgumentIsADataPropertyExpression(int argumentNumber,
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
@@ -969,7 +1027,7 @@ public abstract class AbstractSWRLBuiltInLibrary
   {
     checkThatArgumentIsBound(argumentNumber, arguments);
 
-    return (arguments.get(argumentNumber) instanceof SWRLClassBuiltInArgument);
+    return arguments.get(argumentNumber).getSWRLBuiltInArgumentType() == SWRLBuiltInArgumentType.CLASS;
   }
 
   @Override public boolean isArgumentAClassExpression(int argumentNumber,
@@ -977,7 +1035,8 @@ public abstract class AbstractSWRLBuiltInLibrary
   {
     checkThatArgumentIsBound(argumentNumber, arguments);
 
-    return arguments.get(argumentNumber).isClassExpression();
+    return arguments.get(argumentNumber).getSWRLBuiltInArgumentType() == SWRLBuiltInArgumentType.CLASS_EXPRESSION
+      || arguments.get(argumentNumber).getSWRLBuiltInArgumentType() == SWRLBuiltInArgumentType.CLASS;
   }
 
   @Override public void checkThatArgumentIsAClass(int argumentNumber,
@@ -1445,7 +1504,8 @@ public abstract class AbstractSWRLBuiltInLibrary
         throw new SWRLBuiltInException(
           "built-in " + builtInName + " in rule " + ruleName + " " + "returned with unbound argument ?" + argument
             .asVariable().getVariableName());
-      else if (argument.isMultiValueVariable() && argument.asMultiValueVariable().hasNoArguments())
+      else if (argument.getSWRLBuiltInArgumentType() == SWRLBuiltInArgumentType.MULTI_VALUE_VARIABLE && argument
+        .asMultiValueVariable().hasNoArguments())
         throw new SWRLBuiltInException(
           "built-in " + builtInName + " in rule " + ruleName + " " + "returned with empty multi-argument ?" + argument
             .asVariable().getVariableName());
@@ -1768,6 +1828,110 @@ public abstract class AbstractSWRLBuiltInLibrary
     getBuiltInBridge().injectOWLAxiom(classAssertionAxiom);
 
     return individual;
+  }
+
+  @NonNull protected Map<Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> createOutputMultiValueArguments(
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    Map<Integer, SWRLMultiValueVariableBuiltInArgument> outputMultiValueArguments = new HashMap<>();
+
+    for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++) {
+      if (arguments.get(argumentNumber).isVariable()) {
+        IRI variableIRI = arguments.get(argumentNumber).asVariable().getIRI();
+        outputMultiValueArguments.put(argumentNumber, createSWRLMultiValueVariableBuiltInArgument(variableIRI));
+      }
+    }
+    return outputMultiValueArguments;
+  }
+
+  @NonNull protected Map<Integer, @NonNull OWLObject> getInputArgumentValues(
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments, @NonNull SWRLBuiltInArgumentType<?>... builtInArgumentTypes)
+    throws SWRLBuiltInException
+  {
+    Map<Integer, @NonNull OWLObject> boundInputArgumentValues = new HashMap<>();
+
+    if (arguments.size() != builtInArgumentTypes.length)
+      throw new SWRLBuiltInException(
+        "internal error: expecting " + arguments.size() + " entries for bound argument types, got"
+          + builtInArgumentTypes.length);
+
+    for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++) {
+      if (!arguments.get(argumentNumber).isVariable()) {
+        SWRLBuiltInArgumentType<?> builtInArgumentType = builtInArgumentTypes[argumentNumber];
+
+        if (builtInArgumentType == SWRLBuiltInArgumentType.LITERAL) {
+          checkThatArgumentIsALiteral(argumentNumber, arguments);
+          boundInputArgumentValues
+            .put(argumentNumber, arguments.get(argumentNumber).asSWRLLiteralBuiltInArgument().getLiteral());
+        } else if (builtInArgumentType == SWRLBuiltInArgumentType.CLASS) {
+          checkThatArgumentIsAClass(argumentNumber, arguments);
+          boundInputArgumentValues
+            .put(argumentNumber, arguments.get(argumentNumber).asSWRLClassBuiltInArgument().getOWLClass());
+        } else if (builtInArgumentType == SWRLBuiltInArgumentType.CLASS_EXPRESSION) {
+          checkThatArgumentIsAClassExpression(argumentNumber, arguments);
+          boundInputArgumentValues.put(argumentNumber,
+            arguments.get(argumentNumber).asSWRLClassExpressionBuiltInArgument().getOWLClassExpression());
+        } else if (builtInArgumentType == SWRLBuiltInArgumentType.NAMED_INDIVIDUAL) {
+          checkThatArgumentIsANamedIndividual(argumentNumber, arguments);
+          boundInputArgumentValues.put(argumentNumber,
+            arguments.get(argumentNumber).asSWRLNamedIndividualBuiltInArgument().getOWLNamedIndividual());
+        } else if (builtInArgumentType == SWRLBuiltInArgumentType.OBJECT_PROPERTY) {
+          checkThatArgumentIsAnObjectProperty(argumentNumber, arguments);
+          boundInputArgumentValues.put(argumentNumber,
+            arguments.get(argumentNumber).asSWRLObjectPropertyBuiltInArgument().getOWLObjectProperty());
+        } else if (builtInArgumentType == SWRLBuiltInArgumentType.OBJECT_PROPERTY_EXPRESSION) {
+          checkThatArgumentIsAnObjectPropertyExpression(argumentNumber, arguments);
+          boundInputArgumentValues.put(argumentNumber,
+            arguments.get(argumentNumber).asSWRLObjectPropertyExpressionBuiltInArgument()
+              .getOWLObjectPropertyExpression());
+        } else if (builtInArgumentType == SWRLBuiltInArgumentType.DATA_PROPERTY) {
+          checkThatArgumentIsADataProperty(argumentNumber, arguments);
+          boundInputArgumentValues.put(argumentNumber,
+            arguments.get(argumentNumber).asSWRLDataPropertyBuiltInArgument().getOWLDataProperty());
+        } else if (builtInArgumentType == SWRLBuiltInArgumentType.DATA_PROPERTY_EXPRESSION) {
+          checkThatArgumentIsADataPropertyExpression(argumentNumber, arguments);
+          boundInputArgumentValues.put(argumentNumber,
+            arguments.get(argumentNumber).asSWRLDataPropertyExpressionBuiltInArgument().getOWLDataPropertyExpression());
+        } else if (builtInArgumentType == SWRLBuiltInArgumentType.ANNOTATION_PROPERTY) {
+          checkThatArgumentIsAnAnnotationProperty(argumentNumber, arguments);
+          boundInputArgumentValues.put(argumentNumber,
+            arguments.get(argumentNumber).asSWRLAnnotationPropertyBuiltInArgument().getOWLAnnotationProperty());
+        } else if (builtInArgumentType == SWRLBuiltInArgumentType.DATATYPE) {
+          checkThatArgumentIsADatatype(argumentNumber, arguments);
+          boundInputArgumentValues
+            .put(argumentNumber, arguments.get(argumentNumber).asSWRLDatatypeBuiltInArgument().getOWLDatatype());
+        } else
+          throw new SWRLBuiltInException(
+            "internal error: unexpected argument type " + builtInArgumentType + " for argument number "
+              + argumentNumber);
+      }
+    }
+    return boundInputArgumentValues;
+  }
+
+  protected boolean noBoundArgumentsMismatch(Map<Integer, @NonNull OWLObject> inputArgumentValues,
+    OWLObject... candidateValues) throws SWRLBuiltInException
+  {
+    for (int argumentNumber : inputArgumentValues.keySet()) {
+      OWLObject inputArgumentValue = inputArgumentValues.get(argumentNumber);
+      if (!inputArgumentValue.equals(candidateValues[argumentNumber]))
+        return true;
+    }
+    return false;
+  }
+
+  protected boolean processOutputMultiValueArguments(@NonNull List<@NonNull SWRLBuiltInArgument> arguments,
+    Map<@NonNull Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> outputMultiValueArguments)
+    throws SWRLBuiltInException
+  {
+    if (outputMultiValueArguments.values().stream().filter(a -> a.hasArguments()).collect(Collectors.toSet())
+      .isEmpty()) // No output multi-value arguments have content
+      return false;
+    else {
+      for (Integer argumentNumber : outputMultiValueArguments.keySet())
+        arguments.get(argumentNumber).asVariable().setBuiltInResult(outputMultiValueArguments.get(argumentNumber));
+      return true;
+    }
   }
 
   private void checkThatArgumentIsALiteral(SWRLBuiltInArgument argument) throws SWRLBuiltInException

@@ -6,6 +6,7 @@ import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLClassExpressionResultValue;
 import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
 import org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue;
+import org.swrlapi.sqwrl.values.SQWRLDataRangeResultValue;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLNamedIndividualResultValue;
 import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
@@ -150,6 +151,20 @@ public interface SQWRLResult
 
   /**
    * @param columnIndex A column index
+   * @return A data range result value
+   * @throws SQWRLException If an error occurs
+   */
+  @NonNull SQWRLDataRangeResultValue getDataRange(int columnIndex) throws SQWRLException;
+
+  /**
+   * @param columnName A column name A column name
+   * @return A data range result value
+   * @throws SQWRLException If an error occurs
+   */
+  @NonNull SQWRLDataRangeResultValue getDataRange(@NonNull String columnName) throws SQWRLException;
+
+  /**
+   * @param columnIndex A column index
    * @return An annotation property result value
    * @throws SQWRLException If an error occurs
    */
@@ -252,6 +267,20 @@ public interface SQWRLResult
    * @throws SQWRLException If an error occurs
    */
   boolean hasAnnotationPropertyValue(int columnIndex) throws SQWRLException;
+
+  /**
+   * @param columnName A column name
+   * @return True if the value of the specified column is a data range
+   * @throws SQWRLException If an error occurs
+   */
+  boolean hasDataRangeValue(@NonNull String columnName) throws SQWRLException;
+
+  /**
+   * @param columnIndex A column index
+   * @return True if the value of the specified column is a data range
+   * @throws SQWRLException If an error occurs
+   */
+  boolean hasDataRangeValue(int columnIndex) throws SQWRLException;
 
   /**
    * @param columnName A column name

@@ -38,11 +38,6 @@ abstract class DefaultSWRLNamedBuiltInArgument extends DefaultSWRLBuiltInArgumen
     return this.entity.getIRI();
   }
 
-  public @Override boolean isNamed()
-  {
-    return true;
-  }
-
   @NonNull @Override public SWRLNamedBuiltInArgument asSWRLNamedBuiltInArgument()
   {
     return this;

@@ -8,8 +8,10 @@ import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.sqwrl.exceptions.SQWRLInvalidQueryNameException;
+import org.swrlapi.sqwrl.values.SQWRLClassExpressionResultValue;
 import org.swrlapi.sqwrl.values.SQWRLEntityResultValue;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
+import org.swrlapi.sqwrl.values.SQWRLObjectPropertyExpressionResultValue;
 import org.swrlapi.sqwrl.values.SQWRLResultValue;
 import org.swrlapi.ui.model.SQWRLQueryEngineModel;
 import org.swrlapi.ui.view.SWRLAPIView;
@@ -243,7 +245,7 @@ public class SQWRLResultView extends JPanel implements SWRLAPIView
           "" :
           SQWRLResultView.this.sqwrlResult.getColumnName(columnIndex);
       } catch (SQWRLException e) {
-        return "INVALID";
+        return "<INVALID>";
       }
     }
 
@@ -257,6 +259,12 @@ public class SQWRLResultView extends JPanel implements SWRLAPIView
         if (sqwrlResultValue != null && sqwrlResultValue.isEntity()) {
           SQWRLEntityResultValue sqwrlEntityResultValue = sqwrlResultValue.asEntityResult();
           return sqwrlEntityResultValue.getShortName();
+        } else   if (sqwrlResultValue != null && sqwrlResultValue.isClassExpression()) {
+          SQWRLClassExpressionResultValue sqwrlClassExpressionResultValue = sqwrlResultValue.asClassExpressionResult();
+          return sqwrlClassExpressionResultValue.getRendering();
+        } else   if (sqwrlResultValue != null && sqwrlResultValue.isObjectPropertyExpression()) {
+          SQWRLObjectPropertyExpressionResultValue sqwrlObjectPropertyExpressionResultValue = sqwrlResultValue.asObjectPropertyExpressionResult();
+          return sqwrlObjectPropertyExpressionResultValue.getRendering();
         } else if (sqwrlResultValue != null && sqwrlResultValue.isLiteral()) {
           SQWRLLiteralResultValue sqwrLiteralResultValue = sqwrlResultValue.asLiteralResult();
           if (sqwrLiteralResultValue.isInt() || sqwrLiteralResultValue.isFloat() || sqwrLiteralResultValue.isString()
@@ -265,9 +273,9 @@ public class SQWRLResultView extends JPanel implements SWRLAPIView
           else
             return "\"" + sqwrLiteralResultValue.getValue() + "\"^^" + sqwrLiteralResultValue.getDatatypePrefixedName();
         } else
-          return "INVALID";
+          return "<INVALID>";
       } catch (SQWRLException e) {
-        return "INVALID";
+        return "<INVALID>";
       }
     }
   }

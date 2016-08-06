@@ -6,6 +6,7 @@ import org.checkerframework.dataflow.qual.Deterministic;
 import org.checkerframework.dataflow.qual.SideEffectFree;
 import org.semanticweb.owlapi.model.IRI;
 import org.swrlapi.builtins.arguments.SQWRLCollectionVariableBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentType;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
 import org.swrlapi.exceptions.SWRLBuiltInException;
@@ -24,6 +25,11 @@ class DefaultSQWRLCollectionVariableBuiltInArgument extends DefaultSWRLVariableB
     this.queryName = queryName;
     this.collectionName = collectionName;
     this.collectionGroupID = collectionGroupID;
+  }
+
+  @NonNull @Override public SWRLBuiltInArgumentType<?> getSWRLBuiltInArgumentType()
+  {
+    return SWRLBuiltInArgumentType.COLLECTION_VARIABLE;
   }
 
   @Override public String getGroupID()

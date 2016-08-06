@@ -2,6 +2,7 @@ package org.swrlapi.factory;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
+import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentType;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
@@ -17,6 +18,11 @@ class DefaultSWRLNamedIndividualBuiltInArgument extends DefaultSWRLNamedBuiltInA
     super(individual);
   }
 
+  @NonNull @Override public SWRLBuiltInArgumentType<?> getSWRLBuiltInArgumentType()
+  {
+    return SWRLBuiltInArgumentType.NAMED_INDIVIDUAL;
+  }
+
   @NonNull @Override public OWLNamedIndividual getOWLNamedIndividual()
   {
     return getOWLEntity().asOWLNamedIndividual();
@@ -27,10 +33,8 @@ class DefaultSWRLNamedIndividualBuiltInArgument extends DefaultSWRLNamedBuiltInA
     return visitor.visit(this);
   }
 
-  @Override public boolean isNamedIndividual() { return true; }
-
-  @NonNull @Override public SWRLNamedIndividualBuiltInArgument asSWRLNamedIndividualBuiltInArgument() throws
-    SWRLBuiltInException
+  @NonNull @Override public SWRLNamedIndividualBuiltInArgument asSWRLNamedIndividualBuiltInArgument()
+    throws SWRLBuiltInException
   {
     return this;
   }

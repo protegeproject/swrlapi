@@ -12,6 +12,7 @@ import org.semanticweb.owlapi.model.OWLObjectVisitorEx;
 import org.semanticweb.owlapi.model.SWRLObjectVisitor;
 import org.semanticweb.owlapi.model.SWRLObjectVisitorEx;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
+import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentType;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
 import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
@@ -51,29 +52,14 @@ class DefaultSWRLVariableBuiltInArgument extends DefaultSWRLBuiltInArgument impl
     this.isBound = true;
   }
 
+  @NonNull @Override public SWRLBuiltInArgumentType<?> getSWRLBuiltInArgumentType()
+  {
+    return SWRLBuiltInArgumentType.VARIABLE;
+  }
+
   @NonNull @Override public IRI getIRI()
   {
     return this.variableIRI;
-  }
-
-  @Override public boolean isVariable()
-  {
-    return true;
-  }
-
-  @Override public boolean isMultiValueVariable()
-  {
-    return false;
-  }
-
-  @Override public boolean isLiteral()
-  {
-    return false;
-  }
-
-  @Override public boolean isNamed()
-  {
-    return false;
   }
 
   @NonNull @Override public SWRLVariableBuiltInArgument asVariable()

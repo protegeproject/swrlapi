@@ -1054,7 +1054,24 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
   {
     String prefix = "http://swrl.stanford.edu/ontologies/built-ins/5.0.0/tbox.owl#";
 
+    addSWRLBuiltIn(IRI.create(prefix, "cd"));
+    addSWRLBuiltIn(IRI.create(prefix, "opd"));
+    addSWRLBuiltIn(IRI.create(prefix, "dpd"));
+    addSWRLBuiltIn(IRI.create(prefix, "apd"));
+    addSWRLBuiltIn(IRI.create(prefix, "dd"));
     addSWRLBuiltIn(IRI.create(prefix, "sca"));
+    addSWRLBuiltIn(IRI.create(prefix, "eca"));
+    addSWRLBuiltIn(IRI.create(prefix, "dca"));
+    addSWRLBuiltIn(IRI.create(prefix, "fopa"));
+    addSWRLBuiltIn(IRI.create(prefix, "ifopa"));
+    addSWRLBuiltIn(IRI.create(prefix, "fdpa"));
+    addSWRLBuiltIn(IRI.create(prefix, "opda"));
+    addSWRLBuiltIn(IRI.create(prefix, "opra"));
+    addSWRLBuiltIn(IRI.create(prefix, "dpda"));
+    addSWRLBuiltIn(IRI.create(prefix, "dpra"));
+    addSWRLBuiltIn(IRI.create(prefix, "dda"));
+    addSWRLBuiltIn(IRI.create(prefix, "dua"));
+    addSWRLBuiltIn(IRI.create(prefix, "hka"));
   }
 
   private void addSWRLABoxBuiltIns()
@@ -1062,12 +1079,32 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     String prefix = "http://swrl.stanford.edu/ontologies/built-ins/5.0.0/abox.owl#";
 
     addSWRLBuiltIn(IRI.create(prefix, "caa"));
+    addSWRLBuiltIn(IRI.create(prefix, "sia"));
+    addSWRLBuiltIn(IRI.create(prefix, "dia"));
+    addSWRLBuiltIn(IRI.create(prefix, "opaa"));
+    addSWRLBuiltIn(IRI.create(prefix, "nopaa"));
+    addSWRLBuiltIn(IRI.create(prefix, "dpaa"));
+    addSWRLBuiltIn(IRI.create(prefix, "ndpaa"));
   }
 
   private void addSWRLRBoxBuiltIns()
   {
     String prefix = "http://swrl.stanford.edu/ontologies/built-ins/5.0.0/rbox.owl#";
 
+    addSWRLBuiltIn(IRI.create(prefix, "topa"));
+    addSWRLBuiltIn(IRI.create(prefix, "djopa"));
+    addSWRLBuiltIn(IRI.create(prefix, "eopa"));
+    addSWRLBuiltIn(IRI.create(prefix, "sopa"));
+    addSWRLBuiltIn(IRI.create(prefix, "spa"));
+    addSWRLBuiltIn(IRI.create(prefix, "aopa"));
+    addSWRLBuiltIn(IRI.create(prefix, "ropa"));
+    addSWRLBuiltIn(IRI.create(prefix, "iropa"));
+    addSWRLBuiltIn(IRI.create(prefix, "iopa"));
+    addSWRLBuiltIn(IRI.create(prefix, "djdpa"));
+    addSWRLBuiltIn(IRI.create(prefix, "sdpa"));
+    addSWRLBuiltIn(IRI.create(prefix, "dpda"));
+    addSWRLBuiltIn(IRI.create(prefix, "edpa"));
+    addSWRLBuiltIn(IRI.create(prefix, "spoca"));
   }
 
   private void addSWRLMBuiltIns()
