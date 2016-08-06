@@ -194,7 +194,7 @@ public class SWRLRulesAndSQWRLQueriesTableModel extends AbstractTableModel imple
       case RuleAndQueryContent:
         return RULE_AND_QUERY_TEXT_COLUMN_TITLE;
       default:
-        return "INVALID";
+        return "<INVALID>";
       }
     } else if (column == getRuleCommentColumnNumber())
       return RULE_COMMENT_COLUMN_TITLE;
