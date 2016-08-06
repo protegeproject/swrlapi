@@ -1,7 +1,6 @@
 package org.swrlapi.factory;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.semanticweb.owlapi.io.OWLObjectRenderer;
 import org.semanticweb.owlapi.model.SWRLArgument;
 import org.semanticweb.owlapi.model.SWRLAtom;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
@@ -42,15 +41,14 @@ class DefaultSQWRLQuery implements SQWRLQuery
 
   public DefaultSQWRLQuery(@NonNull String queryName, @NonNull List<@NonNull SWRLAtom> bodyAtoms,
     @NonNull List<@NonNull SWRLAtom> headAtoms, boolean active, @NonNull String comment,
-    @NonNull LiteralFactory literalFactory, @NonNull IRIResolver iriResolver,
-    @NonNull OWLObjectRenderer owlObjectRenderer) throws SWRLBuiltInException
+    @NonNull LiteralFactory literalFactory, @NonNull IRIResolver iriResolver) throws SWRLBuiltInException
   {
     this.queryName = queryName;
     this.bodyAtoms = new ArrayList<>(bodyAtoms);
     this.headAtoms = new ArrayList<>(headAtoms);
     this.active = active;
     this.comment = comment;
-    this.sqwrlResult = SWRLAPIInternalFactory.createSQWRLResultManager(iriResolver, owlObjectRenderer);
+    this.sqwrlResult = SWRLAPIInternalFactory.createSQWRLResultManager(iriResolver);
     this.collectionGroupArgumentsMap = new HashMap<>();
     this.literalFactory = literalFactory;
 

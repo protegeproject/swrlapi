@@ -207,7 +207,7 @@ public class SWRLRulesAndSQWRLQueriesTableModel extends AbstractTableModel imple
   @NonNull @Override public Object getValueAt(int row, int column)
   {
     if ((row < 0 || row >= getRowCount()) || ((column < 0 || column >= getColumnCount())))
-      return "OUT OF BOUNDS";
+      return "<OUT OF BOUNDS>";
     else {
       SWRLRuleModel swrlRuleModel = (SWRLRuleModel)this.swrlRuleModels.values().toArray()[row];
       if (column == getRuleTextColumnNumber())
@@ -218,7 +218,7 @@ public class SWRLRulesAndSQWRLQueriesTableModel extends AbstractTableModel imple
         return swrlRuleModel.getComment();
       else if (column == getRuleActiveColumnNumber())
         return swrlRuleModel.isActive() && !swrlRuleModel.isSQWRLQuery();
-      return "INVALID COLUMN";
+      return ">INVALID COLUMN>";
     }
   }
 

@@ -1,7 +1,6 @@
 package org.swrlapi.core;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.semanticweb.owlapi.io.OWLObjectRenderer;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLAxiom;
@@ -189,8 +188,6 @@ public interface SWRLAPIOWLOntology
   @NonNull SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory();
 
   @NonNull IRIResolver getIRIResolver();
-
-  @NonNull OWLObjectRenderer getOWLObjectRenderer();
 
   @NonNull OWLOntologyManager getOWLOntologyManager();
 

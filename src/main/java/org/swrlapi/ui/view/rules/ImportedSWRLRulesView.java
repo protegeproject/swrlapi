@@ -79,7 +79,7 @@ public class ImportedSWRLRulesView extends JPanel implements SWRLAPIView
     public Object getValueAt(int row, int column)
     {
       if (row < 0 || row >= getRowCount())
-        return "OUT OF BOUNDS!";
+        return "<OUT OF BOUNDS>";
       else {
         Set<@NonNull SWRLAPIRule> swrlRules = ImportedSWRLRulesView.this.getSWRLRuleEngine().getSWRLRules();
         SWRLAPIRule[] swrlRuleArray = swrlRules.toArray(new SWRLAPIRule[swrlRules.size()]);

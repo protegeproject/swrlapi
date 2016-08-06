@@ -70,9 +70,11 @@ public class AssertedOWLAxiomsView extends JPanel implements SWRLAPIView
     public Object getValueAt(int row, int column)
     {
       if (row < 0 || row >= getRowCount())
-        return "OUT OF BOUNDS";
-      else
-        return AssertedOWLAxiomsView.this.getSWRLRuleEngine().getAssertedOWLAxioms().toArray()[row];
+        return "<OUT OF BOUNDS>";
+      else {
+        // TODO Use the IRIResolver to render; also add getAssertedOWLAxiomsAsList to SWRLRuleEngine
+        return AssertedOWLAxiomsView.this.getSWRLRuleEngine().getAssertedOWLAxioms().toArray()[row].toString();
+      }
     }
   }
 }

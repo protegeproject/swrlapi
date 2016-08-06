@@ -32,15 +32,13 @@ public class InferredOWLAxiomsView extends JPanel implements SWRLAPIView
     add(BorderLayout.CENTER, scrollPane);
   }
 
-  @Override
-  public void validate()
+  @Override public void validate()
   {
     this.inferredAxiomsTableModel.fireTableDataChanged();
     super.validate();
   }
 
-  @Override
-  public void update()
+  @Override public void update()
   {
     validate();
   }
@@ -54,24 +52,22 @@ public class InferredOWLAxiomsView extends JPanel implements SWRLAPIView
   {
     private static final long serialVersionUID = 1L;
 
-    @Override
-    public int getRowCount()
+    @Override public int getRowCount()
     {
       return InferredOWLAxiomsView.this.getSWRLRuleEngine().getNumberOfInferredOWLAxioms();
     }
 
-    @Override
-    public int getColumnCount()
+    @Override public int getColumnCount()
     {
       return 1;
     }
 
-    @Override
-    public Object getValueAt(int row, int column)
+    @Override public Object getValueAt(int row, int column)
     {
       if (row < 0 || row >= getRowCount())
-        return "OUT OF BOUNDS";
+        return "<OUT OF BOUNDS>";
       else {
+        // TODO Use the IRIResolver to render; also add getInferredOWLAxiomsAsList to SWRLRuleEngine
         return InferredOWLAxiomsView.this.getSWRLRuleEngine().getInferredOWLAxioms().toArray()[row];
       }
     }

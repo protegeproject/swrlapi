@@ -1,14 +1,12 @@
 package org.swrlapi.factory;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.semanticweb.owlapi.io.OWLObjectRenderer;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.SWRLAtom;
-import org.semanticweb.owlapi.util.SimpleRenderer;
 import org.swrlapi.bridge.SWRLBridge;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.IRIResolver;
@@ -56,10 +54,10 @@ public class SWRLAPIInternalFactory
    * @param iriResolver An IRI resolver
    * @return A SWRL rule renderer
    */
-  public static @NonNull SWRLRuleRenderer createSWRLRuleRenderer(@NonNull OWLOntology ontology,
-    @NonNull IRIResolver iriResolver, @NonNull OWLObjectRenderer owlObjectRenderer)
+  @NonNull public static SWRLRuleRenderer createSWRLRuleRenderer(@NonNull OWLOntology ontology,
+    @NonNull IRIResolver iriResolver)
   {
-    return new DefaultSWRLRuleAndQueryRenderer(ontology, iriResolver, owlObjectRenderer);
+    return new DefaultSWRLRuleAndQueryRenderer(ontology, iriResolver);
   }
 
   /**
@@ -67,18 +65,10 @@ public class SWRLAPIInternalFactory
    * @param iriResolver An IRI resolver
    * @return A SQWRL query renderer
    */
-  public static @NonNull SQWRLQueryRenderer createSQWRLQueryRenderer(@NonNull OWLOntology ontology,
-    @NonNull IRIResolver iriResolver, @NonNull OWLObjectRenderer owlObjectRenderer)
+  @NonNull public static SQWRLQueryRenderer createSQWRLQueryRenderer(@NonNull OWLOntology ontology,
+    @NonNull IRIResolver iriResolver)
   {
-    return new DefaultSWRLRuleAndQueryRenderer(ontology, iriResolver, owlObjectRenderer);
-  }
-
-  /**
-   * @return An OWL object renderer
-   */
-  @NonNull public static OWLObjectRenderer createOWLObjectRenderer()
-  {
-    return new SimpleRenderer();
+    return new DefaultSWRLRuleAndQueryRenderer(ontology, iriResolver);
   }
 
   /**
@@ -93,10 +83,9 @@ public class SWRLAPIInternalFactory
    * @param iriResolver An IRI resolver
    * @return A SQWRL result
    */
-  @NonNull public static SQWRLResultManager createSQWRLResultManager(@NonNull IRIResolver iriResolver,
-    @NonNull OWLObjectRenderer owlObjectRenderer)
+  @NonNull public static SQWRLResultManager createSQWRLResultManager(@NonNull IRIResolver iriResolver)
   {
-    return new DefaultSQWRLResultManager(iriResolver, owlObjectRenderer);
+    return new DefaultSQWRLResultManager(iriResolver);
   }
 
   /**
@@ -118,47 +107,42 @@ public class SWRLAPIInternalFactory
   }
 
   /**
-   * @param iriResolver       An IRI resolver
-   * @param owlObjectRenderer An OWL object renderer
+   * @param iriResolver An IRI resolver
    * @return A SQWRL result value factory
    */
-  @NonNull public static SQWRLResultValueFactory createSQWRLResultValueFactory(@NonNull IRIResolver iriResolver,
-    @NonNull OWLObjectRenderer owlObjectRenderer)
+  @NonNull public static SQWRLResultValueFactory createSQWRLResultValueFactory(@NonNull IRIResolver iriResolver)
   {
-    return new DefaultSQWRLResultValueFactory(iriResolver, owlObjectRenderer);
+    return new DefaultSQWRLResultValueFactory(iriResolver);
   }
 
-  public static @NonNull SQWRLQuery createSQWRLQuery(@NonNull String queryName,
+  @NonNull public static SQWRLQuery createSQWRLQuery(@NonNull String queryName,
     @NonNull List<@NonNull SWRLAtom> bodyAtoms, @NonNull List<@NonNull SWRLAtom> headAtoms, boolean active,
-    @NonNull String comment, @NonNull LiteralFactory literalFactory, @NonNull IRIResolver iriResolver,
-    @NonNull OWLObjectRenderer owlObjectRenderer) throws SWRLBuiltInException
+    @NonNull String comment, @NonNull LiteralFactory literalFactory, @NonNull IRIResolver iriResolver)
+    throws SWRLBuiltInException
   {
-    return new DefaultSQWRLQuery(queryName, bodyAtoms, headAtoms, active, comment, literalFactory, iriResolver,
-      owlObjectRenderer);
+    return new DefaultSQWRLQuery(queryName, bodyAtoms, headAtoms, active, comment, literalFactory, iriResolver);
   }
 
   /**
-   * @param iriResolver       An IRI resolver
-   * @param owlObjectRenderer An OWL object renderer
+   * @param iriResolver An IRI resolver
    * @return A SWRLAPI-based OWL data factory
    */
-  @NonNull public static SWRLAPIOWLDataFactory createSWRLAPIOWLDataFactory(@NonNull IRIResolver iriResolver,
-    @NonNull OWLObjectRenderer owlObjectRenderer)
+  @NonNull public static SWRLAPIOWLDataFactory createSWRLAPIOWLDataFactory(@NonNull IRIResolver iriResolver)
   {
-    return new DefaultSWRLAPIOWLDataFactory(iriResolver, owlObjectRenderer);
+    return new DefaultSWRLAPIOWLDataFactory(iriResolver);
   }
 
   /**
    * @param swrlRuleEngine A SWRL rule engine
    * @return A SWRL rule and SQWRL query table model
    */
-  public static @NonNull SWRLRulesAndSQWRLQueriesTableModel createSWRLRulesAndSQWRLQueriesTableModel(
+  @NonNull public static SWRLRulesAndSQWRLQueriesTableModel createSWRLRulesAndSQWRLQueriesTableModel(
     @NonNull SWRLRuleEngine swrlRuleEngine)
   {
     return new SWRLRulesAndSQWRLQueriesTableModel(swrlRuleEngine);
   }
 
-  public static @NonNull OWL2RLModel createOWL2RLModel(@NonNull OWL2RLEngine owl2RLEngine)
+  @NonNull public static OWL2RLModel createOWL2RLModel(@NonNull OWL2RLEngine owl2RLEngine)
   {
     return new OWL2RLModel(owl2RLEngine);
   }
@@ -191,17 +175,16 @@ public class SWRLAPIInternalFactory
    * @param iriResolver An IRI resolver
    * @return A SQWRL result generator
    */
-  public static @NonNull SQWRLResultGenerator createSQWRLResultGenerator(@NonNull IRIResolver iriResolver,
-    @NonNull OWLObjectRenderer owlObjectRenderer)
+  @NonNull public static SQWRLResultGenerator createSQWRLResultGenerator(@NonNull IRIResolver iriResolver)
   {
-    return new DefaultSQWRLResultManager(iriResolver, owlObjectRenderer);
+    return new DefaultSQWRLResultManager(iriResolver);
   }
 
   /**
    * @param swrlRuleEngineModel A SWRL rule engine model
    * @return A SWRL rule engine controller
    */
-  public static @NonNull SWRLRuleEngineController createSWRLRuleEngineController(
+  @NonNull public static SWRLRuleEngineController createSWRLRuleEngineController(
     @NonNull SWRLRuleEngineModel swrlRuleEngineModel)
   {
     return new DefaultSWRLRuleEngineController(swrlRuleEngineModel);
@@ -211,7 +194,7 @@ public class SWRLAPIInternalFactory
    * @return A SQWRL icon
    * @throws SWRLAPIException If an icon cannot be found
    */
-  public static @NonNull Icon getSQWRLIcon() throws SWRLAPIException
+  @NonNull public static Icon getSQWRLIcon() throws SWRLAPIException
   {
     URL url = SWRLAPIFactory.class.getResource(SQWRL_ICON_NAME);
 
@@ -235,16 +218,16 @@ public class SWRLAPIInternalFactory
       throw new SWRLAPIException("No OWL 2 RL icon found!");
   }
 
-  public static @NonNull Literal createLiteral(OWLLiteral owlLiteral) { return new DefaultLiteral(owlLiteral); }
+  @NonNull public static Literal createLiteral(OWLLiteral owlLiteral) { return new DefaultLiteral(owlLiteral); }
 
-  public static @NonNull SWRLAPIRule createSWRLAPIRule(@NonNull String ruleName,
+  @NonNull public static SWRLAPIRule createSWRLAPIRule(@NonNull String ruleName,
     @NonNull List<? extends SWRLAtom> bodyAtoms, @NonNull List<? extends SWRLAtom> headAtoms, @NonNull String comment,
     boolean isActive) throws SWRLBuiltInException
   {
     return new DefaultSWRLAPIRule(ruleName, bodyAtoms, headAtoms, comment, isActive);
   }
 
-  public static @NonNull SWRLAPIBuiltInAtom createSWRLAPIBuiltInAtom(@NonNull String ruleName, @NonNull IRI builtInIRI,
+  @NonNull public static SWRLAPIBuiltInAtom createSWRLAPIBuiltInAtom(@NonNull String ruleName, @NonNull IRI builtInIRI,
     @NonNull String builtInPrefixedName, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
   {
     return new DefaultSWRLAPIBuiltInAtom(ruleName, builtInIRI, builtInPrefixedName, arguments);
@@ -259,11 +242,10 @@ public class SWRLAPIInternalFactory
    * @return A SWRLAPI-based wrapper of an OWL ontology
    * @throws SQWRLException If a SQWRL error occurs during ontology processing
    */
-  public static @NonNull SWRLAPIOWLOntology createSWRLAPIOntology(@NonNull OWLOntology ontology,
+  @NonNull public static SWRLAPIOWLOntology createSWRLAPIOntology(@NonNull OWLOntology ontology,
     @NonNull IRIResolver iriResolver) throws SWRLBuiltInException
   {
-    SWRLAPIOWLOntology swrlapiowlOntology = new DefaultSWRLAPIOWLOntology(ontology, iriResolver,
-      createOWLObjectRenderer());
+    SWRLAPIOWLOntology swrlapiowlOntology = new DefaultSWRLAPIOWLOntology(ontology, iriResolver);
     swrlapiowlOntology.processOntology();
 
     return swrlapiowlOntology;
@@ -281,8 +263,7 @@ public class SWRLAPIInternalFactory
     throws SWRLBuiltInException
   {
     IRIResolver iriResolver = SWRLAPIFactory.createIRIResolver();
-    OWLObjectRenderer owlObjectRenderer = createOWLObjectRenderer();
-    SWRLAPIOWLOntology swrlapiowlOntology = new DefaultSWRLAPIOWLOntology(ontology, iriResolver, owlObjectRenderer);
+    SWRLAPIOWLOntology swrlapiowlOntology = new DefaultSWRLAPIOWLOntology(ontology, iriResolver);
     swrlapiowlOntology.processOntology();
 
     return swrlapiowlOntology;
@@ -294,7 +275,7 @@ public class SWRLAPIInternalFactory
    * @return A SWRL rule engine bridge
    * @throws SWRLBuiltInBridgeException If an error occurs during rule engine bridge creation
    */
-  public static @NonNull SWRLBridge createSWRLBridge(@NonNull SWRLAPIOWLOntology swrlapiOWLOntology,
+  @NonNull public static SWRLBridge createSWRLBridge(@NonNull SWRLAPIOWLOntology swrlapiOWLOntology,
     @NonNull OWL2RLPersistenceLayer owl2RLPersistenceLayer) throws SWRLBuiltInBridgeException
   {
     return new DefaultSWRLBridge(swrlapiOWLOntology, owl2RLPersistenceLayer);
@@ -304,7 +285,7 @@ public class SWRLAPIInternalFactory
    * @param swrlapiowlOntology A SWRLAPI-based OWL ontology
    * @return A SWRL auto-completer
    */
-  public static @NonNull SWRLAutoCompleter createSWRLAutoCompleter(@NonNull SWRLAPIOWLOntology swrlapiowlOntology)
+  @NonNull public static SWRLAutoCompleter createSWRLAutoCompleter(@NonNull SWRLAPIOWLOntology swrlapiowlOntology)
   {
     return new DefaultSWRLAutoCompleter(swrlapiowlOntology);
   }
@@ -321,5 +302,4 @@ public class SWRLAPIInternalFactory
           ""));
     }
   }
-
 }
