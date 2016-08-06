@@ -1054,6 +1054,11 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
   {
     String prefix = "http://swrl.stanford.edu/ontologies/built-ins/5.0.0/tbox.owl#";
 
+    addSWRLBuiltIn(IRI.create(prefix, "cd"));
+    addSWRLBuiltIn(IRI.create(prefix, "opd"));
+    addSWRLBuiltIn(IRI.create(prefix, "dpd"));
+    addSWRLBuiltIn(IRI.create(prefix, "apd"));
+    addSWRLBuiltIn(IRI.create(prefix, "dd"));
     addSWRLBuiltIn(IRI.create(prefix, "sca"));
     addSWRLBuiltIn(IRI.create(prefix, "eca"));
     addSWRLBuiltIn(IRI.create(prefix, "dca"));

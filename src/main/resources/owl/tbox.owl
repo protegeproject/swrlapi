@@ -9,7 +9,11 @@
     xmlns:owl="http://www.w3.org/2002/07/owl#"
   xml:base="http://swrl.stanford.edu/ontologies/built-ins/5.0.0/tbox.owl">
   <owl:Ontology rdf:about=""/>
-  <swrl:Builtin rdf:ID="sca"/>
+  <swrl:Builtin rdf:ID="cd"/>
+  <swrl:Builtin rdf:ID="opd"/>
+  <swrl:Builtin rdf:ID="dpa"/>
+  <swrl:Builtin rdf:ID="apd"/>
+  <swrl:Builtin rdf:ID="dd"/>
   <swrl:Builtin rdf:ID="eca"/>
   <swrl:Builtin rdf:ID="dca"/>
   <swrl:Builtin rdf:ID="fopa"/>

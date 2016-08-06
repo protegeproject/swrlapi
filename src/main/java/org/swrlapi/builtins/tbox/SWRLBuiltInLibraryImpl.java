@@ -2,15 +2,21 @@ package org.swrlapi.builtins.tbox;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.AxiomType;
+import org.semanticweb.owlapi.model.OWLAnnotationProperty;
+import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;
+import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLDataPropertyDomainAxiom;
 import org.semanticweb.owlapi.model.OWLDataPropertyExpression;
+import org.semanticweb.owlapi.model.OWLDatatype;
+import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
 import org.semanticweb.owlapi.model.OWLDisjointClassesAxiom;
 import org.semanticweb.owlapi.model.OWLEquivalentClassesAxiom;
 import org.semanticweb.owlapi.model.OWLFunctionalDataPropertyAxiom;
 import org.semanticweb.owlapi.model.OWLFunctionalObjectPropertyAxiom;
 import org.semanticweb.owlapi.model.OWLInverseFunctionalObjectPropertyAxiom;
 import org.semanticweb.owlapi.model.OWLObject;
+import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLObjectPropertyDomainAxiom;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.model.OWLObjectPropertyRangeAxiom;
@@ -42,6 +48,168 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
   @Override public void reset()
   {
+  }
+
+  public boolean cd(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    checkNumberOfArgumentsEqualTo(1, arguments.size());
+
+    Set<OWLDeclarationAxiom> axioms = getBuiltInBridge().getOWLOntology()
+      .getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream().filter(a -> a.getEntity().isOWLClass())
+      .collect(Collectors.toSet());
+
+    if (axioms.isEmpty())
+      return false;
+    else {
+      Map<@NonNull Integer, @NonNull OWLObject> inputArgumentValues = getInputArgumentValues(arguments,
+        SWRLBuiltInArgumentType.CLASS);
+      Map<@NonNull Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> outputMultiValueArguments = createOutputMultiValueArguments(
+        arguments);
+
+      for (OWLDeclarationAxiom axiom : axioms) {
+        OWLClass candidateValue1 = axiom.getEntity().asOWLClass();
+
+        if (!noBoundArgumentsMismatch(inputArgumentValues, candidateValue1)) {
+          if (outputMultiValueArguments.isEmpty())
+            return true; // We have a match and there are no unbound arguments - return immediately
+          else { // We have a match so update any unbound arguments with the matched values
+            if (outputMultiValueArguments.containsKey(0))
+              outputMultiValueArguments.get(0).addArgument(createClassBuiltInArgument(candidateValue1));
+          }
+        }
+      }
+      return processOutputMultiValueArguments(arguments, outputMultiValueArguments);
+    }
+  }
+
+  public boolean opd(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    checkNumberOfArgumentsEqualTo(1, arguments.size());
+
+    Set<OWLDeclarationAxiom> axioms = getBuiltInBridge().getOWLOntology()
+      .getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream().filter(a -> a.getEntity().isOWLObjectProperty())
+      .collect(Collectors.toSet());
+    ;
+
+    if (axioms.isEmpty())
+      return false;
+    else {
+      Map<@NonNull Integer, @NonNull OWLObject> inputArgumentValues = getInputArgumentValues(arguments,
+        SWRLBuiltInArgumentType.OBJECT_PROPERTY);
+      Map<@NonNull Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> outputMultiValueArguments = createOutputMultiValueArguments(
+        arguments);
+
+      for (OWLDeclarationAxiom axiom : axioms) {
+        OWLObjectProperty candidateValue1 = axiom.getEntity().asOWLObjectProperty();
+
+        if (!noBoundArgumentsMismatch(inputArgumentValues, candidateValue1)) {
+          if (outputMultiValueArguments.isEmpty())
+            return true; // We have a match and there are no unbound arguments - return immediately
+          else { // We have a match so update any unbound arguments with the matched values
+            if (outputMultiValueArguments.containsKey(0))
+              outputMultiValueArguments.get(0).addArgument(createObjectPropertyBuiltInArgument(candidateValue1));
+          }
+        }
+      }
+      return processOutputMultiValueArguments(arguments, outputMultiValueArguments);
+    }
+  }
+
+  public boolean dpd(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    checkNumberOfArgumentsEqualTo(1, arguments.size());
+
+    Set<OWLDeclarationAxiom> axioms = getBuiltInBridge().getOWLOntology()
+      .getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream().filter(a -> a.getEntity().isOWLDataProperty())
+      .collect(Collectors.toSet());
+    ;
+
+    if (axioms.isEmpty())
+      return false;
+    else {
+      Map<@NonNull Integer, @NonNull OWLObject> inputArgumentValues = getInputArgumentValues(arguments,
+        SWRLBuiltInArgumentType.DATA_PROPERTY);
+      Map<@NonNull Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> outputMultiValueArguments = createOutputMultiValueArguments(
+        arguments);
+
+      for (OWLDeclarationAxiom axiom : axioms) {
+        OWLDataProperty candidateValue1 = axiom.getEntity().asOWLDataProperty();
+
+        if (!noBoundArgumentsMismatch(inputArgumentValues, candidateValue1)) {
+          if (outputMultiValueArguments.isEmpty())
+            return true; // We have a match and there are no unbound arguments - return immediately
+          else { // We have a match so update any unbound arguments with the matched values
+            if (outputMultiValueArguments.containsKey(0))
+              outputMultiValueArguments.get(0).addArgument(createDataPropertyBuiltInArgument(candidateValue1));
+          }
+        }
+      }
+      return processOutputMultiValueArguments(arguments, outputMultiValueArguments);
+    }
+  }
+
+  public boolean apd(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    checkNumberOfArgumentsEqualTo(1, arguments.size());
+
+    Set<OWLDeclarationAxiom> axioms = getBuiltInBridge().getOWLOntology()
+      .getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream().filter(a -> a.getEntity().isOWLAnnotationProperty())
+      .collect(Collectors.toSet());
+
+    if (axioms.isEmpty())
+      return false;
+    else {
+      Map<@NonNull Integer, @NonNull OWLObject> inputArgumentValues = getInputArgumentValues(arguments,
+        SWRLBuiltInArgumentType.ANNOTATION_PROPERTY);
+      Map<@NonNull Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> outputMultiValueArguments = createOutputMultiValueArguments(
+        arguments);
+
+      for (OWLDeclarationAxiom axiom : axioms) {
+        OWLAnnotationProperty candidateValue1 = axiom.getEntity().asOWLAnnotationProperty();
+
+        if (!noBoundArgumentsMismatch(inputArgumentValues, candidateValue1)) {
+          if (outputMultiValueArguments.isEmpty())
+            return true; // We have a match and there are no unbound arguments - return immediately
+          else { // We have a match so update any unbound arguments with the matched values
+            if (outputMultiValueArguments.containsKey(0))
+              outputMultiValueArguments.get(0).addArgument(createAnnotationPropertyBuiltInArgument(candidateValue1));
+          }
+        }
+      }
+      return processOutputMultiValueArguments(arguments, outputMultiValueArguments);
+    }
+  }
+
+  public boolean dd(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    checkNumberOfArgumentsEqualTo(1, arguments.size());
+
+    Set<OWLDeclarationAxiom> axioms = getBuiltInBridge().getOWLOntology()
+      .getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream().filter(a -> a.getEntity().isOWLDatatype())
+      .collect(Collectors.toSet());
+
+    if (axioms.isEmpty())
+      return false;
+    else {
+      Map<@NonNull Integer, @NonNull OWLObject> inputArgumentValues = getInputArgumentValues(arguments,
+        SWRLBuiltInArgumentType.DATATYPE);
+      Map<@NonNull Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> outputMultiValueArguments = createOutputMultiValueArguments(
+        arguments);
+
+      for (OWLDeclarationAxiom axiom : axioms) {
+        OWLDatatype candidateValue1 = axiom.getEntity().asOWLDatatype();
+
+        if (!noBoundArgumentsMismatch(inputArgumentValues, candidateValue1)) {
+          if (outputMultiValueArguments.isEmpty())
+            return true; // We have a match and there are no unbound arguments - return immediately
+          else { // We have a match so update any unbound arguments with the matched values
+            if (outputMultiValueArguments.containsKey(0))
+              outputMultiValueArguments.get(0).addArgument(createDatatypeBuiltInArgument(candidateValue1));
+          }
+        }
+      }
+      return processOutputMultiValueArguments(arguments, outputMultiValueArguments);
+    }
   }
 
   public boolean sca(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
