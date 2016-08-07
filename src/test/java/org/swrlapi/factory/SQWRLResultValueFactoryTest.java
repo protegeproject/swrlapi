@@ -3,7 +3,6 @@ package org.swrlapi.factory;
 import org.junit.Before;
 import org.junit.Test;
 import org.semanticweb.owlapi.apibinding.OWLManager;
-import org.semanticweb.owlapi.io.OWLObjectRenderer;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataFactory;
@@ -25,7 +24,6 @@ public class SQWRLResultValueFactoryTest
 
   private OWLOntologyManager ontologyManager;
   private IRIResolver iriResolver;
-  private OWLObjectRenderer owlObjectRenderer;
   private SQWRLResultValueFactory resultValueFactory;
   private SWRLBuiltInArgumentFactory builtInArgumentFactory;
   private OWLDataFactory dataFactory;
@@ -35,8 +33,7 @@ public class SQWRLResultValueFactoryTest
     ontologyManager = OWLManager.createOWLOntologyManager();
     dataFactory = ontologyManager.getOWLDataFactory();
     iriResolver = SWRLAPIFactory.createIRIResolver();
-    owlObjectRenderer = SWRLAPIInternalFactory.createOWLObjectRenderer();
-    resultValueFactory = SWRLAPIInternalFactory.createSQWRLResultValueFactory(iriResolver, owlObjectRenderer);
+    resultValueFactory = SWRLAPIInternalFactory.createSQWRLResultValueFactory(iriResolver);
     builtInArgumentFactory = SWRLAPIInternalFactory.createSWRLBuiltInArgumentFactory(iriResolver);
 
     iriResolver.setPrefix(TestPrefix, TestNamespace);

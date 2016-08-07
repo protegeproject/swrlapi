@@ -1,7 +1,6 @@
 package org.swrlapi.factory;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.semanticweb.owlapi.io.OWLObjectRenderer;
 import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotation;
@@ -117,7 +116,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
 
   @NonNull private final OWLOntology ontology;
   @NonNull private final IRIResolver iriResolver;
-  @NonNull private final OWLObjectRenderer owlObjectRenderer;
   @NonNull private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
   @NonNull private final Set<@NonNull IRI> swrlBuiltInIRIs;
 
@@ -139,14 +137,11 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
   private boolean hasOntologyChanged = true; // Ensure initial processing
   private boolean eventFreezeMode = false;
 
-  public DefaultSWRLAPIOWLOntology(@NonNull OWLOntology ontology, @NonNull IRIResolver iriResolver,
-    @NonNull OWLObjectRenderer owlObjectRenderer)
+  public DefaultSWRLAPIOWLOntology(@NonNull OWLOntology ontology, @NonNull IRIResolver iriResolver)
   {
     this.ontology = ontology;
     this.iriResolver = iriResolver;
-    this.owlObjectRenderer = owlObjectRenderer;
-    this.swrlapiOWLDataFactory = SWRLAPIInternalFactory
-      .createSWRLAPIOWLDataFactory(this.iriResolver, this.owlObjectRenderer);
+    this.swrlapiOWLDataFactory = SWRLAPIInternalFactory.createSWRLAPIOWLDataFactory(this.iriResolver);
     this.swrlBuiltInIRIs = new HashSet<>();
 
     this.swrlRules = new HashMap<>();
@@ -352,8 +347,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
 
   @NonNull @Override public SWRLRuleRenderer createSWRLRuleRenderer()
   {
-    return SWRLAPIInternalFactory
-      .createSWRLRuleRenderer(this.getOWLOntology(), this.getIRIResolver(), this.getOWLObjectRenderer());
+    return SWRLAPIInternalFactory.createSWRLRuleRenderer(this.getOWLOntology(), this.getIRIResolver());
   }
 
   @Override public Optional<String> getNextRuleName()
@@ -370,8 +364,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
 
   @NonNull @Override public SQWRLQueryRenderer createSQWRLQueryRenderer()
   {
-    return SWRLAPIInternalFactory
-      .createSQWRLQueryRenderer(this.getOWLOntology(), this.getIRIResolver(), getOWLObjectRenderer());
+    return SWRLAPIInternalFactory.createSQWRLQueryRenderer(this.getOWLOntology(), this.getIRIResolver());
   }
 
   @Override public int getNumberOfSWRLRules()
@@ -454,7 +447,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     String comment = rule.getComment();
 
     return SWRLAPIInternalFactory.createSQWRLQuery(queryName, rule.getBodyAtoms(), rule.getHeadAtoms(), active, comment,
-      getSWRLAPIOWLDataFactory().getLiteralFactory(), getIRIResolver(), getOWLObjectRenderer());
+      getSWRLAPIOWLDataFactory().getLiteralFactory(), getIRIResolver());
   }
 
   @NonNull private Optional<@NonNull String> getRuleName(@NonNull SWRLRule owlapiRule)
@@ -536,11 +529,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     return this.iriResolver;
   }
 
-  @Override public @NonNull OWLObjectRenderer getOWLObjectRenderer()
-  {
-    return this.owlObjectRenderer;
-  }
-
   @NonNull private String iri2PrefixedName(IRI iri)
   {
     Optional<@NonNull String> prefixedName = this.iriResolver.iri2PrefixedName(iri);
@@ -598,7 +586,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
 
   @NonNull @Override public SQWRLResultGenerator createSQWRLResultGenerator()
   {
-    return SWRLAPIInternalFactory.createSQWRLResultGenerator(this.iriResolver, this.owlObjectRenderer);
+    return SWRLAPIInternalFactory.createSQWRLResultGenerator(this.iriResolver);
   }
 
   /**

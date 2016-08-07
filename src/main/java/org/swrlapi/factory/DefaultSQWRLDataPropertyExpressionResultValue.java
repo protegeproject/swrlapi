@@ -14,7 +14,7 @@ class DefaultSQWRLDataPropertyExpressionResultValue extends DefaultSQWRLExpressi
 
   @Override public boolean isDataPropertyExpression() { return true; }
 
-  @Override public @NonNull SQWRLDataPropertyExpressionResultValue asDataPropertyExpressionResult()
+  @NonNull @Override public SQWRLDataPropertyExpressionResultValue asDataPropertyExpressionResult()
     throws SQWRLException
   {
     return this;

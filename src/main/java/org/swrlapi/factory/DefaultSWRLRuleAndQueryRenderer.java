@@ -1,7 +1,6 @@
 package org.swrlapi.factory;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.semanticweb.owlapi.io.OWLObjectRenderer;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLClass;
@@ -69,14 +68,11 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
 {
   @NonNull private final OWLOntology ontology;
   @NonNull private final IRIResolver iriResolver;
-  @NonNull private final OWLObjectRenderer owlObjectRenderer;
 
-  public DefaultSWRLRuleAndQueryRenderer(@NonNull OWLOntology ontology, @NonNull IRIResolver iriResolver,
-    @NonNull OWLObjectRenderer owlObjectRenderer)
+  public DefaultSWRLRuleAndQueryRenderer(@NonNull OWLOntology ontology, @NonNull IRIResolver iriResolver)
   {
     this.ontology = ontology;
     this.iriResolver = iriResolver;
-    this.owlObjectRenderer = owlObjectRenderer;
   }
 
   @NonNull @Override public String renderSWRLRule(@NonNull SWRLRule rule)
@@ -241,7 +237,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
     for (SWRLBuiltInArgument argument : swrlapiBuiltInAtom.getBuiltInArguments()) {
       if (!isFirst)
         sb.append(", ");
-      // TODO Look at to get rid of instanceof. accept() in SWRLBuiltInArgument and SWRLObject could apply
+      // TODO Look at getting rid of cast; accept() in SWRLBuiltInArgument and SWRLObject could apply
       sb.append(argument.accept((SWRLBuiltInArgumentVisitorEx<String>)this));
       isFirst = false;
     }
@@ -340,7 +336,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
 
     if (argument instanceof SWRLBuiltInArgument) {
       SWRLBuiltInArgument builtInArgument = (SWRLBuiltInArgument)argument;
-      // TODO Look at to get rid of instanceof. accept() in SWRLBuiltInArgument and SWRLObject could apply
+      // TODO Look at getting rid of cast; accept() in SWRLBuiltInArgument and SWRLObject could apply
       sb.append(builtInArgument.accept((SWRLBuiltInArgumentVisitorEx<String>)this));
     } else if (argument instanceof SWRLLiteralArgument) {
       SWRLLiteralArgument literalArgument = (SWRLLiteralArgument)argument;
@@ -358,7 +354,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
   @NonNull private String visit(@NonNull OWLClassExpression classExpression)
   {
     if (classExpression.isAnonymous())
-      return classExpression.toString(); // TODO Use an OWLAPI renderer
+      return visit(classExpression);
     else {
       OWLClass cls = classExpression.asOWLClass();
       return visit(cls);
@@ -379,13 +375,13 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
 
       return individualNameShortForm.startsWith(":") ? individualNameShortForm.substring(1) : individualNameShortForm;
     } else
-      return individual.toString(); // TODO Use an OWLAPI renderer
+      return this.iriResolver.render(individual);
   }
 
   @NonNull private String visit(@NonNull OWLObjectPropertyExpression objectPropertyExpression)
   {
     if (objectPropertyExpression.isAnonymous())
-      return objectPropertyExpression.toString(); // TODO Use an OWLAPI renderer
+      return visit(objectPropertyExpression);
     else
       return visit(objectPropertyExpression.asOWLObjectProperty());
   }
@@ -402,7 +398,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
   @NonNull private String visit(@NonNull OWLDataPropertyExpression dataPropertyExpression)
   {
     if (dataPropertyExpression.isAnonymous())
-      return dataPropertyExpression.toString(); // TODO Use an OWLAPI renderer
+      return visit(dataPropertyExpression);
     else
       return visit(dataPropertyExpression.asOWLDataProperty());
   }
@@ -422,7 +418,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
       OWLDatatype datatype = dataRange.asOWLDatatype();
       return getShortForm(datatype.getIRI());
     } else
-      return dataRange.toString(); // Use the OWLAPI's rendering
+      return visit(dataRange);
   }
 
   @NonNull @Override public String visit(@NonNull SWRLClassBuiltInArgument argument)
@@ -437,7 +433,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
   {
     OWLClassExpression ce = argument.getOWLClassExpression();
 
-    return this.owlObjectRenderer.render(ce);
+    return this.iriResolver.render(ce);
   }
 
   @NonNull @Override public String visit(@NonNull SWRLNamedIndividualBuiltInArgument argument)
@@ -462,7 +458,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
   {
     OWLObjectPropertyExpression pe = argument.getOWLObjectPropertyExpression();
 
-    return this.owlObjectRenderer.render(pe);
+    return this.iriResolver.render(pe);
   }
 
   @NonNull @Override public String visit(@NonNull SWRLDataPropertyBuiltInArgument argument)
@@ -479,7 +475,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
   {
     OWLDataPropertyExpression pe = argument.getOWLDataPropertyExpression();
 
-    return this.owlObjectRenderer.render(pe);
+    return this.iriResolver.render(pe);
   }
 
   @NonNull @Override public String visit(@NonNull SWRLAnnotationPropertyBuiltInArgument argument)

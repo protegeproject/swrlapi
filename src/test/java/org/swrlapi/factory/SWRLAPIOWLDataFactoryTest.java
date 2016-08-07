@@ -3,7 +3,6 @@ package org.swrlapi.factory;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.semanticweb.owlapi.io.OWLObjectRenderer;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.swrlapi.core.IRIResolver;
 
@@ -17,8 +16,7 @@ public class SWRLAPIOWLDataFactoryTest
 	@Before public void setUp() throws OWLOntologyCreationException
 	{
     IRIResolver iriResolver = SWRLAPIFactory.createIRIResolver();
-		OWLObjectRenderer owlObjectRenderer = SWRLAPIInternalFactory.createOWLObjectRenderer();
-		this.factory = SWRLAPIInternalFactory.createSWRLAPIOWLDataFactory(iriResolver, owlObjectRenderer);
+		this.factory = SWRLAPIInternalFactory.createSWRLAPIOWLDataFactory(iriResolver);
 	}
 
 	@Test public void testGetSWRLBuiltInArgumentFactory() throws Exception

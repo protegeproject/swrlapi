@@ -2,8 +2,10 @@ package org.swrlapi.core;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.model.OWLOntology;
 
+import javax.annotation.Nonnull;
 import java.util.Optional;
 
 /**
@@ -35,7 +37,6 @@ public interface IRIResolver
    */
   @NonNull Optional<@NonNull String> iri2PrefixedName(@NonNull IRI iri);
 
-
   /**
    * @param iri An OWL entity IRI
    * @return The short form of the IRI
@@ -43,14 +44,12 @@ public interface IRIResolver
   @NonNull Optional<@NonNull String> iri2ShortForm(@NonNull IRI iri);
 
   /**
-   *
    * @param ontology The ontology from which to extract prefixes
    */
   void updatePrefixes(@NonNull OWLOntology ontology);
 
   /**
-   *
-   * @param prefix A prefix
+   * @param prefix    A prefix
    * @param namespace A namespace
    */
   void setPrefix(@NonNull String prefix, @NonNull String namespace);
@@ -58,5 +57,7 @@ public interface IRIResolver
   /**
    * @return A generated unique IRI
    */
-  IRI generateIRI();
+  @NonNull IRI generateIRI();
+
+  @NonNull String render(@Nonnull OWLObject owlObject);
 }

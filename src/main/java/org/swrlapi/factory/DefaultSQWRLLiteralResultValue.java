@@ -109,56 +109,56 @@ class DefaultSQWRLLiteralResultValue extends DefaultLiteral implements SQWRLLite
     throw new SQWRLException(getClass().getName() + " is not a " + SQWRLEntityResultValue.class.getName());
   }
 
-  @Override public @NonNull SQWRLExpressionResultValue asExpressionResult() throws SQWRLException
+  @NonNull @Override public SQWRLExpressionResultValue asExpressionResult() throws SQWRLException
   {
     throw new SQWRLException(getClass().getName() + " is not a " + SQWRLExpressionResultValue.class.getName());
   }
 
-  @Override public @NonNull SQWRLClassResultValue asClassResult() throws SQWRLException
+  @NonNull @Override public SQWRLClassResultValue asClassResult() throws SQWRLException
   {
     throw new SQWRLException(getClass().getName() + " is not a " + SQWRLClassResultValue.class.getName());
   }
 
-  @Override public @NonNull SQWRLClassExpressionResultValue asClassExpressionResult() throws SQWRLException
+  @NonNull @Override public SQWRLClassExpressionResultValue asClassExpressionResult() throws SQWRLException
   {
     throw new SQWRLException(getClass().getName() + " is not a " + SQWRLClassExpressionResultValue.class.getName());
   }
 
-  @Override public @NonNull SQWRLNamedIndividualResultValue asNamedIndividualResult() throws SQWRLException
+  @NonNull @Override public SQWRLNamedIndividualResultValue asNamedIndividualResult() throws SQWRLException
   {
     throw new SQWRLException(getClass().getName() + " is not a " + SQWRLNamedIndividualResultValue.class.getName());
   }
 
-  @Override public @NonNull SQWRLObjectPropertyResultValue asObjectPropertyResult() throws SQWRLException
+  @NonNull @Override public SQWRLObjectPropertyResultValue asObjectPropertyResult() throws SQWRLException
   {
     throw new SQWRLException(getClass().getName() + " is not an " + SQWRLObjectPropertyResultValue.class.getName());
   }
 
-  @Override public @NonNull SQWRLObjectPropertyExpressionResultValue asObjectPropertyExpressionResult()
+  @NonNull @Override public SQWRLObjectPropertyExpressionResultValue asObjectPropertyExpressionResult()
     throws SQWRLException
   {
     throw new SQWRLException(
       getClass().getName() + " is not an " + SQWRLObjectPropertyExpressionResultValue.class.getName());
   }
 
-  @Override public @NonNull SQWRLDataPropertyResultValue asDataPropertyResult() throws SQWRLException
+  @NonNull @Override public SQWRLDataPropertyResultValue asDataPropertyResult() throws SQWRLException
   {
     throw new SQWRLException(getClass().getName() + " is not an " + SQWRLDataPropertyResultValue.class.getName());
   }
 
-  @Override public @NonNull SQWRLDataPropertyExpressionResultValue asDataPropertyExpressionResult()
+  @NonNull @Override public SQWRLDataPropertyExpressionResultValue asDataPropertyExpressionResult()
     throws SQWRLException
   {
     throw new SQWRLException(
       getClass().getName() + " is not an " + SQWRLDataPropertyExpressionResultValue.class.getName());
   }
 
-  @Override public @NonNull SQWRLAnnotationPropertyResultValue asAnnotationPropertyResult() throws SQWRLException
+  @NonNull @Override public SQWRLAnnotationPropertyResultValue asAnnotationPropertyResult() throws SQWRLException
   {
     throw new SQWRLException(getClass().getName() + " is not an " + SQWRLAnnotationPropertyResultValue.class.getName());
   }
 
-  @Override public @NonNull SQWRLDatatypeResultValue asDatatypeResult() throws SQWRLException
+  @NonNull @Override public SQWRLDatatypeResultValue asDatatypeResult() throws SQWRLException
   {
     throw new SQWRLException(getClass().getName() + " is not a " + SQWRLDatatypeResultValue.class.getName());
   }

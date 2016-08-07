@@ -18,7 +18,7 @@ class DefaultSQWRLDatatypeResultValue extends DefaultSQWRLEntityResultValue impl
     return true;
   }
 
-  @Override public @NonNull SQWRLDatatypeResultValue asDatatypeResult() throws SQWRLException
+  @NonNull @Override public SQWRLDatatypeResultValue asDatatypeResult() throws SQWRLException
   {
     return this;
   }
