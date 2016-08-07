@@ -14,7 +14,7 @@ class DefaultSQWRLClassExpressionResultValue extends DefaultSQWRLExpressionResul
 
   @Override public boolean isClassExpression() { return true; }
 
-  @Override public @NonNull SQWRLClassExpressionResultValue asClassExpressionResult() throws SQWRLException
+  @NonNull @Override public SQWRLClassExpressionResultValue asClassExpressionResult() throws SQWRLException
   {
     return this;
   }

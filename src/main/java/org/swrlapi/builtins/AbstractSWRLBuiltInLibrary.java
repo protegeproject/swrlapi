@@ -1660,7 +1660,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     return getSWRLBuiltInArgumentFactory().getClassBuiltInArgument(cls);
   }
 
-  @Override public @NonNull SWRLClassExpressionBuiltInArgument createClassExpressionBuiltInArgument(
+  @NonNull @Override public SWRLClassExpressionBuiltInArgument createClassExpressionBuiltInArgument(
     OWLClassExpression ce)
   {
     return getSWRLBuiltInArgumentFactory().getClassExpressionBuiltInArgument(ce);
@@ -1678,7 +1678,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     return getSWRLBuiltInArgumentFactory().getObjectPropertyBuiltInArgument(property);
   }
 
-  @Override public @NonNull SWRLObjectPropertyExpressionBuiltInArgument createObjectPropertyExpressionBuiltInArgument(
+  @NonNull @Override public SWRLObjectPropertyExpressionBuiltInArgument createObjectPropertyExpressionBuiltInArgument(
     OWLObjectPropertyExpression pe)
   {
     return getSWRLBuiltInArgumentFactory().getObjectPropertyExpressionBuiltInArgument(pe);

@@ -71,7 +71,7 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
     return new DefaultSQWRLClassExpressionResultValue(rendering);
   }
 
-  @Override public @NonNull SQWRLNamedIndividualResultValue getNamedIndividualValue(
+  @NonNull @Override public SQWRLNamedIndividualResultValue getNamedIndividualValue(
     @NonNull SWRLNamedIndividualBuiltInArgument individualArgument)
   {
     String prefixedName = iri2PrefixedName(individualArgument.getIRI());
@@ -80,7 +80,7 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
     return new DefaultSQWRLNamedIndividualResultValue(individualArgument.getIRI(), prefixedName, shortForm);
   }
 
-  @Override public @NonNull SQWRLNamedIndividualResultValue getNamedIndividualValue(@NonNull IRI individualIRI)
+  @NonNull @Override public SQWRLNamedIndividualResultValue getNamedIndividualValue(@NonNull IRI individualIRI)
   {
     String prefixedName = iri2PrefixedName(individualIRI);
     String shortForm = iri2ShortForm(individualIRI);
@@ -128,7 +128,7 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
     return new DefaultSQWRLDataPropertyResultValue(propertyIRI, prefixedName, shortForm);
   }
 
-  @Override public @NonNull SQWRLDataPropertyExpressionResultValue getDataPropertyExpressionValue(
+  @NonNull @Override public SQWRLDataPropertyExpressionResultValue getDataPropertyExpressionValue(
     SWRLDataPropertyExpressionBuiltInArgument dataPropertyExpressionArgument)
   {
     OWLDataPropertyExpression pe = dataPropertyExpressionArgument.getOWLDataPropertyExpression();

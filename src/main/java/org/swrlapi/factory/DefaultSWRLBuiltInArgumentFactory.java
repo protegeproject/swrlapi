@@ -66,7 +66,7 @@ class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFactory
     return new DefaultSWRLClassBuiltInArgument(cls);
   }
 
-  @Override public @NonNull SWRLClassExpressionBuiltInArgument getClassExpressionBuiltInArgument(OWLClassExpression ce)
+  @NonNull @Override public SWRLClassExpressionBuiltInArgument getClassExpressionBuiltInArgument(OWLClassExpression ce)
   {
     if (ce.isAnonymous())
       return new DefaultSWRLClassExpressionBuiltInArgument(ce);
@@ -80,7 +80,7 @@ class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFactory
     return new DefaultSWRLObjectPropertyBuiltInArgument(property);
   }
 
-  @Override public @NonNull SWRLObjectPropertyExpressionBuiltInArgument getObjectPropertyExpressionBuiltInArgument(
+  @NonNull @Override public SWRLObjectPropertyExpressionBuiltInArgument getObjectPropertyExpressionBuiltInArgument(
     @NonNull OWLObjectPropertyExpression propertyExpression)
   {
     if (propertyExpression.isAnonymous())
@@ -95,7 +95,7 @@ class DefaultSWRLBuiltInArgumentFactory implements SWRLBuiltInArgumentFactory
     return new DefaultSWRLDataPropertyBuiltInArgument(property);
   }
 
-  @Override public @NonNull SWRLDataPropertyExpressionBuiltInArgument getDataPropertyExpressionBuiltInArgument(
+  @NonNull @Override public SWRLDataPropertyExpressionBuiltInArgument getDataPropertyExpressionBuiltInArgument(
     @NonNull OWLDataPropertyExpression propertyExpression)
   {
     if (propertyExpression.isAnonymous())

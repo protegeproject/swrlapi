@@ -112,7 +112,7 @@ public class DefaultSWRLRuleEngineModel implements SWRLRuleEngineModel
     return this.swrlRuleEngine.createSWRLRuleRenderer();
   }
 
-  @Override public @NonNull SWRLRulesAndSQWRLQueriesTableModel getSWRLRulesTableModel()
+  @NonNull @Override public SWRLRulesAndSQWRLQueriesTableModel getSWRLRulesTableModel()
   {
     return this.swrlRulesAndSQWRLQueriesTableModel;
   }

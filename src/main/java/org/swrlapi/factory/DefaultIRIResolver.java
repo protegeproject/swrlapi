@@ -167,7 +167,7 @@ public class DefaultIRIResolver implements IRIResolver
       return IRI.create(GENERATED_IRI_NAMESPACE + "#" + UUID.randomUUID().toString().replaceAll("-", "_"));
   }
 
-  @Override public @NonNull String render(@Nonnull OWLObject owlObject)
+  @NonNull @Override public String render(@Nonnull OWLObject owlObject)
   {
     return this.objectRenderer.render(owlObject);
   }

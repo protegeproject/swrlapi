@@ -398,7 +398,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
     return this.rows.get(rowIndex).get(columnIndex);
   }
 
-  @Override public @NonNull SQWRLNamedIndividualResultValue getNamedIndividual(@NonNull String columnName)
+  @NonNull @Override public SQWRLNamedIndividualResultValue getNamedIndividual(@NonNull String columnName)
     throws SQWRLException
   {
     if (!hasNamedIndividualValue(columnName))
@@ -406,7 +406,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
     return (SQWRLNamedIndividualResultValue)getValue(columnName);
   }
 
-  @Override public @NonNull SQWRLNamedIndividualResultValue getNamedIndividual(int columnIndex) throws SQWRLException
+  @NonNull @Override public SQWRLNamedIndividualResultValue getNamedIndividual(int columnIndex) throws SQWRLException
   {
     return getNamedIndividual(getColumnName(columnIndex));
   }
@@ -430,7 +430,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
     return getClass(getColumnName(columnIndex));
   }
 
-  @Override public @NonNull SQWRLClassExpressionResultValue getClassExpression(@NonNull String columnName)
+  @NonNull @Override public SQWRLClassExpressionResultValue getClassExpression(@NonNull String columnName)
     throws SQWRLException
   {
     if (!hasClassExpressionValue(columnName))
@@ -488,7 +488,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
     return getDataRange(getColumnName(columnIndex));
   }
 
-  @Override public @NonNull SQWRLDataRangeResultValue getDataRange(@NonNull String columnName) throws SQWRLException
+  @NonNull @Override public SQWRLDataRangeResultValue getDataRange(@NonNull String columnName) throws SQWRLException
   {
     if (!hasDataRangeValue(columnName))
       throw new SQWRLInvalidColumnTypeException("expecting OWL data range in column " + columnName);

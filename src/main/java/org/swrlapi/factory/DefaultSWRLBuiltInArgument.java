@@ -97,7 +97,7 @@ abstract class DefaultSWRLBuiltInArgument implements SWRLBuiltInArgument
     throw new SWRLBuiltInException(getClass().getName() + " is not an " + SWRLNamedBuiltInArgument.class.getName());
   }
 
-  @Override public @NonNull SWRLNamedIndividualBuiltInArgument asSWRLNamedIndividualBuiltInArgument()
+  @NonNull @Override public SWRLNamedIndividualBuiltInArgument asSWRLNamedIndividualBuiltInArgument()
     throws SWRLBuiltInException
   {
     throw new SWRLBuiltInException(

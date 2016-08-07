@@ -29,7 +29,7 @@ class DefaultSWRLDataPropertyBuiltInArgument extends DefaultSWRLNamedBuiltInArgu
     return getOWLEntity().asOWLDataProperty();
   }
 
-  @Override public @NonNull OWLDataPropertyExpression getOWLDataPropertyExpression()
+  @NonNull @Override public OWLDataPropertyExpression getOWLDataPropertyExpression()
   {
     return getOWLDataProperty();
   }
