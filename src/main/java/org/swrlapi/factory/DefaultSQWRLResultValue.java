@@ -7,18 +7,22 @@ import org.swrlapi.sqwrl.values.SQWRLClassExpressionResultValue;
 import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
 import org.swrlapi.sqwrl.values.SQWRLDataPropertyExpressionResultValue;
 import org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue;
+import org.swrlapi.sqwrl.values.SQWRLDataRangeResultValue;
 import org.swrlapi.sqwrl.values.SQWRLDatatypeResultValue;
 import org.swrlapi.sqwrl.values.SQWRLEntityResultValue;
 import org.swrlapi.sqwrl.values.SQWRLExpressionResultValue;
+import org.swrlapi.sqwrl.values.SQWRLIndividualResultValue;
 import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLNamedIndividualResultValue;
 import org.swrlapi.sqwrl.values.SQWRLObjectPropertyExpressionResultValue;
 import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLResultValue;
 
+// TODO Use SQWRLResultValueType; see SWRLBuiltInArgumentType
+
 abstract class DefaultSQWRLResultValue implements SQWRLResultValue
 {
-  DefaultSQWRLResultValue()
+  protected DefaultSQWRLResultValue()
   {
   }
 
@@ -43,6 +47,11 @@ abstract class DefaultSQWRLResultValue implements SQWRLResultValue
   }
 
   @Override public boolean isClassExpression()
+  {
+    return false;
+  }
+
+  @Override public boolean isIndividual()
   {
     return false;
   }
@@ -82,6 +91,11 @@ abstract class DefaultSQWRLResultValue implements SQWRLResultValue
     return false;
   }
 
+  @Override public boolean isDataRange()
+  {
+    return false;
+  }
+
   @NonNull @Override public SQWRLEntityResultValue asEntityResult() throws SQWRLException
   {
     throw new SQWRLException(getClass().getName() + " is not a " + SQWRLEntityResultValue.class.getName());
@@ -110,6 +124,11 @@ abstract class DefaultSQWRLResultValue implements SQWRLResultValue
   @NonNull @Override public SQWRLNamedIndividualResultValue asNamedIndividualResult() throws SQWRLException
   {
     throw new SQWRLException(getClass().getName() + " is not a " + SQWRLNamedIndividualResultValue.class.getName());
+  }
+
+  @NonNull @Override public SQWRLIndividualResultValue asIndividualResult() throws SQWRLException
+  {
+    throw new SQWRLException(getClass().getName() + " is not a " + SQWRLIndividualResultValue.class.getName());
   }
 
   @NonNull @Override public SQWRLObjectPropertyResultValue asObjectPropertyResult() throws SQWRLException
@@ -144,5 +163,10 @@ abstract class DefaultSQWRLResultValue implements SQWRLResultValue
   @NonNull @Override public SQWRLDatatypeResultValue asDatatypeResult() throws SQWRLException
   {
     throw new SQWRLException(getClass().getName() + " is not a " + SQWRLDatatypeResultValue.class.getName());
+  }
+
+  @NonNull @Override public SQWRLDataRangeResultValue asDataRangeResult() throws SQWRLException
+  {
+    throw new SQWRLException(getClass().getName() + " is not a " + SQWRLDataRangeResultValue.class.getName());
   }
 }

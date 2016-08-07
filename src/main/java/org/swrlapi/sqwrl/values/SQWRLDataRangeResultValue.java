@@ -1,5 +1,7 @@
 package org.swrlapi.sqwrl.values;
 
+import android.annotation.NonNull;
+
 /**
  * Represents an OWL data range result value provided by a {@link org.swrlapi.sqwrl.SQWRLResult}
  *
@@ -8,4 +10,5 @@ package org.swrlapi.sqwrl.values;
  */
 public interface SQWRLDataRangeResultValue extends SQWRLResultValue
 {
+  @NonNull String getRendering();
 }

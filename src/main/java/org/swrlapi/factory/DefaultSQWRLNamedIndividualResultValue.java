@@ -13,8 +13,15 @@ class DefaultSQWRLNamedIndividualResultValue extends DefaultSQWRLEntityResultVal
     super(individualIRI, prefixedName, shortForm);
   }
 
+  @Override public boolean isIndividual()
+  {
+    return true;
+  }
+
   @Override public boolean isNamedIndividual()
   {
     return true;
   }
+
+  @NonNull @Override public String getRendering() { return getShortName(); }
 }
