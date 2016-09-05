@@ -8,6 +8,7 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
  *
  * @see org.swrlapi.sqwrl.values.SQWRLEntityResultValue
  * @see org.swrlapi.sqwrl.values.SQWRLClassResultValue
+ * @see org.swrlapi.sqwrl.values.SQWRLIndividualResultValue
  * @see org.swrlapi.sqwrl.values.SQWRLNamedIndividualResultValue
  * @see org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue
  * @see org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue
@@ -16,6 +17,7 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
  * @see org.swrlapi.sqwrl.values.SQWRLClassExpressionResultValue
  * @see org.swrlapi.sqwrl.values.SQWRLObjectPropertyExpressionResultValue
  * @see org.swrlapi.sqwrl.values.SQWRLDataPropertyExpressionResultValue
+ * @see org.swrlapi.sqwrl.values.SQWRLDataRangeResultValue
  *
  */
 public interface SQWRLResultValue
@@ -26,7 +28,7 @@ public interface SQWRLResultValue
   boolean isEntity();
 
   /**
-   * @return True if the result value is an OWL expression (object or datatype)
+   * @return True if the result value is an OWL class or property expression
    */
   boolean isExpression();
 
@@ -46,7 +48,12 @@ public interface SQWRLResultValue
   boolean isClassExpression();
 
   /**
-   * @return True if the result value is a named OWL individual
+   * @return True if the result value is an OWL individual
+   */
+  boolean isIndividual();
+
+  /**
+   * @return True if the result value is an OWL named individual
    */
   boolean isNamedIndividual();
 
@@ -81,6 +88,11 @@ public interface SQWRLResultValue
   boolean isDatatype();
 
   /**
+   * @return True if the result value is an OWL data range
+   */
+  boolean isDataRange();
+
+  /**
    * @return A SQWRL entity result value
    * @throws SQWRLException If the result value cannot be converted to an OWL entity result value
    */
@@ -105,10 +117,16 @@ public interface SQWRLResultValue
   @NonNull SQWRLClassExpressionResultValue asClassExpressionResult() throws SQWRLException;
 
   /**
-   * @return A SQWRL entity result value
+   * @return A SQWRL named individual result value
    * @throws SQWRLException If the result value cannot be converted to an individual result value
    */
   @NonNull SQWRLNamedIndividualResultValue asNamedIndividualResult() throws SQWRLException;
+
+  /**
+   * @return A SQWRL individual result value
+   * @throws SQWRLException If the result value cannot be converted to an individual result value
+   */
+  @NonNull SQWRLIndividualResultValue asIndividualResult() throws SQWRLException;
 
   /**
    * @return A SQWRL entity result value
@@ -147,7 +165,13 @@ public interface SQWRLResultValue
   @NonNull SQWRLDatatypeResultValue asDatatypeResult() throws SQWRLException;
 
   /**
-   * @return A SQWRL entity result value
+   * @return A SQWRL data range result value
+   * @throws SQWRLException If the result value cannot be converted to a data range result value
+   */
+  @NonNull SQWRLDataRangeResultValue asDataRangeResult() throws SQWRLException;
+
+  /**
+   * @return A SQWRL literal result value
    * @throws SQWRLException If the result value cannot be converted to a literal result value
    */
   @NonNull SQWRLLiteralResultValue asLiteralResult() throws SQWRLException;
