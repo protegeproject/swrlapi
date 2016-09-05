@@ -85,7 +85,7 @@ public final class OWLLiteralComparator implements Comparator<OWLLiteral>
             return d1.compareTo(d2);
           } else if (l1.getDatatype().getIRI().equals(XSDVocabulary.DECIMAL.getIRI())) {
             BigDecimal d1 = new BigDecimal(l1.getLiteral());
-            BigDecimal d2 = new BigDecimal(l1.getLiteral());
+            BigDecimal d2 = new BigDecimal(l2.getLiteral());
             return d1.compareTo(d2);
           } else if (l1.getDatatype().getIRI().equals(XSDVocabulary.INTEGER.getIRI()) ||
             l1.getDatatype().getIRI().equals(XSDVocabulary.POSITIVE_INTEGER.getIRI()) ||
@@ -94,7 +94,7 @@ public final class OWLLiteralComparator implements Comparator<OWLLiteral>
             l1.getDatatype().getIRI().equals(XSDVocabulary.NON_POSITIVE_INTEGER.getIRI()) ||
             l1.getDatatype().getIRI().equals(XSDVocabulary.UNSIGNED_LONG.getIRI())) {
             BigInteger d1 = new BigInteger(l1.getLiteral());
-            BigInteger d2 = new BigInteger(l1.getLiteral());
+            BigInteger d2 = new BigInteger(l2.getLiteral());
             return d1.compareTo(d2);
           } else
             throw new SWRLAPIInternalException(
