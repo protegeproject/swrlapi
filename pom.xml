@@ -4,12 +4,12 @@
   <parent>
     <groupId>edu.stanford.swrl</groupId>
     <artifactId>swrlapi-parent</artifactId>
-    <version>1.1.2</version>
+    <version>1.1.4-SNAPSHOT</version>
   </parent>
   
   <groupId>edu.stanford.swrl</groupId>
   <artifactId>swrlapi</artifactId>
-  <version>1.1.3-SNAPSHOT</version>
+  <version>1.1.4-SNAPSHOT</version>
   <packaging>bundle</packaging>
   <name>SWRLAPI</name>
   <description>Java  API for working with SWRL rules and SQWRL queries</description>
