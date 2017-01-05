@@ -10,6 +10,9 @@ import org.swrlapi.exceptions.SWRLBuiltInLibraryException;
 import org.swrlapi.exceptions.UnresolvedSWRLBuiltInClassException;
 import org.swrlapi.exceptions.UnresolvedSWRLBuiltInMethodException;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -21,6 +24,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 /**
  * This class manages the dynamic loading of SWRL built-in libraries and the invocation of built-ins in those libraries.
@@ -31,7 +36,8 @@ import java.util.stream.Collectors;
  */
 public class SWRLBuiltInLibraryManager
 {
-  private static final String BuiltInLibraryPackageBaseName = "org.swrlapi.builtins.";
+  private static final String SWRLBuiltInLibraryPackageBaseName = "org.swrlapi.builtins.";
+  private static final String SWRLBuiltInLibraryImplementationClassName = "SWRLBuiltInLibraryImpl";
 
   // Holds instances of implementation classes defining built-in libraries
   @NonNull private final Map<@NonNull String, @NonNull SWRLBuiltInLibrary> builtInLibraries;
@@ -41,6 +47,44 @@ public class SWRLBuiltInLibraryManager
   {
     this.builtInLibraries = new HashMap<>();
     this.methods = new HashMap<>();
+  }
+
+  public void loadSWRLBuiltInLibrariesFromDirectory()
+  {
+    // TODO
+    //    Have a built-ins directory (e.g., /Applications/Protege-5.1.0/Protégé.app/Contents/Java/plugins/builtins/)
+    //    Put JARs defining built-ins in this directory.
+    //    When DefaultSWRLAPIOWLOntology is created it finds all JARS in this directory and loads them and
+    //    then look for classes called SWRLBuiltInLibraryImpl and then instantiates them.
+    //    Each SWRLBuiltInLibraryImpl class should register the built-ins it defines in its reset() method,
+    //    which is called when the class is instantiated.
+
+  }
+
+  @NonNull private Set<@NonNull String> getSWRLBuiltInLibraryImplementationClassNames(
+    @NonNull String pathToSWRLBuiltInsDirectory) throws IOException
+  {
+    File swrlBuiltInsDirectory = new File(pathToSWRLBuiltInsDirectory);
+    Set<@NonNull String> swrlBuiltInLibraryImplementationClassNames = new HashSet<>();
+
+    for (File jarFile : swrlBuiltInsDirectory.listFiles()) {
+      ZipInputStream jarFileStream = new ZipInputStream(new FileInputStream(jarFile));
+      for (ZipEntry entry = jarFileStream.getNextEntry(); entry != null; entry = jarFileStream.getNextEntry()) {
+        if (entry.getName().endsWith(".class") && !entry.isDirectory()) {
+          StringBuilder className = new StringBuilder();
+          for (String part : entry.getName().split("/")) {
+            if (className.length() != 0)
+              className.append(".");
+            className.append(part);
+            if (part.endsWith(".class"))
+              className.setLength(className.length() - ".class".length());
+          }
+          if (className.toString().endsWith(SWRLBuiltInLibraryImplementationClassName))
+            swrlBuiltInLibraryImplementationClassNames.add(className.toString());
+        }
+      }
+    }
+    return swrlBuiltInLibraryImplementationClassNames;
   }
 
   /**
@@ -69,8 +113,8 @@ public class SWRLBuiltInLibraryManager
     String prefix = getPrefix(builtInName);
     String implementationClassName = getBuiltInLibraryImplementationClassName(prefix);
     String builtInMethodName = getBuiltInMethodName(builtInName);
-    SWRLBuiltInLibrary library = loadBuiltInLibrary(bridge, ruleName, prefix, implementationClassName);
-    Method method = resolveBuiltInMethod(ruleName, library, prefix, builtInMethodName);
+    SWRLBuiltInLibrary library = loadSWRLBuiltInLibrary(bridge, ruleName, prefix, implementationClassName);
+    Method method = resolveSWRLBuiltInMethod(ruleName, library, prefix, builtInMethodName);
     List<@NonNull List<@NonNull SWRLBuiltInArgument>> argumentPatterns = new ArrayList<>();
 
     if (library.invokeBuiltInMethod(method, bridge, ruleName, prefix, builtInMethodName, builtInIndex, isInConsequent,
@@ -102,19 +146,19 @@ public class SWRLBuiltInLibraryManager
     }
   }
 
-  private SWRLBuiltInLibrary loadBuiltInLibrary(@NonNull SWRLBuiltInBridge bridge, @NonNull String ruleName,
-    @NonNull String prefix, @NonNull String implementationClassName) throws SWRLBuiltInLibraryException
+  @NonNull private SWRLBuiltInLibrary loadSWRLBuiltInLibrary(@NonNull SWRLBuiltInBridge bridge,
+    @NonNull String ruleName, @NonNull String prefix, @NonNull String swrlBuiltInLibraryImplementationClassName)
+    throws SWRLBuiltInLibraryException
   {
-    SWRLBuiltInLibrary library;
-
     if (this.builtInLibraries.containsKey(prefix)) { // Find the cached implementation.
-      library = this.builtInLibraries.get(prefix);
+      return this.builtInLibraries.get(prefix);
     } else { // Implementation class not loaded - load it, cache it, and call its reset method.
-      library = loadBuiltInLibraryImpl(ruleName, prefix, implementationClassName);
+      SWRLBuiltInLibrary library = loadSWRLBuiltInLibraryImplementationClass(ruleName, prefix,
+        swrlBuiltInLibraryImplementationClassName);
       this.builtInLibraries.put(prefix, library);
       invokeBuiltInLibraryResetMethod(bridge, library);
+      return library;
     }
-    return library;
   }
 
   @NonNull private String getPrefix(@NonNull String builtInName)
@@ -130,9 +174,9 @@ public class SWRLBuiltInLibraryManager
   @NonNull private String getBuiltInLibraryImplementationClassName(@NonNull String prefix)
   {
     if (prefix.length() == 0)
-      return BuiltInLibraryPackageBaseName + "SWRLBuiltInLibraryImpl";
+      return SWRLBuiltInLibraryPackageBaseName + SWRLBuiltInLibraryImplementationClassName;
     else {
-      return BuiltInLibraryPackageBaseName + prefix + ".SWRLBuiltInLibraryImpl";
+      return SWRLBuiltInLibraryPackageBaseName + prefix + "." + SWRLBuiltInLibraryImplementationClassName;
     }
   }
 
@@ -247,7 +291,7 @@ public class SWRLBuiltInLibraryManager
     return result;
   }
 
-  private Method resolveBuiltInMethod(@NonNull String ruleName, @NonNull SWRLBuiltInLibrary library,
+  @NonNull private Method resolveSWRLBuiltInMethod(@NonNull String ruleName, @NonNull SWRLBuiltInLibrary library,
     @NonNull String prefix, @NonNull String builtInMethodName) throws UnresolvedSWRLBuiltInMethodException
   {
     String key = prefix + ":" + builtInMethodName;
@@ -258,7 +302,7 @@ public class SWRLBuiltInLibraryManager
       try {
         Method method = library.getClass().getMethod(builtInMethodName, List.class);
 
-        checkBuiltInMethodSignature(ruleName, prefix, builtInMethodName, method); // Check signature of method
+        checkSWRLBuiltInMethodSignature(ruleName, prefix, builtInMethodName, method); // Check signature of method
 
         methods.put(key, method);
 
@@ -271,47 +315,42 @@ public class SWRLBuiltInLibraryManager
   }
 
   // TODO Need to get constructor of library to catch exceptions it may throw.
-  private SWRLBuiltInLibrary loadBuiltInLibraryImpl(@NonNull String ruleName, @NonNull String prefix,
-    @NonNull String className) throws SWRLBuiltInLibraryException
+  @NonNull private SWRLBuiltInLibrary loadSWRLBuiltInLibraryImplementationClass(@NonNull String ruleName,
+    @NonNull String prefix, @NonNull String swrlBuiltInLibraryImplementationClassName)
+    throws SWRLBuiltInLibraryException
   {
-    Class<?> swrlBuiltInLibraryClass;
-    SWRLBuiltInLibrary swrlBuiltInLibrary;
+    Class<?> swrlBuiltInLibraryImplementationClass;
 
     try {
-      swrlBuiltInLibraryClass = Class.forName(className);
+      swrlBuiltInLibraryImplementationClass = Class.forName(swrlBuiltInLibraryImplementationClassName);
     } catch (Exception e) {
       throw new UnresolvedSWRLBuiltInClassException(ruleName, prefix, e.getMessage() != null ? e.getMessage() : "", e);
     }
 
-    checkBuiltInMethodsClassCompatibility(ruleName, prefix, swrlBuiltInLibraryClass); // Check implementation class for
-    // compatibility.
+    // Check implementation class for compatibility
+    checkSWRLBuiltInLibraryImplementationClassCompatibility(ruleName, prefix, swrlBuiltInLibraryImplementationClass);
 
     try {
-      swrlBuiltInLibrary = (SWRLBuiltInLibrary)swrlBuiltInLibraryClass.newInstance();
+      return (SWRLBuiltInLibrary)swrlBuiltInLibraryImplementationClass.newInstance();
     } catch (@NonNull InstantiationException | ExceptionInInitializerError | SecurityException | IllegalAccessException e) {
-      throw new IncompatibleSWRLBuiltInClassException(ruleName, prefix, className,
+      throw new IncompatibleSWRLBuiltInClassException(ruleName, prefix, swrlBuiltInLibraryImplementationClassName,
         e.getMessage() != null ? e.getMessage() : "", e);
     }
-
-    return swrlBuiltInLibrary;
   }
 
-  private void checkBuiltInMethodSignature(@NonNull String ruleName, @NonNull String prefix, @NonNull String builtInURI,
-    @NonNull Method method) throws IncompatibleBuiltInMethodException
+  private void checkSWRLBuiltInMethodSignature(@NonNull String ruleName, @NonNull String prefix,
+    @NonNull String builtInURI, @NonNull Method method) throws IncompatibleBuiltInMethodException
   {
-    Class<?> exceptionTypes[];
-    Type parameterTypes[];
-
     if (method.getReturnType() != Boolean.TYPE)
       throw new IncompatibleBuiltInMethodException(ruleName, prefix, builtInURI, "Java method must return a boolean");
 
-    exceptionTypes = method.getExceptionTypes();
+    Class<?> exceptionTypes[] = method.getExceptionTypes();
 
     if ((exceptionTypes.length != 1) || (exceptionTypes[0] != SWRLBuiltInException.class))
       throw new IncompatibleBuiltInMethodException(ruleName, prefix, builtInURI,
         "Java method must throw a single exception of type BuiltInException");
 
-    parameterTypes = method.getGenericParameterTypes();
+    Type parameterTypes[] = method.getGenericParameterTypes();
 
     if ((parameterTypes.length != 1) || (!(parameterTypes[0] instanceof ParameterizedType)) || (
       ((ParameterizedType)parameterTypes[0]).getRawType() != List.class) || (
@@ -330,7 +369,7 @@ public class SWRLBuiltInLibraryManager
     return false;
   }
 
-  private void checkBuiltInMethodsClassCompatibility(@NonNull String ruleName, @NonNull String prefix,
+  private void checkSWRLBuiltInLibraryImplementationClassCompatibility(@NonNull String ruleName, @NonNull String prefix,
     @NonNull Class<?> cls) throws IncompatibleSWRLBuiltInClassException
   {
     if (!SWRLBuiltInLibrary.class.isAssignableFrom(cls))
