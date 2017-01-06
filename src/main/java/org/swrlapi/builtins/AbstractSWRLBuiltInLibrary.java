@@ -222,16 +222,28 @@ public abstract class AbstractSWRLBuiltInLibrary
     return result;
   }
 
-  @NonNull @Override public SQWRLResultValueFactory getSQWRLResultValueFactory() throws SWRLBuiltInLibraryException
+  /**
+   * @return A SQWRL result value factory
+   * @throws SWRLBuiltInLibraryException If an error occurs during factory retrieval
+   */
+  @NonNull protected SQWRLResultValueFactory getSQWRLResultValueFactory() throws SWRLBuiltInLibraryException
   {
     return getBuiltInBridge().getSWRLAPIOWLDataFactory().getSQWRLResultValueFactory();
   }
 
   /**
-   * Create a string that represents a key of a unique invocation pattern for a built-in for a
-   * bridge/rule/built-in/arguments combination.
+   * Create a string that represents a unique invocation pattern for a built-in for a bridge/rule/built-in/arguments
+   * combination.
+   *
+   * @param invokingBridge       The built-in bridge invoking the built-in
+   * @param invokingRuleName     The name of the rule invoking the built-in
+   * @param invokingBuiltInIndex The 0-based index of the built-in in the rule
+   * @param isInConsequent       Is the built-in in the rule consequent
+   * @param arguments            The arguments to the built-in
+   * @return A unique pattern for the invocation
+   * @throws SWRLBuiltInException If the parameters are invalid or if there is an error during pattern generation
    */
-  @NonNull @Override public String createInvocationPattern(@NonNull SWRLBuiltInBridge bridge, @NonNull String ruleName,
+  @NonNull protected String createInvocationPattern(@NonNull SWRLBuiltInBridge bridge, @NonNull String ruleName,
     int builtInIndex, boolean inConsequent, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
@@ -252,7 +264,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     return result;
   }
 
-  @NonNull @Override public IRI createIRI(@NonNull String fullName) throws SWRLBuiltInException
+  @NonNull protected IRI createIRI(@NonNull String fullName) throws SWRLBuiltInException
   {
     try {
       return IRI.create(fullName);
