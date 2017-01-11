@@ -26,6 +26,7 @@ import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLNamedIndividualResultValue;
 import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -551,11 +552,11 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       if (collection.isEmpty())
         return false;
       else {
-        double sumValue = 0, value;
+        BigDecimal sumValue = BigDecimal.ZERO;
         for (SWRLBuiltInArgument element : collection) {
           checkThatElementIsComparable(element);
-          value = getArgumentAsADouble(element);
-          sumValue += value;
+          BigDecimal value = getArgumentAsADecimal(element);
+          sumValue = sumValue.add(value);
         }
         SWRLBuiltInArgument resultArgument = createLeastNarrowNumericLiteralBuiltInArgument(sumValue,
           new ArrayList<>(collection));
@@ -604,13 +605,13 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       if (collection.isEmpty())
         return false;
       else {
-        double sumValue = 0, value;
+        BigDecimal sumValue = BigDecimal.ZERO;
         for (SWRLBuiltInArgument element : collection) {
           checkThatElementIsComparable(element);
-          value = getArgumentAsADouble(element);
-          sumValue += value;
+          BigDecimal value = getArgumentAsADecimal(element);
+          sumValue = sumValue.add(value);
         }
-        double avgValue = sumValue / collection.size();
+        BigDecimal avgValue = sumValue.divide(BigDecimal.valueOf(collection.size()));
         SWRLBuiltInArgument resultArgument = createLeastNarrowNumericLiteralBuiltInArgument(avgValue,
           new ArrayList<>(collection));
 
@@ -658,13 +659,13 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       if (collection.isEmpty())
         return false;
       else {
-        double[] valueArray = new double[collection.size()];
+        BigDecimal[] valueArray = new BigDecimal[collection.size()];
         int count = 0, middle = collection.size() / 2;
-        double medianValue, value;
+        BigDecimal medianValue;
 
         for (SWRLBuiltInArgument element : collection) {
           checkThatElementIsComparable(element);
-          value = getArgumentAsADouble(element);
+          BigDecimal value = getArgumentAsADecimal(element);
           valueArray[count++] = value;
         }
 
@@ -673,7 +674,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
         if (collection.size() % 2 == 1)
           medianValue = valueArray[middle];
         else
-          medianValue = (valueArray[middle - 1] + valueArray[middle]) / 2;
+          medianValue = (valueArray[middle - 1].add(valueArray[middle])).divide(BigDecimal.valueOf(2));
 
         SWRLBuiltInArgument resultArgument = createLeastNarrowNumericLiteralBuiltInArgument(medianValue,
           new ArrayList<>(collection));
