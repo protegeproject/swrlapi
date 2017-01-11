@@ -44,6 +44,8 @@ import org.swrlapi.factory.OWLLiteralFactory;
 import org.swrlapi.factory.SWRLAPIOWLDataFactory;
 import org.swrlapi.factory.SWRLBuiltInArgumentFactory;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
@@ -165,11 +167,11 @@ class SWRLParserSupport
     }
   }
 
-  @NonNull public SWRLLiteralArgument createXSDIntSWRLLiteralArgument(@NonNull String lexicalValue)
+  @NonNull public SWRLLiteralArgument createXSDIntegerSWRLLiteralArgument(@NonNull String lexicalValue)
     throws SWRLParseException
   {
     try {
-      int value = Integer.parseInt(lexicalValue);
+      BigInteger value = new BigInteger(lexicalValue);
       OWLLiteral owlLiteral = getOWLLiteralFactory().getOWLLiteral(value);
       return getOWLDataFactory().getSWRLLiteralArgument(owlLiteral);
     } catch (NumberFormatException e) {
@@ -177,17 +179,18 @@ class SWRLParserSupport
     }
   }
 
-  @NonNull public SWRLLiteralArgument createXSDFloatSWRLLiteralArgument(@NonNull String lexicalValue)
+  @NonNull public SWRLLiteralArgument createXSDDecimalSWRLLiteralArgument(@NonNull String lexicalValue)
     throws SWRLParseException
   {
     try {
-      float value = Float.parseFloat(lexicalValue);
+      BigDecimal value = new BigDecimal(lexicalValue);
       OWLLiteral owlLiteral = getOWLLiteralFactory().getOWLLiteral(value);
       return getOWLDataFactory().getSWRLLiteralArgument(owlLiteral);
     } catch (NumberFormatException e) {
-      throw new SWRLParseException(lexicalValue + " is not a valid xsd:float");
+      throw new SWRLParseException(lexicalValue + " is not a valid xsd:int");
     }
   }
+
 
   @NonNull public SWRLLiteralArgument createSWRLLiteralArgument(@NonNull String lexicalValue,
     @NonNull String datatypeShortName) throws SWRLParseException

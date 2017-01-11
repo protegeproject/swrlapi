@@ -235,11 +235,11 @@ public abstract class AbstractSWRLBuiltInLibrary
    * Create a string that represents a unique invocation pattern for a built-in for a bridge/rule/built-in/arguments
    * combination.
    *
-   * @param invokingBridge       The built-in bridge invoking the built-in
-   * @param invokingRuleName     The name of the rule invoking the built-in
-   * @param invokingBuiltInIndex The 0-based index of the built-in in the rule
-   * @param isInConsequent       Is the built-in in the rule consequent
-   * @param arguments            The arguments to the built-in
+   * @param bridge       The built-in bridge invoking the built-in
+   * @param ruleName     The name of the rule invoking the built-in
+   * @param builtInIndex The 0-based index of the built-in in the rule
+   * @param inConsequent Is the built-in in the rule consequent
+   * @param arguments    The arguments to the built-in
    * @return A unique pattern for the invocation
    * @throws SWRLBuiltInException If the parameters are invalid or if there is an error during pattern generation
    */
@@ -450,8 +450,8 @@ public abstract class AbstractSWRLBuiltInLibrary
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return isArgumentAByte(argumentNumber, arguments) || isArgumentAShort(argumentNumber, arguments) || isArgumentAnInt(
-      argumentNumber, arguments) || isArgumentALong(argumentNumber, arguments) || isArgumentAFloat(argumentNumber,
-      arguments) || isArgumentADouble(argumentNumber, arguments);
+      argumentNumber, arguments) || isArgumentALong(argumentNumber, arguments) || isArgumentAnInteger(argumentNumber,
+      arguments) || isArgumentAFloat(argumentNumber, arguments) || isArgumentADouble(argumentNumber, arguments);
   }
 
   @Override public boolean isWidestNumericArgumentAByte(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
@@ -459,8 +459,8 @@ public abstract class AbstractSWRLBuiltInLibrary
   {
     for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
       if (isArgumentAShort(argumentNumber, arguments) || isArgumentAnInt(argumentNumber, arguments) || isArgumentALong(
-        argumentNumber, arguments) || isArgumentAFloat(argumentNumber, arguments) || isArgumentADouble(argumentNumber,
-        arguments))
+        argumentNumber, arguments) || isArgumentAnInteger(argumentNumber, arguments) || isArgumentAFloat(argumentNumber,
+        arguments) || isArgumentADouble(argumentNumber, arguments) || isArgumentADecimal(argumentNumber, arguments))
         return false;
     return true;
   }
@@ -469,8 +469,9 @@ public abstract class AbstractSWRLBuiltInLibrary
     throws SWRLBuiltInException
   {
     for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
-      if (isArgumentAnInt(argumentNumber, arguments) || isArgumentALong(argumentNumber, arguments) || isArgumentAFloat(
-        argumentNumber, arguments) || isArgumentADouble(argumentNumber, arguments))
+      if (isArgumentAnInt(argumentNumber, arguments) || isArgumentALong(argumentNumber, arguments)
+        || isArgumentAnInteger(argumentNumber, arguments) || isArgumentAFloat(argumentNumber, arguments)
+        || isArgumentADouble(argumentNumber, arguments) || isArgumentADecimal(argumentNumber, arguments))
         return false;
     return true;
   }
@@ -479,8 +480,9 @@ public abstract class AbstractSWRLBuiltInLibrary
     throws SWRLBuiltInException
   {
     for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
-      if (isArgumentALong(argumentNumber, arguments) || isArgumentAFloat(argumentNumber, arguments)
-        || isArgumentADouble(argumentNumber, arguments))
+      if (isArgumentALong(argumentNumber, arguments) || isArgumentAnInteger(argumentNumber, arguments)
+        || isArgumentAFloat(argumentNumber, arguments) || isArgumentADouble(argumentNumber, arguments)
+        || isArgumentADecimal(argumentNumber, arguments))
         return false;
     return true;
   }
@@ -489,7 +491,18 @@ public abstract class AbstractSWRLBuiltInLibrary
     throws SWRLBuiltInException
   {
     for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
-      if (isArgumentAFloat(argumentNumber, arguments) || isArgumentADouble(argumentNumber, arguments))
+      if (isArgumentAnInteger(argumentNumber, arguments) || isArgumentAFloat(argumentNumber, arguments)
+        || isArgumentADouble(argumentNumber, arguments) || isArgumentADecimal(argumentNumber, arguments))
+        return false;
+    return true;
+  }
+
+  @Override public boolean isWidestNumericArgumentAnInteger(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException
+  {
+    for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
+      if (isArgumentAFloat(argumentNumber, arguments) || isArgumentADouble(argumentNumber, arguments)
+        || isArgumentADecimal(argumentNumber, arguments))
         return false;
     return true;
   }
@@ -498,7 +511,16 @@ public abstract class AbstractSWRLBuiltInLibrary
     throws SWRLBuiltInException
   {
     for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
-      if (isArgumentADouble(argumentNumber, arguments))
+      if (isArgumentADouble(argumentNumber, arguments) || isArgumentADecimal(argumentNumber, arguments))
+        return false;
+    return true;
+  }
+
+  @Override public boolean isWidestNumericArgumentADouble(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException
+  {
+    for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++)
+      if (isArgumentADecimal(argumentNumber, arguments))
         return false;
     return true;
   }
@@ -796,7 +818,7 @@ public abstract class AbstractSWRLBuiltInLibrary
   {
     if (!isArgumentAShort(argumentNumber, arguments))
       throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
-        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "short"));
+        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "xsd:short"));
   }
 
   @Override public boolean isArgumentAShort(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
@@ -820,7 +842,7 @@ public abstract class AbstractSWRLBuiltInLibrary
   {
     if (!isArgumentAnInt(argumentNumber, arguments))
       throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
-        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "int"));
+        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "xsd:int"));
   }
 
   @Override public boolean isArgumentAnInt(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
@@ -843,7 +865,7 @@ public abstract class AbstractSWRLBuiltInLibrary
 
     if (i < 0)
       throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
-        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "expecting positive int"));
+        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "expecting positive xsd:int"));
     return i;
   }
 
@@ -852,8 +874,7 @@ public abstract class AbstractSWRLBuiltInLibrary
   @NonNull @Override public BigInteger getArgumentAsAnInteger(int argumentNumber,
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
-    return getArgumentAsALiteral(argumentNumber, arguments).getInteger();
-    // Will throw exception if invalid.
+    return getArgumentAsALiteral(argumentNumber, arguments).getInteger(); // Will throw exception if invalid.
   }
 
   @NonNull @Override public BigInteger getArgumentAsAnInteger(@NonNull SWRLBuiltInArgument argument)
@@ -868,6 +889,17 @@ public abstract class AbstractSWRLBuiltInLibrary
   {
     return isArgumentALiteral(argumentNumber, arguments) && (getArgumentAsALiteral(argumentNumber, arguments)
       .isInteger());
+  }
+
+  @Override public BigInteger getArgumentAsAPositiveInteger(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    BigInteger i = getArgumentAsALiteral(argumentNumber, arguments).getInteger();
+
+    if (i.compareTo(BigInteger.ZERO) < 0)
+      throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
+        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "expecting positive xsd:integer"));
+    return i;
   }
 
   // xsd:decimal
@@ -1120,7 +1152,7 @@ public abstract class AbstractSWRLBuiltInLibrary
 
     if (l < 0)
       throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
-        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "expecting positive long"));
+        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "expecting positive xsd:long"));
 
     return l;
   }
@@ -1132,7 +1164,7 @@ public abstract class AbstractSWRLBuiltInLibrary
   {
     if (!isArgumentAFloat(argumentNumber, arguments))
       throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
-        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "float"));
+        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "xsd:float"));
   }
 
   @Override public boolean isArgumentAFloat(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
@@ -1162,7 +1194,7 @@ public abstract class AbstractSWRLBuiltInLibrary
   {
     if (!isArgumentADouble(argumentNumber, arguments))
       throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
-        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "double"));
+        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "xsd:double"));
   }
 
   @Override public boolean isArgumentADouble(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
@@ -1192,7 +1224,7 @@ public abstract class AbstractSWRLBuiltInLibrary
   {
     if (!isArgumentABoolean(argumentNumber, arguments))
       throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
-        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "boolean"));
+        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "xsd:boolean"));
   }
 
   @Override public boolean isArgumentABoolean(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
@@ -1217,7 +1249,7 @@ public abstract class AbstractSWRLBuiltInLibrary
   {
     if (!isArgumentAString(argumentNumber, arguments))
       throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
-        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "string"));
+        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "xsd:string"));
   }
 
   @Override public boolean isArgumentAString(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
@@ -1436,7 +1468,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     return arguments.get(argumentNumber).asVariable().getVariableName();
   }
 
-  @NonNull private String makeInvalidArgumentTypeMessage(@NonNull SWRLBuiltInArgument argument,
+  @NonNull protected String makeInvalidArgumentTypeMessage(@NonNull SWRLBuiltInArgument argument,
     @NonNull String expectedTypeName) throws SWRLBuiltInException
   {
     String message = "expecting " + expectedTypeName + ", got ";
@@ -1691,34 +1723,35 @@ public abstract class AbstractSWRLBuiltInLibrary
   }
 
   @NonNull @Override public SWRLObjectPropertyExpressionBuiltInArgument createObjectPropertyExpressionBuiltInArgument(
-    OWLObjectPropertyExpression pe)
+    @NonNull OWLObjectPropertyExpression pe)
   {
     return getSWRLBuiltInArgumentFactory().getObjectPropertyExpressionBuiltInArgument(pe);
   }
 
-  @NonNull @Override public SWRLDataPropertyBuiltInArgument createDataPropertyBuiltInArgument(OWLDataProperty property)
+  @NonNull @Override public SWRLDataPropertyBuiltInArgument createDataPropertyBuiltInArgument(
+    @NonNull OWLDataProperty property)
   {
     return getSWRLBuiltInArgumentFactory().getDataPropertyBuiltInArgument(property);
   }
 
   @NonNull @Override public SWRLDataPropertyExpressionBuiltInArgument createDataPropertyExpressionBuiltInArgument(
-    OWLDataPropertyExpression pe)
+    @NonNull OWLDataPropertyExpression pe)
   {
     return getSWRLBuiltInArgumentFactory().getDataPropertyExpressionBuiltInArgument(pe);
   }
 
   @NonNull @Override public SWRLAnnotationPropertyBuiltInArgument createAnnotationPropertyBuiltInArgument(
-    OWLAnnotationProperty property)
+    @NonNull OWLAnnotationProperty property)
   {
     return getSWRLBuiltInArgumentFactory().getAnnotationPropertyBuiltInArgument(property);
   }
 
-  @NonNull @Override public SWRLDatatypeBuiltInArgument createDatatypeBuiltInArgument(OWLDatatype datatype)
+  @NonNull @Override public SWRLDatatypeBuiltInArgument createDatatypeBuiltInArgument(@NonNull OWLDatatype datatype)
   {
     return getSWRLBuiltInArgumentFactory().getDatatypeBuiltInArgument(datatype);
   }
 
-  @Override @NonNull public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(OWLLiteral literal)
+  @Override @NonNull public SWRLLiteralBuiltInArgument createLiteralBuiltInArgument(@NonNull OWLLiteral literal)
   {
     return getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(literal);
   }
@@ -1819,6 +1852,14 @@ public abstract class AbstractSWRLBuiltInLibrary
   }
 
   @NonNull protected SWRLLiteralBuiltInArgument createLeastNarrowNumericLiteralBuiltInArgument(double value,
+    @NonNull List<@NonNull SWRLBuiltInArgument> boundInputNumericArguments) throws SWRLBuiltInException
+  {
+    OWLLiteral literal = createLeastNarrowNumericOWLLiteral(value, boundInputNumericArguments);
+
+    return getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(literal);
+  }
+
+  @NonNull protected SWRLLiteralBuiltInArgument createLeastNarrowNumericLiteralBuiltInArgument(BigDecimal value,
     @NonNull List<@NonNull SWRLBuiltInArgument> boundInputNumericArguments) throws SWRLBuiltInException
   {
     OWLLiteral literal = createLeastNarrowNumericOWLLiteral(value, boundInputNumericArguments);
@@ -1975,6 +2016,27 @@ public abstract class AbstractSWRLBuiltInLibrary
       return getOWLLiteralFactory().getOWLLiteral((long)value);
     else if (isWidestNumericArgumentAFloat(boundInputNumericArguments))
       return getOWLLiteralFactory().getOWLLiteral((float)value);
+    else
+      return getOWLLiteralFactory().getOWLLiteral(value);
+  }
+
+  @NonNull private OWLLiteral createLeastNarrowNumericOWLLiteral(BigDecimal value,
+    @NonNull List<@NonNull SWRLBuiltInArgument> boundInputNumericArguments) throws SWRLBuiltInException
+  { // TODO Check for overflow
+    if (isWidestNumericArgumentAByte(boundInputNumericArguments))
+      return getOWLLiteralFactory().getOWLLiteral(value.byteValue());
+    else if (isWidestNumericArgumentAShort(boundInputNumericArguments))
+      return getOWLLiteralFactory().getOWLLiteral(value.shortValue());
+    else if (isWidestNumericArgumentAnInt(boundInputNumericArguments))
+      return getOWLLiteralFactory().getOWLLiteral(value.intValue());
+    else if (isWidestNumericArgumentALong(boundInputNumericArguments))
+      return getOWLLiteralFactory().getOWLLiteral(value.longValue());
+    else if (isWidestNumericArgumentAnInteger(boundInputNumericArguments))
+      return getOWLLiteralFactory().getOWLLiteral(value.toBigInteger());
+    else if (isWidestNumericArgumentAFloat(boundInputNumericArguments))
+      return getOWLLiteralFactory().getOWLLiteral(value.floatValue());
+    else if (isWidestNumericArgumentADouble(boundInputNumericArguments))
+      return getOWLLiteralFactory().getOWLLiteral(value.doubleValue());
     else
       return getOWLLiteralFactory().getOWLLiteral(value);
   }

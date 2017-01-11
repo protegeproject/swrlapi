@@ -33,6 +33,8 @@ import org.swrlapi.sqwrl.values.SQWRLNamedIndividualResultValue;
 import org.swrlapi.sqwrl.values.SQWRLObjectPropertyExpressionResultValue;
 import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -211,6 +213,18 @@ public class DefaultSQWRLResultValueFactory implements SQWRLResultValueFactory
   {
     return new DefaultSQWRLLiteralResultValue(getOWLLiteralFactory().getOWLLiteral(s),
       XSDVocabulary.STRING.getPrefixedName());
+  }
+
+  @NonNull @Override public SQWRLLiteralResultValue getLiteralValue(@NonNull BigDecimal d)
+  {
+    return new DefaultSQWRLLiteralResultValue(getOWLLiteralFactory().getOWLLiteral(d),
+      XSDVocabulary.DECIMAL.getPrefixedName());
+  }
+
+  @NonNull @Override public SQWRLLiteralResultValue getLiteralValue(@NonNull BigInteger i)
+  {
+    return new DefaultSQWRLLiteralResultValue(getOWLLiteralFactory().getOWLLiteral(i),
+      XSDVocabulary.INTEGER.getPrefixedName());
   }
 
   @NonNull @Override public SQWRLLiteralResultValue getLiteralValue(boolean b)

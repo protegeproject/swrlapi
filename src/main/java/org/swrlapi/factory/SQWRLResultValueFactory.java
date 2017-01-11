@@ -27,6 +27,8 @@ import org.swrlapi.sqwrl.values.SQWRLNamedIndividualResultValue;
 import org.swrlapi.sqwrl.values.SQWRLObjectPropertyExpressionResultValue;
 import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.net.URI;
 import java.util.List;
 
@@ -85,6 +87,10 @@ public interface SQWRLResultValueFactory
   @NonNull SQWRLLiteralResultValue getLiteralValue(float f);
 
   @NonNull SQWRLLiteralResultValue getLiteralValue(double d);
+
+  @NonNull SQWRLLiteralResultValue getLiteralValue(@NonNull BigInteger i);
+
+  @NonNull SQWRLLiteralResultValue getLiteralValue(@NonNull BigDecimal d);
 
   @NonNull SQWRLLiteralResultValue getLiteralValue(@NonNull String s);
 

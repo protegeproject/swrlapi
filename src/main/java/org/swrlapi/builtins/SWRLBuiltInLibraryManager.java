@@ -57,14 +57,12 @@ public class SWRLBuiltInLibraryManager
     this.swrlBuiltInMethods = new HashMap<>();
   }
 
-  public void loadSWRLBuiltInLibrariesFromDirectory(@NonNull String pathToSWRLBuiltInsDirectory)
+  public void loadSWRLBuiltInLibraries(@NonNull String pathToSWRLBuiltInsDirectory)
   {
     // TODO Where do we call this from?
     // TODO Need to be careful we do not load classes more than once
     // TODO library.reset() not called using this approach
-    // TODO Need to add methods in SWRLBuiltInLibrary to return list of built-ins? IRI of library?
-    // prefix of library (instead of current approach of package imply it)?
-    // Or is the built-ins registered in each library reset() method?
+    // TODO Return list of built-in IRIs from here so that SWRLAPIOWLOntology implementation can register them?
 
     try {
       Map<@NonNull String, @NonNull Set<@NonNull String>> swrlBuiltInLibraryJARs = getSWRLBuiltInLibraryJARs(

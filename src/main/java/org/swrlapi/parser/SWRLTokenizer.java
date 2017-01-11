@@ -221,7 +221,7 @@ class SWRLTokenizer
           if (trailingTokenType == StreamTokenizer.TT_WORD && isInt(trailingValue)) {
             String floatValue = value + "." + trailingValue;
             floatValue = negativeNumeric ? "-" + floatValue : floatValue;
-            return new SWRLToken(SWRLToken.SWRLTokenType.FLOAT, floatValue);
+            return new SWRLToken(SWRLToken.SWRLTokenType.DECIMAL, floatValue);
           } else if (trailingTokenType == StreamTokenizer.TT_EOF)
             throw generateEndOfRuleException("Expecting float fraction part after '.'");
           else
@@ -229,7 +229,7 @@ class SWRLTokenizer
         } else { // No following '.' so it is an integer
           this.tokenizer.pushBack();
           String intValue = negativeNumeric ? "-" + value : value;
-          return new SWRLToken(SWRLToken.SWRLTokenType.INT, intValue);
+          return new SWRLToken(SWRLToken.SWRLTokenType.INTEGER, intValue);
         }
       } else { // Value is not an integer
         if (negativeNumeric) // If negative, value should be an integer or float

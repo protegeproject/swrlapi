@@ -359,13 +359,13 @@ public class SWRLParser
     } else if (token.isString()) {
       String literalValue = token.getValue();
       return parseLiteralSWRLDArgument(tokenizer, literalValue);
-    } else if (token.isInt()) {
+    } else if (token.isInteger()) {
       return !tokenizer.isInteractiveParseOnly() ?
-        Optional.of(this.swrlParserSupport.createXSDIntSWRLLiteralArgument(token.getValue())) :
+        Optional.of(this.swrlParserSupport.createXSDIntegerSWRLLiteralArgument(token.getValue())) :
         Optional.<@NonNull SWRLDArgument>empty();
-    } else if (token.isFloat()) {
+    } else if (token.isDecimal()) {
       return !tokenizer.isInteractiveParseOnly() ?
-        Optional.of(this.swrlParserSupport.createXSDFloatSWRLLiteralArgument(token.getValue())) :
+        Optional.of(this.swrlParserSupport.createXSDDecimalSWRLLiteralArgument(token.getValue())) :
         Optional.<@NonNull SWRLDArgument>empty();
     } else
       throw new SWRLParseException("Expecting variable, literal or OWL entity name, got '" + token.getValue() + "'");
