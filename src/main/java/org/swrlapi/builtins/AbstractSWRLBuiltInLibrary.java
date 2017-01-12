@@ -1138,17 +1138,13 @@ public abstract class AbstractSWRLBuiltInLibrary
   @Override public long getArgumentAsALong(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
-    return getArgumentAsALiteral(argumentNumber, arguments).getLong(); // Will throw LiteralException
-    // if
-    // invalid.
+    return getArgumentAsALiteral(argumentNumber, arguments).getLong();
   }
 
   @Override public long getArgumentAsAPositiveLong(int argumentNumber,
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
-    long l = getArgumentAsALiteral(argumentNumber, arguments).getLong(); // Will throw
-    // DatatypeConversionException if
-    // invalid.
+    long l = getArgumentAsALiteral(argumentNumber, arguments).getLong();
 
     if (l < 0)
       throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
@@ -1883,10 +1879,10 @@ public abstract class AbstractSWRLBuiltInLibrary
     return individual;
   }
 
-  @NonNull protected Map<Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> createOutputMultiValueArguments(
+  @NonNull protected Map<@NonNull Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> createOutputMultiValueArguments(
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
-    Map<Integer, SWRLMultiValueVariableBuiltInArgument> outputMultiValueArguments = new HashMap<>();
+    Map<@NonNull Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> outputMultiValueArguments = new HashMap<>();
 
     for (int argumentNumber = 0; argumentNumber < arguments.size(); argumentNumber++) {
       if (arguments.get(argumentNumber).isVariable()) {
@@ -1901,7 +1897,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments, @NonNull SWRLBuiltInArgumentType<?>... builtInArgumentTypes)
     throws SWRLBuiltInException
   {
-    Map<Integer, @NonNull OWLObject> boundInputArgumentValues = new HashMap<>();
+    Map<@NonNull Integer, @NonNull OWLObject> boundInputArgumentValues = new HashMap<>();
 
     if (arguments.size() != builtInArgumentTypes.length)
       throw new SWRLBuiltInException(
@@ -1985,6 +1981,23 @@ public abstract class AbstractSWRLBuiltInLibrary
         arguments.get(argumentNumber).asVariable().setBuiltInResult(outputMultiValueArguments.get(argumentNumber));
       return true;
     }
+  }
+
+  private int convertArgumentToPositiveInt(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException
+  {
+    BigInteger integerValue = getArgumentAsAnInteger(argumentNumber, arguments);
+
+    if (integerValue.compareTo(BigInteger.ZERO) < 0)
+      throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
+        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "expecting positive xsd:integer"));
+
+    if (integerValue.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) > 0)
+      throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
+        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber),
+          "value cannot be larger than " + Integer.MAX_VALUE));
+
+    return integerValue.intValue();
   }
 
   private void checkThatArgumentIsALiteral(SWRLBuiltInArgument argument) throws SWRLBuiltInException

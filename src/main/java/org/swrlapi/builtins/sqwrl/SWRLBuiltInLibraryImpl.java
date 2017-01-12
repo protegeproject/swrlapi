@@ -1881,23 +1881,6 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     return queryName + ":" + collectionName;
   }
 
-  private int convertArgumentToPositiveInt(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
-    throws SWRLBuiltInException
-  {
-    BigInteger integerValue = getArgumentAsAnInteger(argumentNumber, arguments);
-
-    if (integerValue.compareTo(BigInteger.ZERO) < 0)
-      throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
-        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "expecting positive xsd:integer"));
-
-    if (integerValue.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) > 0)
-      throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
-        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber),
-          "value cannot be larger than " + Integer.MAX_VALUE));
-
-    return integerValue.intValue();
-  }
-
   @NonNull @SuppressWarnings("unused") private Collection<@NonNull SWRLBuiltInArgument> ungroupCollection(
     @NonNull String queryName, @NonNull String collectionName) throws SWRLBuiltInException
   {
