@@ -533,7 +533,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     checkNumberOfArgumentsEqualTo(2, arguments.size());
 
     String argument2 = getArgumentAsAString(1, arguments);
-    int operationResult = argument2.length();
+    BigInteger operationResult = BigInteger.valueOf(argument2.length());
 
     return processResultArgument(arguments, 0, operationResult);
   }

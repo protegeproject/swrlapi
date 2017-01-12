@@ -1983,7 +1983,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     }
   }
 
-  private int convertArgumentToPositiveInt(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+  protected int convertArgumentToPositiveInt(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     BigInteger integerValue = getArgumentAsAnInteger(argumentNumber, arguments);
@@ -1995,9 +1995,26 @@ public abstract class AbstractSWRLBuiltInLibrary
     if (integerValue.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) > 0)
       throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
         makeInvalidArgumentTypeMessage(arguments.get(argumentNumber),
-          "value cannot be larger than " + Integer.MAX_VALUE));
+          "value converted to xsd:int cannot be larger than " + Integer.MAX_VALUE));
 
     return integerValue.intValue();
+  }
+
+  protected long convertArgumentToAPositiveLong(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    BigInteger integerValue = getArgumentAsAnInteger(argumentNumber, arguments);
+
+    if (integerValue.compareTo(BigInteger.ZERO) < 0)
+      throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
+        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "expecting positive xsd:integer"));
+
+    if (integerValue.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0)
+      throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
+        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber),
+          "value converted to xsd:long cannot be larger than " + Long.MAX_VALUE));
+
+    return integerValue.longValue();
   }
 
   private void checkThatArgumentIsALiteral(SWRLBuiltInArgument argument) throws SWRLBuiltInException

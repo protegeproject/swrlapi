@@ -442,7 +442,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       arguments.get(0).asVariable().setBuiltInResult(resultArgument); // Bind the result to the first argument
       return true;
     } else {
-      long argument1 = getArgumentAsALong(0, arguments);
+      long argument1 = convertArgumentToAPositiveLong(0, arguments);
       return (argument1 == operationResult);
     }
   }

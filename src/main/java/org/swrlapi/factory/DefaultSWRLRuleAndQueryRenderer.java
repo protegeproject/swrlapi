@@ -528,11 +528,11 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
 
     if (datatype.isString())
       return "\"" + value + "\"";
-    else if (datatype.isFloat())
+    else if (datatype.getIRI().equals(XSDVocabulary.DECIMAL.getIRI()))
       return value;
     else if (datatype.isBoolean())
       return value;
-    else if (datatype.getIRI().equals(XSDVocabulary.INT.getIRI()))
+    else if (datatype.getIRI().equals(XSDVocabulary.INTEGER.getIRI()))
       return value;
     else
       return "\"" + value + "\"^^" + visit(datatype);
