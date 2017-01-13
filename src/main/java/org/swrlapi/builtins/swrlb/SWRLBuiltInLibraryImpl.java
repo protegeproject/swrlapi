@@ -512,10 +512,10 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     checkNumberOfArgumentsAtMost(4, arguments.size());
 
     argument2 = getArgumentAsAString(1, arguments);
-    startIndex = getArgumentAsAnInt(2, arguments);
+    startIndex = convertArgumentToAnInt(2, arguments);
 
     if (arguments.size() == 4) {
-      length = getArgumentAsAnInt(3, arguments);
+      length = convertArgumentToAnInt(3, arguments);
       operationResult = argument2.substring(startIndex, length);
     } else
       operationResult = argument2.substring(startIndex);
@@ -786,8 +786,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   public boolean yearMonthDuration(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(3, arguments.size());
-    int year = getArgumentAsAnInt(1, arguments);
-    int month = getArgumentAsAnInt(2, arguments);
+    int year = convertArgumentToAnInt(1, arguments);
+    int month = convertArgumentToAnInt(2, arguments);
     org.apache.axis.types.Duration duration = new org.apache.axis.types.Duration();
 
     duration.setYears(year);
@@ -804,10 +804,10 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    */ public boolean dayTimeDuration(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(5, arguments.size());
-    int days = getArgumentAsAnInt(1, arguments);
-    int hours = getArgumentAsAnInt(2, arguments);
-    int minutes = getArgumentAsAnInt(3, arguments);
-    int seconds = getArgumentAsAnInt(4, arguments);
+    int days = convertArgumentToAnInt(1, arguments);
+    int hours = convertArgumentToAnInt(2, arguments);
+    int minutes = convertArgumentToAnInt(3, arguments);
+    int seconds = convertArgumentToAnInt(4, arguments);
     org.apache.axis.types.Duration duration = new org.apache.axis.types.Duration();
 
     duration.setDays(days);
@@ -827,12 +827,12 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   {
     checkNumberOfArgumentsEqualTo(8, arguments.size());
 
-    int year = getArgumentAsAnInt(1, arguments);
-    int month = getArgumentAsAnInt(2, arguments);
-    int days = getArgumentAsAnInt(3, arguments);
-    int hours = getArgumentAsAnInt(4, arguments);
-    int minutes = getArgumentAsAnInt(5, arguments);
-    int seconds = getArgumentAsAnInt(6, arguments);
+    int year = convertArgumentToAnInt(1, arguments);
+    int month = convertArgumentToAnInt(2, arguments);
+    int days = convertArgumentToAnInt(3, arguments);
+    int hours = convertArgumentToAnInt(4, arguments);
+    int minutes = convertArgumentToAnInt(5, arguments);
+    int seconds = convertArgumentToAnInt(6, arguments);
     String timeZone = getArgumentAsAString(7, arguments);
     Calendar calendar = new GregorianCalendar();
 
@@ -856,9 +856,9 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   {
     checkNumberOfArgumentsEqualTo(5, arguments.size());
 
-    int year = getArgumentAsAnInt(1, arguments);
-    int month = getArgumentAsAnInt(2, arguments);
-    int days = getArgumentAsAnInt(3, arguments);
+    int year = convertArgumentToAnInt(1, arguments);
+    int month = convertArgumentToAnInt(2, arguments);
+    int days = convertArgumentToAnInt(3, arguments);
     String timeZone = getArgumentAsAString(4, arguments);
     Calendar calendar = new GregorianCalendar();
 
@@ -881,9 +881,9 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   {
     checkNumberOfArgumentsEqualTo(5, arguments.size());
 
-    int hours = getArgumentAsAnInt(1, arguments);
-    int minutes = getArgumentAsAnInt(2, arguments);
-    int seconds = getArgumentAsAnInt(3, arguments);
+    int hours = convertArgumentToAnInt(1, arguments);
+    int minutes = convertArgumentToAnInt(2, arguments);
+    int seconds = convertArgumentToAnInt(3, arguments);
     String timeZone = getArgumentAsAString(4, arguments);
     String operationResult = "" + hours + ":" + minutes + ":" + seconds + timeZone;
 
@@ -1442,7 +1442,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       BigInteger argument3 = getArgumentAsAnInteger(2, arguments);
       operationResult = new BigDecimal(argument2.remainder(argument3));
     } else if (builtInName.equalsIgnoreCase(SWRLB_POW)) {
-      int argument3 = getArgumentAsAnInt(2, arguments);
+      int argument3 = convertArgumentToAnInt(2, arguments);
       BigDecimal argument2 = getArgumentAsADecimal(1, arguments);
       operationResult = argument2.pow(argument3);
     } else if (builtInName.equalsIgnoreCase(SWRLB_UNARY_PLUS)) {
