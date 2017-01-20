@@ -291,8 +291,7 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, -34) ->");
   }
 
-  @Test public void TestIntQualifiedLiteral()
-    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
+  @Test public void TestIntLiteral() throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
@@ -300,6 +299,27 @@ public class SWRLParserTest extends IntegrationTestBase
     addOWLAxioms(ontology, Declaration(HAS_AGE));
 
     swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, \"34\"^^xsd:int) ->");
+  }
+
+  @Test public void TestQualifiedIntegerLiteral()
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
+  {
+    OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
+
+    addOWLAxioms(ontology, Declaration(HAS_AGE));
+
+    swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, \"34\"^^xsd:integer) ->");
+  }
+
+  @Test public void TestIntegerLiteral() throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
+  {
+    OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
+
+    addOWLAxioms(ontology, Declaration(HAS_AGE));
+
+    swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, 34) ->");
   }
 
   @Test public void TestNegativeIntQualifiedLiteral()
@@ -354,29 +374,7 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "hasAge(?p, \"b34\"^^xsd:long) ->");
   }
 
-  @Test public void TestFloatRawLiteral() throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
-  {
-    OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
-
-    addOWLAxioms(ontology, Declaration(HAS_HEIGHT));
-
-    swrlapiOWLOntology.createSWRLRule("r1", "hasHeight(?p, 34.5) ->");
-  }
-
-  @Test public void TestNegativeFloatRawLiteral()
-    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
-  {
-    OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
-    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
-
-    addOWLAxioms(ontology, Declaration(HAS_HEIGHT));
-
-    swrlapiOWLOntology.createSWRLRule("r1", "hasHeight(?p, -34.5) ->");
-  }
-
-  @Test public void TestFloatQualifiedLiteral()
-    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
+  @Test public void TestFloatLiteral() throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
@@ -408,8 +406,7 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "hasHeight(?p, \"x34.0\"^^xsd:float) ->");
   }
 
-  @Test public void TestDoubleQualifiedLiteral()
-    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
+  @Test public void TestDoubleLiteral() throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
     SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
@@ -419,7 +416,7 @@ public class SWRLParserTest extends IntegrationTestBase
     swrlapiOWLOntology.createSWRLRule("r1", "hasHeight(?p, \"34.0\"^^xsd:double) ->");
   }
 
-  @Test public void TestNegativeDoubleQualifiedLiteral()
+  @Test public void TestNegativeDoubleLiteral()
     throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
   {
     OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
@@ -439,6 +436,49 @@ public class SWRLParserTest extends IntegrationTestBase
     addOWLAxioms(ontology, Declaration(HAS_HEIGHT));
 
     swrlapiOWLOntology.createSWRLRule("r1", "hasHeight(?p, \"x34.0\"^^xsd:double) ->");
+  }
+
+  @Test public void TestQualifiedDecimalLiteral()
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
+  {
+    OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
+
+    addOWLAxioms(ontology, Declaration(HAS_HEIGHT));
+
+    swrlapiOWLOntology.createSWRLRule("r1", "hasHeight(?p, \"34.0\"^^xsd:decimal) ->");
+  }
+
+  @Test public void TestQualifiedNegativeDecimalLiteral()
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
+  {
+    OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
+
+    addOWLAxioms(ontology, Declaration(HAS_HEIGHT));
+
+    swrlapiOWLOntology.createSWRLRule("r1", "hasHeight(?p, \"-34.0\"^^xsd:decimal) ->");
+  }
+
+  @Test public void TestDecimalLiteral() throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
+  {
+    OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
+
+    addOWLAxioms(ontology, Declaration(HAS_HEIGHT));
+
+    swrlapiOWLOntology.createSWRLRule("r1", "hasHeight(?p, 34.5) ->");
+  }
+
+  @Test public void TestNegativeDecimalLiteral()
+    throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
+  {
+    OWLOntology ontology = OWLManager.createOWLOntologyManager().createOntology();
+    SWRLAPIOWLOntology swrlapiOWLOntology = createSWRLAPIOntology(ontology);
+
+    addOWLAxioms(ontology, Declaration(HAS_HEIGHT));
+
+    swrlapiOWLOntology.createSWRLRule("r1", "hasHeight(?p, -34.5) ->");
   }
 
   @Test public void TestURILiteral() throws SWRLParseException, OWLOntologyCreationException, SWRLBuiltInException
