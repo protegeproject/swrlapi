@@ -442,7 +442,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       arguments.get(0).asVariable().setBuiltInResult(resultArgument); // Bind the result to the first argument
       return true;
     } else {
-      long argument1 = getArgumentAsALong(0, arguments);
+      long argument1 = convertArgumentToAPositiveLong(0, arguments);
       return (argument1 == operationResult);
     }
   }
@@ -458,13 +458,13 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     checkForUnboundArguments(arguments);
     List<@NonNull SWRLBuiltInArgument> newArguments = cloneArguments(arguments);
 
-    long argument1 = getArgumentAsALong(0, arguments);
+    long argument1 = convertArgumentToALong(0, arguments);
 
     if (newArguments.get(0).isVariable())
       newArguments.get(0).asVariable().setUnbound();
 
     duration(newArguments);
-    long operationResult = getArgumentAsALong(0, newArguments);
+    long operationResult = convertArgumentToALong(0, newArguments);
 
     return argument1 < operationResult;
   }
@@ -481,13 +481,13 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     checkForUnboundArguments(arguments);
     List<@NonNull SWRLBuiltInArgument> newArguments = cloneArguments(arguments);
 
-    long argument1 = getArgumentAsALong(0, arguments);
+    long argument1 = convertArgumentToALong(0, arguments);
 
     if (newArguments.get(0).isVariable())
       newArguments.get(0).asVariable().setUnbound();
 
     duration(newArguments);
-    long operationResult = getArgumentAsALong(0, newArguments);
+    long operationResult = convertArgumentToALong(0, newArguments);
 
     return argument1 <= operationResult;
   }
@@ -504,13 +504,13 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
     List<@NonNull SWRLBuiltInArgument> newArguments = cloneArguments(arguments);
 
-    long argument1 = getArgumentAsALong(0, arguments);
+    long argument1 = convertArgumentToALong(0, arguments);
 
     if (newArguments.get(0).isVariable())
       newArguments.get(0).asVariable().setUnbound();
 
     duration(newArguments);
-    long operationResult = getArgumentAsALong(0, newArguments);
+    long operationResult = convertArgumentToALong(0, newArguments);
 
     return argument1 == operationResult;
   }
@@ -527,13 +527,13 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
     List<@NonNull SWRLBuiltInArgument> newArguments = cloneArguments(arguments);
 
-    long argument1 = getArgumentAsALong(0, arguments);
+    long argument1 = convertArgumentToALong(0, arguments);
 
     if (newArguments.get(0).isVariable())
       newArguments.get(0).asVariable().setUnbound();
 
     duration(newArguments);
-    long operationResult = getArgumentAsALong(0, newArguments);
+    long operationResult = convertArgumentToALong(0, newArguments);
 
     return argument1 > operationResult;
   }
@@ -550,13 +550,13 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     checkForUnboundArguments(arguments);
     List<@NonNull SWRLBuiltInArgument> newArguments = cloneArguments(arguments);
 
-    long argument1 = getArgumentAsALong(0, arguments);
+    long argument1 = convertArgumentToALong(0, arguments);
 
     if (newArguments.get(0).isVariable())
       newArguments.get(0).asVariable().setUnbound();
 
     duration(newArguments);
-    long operationResult = getArgumentAsALong(0, newArguments);
+    long operationResult = convertArgumentToALong(0, newArguments);
 
     return argument1 >= operationResult;
   }
@@ -577,7 +577,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     checkForUnboundNonFirstArguments(arguments);
 
     try {
-      long granuleCount = getArgumentAsALong(2, arguments);
+      long granuleCount = convertArgumentToALong(2, arguments);
       int granularity = getBuiltInArgumentAsAGranularity(3, arguments);
       Instant operationResult = getArgumentAsAnInstant(1, arguments, Temporal.FINEST);
 

@@ -17,6 +17,7 @@ import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.SQWRLResultManager;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -245,11 +246,22 @@ class DefaultSQWRLQuery implements SQWRLQuery
         sliceN = literal.getInt();
         if (sliceN < 1)
           throw new SQWRLException(
-            "nth argument for slicing operator " + builtInPrefixedName + " must be a positive xsd:int");
+            "nth argument for slicing operator " + builtInPrefixedName + " must be a positive xsd:int or xsd:integer");
+      } else if (literal.isInteger()) {
+        BigInteger value = literal.getInteger();
+        if (value.compareTo(BigInteger.ZERO) <= 0)
+          throw new SQWRLException(
+            "nth argument for slicing operator " + builtInPrefixedName + " must be a positive xsd:int or xsd:integer");
+        if (value.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) > 0)
+          throw new SQWRLException(
+            "nth argument for slicing operator " + builtInPrefixedName + " must not be greater than "
+              + Integer.MAX_VALUE);
+        sliceN = value.intValue();
       } else
-        throw new SQWRLException("expecting xsd:int argument for slicing operator " + builtInPrefixedName);
+        throw new SQWRLException(
+          "expecting xsd:int or xsd:integer argument for slicing operator " + builtInPrefixedName);
     } else
-      throw new SQWRLException("expecting xsd:int argument for slicing operator " + builtInPrefixedName);
+      throw new SQWRLException("expecting xsd:int or xsd:integer argument for slicing operator " + builtInPrefixedName);
 
     if (builtInAtom.getNumberOfArguments() == 1) {
       processHeadSliceOperationWithoutSliceSize(builtInPrefixedName, sliceN);
@@ -272,11 +284,21 @@ class DefaultSQWRLQuery implements SQWRLQuery
         sliceSize = literal.getInt();
         if (sliceSize < 1)
           throw new SQWRLException(
-            "slice size argument to slicing operator " + builtInName + " must be a positive xsd:int");
+            "slice size argument to slicing operator " + builtInName + " must be a positive xsd:int or xsd:integer");
+      } else if (literal.isInteger()) {
+        BigInteger value = literal.getInteger();
+        if (value.compareTo(BigInteger.ZERO) <= 0)
+          throw new SQWRLException(
+            "slice size argument to slicing operator " + builtInName + " must be a positive xsd:int or xsd:integer");
+        if (value.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) > 0)
+          throw new SQWRLException(
+            "slice size argument to slicing operator " + builtInName + " must not be greater than "
+              + Integer.MAX_VALUE);
+        sliceSize = value.intValue();
       } else
-        throw new SQWRLException("expecting xsd:int argument for slicing operator " + builtInName);
+        throw new SQWRLException("expecting xsd:int or xsd:integer argument for slicing operator " + builtInName);
     } else
-      throw new SQWRLException("expecting xsd:int argument for slicing operator " + builtInName);
+      throw new SQWRLException("expecting xsd:int or xsd:integer argument for slicing operator " + builtInName);
 
     if (builtInName.equalsIgnoreCase(SQWRLNames.NthSlice))
       this.sqwrlResult.setNthSlice(sliceN, sliceSize);

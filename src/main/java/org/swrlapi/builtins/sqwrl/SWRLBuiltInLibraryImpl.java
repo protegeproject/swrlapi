@@ -26,6 +26,8 @@ import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
 import org.swrlapi.sqwrl.values.SQWRLNamedIndividualResultValue;
 import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -123,7 +125,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
         resultGenerator.addCell(annotationPropertyValue);
       } else if (argument instanceof SWRLClassExpressionBuiltInArgument) {
         SWRLClassExpressionBuiltInArgument classExpressionArgument = (SWRLClassExpressionBuiltInArgument)argument;
-        SQWRLClassExpressionResultValue classExpressionValue = getSQWRLResultValueFactory().getClassExpressionValue(classExpressionArgument);
+        SQWRLClassExpressionResultValue classExpressionValue = getSQWRLResultValueFactory()
+          .getClassExpressionValue(classExpressionArgument);
         resultGenerator.addCell(classExpressionValue);
       } else if (argument instanceof SQWRLCollectionVariableBuiltInArgument) {
         throw new InvalidSWRLBuiltInArgumentException(argumentIndex, "collections cannot be selected");
@@ -549,11 +552,11 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       if (collection.isEmpty())
         return false;
       else {
-        double sumValue = 0, value;
+        BigDecimal sumValue = BigDecimal.ZERO;
         for (SWRLBuiltInArgument element : collection) {
           checkThatElementIsComparable(element);
-          value = getArgumentAsADouble(element);
-          sumValue += value;
+          BigDecimal value = getArgumentAsADecimal(element);
+          sumValue = sumValue.add(value);
         }
         SWRLBuiltInArgument resultArgument = createLeastNarrowNumericLiteralBuiltInArgument(sumValue,
           new ArrayList<>(collection));
@@ -602,13 +605,13 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       if (collection.isEmpty())
         return false;
       else {
-        double sumValue = 0, value;
+        BigDecimal sumValue = BigDecimal.ZERO;
         for (SWRLBuiltInArgument element : collection) {
           checkThatElementIsComparable(element);
-          value = getArgumentAsADouble(element);
-          sumValue += value;
+          BigDecimal value = getArgumentAsADecimal(element);
+          sumValue = sumValue.add(value);
         }
-        double avgValue = sumValue / collection.size();
+        BigDecimal avgValue = sumValue.divide(BigDecimal.valueOf(collection.size()));
         SWRLBuiltInArgument resultArgument = createLeastNarrowNumericLiteralBuiltInArgument(avgValue,
           new ArrayList<>(collection));
 
@@ -656,13 +659,13 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       if (collection.isEmpty())
         return false;
       else {
-        double[] valueArray = new double[collection.size()];
+        BigDecimal[] valueArray = new BigDecimal[collection.size()];
         int count = 0, middle = collection.size() / 2;
-        double medianValue, value;
+        BigDecimal medianValue;
 
         for (SWRLBuiltInArgument element : collection) {
           checkThatElementIsComparable(element);
-          value = getArgumentAsADouble(element);
+          BigDecimal value = getArgumentAsADecimal(element);
           valueArray[count++] = value;
         }
 
@@ -671,7 +674,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
         if (collection.size() % 2 == 1)
           medianValue = valueArray[middle];
         else
-          medianValue = (valueArray[middle - 1] + valueArray[middle]) / 2;
+          medianValue = (valueArray[middle - 1].add(valueArray[middle])).divide(BigDecimal.valueOf(2));
 
         SWRLBuiltInArgument resultArgument = createLeastNarrowNumericLiteralBuiltInArgument(medianValue,
           new ArrayList<>(collection));
@@ -695,7 +698,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     else {
       List<@NonNull SWRLBuiltInArgument> sortedList = getSortedListInSingleOperandCollectionOperation(arguments,
         sourceCollectionArgumentNumber, numberOfCoreArguments);
-      int n = getArgumentAsAPositiveInt(nArgumentNumber, arguments) - 1; // 1-offset for user, 0 for processing
+      int n = convertArgumentToPositiveInt(nArgumentNumber, arguments) - 1; // 1-offset for user, 0 for processing
 
       if (!sortedList.isEmpty()) {
         if (n >= 0 && n < sortedList.size()) {
@@ -745,7 +748,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     else {
       List<@NonNull SWRLBuiltInArgument> sortedList = getSortedListInSingleOperandCollectionOperation(arguments,
         sourceCollectionArgumentNumber, numberOfCoreArguments);
-      int n = getArgumentAsAPositiveInt(nArgumentNumber, arguments);
+      int n = convertArgumentToPositiveInt(nArgumentNumber, arguments);
 
       if (!sortedList.isEmpty() && n > 0 && n <= sortedList.size()) {
         SWRLBuiltInArgument nthGreatest = sortedList.get(sortedList.size() - n);
@@ -801,7 +804,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     else {
       List<@NonNull SWRLBuiltInArgument> sortedList = getSortedListInSingleOperandCollectionOperation(arguments,
         sourceCollectionArgumentNumber, numberOfCoreArguments);
-      int n = getArgumentAsAPositiveInt(nArgumentNumber, arguments);
+      int n = convertArgumentToPositiveInt(nArgumentNumber, arguments);
 
       if (!sortedList.isEmpty() && n > 0 && n <= sortedList.size())
         sortedList.remove(sortedList.size() - n);
@@ -825,8 +828,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     else {
       List<@NonNull SWRLBuiltInArgument> sortedList = getSortedListInSingleOperandCollectionOperation(arguments,
         sourceCollectionArgumentNumber, numberOfCoreArguments);
-      int n = getArgumentAsAPositiveInt(nArgumentNumber, arguments) - 1; // 1-offset for user, 0 for processing
-      int sliceSize = getArgumentAsAPositiveInt(sliceSizeArgumentNumber, arguments);
+      int n = convertArgumentToPositiveInt(nArgumentNumber, arguments) - 1; // 1-offset for user, 0 for processing
+      int sliceSize = convertArgumentToPositiveInt(sliceSizeArgumentNumber, arguments);
       List<@NonNull SWRLBuiltInArgument> slice = new ArrayList<>();
 
       if (!sortedList.isEmpty() && n >= 0) {
@@ -855,8 +858,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     else {
       List<@NonNull SWRLBuiltInArgument> sortedList = getSortedListInSingleOperandCollectionOperation(arguments,
         sourceCollectionArgumentNumber, numberOfCoreArguments);
-      int n = getArgumentAsAPositiveInt(nArgumentNumber, arguments) - 1; // 1-offset for user, 0 for processing
-      int sliceSize = getArgumentAsAPositiveInt(sliceSizeArgumentNumber, arguments);
+      int n = convertArgumentToPositiveInt(nArgumentNumber, arguments) - 1; // 1-offset for user, 0 for processing
+      int sliceSize = convertArgumentToPositiveInt(sliceSizeArgumentNumber, arguments);
       List<@NonNull SWRLBuiltInArgument> notSlice = new ArrayList<>();
 
       if (!sortedList.isEmpty() && n >= 0 && n < sortedList.size()) {
@@ -886,9 +889,9 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     else {
       List<@NonNull SWRLBuiltInArgument> sortedList = getSortedListInSingleOperandCollectionOperation(arguments,
         sourceCollectionArgumentNumber, numberOfCoreArguments);
-      int n = getArgumentAsAPositiveInt(nArgumentNumber, arguments);
+      int n = convertArgumentToPositiveInt(nArgumentNumber, arguments);
       List<@NonNull SWRLBuiltInArgument> slice = new ArrayList<>();
-      int sliceSize = getArgumentAsAPositiveInt(sliceSizeArgumentNumber, arguments);
+      int sliceSize = convertArgumentToPositiveInt(sliceSizeArgumentNumber, arguments);
 
       if (!sortedList.isEmpty() && n > 0) {
         int startIndex = sortedList.size() - n;
@@ -918,8 +921,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     else {
       List<@NonNull SWRLBuiltInArgument> sortedList = getSortedListInSingleOperandCollectionOperation(arguments,
         sourceCollectionArgumentNumber, numberOfCoreArguments);
-      int n = getArgumentAsAPositiveInt(nArgumentNumber, arguments);
-      int sliceSize = getArgumentAsAPositiveInt(sliceSizeArgumentNumber, arguments);
+      int n = convertArgumentToPositiveInt(nArgumentNumber, arguments);
+      int sliceSize = convertArgumentToPositiveInt(sliceSizeArgumentNumber, arguments);
       List<@NonNull SWRLBuiltInArgument> slice = new ArrayList<>();
 
       if (!sortedList.isEmpty() && n > 0 && n <= sortedList.size()) {
@@ -949,7 +952,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     else {
       List<@NonNull SWRLBuiltInArgument> sortedList = getSortedListInSingleOperandCollectionOperation(arguments,
         sourceCollectionArgumentNumber, numberOfCoreArguments);
-      int n = getArgumentAsAPositiveInt(nArgumentNumber, arguments) - 1; // 1-offset for user, 0 for processing
+      int n = convertArgumentToPositiveInt(nArgumentNumber, arguments) - 1; // 1-offset for user, 0 for processing
 
       if (!sortedList.isEmpty() && n >= 0 && n < sortedList.size())
         sortedList.remove(n);
@@ -996,7 +999,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     else {
       List<@NonNull SWRLBuiltInArgument> sortedList = getSortedListInSingleOperandCollectionOperation(arguments,
         sourceCollectionArgumentNumber, numberOfCoreArguments);
-      int n = getArgumentAsAPositiveInt(nArgumentNumber, arguments);
+      int n = convertArgumentToPositiveInt(nArgumentNumber, arguments);
       List<@NonNull SWRLBuiltInArgument> greatestN = new ArrayList<>();
 
       if (!sortedList.isEmpty() && n > 0) {
@@ -1026,7 +1029,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     else {
       List<@NonNull SWRLBuiltInArgument> sortedList = getSortedListInSingleOperandCollectionOperation(arguments,
         sourceCollectionArgumentNumber, numberOfCoreArguments);
-      int n = getArgumentAsAPositiveInt(nArgumentNumber, arguments);
+      int n = convertArgumentToPositiveInt(nArgumentNumber, arguments);
       List<@NonNull SWRLBuiltInArgument> notGreatestN = new ArrayList<>();
 
       if (!sortedList.isEmpty() && n > 0) {
@@ -1080,7 +1083,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     else {
       List<@NonNull SWRLBuiltInArgument> sortedList = getSortedListInSingleOperandCollectionOperation(arguments,
         sourceCollectionArgumentNumber, numberOfCoreArguments);
-      int n = getArgumentAsAPositiveInt(nArgumentNumber, arguments) - 1;
+      int n = convertArgumentToPositiveInt(nArgumentNumber, arguments) - 1;
       List<@NonNull SWRLBuiltInArgument> leastN = new ArrayList<>();
 
       for (int i = 0; i <= n && i < sortedList.size(); i++)
@@ -1105,7 +1108,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     else {
       List<@NonNull SWRLBuiltInArgument> sortedList = getSortedListInSingleOperandCollectionOperation(arguments,
         sourceCollectionArgumentNumber, numberOfCoreArguments);
-      int n = getArgumentAsAPositiveInt(nArgumentNumber, arguments);
+      int n = convertArgumentToPositiveInt(nArgumentNumber, arguments);
       List<@NonNull SWRLBuiltInArgument> notLeastN = new ArrayList<>();
 
       for (int i = n; i >= 0 && i < sortedList.size(); i++)

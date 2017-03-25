@@ -271,7 +271,7 @@ public class SQWRLResultView extends JPanel implements SWRLAPIView
           return sqwrlDataPropertyExpressionResultValue.getRendering();
         } else if (sqwrlResultValue != null && sqwrlResultValue.isLiteral()) {
           SQWRLLiteralResultValue sqwrLiteralResultValue = sqwrlResultValue.asLiteralResult();
-          if (sqwrLiteralResultValue.isInt() || sqwrLiteralResultValue.isFloat() || sqwrLiteralResultValue.isString()
+          if (sqwrLiteralResultValue.isInteger() || sqwrLiteralResultValue.isDecimal() || sqwrLiteralResultValue.isString()
             || sqwrLiteralResultValue.isBoolean())
             return sqwrLiteralResultValue.getValue();
           else

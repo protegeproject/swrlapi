@@ -19,6 +19,8 @@ import org.swrlapi.literal.XSDDuration;
 import org.swrlapi.literal.XSDTime;
 import org.swrlapi.literal.XSDTimeUtil;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -510,10 +512,10 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     checkNumberOfArgumentsAtMost(4, arguments.size());
 
     argument2 = getArgumentAsAString(1, arguments);
-    startIndex = getArgumentAsAnInt(2, arguments);
+    startIndex = convertArgumentToAnInt(2, arguments);
 
     if (arguments.size() == 4) {
-      length = getArgumentAsAnInt(3, arguments);
+      length = convertArgumentToAnInt(3, arguments);
       operationResult = argument2.substring(startIndex, length);
     } else
       operationResult = argument2.substring(startIndex);
@@ -531,7 +533,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     checkNumberOfArgumentsEqualTo(2, arguments.size());
 
     String argument2 = getArgumentAsAString(1, arguments);
-    int operationResult = argument2.length();
+    BigInteger operationResult = BigInteger.valueOf(argument2.length());
 
     return processResultArgument(arguments, 0, operationResult);
   }
@@ -784,8 +786,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   public boolean yearMonthDuration(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(3, arguments.size());
-    int year = getArgumentAsAnInt(1, arguments);
-    int month = getArgumentAsAnInt(2, arguments);
+    int year = convertArgumentToAnInt(1, arguments);
+    int month = convertArgumentToAnInt(2, arguments);
     org.apache.axis.types.Duration duration = new org.apache.axis.types.Duration();
 
     duration.setYears(year);
@@ -802,10 +804,10 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    */ public boolean dayTimeDuration(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(5, arguments.size());
-    int days = getArgumentAsAnInt(1, arguments);
-    int hours = getArgumentAsAnInt(2, arguments);
-    int minutes = getArgumentAsAnInt(3, arguments);
-    int seconds = getArgumentAsAnInt(4, arguments);
+    int days = convertArgumentToAnInt(1, arguments);
+    int hours = convertArgumentToAnInt(2, arguments);
+    int minutes = convertArgumentToAnInt(3, arguments);
+    int seconds = convertArgumentToAnInt(4, arguments);
     org.apache.axis.types.Duration duration = new org.apache.axis.types.Duration();
 
     duration.setDays(days);
@@ -825,12 +827,12 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   {
     checkNumberOfArgumentsEqualTo(8, arguments.size());
 
-    int year = getArgumentAsAnInt(1, arguments);
-    int month = getArgumentAsAnInt(2, arguments);
-    int days = getArgumentAsAnInt(3, arguments);
-    int hours = getArgumentAsAnInt(4, arguments);
-    int minutes = getArgumentAsAnInt(5, arguments);
-    int seconds = getArgumentAsAnInt(6, arguments);
+    int year = convertArgumentToAnInt(1, arguments);
+    int month = convertArgumentToAnInt(2, arguments);
+    int days = convertArgumentToAnInt(3, arguments);
+    int hours = convertArgumentToAnInt(4, arguments);
+    int minutes = convertArgumentToAnInt(5, arguments);
+    int seconds = convertArgumentToAnInt(6, arguments);
     String timeZone = getArgumentAsAString(7, arguments);
     Calendar calendar = new GregorianCalendar();
 
@@ -854,9 +856,9 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   {
     checkNumberOfArgumentsEqualTo(5, arguments.size());
 
-    int year = getArgumentAsAnInt(1, arguments);
-    int month = getArgumentAsAnInt(2, arguments);
-    int days = getArgumentAsAnInt(3, arguments);
+    int year = convertArgumentToAnInt(1, arguments);
+    int month = convertArgumentToAnInt(2, arguments);
+    int days = convertArgumentToAnInt(3, arguments);
     String timeZone = getArgumentAsAString(4, arguments);
     Calendar calendar = new GregorianCalendar();
 
@@ -879,9 +881,9 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   {
     checkNumberOfArgumentsEqualTo(5, arguments.size());
 
-    int hours = getArgumentAsAnInt(1, arguments);
-    int minutes = getArgumentAsAnInt(2, arguments);
-    int seconds = getArgumentAsAnInt(3, arguments);
+    int hours = convertArgumentToAnInt(1, arguments);
+    int minutes = convertArgumentToAnInt(2, arguments);
+    int seconds = convertArgumentToAnInt(3, arguments);
     String timeZone = getArgumentAsAString(4, arguments);
     String operationResult = "" + hours + ":" + minutes + ":" + seconds + timeZone;
 
@@ -1395,8 +1397,9 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   private boolean mathOperation(@NonNull String builtInName, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
-    double argument1 = 0.0, argument2, argument3, operationResult;
+    BigDecimal argument1 = BigDecimal.ZERO;
     boolean hasUnbound1stArgument = false;
+    BigDecimal operationResult;
 
     checkForUnboundNonFirstArguments(arguments); // Only supports binding of first argument
 
@@ -1405,68 +1408,83 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
     // Argument number checking will have been performed by invoking method.
     if (!hasUnbound1stArgument)
-      argument1 = getArgumentAsADouble(0, arguments);
-    argument2 = getArgumentAsADouble(1, arguments);
+      argument1 = getArgumentAsADecimal(0, arguments);
 
     if (builtInName.equalsIgnoreCase(SWRLB_ADD)) {
-      operationResult = 0.0;
+      operationResult = BigDecimal.ZERO;
       for (int argumentNumber = 1; argumentNumber < arguments.size(); argumentNumber++) {
-        operationResult += getArgumentAsADouble(argumentNumber, arguments);
+        operationResult = operationResult.add(getArgumentAsADecimal(argumentNumber, arguments));
       }
     } else if (builtInName.equalsIgnoreCase(SWRLB_MULTIPLY)) {
-      operationResult = 1.0;
+      operationResult = BigDecimal.ONE;
       for (int argumentNumber = 1; argumentNumber < arguments.size(); argumentNumber++) {
-        operationResult *= getArgumentAsADouble(argumentNumber, arguments);
+        operationResult = operationResult.multiply(getArgumentAsADecimal(argumentNumber, arguments));
       }
     } else if (builtInName.equalsIgnoreCase(SWRLB_SUBTRACT)) {
-      argument3 = getArgumentAsADouble(2, arguments);
-      operationResult = argument2 - argument3;
+      BigDecimal argument2 = getArgumentAsADecimal(1, arguments);
+      BigDecimal argument3 = getArgumentAsADecimal(2, arguments);
+      operationResult = argument2.subtract(argument3);
     } else if (builtInName.equalsIgnoreCase(SWRLB_DIVIDE)) {
-      argument3 = getArgumentAsADouble(2, arguments);
-      operationResult = (argument2 / argument3);
+      BigDecimal argument2 = getArgumentAsADecimal(1, arguments);
+      BigDecimal argument3 = getArgumentAsADecimal(2, arguments);
+      operationResult = argument2.divide(argument3);
     } else if (builtInName.equalsIgnoreCase(SWRLB_INTEGER_DIVIDE)) {
-      argument3 = getArgumentAsADouble(2, arguments);
-      if (argument3 == 0)
+      BigInteger argument2 = getArgumentAsAnInteger(1, arguments);
+      BigInteger argument3 = getArgumentAsAnInteger(2, arguments);
+      if (argument3.equals(BigDecimal.ZERO))
         throw new InvalidSWRLBuiltInArgumentException(2, "zero passed as divisor");
-      if (argument3 >= 0)
-        operationResult = argument2 + argument3 + 1 / argument3;
+      if (argument3.compareTo(BigInteger.ZERO) >= 0)
+        operationResult = new BigDecimal(argument2.add(argument3).add(BigInteger.ONE.divide(argument3)));
       else
-        operationResult = argument2 / argument3;
+        operationResult = new BigDecimal(argument2.divide(argument3));
     } else if (builtInName.equalsIgnoreCase(SWRLB_MOD)) {
-      argument3 = getArgumentAsADouble(2, arguments);
-      operationResult = argument2 % argument3;
+      BigInteger argument2 = getArgumentAsAnInteger(1, arguments);
+      BigInteger argument3 = getArgumentAsAnInteger(2, arguments);
+      operationResult = new BigDecimal(argument2.remainder(argument3));
     } else if (builtInName.equalsIgnoreCase(SWRLB_POW)) {
-      argument3 = getArgumentAsADouble(2, arguments);
-      operationResult = java.lang.Math.pow(argument2, argument3);
-    } else if (builtInName.equalsIgnoreCase(SWRLB_UNARY_PLUS))
-      operationResult = +argument2; // TODO Not correct since already a double so xsd:int conversion logic missed
-    else if (builtInName.equalsIgnoreCase(SWRLB_UNARY_MINUS))
-      operationResult = -argument2; // TODO Not correct since already a double so xsd:int conversion logic missed
-    else if (builtInName.equalsIgnoreCase(SWRLB_ABS))
-      operationResult = java.lang.Math.abs(argument2);
-    else if (builtInName.equalsIgnoreCase(SWRLB_CEILING))
-      operationResult = java.lang.Math.ceil(argument2);
-    else if (builtInName.equalsIgnoreCase(SWRLB_FLOOR))
-      operationResult = java.lang.Math.floor(argument2);
-    else if (builtInName.equalsIgnoreCase(SWRLB_ROUND))
-      operationResult = java.lang.Math.rint(argument2);
-    else if (builtInName.equalsIgnoreCase(SWRLB_ROUND_HALF_TO_EVEN))
-      operationResult = java.lang.Math.rint(argument2);
-    else if (builtInName.equalsIgnoreCase(SWRLB_SIN))
-      operationResult = java.lang.Math.sin(argument2);
-    else if (builtInName.equalsIgnoreCase(SWRLB_COS))
-      operationResult = java.lang.Math.cos(argument2);
-    else if (builtInName.equalsIgnoreCase(SWRLB_TAN))
-      operationResult = java.lang.Math.tan(argument2);
-    else
+      int argument3 = convertArgumentToAnInt(2, arguments);
+      BigDecimal argument2 = getArgumentAsADecimal(1, arguments);
+      operationResult = argument2.pow(argument3);
+    } else if (builtInName.equalsIgnoreCase(SWRLB_UNARY_PLUS)) {
+      BigDecimal argument2 = getArgumentAsADecimal(1, arguments);
+      operationResult = argument2; // TODO Not correct since already a double so xsd:int conversion logic missed
+    } else if (builtInName.equalsIgnoreCase(SWRLB_UNARY_MINUS)) {
+      BigDecimal argument2 = getArgumentAsADecimal(1, arguments);
+      operationResult = argument2
+        .negate(); // TODO Not correct since already a double so xsd:int conversion logic missed
+    } else if (builtInName.equalsIgnoreCase(SWRLB_ABS)) {
+      BigDecimal argument2 = getArgumentAsADecimal(1, arguments);
+      operationResult = argument2.abs();
+    } else if (builtInName.equalsIgnoreCase(SWRLB_CEILING)) {
+      BigDecimal argument2 = getArgumentAsADecimal(1, arguments);
+      operationResult = argument2.setScale(0, BigDecimal.ROUND_CEILING);
+    } else if (builtInName.equalsIgnoreCase(SWRLB_FLOOR)) {
+      BigDecimal argument2 = getArgumentAsADecimal(1, arguments);
+      operationResult = argument2.setScale(0, BigDecimal.ROUND_FLOOR);
+    } else if (builtInName.equalsIgnoreCase(SWRLB_ROUND)) {
+      BigDecimal argument2 = getArgumentAsADecimal(1, arguments);
+      operationResult = argument2.setScale(0);
+    } else if (builtInName.equalsIgnoreCase(SWRLB_ROUND_HALF_TO_EVEN)) {
+      BigDecimal argument2 = getArgumentAsADecimal(1, arguments);
+      operationResult = argument2.setScale(0, BigDecimal.ROUND_HALF_EVEN);
+    } else if (builtInName.equalsIgnoreCase(SWRLB_SIN)) {
+      double argument2 = getArgumentAsADouble(1, arguments);
+      operationResult = new BigDecimal(java.lang.Math.sin(argument2));
+    } else if (builtInName.equalsIgnoreCase(SWRLB_COS)) {
+      double argument2 = getArgumentAsADouble(1, arguments);
+      operationResult = new BigDecimal(java.lang.Math.cos(argument2));
+    } else if (builtInName.equalsIgnoreCase(SWRLB_TAN)) {
+      double argument2 = getArgumentAsADouble(1, arguments);
+      operationResult = new BigDecimal(java.lang.Math.tan(argument2));
+    } else
       throw new InvalidSWRLBuiltInNameException(builtInName);
 
     if (hasUnbound1stArgument) { // Bind the result to the first argument.
       List<@NonNull SWRLBuiltInArgument> boundInputArguments = arguments.subList(1, arguments.size());
 
       if (builtInName.equalsIgnoreCase(SWRLB_SIN) || builtInName.equalsIgnoreCase(SWRLB_COS) || builtInName
-        .equalsIgnoreCase(SWRLB_TAN)) // Use xsd:double for the trigonometric arguments
-        arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument(operationResult));
+        .equalsIgnoreCase(SWRLB_TAN))
+        arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument(operationResult.doubleValue()));
       else {
         SWRLBuiltInArgument resultArgument = createLeastNarrowNumericLiteralBuiltInArgument(operationResult,
           boundInputArguments);
@@ -1474,7 +1492,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       }
       return true;
     } else
-      return (argument1 == operationResult);
+      return (argument1.equals(operationResult));
   }
 
   private org.apache.axis.types.Duration getArgumentAsAnAxisDuration(int argumentNumber,

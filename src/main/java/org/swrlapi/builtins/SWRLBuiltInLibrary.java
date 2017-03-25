@@ -1,7 +1,6 @@
 package org.swrlapi.builtins;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.semanticweb.owlapi.model.IRI;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLBuiltInLibraryException;
@@ -48,37 +47,6 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
    * @throws SWRLBuiltInException If the parameters are invalid or if there is an error during built-in invocation
    */
   boolean invokeBuiltInMethod(@NonNull Method method, @NonNull SWRLBuiltInBridge bridge, @NonNull String ruleName,
-      @NonNull String prefix, @NonNull String builtInMethodName, int builtInIndex, boolean isInConsequent,
-      @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
-
-  /**
-   * Create a string that represents a unique invocation pattern for a built-in for a bridge/rule/built-in/arguments
-   * combination.
-   *
-   * @param invokingBridge       The built-in bridge invoking the built-in
-   * @param invokingRuleName     The name of the rule invoking the built-in
-   * @param invokingBuiltInIndex The 0-based index of the built-in in the rule
-   * @param isInConsequent       Is the built-in in the rule consequent
-   * @param arguments            The arguments to the built-in
-   * @return A unique pattern for the invocation
-   * @throws SWRLBuiltInException If the parameters are invalid or if there is an error during pattern generation
-   */
-  @NonNull String createInvocationPattern(@NonNull SWRLBuiltInBridge invokingBridge, @NonNull String invokingRuleName,
-      int invokingBuiltInIndex, boolean isInConsequent, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
-      throws SWRLBuiltInException;
-
-  /**
-   * @return A SQWRL result value factory
-   * @throws SWRLBuiltInLibraryException If an error occurs during factory retrieval
-   */
-  @NonNull SQWRLResultValueFactory getSQWRLResultValueFactory() throws SWRLBuiltInLibraryException;
-
-  /**
-   * Convenience method to create an IRI from a full name
-   *
-   * @param fullName The full name
-   * @return An IRI generated from the full name
-   * @throws SWRLBuiltInException If an error occurs during IRI generation
-   */
-  @NonNull IRI createIRI(@NonNull String fullName) throws SWRLBuiltInException;
+    @NonNull String prefix, @NonNull String builtInMethodName, int builtInIndex, boolean isInConsequent,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 }

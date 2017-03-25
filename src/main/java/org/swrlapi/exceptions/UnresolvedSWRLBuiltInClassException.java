@@ -6,9 +6,9 @@ public class UnresolvedSWRLBuiltInClassException extends SWRLBuiltInLibraryExcep
 {
   private static final long serialVersionUID = 1L;
 
-  public UnresolvedSWRLBuiltInClassException(@NonNull String ruleName, @NonNull String prefix, @NonNull String message,
+  public UnresolvedSWRLBuiltInClassException(@NonNull String prefix, @NonNull String message,
     @NonNull Throwable cause)
   {
-    super("unresolved built-in class for prefix '" + prefix + "' in rule '" + ruleName + "': " + message, cause);
+    super("unresolved built-in class for prefix " + prefix + ": " + message, cause);
   }
 }

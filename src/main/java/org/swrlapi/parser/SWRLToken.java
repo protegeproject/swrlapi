@@ -61,14 +61,14 @@ class SWRLToken
     return this.tokenType == SWRLTokenType.IRI;
   }
 
-  public boolean isInt()
+  public boolean isInteger()
   {
-    return this.tokenType == SWRLTokenType.INT;
+    return this.tokenType == SWRLTokenType.INTEGER;
   }
 
-  public boolean isFloat()
+  public boolean isDecimal()
   {
-    return this.tokenType == SWRLTokenType.FLOAT;
+    return this.tokenType == SWRLTokenType.DECIMAL;
   }
 
   public boolean isTypeQualifier()
@@ -101,7 +101,7 @@ class SWRLToken
     return this.tokenType == SWRLTokenType.END_OF_INPUT;
   }
 
-   @NonNull @SideEffectFree @Override public String toString()
+  @NonNull @SideEffectFree @Override public String toString()
   {
     return "[" + this.tokenType.getName() + " with value '" + this.value + "']";
   }
@@ -109,8 +109,8 @@ class SWRLToken
   public enum SWRLTokenType
   {
     SHORTNAME("short name"), // A short name is a user-friendly name. Note: it can be a prefixed name or a full IRI.
-    IRI("IRI"), STRING("quoted string"), FLOAT("float"), INT("int"), TYPE_QUAL("^^"), AND("^"), IMP("->"), RING(
-    "."), LPAREN("("), RPAREN(")"), COMMA(","), QUESTION("?"), END_OF_INPUT("end");
+    IRI("IRI"), STRING("quoted string"), DECIMAL("decimal"), INTEGER("integer"), TYPE_QUAL("^^"), AND("^"), IMP(
+    "->"), RING("."), LPAREN("("), RPAREN(")"), COMMA(","), QUESTION("?"), END_OF_INPUT("end");
 
     @NonNull private final String name;
 

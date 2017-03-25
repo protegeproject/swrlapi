@@ -938,24 +938,18 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param arguments The built-in arguments
+   * @return True if the widest numeric argument is a double
+   * @throws SWRLBuiltInException If an error occurs during processing
+   */
+  boolean isWidestNumericArgumentADouble(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException;
+
+  /**
+   * @param arguments The built-in arguments
    * @return True if all arguments are doubles
    * @throws SWRLBuiltInException If an error occurs during processing
    */
   boolean areAllArgumentsDoubles(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
-
-  /**
-   * @param arguments The built-in arguments
-   * @return True if all arguments are xsd:decimals
-   * @throws SWRLBuiltInException If an error occurs during processing
-   */
-  boolean areAllArgumentsDecimals(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
-
-  /**
-   * @param arguments The built-in arguments
-   * @return True if all arguments are xsd:integers
-   * @throws SWRLBuiltInException If an error occurs during processing
-   */
-  boolean areAllArgumentsIntegers(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
   /**
    * @param argumentNumber The 0-based index of the argument
@@ -969,7 +963,7 @@ public interface SWRLBuiltInInputArgumentHandler
   /**
    * @param argumentNumber The 0-based index of the argument
    * @param arguments      The built-in arguments
-   * @throws SWRLBuiltInException If the specified argument is not a double
+   * @throws SWRLBuiltInException If the specified argument is not an xsd:double
    */
   void checkThatArgumentIsADouble(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException;
@@ -977,7 +971,7 @@ public interface SWRLBuiltInInputArgumentHandler
   /**
    * @param argumentNumber The 0-based index of the argument
    * @param arguments      The built-in arguments
-   * @return True if the specified argument is a double
+   * @return True if the specified argument is an xsd:double
    * @throws SWRLBuiltInException If an error occurs during processing
    */
   boolean isArgumentADouble(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
@@ -994,10 +988,41 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param argument A built-in argument
-   * @return A double representation of the built-on argument
+   * @return A double representation of the built-in argument
    * @throws SWRLBuiltInException If the built-in argument cannot be converted to a double
    */
   double getArgumentAsADouble(SWRLBuiltInArgument argument) throws SWRLBuiltInException;
+
+  /**
+   * @param arguments The built-in arguments
+   * @return True if all arguments are xsd:decimals
+   * @throws SWRLBuiltInException If an error occurs during processing
+   */
+  boolean areAllArgumentsDecimals(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+
+  /**
+   * @param arguments The built-in arguments
+   * @return True if the widest numeric argument is an xsd:integer
+   * @throws SWRLBuiltInException If an error occurs during processing
+   */
+  boolean isWidestNumericArgumentAnInteger(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException;
+
+  /**
+   * @param argumentNumber The 0-based index of the argument
+   * @param arguments      The built-in arguments
+   * @return A positive integer representation of the specified argument
+   * @throws SWRLBuiltInException If an error occurs during processing
+   */
+  @NonNull BigInteger getArgumentAsAPositiveInteger(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+
+  /**
+   * @param arguments The built-in arguments
+   * @return True if all arguments are xsd:integers
+   * @throws SWRLBuiltInException If an error occurs during processing
+   */
+  boolean areAllArgumentsIntegers(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
   /**
    * @param argumentNumber The 0-based index of the argument
