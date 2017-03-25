@@ -160,7 +160,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     addDefaultSWRLBuiltIns();
     addSWRLAPIOntologies(this.ontology);
 
-    iriResolver.updatePrefixes(ontology);
+    iriResolver.updatePrefixes(this.ontology);
   }
 
   @Override public void processOntology() throws SWRLBuiltInException
