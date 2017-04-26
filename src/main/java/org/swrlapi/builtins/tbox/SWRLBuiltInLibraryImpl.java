@@ -23,12 +23,15 @@ import org.semanticweb.owlapi.model.OWLObjectPropertyRangeAxiom;
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
 import org.semanticweb.owlapi.model.parameters.Imports;
 import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
+import org.swrlapi.builtins.SWRLBuiltInLibraryManager;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentType;
 import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLBuiltInNotImplementedException;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -39,11 +42,18 @@ import java.util.stream.Collectors;
  */
 public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 {
-  private static final String SWRLTBoxLibraryName = "SWRLTBoxBuiltIns";
+  private static final String Namespace = "http://swrl.stanford.edu/ontologies/built-ins/5.0.0/tbox.owl#";
+
+  private static final String[] BuiltInNames = { "cd", "opd", "dpd", "apd", "dd", "sca", "eca", "dca", "fopa", "ifopa",
+    "fdpa", "opda", "opra", "dpda", "dpra", "dda", "dua", "hka" };
+
+  static{
+    SWRLBuiltInLibraryManager.registerSWRLBuiltIns(Namespace, BuiltInNames);
+  }
 
   public SWRLBuiltInLibraryImpl()
   {
-    super(SWRLTBoxLibraryName);
+    super(Namespace, new HashSet<>(Arrays.asList(BuiltInNames)));
   }
 
   @Override public void reset()

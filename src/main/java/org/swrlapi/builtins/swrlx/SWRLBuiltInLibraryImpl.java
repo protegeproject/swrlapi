@@ -1,42 +1,40 @@
 package org.swrlapi.builtins.swrlx;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.semanticweb.owlapi.model.AxiomType;
-import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLClass;
-import org.semanticweb.owlapi.model.OWLClassAssertionAxiom;
-import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
-import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
-import org.semanticweb.owlapi.model.OWLOntology;
-import org.semanticweb.owlapi.model.parameters.Imports;
 import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
+import org.swrlapi.builtins.SWRLBuiltInLibraryManager;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLClassExpressionBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Implementations library for SWRL Extensions built-ins.
  */
 public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 {
-  private static final String SWRLXLibraryName = "SWRLExtensionsBuiltIns";
+  private static final String Namespace = "http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#";
+
+  private static final String[] BuiltInNames = { "makeOWLClass", "makeOWLIndividual", "makeOWLThing", "createOWLThing",
+    "invokeSWRLBuiltIn" };
+
+  static{
+    SWRLBuiltInLibraryManager.registerSWRLBuiltIns(Namespace, BuiltInNames);
+  }
 
   @NonNull private final Map<@NonNull String, @NonNull OWLClass> classInvocationMap;
   @NonNull private final Map<@NonNull String, @NonNull OWLNamedIndividual> individualInvocationMap;
 
   public SWRLBuiltInLibraryImpl()
   {
-    super(SWRLXLibraryName);
+    super(Namespace, new HashSet<>(Arrays.asList(BuiltInNames)));
 
     this.classInvocationMap = new HashMap<>();
     this.individualInvocationMap = new HashMap<>();
@@ -79,53 +77,6 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     return true;
   }
 
-  // swrlx:ca(?c, ?i) -> sqwrl:select(?c, ?i) ^ sqwrl:orderBy(?c, ?i)
-
-  public boolean ca(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
-  {
-    checkNumberOfArgumentsEqualTo(2, arguments.size());
-
-    IRI classVariableIRI = arguments.get(0).asVariable().getIRI();
-    IRI individualVariableIRI = arguments.get(1).asVariable().getIRI();
-
-    OWLOntology ontology = getBuiltInBridge().getOWLOntology();
-
-    Set<OWLClassAssertionAxiom> axioms = ontology.getAxioms(AxiomType.CLASS_ASSERTION, Imports.INCLUDED);
-
-    if (!axioms.isEmpty()) {
-      SWRLMultiValueVariableBuiltInArgument classesResultArgument = createSWRLMultiValueVariableBuiltInArgument(
-        classVariableIRI);
-      SWRLMultiValueVariableBuiltInArgument individualsResultArgument = createSWRLMultiValueVariableBuiltInArgument(
-        individualVariableIRI);
-
-      for (OWLClassAssertionAxiom axiom : axioms) {
-        OWLClassExpression ce = axiom.getClassExpression();
-        OWLIndividual individual = axiom.getIndividual();
-
-        if (individual.isAnonymous())
-          continue;
-
-        OWLNamedIndividual namedIndividual = individual.asOWLNamedIndividual();
-        SWRLNamedIndividualBuiltInArgument namedIndividualBuiltInArgument = createNamedIndividualBuiltInArgument(
-          namedIndividual);
-        individualsResultArgument.addArgument(namedIndividualBuiltInArgument);
-
-        if (ce.isAnonymous()) {
-          SWRLClassExpressionBuiltInArgument classExpressionBuiltInArgument = createClassExpressionBuiltInArgument(ce);
-          classesResultArgument.addArgument(classExpressionBuiltInArgument);
-        } else {
-          SWRLClassBuiltInArgument classBuiltInArgument = createClassBuiltInArgument(ce.asOWLClass());
-          classesResultArgument.addArgument(classBuiltInArgument);
-        }
-      }
-
-      arguments.get(0).asVariable().setBuiltInResult(classesResultArgument);
-      arguments.get(1).asVariable().setBuiltInResult(individualsResultArgument);
-      return true;
-    } else
-      return false;
-  }
-
   /**
    * For every pattern of second and subsequent arguments, create an OWL individual of type OWL:Thing and bind it to the
    * first argument. If the first argument is already bound when the built-in is called, this method returns true.
@@ -152,9 +103,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
         this.individualInvocationMap.put(createInvocationPattern, individual);
       }
       arguments.get(0).asVariable()
-        .setBuiltInResult(createNamedIndividualBuiltInArgument(individual)); // Bind the result to
-      // the first
-      // parameter
+        .setBuiltInResult(createNamedIndividualBuiltInArgument(individual)); // Bind result to the first parameter
     }
 
     return true;

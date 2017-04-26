@@ -74,6 +74,7 @@ import org.semanticweb.owlapi.vocab.OWL2Datatype;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.swrlapi.builtins.SWRLBuiltInLibraryManager;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.core.IRIResolver;
@@ -116,7 +117,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
   @NonNull private final OWLOntology ontology;
   @NonNull private final IRIResolver iriResolver;
   @NonNull private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
-  @NonNull private final Set<@NonNull IRI> swrlBuiltInIRIs;
 
   @NonNull private final Map<@NonNull String, @NonNull SWRLAPIRule> swrlRules; // Rules and queries extracted from ontology
   @NonNull private final Map<@NonNull String, @NonNull SWRLRule> owlapiRules; // All SWRL rules in supplied ontology
@@ -141,7 +141,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     this.ontology = ontology;
     this.iriResolver = iriResolver;
     this.swrlapiOWLDataFactory = SWRLAPIInternalFactory.createSWRLAPIOWLDataFactory(this.iriResolver);
-    this.swrlBuiltInIRIs = new HashSet<>();
 
     this.swrlRules = new HashMap<>();
     this.owlapiRules = new HashMap<>();
@@ -157,7 +156,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
 
     this.swrlRuleEngineModels = new HashSet<>();
 
-    addDefaultSWRLBuiltIns();
     addSWRLAPIOntologies(this.ontology);
 
     iriResolver.updatePrefixes(this.ontology);
@@ -570,17 +568,12 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
 
   @Override public boolean isSWRLBuiltIn(@NonNull IRI iri)
   {
-    return this.swrlBuiltInIRIs.contains(iri);
-  }
-
-  @Override public void addSWRLBuiltIn(@NonNull IRI iri)
-  {
-    this.swrlBuiltInIRIs.add(iri);
+    return SWRLBuiltInLibraryManager.isSWRLBuiltIn(iri);
   }
 
   @NonNull @Override public Set<@NonNull IRI> getSWRLBuiltInIRIs()
   {
-    return new HashSet<>(this.swrlBuiltInIRIs);
+    return SWRLBuiltInLibraryManager.getSWRLBuiltInIRIs();
   }
 
   @NonNull @Override public SQWRLResultGenerator createSQWRLResultGenerator()
@@ -818,290 +811,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     return getSWRLAPIOWLDataFactory().getSWRLBuiltInArgumentFactory();
   }
 
-  private void addDefaultSWRLBuiltIns()
-  {
-    addCoreSWRLBuiltIns();
-    addSQWRLBuiltIns();
-    addTemporalBuiltIns();
-    addSWRLXBuiltIns();
-    addSWRLMBuiltIns();
-    addSWRLTBoxBuiltIns();
-    addSWRLABoxBuiltIns();
-    addSWRLRBoxBuiltIns();
-  }
-
-  private void addCoreSWRLBuiltIns()
-  {
-    String prefix = "http://www.w3.org/2003/11/swrlb#";
-
-    addSWRLBuiltIn(IRI.create(prefix, "equal"));
-    addSWRLBuiltIn(IRI.create(prefix, "notEqual"));
-    addSWRLBuiltIn(IRI.create(prefix, "lessThan"));
-    addSWRLBuiltIn(IRI.create(prefix, "lessThanOrEqual"));
-    addSWRLBuiltIn(IRI.create(prefix, "greaterThan"));
-    addSWRLBuiltIn(IRI.create(prefix, "greaterThanOrEqual"));
-    addSWRLBuiltIn(IRI.create(prefix, "add"));
-    addSWRLBuiltIn(IRI.create(prefix, "subtract"));
-    addSWRLBuiltIn(IRI.create(prefix, "multiply"));
-    addSWRLBuiltIn(IRI.create(prefix, "divide"));
-    addSWRLBuiltIn(IRI.create(prefix, "integerDivide"));
-    addSWRLBuiltIn(IRI.create(prefix, "mod"));
-    addSWRLBuiltIn(IRI.create(prefix, "pow"));
-    addSWRLBuiltIn(IRI.create(prefix, "unaryPlus"));
-    addSWRLBuiltIn(IRI.create(prefix, "unaryMinus"));
-    addSWRLBuiltIn(IRI.create(prefix, "abs"));
-    addSWRLBuiltIn(IRI.create(prefix, "ceiling"));
-    addSWRLBuiltIn(IRI.create(prefix, "floor"));
-    addSWRLBuiltIn(IRI.create(prefix, "round"));
-    addSWRLBuiltIn(IRI.create(prefix, "roundHalfToEven"));
-    addSWRLBuiltIn(IRI.create(prefix, "sin"));
-    addSWRLBuiltIn(IRI.create(prefix, "cos"));
-    addSWRLBuiltIn(IRI.create(prefix, "tan"));
-    addSWRLBuiltIn(IRI.create(prefix, "booleanNot"));
-    addSWRLBuiltIn(IRI.create(prefix, "stringEqualIgnoreCase"));
-    addSWRLBuiltIn(IRI.create(prefix, "stringConcat"));
-    addSWRLBuiltIn(IRI.create(prefix, "substring"));
-    addSWRLBuiltIn(IRI.create(prefix, "stringLength"));
-    addSWRLBuiltIn(IRI.create(prefix, "normalizeSpace"));
-    addSWRLBuiltIn(IRI.create(prefix, "upperCase"));
-    addSWRLBuiltIn(IRI.create(prefix, "lowerCase"));
-    addSWRLBuiltIn(IRI.create(prefix, "translate"));
-    addSWRLBuiltIn(IRI.create(prefix, "contains"));
-    addSWRLBuiltIn(IRI.create(prefix, "containsIgnoreCase"));
-    addSWRLBuiltIn(IRI.create(prefix, "startsWith"));
-    addSWRLBuiltIn(IRI.create(prefix, "endsWith"));
-    addSWRLBuiltIn(IRI.create(prefix, "substringBefore"));
-    addSWRLBuiltIn(IRI.create(prefix, "substringAfter"));
-    addSWRLBuiltIn(IRI.create(prefix, "matches"));
-    addSWRLBuiltIn(IRI.create(prefix, "replace"));
-    addSWRLBuiltIn(IRI.create(prefix, "tokenize"));
-    addSWRLBuiltIn(IRI.create(prefix, "yearMonthDuration"));
-    addSWRLBuiltIn(IRI.create(prefix, "dayTimeDuration"));
-    addSWRLBuiltIn(IRI.create(prefix, "dateTime"));
-    addSWRLBuiltIn(IRI.create(prefix, "date"));
-    addSWRLBuiltIn(IRI.create(prefix, "time"));
-    addSWRLBuiltIn(IRI.create(prefix, "addYearMonthDurations"));
-    addSWRLBuiltIn(IRI.create(prefix, "subtractYearMonthDurations"));
-    addSWRLBuiltIn(IRI.create(prefix, "multiplyYearMonthDuration"));
-    addSWRLBuiltIn(IRI.create(prefix, "divideYearMonthDuration"));
-    addSWRLBuiltIn(IRI.create(prefix, "addDayTimeDurations"));
-    addSWRLBuiltIn(IRI.create(prefix, "subtractDayTimeDurations"));
-    addSWRLBuiltIn(IRI.create(prefix, "multiplyDayTimeDuration"));
-    addSWRLBuiltIn(IRI.create(prefix, "divideDayTimeDuration"));
-    addSWRLBuiltIn(IRI.create(prefix, "subtractDates"));
-    addSWRLBuiltIn(IRI.create(prefix, "subtractTimes"));
-    addSWRLBuiltIn(IRI.create(prefix, "addYearMonthDurationToDateTime"));
-    addSWRLBuiltIn(IRI.create(prefix, "addDayTimeDurationToDateTime"));
-    addSWRLBuiltIn(IRI.create(prefix, "subtractYearMonthDurationFromDateTime"));
-    addSWRLBuiltIn(IRI.create(prefix, "subtractDayTimeDurationFromDateTime"));
-    addSWRLBuiltIn(IRI.create(prefix, "addYearMonthDurationToDate"));
-    addSWRLBuiltIn(IRI.create(prefix, "addDayTimeDurationToDate"));
-    addSWRLBuiltIn(IRI.create(prefix, "subtractYearMonthDurationFromDate"));
-    addSWRLBuiltIn(IRI.create(prefix, "subtractDayTimeDurationFromDate"));
-    addSWRLBuiltIn(IRI.create(prefix, "addDayTimeDurationToTime"));
-    addSWRLBuiltIn(IRI.create(prefix, "subtractDayTimeDurationFromTime"));
-    addSWRLBuiltIn(IRI.create(prefix, "subtractDateTimesYieldingYearMonthDuration"));
-    addSWRLBuiltIn(IRI.create(prefix, "subtractDateTimesYieldingYearMonthDuration"));
-    addSWRLBuiltIn(IRI.create(prefix, "resolveURI"));
-    addSWRLBuiltIn(IRI.create(prefix, "anyURU"));
-    addSWRLBuiltIn(IRI.create(prefix, "listConcat"));
-    addSWRLBuiltIn(IRI.create(prefix, "listIntersection"));
-    addSWRLBuiltIn(IRI.create(prefix, "listSubtraction"));
-    addSWRLBuiltIn(IRI.create(prefix, "member"));
-    addSWRLBuiltIn(IRI.create(prefix, "length"));
-    addSWRLBuiltIn(IRI.create(prefix, "first"));
-    addSWRLBuiltIn(IRI.create(prefix, "rest"));
-    addSWRLBuiltIn(IRI.create(prefix, "sublist"));
-    addSWRLBuiltIn(IRI.create(prefix, "empty"));
-  }
-
-  private void addSQWRLBuiltIns()
-  {
-    String prefix = "http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#";
-
-    addSWRLBuiltIn(IRI.create(prefix, "selectDistinct"));
-    addSWRLBuiltIn(IRI.create(prefix, "select"));
-    addSWRLBuiltIn(IRI.create(prefix, "count"));
-    addSWRLBuiltIn(IRI.create(prefix, "columnNames"));
-    addSWRLBuiltIn(IRI.create(prefix, "orderBy"));
-    addSWRLBuiltIn(IRI.create(prefix, "orderByDescending"));
-    addSWRLBuiltIn(IRI.create(prefix, "limit"));
-    addSWRLBuiltIn(IRI.create(prefix, "min"));
-    addSWRLBuiltIn(IRI.create(prefix, "max"));
-    addSWRLBuiltIn(IRI.create(prefix, "avg"));
-    addSWRLBuiltIn(IRI.create(prefix, "sum"));
-    addSWRLBuiltIn(IRI.create(prefix, "median"));
-    addSWRLBuiltIn(IRI.create(prefix, "makeSet"));
-    addSWRLBuiltIn(IRI.create(prefix, "makeBag"));
-    addSWRLBuiltIn(IRI.create(prefix, "groupBy"));
-    addSWRLBuiltIn(IRI.create(prefix, "size"));
-    addSWRLBuiltIn(IRI.create(prefix, "isEmpty"));
-    addSWRLBuiltIn(IRI.create(prefix, "notEmpty"));
-    addSWRLBuiltIn(IRI.create(prefix, "element"));
-    addSWRLBuiltIn(IRI.create(prefix, "notElement"));
-    addSWRLBuiltIn(IRI.create(prefix, "intersects"));
-    addSWRLBuiltIn(IRI.create(prefix, "notIntersects"));
-    addSWRLBuiltIn(IRI.create(prefix, "equal"));
-    addSWRLBuiltIn(IRI.create(prefix, "notEqual"));
-    addSWRLBuiltIn(IRI.create(prefix, "contains"));
-    addSWRLBuiltIn(IRI.create(prefix, "notContains"));
-    addSWRLBuiltIn(IRI.create(prefix, "difference"));
-    addSWRLBuiltIn(IRI.create(prefix, "union"));
-    addSWRLBuiltIn(IRI.create(prefix, "intersection"));
-    addSWRLBuiltIn(IRI.create(prefix, "append"));
-    addSWRLBuiltIn(IRI.create(prefix, "last"));
-    addSWRLBuiltIn(IRI.create(prefix, "notLast"));
-    addSWRLBuiltIn(IRI.create(prefix, "lastN"));
-    addSWRLBuiltIn(IRI.create(prefix, "notLastN"));
-    addSWRLBuiltIn(IRI.create(prefix, "first"));
-    addSWRLBuiltIn(IRI.create(prefix, "notFirst"));
-    addSWRLBuiltIn(IRI.create(prefix, "firstN"));
-    addSWRLBuiltIn(IRI.create(prefix, "notFirstN"));
-    addSWRLBuiltIn(IRI.create(prefix, "nth"));
-    addSWRLBuiltIn(IRI.create(prefix, "notNth"));
-    addSWRLBuiltIn(IRI.create(prefix, "nthLast"));
-    addSWRLBuiltIn(IRI.create(prefix, "notNthLast"));
-    addSWRLBuiltIn(IRI.create(prefix, "nthSlice"));
-    addSWRLBuiltIn(IRI.create(prefix, "notNthSlice"));
-    addSWRLBuiltIn(IRI.create(prefix, "nthLastSlice"));
-    addSWRLBuiltIn(IRI.create(prefix, "notNthLastSlice"));
-    addSWRLBuiltIn(IRI.create(prefix, "greatest"));
-    addSWRLBuiltIn(IRI.create(prefix, "notGreatest"));
-    addSWRLBuiltIn(IRI.create(prefix, "greatestN"));
-    addSWRLBuiltIn(IRI.create(prefix, "notGreatestN"));
-    addSWRLBuiltIn(IRI.create(prefix, "least"));
-    addSWRLBuiltIn(IRI.create(prefix, "notLeast"));
-    addSWRLBuiltIn(IRI.create(prefix, "leastN"));
-    addSWRLBuiltIn(IRI.create(prefix, "notLeastN"));
-    addSWRLBuiltIn(IRI.create(prefix, "nthGreatest"));
-    addSWRLBuiltIn(IRI.create(prefix, "notNthGreatest"));
-    addSWRLBuiltIn(IRI.create(prefix, "nthGreatestSlice"));
-    addSWRLBuiltIn(IRI.create(prefix, "notNthGreatestSlice"));
-  }
-
-  private void addTemporalBuiltIns()
-  {
-    String prefix = "http://swrl.stanford.edu/ontologies/built-ins/3.3/temporal.owl#";
-
-    addSWRLBuiltIn(IRI.create(prefix, "notEquals"));
-    addSWRLBuiltIn(IRI.create(prefix, "notIntersects"));
-    addSWRLBuiltIn(IRI.create(prefix, "notStarts"));
-    addSWRLBuiltIn(IRI.create(prefix, "overlappedBy"));
-    addSWRLBuiltIn(IRI.create(prefix, "contains"));
-    addSWRLBuiltIn(IRI.create(prefix, "equals"));
-    addSWRLBuiltIn(IRI.create(prefix, "intersects"));
-    addSWRLBuiltIn(IRI.create(prefix, "finishedBy"));
-    addSWRLBuiltIn(IRI.create(prefix, "notDurationLessThanOrEqualTo"));
-    addSWRLBuiltIn(IRI.create(prefix, "notStartedBy"));
-    addSWRLBuiltIn(IRI.create(prefix, "notFinishedBy"));
-    addSWRLBuiltIn(IRI.create(prefix, "starts"));
-    addSWRLBuiltIn(IRI.create(prefix, "notContains"));
-    addSWRLBuiltIn(IRI.create(prefix, "notOverlaps"));
-    addSWRLBuiltIn(IRI.create(prefix, "durationLessThanOrEqualTo"));
-    addSWRLBuiltIn(IRI.create(prefix, "duration"));
-    addSWRLBuiltIn(IRI.create(prefix, "notFinishes"));
-    addSWRLBuiltIn(IRI.create(prefix, "metBy"));
-    addSWRLBuiltIn(IRI.create(prefix, "notDurationEqualTo"));
-    addSWRLBuiltIn(IRI.create(prefix, "before"));
-    addSWRLBuiltIn(IRI.create(prefix, "startedBy"));
-    addSWRLBuiltIn(IRI.create(prefix, "notMeets"));
-    addSWRLBuiltIn(IRI.create(prefix, "durationGreaterThanOrEqualTo"));
-    addSWRLBuiltIn(IRI.create(prefix, "notDuring"));
-    addSWRLBuiltIn(IRI.create(prefix, "notOverlappedBy"));
-    addSWRLBuiltIn(IRI.create(prefix, "during"));
-    addSWRLBuiltIn(IRI.create(prefix, "notDurationLessThan"));
-    addSWRLBuiltIn(IRI.create(prefix, "notBefore"));
-    addSWRLBuiltIn(IRI.create(prefix, "meets"));
-    addSWRLBuiltIn(IRI.create(prefix, "notDurationGreaterThan"));
-    addSWRLBuiltIn(IRI.create(prefix, "notDurationGreaterThanOrEqualTo"));
-    addSWRLBuiltIn(IRI.create(prefix, "add"));
-    addSWRLBuiltIn(IRI.create(prefix, "finishes"));
-    addSWRLBuiltIn(IRI.create(prefix, "notAfter"));
-    addSWRLBuiltIn(IRI.create(prefix, "durationEqualTo"));
-    addSWRLBuiltIn(IRI.create(prefix, "overlaps"));
-    addSWRLBuiltIn(IRI.create(prefix, "durationGreaterThan"));
-    addSWRLBuiltIn(IRI.create(prefix, "durationLessThan"));
-    addSWRLBuiltIn(IRI.create(prefix, "after"));
-    addSWRLBuiltIn(IRI.create(prefix, "notMetBy"));
-  }
-
-  private void addSWRLXBuiltIns()
-  {
-    String prefix = "http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#";
-
-    addSWRLBuiltIn(IRI.create(prefix, "makeOWLClass"));
-    addSWRLBuiltIn(IRI.create(prefix, "makeOWLIndividual"));
-    addSWRLBuiltIn(IRI.create(prefix, "ca"));
-    addSWRLBuiltIn(IRI.create(prefix, "makeOWLThing"));
-    addSWRLBuiltIn(IRI.create(prefix, "createOWLThing"));
-    addSWRLBuiltIn(IRI.create(prefix, "invokeSWRLBuiltIn"));
-  }
-
-  private void addSWRLTBoxBuiltIns()
-  {
-    String prefix = "http://swrl.stanford.edu/ontologies/built-ins/5.0.0/tbox.owl#";
-
-    addSWRLBuiltIn(IRI.create(prefix, "cd"));
-    addSWRLBuiltIn(IRI.create(prefix, "opd"));
-    addSWRLBuiltIn(IRI.create(prefix, "dpd"));
-    addSWRLBuiltIn(IRI.create(prefix, "apd"));
-    addSWRLBuiltIn(IRI.create(prefix, "dd"));
-    addSWRLBuiltIn(IRI.create(prefix, "sca"));
-    addSWRLBuiltIn(IRI.create(prefix, "eca"));
-    addSWRLBuiltIn(IRI.create(prefix, "dca"));
-    addSWRLBuiltIn(IRI.create(prefix, "fopa"));
-    addSWRLBuiltIn(IRI.create(prefix, "ifopa"));
-    addSWRLBuiltIn(IRI.create(prefix, "fdpa"));
-    addSWRLBuiltIn(IRI.create(prefix, "opda"));
-    addSWRLBuiltIn(IRI.create(prefix, "opra"));
-    addSWRLBuiltIn(IRI.create(prefix, "dpda"));
-    addSWRLBuiltIn(IRI.create(prefix, "dpra"));
-    addSWRLBuiltIn(IRI.create(prefix, "dda"));
-    addSWRLBuiltIn(IRI.create(prefix, "dua"));
-    addSWRLBuiltIn(IRI.create(prefix, "hka"));
-  }
-
-  private void addSWRLABoxBuiltIns()
-  {
-    String prefix = "http://swrl.stanford.edu/ontologies/built-ins/5.0.0/abox.owl#";
-
-    addSWRLBuiltIn(IRI.create(prefix, "caa"));
-    addSWRLBuiltIn(IRI.create(prefix, "sia"));
-    addSWRLBuiltIn(IRI.create(prefix, "dia"));
-    addSWRLBuiltIn(IRI.create(prefix, "opaa"));
-    addSWRLBuiltIn(IRI.create(prefix, "nopaa"));
-    addSWRLBuiltIn(IRI.create(prefix, "dpaa"));
-    addSWRLBuiltIn(IRI.create(prefix, "ndpaa"));
-  }
-
-  private void addSWRLRBoxBuiltIns()
-  {
-    String prefix = "http://swrl.stanford.edu/ontologies/built-ins/5.0.0/rbox.owl#";
-
-    addSWRLBuiltIn(IRI.create(prefix, "topa"));
-    addSWRLBuiltIn(IRI.create(prefix, "djopa"));
-    addSWRLBuiltIn(IRI.create(prefix, "eopa"));
-    addSWRLBuiltIn(IRI.create(prefix, "sopa"));
-    addSWRLBuiltIn(IRI.create(prefix, "spa"));
-    addSWRLBuiltIn(IRI.create(prefix, "aopa"));
-    addSWRLBuiltIn(IRI.create(prefix, "ropa"));
-    addSWRLBuiltIn(IRI.create(prefix, "iropa"));
-    addSWRLBuiltIn(IRI.create(prefix, "iopa"));
-    addSWRLBuiltIn(IRI.create(prefix, "djdpa"));
-    addSWRLBuiltIn(IRI.create(prefix, "sdpa"));
-    addSWRLBuiltIn(IRI.create(prefix, "dpda"));
-    addSWRLBuiltIn(IRI.create(prefix, "edpa"));
-    addSWRLBuiltIn(IRI.create(prefix, "spoca"));
-  }
-
-  private void addSWRLMBuiltIns()
-  {
-    String prefix = "http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlm.owl#";
-
-    addSWRLBuiltIn(IRI.create(prefix, "sqrt"));
-    addSWRLBuiltIn(IRI.create(prefix, "eval"));
-    addSWRLBuiltIn(IRI.create(prefix, "log"));
-  }
 
   private void addSWRLRule(@NonNull SWRLAPIRule swrlapiRule, @NonNull SWRLRule owlapiRule)
   {

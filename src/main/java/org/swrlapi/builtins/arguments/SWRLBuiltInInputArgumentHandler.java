@@ -15,7 +15,7 @@ import java.math.BigInteger;
 import java.util.List;
 
 /**
- * Utility methods for dealing with input arguments to SWRL built-ins.
+ * This interface defines utility methods for dealing with input arguments to SWRL built-ins.
  *
  * @see org.swrlapi.builtins.AbstractSWRLBuiltInLibrary
  */

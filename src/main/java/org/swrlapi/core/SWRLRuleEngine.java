@@ -113,11 +113,6 @@ public interface SWRLRuleEngine
   boolean isSWRLBuiltIn(@NonNull IRI iri);
 
   /**
-   * @param iri The IRI of a built-in
-   */
-  void addSWRLBuiltIn(@NonNull IRI iri);
-
-  /**
    * @return The IRIs of all SWRL built-ins
    */
   @NonNull Set<@NonNull IRI> getSWRLBuiltInIRIs();

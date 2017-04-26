@@ -3,8 +3,6 @@ package org.swrlapi.builtins;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.exceptions.SWRLBuiltInException;
-import org.swrlapi.exceptions.SWRLBuiltInLibraryException;
-import org.swrlapi.factory.SQWRLResultValueFactory;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -25,10 +23,11 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
   /**
    * @return The name of the built-in library
    */
-  @NonNull String getLibraryName();
+  @NonNull String getNamespace();
+
 
   /**
-   * Reset library, discarding any internal state if any (e.g., caches).
+   * Reset library, discarding any internal state if any (e.g., caches)
    */
   void reset();
 

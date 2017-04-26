@@ -114,8 +114,6 @@ public interface SWRLAPIOWLOntology
 
   boolean isSWRLBuiltIn(@NonNull IRI iri);
 
-  void addSWRLBuiltIn(@NonNull IRI iri);
-
   @NonNull Set<@NonNull IRI> getSWRLBuiltInIRIs();
 
   @NonNull SWRLParser createSWRLParser();

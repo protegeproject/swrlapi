@@ -8,6 +8,7 @@ import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
 import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
 import org.swrlapi.builtins.SWRLBuiltInBridge;
+import org.swrlapi.builtins.SWRLBuiltInLibraryManager;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
@@ -17,6 +18,7 @@ import org.swrlapi.exceptions.SWRLBuiltInLibraryException;
 import org.swrlapi.literal.XSDDate;
 import org.swrlapi.literal.XSDDateTime;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,10 +28,21 @@ import java.util.Set;
  */
 public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 {
-  private static final String TemporalLibraryName = "SWRLTemporalBuiltIns";
+  private static final String Namespace = "http://swrl.stanford.edu/ontologies/built-ins/3.3/temporal.owl#";
+
+  private static final String[] BuiltInNames = { "notEquals", "notIntersects", "notStarts", "overlappedBy", "contains",
+    "equals", "intersects", "finishedBy", "notDurationLessThanOrEqualTo", "notStartedBy", "notFinishedBy", "starts",
+    "notContains", "notOverlaps", "durationLessThanOrEqualTo", "duration", "notFinishes", "metBy", "notDurationEqualTo",
+    "before", "startedBy", "notMeets", "durationGreaterThanOrEqualTo", "notDuring", "notOverlappedBy", "during",
+    "notDurationLessThan", "notBefore", "meets", "notDurationGreaterThan", "notDurationGreaterThanOrEqualTo", "add",
+    "finishes", "notAfter", "durationEqualTo", "overlaps", "durationGreaterThan", "durationLessThan", "after",
+    "notMetBy" };
+
+  static{
+    SWRLBuiltInLibraryManager.registerSWRLBuiltIns(Namespace, BuiltInNames);
+  }
 
   private static final String Prefix = "temporal:";
-  private static final String Namespace = "http://swrl.stanford.edu/ontologies/built-ins/3.3/temporal.owl#";
 
   private static final String TemporalEquals = Prefix + "equals";
   private static final String TemporalAfter = Prefix + "after";
@@ -59,7 +72,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
   public SWRLBuiltInLibraryImpl()
   {
-    super(TemporalLibraryName);
+    super(Namespace, new HashSet<>(Arrays.asList(BuiltInNames)));
 
     this.temporal = new Temporal(new XSDDateTimeStringProcessor());
     this.temporal.setNow();

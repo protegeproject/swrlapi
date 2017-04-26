@@ -5,9 +5,12 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import org.nfunk.jep.JEP;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
 import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
+import org.swrlapi.builtins.SWRLBuiltInLibraryManager;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,13 +19,19 @@ import java.util.Optional;
  */
 public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 {
-  private static final String SWRLMLibraryName = "SWRLAPIMathematicalBuiltIns";
+  private static final String Namespace = "http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlm.owl#";
+
+  private static final String[] BuiltInNames = { "sqrt", "eval", "log" };
+
+  static{
+    SWRLBuiltInLibraryManager.registerSWRLBuiltIns(Namespace, BuiltInNames);
+  }
 
   @Nullable private JEP jep = null;
 
   public SWRLBuiltInLibraryImpl()
   {
-    super(SWRLMLibraryName);
+    super(Namespace, new HashSet<>(Arrays.asList(BuiltInNames)));
   }
 
   @Override public void reset()
@@ -111,10 +120,10 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
             double variableValue = getArgumentAsADouble(variableArgument);
             getJEP().addVariable(variableName.get(), variableValue);
           } else {
-            String message = "exception processing expression '" + expression + "': " +
-              "variable ?" + variableName.get() + " with type " + getLiteralArgumentDatatypeName(
-              currentVariableArgumentIndex, arguments) +
-              " cannot be converted to " + XSDVocabulary.DOUBLE.getPrefixedName();
+            String message =
+              "exception processing expression '" + expression + "': " + "variable ?" + variableName.get()
+                + " with type " + getLiteralArgumentDatatypeName(currentVariableArgumentIndex, arguments)
+                + " cannot be converted to " + XSDVocabulary.DOUBLE.getPrefixedName();
             throw new SWRLBuiltInException(message);
           }
           currentVariableArgumentIndex++;
@@ -139,9 +148,10 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       if (isArgumentConvertibleToDouble(resultArgumentIndex, arguments))
         return value == getArgumentAsADouble(resultArgumentIndex, arguments);
       else
-        throw new SWRLBuiltInException("exception processing expression '" + expression + "': " +
-          "result argument with type " + getLiteralArgumentDatatypeName(resultArgumentIndex, arguments)
-          + " cannot be converted to " + XSDVocabulary.DOUBLE.getPrefixedName());
+        throw new SWRLBuiltInException(
+          "exception processing expression '" + expression + "': " + "result argument with type "
+            + getLiteralArgumentDatatypeName(resultArgumentIndex, arguments) + " cannot be converted to "
+            + XSDVocabulary.DOUBLE.getPrefixedName());
     }
   }
 

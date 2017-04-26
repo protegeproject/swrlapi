@@ -23,7 +23,7 @@ import java.net.URI;
 import java.util.List;
 
 /**
- * Utility methods that can be used by built-ins to create SWRL built-in result arguments.
+ * This interface defines utility methods that can be used by built-ins to create SWRL built-in result arguments.
  *
  * @see org.swrlapi.builtins.AbstractSWRLBuiltInLibrary
  */

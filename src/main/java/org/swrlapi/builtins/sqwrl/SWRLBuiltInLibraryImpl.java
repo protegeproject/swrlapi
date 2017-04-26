@@ -4,6 +4,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.SWRLArgument;
 import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
+import org.swrlapi.builtins.SWRLBuiltInLibraryManager;
 import org.swrlapi.builtins.arguments.SQWRLCollectionVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
@@ -16,7 +17,6 @@ import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
 import org.swrlapi.exceptions.InvalidSWRLBuiltInArgumentException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
-import org.swrlapi.sqwrl.SQWRLNames;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
 import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue;
 import org.swrlapi.sqwrl.values.SQWRLClassExpressionResultValue;
@@ -27,7 +27,6 @@ import org.swrlapi.sqwrl.values.SQWRLNamedIndividualResultValue;
 import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -46,6 +45,20 @@ import java.util.Set;
  */
 public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 {
+  private static final String Namespace = "http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#";
+
+  private static final String[] BuiltInNames = { "selectDistinct", "select", "count", "columnNames", "orderBy",
+    "orderByDescending", "limit", "min", "max", "avg", "sum", "median", "makeSet", "makeBag", "groupBy", "size",
+    "isEmpty", "notEmpty", "element", "notElement", "intersects", "notIntersects", "equal", "notEqual", "contains",
+    "notContains", "difference", "union", "intersection", "append", "last", "notLast", "lastN", "notLastN", "first",
+    "notFirst", "firstN", "notFirstN", "nth", "notNth", "nthLast", "notNthLast", "nthSlice", "notNthSlice",
+    "nthLastSlice", "notNthLastSlice", "greatest", "notGreatest", "greatestN", "notGreatestN", "least", "notLeast",
+    "leastN", "notLeastN", "nthGreatest", "notNthGreatest", "nthGreatestSlice", "notNthGreatestSlice" };
+
+  static{
+    SWRLBuiltInLibraryManager.registerSWRLBuiltIns(Namespace, BuiltInNames);
+  }
+
   /**
    * A collections map is a map of collection keys to a map of group keys to collections.
    * A collection can be uniquely identified by its query name and collection name. A unique key is generated from this
@@ -60,9 +73,10 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
   @NonNull private final Set<@NonNull String> setKeys, bagKeys;
 
+
   public SWRLBuiltInLibraryImpl()
   {
-    super(SQWRLNames.SQWRLBuiltInLibraryName);
+    super(Namespace, new HashSet<>(Arrays.asList(BuiltInNames)));
 
     this.collectionsMap = new HashMap<>();
     this.collectionGroupElementNumbersMap = new HashMap<>();

@@ -2,6 +2,7 @@ package org.swrlapi.builtins;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
+import org.semanticweb.owlapi.model.IRI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
@@ -13,15 +14,11 @@ import org.swrlapi.exceptions.SWRLBuiltInLibraryException;
 import org.swrlapi.exceptions.UnresolvedSWRLBuiltInClassException;
 import org.swrlapi.exceptions.UnresolvedSWRLBuiltInMethodException;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -30,7 +27,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 /**
  * This class manages the dynamic loading of SWRL built-in libraries and the invocation of built-ins in those libraries.
@@ -46,6 +42,8 @@ public class SWRLBuiltInLibraryManager
   private static final String SWRLBuiltInLibraryPackageBaseName = "org.swrlapi.builtins.";
   private static final String SWRLBuiltInLibraryImplementationClassName = "SWRLBuiltInLibraryImpl";
 
+  @NonNull private static Set<@NonNull IRI> swrlBuiltInIRIs = new HashSet<>();
+
   // Map of built-in library prefix name to SWRLBuiltInLibrary instance
   @NonNull private final Map<@NonNull String, @NonNull SWRLBuiltInLibrary> swrlBuiltInLibraryImplementations;
   // Map of prefix : methodName to method implementation
@@ -57,78 +55,20 @@ public class SWRLBuiltInLibraryManager
     this.swrlBuiltInMethods = new HashMap<>();
   }
 
-  public void loadSWRLBuiltInLibraries(@NonNull String pathToSWRLBuiltInsDirectory)
+  public static void registerSWRLBuiltIns(@NonNull String namespace, String[] builtInNames)
   {
-    // TODO Where do we call this from?
-    // TODO Need to be careful we do not load classes more than once
-    // TODO library.reset() not called using this approach
-    // TODO Return list of built-in IRIs from here so that SWRLAPIOWLOntology implementation can register them?
-
-    try {
-      Map<@NonNull String, @NonNull Set<@NonNull String>> swrlBuiltInLibraryJARs = getSWRLBuiltInLibraryJARs(
-        pathToSWRLBuiltInsDirectory);
-
-      for (String swrlBuiltInLibraryJARFilePath : swrlBuiltInLibraryJARs.keySet()) {
-        URL[] classLoaderURLs = new URL[] { new URL(swrlBuiltInLibraryJARFilePath) };
-        URLClassLoader classLoader = new URLClassLoader(classLoaderURLs, this.getClass().getClassLoader());
-        for (String swrlBuiltInLibraryImplementationClassName : swrlBuiltInLibraryJARs
-          .get(swrlBuiltInLibraryJARFilePath)) {
-          Optional<String> swrlBuiltInLibraryPrefix = extractSWRLBuiltInLibraryPrefixFromClassName(
-            swrlBuiltInLibraryImplementationClassName);
-          if (swrlBuiltInLibraryPrefix.isPresent()) {
-
-            Class swrlBuiltInLibraryImplementationClass = Class
-              .forName(swrlBuiltInLibraryImplementationClassName, true, classLoader);
-            if (!this.swrlBuiltInLibraryImplementations.containsKey(swrlBuiltInLibraryPrefix.get())) {
-              SWRLBuiltInLibrary library = loadSWRLBuiltInLibraryImplementationClass(swrlBuiltInLibraryPrefix.get(),
-                swrlBuiltInLibraryImplementationClassName);
-              this.swrlBuiltInLibraryImplementations.put(swrlBuiltInLibraryPrefix.get(), library);
-            } else
-              log.warn("Could not extract a valid prefix from built-in library class "
-                + swrlBuiltInLibraryImplementationClassName);
-          }
-        }
-      }
-    } catch (IOException e) {
-      // TODO
-    } catch (ClassNotFoundException e) {
-      // TODO
-
-    }
+    for (String builtInName : builtInNames)
+      swrlBuiltInIRIs.add(IRI.create(namespace, builtInName));
   }
 
-  /**
-   * @param swrlBuiltInsDirectoryPath
-   * @return A map of built-in JAR names to a set of built-in library implementation classes in each JAR
-   * @throws IOException If an error occurs during processing
-   */
-  @NonNull private Map<@NonNull String, @NonNull Set<@NonNull String>> getSWRLBuiltInLibraryJARs(
-    @NonNull String swrlBuiltInsDirectoryPath) throws IOException
+  public static boolean isSWRLBuiltIn(@NonNull IRI iri)
   {
-    File swrlBuiltInsDirectory = new File(swrlBuiltInsDirectoryPath);
-    Map<@NonNull String, @NonNull Set<@NonNull String>> swrlBuiltInLibraryJARs = new HashMap<>();
+    return swrlBuiltInIRIs.contains(iri);
+  }
 
-    for (File swrlBuiltInLibraryJARFile : swrlBuiltInsDirectory.listFiles()) {
-      ZipInputStream jarFileStream = new ZipInputStream(new FileInputStream(swrlBuiltInLibraryJARFile));
-      String swrlBuiltInLibraryJARFilePath = swrlBuiltInLibraryJARFile.getAbsolutePath();
-      for (ZipEntry entry = jarFileStream.getNextEntry(); entry != null; entry = jarFileStream.getNextEntry()) {
-        if (entry.getName().endsWith(".class") && !entry.isDirectory()) {
-          String className = getClassNameFromEntry(entry);
-          if (className.startsWith(SWRLBuiltInLibraryPackageBaseName) && className
-            .endsWith("." + SWRLBuiltInLibraryImplementationClassName)) {
-            String swrlBuiltInLibraryImplementationClassName = className;
-            if (swrlBuiltInLibraryJARs.containsKey(swrlBuiltInLibraryJARFilePath))
-              swrlBuiltInLibraryJARs.get(swrlBuiltInLibraryJARFilePath).add(swrlBuiltInLibraryImplementationClassName);
-            else {
-              Set<@NonNull String> swrlBuiltInLibraryImplementationClassNames = new HashSet<>();
-              swrlBuiltInLibraryImplementationClassNames.add(swrlBuiltInLibraryImplementationClassName);
-              swrlBuiltInLibraryJARs.put(swrlBuiltInLibraryJARFilePath, swrlBuiltInLibraryImplementationClassNames);
-            }
-          }
-        }
-      }
-    }
-    return swrlBuiltInLibraryJARs;
+  @NonNull public static Set<@NonNull IRI> getSWRLBuiltInIRIs()
+  {
+    return Collections.unmodifiableSet(swrlBuiltInIRIs);
   }
 
   /**
@@ -198,7 +138,7 @@ public class SWRLBuiltInLibraryManager
     if (this.swrlBuiltInLibraryImplementations.containsKey(prefix)) { // Find the cached implementation.
       return this.swrlBuiltInLibraryImplementations.get(prefix);
     } else { // Implementation class not loaded - load it, cache it, and call its reset method.
-      SWRLBuiltInLibrary library = loadSWRLBuiltInLibraryImplementationClass(prefix,
+      SWRLBuiltInLibrary library = instantiateSWRLBuiltInLibraryImplementation(prefix,
         swrlBuiltInLibraryImplementationClassName);
       this.swrlBuiltInLibraryImplementations.put(prefix, library);
       invokeBuiltInLibraryResetMethod(bridge, library);
@@ -332,8 +272,7 @@ public class SWRLBuiltInLibraryManager
     }
   }
 
-  // TODO Need to get constructor of library to catch exceptions it may throw.
-  @NonNull private SWRLBuiltInLibrary loadSWRLBuiltInLibraryImplementationClass(@NonNull String prefix,
+  @NonNull private SWRLBuiltInLibrary instantiateSWRLBuiltInLibraryImplementation(@NonNull String prefix,
     @NonNull String swrlBuiltInLibraryImplementationClassName) throws SWRLBuiltInLibraryException
   {
     Class<?> swrlBuiltInLibraryImplementationClass;
@@ -347,7 +286,7 @@ public class SWRLBuiltInLibraryManager
     // Check implementation class for compatibility
     checkSWRLBuiltInLibraryImplementationClassCompatibility(prefix, swrlBuiltInLibraryImplementationClass);
 
-    try {
+    try { // TODO Need to get constructor of library to catch exceptions it may throw
       return (SWRLBuiltInLibrary)swrlBuiltInLibraryImplementationClass.newInstance();
     } catch (@NonNull InstantiationException | ExceptionInInitializerError | SecurityException | IllegalAccessException e) {
       throw new IncompatibleSWRLBuiltInClassException(prefix, swrlBuiltInLibraryImplementationClassName,

@@ -58,8 +58,10 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -79,7 +81,8 @@ public abstract class AbstractSWRLBuiltInLibrary
   implements SWRLBuiltInLibrary, SWRLBuiltInInputArgumentHandler, SWRLBuiltInResultArgumentHandler,
   SWRLBuiltInArgumentCreator
 {
-  @NonNull private final String libraryName;
+  @NonNull private final String namespace;
+  @NonNull private final Set<@NonNull String> builtInNames;
 
   // Bridge, rule name, built-in index, and head or body location within rule of built-in currently invoking its
   // associated Java implementation. The invokingRuleName, invokingBuiltInIndex, and isInConsequent variables are valid
@@ -93,17 +96,23 @@ public abstract class AbstractSWRLBuiltInLibrary
   private int invokingBuiltInIndex = -1;
   private boolean isInConsequent = false;
 
-  protected AbstractSWRLBuiltInLibrary(@NonNull String libraryName)
+  protected AbstractSWRLBuiltInLibrary(@NonNull String namespace, @NonNull Set<@NonNull String> builtInNames)
   {
     this.invokingBridge = null;
-    this.libraryName = libraryName;
+    this.namespace = namespace;
+    this.builtInNames = new HashSet<>(builtInNames);
     this.invocationPatternID = 0L;
     this.invocationPatternMap = new HashMap<>();
   }
 
-  @NonNull @Override public String getLibraryName()
+  @NonNull public String getNamespace()
   {
-    return this.libraryName;
+    return this.namespace;
+  }
+
+  @NonNull public Set<@NonNull String> getBuiltInNames()
+  {
+    return new HashSet<>(this.builtInNames);
   }
 
   @NonNull @Override public SWRLBuiltInBridge getBuiltInBridge() throws SWRLBuiltInLibraryException

@@ -271,11 +271,6 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
     return this.swrlapiOWLOntology.isSWRLBuiltIn(iri);
   }
 
-  @Override public void addSWRLBuiltIn(@NonNull IRI iri)
-  {
-    this.swrlapiOWLOntology.addSWRLBuiltIn(iri);
-  }
-
   @NonNull @Override public Set<@NonNull IRI> getSWRLBuiltInIRIs()
   {
     return this.swrlapiOWLOntology.getSWRLBuiltInIRIs();
