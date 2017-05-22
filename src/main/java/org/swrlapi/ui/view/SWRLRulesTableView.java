@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.parser.SWRLParseException;
+import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.ui.action.DisableAllRulesAction;
 import org.swrlapi.ui.action.EnableAllRulesAction;
 import org.swrlapi.ui.dialog.SWRLRuleEngineDialogManager;
@@ -100,9 +101,10 @@ public class SWRLRulesTableView extends JPanel implements SWRLAPIView
   {
     int selectedRow = this.swrlRulesTable.getSelectedRow();
 
-    if (selectedRow != -1)
-      return Optional.of(getSWRLRulesTableModel().getSWRLRuleTextByIndex(selectedRow));
-    else
+    if (selectedRow != -1) {
+      String ruleText = getSWRLRulesTableModel().getSWRLRuleTextByIndex(selectedRow);
+      return Optional.of(ruleText.replaceAll(Character.toString(SWRLParser.RING_CHAR), " . "));
+    } else
       return Optional.<@NonNull String>empty();
   }
 
