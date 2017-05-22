@@ -354,7 +354,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
   @NonNull private String visit(@NonNull OWLClassExpression classExpression)
   {
     if (classExpression.isAnonymous())
-      return visit(classExpression);
+      return "[Anonymous class expressions not implemented]";
     else {
       OWLClass cls = classExpression.asOWLClass();
       return visit(cls);
@@ -381,7 +381,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
   @NonNull private String visit(@NonNull OWLObjectPropertyExpression objectPropertyExpression)
   {
     if (objectPropertyExpression.isAnonymous())
-      return visit(objectPropertyExpression);
+      return "[Anonymous object property expressions not implemented]";
     else
       return visit(objectPropertyExpression.asOWLObjectProperty());
   }
@@ -398,7 +398,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
   @NonNull private String visit(@NonNull OWLDataPropertyExpression dataPropertyExpression)
   {
     if (dataPropertyExpression.isAnonymous())
-      return visit(dataPropertyExpression);
+      return "[Anonymous data property expressions not implemented]";
     else
       return visit(dataPropertyExpression.asOWLDataProperty());
   }
