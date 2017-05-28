@@ -5,7 +5,6 @@ import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
-import org.swrlapi.builtins.SWRLBuiltInLibraryManager;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 
@@ -20,21 +19,19 @@ import java.util.Map;
  */
 public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 {
+  private static final String Prefix = "swrlx";
+
   private static final String Namespace = "http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#";
 
   private static final String[] BuiltInNames = { "makeOWLClass", "makeOWLIndividual", "makeOWLThing", "createOWLThing",
     "invokeSWRLBuiltIn" };
-
-  static{
-    SWRLBuiltInLibraryManager.registerSWRLBuiltIns(Namespace, BuiltInNames);
-  }
 
   @NonNull private final Map<@NonNull String, @NonNull OWLClass> classInvocationMap;
   @NonNull private final Map<@NonNull String, @NonNull OWLNamedIndividual> individualInvocationMap;
 
   public SWRLBuiltInLibraryImpl()
   {
-    super(Namespace, new HashSet<>(Arrays.asList(BuiltInNames)));
+    super(Prefix, Namespace, new HashSet<>(Arrays.asList(BuiltInNames)));
 
     this.classInvocationMap = new HashMap<>();
     this.individualInvocationMap = new HashMap<>();

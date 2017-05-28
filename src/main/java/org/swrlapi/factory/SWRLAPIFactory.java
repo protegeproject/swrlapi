@@ -2,6 +2,7 @@ package org.swrlapi.factory;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.OWLOntology;
+import org.swrlapi.builtins.SWRLBuiltInLibraryManager;
 import org.swrlapi.core.IRIResolver;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.exceptions.SWRLRuleEngineException;
@@ -16,15 +17,17 @@ import java.io.File;
 import java.util.Optional;
 
 /**
- * Factory for generating some of the core entities defined by the SWRLAPI.
+ * Factory for generating some of the core entities defined by the SWRLAPI
  */
 public class SWRLAPIFactory
 {
   @NonNull private static final SWRLRuleAndQueryEngineFactory swrlRuleAndQueryEngineFactory;
+  @NonNull private static final SWRLBuiltInLibraryManager swrlBuiltInLibraryManager;
 
   static {
     swrlRuleAndQueryEngineFactory = new DefaultSWRLRuleAndQueryEngineFactory();
     swrlRuleAndQueryEngineFactory.tryToRegisterADefaultSWRLRuleEngine();
+    swrlBuiltInLibraryManager = new SWRLBuiltInLibraryManager();
   }
 
   /**
@@ -36,7 +39,7 @@ public class SWRLAPIFactory
     throws SWRLRuleEngineException
   {
     IRIResolver iriResolver = createIRIResolver();
-    return swrlRuleAndQueryEngineFactory.createSWRLRuleEngine(ontology, iriResolver);
+    return swrlRuleAndQueryEngineFactory.createSWRLRuleEngine(ontology, iriResolver, swrlBuiltInLibraryManager);
   }
 
   /**
@@ -47,7 +50,7 @@ public class SWRLAPIFactory
   @NonNull public static SWRLRuleEngine createSWRLRuleEngine(@NonNull OWLOntology ontology,
     @NonNull IRIResolver iriResolver) throws SWRLRuleEngineException
   {
-    return swrlRuleAndQueryEngineFactory.createSWRLRuleEngine(ontology, iriResolver);
+    return swrlRuleAndQueryEngineFactory.createSWRLRuleEngine(ontology, iriResolver, swrlBuiltInLibraryManager);
   }
 
   /**
@@ -59,7 +62,7 @@ public class SWRLAPIFactory
     throws SWRLRuleEngineException
   {
     IRIResolver iriResolver = createIRIResolver();
-    return swrlRuleAndQueryEngineFactory.createSQWRLQueryEngine(ontology, iriResolver);
+    return swrlRuleAndQueryEngineFactory.createSQWRLQueryEngine(ontology, iriResolver, swrlBuiltInLibraryManager);
   }
 
   /**
@@ -71,7 +74,7 @@ public class SWRLAPIFactory
   @NonNull public static SQWRLQueryEngine createSQWRLQueryEngine(@NonNull OWLOntology ontology,
     @NonNull IRIResolver iriResolver) throws SWRLRuleEngineException
   {
-    return swrlRuleAndQueryEngineFactory.createSQWRLQueryEngine(ontology, iriResolver);
+    return swrlRuleAndQueryEngineFactory.createSQWRLQueryEngine(ontology, iriResolver, swrlBuiltInLibraryManager);
   }
 
   /**

@@ -30,7 +30,7 @@ import java.util.Set;
 /**
  * Default implementation of a SWRL rule engine bridge, built-in bridge, built-in bridge controller, and rule engine
  * bridge controller.
- * <p/>
+ * <p>
  * Asserted OWL axioms are managed by a {@link org.swrlapi.core.SWRLRuleEngine}, which passes them to a
  * {@link org.swrlapi.bridge.TargetSWRLRuleEngine} using the
  * {@link org.swrlapi.bridge.TargetSWRLRuleEngine#defineOWLAxiom(OWLAxiom)} call.
@@ -61,11 +61,12 @@ public class DefaultSWRLBridge implements SWRLBridge
   @MonotonicNonNull private TargetSWRLRuleEngine targetSWRLRuleEngine;
 
   public DefaultSWRLBridge(@NonNull SWRLAPIOWLOntology swrlapiOWLOntology,
-    @NonNull OWL2RLPersistenceLayer owl2RLPersistenceLayer) throws SWRLBuiltInBridgeException
+    @NonNull OWL2RLPersistenceLayer owl2RLPersistenceLayer,
+    @NonNull SWRLBuiltInLibraryManager builtInLibraryManager) throws SWRLBuiltInBridgeException
   {
     this.swrlapiOWLOntology = swrlapiOWLOntology;
     this.owl2RLPersistenceLayer = owl2RLPersistenceLayer;
-    this.builtInLibraryManager = new SWRLBuiltInLibraryManager();
+    this.builtInLibraryManager = builtInLibraryManager;
 
     this.inferredOWLAxioms = new HashSet<>();
     this.injectedOWLAxioms = new HashSet<>();

@@ -5,7 +5,6 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
-import org.swrlapi.builtins.SWRLBuiltInLibraryManager;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
@@ -41,6 +40,8 @@ import java.util.regex.PatternSyntaxException;
  */
 public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 {
+  private static final String Prefix = "swrlb";
+
   private static final String Namespace = "http://www.w3.org/2003/11/swrlb#";
 
   private static final String[] BuiltInNames = { "equal", "notEqual", "lessThan", "lessThanOrEqual", "greaterThan",
@@ -57,10 +58,6 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     "addDayTimeDurationToTime", "subtractDayTimeDurationFromTime", "subtractDateTimesYieldingYearMonthDuration",
     "subtractDateTimesYieldingYearMonthDuration", "resolveURI", "anyURU", "listConcat", "listIntersection",
     "listSubtraction", "member", "length", "first", "rest", "sublist", "empty" };
-
-  static{
-    SWRLBuiltInLibraryManager.registerSWRLBuiltIns(Namespace, BuiltInNames);
-  }
 
   private static final String SWRLBPrefix = "swrlb:";
 
@@ -84,7 +81,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
   public SWRLBuiltInLibraryImpl()
   {
-    super(Namespace, new HashSet<>(Arrays.asList(BuiltInNames)));
+    super(Prefix, Namespace, new HashSet<>(Arrays.asList(BuiltInNames)));
   }
 
   @Override public void reset()

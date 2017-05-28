@@ -5,7 +5,6 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import org.nfunk.jep.JEP;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
 import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
-import org.swrlapi.builtins.SWRLBuiltInLibraryManager;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 
@@ -19,19 +18,17 @@ import java.util.Optional;
  */
 public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 {
+  private static final String Prefix = "swrlm";
+
   private static final String Namespace = "http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlm.owl#";
 
   private static final String[] BuiltInNames = { "sqrt", "eval", "log" };
-
-  static{
-    SWRLBuiltInLibraryManager.registerSWRLBuiltIns(Namespace, BuiltInNames);
-  }
 
   @Nullable private JEP jep = null;
 
   public SWRLBuiltInLibraryImpl()
   {
-    super(Namespace, new HashSet<>(Arrays.asList(BuiltInNames)));
+    super(Prefix, Namespace, new HashSet<>(Arrays.asList(BuiltInNames)));
   }
 
   @Override public void reset()

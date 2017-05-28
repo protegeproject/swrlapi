@@ -8,6 +8,7 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.SWRLAtom;
 import org.swrlapi.bridge.SWRLBridge;
+import org.swrlapi.builtins.SWRLBuiltInLibraryManager;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.IRIResolver;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
@@ -276,9 +277,10 @@ public class SWRLAPIInternalFactory
    * @throws SWRLBuiltInBridgeException If an error occurs during rule engine bridge creation
    */
   @NonNull public static SWRLBridge createSWRLBridge(@NonNull SWRLAPIOWLOntology swrlapiOWLOntology,
-    @NonNull OWL2RLPersistenceLayer owl2RLPersistenceLayer) throws SWRLBuiltInBridgeException
+    @NonNull OWL2RLPersistenceLayer owl2RLPersistenceLayer,
+    @NonNull SWRLBuiltInLibraryManager builtInLibraryManager) throws SWRLBuiltInBridgeException
   {
-    return new DefaultSWRLBridge(swrlapiOWLOntology, owl2RLPersistenceLayer);
+    return new DefaultSWRLBridge(swrlapiOWLOntology, owl2RLPersistenceLayer, builtInLibraryManager);
   }
 
   /**

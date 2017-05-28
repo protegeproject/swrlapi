@@ -4,7 +4,6 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.SWRLArgument;
 import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
-import org.swrlapi.builtins.SWRLBuiltInLibraryManager;
 import org.swrlapi.builtins.arguments.SQWRLCollectionVariableBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
@@ -45,6 +44,8 @@ import java.util.Set;
  */
 public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 {
+  private static final String Prefix = "sqwrl";
+
   private static final String Namespace = "http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#";
 
   private static final String[] BuiltInNames = { "selectDistinct", "select", "count", "columnNames", "orderBy",
@@ -54,10 +55,6 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     "notFirst", "firstN", "notFirstN", "nth", "notNth", "nthLast", "notNthLast", "nthSlice", "notNthSlice",
     "nthLastSlice", "notNthLastSlice", "greatest", "notGreatest", "greatestN", "notGreatestN", "least", "notLeast",
     "leastN", "notLeastN", "nthGreatest", "notNthGreatest", "nthGreatestSlice", "notNthGreatestSlice" };
-
-  static{
-    SWRLBuiltInLibraryManager.registerSWRLBuiltIns(Namespace, BuiltInNames);
-  }
 
   /**
    * A collections map is a map of collection keys to a map of group keys to collections.
@@ -76,7 +73,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
   public SWRLBuiltInLibraryImpl()
   {
-    super(Namespace, new HashSet<>(Arrays.asList(BuiltInNames)));
+    super(Prefix, Namespace, new HashSet<>(Arrays.asList(BuiltInNames)));
 
     this.collectionsMap = new HashMap<>();
     this.collectionGroupElementNumbersMap = new HashMap<>();

@@ -6,6 +6,7 @@ import org.swrlapi.exceptions.SWRLBuiltInException;
 
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Defines a base interface for a SWRL built-in library. All built-in library implementation must implement this
@@ -20,11 +21,14 @@ import java.util.List;
  */
 public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
 {
+  @NonNull String getPrefix();
+
   /**
    * @return The name of the built-in library
    */
   @NonNull String getNamespace();
 
+  @NonNull Set<@NonNull String> getBuiltInNames();
 
   /**
    * Reset library, discarding any internal state if any (e.g., caches)
@@ -34,7 +38,7 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
   /**
    * Method to invoke a built-in in the library. Invoked by {@link SWRLBuiltInLibraryManager}.
    *
-   * @param method            The name of the built-in method
+   * @param method            The built-in method
    * @param bridge            The built-in bridge
    * @param ruleName          The invoking rule name
    * @param prefix            The prefix of the built-in name

@@ -1,7 +1,6 @@
 package org.swrlapi.builtins;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.jetbrains.annotations.NotNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,9 +13,11 @@ import org.swrlapi.exceptions.SWRLBuiltInLibraryException;
 import org.swrlapi.exceptions.UnresolvedSWRLBuiltInClassException;
 import org.swrlapi.exceptions.UnresolvedSWRLBuiltInMethodException;
 
+import java.io.File;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -30,7 +31,7 @@ import java.util.zip.ZipEntry;
 
 /**
  * This class manages the dynamic loading of SWRL built-in libraries and the invocation of built-ins in those libraries.
- * A library is identified by a prefix and this prefix is used to find and dynamically load a Java class implementing
+ * A library is identified by a prefix and this prefix is used to loadSWRLBuiltInLibraries and dynamically load a Java class implementing
  * the built-ins in this library.
  *
  * @see org.swrlapi.builtins.SWRLBuiltInLibrary
@@ -39,7 +40,7 @@ public class SWRLBuiltInLibraryManager
 {
   private static final Logger log = LoggerFactory.getLogger(SWRLBuiltInLibraryManager.class);
 
-  private static final String SWRLBuiltInLibraryPackageBaseName = "org.swrlapi.builtins.";
+  private static final String SWRLBuiltInLibraryPackageBaseName = "org.swrlapi.builtins";
   private static final String SWRLBuiltInLibraryImplementationClassName = "SWRLBuiltInLibraryImpl";
 
   @NonNull private static Set<@NonNull IRI> swrlBuiltInIRIs = new HashSet<>();
@@ -53,12 +54,8 @@ public class SWRLBuiltInLibraryManager
   {
     this.swrlBuiltInLibraryImplementations = new HashMap<>();
     this.swrlBuiltInMethods = new HashMap<>();
-  }
 
-  public static void registerSWRLBuiltIns(@NonNull String namespace, String[] builtInNames)
-  {
-    for (String builtInName : builtInNames)
-      swrlBuiltInIRIs.add(IRI.create(namespace, builtInName));
+    loadSWRLBuiltInLibraries(SWRLBuiltInLibraryPackageBaseName);
   }
 
   public static boolean isSWRLBuiltIn(@NonNull IRI iri)
@@ -75,28 +72,28 @@ public class SWRLBuiltInLibraryManager
    * Invoke a SWRL built-in. This method is called from the invokeSWRLBuiltIn method in the
    * {@link org.swrlapi.bridge.SWRLRuleEngineBridge} and should not be called directly from a rule engine. The built-in
    * name should be the prefixed name of the built-in (e.g., swrlb:lessThanOrEqual).
-   * <p/>
+   * <p>
    * For built-ins that evaluate to true, this method will return a list of argument patterns, one pattern for each
    * combination of arguments that evaluates to true.
-   * <p/>
+   * <p>
    * If the built-in evaluates to false, it will return an empty argument pattern list.
    *
-   * @param bridge         The built-in bridge
-   * @param ruleName       The name of the invoking rule
-   * @param builtInName    The invoked built-in
-   * @param builtInIndex   The 0-based index of the invoked built-in
-   * @param isInConsequent If the built-in in the consequent?
-   * @param arguments      The built-in arguments
+   * @param bridge              The built-in bridge
+   * @param ruleName            The name of the invoking rule
+   * @param builtInPrefixedName The invoked built-in
+   * @param builtInIndex        The 0-based index of the invoked built-in
+   * @param isInConsequent      If the built-in in the consequent?
+   * @param arguments           The built-in arguments
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an exception occurs during invocation
    */
   @NonNull public List<@NonNull List<@NonNull SWRLBuiltInArgument>> invokeSWRLBuiltIn(@NonNull SWRLBuiltInBridge bridge,
-    @NonNull String ruleName, @NonNull String builtInName, int builtInIndex, boolean isInConsequent,
+    @NonNull String ruleName, @NonNull String builtInPrefixedName, int builtInIndex, boolean isInConsequent,
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
-    String prefix = getPrefix(builtInName);
+    String prefix = getPrefixFromPrefixedName(builtInPrefixedName);
     String swrlBuiltinLibraryImplementationClassName = getBuiltInLibraryImplementationClassName(prefix);
-    String builtInMethodName = getBuiltInMethodName(builtInName);
+    String builtInMethodName = getBuiltInMethodName(builtInPrefixedName);
     SWRLBuiltInLibrary library = getSWRLBuiltInLibraryImplementation(bridge, prefix,
       swrlBuiltinLibraryImplementationClassName);
     Method method = resolveSWRLBuiltInMethod(ruleName, library, prefix, builtInMethodName);
@@ -106,13 +103,15 @@ public class SWRLBuiltInLibraryManager
       arguments)) {
 
       if (hasUnboundArguments(arguments)) // Make sure the built-in has bound all of its arguments.
-        throw new SWRLBuiltInException("built-in " + builtInName + "(index " + builtInIndex + ") in rule " + ruleName
-          + " returned with unbound arguments");
+        throw new SWRLBuiltInException(
+          "built-in " + builtInPrefixedName + "(index " + builtInIndex + ") in rule " + ruleName
+            + " returned with unbound arguments");
 
       processBoundArguments(arguments);
 
-      argumentPatterns.addAll(generateBuiltInArgumentPattern(ruleName, builtInName, builtInIndex, arguments).stream()
-        .collect(Collectors.toList()));
+      argumentPatterns.addAll(
+        generateBuiltInArgumentPattern(ruleName, builtInPrefixedName, builtInIndex, arguments).stream()
+          .collect(Collectors.toList()));
     }
 
     return argumentPatterns;
@@ -354,12 +353,68 @@ public class SWRLBuiltInLibraryManager
     }
   }
 
-  @NonNull private String getPrefix(@NonNull String builtInName)
+  /**
+   * TODO This is experimental code and does not currectly load built-in libraries.
+   *
+   * @param packageName
+   */
+  public void loadSWRLBuiltInLibraries(String packageName)
   {
-    int hashIndex = builtInName.indexOf(':');
+    String name = new String(packageName);
+    if (!name.startsWith(File.separator))
+      name = File.separator + name;
+
+    name = name.replace('.', File.separatorChar);
+
+    // URL url = Launcher.class.getResource(name); // Get a File object for the package
+    URL url = SWRLBuiltInLibraryManager.class.getResource(name); // Get a File object for the package
+    File packageDirectory = new File(url.getFile());
+    if (packageDirectory.exists()) {
+      File[] packageDirectoryFiles = packageDirectory.listFiles();
+      for (int i = 0; i < packageDirectoryFiles.length; i++) {
+        if (packageDirectoryFiles[i].isDirectory()) {
+          File packageSubDirectory = packageDirectoryFiles[i];
+          String packageSubDirectoryName = packageSubDirectory.getName();
+          String[] files = packageSubDirectory.list();
+          for (int j = 0; j < files.length; j++) {
+            if (files[j].endsWith(".class")) {
+              String className = files[j].substring(0, files[j].length() - 6); // Remove .class extension
+              String classQualifiedName = packageName + "." + packageSubDirectoryName + "." + className;
+              try {
+                Object o = Class.forName(classQualifiedName).newInstance();
+                if (o instanceof SWRLBuiltInLibrary) {
+                  SWRLBuiltInLibrary swrlBuiltInLibrary = (SWRLBuiltInLibrary)o;
+                  log.info("Loading SWRL built-in library " + swrlBuiltInLibrary.getNamespace());
+                  registerSWRLBuiltIns(swrlBuiltInLibrary.getPrefix(), swrlBuiltInLibrary.getNamespace(),
+                    swrlBuiltInLibrary.getBuiltInNames());
+                }
+              } catch (ClassNotFoundException e) {
+                log.error("class not found " + e.getMessage());
+              } catch (InstantiationException e) {
+                log.error("instantiation error " + e.getMessage());
+              } catch (IllegalAccessException e) {
+                log.error("illegal access exception " + e.getMessage());
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  private void registerSWRLBuiltIns(@NonNull String prefix, @NonNull String namespace,
+    @NonNull Set<@NonNull String> builtInNames)
+  {
+    for (String builtInName : builtInNames)
+      swrlBuiltInIRIs.add(IRI.create(namespace, builtInName));
+  }
+
+  @NonNull private String getPrefixFromPrefixedName(@NonNull String builtInPrefixedName)
+  {
+    int hashIndex = builtInPrefixedName.indexOf(':');
 
     if (hashIndex != -1) {
-      return builtInName.substring(0, hashIndex);
+      return builtInPrefixedName.substring(0, hashIndex);
     } else
       return ""; // No prefix - try the base built-ins package. Ordinarily, built-ins should not be located here.
   }
@@ -369,19 +424,19 @@ public class SWRLBuiltInLibraryManager
     if (prefix.length() == 0)
       return SWRLBuiltInLibraryPackageBaseName + SWRLBuiltInLibraryImplementationClassName;
     else {
-      return SWRLBuiltInLibraryPackageBaseName + prefix + "." + SWRLBuiltInLibraryImplementationClassName;
+      return SWRLBuiltInLibraryPackageBaseName + "." + prefix + "." + SWRLBuiltInLibraryImplementationClassName;
     }
   }
 
-  @NonNull private String getBuiltInMethodName(@NonNull String builtInName)
+  @NonNull private String getBuiltInMethodName(@NonNull String builtInPrefixedName)
   {
-    if (!builtInName.contains(":"))
-      return builtInName;
+    if (!builtInPrefixedName.contains(":"))
+      return builtInPrefixedName;
     else
-      return builtInName.substring(builtInName.indexOf(":") + 1, builtInName.length());
+      return builtInPrefixedName.substring(builtInPrefixedName.indexOf(":") + 1, builtInPrefixedName.length());
   }
 
-  @NotNull private String getClassNameFromEntry(@NonNull ZipEntry entry)
+  @NonNull private String getClassNameFromEntry(@NonNull ZipEntry entry)
   {
     StringBuilder className = new StringBuilder();
     for (String part : entry.getName().split("/")) {

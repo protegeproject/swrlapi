@@ -3,6 +3,7 @@ package org.swrlapi.factory;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.swrlapi.bridge.TargetSWRLRuleEngineCreator;
+import org.swrlapi.builtins.SWRLBuiltInLibraryManager;
 import org.swrlapi.core.IRIResolver;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.exceptions.SWRLRuleEngineException;
@@ -33,8 +34,8 @@ public interface SWRLRuleAndQueryEngineFactory
    * @return A SWRL rule engine
    * @throws SWRLRuleEngineException If an error occurs during creation
    */
-  @NonNull SWRLRuleEngine createSWRLRuleEngine(@NonNull OWLOntology ontology, @NonNull IRIResolver iriResolver)
-    throws SWRLRuleEngineException;
+  @NonNull SWRLRuleEngine createSWRLRuleEngine(@NonNull OWLOntology ontology, @NonNull IRIResolver iriResolver,
+    @NonNull SWRLBuiltInLibraryManager builtInLibraryManager) throws SWRLRuleEngineException;
 
   /**
    * @param ruleEngineName The name of a rule engine
@@ -44,7 +45,8 @@ public interface SWRLRuleAndQueryEngineFactory
    * @throws SWRLRuleEngineException If an error occurs during creation
    */
   @NonNull SWRLRuleEngine createSWRLRuleEngine(@NonNull String ruleEngineName, @NonNull OWLOntology ontology,
-    @NonNull IRIResolver iriResolver) throws SWRLRuleEngineException;
+    @NonNull IRIResolver iriResolver, @NonNull SWRLBuiltInLibraryManager builtInLibraryManager)
+    throws SWRLRuleEngineException;
 
   /**
    * @param ontology    An OWL ontology
@@ -52,8 +54,8 @@ public interface SWRLRuleAndQueryEngineFactory
    * @return A SQWRL query engine
    * @throws SWRLRuleEngineException If an error occurs during creation
    */
-  @NonNull SQWRLQueryEngine createSQWRLQueryEngine(@NonNull OWLOntology ontology, @NonNull IRIResolver iriResolver)
-    throws SWRLRuleEngineException;
+  @NonNull SQWRLQueryEngine createSQWRLQueryEngine(@NonNull OWLOntology ontology, @NonNull IRIResolver iriResolver,
+    @NonNull SWRLBuiltInLibraryManager builtInLibraryManager) throws SWRLRuleEngineException;
 
   /**
    * @param ruleEngineName The name of a rule engine
@@ -63,7 +65,8 @@ public interface SWRLRuleAndQueryEngineFactory
    * @throws SWRLRuleEngineException If an error occurs during creation
    */
   @NonNull SQWRLQueryEngine createSQWRLQueryEngine(@NonNull String ruleEngineName, @NonNull OWLOntology ontology,
-    @NonNull IRIResolver iriResolver) throws SWRLRuleEngineException;
+    @NonNull IRIResolver iriResolver, @NonNull SWRLBuiltInLibraryManager builtInLibraryManager)
+    throws SWRLRuleEngineException;
 
   void tryToRegisterADefaultSWRLRuleEngine();
 }
