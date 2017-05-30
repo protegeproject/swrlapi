@@ -354,7 +354,7 @@ public class SWRLBuiltInLibraryManager
   }
 
   /**
-   * TODO This is experimental code and does not currectly load built-in libraries.
+   * TODO This is experimental code and does not correctly load built-in libraries.
    *
    * @param packageName
    */
@@ -366,7 +366,6 @@ public class SWRLBuiltInLibraryManager
 
     name = name.replace('.', File.separatorChar);
 
-    // URL url = Launcher.class.getResource(name); // Get a File object for the package
     URL url = SWRLBuiltInLibraryManager.class.getResource(name); // Get a File object for the package
     File packageDirectory = new File(url.getFile());
     if (packageDirectory.exists()) {
