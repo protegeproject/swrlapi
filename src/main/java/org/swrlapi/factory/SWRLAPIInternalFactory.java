@@ -50,6 +50,25 @@ public class SWRLAPIInternalFactory
   @NonNull private static final String SQWRL_ICON_NAME = "SQWRL.gif";
   @NonNull private static final String OWL2RL_ICON_NAME = "OWL2RL.gif";
 
+  @NonNull private static final SWRLRuleAndQueryEngineFactory swrlRuleAndQueryEngineFactory;
+  @NonNull private static final SWRLBuiltInLibraryManager swrlBuiltInLibraryManager;
+
+  static {
+    swrlRuleAndQueryEngineFactory = new DefaultSWRLRuleAndQueryEngineFactory();
+    swrlRuleAndQueryEngineFactory.tryToRegisterADefaultSWRLRuleEngine();
+    swrlBuiltInLibraryManager = new SWRLBuiltInLibraryManager();
+  }
+
+  @NonNull public static SWRLRuleAndQueryEngineFactory getSWRLRuleAndQueryEngineFactory()
+  {
+    return swrlRuleAndQueryEngineFactory;
+  }
+
+  @NonNull public static SWRLBuiltInLibraryManager getSWRLBuiltInLibraryManager()
+  {
+    return swrlBuiltInLibraryManager;
+  }
+
   /**
    * @param ontology    An OWL ontology
    * @param iriResolver An IRI resolver
@@ -277,8 +296,8 @@ public class SWRLAPIInternalFactory
    * @throws SWRLBuiltInBridgeException If an error occurs during rule engine bridge creation
    */
   @NonNull public static SWRLBridge createSWRLBridge(@NonNull SWRLAPIOWLOntology swrlapiOWLOntology,
-    @NonNull OWL2RLPersistenceLayer owl2RLPersistenceLayer,
-    @NonNull SWRLBuiltInLibraryManager builtInLibraryManager) throws SWRLBuiltInBridgeException
+    @NonNull OWL2RLPersistenceLayer owl2RLPersistenceLayer, @NonNull SWRLBuiltInLibraryManager builtInLibraryManager)
+    throws SWRLBuiltInBridgeException
   {
     return new DefaultSWRLBridge(swrlapiOWLOntology, owl2RLPersistenceLayer, builtInLibraryManager);
   }

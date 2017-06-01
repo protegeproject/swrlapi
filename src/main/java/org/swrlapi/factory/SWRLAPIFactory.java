@@ -25,9 +25,8 @@ public class SWRLAPIFactory
   @NonNull private static final SWRLBuiltInLibraryManager swrlBuiltInLibraryManager;
 
   static {
-    swrlRuleAndQueryEngineFactory = new DefaultSWRLRuleAndQueryEngineFactory();
-    swrlRuleAndQueryEngineFactory.tryToRegisterADefaultSWRLRuleEngine();
-    swrlBuiltInLibraryManager = new SWRLBuiltInLibraryManager();
+    swrlRuleAndQueryEngineFactory = SWRLAPIInternalFactory.getSWRLRuleAndQueryEngineFactory();
+    swrlBuiltInLibraryManager = SWRLAPIInternalFactory.getSWRLBuiltInLibraryManager();
   }
 
   /**
