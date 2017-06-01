@@ -116,6 +116,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
 
   @NonNull private final OWLOntology ontology;
   @NonNull private final IRIResolver iriResolver;
+  @NonNull private final SWRLBuiltInLibraryManager swrlBuiltInLibraryManager;
   @NonNull private final SWRLAPIOWLDataFactory swrlapiOWLDataFactory;
 
   @NonNull private final Map<@NonNull String, @NonNull SWRLAPIRule> swrlRules; // Rules and queries extracted from ontology
@@ -136,11 +137,13 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
   private boolean hasOntologyChanged = true; // Ensure initial processing
   private boolean eventFreezeMode = false;
 
-  public DefaultSWRLAPIOWLOntology(@NonNull OWLOntology ontology, @NonNull IRIResolver iriResolver)
+  public DefaultSWRLAPIOWLOntology(@NonNull OWLOntology ontology, @NonNull IRIResolver iriResolver,
+    @NonNull SWRLBuiltInLibraryManager swrlBuiltInLibraryManager)
   {
     this.ontology = ontology;
     this.iriResolver = iriResolver;
     this.swrlapiOWLDataFactory = SWRLAPIInternalFactory.createSWRLAPIOWLDataFactory(this.iriResolver);
+    this.swrlBuiltInLibraryManager = swrlBuiltInLibraryManager;
 
     this.swrlRules = new HashMap<>();
     this.owlapiRules = new HashMap<>();
@@ -568,12 +571,12 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
 
   @Override public boolean isSWRLBuiltIn(@NonNull IRI iri)
   {
-    return SWRLBuiltInLibraryManager.isSWRLBuiltIn(iri);
+    return swrlBuiltInLibraryManager.isSWRLBuiltIn(iri);
   }
 
   @NonNull @Override public Set<@NonNull IRI> getSWRLBuiltInIRIs()
   {
-    return SWRLBuiltInLibraryManager.getSWRLBuiltInIRIs();
+    return swrlBuiltInLibraryManager.getSWRLBuiltInIRIs();
   }
 
   @NonNull @Override public SQWRLResultGenerator createSQWRLResultGenerator()
@@ -810,7 +813,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
   {
     return getSWRLAPIOWLDataFactory().getSWRLBuiltInArgumentFactory();
   }
-
 
   private void addSWRLRule(@NonNull SWRLAPIRule swrlapiRule, @NonNull SWRLRule owlapiRule)
   {

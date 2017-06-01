@@ -265,7 +265,7 @@ public class SWRLAPIInternalFactory
   @NonNull public static SWRLAPIOWLOntology createSWRLAPIOntology(@NonNull OWLOntology ontology,
     @NonNull IRIResolver iriResolver) throws SWRLBuiltInException
   {
-    SWRLAPIOWLOntology swrlapiowlOntology = new DefaultSWRLAPIOWLOntology(ontology, iriResolver);
+    SWRLAPIOWLOntology swrlapiowlOntology = new DefaultSWRLAPIOWLOntology(ontology, iriResolver, swrlBuiltInLibraryManager);
     swrlapiowlOntology.processOntology();
 
     return swrlapiowlOntology;
@@ -283,7 +283,7 @@ public class SWRLAPIInternalFactory
     throws SWRLBuiltInException
   {
     IRIResolver iriResolver = SWRLAPIFactory.createIRIResolver();
-    SWRLAPIOWLOntology swrlapiowlOntology = new DefaultSWRLAPIOWLOntology(ontology, iriResolver);
+    SWRLAPIOWLOntology swrlapiowlOntology = new DefaultSWRLAPIOWLOntology(ontology, iriResolver, swrlBuiltInLibraryManager);
     swrlapiowlOntology.processOntology();
 
     return swrlapiowlOntology;

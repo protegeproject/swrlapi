@@ -122,6 +122,11 @@ public abstract class AbstractSWRLBuiltInLibrary
     return new HashSet<>(this.builtInNames);
   }
 
+  @NonNull public Set<@NonNull IRI> getBuiltInIRIs()
+  {
+    return this.builtInNames.stream().map(s -> IRI.create(namespace + s)).collect(Collectors.toSet());
+  }
+
   @NonNull @Override public SWRLBuiltInBridge getBuiltInBridge() throws SWRLBuiltInLibraryException
   {
     if (this.invokingBridge == null)

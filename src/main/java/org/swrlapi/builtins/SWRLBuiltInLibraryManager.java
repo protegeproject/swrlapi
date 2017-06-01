@@ -19,6 +19,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -58,8 +59,18 @@ public class SWRLBuiltInLibraryManager
     this.swrlBuiltInLibraryImplementations = new HashMap<>();
     this.swrlBuiltInMethods = new HashMap<>();
 
-    //loadInternalSWRLBuiltInLibraries(new HashSet<String>(Arrays.asList(preCannedSWRLBuiltInLibraryPrefixes)))_;
-    loadExternalSWRLBuiltInLibraries(SWRLBuiltInLibraryPackageBaseName);
+    loadInternalSWRLBuiltInLibraries(new HashSet<>(Arrays.asList(preCannedSWRLBuiltInLibraryPrefixes)));
+    //loadExternalSWRLBuiltInLibraries(SWRLBuiltInLibraryPackageBaseName);
+  }
+
+  private void loadInternalSWRLBuiltInLibraries(Set<String> swrlBuiltInLibraryPrefixes)
+  {
+    for (String swrlBuiltInLibraryPrefix: swrlBuiltInLibraryPrefixes) {
+      SWRLBuiltInLibrary swrlBuiltInLibrary = instantiateSWRLBuiltInLibraryImplementation(swrlBuiltInLibraryPrefix);
+      Set<IRI> libraryBuiltInIRIs = swrlBuiltInLibrary.getBuiltInIRIs();
+      this.swrlBuiltInIRIs.addAll(libraryBuiltInIRIs);
+      this.swrlBuiltInLibraryImplementations.put(swrlBuiltInLibraryPrefix, swrlBuiltInLibrary);
+    }
   }
 
   public boolean isSWRLBuiltIn(@NonNull IRI iri)
@@ -268,25 +279,31 @@ public class SWRLBuiltInLibraryManager
     }
   }
 
-  @NonNull private SWRLBuiltInLibrary instantiateSWRLBuiltInLibraryImplementation(@NonNull String prefix,
-    @NonNull String swrlBuiltInLibraryImplementationClassName) throws SWRLBuiltInLibraryException
+  @NonNull private SWRLBuiltInLibrary instantiateSWRLBuiltInLibraryImplementation(
+    @NonNull String swrlBuiltInLibraryPrefix) throws SWRLBuiltInLibraryException
   {
     Class<?> swrlBuiltInLibraryImplementationClass;
+
+    String swrlBuiltInLibraryImplementationClassName =
+      SWRLBuiltInLibraryPackageBaseName + "." + swrlBuiltInLibraryPrefix + "."
+        + SWRLBuiltInLibraryImplementationClassName;
 
     try {
       swrlBuiltInLibraryImplementationClass = Class.forName(swrlBuiltInLibraryImplementationClassName);
     } catch (Exception e) {
-      throw new UnresolvedSWRLBuiltInClassException(prefix, e.getMessage() != null ? e.getMessage() : "", e);
+      throw new UnresolvedSWRLBuiltInClassException(swrlBuiltInLibraryPrefix,
+        e.getMessage() != null ? e.getMessage() : "", e);
     }
 
     // Check implementation class for compatibility
-    checkSWRLBuiltInLibraryImplementationClassCompatibility(prefix, swrlBuiltInLibraryImplementationClass);
+    checkSWRLBuiltInLibraryImplementationClassCompatibility(swrlBuiltInLibraryPrefix,
+      swrlBuiltInLibraryImplementationClass);
 
     try { // TODO Need to get constructor of library to catch exceptions it may throw
       return (SWRLBuiltInLibrary)swrlBuiltInLibraryImplementationClass.newInstance();
     } catch (@NonNull InstantiationException | ExceptionInInitializerError | SecurityException | IllegalAccessException e) {
-      throw new IncompatibleSWRLBuiltInClassException(prefix, swrlBuiltInLibraryImplementationClassName,
-        e.getMessage() != null ? e.getMessage() : "", e);
+      throw new IncompatibleSWRLBuiltInClassException(swrlBuiltInLibraryPrefix,
+        swrlBuiltInLibraryImplementationClassName, e.getMessage() != null ? e.getMessage() : "", e);
     }
   }
 
