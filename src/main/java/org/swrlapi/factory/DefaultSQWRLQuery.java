@@ -785,7 +785,7 @@ class DefaultSQWRLQuery implements SQWRLQuery
               }
             }
           } else {
-            // Did not loadSWRLBuiltInLibraries existing path for this root using these variables - add dependent variables as new path
+            // Did not loadExternalSWRLBuiltInLibraries existing path for this root using these variables - add dependent variables as new path
             Set<@NonNull Set<@NonNull String>> paths = pathMap.get(rootVariableName);
             paths.add(Collections.unmodifiableSet(dependentVariables));
           }

@@ -64,6 +64,9 @@ class DefaultSWRLAutoCompleter implements SWRLAutoCompleter
 
     this.renderings.add("sameAs");
     this.renderings.add("differentFrom");
+    this.renderings.add("and");
+    this.renderings.add("or");
+    this.renderings.add("not");
 
     Collections.sort(this.renderings);
   }

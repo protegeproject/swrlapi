@@ -1454,12 +1454,12 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     ClassLoader classLoader = DefaultSWRLAPIOWLOntology.class.getClassLoader();
 
     if (classLoader == null)
-      throw new SWRLAPIException("Could not loadSWRLBuiltInLibraries class loader");
+      throw new SWRLAPIException("Could not loadExternalSWRLBuiltInLibraries class loader");
 
     URL url = classLoader.getResource(resourceName);
 
     if (url == null)
-      throw new SWRLAPIException("Could not loadSWRLBuiltInLibraries local resource " + resourceName);
+      throw new SWRLAPIException("Could not loadExternalSWRLBuiltInLibraries local resource " + resourceName);
 
     //log.info("External form " + url.toExternalForm());
 

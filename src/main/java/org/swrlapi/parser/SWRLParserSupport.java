@@ -105,7 +105,7 @@ class SWRLParserSupport
     return getOWLOntology().containsAnnotationPropertyInSignature(propertyIRI, Imports.INCLUDED);
   }
 
-  // TODO This is very arbitrary. See if we can loadSWRLBuiltInLibraries a method in the OWLAPI to determine if a shortName is a datatype.
+  // TODO This is very arbitrary. See if we can loadExternalSWRLBuiltInLibraries a method in the OWLAPI to determine if a shortName is a datatype.
   public boolean isOWLDatatype(@NonNull String shortName)
   {
     if (shortName.equals("rdf:PlainLiteral") || shortName.equals("rdfs:Literal") || shortName.equals("rdf:XMLLiteral"))
@@ -452,7 +452,7 @@ class SWRLParserSupport
     if (iri.isPresent())
       return iri.get();
     else
-      throw new IllegalArgumentException("could not loadSWRLBuiltInLibraries IRI for prefixed name " + prefixedName);
+      throw new IllegalArgumentException("could not loadExternalSWRLBuiltInLibraries IRI for prefixed name " + prefixedName);
   }
 
   /**
