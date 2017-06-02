@@ -5,7 +5,6 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.swrlapi.bridge.SWRLBridge;
 import org.swrlapi.bridge.TargetSWRLRuleEngine;
 import org.swrlapi.bridge.TargetSWRLRuleEngineCreator;
-import org.swrlapi.builtins.SWRLBuiltInLibraryManager;
 import org.swrlapi.core.IRIResolver;
 import org.swrlapi.core.SWRLAPIOWLOntology;
 import org.swrlapi.core.SWRLRuleEngine;
@@ -36,12 +35,12 @@ public class DefaultSWRLRuleAndQueryEngineFactory implements SWRLRuleAndQueryEng
   }
 
   @NonNull @Override public SWRLRuleEngine createSWRLRuleEngine(@NonNull OWLOntology ontology,
-    @NonNull IRIResolver iriResolver, @NonNull SWRLBuiltInLibraryManager builtInLibraryManager)
+    @NonNull IRIResolver iriResolver)
   {
     if (this.ruleEngineManager.hasRegisteredRuleEngines()) {
       Optional<@NonNull String> ruleEngineName = this.ruleEngineManager.getAnyRegisteredRuleEngineName();
       if (ruleEngineName.isPresent())
-        return createSWRLRuleEngine(ruleEngineName.get(), ontology, iriResolver, builtInLibraryManager);
+        return createSWRLRuleEngine(ruleEngineName.get(), ontology, iriResolver);
       else
         throw new NoRegisteredSWRLRuleEnginesException();
     } else
@@ -49,15 +48,13 @@ public class DefaultSWRLRuleAndQueryEngineFactory implements SWRLRuleAndQueryEng
   }
 
   @NonNull @Override public SWRLRuleEngine createSWRLRuleEngine(@NonNull String ruleEngineName,
-    @NonNull OWLOntology ontology, @NonNull IRIResolver iriResolver,
-    @NonNull SWRLBuiltInLibraryManager builtInLibraryManager)
+    @NonNull OWLOntology ontology, @NonNull IRIResolver iriResolver)
   {
     if (this.ruleEngineManager.isRuleEngineRegistered(ruleEngineName)) {
       try {
         SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIInternalFactory.createSWRLAPIOntology(ontology, iriResolver);
         OWL2RLPersistenceLayer owl2RLPersistenceLayer = SWRLAPIInternalFactory.createOWL2RLPersistenceLayer(ontology);
-        SWRLBridge bridge = SWRLAPIInternalFactory
-          .createSWRLBridge(swrlapiOWLOntology, owl2RLPersistenceLayer, builtInLibraryManager);
+        SWRLBridge bridge = SWRLAPIInternalFactory.createSWRLBridge(swrlapiOWLOntology, owl2RLPersistenceLayer);
         Optional<TargetSWRLRuleEngineCreator> targetSWRLRuleEngineCreator = this.ruleEngineManager
           .getRegisteredRuleEngineCreator(ruleEngineName);
         if (targetSWRLRuleEngineCreator.isPresent()) {
@@ -80,25 +77,23 @@ public class DefaultSWRLRuleAndQueryEngineFactory implements SWRLRuleAndQueryEng
   }
 
   @NonNull @Override public SQWRLQueryEngine createSQWRLQueryEngine(@NonNull OWLOntology ontology,
-    @NonNull IRIResolver iriResolver,     @NonNull SWRLBuiltInLibraryManager builtInLibraryManager)
+    @NonNull IRIResolver iriResolver)
   {
     Optional<@NonNull String> ruleEngineName = this.ruleEngineManager.getAnyRegisteredRuleEngineName();
     if (ruleEngineName.isPresent())
-      return createSQWRLQueryEngine(ruleEngineName.get(), ontology, iriResolver, builtInLibraryManager);
+      return createSQWRLQueryEngine(ruleEngineName.get(), ontology, iriResolver);
     else
       throw new NoRegisteredSWRLRuleEnginesException();
   }
 
   @NonNull @Override public SQWRLQueryEngine createSQWRLQueryEngine(@NonNull String queryEngineName,
-    @NonNull OWLOntology ontology, @NonNull IRIResolver iriResolver,
-    @NonNull SWRLBuiltInLibraryManager builtInLibraryManager)
+    @NonNull OWLOntology ontology, @NonNull IRIResolver iriResolver)
   {
     if (this.ruleEngineManager.isRuleEngineRegistered(queryEngineName)) {
       try {
         SWRLAPIOWLOntology swrlapiOWLOntology = SWRLAPIInternalFactory.createSWRLAPIOntology(ontology, iriResolver);
         OWL2RLPersistenceLayer owl2RLPersistenceLayer = SWRLAPIInternalFactory.createOWL2RLPersistenceLayer(ontology);
-        SWRLBridge bridge = SWRLAPIInternalFactory
-          .createSWRLBridge(swrlapiOWLOntology, owl2RLPersistenceLayer, builtInLibraryManager);
+        SWRLBridge bridge = SWRLAPIInternalFactory.createSWRLBridge(swrlapiOWLOntology, owl2RLPersistenceLayer);
         Optional<TargetSWRLRuleEngineCreator> targetSWRLRuleEngineCreator = this.ruleEngineManager
           .getRegisteredRuleEngineCreator(queryEngineName);
         if (targetSWRLRuleEngineCreator.isPresent()) {

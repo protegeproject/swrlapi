@@ -7,6 +7,7 @@ import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.swrlapi.builtins.SWRLBuiltInLibraryManager;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLRuleException;
 import org.swrlapi.factory.SWRLAPIOWLDataFactory;
@@ -121,6 +122,8 @@ public interface SWRLAPIOWLOntology
   @NonNull SWRLAutoCompleter createSWRLAutoCompleter();
 
   @NonNull SWRLRuleRenderer createSWRLRuleRenderer();
+
+  @NonNull SWRLBuiltInLibraryManager getSWRLBuiltInLibraryManager();
 
   /**
    * @return A rule name

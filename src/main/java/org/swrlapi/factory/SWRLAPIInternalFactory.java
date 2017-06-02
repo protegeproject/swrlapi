@@ -51,12 +51,10 @@ public class SWRLAPIInternalFactory
   @NonNull private static final String OWL2RL_ICON_NAME = "OWL2RL.gif";
 
   @NonNull private static final SWRLRuleAndQueryEngineFactory swrlRuleAndQueryEngineFactory;
-  @NonNull private static final SWRLBuiltInLibraryManager swrlBuiltInLibraryManager;
 
   static {
     swrlRuleAndQueryEngineFactory = new DefaultSWRLRuleAndQueryEngineFactory();
     swrlRuleAndQueryEngineFactory.tryToRegisterADefaultSWRLRuleEngine();
-    swrlBuiltInLibraryManager = new SWRLBuiltInLibraryManager();
   }
 
   @NonNull public static SWRLRuleAndQueryEngineFactory getSWRLRuleAndQueryEngineFactory()
@@ -64,9 +62,9 @@ public class SWRLAPIInternalFactory
     return swrlRuleAndQueryEngineFactory;
   }
 
-  @NonNull public static SWRLBuiltInLibraryManager getSWRLBuiltInLibraryManager()
+  @NonNull public static SWRLBuiltInLibraryManager createSWRLBuiltInLibraryManager()
   {
-    return swrlBuiltInLibraryManager;
+    return new SWRLBuiltInLibraryManager();
   }
 
   /**
@@ -265,7 +263,7 @@ public class SWRLAPIInternalFactory
   @NonNull public static SWRLAPIOWLOntology createSWRLAPIOntology(@NonNull OWLOntology ontology,
     @NonNull IRIResolver iriResolver) throws SWRLBuiltInException
   {
-    SWRLAPIOWLOntology swrlapiowlOntology = new DefaultSWRLAPIOWLOntology(ontology, iriResolver, swrlBuiltInLibraryManager);
+    SWRLAPIOWLOntology swrlapiowlOntology = new DefaultSWRLAPIOWLOntology(ontology, iriResolver);
     swrlapiowlOntology.processOntology();
 
     return swrlapiowlOntology;
@@ -283,7 +281,7 @@ public class SWRLAPIInternalFactory
     throws SWRLBuiltInException
   {
     IRIResolver iriResolver = SWRLAPIFactory.createIRIResolver();
-    SWRLAPIOWLOntology swrlapiowlOntology = new DefaultSWRLAPIOWLOntology(ontology, iriResolver, swrlBuiltInLibraryManager);
+    SWRLAPIOWLOntology swrlapiowlOntology = new DefaultSWRLAPIOWLOntology(ontology, iriResolver);
     swrlapiowlOntology.processOntology();
 
     return swrlapiowlOntology;
@@ -296,10 +294,9 @@ public class SWRLAPIInternalFactory
    * @throws SWRLBuiltInBridgeException If an error occurs during rule engine bridge creation
    */
   @NonNull public static SWRLBridge createSWRLBridge(@NonNull SWRLAPIOWLOntology swrlapiOWLOntology,
-    @NonNull OWL2RLPersistenceLayer owl2RLPersistenceLayer, @NonNull SWRLBuiltInLibraryManager builtInLibraryManager)
-    throws SWRLBuiltInBridgeException
+    @NonNull OWL2RLPersistenceLayer owl2RLPersistenceLayer) throws SWRLBuiltInBridgeException
   {
-    return new DefaultSWRLBridge(swrlapiOWLOntology, owl2RLPersistenceLayer, builtInLibraryManager);
+    return new DefaultSWRLBridge(swrlapiOWLOntology, owl2RLPersistenceLayer);
   }
 
   /**

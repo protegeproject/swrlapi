@@ -137,13 +137,12 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
   private boolean hasOntologyChanged = true; // Ensure initial processing
   private boolean eventFreezeMode = false;
 
-  public DefaultSWRLAPIOWLOntology(@NonNull OWLOntology ontology, @NonNull IRIResolver iriResolver,
-    @NonNull SWRLBuiltInLibraryManager swrlBuiltInLibraryManager)
+  public DefaultSWRLAPIOWLOntology(@NonNull OWLOntology ontology, @NonNull IRIResolver iriResolver)
   {
     this.ontology = ontology;
     this.iriResolver = iriResolver;
     this.swrlapiOWLDataFactory = SWRLAPIInternalFactory.createSWRLAPIOWLDataFactory(this.iriResolver);
-    this.swrlBuiltInLibraryManager = swrlBuiltInLibraryManager;
+    this.swrlBuiltInLibraryManager = SWRLAPIInternalFactory.createSWRLBuiltInLibraryManager();
 
     this.swrlRules = new HashMap<>();
     this.owlapiRules = new HashMap<>();
@@ -348,6 +347,11 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
   @NonNull @Override public SWRLRuleRenderer createSWRLRuleRenderer()
   {
     return SWRLAPIInternalFactory.createSWRLRuleRenderer(this.getOWLOntology(), this.getIRIResolver());
+  }
+
+  @NonNull @Override public SWRLBuiltInLibraryManager getSWRLBuiltInLibraryManager()
+  {
+    return this.swrlBuiltInLibraryManager;
   }
 
   @Override public Optional<String> getNextRuleName()
