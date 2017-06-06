@@ -31,6 +31,7 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.ui.model.SWRLAutoCompleter;
 
 import javax.swing.*;
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -329,6 +330,12 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
   @NonNull @Override public OWLReasoner getOWLReasoner()
   {
     return this.targetSWRLRuleEngine.getOWLReasoner();
+  }
+
+  @Override public void loadExternalSWRLBuiltInLibraries(File swrlBuiltInLibraryDirectory)
+  {
+    this.swrlapiOWLOntology.getSWRLBuiltInLibraryManager()
+      .loadExternalSWRLBuiltInLibraries(swrlBuiltInLibraryDirectory);
   }
 
   @NonNull @Override public Icon getRuleEngineIcon()
