@@ -17,7 +17,6 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -65,7 +64,7 @@ public class SWRLBuiltInLibraryManager
 
   private void loadInternalSWRLBuiltInLibraries(Set<String> swrlBuiltInLibraryPrefixes)
   {
-    for (String swrlBuiltInLibraryPrefix: swrlBuiltInLibraryPrefixes) {
+    for (String swrlBuiltInLibraryPrefix : swrlBuiltInLibraryPrefixes) {
       SWRLBuiltInLibrary swrlBuiltInLibrary = instantiateSWRLBuiltInLibraryImplementation(swrlBuiltInLibraryPrefix);
       Set<IRI> libraryBuiltInIRIs = swrlBuiltInLibrary.getBuiltInIRIs();
       this.swrlBuiltInIRIs.addAll(libraryBuiltInIRIs);
@@ -369,30 +368,20 @@ public class SWRLBuiltInLibraryManager
 
   /**
    * TODO This is experimental code and does not correctly load built-in libraries.
-   *
-   * @param packageName
    */
-  public void loadExternalSWRLBuiltInLibraries(@NonNull String packageName)
+  public void loadExternalSWRLBuiltInLibraries(@NonNull File swrlBuiltInLibraryDirectory)
   {
-    String name = new String(packageName);
-    if (!name.startsWith(File.separator))
-      name = File.separator + name;
-
-    name = name.replace('.', File.separatorChar);
-
-    URL url = SWRLBuiltInLibraryManager.class.getResource(name); // Get a File object for the package
-    File packageDirectory = new File(url.getFile());
-    if (packageDirectory.exists()) {
-      File[] packageDirectoryFiles = packageDirectory.listFiles();
-      for (int i = 0; i < packageDirectoryFiles.length; i++) {
-        if (packageDirectoryFiles[i].isDirectory()) {
-          File packageSubDirectory = packageDirectoryFiles[i];
-          String packageSubDirectoryName = packageSubDirectory.getName();
-          String[] files = packageSubDirectory.list();
-          for (int j = 0; j < files.length; j++) {
-            if (files[j].endsWith(".class")) {
-              String className = files[j].substring(0, files[j].length() - 6); // Remove .class extension
-              String classQualifiedName = packageName + "." + packageSubDirectoryName + "." + className;
+    if (swrlBuiltInLibraryDirectory.exists()) {
+      File[] swrlBuiltInLibrarySubDirectories = swrlBuiltInLibraryDirectory.listFiles();
+      for (int i = 0; i < swrlBuiltInLibrarySubDirectories.length; i++) {
+        if (swrlBuiltInLibrarySubDirectories[i].isDirectory()) {
+          File swrlBuiltInLibrarySubDirectory = swrlBuiltInLibrarySubDirectories[i];
+          String packageSubDirectoryName = swrlBuiltInLibrarySubDirectory.getName();
+          String[] subDirectories = swrlBuiltInLibrarySubDirectory.list();
+          for (int j = 0; j < subDirectories.length; j++) {
+            if (subDirectories[j].endsWith(".class")) {
+              String classQualifiedName =
+                SWRLBuiltInLibraryPackageBaseName + "." + packageSubDirectoryName + "." + SWRLBuiltInLibraryImplementationClassName;
               try {
                 Object o = Class.forName(classQualifiedName).newInstance();
                 if (o instanceof SWRLBuiltInLibrary) {
