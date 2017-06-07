@@ -18,8 +18,8 @@ import static org.junit.Assert.assertEquals;
  */
 public class SWRLBuiltInArgumentFactoryTest
 {
-  private static final String TestPrefix = "test";
-  private static final String TestNamespace = "http://example.org#";
+  private static final String TEST_PREFIX = "test";
+  private static final String TEST_NAMESPACE = "http://example.org#";
 
   private IRIResolver iriResolver;
   private SWRLBuiltInArgumentFactory builtInArgumentFactory;
@@ -32,12 +32,12 @@ public class SWRLBuiltInArgumentFactoryTest
     iriResolver = SWRLAPIFactory.createIRIResolver();
     builtInArgumentFactory = SWRLAPIInternalFactory.createSWRLBuiltInArgumentFactory(iriResolver);
 
-    iriResolver.setPrefix(TestPrefix, TestNamespace);
+    iriResolver.setPrefix(TEST_PREFIX, TEST_NAMESPACE);
   }
 
   @Test public void testGetClassValue() throws Exception
   {
-    IRI classIRI = IRI.create(TestNamespace + "AClass");
+    IRI classIRI = IRI.create(TEST_NAMESPACE + "AClass");
     OWLClass cls = this.dataFactory.getOWLClass(classIRI);
     SWRLClassBuiltInArgument classBuiltInArgument = this.builtInArgumentFactory.getClassBuiltInArgument(cls);
 

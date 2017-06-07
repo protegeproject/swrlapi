@@ -44,11 +44,11 @@ import java.util.Set;
  */
 public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 {
-  private static final String Prefix = "sqwrl";
+  private static final String PREFIX = "sqwrl";
 
-  private static final String Namespace = "http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#";
+  private static final String NAMESPACE = "http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#";
 
-  private static final String[] BuiltInNames = { "selectDistinct", "select", "count", "columnNames", "orderBy",
+  private static final String[] BUILT_IN_NAMES = { "selectDistinct", "select", "count", "columnNames", "orderBy",
     "orderByDescending", "limit", "min", "max", "avg", "sum", "median", "makeSet", "makeBag", "groupBy", "size",
     "isEmpty", "notEmpty", "element", "notElement", "intersects", "notIntersects", "equal", "notEqual", "contains",
     "notContains", "difference", "union", "intersection", "append", "last", "notLast", "lastN", "notLastN", "first",
@@ -70,10 +70,9 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
   @NonNull private final Set<@NonNull String> setKeys, bagKeys;
 
-
   public SWRLBuiltInLibraryImpl()
   {
-    super(Prefix, Namespace, new HashSet<>(Arrays.asList(BuiltInNames)));
+    super(PREFIX, NAMESPACE, new HashSet<>(Arrays.asList(BUILT_IN_NAMES)));
 
     this.collectionsMap = new HashMap<>();
     this.collectionGroupElementNumbersMap = new HashMap<>();

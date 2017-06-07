@@ -40,11 +40,11 @@ import java.util.regex.PatternSyntaxException;
  */
 public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 {
-  private static final String Prefix = "swrlb";
+  private static final String PREFIX = "swrlb";
 
-  private static final String Namespace = "http://www.w3.org/2003/11/swrlb#";
+  private static final String NAMESPACE = "http://www.w3.org/2003/11/swrlb#";
 
-  private static final String[] BuiltInNames = { "equal", "notEqual", "lessThan", "lessThanOrEqual", "greaterThan",
+  private static final String[] BUILT_IN_NAMES = { "equal", "notEqual", "lessThan", "lessThanOrEqual", "greaterThan",
     "greaterThanOrEqual", "add", "subtract", "multiply", "divide", "integerDivide", "mod", "pow", "unaryPlus",
     "unaryMinus", "abs", "ceiling", "floor", "round", "roundHalfToEven", "sin", "cos", "tan", "booleanNot",
     "stringEqualIgnoreCase", "stringConcat", "substring", "stringLength", "normalizeSpace", "upperCase", "lowerCase",
@@ -81,7 +81,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
   public SWRLBuiltInLibraryImpl()
   {
-    super(Prefix, Namespace, new HashSet<>(Arrays.asList(BuiltInNames)));
+    super(PREFIX, NAMESPACE, new HashSet<>(Arrays.asList(BUILT_IN_NAMES)));
   }
 
   @Override public void reset()

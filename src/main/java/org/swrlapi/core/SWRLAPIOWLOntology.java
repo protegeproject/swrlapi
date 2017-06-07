@@ -113,9 +113,13 @@ public interface SWRLAPIOWLOntology
 
   // The SWRLAPI provides built-ins beyond the core set defined in the SWRL submission.
 
-  boolean isSWRLBuiltIn(@NonNull IRI iri);
+  boolean isSWRLBuiltInIRI(@NonNull IRI iri);
+
+  boolean isSWRLBuiltIn(@NonNull String prefixedName);
 
   @NonNull Set<@NonNull IRI> getSWRLBuiltInIRIs();
+
+  Optional<@NonNull IRI> swrlBuiltInPrefixedName2IRI(@NonNull String prefixedName);
 
   @NonNull SWRLParser createSWRLParser();
 

@@ -573,9 +573,19 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
   // this.ontologyManager.applyChange(new AddAxiom(this.ontology, annotationAssertionAxiom));
   // }
 
-  @Override public boolean isSWRLBuiltIn(@NonNull IRI iri)
+  @Override public boolean isSWRLBuiltInIRI(@NonNull IRI iri)
   {
-    return swrlBuiltInLibraryManager.isSWRLBuiltIn(iri);
+    return swrlBuiltInLibraryManager.isSWRLBuiltInIRI(iri);
+  }
+
+  @Override public boolean isSWRLBuiltIn(@NonNull String prefixedName)
+  {
+    return swrlBuiltInLibraryManager.isSWRLBuiltIn(prefixedName);
+  }
+
+  @Override public Optional<@NonNull IRI> swrlBuiltInPrefixedName2IRI(@NonNull String prefixedNameName)
+  {
+    return swrlBuiltInLibraryManager.swrlBuiltInPrefixedName2IRI(prefixedNameName);
   }
 
   @NonNull @Override public Set<@NonNull IRI> getSWRLBuiltInIRIs()
@@ -608,7 +618,11 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
       if (isSWRLBuiltInAtom(atom)) {
         SWRLBuiltInAtom builtInAtom = (SWRLBuiltInAtom)atom;
         IRI builtInIRI = builtInAtom.getPredicate();
-        String builtInPrefixedName = iri2PrefixedName(builtInIRI);
+        Optional<String> knownBuiltInPrefixedName = this.swrlBuiltInLibraryManager
+          .swrlBuiltInIRI2PrefixedName(builtInIRI);
+        String builtInPrefixedName = knownBuiltInPrefixedName.isPresent() ?
+          knownBuiltInPrefixedName.get() :
+          iri2PrefixedName(builtInIRI); // Even if we do not have an implementation for a built-in we must process it
         List<@NonNull SWRLDArgument> swrlDArguments = builtInAtom.getArguments();
         List<@NonNull SWRLBuiltInArgument> swrlBuiltInArguments = convertSWRLDArguments2SWRLBuiltInArguments(
           swrlDArguments);
@@ -794,7 +808,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
     }
   }
 
-  private boolean isSWRLBuiltInAtom(SWRLAtom atom) // TODO Check implementation of isSWRLBuiltIn atom
+  private boolean isSWRLBuiltInAtom(SWRLAtom atom) // TODO Check implementation of isSWRLBuiltInIRI atom
   {
     if (atom instanceof SWRLBuiltInAtom)
       return true;
@@ -802,7 +816,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
       SWRLPredicate predicate = atom.getPredicate();
       if (predicate instanceof IRI) {
         IRI iri = (IRI)predicate;
-        return isSWRLBuiltIn(iri);
+        return isSWRLBuiltInIRI(iri);
       }
       return false;
     }

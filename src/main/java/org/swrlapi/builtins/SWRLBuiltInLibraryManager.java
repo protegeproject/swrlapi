@@ -50,7 +50,8 @@ public class SWRLBuiltInLibraryManager
   private static final Set<String> preCannedSWRLBuiltInLibraryPrefixes = new HashSet<>(
     Arrays.asList(preCannedSWRLBuiltInLibraryPrefixNames));
 
-  @NonNull private Set<@NonNull IRI> swrlBuiltInIRIs = new HashSet<>();
+  @NonNull private Map<@NonNull IRI, @NonNull String> swrlBuiltInIRI2PrefixedName = new HashMap<>();
+  @NonNull private Map<@NonNull String, @NonNull IRI> swrlBuiltInPrefixedName2IRI = new HashMap<>();
 
   // Map of built-in library prefix name to SWRLBuiltInLibrary instance
   @NonNull private final Map<@NonNull String, @NonNull SWRLBuiltInLibrary> swrlBuiltInLibraryImplementations;
@@ -66,75 +67,89 @@ public class SWRLBuiltInLibraryManager
     loadInternalSWRLBuiltInLibraries(preCannedSWRLBuiltInLibraryPrefixes);
   }
 
-  /**
-   * TODO This is experimental code
-   */
   public void loadExternalSWRLBuiltInLibraries(@NonNull File swrlBuiltInLibraryDirectory)
   {
     if (swrlBuiltInLibraryDirectory.exists() && swrlBuiltInLibraryDirectory.isDirectory()) {
       File[] swrlBuiltInLibrarySubDirectories = swrlBuiltInLibraryDirectory.listFiles();
-      for (int i = 0; i < swrlBuiltInLibrarySubDirectories.length; i++) {
-        if (swrlBuiltInLibrarySubDirectories[i].isDirectory()) {
-          File swrlBuiltInLibrarySubDirectory = swrlBuiltInLibrarySubDirectories[i];
+      for (int builtInLibraryIndex = 0;
+           builtInLibraryIndex < swrlBuiltInLibrarySubDirectories.length; builtInLibraryIndex++) {
+        if (swrlBuiltInLibrarySubDirectories[builtInLibraryIndex].isDirectory()) {
+          File swrlBuiltInLibrarySubDirectory = swrlBuiltInLibrarySubDirectories[builtInLibraryIndex];
           String swrlBuiltInLibrarySubDirectoryName = swrlBuiltInLibrarySubDirectory.getName();
           try {
-            URL swrlBuiltInLibrarySubDirectoryURL = new URL(swrlBuiltInLibrarySubDirectory.getCanonicalPath());
-            URLClassLoader child = new URLClassLoader(new URL[] { swrlBuiltInLibrarySubDirectoryURL },
+            URL swrlBuiltInLibrarySubDirectoryURL = new URL(
+              "file:" + swrlBuiltInLibrarySubDirectory.getCanonicalPath());
+            URLClassLoader classLoader = new URLClassLoader(new URL[] { swrlBuiltInLibrarySubDirectoryURL },
               this.getClass().getClassLoader());
-            String swrlBuiltInLibraryClassName =
+            String swrlBuiltInLibraryImplementationClassName =
               SWRLBuiltInLibraryPackageBaseName + "." + swrlBuiltInLibrarySubDirectoryName + "."
                 + SWRLBuiltInLibraryImplementationClassName;
-            try {
-              Object instance = Class.forName(swrlBuiltInLibraryClassName, true, child);
-              if (instance instanceof SWRLBuiltInLibrary) {
-                SWRLBuiltInLibrary swrlBuiltInLibrary = (SWRLBuiltInLibrary)instance;
-                String swrlBuiltInLibraryPrefix = swrlBuiltInLibrary.getPrefix();
-                if (preCannedSWRLBuiltInLibraryPrefixes.contains(swrlBuiltInLibraryPrefix)) {
-                  log.warn("External built-in library prefix " + swrlBuiltInLibraryPrefix
-                    + " collides with in-built library prefix");
-                } else if (swrlBuiltInLibraryPrefix.equals(swrlBuiltInLibrarySubDirectoryName)) {
-                  log.info("Loading SWRL built-in library " + swrlBuiltInLibrary.getNamespace());
-                  registerSWRLBuiltIns(swrlBuiltInLibraryPrefix, swrlBuiltInLibrary.getNamespace(),
-                    swrlBuiltInLibrary.getBuiltInNames());
-                } else
-                  log.warn("Invalid sub-directory name " + swrlBuiltInLibrarySubDirectoryName
-                    + " for SWRL built-in library with prefix " + swrlBuiltInLibraryPrefix
-                    + " - sub-directory and prefix should match!");
-              }
-            } catch (ClassNotFoundException e) {
-              log.warn("Could not find built-in library class " + swrlBuiltInLibraryClassName + " in directory "
-                + swrlBuiltInLibrarySubDirectoryName + ": " + e.getMessage());
-            }
+            SWRLBuiltInLibrary swrlBuiltInLibrary = instantiateSWRLBuiltInLibraryImplementation(
+              swrlBuiltInLibrarySubDirectoryName);
+            String swrlBuiltInLibraryPrefix = swrlBuiltInLibrary.getPrefix();
+            if (preCannedSWRLBuiltInLibraryPrefixes.contains(swrlBuiltInLibraryPrefix)) {
+              log.warn("External built-in library prefix " + swrlBuiltInLibraryPrefix
+                + " collides with in-built library prefix");
+            } else if (swrlBuiltInLibraryPrefix.equals(swrlBuiltInLibrarySubDirectoryName)) {
+              log.info("Loading external SWRL built-in library " + swrlBuiltInLibraryPrefix);
+              registerSWRLBuiltIns(swrlBuiltInLibraryPrefix, swrlBuiltInLibrary.getNamespace(),
+                swrlBuiltInLibrary.getBuiltInNames());
+              this.swrlBuiltInLibraryImplementations.put(swrlBuiltInLibraryPrefix, swrlBuiltInLibrary);
+            } else
+              log.warn("Invalid sub-directory name " + swrlBuiltInLibrarySubDirectoryName
+                + " for SWRL built-in library with prefix " + swrlBuiltInLibraryPrefix
+                + " - sub-directory and prefix should match!");
           } catch (IOException e) {
             log.warn(
-              "Internal error processing built-in sub-directory " + swrlBuiltInLibrarySubDirectory.getAbsolutePath()
-                + ": " + e.getMessage());
+              "Internal error processing SWRL built-in directory " + swrlBuiltInLibraryDirectory.getAbsolutePath());
           }
-        }
+        } else
+          log.warn("SWRL built-in directory " + swrlBuiltInLibraryDirectory.getAbsolutePath()
+            + " does not exist or is not a directory!");
       }
-    } else
-      log.warn("SWRL built-in directory " + swrlBuiltInLibraryDirectory.getAbsolutePath()
-        + " does not exist or is not a directory!");
+    }
   }
 
-  private void loadInternalSWRLBuiltInLibraries(Set<String> swrlBuiltInLibraryPrefixes)
+  private void loadInternalSWRLBuiltInLibraries(Set<@NonNull String> swrlBuiltInLibraryPrefixes)
   {
     for (String swrlBuiltInLibraryPrefix : swrlBuiltInLibraryPrefixes) {
       SWRLBuiltInLibrary swrlBuiltInLibrary = instantiateSWRLBuiltInLibraryImplementation(swrlBuiltInLibraryPrefix);
-      Set<IRI> libraryBuiltInIRIs = swrlBuiltInLibrary.getBuiltInIRIs();
-      this.swrlBuiltInIRIs.addAll(libraryBuiltInIRIs);
+
+      registerSWRLBuiltIns(swrlBuiltInLibrary.getPrefix(), swrlBuiltInLibrary.getNamespace(),
+        swrlBuiltInLibrary.getBuiltInNames());
       this.swrlBuiltInLibraryImplementations.put(swrlBuiltInLibraryPrefix, swrlBuiltInLibrary);
     }
   }
 
-  public boolean isSWRLBuiltIn(@NonNull IRI iri)
+  public boolean isSWRLBuiltInIRI(@NonNull IRI iri)
   {
-    return swrlBuiltInIRIs.contains(iri);
+    return swrlBuiltInIRI2PrefixedName.containsKey(iri);
+  }
+
+  public boolean isSWRLBuiltIn(@NonNull String prefixedName)
+  {
+    return swrlBuiltInPrefixedName2IRI.containsKey(prefixedName);
+  }
+
+  public Optional<@NonNull IRI> swrlBuiltInPrefixedName2IRI(@NonNull String prefixedName)
+  {
+    if (this.swrlBuiltInPrefixedName2IRI.containsKey(prefixedName))
+      return Optional.of(this.swrlBuiltInPrefixedName2IRI.get(prefixedName));
+    else
+      return Optional.empty();
+  }
+
+  public Optional<@NonNull String> swrlBuiltInIRI2PrefixedName(@NonNull IRI iri)
+  {
+    if (this.swrlBuiltInIRI2PrefixedName.containsKey(iri))
+      return Optional.of(this.swrlBuiltInIRI2PrefixedName.get(iri));
+    else
+      return Optional.empty();
   }
 
   @NonNull public Set<@NonNull IRI> getSWRLBuiltInIRIs()
   {
-    return Collections.unmodifiableSet(swrlBuiltInIRIs);
+    return Collections.unmodifiableSet(swrlBuiltInIRI2PrefixedName.keySet());
   }
 
   /**
@@ -337,7 +352,6 @@ public class SWRLBuiltInLibraryManager
     @NonNull String swrlBuiltInLibraryPrefix) throws SWRLBuiltInLibraryException
   {
     Class<?> swrlBuiltInLibraryImplementationClass;
-
     String swrlBuiltInLibraryImplementationClassName =
       SWRLBuiltInLibraryPackageBaseName + "." + swrlBuiltInLibraryPrefix + "."
         + SWRLBuiltInLibraryImplementationClassName;
@@ -345,19 +359,19 @@ public class SWRLBuiltInLibraryManager
     try {
       swrlBuiltInLibraryImplementationClass = Class.forName(swrlBuiltInLibraryImplementationClassName);
     } catch (Exception e) {
-      throw new UnresolvedSWRLBuiltInClassException(swrlBuiltInLibraryPrefix,
+      throw new UnresolvedSWRLBuiltInClassException(swrlBuiltInLibraryImplementationClassName,
         e.getMessage() != null ? e.getMessage() : "", e);
     }
 
     // Check implementation class for compatibility
-    checkSWRLBuiltInLibraryImplementationClassCompatibility(swrlBuiltInLibraryPrefix,
+    checkSWRLBuiltInLibraryImplementationClassCompatibility(swrlBuiltInLibraryImplementationClassName,
       swrlBuiltInLibraryImplementationClass);
 
     try { // TODO Need to get constructor of library to catch exceptions it may throw
       return (SWRLBuiltInLibrary)swrlBuiltInLibraryImplementationClass.newInstance();
     } catch (@NonNull InstantiationException | ExceptionInInitializerError | SecurityException | IllegalAccessException e) {
-      throw new IncompatibleSWRLBuiltInClassException(swrlBuiltInLibraryPrefix,
-        swrlBuiltInLibraryImplementationClassName, e.getMessage() != null ? e.getMessage() : "", e);
+      throw new IncompatibleSWRLBuiltInClassException(swrlBuiltInLibraryImplementationClassName,
+        e.getMessage() != null ? e.getMessage() : "", e);
     }
   }
 
@@ -387,7 +401,7 @@ public class SWRLBuiltInLibraryManager
     throws IncompatibleSWRLBuiltInClassException
   {
     if (!SWRLBuiltInLibrary.class.isAssignableFrom(cls))
-      throw new IncompatibleSWRLBuiltInClassException(prefix, cls.getName(),
+      throw new IncompatibleSWRLBuiltInClassException(cls.getName(),
         "Java class does not extend " + SWRLBuiltInLibrary.class.getCanonicalName());
   }
 
@@ -421,11 +435,20 @@ public class SWRLBuiltInLibraryManager
     }
   }
 
-  private void registerSWRLBuiltIns(@NonNull String prefix, @NonNull String namespace,
-    @NonNull Set<@NonNull String> builtInNames)
+  private void registerSWRLBuiltIns(@NonNull String swrlBuiltInLibraryPrefix,
+    @NonNull String swrlBuiltInLibraryNamespace, @NonNull Set<@NonNull String> builtInNames)
   {
     for (String builtInName : builtInNames)
-      swrlBuiltInIRIs.add(IRI.create(namespace, builtInName));
+      registerSWRLBuiltIn(swrlBuiltInLibraryPrefix, swrlBuiltInLibraryNamespace, builtInName);
+  }
+
+  private void registerSWRLBuiltIn(@NonNull String swrlBuiltInLibraryPrefix,
+    @NonNull String swrlBuiltInLibraryNamespace, @NonNull String builtInName)
+  {
+    IRI builtInIRI = IRI.create(swrlBuiltInLibraryNamespace, builtInName);
+    String builtInPrefixedName = swrlBuiltInLibraryPrefix + ":" + builtInName;
+    this.swrlBuiltInIRI2PrefixedName.put(builtInIRI, builtInPrefixedName);
+    this.swrlBuiltInPrefixedName2IRI.put(builtInPrefixedName, builtInIRI);
   }
 
   @NonNull private String getPrefixFromPrefixedName(@NonNull String builtInPrefixedName)

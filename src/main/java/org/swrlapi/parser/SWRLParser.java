@@ -200,6 +200,9 @@ public class SWRLParser
     } else if (shortName.equalsIgnoreCase(DIFFERENT_FROM_PREDICATE)) {
       tokenizer.checkAndSkipLParen("Expecting parentheses-enclosed arguments for different individuals atom");
       return parseSWRLDifferentFromAtomArguments(tokenizer, isInHead);
+    } else if (this.swrlParserSupport.isSWRLBuiltIn(shortName)) {
+      tokenizer.checkAndSkipLParen("Expecting parentheses-enclosed arguments for built-in atom");
+      return parseSWRLBuiltinAtomArguments(shortName, tokenizer, isInHead);
     } else if (this.swrlParserSupport.isOWLClass(shortName)) {
       tokenizer.checkAndSkipLParen("Expecting parentheses-enclosed arguments for class atom");
       return parseSWRLClassAtomArguments(shortName, tokenizer, isInHead);
@@ -209,9 +212,6 @@ public class SWRLParser
     } else if (this.swrlParserSupport.isOWLDataProperty(shortName)) {
       tokenizer.checkAndSkipLParen("Expecting parentheses-enclosed arguments for data property atom");
       return parseSWRLDataPropertyAtomArguments(shortName, tokenizer, isInHead);
-    } else if (this.swrlParserSupport.isSWRLBuiltIn(shortName)) {
-      tokenizer.checkAndSkipLParen("Expecting parentheses-enclosed arguments for built-in atom");
-      return parseSWRLBuiltinAtomArguments(shortName, tokenizer, isInHead);
     } else if (this.swrlParserSupport.isOWLDatatype(shortName)) {
       tokenizer.checkAndSkipLParen("Expecting parentheses-enclosed arguments for data range atom");
       return parseSWRLDataRangeAtomArguments(shortName, tokenizer, isInHead);

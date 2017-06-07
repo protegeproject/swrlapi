@@ -14,24 +14,24 @@ public class SQWRLNames
 {
   public static final String SQWRLBuiltInLibraryName = "SQWRLBuiltIns";
 
-  public static final String SQWRLPrefix = "sqwrl:";
-  public static final String SQWRLNamespace = "http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#";
+  public static final String SQWRL_PREFIX = "sqwrl:";
+  public static final String SQWRL_NAMESPACE = "http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#";
 
-  public static final String Select = SQWRLPrefix + "select";
-  public static final String SelectDistinct = SQWRLPrefix + "selectDistinct";
-  public static final String Count = SQWRLPrefix + "count";
-  public static final String CountDistinct = SQWRLPrefix + "countDistinct";
-  public static final String Avg = SQWRLPrefix + "avg";
-  public static final String Min = SQWRLPrefix + "min";
-  public static final String Max = SQWRLPrefix + "max";
-  public static final String Sum = SQWRLPrefix + "sum";
-  public static final String Median = SQWRLPrefix + "median";
-  public static final String OrderBy = SQWRLPrefix + "orderBy";
-  public static final String OrderByDescending = SQWRLPrefix + "orderByDescending";
-  public static final String ColumnNames = SQWRLPrefix + "columnNames";
+  public static final String Select = SQWRL_PREFIX + "select";
+  public static final String SelectDistinct = SQWRL_PREFIX + "selectDistinct";
+  public static final String Count = SQWRL_PREFIX + "count";
+  public static final String CountDistinct = SQWRL_PREFIX + "countDistinct";
+  public static final String Avg = SQWRL_PREFIX + "avg";
+  public static final String Min = SQWRL_PREFIX + "min";
+  public static final String Max = SQWRL_PREFIX + "max";
+  public static final String Sum = SQWRL_PREFIX + "sum";
+  public static final String Median = SQWRL_PREFIX + "median";
+  public static final String OrderBy = SQWRL_PREFIX + "orderBy";
+  public static final String OrderByDescending = SQWRL_PREFIX + "orderByDescending";
+  public static final String ColumnNames = SQWRL_PREFIX + "columnNames";
   public static final String CountAggregateFunction = "count";
   public static final String CountDistinctAggregateFunction = "countDistinct";
-  public static final String Limit = SQWRLPrefix + "limit";
+  public static final String Limit = SQWRL_PREFIX + "limit";
 
   // Aggregation functions
 
@@ -42,60 +42,60 @@ public class SQWRLNames
   public static final String MedianAggregateFunction = "median";
 
   // Collection construction operations
-  public static final String MakeSet = SQWRLPrefix + "makeSet";
-  public static final String MakeBag = SQWRLPrefix + "makeBag";
-  public static final String GroupBy = SQWRLPrefix + "groupBy";
+  public static final String MakeSet = SQWRL_PREFIX + "makeSet";
+  public static final String MakeBag = SQWRL_PREFIX + "makeBag";
+  public static final String GroupBy = SQWRL_PREFIX + "groupBy";
 
   // Collection operations
 
   // Core collection operations
-  public static final String Size = SQWRLPrefix + "size";
-  public static final String IsEmpty = SQWRLPrefix + "isEmpty";
-  public static final String NotIsEmpty = SQWRLPrefix + "notIsEmpty";
-  public static final String Element = SQWRLPrefix + "element";
-  public static final String NotElement = SQWRLPrefix + "notElement";
+  public static final String Size = SQWRL_PREFIX + "size";
+  public static final String IsEmpty = SQWRL_PREFIX + "isEmpty";
+  public static final String NotIsEmpty = SQWRL_PREFIX + "notIsEmpty";
+  public static final String Element = SQWRL_PREFIX + "element";
+  public static final String NotElement = SQWRL_PREFIX + "notElement";
 
   // First and last collection operations
-  public static final String LastN = SQWRLPrefix + "lastN";
-  public static final String NotLastN = SQWRLPrefix + "notLastN";
-  public static final String FirstN = SQWRLPrefix + "firstN";
-  public static final String NotFirstN = SQWRLPrefix + "notFirstN";
+  public static final String LastN = SQWRL_PREFIX + "lastN";
+  public static final String NotLastN = SQWRL_PREFIX + "notLastN";
+  public static final String FirstN = SQWRL_PREFIX + "firstN";
+  public static final String NotFirstN = SQWRL_PREFIX + "notFirstN";
 
   // nth collection operations
-  public static final String Nth = SQWRLPrefix + "nth";
-  public static final String NotNth = SQWRLPrefix + "notNth";
-  public static final String NthLast = SQWRLPrefix + "nthLast";
-  public static final String NotNthLast = SQWRLPrefix + "notNthLast";
+  public static final String Nth = SQWRL_PREFIX + "nth";
+  public static final String NotNth = SQWRL_PREFIX + "notNth";
+  public static final String NthLast = SQWRL_PREFIX + "nthLast";
+  public static final String NotNthLast = SQWRL_PREFIX + "notNthLast";
 
   // Slicing collection operations
-  public static final String NthSlice = SQWRLPrefix + "nthSlice";
-  public static final String NotNthSlice = SQWRLPrefix + "notNthSlice";
-  public static final String NthLastSlice = SQWRLPrefix + "nthLastSlice";
-  public static final String NotNthLastSlice = SQWRLPrefix + "notNthLastSlice";
+  public static final String NthSlice = SQWRL_PREFIX + "nthSlice";
+  public static final String NotNthSlice = SQWRL_PREFIX + "notNthSlice";
+  public static final String NthLastSlice = SQWRL_PREFIX + "nthLastSlice";
+  public static final String NotNthLastSlice = SQWRL_PREFIX + "notNthLastSlice";
 
   // Multi-collection operations with collection results
-  public static final String Intersection = SQWRLPrefix + "intersection";
-  public static final String Union = SQWRLPrefix + "union";
-  public static final String Difference = SQWRLPrefix + "difference";
-  public static final String Append = SQWRLPrefix + "append";
+  public static final String Intersection = SQWRL_PREFIX + "intersection";
+  public static final String Union = SQWRL_PREFIX + "union";
+  public static final String Difference = SQWRL_PREFIX + "difference";
+  public static final String Append = SQWRL_PREFIX + "append";
 
   // Multi-collection operations with non-collection results
-  public static final String Intersects = SQWRLPrefix + "intersects";
-  public static final String NotIntersects = SQWRLPrefix + "notIntersects";
-  public static final String Equal = SQWRLPrefix + "equal";
-  public static final String NotEqual = SQWRLPrefix + "notEqual";
-  public static final String Contains = SQWRLPrefix + "contains";
-  public static final String NotContains = SQWRLPrefix + "notContains";
+  public static final String Intersects = SQWRL_PREFIX + "intersects";
+  public static final String NotIntersects = SQWRL_PREFIX + "notIntersects";
+  public static final String Equal = SQWRL_PREFIX + "equal";
+  public static final String NotEqual = SQWRL_PREFIX + "notEqual";
+  public static final String Contains = SQWRL_PREFIX + "contains";
+  public static final String NotContains = SQWRL_PREFIX + "notContains";
 
   // Aliases for first and last operators
-  public static final String GreatestN = SQWRLPrefix + "greatestN";
-  public static final String NotGreatestN = SQWRLPrefix + "notGreatestN";
-  public static final String LeastN = SQWRLPrefix + "leastN";
-  public static final String NotLeastN = SQWRLPrefix + "notLeastN";
-  public static final String NthGreatest = SQWRLPrefix + "nthGreatest";
-  public static final String NotNthGreatest = SQWRLPrefix + "notNthGreatest";
-  public static final String NthGreatestSlice = SQWRLPrefix + "nthGreatestSlice";
-  public static final String NotNthGreatestSlice = SQWRLPrefix + "notNthGreatestSlice";
+  public static final String GreatestN = SQWRL_PREFIX + "greatestN";
+  public static final String NotGreatestN = SQWRL_PREFIX + "notGreatestN";
+  public static final String LeastN = SQWRL_PREFIX + "leastN";
+  public static final String NotLeastN = SQWRL_PREFIX + "notLeastN";
+  public static final String NthGreatest = SQWRL_PREFIX + "nthGreatest";
+  public static final String NotNthGreatest = SQWRL_PREFIX + "notNthGreatest";
+  public static final String NthGreatestSlice = SQWRL_PREFIX + "nthGreatestSlice";
+  public static final String NotNthGreatestSlice = SQWRL_PREFIX + "notNthGreatestSlice";
 
   private static final String headSelectionBuiltInNamesArray[] = { Select, SelectDistinct, OrderBy, OrderByDescending,
     ColumnNames };

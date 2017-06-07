@@ -19,19 +19,19 @@ import java.util.Map;
  */
 public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 {
-  private static final String Prefix = "swrlx";
+  private static final String PREFIX = "swrlx";
 
-  private static final String Namespace = "http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#";
+  private static final String NAMESPACE = "http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#";
 
-  private static final String[] BuiltInNames = { "makeOWLClass", "makeOWLIndividual", "makeOWLThing", "createOWLThing",
-    "invokeSWRLBuiltIn" };
+  private static final String[] BUILT_IN_NAMES = { "makeOWLClass", "makeOWLIndividual", "makeOWLThing",
+    "createOWLThing", "invokeSWRLBuiltIn" };
 
   @NonNull private final Map<@NonNull String, @NonNull OWLClass> classInvocationMap;
   @NonNull private final Map<@NonNull String, @NonNull OWLNamedIndividual> individualInvocationMap;
 
   public SWRLBuiltInLibraryImpl()
   {
-    super(Prefix, Namespace, new HashSet<>(Arrays.asList(BuiltInNames)));
+    super(PREFIX, NAMESPACE, new HashSet<>(Arrays.asList(BUILT_IN_NAMES)));
 
     this.classInvocationMap = new HashMap<>();
     this.individualInvocationMap = new HashMap<>();

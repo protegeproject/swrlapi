@@ -267,9 +267,14 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
     this.swrlapiOWLOntology.deleteSWRLRule(ruleName);
   }
 
-  @Override public boolean isSWRLBuiltIn(@NonNull IRI iri)
+  @Override public boolean isSWRLBuiltInIRI(@NonNull IRI iri)
   {
-    return this.swrlapiOWLOntology.isSWRLBuiltIn(iri);
+    return this.swrlapiOWLOntology.isSWRLBuiltInIRI(iri);
+  }
+
+  @Override public boolean isSWRLBuiltIn(@NonNull String shortName)
+  {
+    return this.swrlapiOWLOntology.isSWRLBuiltIn(shortName);
   }
 
   @NonNull @Override public Set<@NonNull IRI> getSWRLBuiltInIRIs()
@@ -332,7 +337,7 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
     return this.targetSWRLRuleEngine.getOWLReasoner();
   }
 
-  @Override public void loadExternalSWRLBuiltInLibraries(File swrlBuiltInLibraryDirectory)
+  @Override public void loadExternalSWRLBuiltInLibraries(@NonNull File swrlBuiltInLibraryDirectory)
   {
     this.swrlapiOWLOntology.getSWRLBuiltInLibraryManager()
       .loadExternalSWRLBuiltInLibraries(swrlBuiltInLibraryDirectory);

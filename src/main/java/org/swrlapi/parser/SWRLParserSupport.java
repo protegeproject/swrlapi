@@ -119,10 +119,14 @@ class SWRLParserSupport
       }
   }
 
-  public boolean isSWRLBuiltIn(@NonNull String shortName)
+  public boolean isSWRLBuiltIn(@NonNull String prefixedName)
   {
-    IRI builtInIRI = prefixedName2IRI(shortName);
-    return getSWRLAPIOWLOntology().isSWRLBuiltIn(builtInIRI);
+    return getSWRLAPIOWLOntology().isSWRLBuiltIn(prefixedName);
+  }
+
+  public Optional<@NonNull IRI> swrlBuiltInPrefixedName2IRI(@NonNull String prefixedName)
+  {
+    return getSWRLAPIOWLOntology().swrlBuiltInPrefixedName2IRI(prefixedName);
   }
 
   public void checkThatSWRLVariableNameIsValid(@NonNull String variableName) throws SWRLParseException
@@ -190,7 +194,6 @@ class SWRLParserSupport
       throw new SWRLParseException(lexicalValue + " is not a valid xsd:int");
     }
   }
-
 
   @NonNull public SWRLLiteralArgument createSWRLLiteralArgument(@NonNull String lexicalValue,
     @NonNull String datatypeShortName) throws SWRLParseException
@@ -399,10 +402,12 @@ class SWRLParserSupport
 
   @NonNull private IRI createSWRLBuiltInIRI(@NonNull String builtInPrefixedName) throws SWRLParseException
   {
-    if (!isSWRLBuiltIn(builtInPrefixedName))
-      throw new SWRLParseException(builtInPrefixedName + " is not a SWRL built-in");
+    Optional<@NonNull IRI> iri = getSWRLAPIOWLOntology().swrlBuiltInPrefixedName2IRI(builtInPrefixedName);
+
+    if (iri.isPresent())
+      return iri.get();
     else
-      return prefixedName2IRI(builtInPrefixedName);
+      throw new SWRLParseException(builtInPrefixedName + " is not a SWRL built-in");
   }
 
   @NonNull private SWRLAPIOWLOntology getSWRLAPIOWLOntology()
@@ -452,7 +457,8 @@ class SWRLParserSupport
     if (iri.isPresent())
       return iri.get();
     else
-      throw new IllegalArgumentException("could not loadExternalSWRLBuiltInLibraries IRI for prefixed name " + prefixedName);
+      throw new IllegalArgumentException(
+        "could not loadExternalSWRLBuiltInLibraries IRI for prefixed name " + prefixedName);
   }
 
   /**

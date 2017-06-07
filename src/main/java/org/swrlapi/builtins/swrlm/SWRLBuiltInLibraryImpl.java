@@ -18,17 +18,17 @@ import java.util.Optional;
  */
 public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 {
-  private static final String Prefix = "swrlm";
+  private static final String PREFIX = "swrlm";
 
-  private static final String Namespace = "http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlm.owl#";
+  private static final String NAMESPACE = "http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlm.owl#";
 
-  private static final String[] BuiltInNames = { "sqrt", "eval", "log" };
+  private static final String[] BUILT_IN_NAMES = { "sqrt", "eval", "log" };
 
   @Nullable private JEP jep = null;
 
   public SWRLBuiltInLibraryImpl()
   {
-    super(Prefix, Namespace, new HashSet<>(Arrays.asList(BuiltInNames)));
+    super(PREFIX, NAMESPACE, new HashSet<>(Arrays.asList(BUILT_IN_NAMES)));
   }
 
   @Override public void reset()

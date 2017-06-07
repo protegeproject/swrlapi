@@ -38,16 +38,16 @@ import java.util.stream.Collectors;
  */
 public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 {
-  private static final String Prefix = "rbox";
+  private static final String PREFIX = "rbox";
 
-  private static final String Namespace = "http://swrl.stanford.edu/ontologies/built-ins/5.0.0/rbox.owl#";
+  private static final String NAMESPACE = "http://swrl.stanford.edu/ontologies/built-ins/5.0.0/rbox.owl#";
 
-  private static final String[] BuiltInNames = { "topa", "djopa", "eopa", "sopa", "spa", "aopa", "ropa", "iropa",
+  private static final String[] BUILT_IN_NAMES = { "topa", "djopa", "eopa", "sopa", "spa", "aopa", "ropa", "iropa",
     "iopa", "djdpa", "sdpa", "dpda", "edpa", "spoca" };
 
   public SWRLBuiltInLibraryImpl()
   {
-    super(Prefix, Namespace, new HashSet<>(Arrays.asList(BuiltInNames)));
+    super(PREFIX, NAMESPACE, new HashSet<>(Arrays.asList(BUILT_IN_NAMES)));
   }
 
   @Override public void reset()

@@ -115,7 +115,13 @@ public interface SWRLRuleEngine
    * @param iri An IRI
    * @return True if the IRI is a built-in
    */
-  boolean isSWRLBuiltIn(@NonNull IRI iri);
+  boolean isSWRLBuiltInIRI(@NonNull IRI iri);
+
+  /**
+   * @param shortName An short name
+   * @return True if the short name is a built-in
+   */
+  boolean isSWRLBuiltIn(@NonNull String shortName);
 
   /**
    * @return The IRIs of all SWRL built-ins
@@ -178,7 +184,7 @@ public interface SWRLRuleEngine
    *
    * @param swrlBuiltInLibraryDirectory The directory containing the libraries
    */
-  void loadExternalSWRLBuiltInLibraries(File swrlBuiltInLibraryDirectory);
+  void loadExternalSWRLBuiltInLibraries(@NonNull File swrlBuiltInLibraryDirectory);
 
   /**
    * @return The rule engine's icon

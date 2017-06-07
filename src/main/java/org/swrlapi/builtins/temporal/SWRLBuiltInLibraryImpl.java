@@ -27,11 +27,11 @@ import java.util.Set;
  */
 public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 {
-  private static final String Prefix = "temporal";
+  private static final String PREFIX = "temporal";
 
-  private static final String Namespace = "http://swrl.stanford.edu/ontologies/built-ins/3.3/temporal.owl#";
+  private static final String NAMESPACE = "http://swrl.stanford.edu/ontologies/built-ins/3.3/temporal.owl#";
 
-  private static final String[] BuiltInNames = { "notEquals", "notIntersects", "notStarts", "overlappedBy", "contains",
+  private static final String[] BUILT_IN_NAMES = { "notEquals", "notIntersects", "notStarts", "overlappedBy", "contains",
     "equals", "intersects", "finishedBy", "notDurationLessThanOrEqualTo", "notStartedBy", "notFinishedBy", "starts",
     "notContains", "notOverlaps", "durationLessThanOrEqualTo", "duration", "notFinishes", "metBy", "notDurationEqualTo",
     "before", "startedBy", "notMeets", "durationGreaterThanOrEqualTo", "notDuring", "notOverlappedBy", "during",
@@ -39,35 +39,35 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     "finishes", "notAfter", "durationEqualTo", "overlaps", "durationGreaterThan", "durationLessThan", "after",
     "notMetBy" };
 
-  private static final String TemporalEquals = Prefix + ":" + "equals";
-  private static final String TemporalAfter = Prefix + ":" + "after";
-  private static final String TemporalBefore = Prefix + ":" + "before";
-  private static final String TemporalMeets = Prefix + ":" + "meets";
-  private static final String TemporalMetBy = Prefix + ":" + "metBy";
-  private static final String TemporalOverlaps = Prefix + ":" + "overlaps";
-  private static final String TemporalOverlappedBy = Prefix + ":" + "overlappedBy";
-  private static final String TemporalContains = Prefix + ":" + "contains";
-  private static final String TemporalDuring = Prefix + ":" + "during";
-  private static final String TemporalStarts = Prefix + ":" + "starts";
-  private static final String TemporalStartedBy = Prefix + ":" + "startedBy";
-  private static final String TemporalFinishes = Prefix + ":" + "finishes";
-  private static final String TemporalFinishedBy = Prefix + ":" + "finishedBy";
-  private static final String TemporalIntersects = Prefix + ":" + "intersects";
+  private static final String TemporalEquals = PREFIX + ":" + "equals";
+  private static final String TemporalAfter = PREFIX + ":" + "after";
+  private static final String TemporalBefore = PREFIX + ":" + "before";
+  private static final String TemporalMeets = PREFIX + ":" + "meets";
+  private static final String TemporalMetBy = PREFIX + ":" + "metBy";
+  private static final String TemporalOverlaps = PREFIX + ":" + "overlaps";
+  private static final String TemporalOverlappedBy = PREFIX + ":" + "overlappedBy";
+  private static final String TemporalContains = PREFIX + ":" + "contains";
+  private static final String TemporalDuring = PREFIX + ":" + "during";
+  private static final String TemporalStarts = PREFIX + ":" + "starts";
+  private static final String TemporalStartedBy = PREFIX + ":" + "startedBy";
+  private static final String TemporalFinishes = PREFIX + ":" + "finishes";
+  private static final String TemporalFinishedBy = PREFIX + ":" + "finishedBy";
+  private static final String TemporalIntersects = PREFIX + ":" + "intersects";
 
-  private static final String ExtendedPropositionClassName = Namespace + "ExtendedProposition";
-  private static final String ValidInstantClassName = Namespace + "ValidInstant";
-  private static final String ValidPeriodClassName = Namespace + "ValidPeriod";
-  private static final String GranularityClassName = Namespace + "Granularity";
-  private static final String HasValidTimePropertyName = Namespace + "hasValidTime";
-  private static final String HasTimePropertyName = Namespace + "hasTime";
-  private static final String HasStartTimePropertyName = Namespace + "hasStartTime";
-  private static final String HasFinishTimePropertyName = Namespace + "hasFinishTime";
+  private static final String ExtendedPropositionClassName = NAMESPACE + "ExtendedProposition";
+  private static final String ValidInstantClassName = NAMESPACE + "ValidInstant";
+  private static final String ValidPeriodClassName = NAMESPACE + "ValidPeriod";
+  private static final String GranularityClassName = NAMESPACE + "Granularity";
+  private static final String HasValidTimePropertyName = NAMESPACE + "hasValidTime";
+  private static final String HasTimePropertyName = NAMESPACE + "hasTime";
+  private static final String HasStartTimePropertyName = NAMESPACE + "hasStartTime";
+  private static final String HasFinishTimePropertyName = NAMESPACE + "hasFinishTime";
 
   @NonNull private final Temporal temporal;
 
   public SWRLBuiltInLibraryImpl()
   {
-    super(Prefix, Namespace, new HashSet<>(Arrays.asList(BuiltInNames)));
+    super(PREFIX, NAMESPACE, new HashSet<>(Arrays.asList(BUILT_IN_NAMES)));
 
     this.temporal = new Temporal(new XSDDateTimeStringProcessor());
     this.temporal.setNow();
