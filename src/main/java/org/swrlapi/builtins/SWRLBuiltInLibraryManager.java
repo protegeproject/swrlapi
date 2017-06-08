@@ -81,9 +81,6 @@ public class SWRLBuiltInLibraryManager
               "file:" + swrlBuiltInLibrarySubDirectory.getCanonicalPath());
             URLClassLoader classLoader = new URLClassLoader(new URL[] { swrlBuiltInLibrarySubDirectoryURL },
               this.getClass().getClassLoader());
-            String swrlBuiltInLibraryImplementationClassName =
-              SWRLBuiltInLibraryPackageBaseName + "." + swrlBuiltInLibrarySubDirectoryName + "."
-                + SWRLBuiltInLibraryImplementationClassName;
             SWRLBuiltInLibrary swrlBuiltInLibrary = instantiateSWRLBuiltInLibraryImplementation(
               swrlBuiltInLibrarySubDirectoryName);
             String swrlBuiltInLibraryPrefix = swrlBuiltInLibrary.getPrefix();
