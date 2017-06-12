@@ -208,7 +208,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
           "expecting numeric argument for comparison, got " + representArgumentAsAString(1, arguments));
     } else
       throw new InvalidSWRLBuiltInArgumentException(0,
-        "expecting boolean, numeric, string, xsd:date, xsd:dateTime, xsd:time, or xsd:duration argument for comparison, got "
+        "unsupported argument type: expecting boolean, numeric, string, xsd:date, xsd:dateTime, xsd:time, or xsd:duration argument for comparison, got "
           + representArgumentAsAString(0, arguments));
   }
 
