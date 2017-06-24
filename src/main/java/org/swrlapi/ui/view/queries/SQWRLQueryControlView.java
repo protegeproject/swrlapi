@@ -181,12 +181,10 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
             appendToConsole("No enabled SQWRL query selected.\n");
         } catch (SQWRLException | RuntimeException e) {
           if (queryName.isPresent())
-            appendToConsole("Exception when running SQWRL query " + queryName.get() + ": " + (e.getMessage() != null ?
-              e.getMessage() :
-              "") + "\n");
-          else
             appendToConsole(
-              "Exception running SQWRL queries: " + (e.getMessage() != null ? e.getMessage() : "") + "\n");
+              "Exception running SQWRL query " + queryName.get() + ": " + buildChainedErrorMessage(e) + "\n");
+          else
+            appendToConsole("Exception running SQWRL queries: " + buildChainedErrorMessage(e) + "\n");
         }
       }
     }
@@ -230,5 +228,20 @@ public class SQWRLQueryControlView extends JPanel implements SWRLAPIView
       this.sqwrlQueryControlView.getParent().validate();
       this.console.validate();
     }
+  }
+
+  @NonNull private String buildChainedErrorMessage(Throwable t)
+  {
+    String message = t.getMessage() != null ? t.getMessage() : "";
+
+    Throwable currentThrowable = t;
+    while (currentThrowable != null) {
+      Throwable cause = currentThrowable.getCause();
+      if (cause != null && cause.getMessage() != null)
+        message += ": " + cause.getMessage();
+
+      currentThrowable = cause;
+    }
+    return message;
   }
 }
