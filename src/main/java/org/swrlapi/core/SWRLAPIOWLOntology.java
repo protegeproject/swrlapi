@@ -7,6 +7,7 @@ import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.swrlapi.builtins.SWRLBuiltInLibraryManager;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLRuleException;
 import org.swrlapi.factory.SWRLAPIOWLDataFactory;
@@ -112,17 +113,21 @@ public interface SWRLAPIOWLOntology
 
   // The SWRLAPI provides built-ins beyond the core set defined in the SWRL submission.
 
-  boolean isSWRLBuiltIn(@NonNull IRI iri);
+  boolean isSWRLBuiltInIRI(@NonNull IRI iri);
 
-  void addSWRLBuiltIn(@NonNull IRI iri);
+  boolean isSWRLBuiltIn(@NonNull String prefixedName);
 
   @NonNull Set<@NonNull IRI> getSWRLBuiltInIRIs();
+
+  Optional<@NonNull IRI> swrlBuiltInPrefixedName2IRI(@NonNull String prefixedName);
 
   @NonNull SWRLParser createSWRLParser();
 
   @NonNull SWRLAutoCompleter createSWRLAutoCompleter();
 
   @NonNull SWRLRuleRenderer createSWRLRuleRenderer();
+
+  @NonNull SWRLBuiltInLibraryManager getSWRLBuiltInLibraryManager();
 
   /**
    * @return A rule name

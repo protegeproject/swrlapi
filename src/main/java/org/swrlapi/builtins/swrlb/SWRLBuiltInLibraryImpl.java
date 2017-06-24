@@ -21,8 +21,10 @@ import org.swrlapi.literal.XSDTimeUtil;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.TimeZone;
@@ -38,7 +40,25 @@ import java.util.regex.PatternSyntaxException;
  */
 public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 {
-  private static final String SWRLBLibraryName = "SWRLCoreBuiltIns";
+  private static final String PREFIX = "swrlb";
+
+  private static final String NAMESPACE = "http://www.w3.org/2003/11/swrlb#";
+
+  private static final String[] BUILT_IN_NAMES = { "equal", "notEqual", "lessThan", "lessThanOrEqual", "greaterThan",
+    "greaterThanOrEqual", "add", "subtract", "multiply", "divide", "integerDivide", "mod", "pow", "unaryPlus",
+    "unaryMinus", "abs", "ceiling", "floor", "round", "roundHalfToEven", "sin", "cos", "tan", "booleanNot",
+    "stringEqualIgnoreCase", "stringConcat", "substring", "stringLength", "normalizeSpace", "upperCase", "lowerCase",
+    "translate", "contains", "containsIgnoreCase", "startsWith", "endsWith", "substringBefore", "substringAfter",
+    "matches", "replace", "tokenize", "yearMonthDuration", "dayTimeDuration", "dateTime", "date", "time",
+    "addYearMonthDurations", "subtractYearMonthDurations", "multiplyYearMonthDuration", "divideYearMonthDuration",
+    "addDayTimeDurations", "subtractDayTimeDurations", "multiplyDayTimeDuration", "divideDayTimeDuration",
+    "subtractDates", "subtractTimes", "addYearMonthDurationToDateTime", "addDayTimeDurationToDateTime",
+    "subtractYearMonthDurationFromDateTime", "subtractDayTimeDurationFromDateTime", "addYearMonthDurationToDate",
+    "addDayTimeDurationToDate", "subtractYearMonthDurationFromDate", "subtractDayTimeDurationFromDate",
+    "addDayTimeDurationToTime", "subtractDayTimeDurationFromTime", "subtractDateTimesYieldingYearMonthDuration",
+    "subtractDateTimesYieldingYearMonthDuration", "resolveURI", "anyURU", "listConcat", "listIntersection",
+    "listSubtraction", "member", "length", "first", "rest", "sublist", "empty" };
+
   private static final String SWRLBPrefix = "swrlb:";
 
   private static final String SWRLB_ADD = SWRLBPrefix + "add";
@@ -61,7 +81,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
   public SWRLBuiltInLibraryImpl()
   {
-    super(SWRLBLibraryName);
+    super(PREFIX, NAMESPACE, new HashSet<>(Arrays.asList(BUILT_IN_NAMES)));
   }
 
   @Override public void reset()
@@ -188,7 +208,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
           "expecting numeric argument for comparison, got " + representArgumentAsAString(1, arguments));
     } else
       throw new InvalidSWRLBuiltInArgumentException(0,
-        "expecting boolean, numeric, string, xsd:date, xsd:dateTime, xsd:time, or xsd:duration argument for comparison, got "
+        "unsupported argument type: expecting boolean, numeric, string, xsd:date, xsd:dateTime, xsd:time, or xsd:duration argument for comparison, got "
           + representArgumentAsAString(0, arguments));
   }
 

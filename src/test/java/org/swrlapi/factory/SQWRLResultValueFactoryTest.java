@@ -19,8 +19,8 @@ import static junit.framework.TestCase.assertEquals;
  */
 public class SQWRLResultValueFactoryTest
 {
-  private static final String TestPrefix = "test";
-  private static final String TestNamespace = "http://example.org#";
+  private static final String TEST_PREFIX = "test";
+  private static final String TEST_NAMESPACE = "http://example.org#";
 
   private OWLOntologyManager ontologyManager;
   private IRIResolver iriResolver;
@@ -36,12 +36,12 @@ public class SQWRLResultValueFactoryTest
     resultValueFactory = SWRLAPIInternalFactory.createSQWRLResultValueFactory(iriResolver);
     builtInArgumentFactory = SWRLAPIInternalFactory.createSWRLBuiltInArgumentFactory(iriResolver);
 
-    iriResolver.setPrefix(TestPrefix, TestNamespace);
+    iriResolver.setPrefix(TEST_PREFIX, TEST_NAMESPACE);
   }
 
   @Test public void testGetClassValueWithBuiltInArgument() throws Exception
   {
-    IRI classIRI = IRI.create(TestNamespace + "AClass");
+    IRI classIRI = IRI.create(TEST_NAMESPACE + "AClass");
     OWLClass cls = this.dataFactory.getOWLClass(classIRI);
     SWRLClassBuiltInArgument classBuiltInArgument = this.builtInArgumentFactory.getClassBuiltInArgument(cls);
     SQWRLClassResultValue value = this.resultValueFactory.getClassValue(classBuiltInArgument);
@@ -51,7 +51,7 @@ public class SQWRLResultValueFactoryTest
 
   @Test public void testGetClassValueWithIRI() throws Exception
   {
-    IRI classIRI = IRI.create(TestNamespace + "AClass");
+    IRI classIRI = IRI.create(TEST_NAMESPACE + "AClass");
     SQWRLClassResultValue value = this.resultValueFactory.getClassValue(classIRI);
 
     assertEquals(classIRI, value.getIRI());

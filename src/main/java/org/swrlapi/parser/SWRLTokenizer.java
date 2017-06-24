@@ -18,6 +18,7 @@ import java.util.Set;
  * {@link org.swrlapi.parser.SWRLIncompleteRuleException} (which is a subclass of
  * {@link org.swrlapi.parser.SWRLParseException}) for valid but incomplete input.
  *
+ * @see org.swrlapi.parser.SWRLToken
  * @see org.swrlapi.parser.SWRLParser
  * @see org.swrlapi.parser.SWRLParseException
  * @see org.swrlapi.parser.SWRLIncompleteRuleException
@@ -202,41 +203,49 @@ class SWRLTokenizer
       throw new SWRLParseException("internal error - not expecting a StreamTokenizer.TT_NUMBER");
     case StreamTokenizer.TT_WORD: {
       String value = this.tokenizer.getValue();
-      boolean negativeNumeric = false;
-      if (value.equals("-")) {
-        int nextTokenType = this.tokenizer.nextToken();
-        if (nextTokenType == '>')
-          return new SWRLToken(SWRLToken.SWRLTokenType.IMP, "->");
-        else if (nextTokenType == StreamTokenizer.TT_EOF)
-          throw generateEndOfRuleException("Expecting '>' or integer or decimal after '-'");
-        else if (nextTokenType != StreamTokenizer.TT_WORD)
-          throw new SWRLParseException("Expecting '>' or integer or decimal after '-'");
-        else
-          negativeNumeric = true;
-      }
-      if (isInteger(value)) {
-        // See if it is followed by a '.', in which case it should be a decimal
-        if (this.tokenizer.nextToken() == '.') { // Found a . so expecting rest of decimal
-          int trailingTokenType = this.tokenizer.nextToken();
-          String trailingValue = this.tokenizer.getValue();
-          if (trailingTokenType == StreamTokenizer.TT_WORD && isInteger(trailingValue)) {
-            String decimalValue = value + "." + trailingValue;
-            decimalValue = negativeNumeric ? "-" + decimalValue : decimalValue;
-            return new SWRLToken(SWRLToken.SWRLTokenType.DECIMAL, decimalValue);
-          } else if (trailingTokenType == StreamTokenizer.TT_EOF)
-            throw generateEndOfRuleException("Expecting decimal fraction part after '.'");
+      if (value.equalsIgnoreCase("not")) {
+        return new SWRLToken(SWRLToken.SWRLTokenType.NOT, "not");
+      } else if (value.equalsIgnoreCase("and")) {
+        return new SWRLToken(SWRLToken.SWRLTokenType.AND, "and");
+      } else if (value.equalsIgnoreCase("or")) {
+        return new SWRLToken(SWRLToken.SWRLTokenType.OR, "or");
+      } else {
+        boolean negativeNumeric = false;
+        if (value.equals("-")) {
+          int nextTokenType = this.tokenizer.nextToken();
+          if (nextTokenType == '>')
+            return new SWRLToken(SWRLToken.SWRLTokenType.IMP, "->");
+          else if (nextTokenType == StreamTokenizer.TT_EOF)
+            throw generateEndOfRuleException("Expecting '>' or integer or decimal after '-'");
+          else if (nextTokenType != StreamTokenizer.TT_WORD)
+            throw new SWRLParseException("Expecting '>' or integer or decimal after '-'");
           else
-            throw new SWRLParseException("Expecting decimal fraction part after '.'");
-        } else { // No following '.' so it is an integer
-          this.tokenizer.pushBack();
-          String integerValue = negativeNumeric ? "-" + value : value;
-          return new SWRLToken(SWRLToken.SWRLTokenType.INTEGER, integerValue);
+            negativeNumeric = true;
         }
-      } else { // Value is not an integer
-        if (negativeNumeric) // If negative, value should be an integer or decimal
-          throw new SWRLParseException("Expecting integer or decimal");
-        else // Must be an identifier
-          return new SWRLToken(SWRLToken.SWRLTokenType.SHORTNAME, value);
+        if (isInteger(value)) {
+          // See if it is followed by a '.', in which case it should be a decimal
+          if (this.tokenizer.nextToken() == '.') { // Found a . so expecting rest of decimal
+            int trailingTokenType = this.tokenizer.nextToken();
+            String trailingValue = this.tokenizer.getValue();
+            if (trailingTokenType == StreamTokenizer.TT_WORD && isInteger(trailingValue)) {
+              String decimalValue = value + "." + trailingValue;
+              decimalValue = negativeNumeric ? "-" + decimalValue : decimalValue;
+              return new SWRLToken(SWRLToken.SWRLTokenType.DECIMAL, decimalValue);
+            } else if (trailingTokenType == StreamTokenizer.TT_EOF)
+              throw generateEndOfRuleException("Expecting decimal fraction part after '.'");
+            else
+              throw new SWRLParseException("Expecting decimal fraction part after '.'");
+          } else { // No following '.' so it is an integer
+            this.tokenizer.pushBack();
+            String integerValue = negativeNumeric ? "-" + value : value;
+            return new SWRLToken(SWRLToken.SWRLTokenType.INTEGER, integerValue);
+          }
+        } else { // Value is not an integer
+          if (negativeNumeric) // If negative, value should be an integer or decimal
+            throw new SWRLParseException("Expecting integer or decimal");
+          else // Must be an identifier
+            return new SWRLToken(SWRLToken.SWRLTokenType.SHORTNAME, value);
+        }
       }
     }
     case '"':
@@ -257,7 +266,7 @@ class SWRLTokenizer
         return new SWRLToken(SWRLToken.SWRLTokenType.TYPE_QUAL, "^^");
       } else { // Not ^^
         this.tokenizer.pushBack();
-        return new SWRLToken(SWRLToken.SWRLTokenType.AND, "^");
+        return new SWRLToken(SWRLToken.SWRLTokenType.CONJUNCTION, "^");
       }
     }
     case '<': {

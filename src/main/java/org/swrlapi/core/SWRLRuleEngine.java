@@ -14,6 +14,7 @@ import org.swrlapi.parser.SWRLParser;
 import org.swrlapi.ui.model.SWRLAutoCompleter;
 
 import javax.swing.*;
+import java.io.File;
 import java.util.Optional;
 import java.util.Set;
 
@@ -57,6 +58,8 @@ public interface SWRLRuleEngine
   void exportInferredOWLAxioms() throws SWRLRuleEngineException;
 
   /**
+   * Create a SWRL rule
+   *
    * @param ruleName The name of the rule
    * @param rule     The rule text
    * @return A SWRL rule
@@ -66,6 +69,8 @@ public interface SWRLRuleEngine
     SWRLBuiltInException;
 
   /**
+   * Create a SWRL rule and associate a comment and active state with it.
+   *
    * @param ruleName The name of the rule
    * @param rule     The rule text
    * @param comment  A comment associated with the rule
@@ -110,12 +115,13 @@ public interface SWRLRuleEngine
    * @param iri An IRI
    * @return True if the IRI is a built-in
    */
-  boolean isSWRLBuiltIn(@NonNull IRI iri);
+  boolean isSWRLBuiltInIRI(@NonNull IRI iri);
 
   /**
-   * @param iri The IRI of a built-in
+   * @param shortName An short name
+   * @return True if the short name is a built-in
    */
-  void addSWRLBuiltIn(@NonNull IRI iri);
+  boolean isSWRLBuiltIn(@NonNull String shortName);
 
   /**
    * @return The IRIs of all SWRL built-ins
@@ -145,7 +151,7 @@ public interface SWRLRuleEngine
   @NonNull String getRuleEngineName();
 
   /**
-   * Get the version of the native rule engine implementing this SWRL rule engine.
+   * Get the version of the native rule engine implementing this SWRL rule engine
    *
    * @return A rule engine version
    */
@@ -157,7 +163,7 @@ public interface SWRLRuleEngine
   @NonNull OWLOntology getOWLOntology();
 
   /**
-   * Get the underlying OWL 2 RL reasoner used by the rule and query engine.
+   * Get the underlying OWL 2 RL reasoner used by the rule and query engine
    *
    * @return An OWL 2 RL engine
    */
@@ -169,6 +175,16 @@ public interface SWRLRuleEngine
    * @return An OWL reasoner
    */
   @NonNull OWLReasoner getOWLReasoner();
+
+  /**
+   * Load user-defined SWRL built-in libraries
+   *
+   * See <a href="https://github.com/protegeproject/swrlapi/wiki/SWRLBuiltInBridge">here</a> for documentation on
+   * defining these libraries.
+   *
+   * @param swrlBuiltInLibraryDirectory The directory containing the libraries
+   */
+  void loadExternalSWRLBuiltInLibraries(@NonNull File swrlBuiltInLibraryDirectory);
 
   /**
    * @return The rule engine's icon

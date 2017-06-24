@@ -27,8 +27,8 @@ public class SQWRLResultGeneratorTest
 {
   private SQWRLResultManager resultManager;
 
-  private static final String TestPrefix = "test:";
-  private static final String TestNamespace = "http://example.org#";
+  private static final String TEST_PREFIX = "test:";
+  private static final String TEST_NAMESPACE = "http://example.org#";
 
   private static final String columnName = "c";
 
@@ -38,7 +38,7 @@ public class SQWRLResultGeneratorTest
   {
     IRIResolver iriResolver = SWRLAPIFactory.createIRIResolver();
 
-    iriResolver.setPrefix(TestPrefix, TestNamespace);
+    iriResolver.setPrefix(TEST_PREFIX, TEST_NAMESPACE);
 
     resultManager = SWRLAPIInternalFactory.createSQWRLResultManager(iriResolver);
   }

@@ -41,9 +41,9 @@ class SWRLToken
     return this.tokenType == SWRLTokenType.RING;
   }
 
-  public boolean isAnd()
+  public boolean isConjunction()
   {
-    return this.tokenType == SWRLTokenType.AND;
+    return this.tokenType == SWRLTokenType.CONJUNCTION;
   }
 
   public boolean isString()
@@ -96,6 +96,21 @@ class SWRLToken
     return this.tokenType == SWRLTokenType.QUESTION;
   }
 
+  public boolean isAnd()
+  {
+    return this.tokenType == SWRLTokenType.AND;
+  }
+
+  public boolean isOr()
+  {
+    return this.tokenType == SWRLTokenType.OR;
+  }
+
+  public boolean isNot()
+  {
+    return this.tokenType == SWRLTokenType.NOT;
+  }
+
   public boolean isEndOfInput()
   {
     return this.tokenType == SWRLTokenType.END_OF_INPUT;
@@ -109,8 +124,9 @@ class SWRLToken
   public enum SWRLTokenType
   {
     SHORTNAME("short name"), // A short name is a user-friendly name. Note: it can be a prefixed name or a full IRI.
-    IRI("IRI"), STRING("quoted string"), DECIMAL("decimal"), INTEGER("integer"), TYPE_QUAL("^^"), AND("^"), IMP(
-    "->"), RING("."), LPAREN("("), RPAREN(")"), COMMA(","), QUESTION("?"), END_OF_INPUT("end");
+    IRI("IRI"), STRING("quoted string"), DECIMAL("decimal"), INTEGER("integer"), TYPE_QUAL("^^"), CONJUNCTION("^"), IMP(
+    "->"), RING("."), LPAREN("("), RPAREN(")"), COMMA(","), QUESTION("?"), AND("AND"), OR("OR"), NOT(
+    "NOT"), END_OF_INPUT("end");
 
     @NonNull private final String name;
 

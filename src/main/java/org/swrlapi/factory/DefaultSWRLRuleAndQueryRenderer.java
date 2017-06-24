@@ -112,21 +112,21 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
       SWRLAtom atom = bodyAtomIterator.next();
       if (isSQWRLCollectionMakeBuiltInAtom(atom)) {
         if (collectionMakeEncountered)
-          sb.append(" " + SWRLParser.AND_CHAR + " ");
+          sb.append(" " + SWRLParser.CONJUNCTION_CHAR + " ");
         else {
           sb.append(" " + SWRLParser.RING_CHAR + " ");
           collectionMakeEncountered = true;
         }
       } else if (isSQWRLCollectionOperateBuiltInAtom(atom)) {
         if (collectionOperationEncountered)
-          sb.append(" " + SWRLParser.AND_CHAR + " ");
+          sb.append(" " + SWRLParser.CONJUNCTION_CHAR + " ");
         else {
           sb.append(" " + SWRLParser.RING_CHAR + " ");
           collectionOperationEncountered = true;
         }
       } else {
         if (!isFirst)
-          sb.append(" " + SWRLParser.AND_CHAR + " ");
+          sb.append(" " + SWRLParser.CONJUNCTION_CHAR + " ");
       }
       sb.append(atom.accept(this));
       isFirst = false;
@@ -142,7 +142,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
     while (headAtomIterator.hasNext()) {
       SWRLAtom atom = headAtomIterator.next();
       if (!isFirst)
-        sb.append(" " + SWRLParser.AND_CHAR + " ");
+        sb.append(" " + SWRLParser.CONJUNCTION_CHAR + " ");
       sb.append(atom.accept(this));
       isFirst = false;
     }
@@ -354,7 +354,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
   @NonNull private String visit(@NonNull OWLClassExpression classExpression)
   {
     if (classExpression.isAnonymous())
-      return visit(classExpression);
+      return "[Anonymous class expressions not implemented]";
     else {
       OWLClass cls = classExpression.asOWLClass();
       return visit(cls);
@@ -381,7 +381,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
   @NonNull private String visit(@NonNull OWLObjectPropertyExpression objectPropertyExpression)
   {
     if (objectPropertyExpression.isAnonymous())
-      return visit(objectPropertyExpression);
+      return "[Anonymous object property expressions not implemented]";
     else
       return visit(objectPropertyExpression.asOWLObjectProperty());
   }
@@ -398,7 +398,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
   @NonNull private String visit(@NonNull OWLDataPropertyExpression dataPropertyExpression)
   {
     if (dataPropertyExpression.isAnonymous())
-      return visit(dataPropertyExpression);
+      return "[Anonymous data property expressions not implemented]";
     else
       return visit(dataPropertyExpression.asOWLDataProperty());
   }

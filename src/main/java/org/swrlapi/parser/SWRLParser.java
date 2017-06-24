@@ -37,13 +37,14 @@ import java.util.Set;
  *
  * @see org.semanticweb.owlapi.model.SWRLRule
  * @see org.swrlapi.parser.SWRLTokenizer
+ * @see org.swrlapi.parser.SWRLToken
  * @see org.swrlapi.parser.SWRLParserSupport
  * @see org.swrlapi.parser.SWRLParseException
  * @see org.swrlapi.parser.SWRLIncompleteRuleException
  */
 public class SWRLParser
 {
-  public final static char AND_CHAR = '^';
+  public final static char CONJUNCTION_CHAR = '^';
   public final static String IMP_COMBINATION = "->";
   public final static char RING_CHAR = '\u02da'; // .
 
@@ -84,8 +85,8 @@ public class SWRLParser
     do {
       if (justProcessedAtom)
         message = isInHead ?
-          "Expecting " + AND_CHAR :
-          "Expecting " + IMP_COMBINATION + ", " + AND_CHAR + " or " + RING_CHAR;
+          "Expecting " + CONJUNCTION_CHAR :
+          "Expecting " + IMP_COMBINATION + ", " + CONJUNCTION_CHAR + " or " + RING_CHAR;
       else
         message = isInHead ? "Expecting atom" : "Expecting atom," + IMP_COMBINATION + " or " + RING_CHAR;
 
@@ -95,12 +96,20 @@ public class SWRLParser
         if (isInHead)
           throw new SWRLParseException("Second occurrence of ^");
         isInHead = true;
-      } else if (currentToken.isAnd()) {
+      } else if (currentToken.isConjunction()) {
         if (!justProcessedAtom)
           throw new SWRLParseException("^ may occur only after an atom");
+      } else if (currentToken.isAnd()) {
+        throw new SWRLParseException("AND may be used only in a class or property expression");
+      } else if (currentToken.isOr()) {
+        throw new SWRLParseException("OR may be used only in a class or property expression ");
+      } else if (currentToken.isNot()) {
+        throw new SWRLParseException("NOT may be used only in a class or property expression");
       } else if (currentToken.isRing()) {
         if (isInHead)
           throw new SWRLParseException(". may only occur in query body");
+      } else if (currentToken.isLParen()) {
+        // TODO Class or property expression
       } else if (currentToken.isShortName()) {
         String shortName = currentToken.getValue();
         Optional<? extends @NonNull SWRLAtom> atom = parseSWRLAtom(shortName, tokenizer, isInHead);
@@ -191,6 +200,9 @@ public class SWRLParser
     } else if (shortName.equalsIgnoreCase(DIFFERENT_FROM_PREDICATE)) {
       tokenizer.checkAndSkipLParen("Expecting parentheses-enclosed arguments for different individuals atom");
       return parseSWRLDifferentFromAtomArguments(tokenizer, isInHead);
+    } else if (this.swrlParserSupport.isSWRLBuiltIn(shortName)) {
+      tokenizer.checkAndSkipLParen("Expecting parentheses-enclosed arguments for built-in atom");
+      return parseSWRLBuiltinAtomArguments(shortName, tokenizer, isInHead);
     } else if (this.swrlParserSupport.isOWLClass(shortName)) {
       tokenizer.checkAndSkipLParen("Expecting parentheses-enclosed arguments for class atom");
       return parseSWRLClassAtomArguments(shortName, tokenizer, isInHead);
@@ -200,9 +212,6 @@ public class SWRLParser
     } else if (this.swrlParserSupport.isOWLDataProperty(shortName)) {
       tokenizer.checkAndSkipLParen("Expecting parentheses-enclosed arguments for data property atom");
       return parseSWRLDataPropertyAtomArguments(shortName, tokenizer, isInHead);
-    } else if (this.swrlParserSupport.isSWRLBuiltIn(shortName)) {
-      tokenizer.checkAndSkipLParen("Expecting parentheses-enclosed arguments for built-in atom");
-      return parseSWRLBuiltinAtomArguments(shortName, tokenizer, isInHead);
     } else if (this.swrlParserSupport.isOWLDatatype(shortName)) {
       tokenizer.checkAndSkipLParen("Expecting parentheses-enclosed arguments for data range atom");
       return parseSWRLDataRangeAtomArguments(shortName, tokenizer, isInHead);
@@ -374,7 +383,7 @@ public class SWRLParser
   private Optional<@NonNull SWRLDArgument> parseLiteralSWRLDArgument(@NonNull SWRLTokenizer tokenizer,
     @NonNull String literalValue) throws SWRLParseException
   {
-    if (tokenizer.peekToken("String may be qualified with datatype").isAnd()) {
+    if (tokenizer.peekToken("String may be qualified with datatype").isConjunction()) {
       tokenizer.skipToken(); // Skip the peeked token
       throw generateEndOfRuleException("Partial datatype qualifier - add '^' to complete", tokenizer);
     } else if (tokenizer.peekToken("String may be qualified with datatype").isTypeQualifier()) {

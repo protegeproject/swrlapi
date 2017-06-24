@@ -6,16 +6,14 @@ public class IncompatibleSWRLBuiltInClassException extends SWRLBuiltInLibraryExc
 {
   private static final long serialVersionUID = 1L;
 
-  public IncompatibleSWRLBuiltInClassException(@NonNull String prefix, @NonNull String className,
-    @NonNull String message, @NonNull Throwable cause)
+  public IncompatibleSWRLBuiltInClassException(@NonNull String className, @NonNull String message,
+    @NonNull Throwable cause)
   {
-    super("incompatible Java built-in class " + className + " defined for library prefix " + prefix + ": " + message,
-      cause);
+    super("incompatible Java built-in class " + className + ": " + message, cause);
   }
 
-  public IncompatibleSWRLBuiltInClassException(@NonNull String prefix, @NonNull String className,
-    @NonNull String message)
+  public IncompatibleSWRLBuiltInClassException(@NonNull String className, @NonNull String message)
   {
-    super("incompatible Java built-in class " + className + " defined for library prefix " + prefix + ": " + message);
+    super("incompatible Java built-in class " + className + ": " + message);
   }
 }

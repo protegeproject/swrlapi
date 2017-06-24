@@ -744,7 +744,7 @@ class DefaultSQWRLQuery implements SQWRLQuery
 
   /**
    * Incrementally build variable dependency paths up to and including the current atom.
-   * <p/>
+   * <p>
    * Note: Sets of sets in Java require care because of hash code issues. The enclosed set should not be modified or the
    * outer set may return inconsistent results.
    */
@@ -785,7 +785,7 @@ class DefaultSQWRLQuery implements SQWRLQuery
               }
             }
           } else {
-            // Did not find existing path for this root using these variables - add dependent variables as new path
+            // Did not loadExternalSWRLBuiltInLibraries existing path for this root using these variables - add dependent variables as new path
             Set<@NonNull Set<@NonNull String>> paths = pathMap.get(rootVariableName);
             paths.add(Collections.unmodifiableSet(dependentVariables));
           }

@@ -62,7 +62,7 @@ public abstract class TargetRuleEngineExtractorBase implements TargetRuleEngineE
     if (iri.isPresent())
       return iri.get();
     else
-      throw new IllegalArgumentException("could not find IRI for prefixed name " + prefixedName);
+      throw new IllegalArgumentException("could not loadExternalSWRLBuiltInLibraries IRI for prefixed name " + prefixedName);
   }
 
   @NonNull private SWRLRuleEngineBridge getBridge()

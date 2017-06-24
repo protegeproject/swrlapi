@@ -16,15 +16,14 @@ import java.io.File;
 import java.util.Optional;
 
 /**
- * Factory for generating some of the core entities defined by the SWRLAPI.
+ * Factory for generating some of the core entities defined by the SWRLAPI
  */
 public class SWRLAPIFactory
 {
   @NonNull private static final SWRLRuleAndQueryEngineFactory swrlRuleAndQueryEngineFactory;
 
   static {
-    swrlRuleAndQueryEngineFactory = new DefaultSWRLRuleAndQueryEngineFactory();
-    swrlRuleAndQueryEngineFactory.tryToRegisterADefaultSWRLRuleEngine();
+    swrlRuleAndQueryEngineFactory = SWRLAPIInternalFactory.getSWRLRuleAndQueryEngineFactory();
   }
 
   /**

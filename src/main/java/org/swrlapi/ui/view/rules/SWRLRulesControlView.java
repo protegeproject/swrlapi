@@ -191,11 +191,27 @@ public class SWRLRulesControlView extends JPanel implements SWRLAPIView
         appendToConsole("Look at the 'Inferred Axioms' tab to see the inferred axioms.\n");
         appendToConsole("Press the '" + SWRLRulesControlView.this.getSWRLRuleEngine().getRuleEngineName()
           + "->OWL' button to translate the inferred axioms to OWL knowledge.\n");
-      } catch (SWRLRuleEngineException e) {
-        appendToConsole("Exception running rule engine: " + (e.getMessage() != null ? e.getMessage() : "") + "\n");
+      } catch (Exception e) {
+        String errorMessage = buildChainedErrorMessage(e);
+        appendToConsole("Exception running rule engine: " + errorMessage + "\n");
       }
       this.controlPanel.getParent().validate();
     }
+  }
+
+  @NonNull private String buildChainedErrorMessage(Throwable t)
+  {
+    String message = t.getMessage() != null ? t.getMessage() : "";
+
+    Throwable currentThrowable = t;
+    while (currentThrowable != null) {
+      Throwable cause = currentThrowable.getCause();
+      if (cause != null && cause.getMessage() != null)
+        message += ": " + cause.getMessage();
+
+      currentThrowable = cause;
+    }
+    return message;
   }
 
   private class ExportActionListener extends ListenerBase implements ActionListener

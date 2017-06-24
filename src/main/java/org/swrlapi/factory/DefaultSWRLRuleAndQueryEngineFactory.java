@@ -30,8 +30,6 @@ public class DefaultSWRLRuleAndQueryEngineFactory implements SWRLRuleAndQueryEng
   @Override public void registerRuleEngine(@NonNull TargetSWRLRuleEngineCreator ruleEngineCreator)
   {
     this.ruleEngineManager.registerRuleEngine(ruleEngineCreator);
-
-    // log.info("Rule engine '" + ruleEngineName + "' registered with the SWRLAPI rule engine manager.");
   }
 
   @NonNull @Override public SWRLRuleEngine createSWRLRuleEngine(@NonNull OWLOntology ontology,

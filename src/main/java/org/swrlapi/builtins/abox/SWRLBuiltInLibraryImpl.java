@@ -22,6 +22,8 @@ import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentType;
 import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -32,11 +34,15 @@ import java.util.stream.Collectors;
  */
 public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 {
-  private static final String SWRLABoxLibraryName = "SWRLABoxBuiltIns";
+  private static final String PREFIX = "abox";
+
+  private static final String NAMESPACE = "http://swrl.stanford.edu/ontologies/built-ins/5.0.0/abox.owl#";
+
+  private static final String[] BUILT_IN_NAMES = { "caa", "sia", "dia", "opaa", "nopaa", "dpaa", "ndpaa" };
 
   public SWRLBuiltInLibraryImpl()
   {
-    super(SWRLABoxLibraryName);
+    super(PREFIX, NAMESPACE, new HashSet<>(Arrays.asList(BUILT_IN_NAMES)));
   }
 
   @Override public void reset()

@@ -31,15 +31,15 @@ public class SQWRLResultTest
   private SQWRLResultManager resultManager;
   private SQWRLResultValueFactory valueFactory;
 
-  private static final String TestPrefix = "test:";
-  private static final String TestNamespace = "http://example.org#";
+  private static final String TEST_PREFIX = "test:";
+  private static final String TEST_NAMESPACE = "http://example.org#";
 
-  private static final IRI c1IRI = IRI.create(TestNamespace + "c1");
-  private static final IRI i1IRI = IRI.create(TestNamespace + "i1");
-  private static final IRI p1IRI = IRI.create(TestNamespace + "p1");
-  private static final String c1PrefixedName = TestPrefix + "c1";
-  private static final String i1PrefixedName = TestPrefix + "i1";
-  private static final String p1PrefixedName = TestPrefix + "p1";
+  private static final IRI c1IRI = IRI.create(TEST_NAMESPACE + "c1");
+  private static final IRI i1IRI = IRI.create(TEST_NAMESPACE + "i1");
+  private static final IRI p1IRI = IRI.create(TEST_NAMESPACE + "p1");
+  private static final String c1PrefixedName = TEST_PREFIX + "c1";
+  private static final String i1PrefixedName = TEST_PREFIX + "i1";
+  private static final String p1PrefixedName = TEST_PREFIX + "p1";
   private static final String columnName = "c";
   private static final String column1Name = "c1";
 
@@ -51,7 +51,7 @@ public class SQWRLResultTest
     resultManager = SWRLAPIInternalFactory.createSQWRLResultManager(iriResolver);
     valueFactory = SWRLAPIInternalFactory.createSQWRLResultValueFactory(iriResolver);
 
-    iriResolver.setPrefix(TestPrefix, TestNamespace);
+    iriResolver.setPrefix(TEST_PREFIX, TEST_NAMESPACE);
   }
 
   @Test public void testEmptyResult() throws Exception

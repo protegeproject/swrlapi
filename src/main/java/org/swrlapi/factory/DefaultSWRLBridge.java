@@ -9,7 +9,6 @@ import org.semanticweb.owlapi.model.parameters.Imports;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 import org.swrlapi.bridge.SWRLBridge;
 import org.swrlapi.bridge.TargetSWRLRuleEngine;
-import org.swrlapi.builtins.SWRLBuiltInLibraryManager;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.IRIResolver;
 import org.swrlapi.core.SWRLAPIOWLOntology;
@@ -30,7 +29,7 @@ import java.util.Set;
 /**
  * Default implementation of a SWRL rule engine bridge, built-in bridge, built-in bridge controller, and rule engine
  * bridge controller.
- * <p/>
+ * <p>
  * Asserted OWL axioms are managed by a {@link org.swrlapi.core.SWRLRuleEngine}, which passes them to a
  * {@link org.swrlapi.bridge.TargetSWRLRuleEngine} using the
  * {@link org.swrlapi.bridge.TargetSWRLRuleEngine#defineOWLAxiom(OWLAxiom)} call.
@@ -39,7 +38,6 @@ public class DefaultSWRLBridge implements SWRLBridge
 {
   @NonNull private final SWRLAPIOWLOntology swrlapiOWLOntology;
   @NonNull private final OWL2RLPersistenceLayer owl2RLPersistenceLayer;
-  @NonNull private final SWRLBuiltInLibraryManager builtInLibraryManager;
 
   /**
    * OWL axioms inferred by a rule engine (via the {@link #inferOWLAxiom(org.semanticweb.owlapi.model.OWLAxiom)} call).
@@ -65,12 +63,11 @@ public class DefaultSWRLBridge implements SWRLBridge
   {
     this.swrlapiOWLOntology = swrlapiOWLOntology;
     this.owl2RLPersistenceLayer = owl2RLPersistenceLayer;
-    this.builtInLibraryManager = new SWRLBuiltInLibraryManager();
 
     this.inferredOWLAxioms = new HashSet<>();
     this.injectedOWLAxioms = new HashSet<>();
 
-    this.builtInLibraryManager.invokeAllBuiltInLibrariesResetMethod(this);
+    this.swrlapiOWLOntology.getSWRLBuiltInLibraryManager().invokeAllBuiltInLibrariesResetMethod(this);
   }
 
   @Override public void setTargetSWRLRuleEngine(@NonNull TargetSWRLRuleEngine targetSWRLRuleEngine)
@@ -83,7 +80,7 @@ public class DefaultSWRLBridge implements SWRLBridge
     this.inferredOWLAxioms.clear();
     this.injectedOWLAxioms.clear();
 
-    this.builtInLibraryManager.invokeAllBuiltInLibrariesResetMethod(this);
+    this.swrlapiOWLOntology.getSWRLBuiltInLibraryManager().invokeAllBuiltInLibrariesResetMethod(this);
   }
 
   @Override public boolean hasOntologyChanged()
@@ -149,7 +146,7 @@ public class DefaultSWRLBridge implements SWRLBridge
     @NonNull String ruleName, @NonNull String builtInName, int builtInIndex, boolean isInConsequent,
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
-    return builtInLibraryManager
+    return this.swrlapiOWLOntology.getSWRLBuiltInLibraryManager()
       .invokeSWRLBuiltIn(this, ruleName, builtInName, builtInIndex, isInConsequent, arguments);
   }
 

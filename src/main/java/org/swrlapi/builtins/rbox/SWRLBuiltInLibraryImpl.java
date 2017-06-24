@@ -26,6 +26,8 @@ import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.exceptions.SWRLBuiltInNotImplementedException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -36,11 +38,16 @@ import java.util.stream.Collectors;
  */
 public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 {
-  private static final String SWRLRBoxLibraryName = "SWRLRBoxBuiltIns";
+  private static final String PREFIX = "rbox";
+
+  private static final String NAMESPACE = "http://swrl.stanford.edu/ontologies/built-ins/5.0.0/rbox.owl#";
+
+  private static final String[] BUILT_IN_NAMES = { "topa", "djopa", "eopa", "sopa", "spa", "aopa", "ropa", "iropa",
+    "iopa", "djdpa", "sdpa", "dpda", "edpa", "spoca" };
 
   public SWRLBuiltInLibraryImpl()
   {
-    super(SWRLRBoxLibraryName);
+    super(PREFIX, NAMESPACE, new HashSet<>(Arrays.asList(BUILT_IN_NAMES)));
   }
 
   @Override public void reset()

@@ -8,6 +8,7 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.SWRLAtom;
 import org.swrlapi.bridge.SWRLBridge;
+import org.swrlapi.builtins.SWRLBuiltInLibraryManager;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.core.IRIResolver;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
@@ -48,6 +49,23 @@ public class SWRLAPIInternalFactory
 {
   @NonNull private static final String SQWRL_ICON_NAME = "SQWRL.gif";
   @NonNull private static final String OWL2RL_ICON_NAME = "OWL2RL.gif";
+
+  @NonNull private static final SWRLRuleAndQueryEngineFactory swrlRuleAndQueryEngineFactory;
+
+  static {
+    swrlRuleAndQueryEngineFactory = new DefaultSWRLRuleAndQueryEngineFactory();
+    swrlRuleAndQueryEngineFactory.tryToRegisterADefaultSWRLRuleEngine();
+  }
+
+  @NonNull public static SWRLRuleAndQueryEngineFactory getSWRLRuleAndQueryEngineFactory()
+  {
+    return swrlRuleAndQueryEngineFactory;
+  }
+
+  @NonNull public static SWRLBuiltInLibraryManager createSWRLBuiltInLibraryManager()
+  {
+    return new SWRLBuiltInLibraryManager();
+  }
 
   /**
    * @param ontology    An OWL ontology

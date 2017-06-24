@@ -31,15 +31,15 @@ import org.swrlapi.sqwrl.values.SQWRLResultValue;
  * <p>
  * An example configuration, data generation, and result retrieval is:
  * <pre>
- * private static final String TestPrefix = "test:";
- * private static final String TestNamespace = "http://example.org#";
+ * private static final String TEST_PREFIX = "test:";
+ * private static final String TEST_NAMESPACE = "http://example.org#";
  * private static final IRI i1IRI = IRI.create(TestNamespace + "i1");
  * private static final IRI 21IRI = IRI.create(TestNamespace + "i2");
  *
  * IRIResolver iriResolver = SWRLAPIFactory.createIRIResolver();
  * SQWRLResultManager resultManager = SWRLAPIFactory.createSQWRLResultManager(iriResolver);
  *
- * prefixManager.setPrefix(TestPrefix, TestNamespace);
+ * prefixManager.setPrefix(TEST_PREFIX, TEST_NAMESPACE);
  *
  * resultManager.addColumn(&quot;name&quot;);
  * resultManager.addAggregateColumn(&quot;average&quot;, SQWRLResultNames.AvgAggregateFunction);

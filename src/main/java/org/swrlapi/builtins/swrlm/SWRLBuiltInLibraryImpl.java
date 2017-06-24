@@ -8,6 +8,8 @@ import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,13 +18,17 @@ import java.util.Optional;
  */
 public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 {
-  private static final String SWRLMLibraryName = "SWRLAPIMathematicalBuiltIns";
+  private static final String PREFIX = "swrlm";
+
+  private static final String NAMESPACE = "http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlm.owl#";
+
+  private static final String[] BUILT_IN_NAMES = { "sqrt", "eval", "log" };
 
   @Nullable private JEP jep = null;
 
   public SWRLBuiltInLibraryImpl()
   {
-    super(SWRLMLibraryName);
+    super(PREFIX, NAMESPACE, new HashSet<>(Arrays.asList(BUILT_IN_NAMES)));
   }
 
   @Override public void reset()
@@ -111,10 +117,10 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
             double variableValue = getArgumentAsADouble(variableArgument);
             getJEP().addVariable(variableName.get(), variableValue);
           } else {
-            String message = "exception processing expression '" + expression + "': " +
-              "variable ?" + variableName.get() + " with type " + getLiteralArgumentDatatypeName(
-              currentVariableArgumentIndex, arguments) +
-              " cannot be converted to " + XSDVocabulary.DOUBLE.getPrefixedName();
+            String message =
+              "exception processing expression '" + expression + "': " + "variable ?" + variableName.get()
+                + " with type " + getLiteralArgumentDatatypeName(currentVariableArgumentIndex, arguments)
+                + " cannot be converted to " + XSDVocabulary.DOUBLE.getPrefixedName();
             throw new SWRLBuiltInException(message);
           }
           currentVariableArgumentIndex++;
@@ -139,9 +145,10 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       if (isArgumentConvertibleToDouble(resultArgumentIndex, arguments))
         return value == getArgumentAsADouble(resultArgumentIndex, arguments);
       else
-        throw new SWRLBuiltInException("exception processing expression '" + expression + "': " +
-          "result argument with type " + getLiteralArgumentDatatypeName(resultArgumentIndex, arguments)
-          + " cannot be converted to " + XSDVocabulary.DOUBLE.getPrefixedName());
+        throw new SWRLBuiltInException(
+          "exception processing expression '" + expression + "': " + "result argument with type "
+            + getLiteralArgumentDatatypeName(resultArgumentIndex, arguments) + " cannot be converted to "
+            + XSDVocabulary.DOUBLE.getPrefixedName());
     }
   }
 

@@ -58,14 +58,16 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
  * A class that must be subclassed by a class implementing a library of SWRL built-in methods.
- * <p/>
- * Provides invocation context for invoked built-ins (such the name of invoking rule, whether the invocation is in the
+ * <p>
+ * Provides invocation context for invoked built-ins (such the prefix of invoking rule, whether the invocation is in the
  * consequent or the antecedent) and access to the invoking {@link org.swrlapi.builtins.SWRLBuiltInBridge}. Also
  * provides implementations for a large number of SWRL built-in argument processing methods.
  *
@@ -79,9 +81,11 @@ public abstract class AbstractSWRLBuiltInLibrary
   implements SWRLBuiltInLibrary, SWRLBuiltInInputArgumentHandler, SWRLBuiltInResultArgumentHandler,
   SWRLBuiltInArgumentCreator
 {
-  @NonNull private final String libraryName;
+  @NonNull private final String prefix;
+  @NonNull private final String namespace;
+  @NonNull private final Set<@NonNull String> builtInNames;
 
-  // Bridge, rule name, built-in index, and head or body location within rule of built-in currently invoking its
+  // Bridge, rule prefix, built-in index, and head or body location within rule of built-in currently invoking its
   // associated Java implementation. The invokingRuleName, invokingBuiltInIndex, and isInConsequent variables are valid
   // only when a built-in currently being invoked so should only be retrieved through their associated accessor methods
   // from within a built-in; the invokingBridge method is valid only in built-ins and in the reset method.
@@ -93,17 +97,34 @@ public abstract class AbstractSWRLBuiltInLibrary
   private int invokingBuiltInIndex = -1;
   private boolean isInConsequent = false;
 
-  protected AbstractSWRLBuiltInLibrary(@NonNull String libraryName)
+  protected AbstractSWRLBuiltInLibrary(@NonNull String prefix, @NonNull String namespace, @NonNull Set<@NonNull String> builtInNames)
   {
     this.invokingBridge = null;
-    this.libraryName = libraryName;
+    this.prefix = prefix;
+    this.namespace = namespace;
+    this.builtInNames = new HashSet<>(builtInNames);
     this.invocationPatternID = 0L;
     this.invocationPatternMap = new HashMap<>();
   }
 
-  @NonNull @Override public String getLibraryName()
+  @NonNull public String getPrefix()
   {
-    return this.libraryName;
+    return this.prefix;
+  }
+
+  @NonNull public String getNamespace()
+  {
+    return this.namespace;
+  }
+
+  @NonNull public Set<@NonNull String> getBuiltInNames()
+  {
+    return new HashSet<>(this.builtInNames);
+  }
+
+  @NonNull public Set<@NonNull IRI> getBuiltInIRIs()
+  {
+    return this.builtInNames.stream().map(s -> IRI.create(namespace + s)).collect(Collectors.toSet());
   }
 
   @NonNull @Override public SWRLBuiltInBridge getBuiltInBridge() throws SWRLBuiltInLibraryException
@@ -236,7 +257,7 @@ public abstract class AbstractSWRLBuiltInLibrary
    * combination.
    *
    * @param bridge       The built-in bridge invoking the built-in
-   * @param ruleName     The name of the rule invoking the built-in
+   * @param ruleName     The prefix of the rule invoking the built-in
    * @param builtInIndex The 0-based index of the built-in in the rule
    * @param inConsequent Is the built-in in the rule consequent
    * @param arguments    The arguments to the built-in
@@ -270,7 +291,7 @@ public abstract class AbstractSWRLBuiltInLibrary
       return IRI.create(fullName);
     } catch (RuntimeException e) {
       throw new SWRLBuiltInException(
-        "error creating IRI from full name " + fullName + ": " + (e.getMessage() != null ? e.getMessage() : ""), e);
+        "error creating IRI from full prefix " + fullName + ": " + (e.getMessage() != null ? e.getMessage() : ""), e);
     }
   }
 
@@ -1459,7 +1480,7 @@ public abstract class AbstractSWRLBuiltInLibrary
 
     if (!arguments.get(argumentNumber).isVariable())
       throw new SWRLBuiltInException(
-        "internal error: attempt to get variable name of non-variable argument " + argumentNumber);
+        "internal error: attempt to get variable prefix of non-variable argument " + argumentNumber);
 
     return arguments.get(argumentNumber).asVariable().getVariableName();
   }
@@ -1470,7 +1491,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     String message = "expecting " + expectedTypeName + ", got ";
 
     if (argument.isVariable() && argument.asVariable().isUnbound())
-      message += "unbound argument with variable name " + argument.asVariable().getVariableName();
+      message += "unbound argument with variable prefix " + argument.asVariable().getVariableName();
     else {
       if (argument instanceof SWRLClassBuiltInArgument) {
         SWRLClassBuiltInArgument classArgument = (SWRLClassBuiltInArgument)argument;

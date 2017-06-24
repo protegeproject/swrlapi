@@ -31,6 +31,7 @@ import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.swrlapi.ui.model.SWRLAutoCompleter;
 
 import javax.swing.*;
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -266,14 +267,14 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
     this.swrlapiOWLOntology.deleteSWRLRule(ruleName);
   }
 
-  @Override public boolean isSWRLBuiltIn(@NonNull IRI iri)
+  @Override public boolean isSWRLBuiltInIRI(@NonNull IRI iri)
   {
-    return this.swrlapiOWLOntology.isSWRLBuiltIn(iri);
+    return this.swrlapiOWLOntology.isSWRLBuiltInIRI(iri);
   }
 
-  @Override public void addSWRLBuiltIn(@NonNull IRI iri)
+  @Override public boolean isSWRLBuiltIn(@NonNull String shortName)
   {
-    this.swrlapiOWLOntology.addSWRLBuiltIn(iri);
+    return this.swrlapiOWLOntology.isSWRLBuiltIn(shortName);
   }
 
   @NonNull @Override public Set<@NonNull IRI> getSWRLBuiltInIRIs()
@@ -334,6 +335,12 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
   @NonNull @Override public OWLReasoner getOWLReasoner()
   {
     return this.targetSWRLRuleEngine.getOWLReasoner();
+  }
+
+  @Override public void loadExternalSWRLBuiltInLibraries(@NonNull File swrlBuiltInLibraryDirectory)
+  {
+    this.swrlapiOWLOntology.getSWRLBuiltInLibraryManager()
+      .loadExternalSWRLBuiltInLibraries(swrlBuiltInLibraryDirectory);
   }
 
   @NonNull @Override public Icon getRuleEngineIcon()

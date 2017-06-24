@@ -1,13 +1,13 @@
 package org.swrlapi.builtins;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.semanticweb.owlapi.model.IRI;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.exceptions.SWRLBuiltInException;
-import org.swrlapi.exceptions.SWRLBuiltInLibraryException;
-import org.swrlapi.factory.SQWRLResultValueFactory;
 
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Defines a base interface for a SWRL built-in library. All built-in library implementation must implement this
@@ -22,20 +22,26 @@ import java.util.List;
  */
 public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
 {
+  @NonNull String getPrefix();
+
   /**
    * @return The name of the built-in library
    */
-  @NonNull String getLibraryName();
+  @NonNull String getNamespace();
+
+  @NonNull Set<@NonNull String> getBuiltInNames();
+
+  @NonNull public Set<@NonNull IRI> getBuiltInIRIs();
 
   /**
-   * Reset library, discarding any internal state if any (e.g., caches).
+   * Reset library, discarding any internal state if any (e.g., caches)
    */
   void reset();
 
   /**
    * Method to invoke a built-in in the library. Invoked by {@link SWRLBuiltInLibraryManager}.
    *
-   * @param method            The name of the built-in method
+   * @param method            The built-in method
    * @param bridge            The built-in bridge
    * @param ruleName          The invoking rule name
    * @param prefix            The prefix of the built-in name
