@@ -4,6 +4,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.ui.model.SWRLRuleEngineModel;
 import org.swrlapi.ui.view.SWRLAPIView;
+import org.semanticweb.owlapi.model.OWLObject;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -72,8 +73,9 @@ public class AssertedOWLAxiomsView extends JPanel implements SWRLAPIView
       if (row < 0 || row >= getRowCount())
         return "<OUT OF BOUNDS>";
       else {
-        // TODO Use the IRIResolver to render; also add getAssertedOWLAxiomsAsList to SWRLRuleEngine
-        return AssertedOWLAxiomsView.this.getSWRLRuleEngine().getAssertedOWLAxioms().toArray()[row].toString();
+        // TODO This seems overly elaborate
+        OWLObject owlObject = (OWLObject)AssertedOWLAxiomsView.this.getSWRLRuleEngine().getAssertedOWLAxioms().toArray()[row];
+        return ruleEngineModel.getSWRLRuleEngine().getSWRLAPIOWLOntology().getIRIResolver().render(owlObject);
       }
     }
   }
