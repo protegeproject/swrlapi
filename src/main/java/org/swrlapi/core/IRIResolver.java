@@ -59,5 +59,11 @@ public interface IRIResolver
    */
   @NonNull IRI generateIRI();
 
+  /**
+   * Return a rendering of an OWL object
+   *
+   * @param owlObject The OWL object
+   * @return Its rendering
+   */
   @NonNull String render(@Nonnull OWLObject owlObject);
 }

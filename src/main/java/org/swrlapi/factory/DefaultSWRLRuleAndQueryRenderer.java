@@ -538,14 +538,14 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
       return "\"" + value + "\"^^" + visit(datatype);
   }
 
-  @NonNull private String getShortForm(IRI iri)
+  @NonNull private String getShortForm(@NonNull IRI iri)
   {
     String shortForm = iri2ShortForm(iri);
 
     return shortForm != null ? shortForm : iri.getShortForm();
   }
 
-  @NonNull private String getPrefixedName(IRI iri)
+  @NonNull private String getPrefixedName(@NonNull IRI iri)
   {
     String prefixedName = iri2PrefixedName(iri);
 
@@ -564,7 +564,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
       .isSQWRLCollectionOperationBuiltIn(((SWRLAPIBuiltInAtom)atom).getBuiltInPrefixedName());
   }
 
-  @NonNull private String iri2PrefixedName(IRI iri)
+  @NonNull private String iri2PrefixedName(@NonNull IRI iri)
   {
     Optional<@NonNull String> prefixedName = this.iriResolver.iri2PrefixedName(iri);
 
@@ -574,7 +574,7 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
       throw new IllegalArgumentException("could not get prefixed name for IRI " + iri);
   }
 
-  @NonNull private String iri2ShortForm(IRI iri)
+  @NonNull private String iri2ShortForm(@NonNull IRI iri)
   {
     Optional<@NonNull String> shortForm = this.iriResolver.iri2ShortForm(iri);
 

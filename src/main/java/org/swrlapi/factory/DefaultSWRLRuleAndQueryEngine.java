@@ -32,6 +32,7 @@ import org.swrlapi.ui.model.SWRLAutoCompleter;
 
 import javax.swing.*;
 import java.io.File;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -279,7 +280,7 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
 
   @NonNull @Override public Set<@NonNull IRI> getSWRLBuiltInIRIs()
   {
-    return this.swrlapiOWLOntology.getSWRLBuiltInIRIs();
+    return Collections.unmodifiableSet(this.swrlapiOWLOntology.getSWRLBuiltInIRIs());
   }
 
   @NonNull @Override public SWRLParser createSWRLParser()

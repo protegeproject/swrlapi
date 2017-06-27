@@ -413,7 +413,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
 
   @NonNull @Override public Set<@NonNull String> getSQWRLQueryNames()
   {
-    return new HashSet<>(this.sqwrlQueries.keySet());
+    return Collections.unmodifiableSet(this.sqwrlQueries.keySet());
   }
 
   @NonNull @Override public Set<@NonNull SQWRLQuery> getSQWRLQueries()
