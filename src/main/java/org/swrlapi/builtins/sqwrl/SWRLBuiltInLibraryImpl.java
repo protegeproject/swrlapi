@@ -4,37 +4,15 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.SWRLArgument;
 import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
-import org.swrlapi.builtins.arguments.SQWRLCollectionVariableBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLAnnotationPropertyBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLClassBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLClassExpressionBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLDataPropertyBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLNamedIndividualBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLObjectPropertyBuiltInArgument;
-import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
+import org.swrlapi.builtins.arguments.*;
 import org.swrlapi.exceptions.InvalidSWRLBuiltInArgumentException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.sqwrl.SQWRLResultGenerator;
-import org.swrlapi.sqwrl.values.SQWRLAnnotationPropertyResultValue;
-import org.swrlapi.sqwrl.values.SQWRLClassExpressionResultValue;
-import org.swrlapi.sqwrl.values.SQWRLClassResultValue;
-import org.swrlapi.sqwrl.values.SQWRLDataPropertyResultValue;
-import org.swrlapi.sqwrl.values.SQWRLLiteralResultValue;
-import org.swrlapi.sqwrl.values.SQWRLNamedIndividualResultValue;
-import org.swrlapi.sqwrl.values.SQWRLObjectPropertyResultValue;
+import org.swrlapi.sqwrl.values.*;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.math.BigInteger;
+import java.util.*;
 
 /**
  * Implementation library for SQWRL built-ins.
@@ -418,7 +396,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     Collection<SWRLBuiltInArgument> collection = getCollectionInSingleCollectionOperation(arguments,
       sourceCollectionArgumentNumber, numberOfCoreArguments);
 
-    return processResultArgument(arguments, resultArgumentNumber, collection.size());
+    return processResultArgument(arguments, resultArgumentNumber, BigInteger.valueOf(collection.size()));
   }
 
   /**
