@@ -1,8 +1,10 @@
 package org.swrlapi.factory;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.SWRLArgument;
 import org.semanticweb.owlapi.model.SWRLAtom;
+import org.semanticweb.owlapi.model.SWRLVariable;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLLiteralBuiltInArgument;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
@@ -10,21 +12,11 @@ import org.swrlapi.core.IRIResolver;
 import org.swrlapi.core.SWRLAPIBuiltInAtom;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.literal.Literal;
-import org.swrlapi.sqwrl.SQWRLNames;
-import org.swrlapi.sqwrl.SQWRLQuery;
-import org.swrlapi.sqwrl.SQWRLResult;
-import org.swrlapi.sqwrl.SQWRLResultGenerator;
-import org.swrlapi.sqwrl.SQWRLResultManager;
+import org.swrlapi.sqwrl.*;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 class DefaultSQWRLQuery implements SQWRLQuery
@@ -35,6 +27,7 @@ class DefaultSQWRLQuery implements SQWRLQuery
   @NonNull private final SQWRLResultManager sqwrlResult;
   // Map of collection name to group arguments. Applies only to grouped collections.
   @NonNull private final Map<@NonNull String, @NonNull List<@NonNull SWRLBuiltInArgument>> collectionGroupArgumentsMap;
+  @NonNull private final IRIResolver iriResolver;
   @NonNull private final LiteralFactory literalFactory;
   @NonNull private final String comment;
 
@@ -51,6 +44,7 @@ class DefaultSQWRLQuery implements SQWRLQuery
     this.comment = comment;
     this.sqwrlResult = SWRLAPIInternalFactory.createSQWRLResultManager(iriResolver);
     this.collectionGroupArgumentsMap = new HashMap<>();
+    this.iriResolver = iriResolver;
     this.literalFactory = literalFactory;
 
     processSQWRLBuiltIns();
@@ -851,9 +845,11 @@ class DefaultSQWRLQuery implements SQWRLQuery
     Set<@NonNull String> referencedVariableNames = new HashSet<>();
 
     for (SWRLArgument argument : atom.getAllArguments()) {
-      if (argument instanceof SWRLVariableBuiltInArgument) {
-        SWRLVariableBuiltInArgument variableBuiltInArgument = (SWRLVariableBuiltInArgument)argument;
-        referencedVariableNames.add(variableBuiltInArgument.getVariableName());
+      if (argument instanceof SWRLVariable) {
+        SWRLVariable variableArgument = (SWRLVariable)argument;
+        IRI variableIRI = variableArgument.getIRI();
+        Optional<String> variableName = iriResolver.iri2PrefixedName(variableIRI);
+        referencedVariableNames.add(variableName.get());
       }
     }
 
