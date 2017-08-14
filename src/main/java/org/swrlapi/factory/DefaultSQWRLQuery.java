@@ -689,7 +689,7 @@ class DefaultSQWRLQuery implements SQWRLQuery
   /**
    * For every built-in atom, recordOWLClassExpression the variables it depends from preceding atoms (directly and indirectly).
    */
-  private void generateBuiltInAtomVariableDependencies()
+  private void generateBuiltInAtomVariableDependencies() throws SWRLBuiltInException
   {
     Map<@NonNull String, @NonNull Set<@NonNull Set<@NonNull String>>> pathMap = new HashMap<>();
     Set<@NonNull String> rootVariableNames = new HashSet<>();
@@ -743,7 +743,7 @@ class DefaultSQWRLQuery implements SQWRLQuery
    * outer set may return inconsistent results.
    */
   private void buildPaths(@NonNull SWRLAtom atom, @NonNull Set<@NonNull String> rootVariableNames,
-    @NonNull Map<@NonNull String, @NonNull Set<@NonNull Set<@NonNull String>>> pathMap)
+    @NonNull Map<@NonNull String, @NonNull Set<@NonNull Set<@NonNull String>>> pathMap) throws SWRLBuiltInException
   {
     Set<@NonNull String> currentAtomReferencedVariableNames = getReferencedVariableNames(atom);
     Set<@NonNull String> matchingRootVariableNames;
@@ -840,7 +840,7 @@ class DefaultSQWRLQuery implements SQWRLQuery
     return matchingRootVariableNames;
   }
 
-  @NonNull private Set<@NonNull String> getReferencedVariableNames(@NonNull SWRLAtom atom)
+  @NonNull private Set<@NonNull String> getReferencedVariableNames(@NonNull SWRLAtom atom) throws SWRLBuiltInException
   {
     Set<@NonNull String> referencedVariableNames = new HashSet<>();
 
@@ -848,30 +848,19 @@ class DefaultSQWRLQuery implements SQWRLQuery
       if (argument instanceof SWRLVariable) {
         SWRLVariable variableArgument = (SWRLVariable)argument;
         IRI variableIRI = variableArgument.getIRI();
-        Optional<String> variableName = iriResolver.iri2PrefixedName(variableIRI);
-        referencedVariableNames.add(variableName.get());
+        Optional<String> variableName = iriResolver.iri2VariableName(variableIRI);
+        if (variableName.isPresent())
+          referencedVariableNames.add(variableName.get());
+        else
+          throw new SWRLBuiltInException("Could not find variable name for IRI " + variableIRI);
       }
     }
 
     return referencedVariableNames;
   }
 
-  private boolean hasReferencedVariables(@NonNull SWRLAtom atom)
+  private boolean hasReferencedVariables(@NonNull SWRLAtom atom) throws SWRLBuiltInException
   {
     return !getReferencedVariableNames(atom).isEmpty();
-  }
-
-  @SuppressWarnings("unused")
-  // Used by commented-out group argument checking in processBuiltInArgumentDependencies
-  private Set<@NonNull String> getVariableNames(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
-    throws SWRLBuiltInException
-  {
-    Set<@NonNull String> variableNames = new HashSet<>();
-
-    for (SWRLBuiltInArgument argument : arguments)
-      if (argument.isVariable())
-        variableNames.add(argument.asVariable().getVariableName());
-
-    return variableNames;
   }
 }

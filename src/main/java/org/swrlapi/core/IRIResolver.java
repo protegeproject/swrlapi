@@ -38,6 +38,12 @@ public interface IRIResolver
   @NonNull Optional<@NonNull String> iri2PrefixedName(@NonNull IRI iri);
 
   /**
+   * @param iri An IRI
+   * @return A variable name form of the IRI
+   */
+  @NonNull Optional<@NonNull String> iri2VariableName(@NonNull IRI iri);
+
+  /**
    * @param iri An OWL entity IRI
    * @return The short form of the IRI
    */

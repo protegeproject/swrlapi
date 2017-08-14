@@ -123,6 +123,21 @@ public class DefaultIRIResolver implements IRIResolver
     }
   }
 
+  @Override @NonNull public Optional<@NonNull String> iri2VariableName(@NonNull IRI iri)
+  {
+    Optional<String> prefixedName = iri2PrefixedName(iri);
+
+    if (prefixedName.isPresent()) {
+      String actualPrefixedName = prefixedName.get();
+      if (!actualPrefixedName.contains(":"))
+        return Optional.of(actualPrefixedName);
+      else
+        return Optional
+          .of(actualPrefixedName.substring(actualPrefixedName.indexOf(":") + 1, actualPrefixedName.length()));
+    } else
+      return Optional.empty();
+  }
+
   @Override @NonNull public Optional<@NonNull String> iri2ShortForm(@NonNull IRI iri)
   {
     String shortForm = this.prefixManager.getShortForm(iri);
