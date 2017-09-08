@@ -4,6 +4,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.net.URI;
 
 /**
@@ -14,7 +16,13 @@ public class OWLLiteralValidator
   public static boolean isValid(@NonNull String literal, @NonNull OWLDatatype datatype)
   {
     try {
-      if (datatype.getIRI().equals(XSDVocabulary.BYTE.getIRI())) {
+      if (datatype.getIRI().equals(XSDVocabulary.DECIMAL.getIRI())) {
+        new BigDecimal(literal);
+        return true;
+      } else if (datatype.getIRI().equals(XSDVocabulary.INTEGER.getIRI())) {
+        new BigInteger(literal);
+        return true;
+      } else if (datatype.getIRI().equals(XSDVocabulary.BYTE.getIRI())) {
         Byte.parseByte(literal);
         return true;
       } else if (datatype.getIRI().equals(XSDVocabulary.SHORT.getIRI())) {
@@ -33,8 +41,7 @@ public class OWLLiteralValidator
         Double.parseDouble(literal);
         return true;
       } else if (datatype.getIRI().equals(XSDVocabulary.BOOLEAN.getIRI())) {
-        Boolean.parseBoolean(literal);
-        return true;
+        return (literal.equalsIgnoreCase("true") || literal.equalsIgnoreCase("false"));
       } else if (datatype.getIRI().equals(XSDVocabulary.ANY_URI.getIRI())) {
         URI.create(literal);
         return true;
@@ -50,10 +57,9 @@ public class OWLLiteralValidator
       } else if (datatype.getIRI().equals(XSDVocabulary.DURATION.getIRI())) {
         new XSDDuration(literal);
         return true;
-      } else
-        // We do not validate types we do not know about
+      } else // We do not validate types we do not know about
         return true;
-    } catch (IllegalArgumentException e) {
+    } catch (IllegalArgumentException e) { // NumberFormatException (thrown by BigDecimal and BigInteger constructors) a subclass
       return false;
     }
   }
