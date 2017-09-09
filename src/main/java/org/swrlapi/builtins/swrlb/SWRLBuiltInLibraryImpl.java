@@ -1631,4 +1631,18 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     return str.substring(0, pos);
   }
 
+  private int convertArgumentToAnInt(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException
+  {
+    BigInteger integerValue = getArgumentAsAnInteger(argumentNumber, arguments);
+
+    if (integerValue.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) > 0
+      || integerValue.compareTo(BigInteger.valueOf(Integer.MIN_VALUE)) < 0)
+      throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
+        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber),
+          "value converted to xsd:int cannot be larger than " + Integer.MAX_VALUE));
+
+    return integerValue.intValue();
+  }
+
 }

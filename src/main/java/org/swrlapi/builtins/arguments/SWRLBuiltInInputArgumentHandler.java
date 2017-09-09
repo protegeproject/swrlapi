@@ -3,6 +3,7 @@ package org.swrlapi.builtins.arguments;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLLiteral;
+import org.semanticweb.owlapi.model.OWLObject;
 import org.swrlapi.exceptions.InvalidSWRLBuiltInArgumentNumberException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.literal.XSDDate;
@@ -13,6 +14,7 @@ import org.swrlapi.literal.XSDTime;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This interface defines utility methods for dealing with input arguments to SWRL built-ins.
@@ -40,6 +42,15 @@ public interface SWRLBuiltInInputArgumentHandler
    * @throws SWRLBuiltInException If the argument is not bound
    */
   void checkThatArgumentIsBound(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException;
+
+  /**
+   * @param argumentNumber The 0-based index of the argument
+   * @param arguments      The built-in arguments
+   * @return True if the specified argument is bound
+   * @throws SWRLBuiltInException
+   */
+  boolean isBoundArgument(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException;
 
   /**
@@ -95,6 +106,13 @@ public interface SWRLBuiltInInputArgumentHandler
    * @throws SWRLBuiltInException If the check condition is met
    */
   void checkForUnboundNonFirstArguments(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException;
+
+  /**
+   * @param arguments
+   * @throws SWRLBuiltInException
+   */
+  void checkNumberOfArgumentsAtLeastOne(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException;
 
   /**
@@ -1033,6 +1051,9 @@ public interface SWRLBuiltInInputArgumentHandler
   @NonNull BigDecimal getArgumentAsADecimal(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException;
 
+  boolean isArgumentADecimal(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException;
+
   /**
    * @param argument A built-in argument
    * @return A decimal representation of the built-on argument
@@ -1047,6 +1068,9 @@ public interface SWRLBuiltInInputArgumentHandler
    * @throws SWRLBuiltInException If the specified argument cannot be converted to a double
    */
   @NonNull BigInteger getArgumentAsAnInteger(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException;
+
+  boolean isArgumentAnInteger(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException;
 
   /**
@@ -1117,4 +1141,24 @@ public interface SWRLBuiltInInputArgumentHandler
    */
   @NonNull String getVariableName(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException;
+
+  /**
+   * @param arguments            The built-in arguments
+   * @param builtInArgumentTypes
+   * @return
+   * @throws SWRLBuiltInException If an error occurs during processing
+   */
+  @NonNull Map<@NonNull Integer, @NonNull OWLObject> getInputArgumentValues(
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments, @NonNull SWRLBuiltInArgumentType<?>... builtInArgumentTypes)
+    throws SWRLBuiltInException;
+
+  /**
+   * @param argument
+   * @param expectedTypeName
+   * @return
+   * @throws SWRLBuiltInException If an error occurs during processing
+   */
+  @NonNull String makeInvalidArgumentTypeMessage(@NonNull SWRLBuiltInArgument argument,
+    @NonNull String expectedTypeName) throws SWRLBuiltInException;
+
 }
