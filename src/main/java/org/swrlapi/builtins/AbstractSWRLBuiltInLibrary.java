@@ -1150,7 +1150,7 @@ public abstract class AbstractSWRLBuiltInLibrary
 
   @Override public float getArgumentAsAFloat(SWRLBuiltInArgument argument) throws SWRLBuiltInException
   {
-    return getArgumentAsALiteral(argument).getFloat(); // Will throw LiteralException if invalid.
+    return getArgumentAsALiteral(argument).getFloat(); // Will throw LiteralException if invalid
   }
 
   // Double
@@ -1227,7 +1227,15 @@ public abstract class AbstractSWRLBuiltInLibrary
   @NonNull @Override public String getArgumentAsAString(int argumentNumber,
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
-    checkThatArgumentIsAString(argumentNumber, arguments);
+    isArgumentAString(argumentNumber, arguments);
+
+    return getArgumentAsALiteral(argumentNumber, arguments).getString();
+  }
+
+  @NonNull @Override public String getLiteralArgumentAsAString(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    isArgumentALiteral(argumentNumber, arguments);
 
     return getArgumentAsALiteral(argumentNumber, arguments).getString();
   }

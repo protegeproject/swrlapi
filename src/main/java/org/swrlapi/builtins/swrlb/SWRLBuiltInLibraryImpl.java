@@ -1521,7 +1521,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     String duration = "";
 
     try {
-      duration = getArgumentAsAString(argumentNumber, arguments);
+      XSDDuration duration = getArgumentAsADuration(argumentNumber, arguments);
       return XSDTimeUtil.xsdDurationString2AxisDuration(duration);
     } catch (IllegalArgumentException e) {
       throw new SWRLBuiltInException("invalid xsd:duration " + duration + ": " + e.getMessage(), e);
