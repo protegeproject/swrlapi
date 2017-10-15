@@ -20,46 +20,46 @@ public class XSDTimeUtil
   @NonNull private static final DateFormat jdbcDateTimeFormat = new SimpleDateFormat(jdbcDateTimeFormatString);
   @NonNull private static final DateFormat jdbcDateFormat = new SimpleDateFormat(jdbcDateFormatString);
 
-  public static org.apache.axis.types.Duration addDurations(org.apache.axis.types.@NonNull Duration duration1,
+  public static org.apache.axis.types.Duration addAxisDurations(org.apache.axis.types.@NonNull Duration duration1,
     org.apache.axis.types.@NonNull Duration duration2)
   {
     org.apache.axis.types.Duration result = new org.apache.axis.types.Duration();
 
-    result.setYears(getYears(duration1) + getYears(duration2));
-    result.setMonths(getMonths(duration1) + getMonths(duration2));
-    result.setDays(getDays(duration1) + getDays(duration2));
-    result.setHours(getHours(duration1) + getHours(duration2));
-    result.setMinutes(getMinutes(duration1) + getMinutes(duration2));
-    result.setSeconds(getSeconds(duration1) + getSeconds(duration2));
+    result.setYears(getYearsFromAxisDuration(duration1) + getYearsFromAxisDuration(duration2));
+    result.setMonths(getMonthsFromAxisDuration(duration1) + getMonthsFromAxisDuration(duration2));
+    result.setDays(getDaysFromAxisDuration(duration1) + getDaysFromAxisDuration(duration2));
+    result.setHours(getHoursFromAxisDuration(duration1) + getHoursFromAxisDuration(duration2));
+    result.setMinutes(getMinutesFromAxisDuration(duration1) + getMinutesFromAxisDuration(duration2));
+    result.setSeconds(getSecondsFromAxisDuration(duration1) + getSecondsFromAxisDuration(duration2));
 
     return result;
   }
 
-  public static int compareDurations(org.apache.axis.types.@NonNull Duration duration1,
+  public static int compareAxisDurations(org.apache.axis.types.@NonNull Duration duration1,
     org.apache.axis.types.@NonNull Duration duration2)
   {
-    int diff = getYears(duration1) - getYears(duration2);
+    int diff = getYearsFromAxisDuration(duration1) - getYearsFromAxisDuration(duration2);
     if (diff != 0)
       return diff;
 
-    diff = getMonths(duration1) - getMonths(duration2);
+    diff = getMonthsFromAxisDuration(duration1) - getMonthsFromAxisDuration(duration2);
     if (diff != 0)
       return diff;
 
-    diff = getDays(duration1) - getDays(duration2);
+    diff = getDaysFromAxisDuration(duration1) - getDaysFromAxisDuration(duration2);
     if (diff != 0)
       return diff;
 
-    diff = getHours(duration1) - getHours(duration2);
+    diff = getHoursFromAxisDuration(duration1) - getHoursFromAxisDuration(duration2);
     if (diff != 0)
       return diff;
 
-    diff = getMinutes(duration1) - getMinutes(duration2);
+    diff = getMinutesFromAxisDuration(duration1) - getMinutesFromAxisDuration(duration2);
     if (diff != 0)
       return diff;
 
     // TODO Look at this
-    diff = (int)getSeconds(duration1) - (int)getSeconds(duration2);
+    diff = (int)getSecondsFromAxisDuration(duration1) - (int)getSecondsFromAxisDuration(duration2);
 
     return diff;
   }
@@ -116,7 +116,8 @@ public class XSDTimeUtil
     return diff;
   }
 
-  public static int compareTimes(org.apache.axis.types.@NonNull Time time1, org.apache.axis.types.@NonNull Time time2)
+  public static int compareAxisTimes(org.apache.axis.types.@NonNull Time time1,
+    org.apache.axis.types.@NonNull Time time2)
   {
     Calendar calendar1 = time1.getAsCalendar();
     Calendar calendar2 = time2.getAsCalendar();
@@ -136,47 +137,47 @@ public class XSDTimeUtil
     return diff;
   }
 
-  public static org.apache.axis.types.@NonNull Duration subtractDurations(
+  public static org.apache.axis.types.@NonNull Duration subtractAxisDurations(
     org.apache.axis.types.@NonNull Duration duration1, org.apache.axis.types.@NonNull Duration duration2)
   {
     org.apache.axis.types.Duration result = new org.apache.axis.types.Duration();
 
-    result.setYears(getYears(duration1) - getYears(duration2));
-    result.setMonths(getMonths(duration1) - getMonths(duration2));
-    result.setDays(getDays(duration1) - getDays(duration2));
-    result.setHours(getHours(duration1) - getHours(duration2));
-    result.setMinutes(getMinutes(duration1) - getMinutes(duration2));
-    result.setSeconds(getSeconds(duration1) - getSeconds(duration2));
+    result.setYears(getYearsFromAxisDuration(duration1) - getYearsFromAxisDuration(duration2));
+    result.setMonths(getMonthsFromAxisDuration(duration1) - getMonthsFromAxisDuration(duration2));
+    result.setDays(getDaysFromAxisDuration(duration1) - getDaysFromAxisDuration(duration2));
+    result.setHours(getHoursFromAxisDuration(duration1) - getHoursFromAxisDuration(duration2));
+    result.setMinutes(getMinutesFromAxisDuration(duration1) - getMinutesFromAxisDuration(duration2));
+    result.setSeconds(getSecondsFromAxisDuration(duration1) - getSecondsFromAxisDuration(duration2));
 
     return result;
   }
 
-  public static org.apache.axis.types.@NonNull Duration multiplyDurations(
+  public static org.apache.axis.types.@NonNull Duration multiplyAxisDurations(
     org.apache.axis.types.@NonNull Duration duration1, org.apache.axis.types.@NonNull Duration duration2)
   {
     org.apache.axis.types.Duration result = new org.apache.axis.types.Duration();
 
-    result.setYears(getYears(duration1) * getYears(duration2));
-    result.setMonths(getMonths(duration1) * getMonths(duration2));
-    result.setDays(getDays(duration1) * getDays(duration2));
-    result.setHours(getHours(duration1) * getHours(duration2));
-    result.setMinutes(getMinutes(duration1) * getMinutes(duration2));
-    result.setSeconds(getSeconds(duration1) * getSeconds(duration2));
+    result.setYears(getYearsFromAxisDuration(duration1) * getYearsFromAxisDuration(duration2));
+    result.setMonths(getMonthsFromAxisDuration(duration1) * getMonthsFromAxisDuration(duration2));
+    result.setDays(getDaysFromAxisDuration(duration1) * getDaysFromAxisDuration(duration2));
+    result.setHours(getHoursFromAxisDuration(duration1) * getHoursFromAxisDuration(duration2));
+    result.setMinutes(getMinutesFromAxisDuration(duration1) * getMinutesFromAxisDuration(duration2));
+    result.setSeconds(getSecondsFromAxisDuration(duration1) * getSecondsFromAxisDuration(duration2));
 
     return result;
   }
 
-  public static org.apache.axis.types.@NonNull Duration divideDurations(org.apache.axis.types.Duration duration1,
+  public static org.apache.axis.types.@NonNull Duration divideAxisDurations(org.apache.axis.types.Duration duration1,
     org.apache.axis.types.Duration duration2)
   {
     org.apache.axis.types.Duration result = new org.apache.axis.types.Duration();
 
-    result.setYears(getYears(duration1) / getYears(duration2));
-    result.setMonths(getMonths(duration1) / getMonths(duration2));
-    result.setDays(getDays(duration1) / getDays(duration2));
-    result.setHours(getHours(duration1) / getHours(duration2));
-    result.setMinutes(getMinutes(duration1) / getMinutes(duration2));
-    result.setSeconds(getSeconds(duration1) / getSeconds(duration2));
+    result.setYears(getYearsFromAxisDuration(duration1) / getYearsFromAxisDuration(duration2));
+    result.setMonths(getMonthsFromAxisDuration(duration1) / getMonthsFromAxisDuration(duration2));
+    result.setDays(getDaysFromAxisDuration(duration1) / getDaysFromAxisDuration(duration2));
+    result.setHours(getHoursFromAxisDuration(duration1) / getHoursFromAxisDuration(duration2));
+    result.setMinutes(getMinutesFromAxisDuration(duration1) / getMinutesFromAxisDuration(duration2));
+    result.setSeconds(getSecondsFromAxisDuration(duration1) / getSecondsFromAxisDuration(duration2));
 
     return result;
   }
@@ -186,10 +187,10 @@ public class XSDTimeUtil
   {
     org.apache.axis.types.Duration result = new org.apache.axis.types.Duration();
 
-    result.setDays(getDays(duration1) + getDays(duration2));
-    result.setHours(getHours(duration1) + getHours(duration2));
-    result.setMinutes(getMinutes(duration1) + getMinutes(duration2));
-    result.setSeconds(getSeconds(duration1) + getSeconds(duration2));
+    result.setDays(getDaysFromAxisDuration(duration1) + getDaysFromAxisDuration(duration2));
+    result.setHours(getHoursFromAxisDuration(duration1) + getHoursFromAxisDuration(duration2));
+    result.setMinutes(getMinutesFromAxisDuration(duration1) + getMinutesFromAxisDuration(duration2));
+    result.setSeconds(getSecondsFromAxisDuration(duration1) + getSecondsFromAxisDuration(duration2));
 
     return result;
   }
@@ -199,10 +200,10 @@ public class XSDTimeUtil
   {
     org.apache.axis.types.Duration result = new org.apache.axis.types.Duration();
 
-    result.setDays(getDays(duration1) - getDays(duration2));
-    result.setHours(getHours(duration1) - getHours(duration2));
-    result.setMinutes(getMinutes(duration1) - getMinutes(duration2));
-    result.setSeconds(getSeconds(duration1) - getSeconds(duration2));
+    result.setDays(getDaysFromAxisDuration(duration1) - getDaysFromAxisDuration(duration2));
+    result.setHours(getHoursFromAxisDuration(duration1) - getHoursFromAxisDuration(duration2));
+    result.setMinutes(getMinutesFromAxisDuration(duration1) - getMinutesFromAxisDuration(duration2));
+    result.setSeconds(getSecondsFromAxisDuration(duration1) - getSecondsFromAxisDuration(duration2));
 
     return result;
   }
@@ -212,10 +213,10 @@ public class XSDTimeUtil
   {
     org.apache.axis.types.Duration result = new org.apache.axis.types.Duration();
 
-    result.setDays(getDays(duration1) * getDays(duration2));
-    result.setHours(getHours(duration1) * getHours(duration2));
-    result.setMinutes(getMinutes(duration1) * getMinutes(duration2));
-    result.setSeconds(getSeconds(duration1) * getSeconds(duration2));
+    result.setDays(getDaysFromAxisDuration(duration1) * getDaysFromAxisDuration(duration2));
+    result.setHours(getHoursFromAxisDuration(duration1) * getHoursFromAxisDuration(duration2));
+    result.setMinutes(getMinutesFromAxisDuration(duration1) * getMinutesFromAxisDuration(duration2));
+    result.setSeconds(getSecondsFromAxisDuration(duration1) * getSecondsFromAxisDuration(duration2));
 
     return result;
   }
@@ -225,10 +226,10 @@ public class XSDTimeUtil
   {
     org.apache.axis.types.Duration result = new org.apache.axis.types.Duration();
 
-    result.setDays(getDays(duration1) / getDays(duration2));
-    result.setHours(getHours(duration1) / getHours(duration2));
-    result.setMinutes(getMinutes(duration1) / getMinutes(duration2));
-    result.setSeconds(getSeconds(duration1) / getSeconds(duration2));
+    result.setDays(getDaysFromAxisDuration(duration1) / getDaysFromAxisDuration(duration2));
+    result.setHours(getHoursFromAxisDuration(duration1) / getHoursFromAxisDuration(duration2));
+    result.setMinutes(getMinutesFromAxisDuration(duration1) / getMinutesFromAxisDuration(duration2));
+    result.setSeconds(getSecondsFromAxisDuration(duration1) / getSecondsFromAxisDuration(duration2));
 
     return result;
   }
@@ -238,8 +239,8 @@ public class XSDTimeUtil
   {
     org.apache.axis.types.Duration result = new org.apache.axis.types.Duration();
 
-    result.setDays(getYears(duration1) + getYears(duration2));
-    result.setHours(getMonths(duration1) + getMonths(duration2));
+    result.setDays(getYearsFromAxisDuration(duration1) + getYearsFromAxisDuration(duration2));
+    result.setHours(getMonthsFromAxisDuration(duration1) + getMonthsFromAxisDuration(duration2));
 
     return result;
   }
@@ -249,8 +250,8 @@ public class XSDTimeUtil
   {
     org.apache.axis.types.Duration result = new org.apache.axis.types.Duration();
 
-    result.setDays(getYears(duration1) - getYears(duration2));
-    result.setHours(getMonths(duration1) - getMonths(duration2));
+    result.setDays(getYearsFromAxisDuration(duration1) - getYearsFromAxisDuration(duration2));
+    result.setHours(getMonthsFromAxisDuration(duration1) - getMonthsFromAxisDuration(duration2));
 
     return result;
   }
@@ -260,8 +261,8 @@ public class XSDTimeUtil
   {
     org.apache.axis.types.Duration result = new org.apache.axis.types.Duration();
 
-    result.setDays(getYears(duration1) * getYears(duration2));
-    result.setHours(getMonths(duration1) * getMonths(duration2));
+    result.setDays(getYearsFromAxisDuration(duration1) * getYearsFromAxisDuration(duration2));
+    result.setHours(getMonthsFromAxisDuration(duration1) * getMonthsFromAxisDuration(duration2));
 
     return result;
   }
@@ -271,8 +272,8 @@ public class XSDTimeUtil
   {
     org.apache.axis.types.Duration result = new org.apache.axis.types.Duration();
 
-    result.setDays(getYears(duration1) / getYears(duration2));
-    result.setHours(getMonths(duration1) / getMonths(duration2));
+    result.setDays(getYearsFromAxisDuration(duration1) / getYearsFromAxisDuration(duration2));
+    result.setHours(getMonthsFromAxisDuration(duration1) / getMonthsFromAxisDuration(duration2));
 
     return result;
   }
@@ -319,9 +320,9 @@ public class XSDTimeUtil
 
     calendar.setTime(date);
 
-    result.set(calendar.get(Calendar.YEAR) + getYears(duration), calendar.get(Calendar.MONTH) + getMonths(duration),
-      calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE),
-      calendar.get(Calendar.SECOND));
+    result.set(calendar.get(Calendar.YEAR) + getYearsFromAxisDuration(duration),
+      calendar.get(Calendar.MONTH) + getMonthsFromAxisDuration(duration), calendar.get(Calendar.DAY_OF_MONTH),
+      calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND));
 
     return result.getTime();
   }
@@ -333,9 +334,8 @@ public class XSDTimeUtil
 
     calendar.setTime(date);
 
-    resultCalendar
-      .set(calendar.get(Calendar.YEAR) + getYears(duration), calendar.get(Calendar.MONTH) + getMonths(duration),
-        calendar.get(Calendar.DAY_OF_MONTH));
+    resultCalendar.set(calendar.get(Calendar.YEAR) + getYearsFromAxisDuration(duration),
+      calendar.get(Calendar.MONTH) + getMonthsFromAxisDuration(duration), calendar.get(Calendar.DAY_OF_MONTH));
 
     return resultCalendar.getTime();
   }
@@ -347,9 +347,9 @@ public class XSDTimeUtil
 
     calendar.setTime(date);
 
-    result.set(calendar.get(Calendar.YEAR) - getYears(duration), calendar.get(Calendar.MONTH) - getMonths(duration),
-      calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE),
-      calendar.get(Calendar.SECOND));
+    result.set(calendar.get(Calendar.YEAR) - getYearsFromAxisDuration(duration),
+      calendar.get(Calendar.MONTH) - getMonthsFromAxisDuration(duration), calendar.get(Calendar.DAY_OF_MONTH),
+      calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND));
 
     return result.getTime();
   }
@@ -361,9 +361,8 @@ public class XSDTimeUtil
 
     calendar.setTime(date);
 
-    resultCalendar
-      .set(calendar.get(Calendar.YEAR) - getYears(duration), calendar.get(Calendar.MONTH) - getMonths(duration),
-        calendar.get(Calendar.DAY_OF_MONTH));
+    resultCalendar.set(calendar.get(Calendar.YEAR) - getYearsFromAxisDuration(duration),
+      calendar.get(Calendar.MONTH) - getMonthsFromAxisDuration(duration), calendar.get(Calendar.DAY_OF_MONTH));
 
     return resultCalendar.getTime();
   }
@@ -376,9 +375,10 @@ public class XSDTimeUtil
     calendar.setTime(date);
 
     resultCalendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-      calendar.get(Calendar.DAY_OF_MONTH) + getDays(duration), calendar.get(Calendar.HOUR) + getHours(duration),
-      calendar.get(Calendar.MINUTE) + getMinutes(duration),
-      (int)(calendar.get(Calendar.SECOND) + getSeconds(duration)));
+      calendar.get(Calendar.DAY_OF_MONTH) + getDaysFromAxisDuration(duration),
+      calendar.get(Calendar.HOUR) + getHoursFromAxisDuration(duration),
+      calendar.get(Calendar.MINUTE) + getMinutesFromAxisDuration(duration),
+      (int)(calendar.get(Calendar.SECOND) + getSecondsFromAxisDuration(duration)));
 
     return resultCalendar.getTime();
   }
@@ -391,9 +391,10 @@ public class XSDTimeUtil
     calendar.setTime(date);
 
     resultCalendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-      calendar.get(Calendar.DAY_OF_MONTH) - getDays(duration), calendar.get(Calendar.HOUR) - getHours(duration),
-      calendar.get(Calendar.MINUTE) - getMinutes(duration),
-      (int)(calendar.get(Calendar.SECOND) - getSeconds(duration)));
+      calendar.get(Calendar.DAY_OF_MONTH) - getDaysFromAxisDuration(duration),
+      calendar.get(Calendar.HOUR) - getHoursFromAxisDuration(duration),
+      calendar.get(Calendar.MINUTE) - getMinutesFromAxisDuration(duration),
+      (int)(calendar.get(Calendar.SECOND) - getSecondsFromAxisDuration(duration)));
 
     return resultCalendar.getTime();
   }
@@ -403,10 +404,10 @@ public class XSDTimeUtil
   {
     Calendar calendar = time.getAsCalendar(), resultCalendar = new GregorianCalendar();
 
-    resultCalendar
-      .set(0, calendar.get(Calendar.DAY_OF_MONTH) + getDays(duration), calendar.get(Calendar.HOUR) + getHours(duration),
-        calendar.get(Calendar.MINUTE) + getMinutes(duration),
-        (int)(calendar.get(Calendar.SECOND) + getSeconds(duration)));
+    resultCalendar.set(0, calendar.get(Calendar.DAY_OF_MONTH) + getDaysFromAxisDuration(duration),
+      calendar.get(Calendar.HOUR) + getHoursFromAxisDuration(duration),
+      calendar.get(Calendar.MINUTE) + getMinutesFromAxisDuration(duration),
+      (int)(calendar.get(Calendar.SECOND) + getSecondsFromAxisDuration(duration)));
 
     return new org.apache.axis.types.Time(resultCalendar);
   }
@@ -416,10 +417,10 @@ public class XSDTimeUtil
   {
     Calendar calendar = time.getAsCalendar(), resultCalendar = new GregorianCalendar();
 
-    resultCalendar
-      .set(0, calendar.get(Calendar.DAY_OF_MONTH) - getDays(duration), calendar.get(Calendar.HOUR) - getHours(duration),
-        calendar.get(Calendar.MINUTE) - getMinutes(duration),
-        (int)(calendar.get(Calendar.SECOND) - getSeconds(duration)));
+    resultCalendar.set(0, calendar.get(Calendar.DAY_OF_MONTH) - getDaysFromAxisDuration(duration),
+      calendar.get(Calendar.HOUR) - getHoursFromAxisDuration(duration),
+      calendar.get(Calendar.MINUTE) - getMinutesFromAxisDuration(duration),
+      (int)(calendar.get(Calendar.SECOND) - getSecondsFromAxisDuration(duration)));
 
     return new org.apache.axis.types.Time(resultCalendar);
   }
@@ -479,7 +480,12 @@ public class XSDTimeUtil
     return new org.apache.axis.types.Time(calendar);
   }
 
-  public static java.util.@NonNull Date xsdDateTimeString2Date(@NonNull String content)
+  public static java.util.@NonNull Date xsdDateTime2UtilDate(@NonNull XSDDateTime dateTime)
+  {
+    return xsdDateTimeString2UtilDate(dateTime.getContent());
+  }
+
+  public static java.util.@NonNull Date xsdDateTimeString2UtilDate(@NonNull String content)
   {
     try {
       return xsdDateTimeFormat.parse(content);
@@ -488,7 +494,12 @@ public class XSDTimeUtil
     }
   }
 
-  public static java.util.@NonNull Date xsdDateString2Date(@NonNull String content)
+  public static java.util.@NonNull Date xsdDate2UtilDate(@NonNull XSDDate date)
+  {
+    return xsdDateString2UtilDate(date.getContent());
+  }
+
+  public static java.util.@NonNull Date xsdDateString2UtilDate(@NonNull String content)
   {
     try {
       return xsdDateFormat.parse(content);
@@ -497,7 +508,7 @@ public class XSDTimeUtil
     }
   }
 
-  public static java.util.@NonNull Date xsdTimeString2Date(@NonNull String content)
+  public static java.util.@NonNull Date xsdTimeString2UtilDate(@NonNull String content)
   {
     org.apache.axis.types.Time time = new org.apache.axis.types.Time(content);
 
@@ -507,6 +518,11 @@ public class XSDTimeUtil
   public static org.apache.axis.types.@NonNull Time xsdTimeString2AxisTime(@NonNull String content)
   {
     return new org.apache.axis.types.Time(content);
+  }
+
+  public static org.apache.axis.types.@NonNull Duration xsdDuration2AxisDuration(@NonNull XSDDuration duration)
+  {
+    return new org.apache.axis.types.Duration(duration.getContent());
   }
 
   public static org.apache.axis.types.@NonNull Duration xsdDurationString2AxisDuration(@NonNull String content)
@@ -524,7 +540,7 @@ public class XSDTimeUtil
     return jdbcDateFormat.format(date);
   }
 
-  public static java.util.@NonNull Date jdbcDateTimeString2Date(@NonNull String content)
+  public static java.util.@NonNull Date jdbcDateTimeString2UtilDate(@NonNull String content)
   {
     try {
       return jdbcDateTimeFormat.parse(content);
@@ -533,7 +549,7 @@ public class XSDTimeUtil
     }
   }
 
-  public static java.util.@NonNull Date jdbcDateString2Date(@NonNull String content)
+  public static java.util.@NonNull Date jdbcDateString2UtilDate(@NonNull String content)
   {
     try {
       return jdbcDateFormat.parse(content);
@@ -542,7 +558,7 @@ public class XSDTimeUtil
     }
   }
 
-  public static boolean isValidXSDDateTime(@NonNull String content)
+  public static boolean isValidXSDDateTimeString(@NonNull String content)
   {
     try {
       xsdDateTimeFormat.parse(content);
@@ -552,7 +568,7 @@ public class XSDTimeUtil
     }
   }
 
-  public static boolean isValidXSDDate(@NonNull String content)
+  public static boolean isValidXSDDateString(@NonNull String content)
   {
     try {
       xsdDateFormat.parse(content);
@@ -562,7 +578,7 @@ public class XSDTimeUtil
     }
   }
 
-  public static boolean isValidXSDTime(@NonNull String content)
+  public static boolean isValidXSDTimeString(@NonNull String content)
   {
     try {
       new org.apache.axis.types.Time(content);
@@ -572,7 +588,7 @@ public class XSDTimeUtil
     }
   }
 
-  public static boolean isValidXSDDuration(@NonNull String content)
+  public static boolean isValidXSDDurationString(@NonNull String content)
   {
     try {
       new org.apache.axis.types.Duration(content);
@@ -582,7 +598,7 @@ public class XSDTimeUtil
     }
   }
 
-  public static boolean isValidJDBCDateTime(@NonNull String content)
+  public static boolean isValidJDBCDateTimeString(@NonNull String content)
   {
     try {
       jdbcDateTimeFormat.parse(content);
@@ -592,79 +608,79 @@ public class XSDTimeUtil
     }
   }
 
-  public static int addDurationYears(org.apache.axis.types.@NonNull Duration duration1,
+  public static int addAxisDurationYears(org.apache.axis.types.@NonNull Duration duration1,
     org.apache.axis.types.@NonNull Duration duration2)
   {
-    return getYears(duration1) + getYears(duration2);
+    return getYearsFromAxisDuration(duration1) + getYearsFromAxisDuration(duration2);
   }
 
-  public static int addDurationMonths(org.apache.axis.types.@NonNull Duration duration1,
+  public static int addAxisDurationMonths(org.apache.axis.types.@NonNull Duration duration1,
     org.apache.axis.types.@NonNull Duration duration2)
   {
-    return getMonths(duration1) + getMonths(duration2);
+    return getMonthsFromAxisDuration(duration1) + getMonthsFromAxisDuration(duration2);
   }
 
-  public static int addDurationDays(org.apache.axis.types.@NonNull Duration duration1,
+  public static int addAxisDurationDays(org.apache.axis.types.@NonNull Duration duration1,
     org.apache.axis.types.@NonNull Duration duration2)
   {
-    return getDays(duration1) + getDays(duration2);
+    return getDaysFromAxisDuration(duration1) + getDaysFromAxisDuration(duration2);
   }
 
-  public static int addDurationHours(org.apache.axis.types.@NonNull Duration duration1,
+  public static int addAxisDurationHours(org.apache.axis.types.@NonNull Duration duration1,
     org.apache.axis.types.@NonNull Duration duration2)
   {
-    return getHours(duration1) + getHours(duration2);
+    return getHoursFromAxisDuration(duration1) + getHoursFromAxisDuration(duration2);
   }
 
-  public static int addDurationMinutes(org.apache.axis.types.@NonNull Duration duration1,
+  public static int addAxisDurationMinutes(org.apache.axis.types.@NonNull Duration duration1,
     org.apache.axis.types.@NonNull Duration duration2)
   {
-    return getMinutes(duration1) + getMinutes(duration2);
+    return getMinutesFromAxisDuration(duration1) + getMinutesFromAxisDuration(duration2);
   }
 
-  public static double addDurationSeconds(org.apache.axis.types.@NonNull Duration duration1,
+  public static double addAxisDurationSeconds(org.apache.axis.types.@NonNull Duration duration1,
     org.apache.axis.types.@NonNull Duration duration2)
   {
-    return getSeconds(duration1) + getSeconds(duration2);
+    return getSecondsFromAxisDuration(duration1) + getSecondsFromAxisDuration(duration2);
   }
 
-  public static int subtractDurationYears(org.apache.axis.types.@NonNull Duration duration1,
+  public static int subtractAxisDurationYears(org.apache.axis.types.@NonNull Duration duration1,
     org.apache.axis.types.@NonNull Duration duration2)
   {
-    return getYears(duration1) - getYears(duration2);
+    return getYearsFromAxisDuration(duration1) - getYearsFromAxisDuration(duration2);
   }
 
-  public static int subtractDurationMonths(org.apache.axis.types.@NonNull Duration duration1,
+  public static int subtractAxisDurationMonths(org.apache.axis.types.@NonNull Duration duration1,
     org.apache.axis.types.@NonNull Duration duration2)
   {
-    return getMonths(duration1) - getMonths(duration2);
+    return getMonthsFromAxisDuration(duration1) - getMonthsFromAxisDuration(duration2);
   }
 
-  public static int subtractDurationDays(org.apache.axis.types.@NonNull Duration duration1,
+  public static int subtractAxisDurationDays(org.apache.axis.types.@NonNull Duration duration1,
     org.apache.axis.types.@NonNull Duration duration2)
   {
-    return getDays(duration1) - getDays(duration2);
+    return getDaysFromAxisDuration(duration1) - getDaysFromAxisDuration(duration2);
   }
 
-  public static int subtractDurationHours(org.apache.axis.types.@NonNull Duration duration1,
+  public static int subtractAxisDurationHours(org.apache.axis.types.@NonNull Duration duration1,
     org.apache.axis.types.@NonNull Duration duration2)
   {
-    return getHours(duration1) - getHours(duration2);
+    return getHoursFromAxisDuration(duration1) - getHoursFromAxisDuration(duration2);
   }
 
-  public static int subtractDurationMinutes(org.apache.axis.types.@NonNull Duration duration1,
+  public static int subtractAxisDurationMinutes(org.apache.axis.types.@NonNull Duration duration1,
     org.apache.axis.types.@NonNull Duration duration2)
   {
-    return getMinutes(duration1) - getMinutes(duration2);
+    return getMinutesFromAxisDuration(duration1) - getMinutesFromAxisDuration(duration2);
   }
 
-  public static double subtractDurationSeconds(org.apache.axis.types.@NonNull Duration duration1,
+  public static double subtractAxisDurationSeconds(org.apache.axis.types.@NonNull Duration duration1,
     org.apache.axis.types.@NonNull Duration duration2)
   {
-    return getSeconds(duration1) - getSeconds(duration2);
+    return getSecondsFromAxisDuration(duration1) - getSecondsFromAxisDuration(duration2);
   }
 
-  private static int getYears(org.apache.axis.types.Duration duration)
+  private static int getYearsFromAxisDuration(org.apache.axis.types.@NonNull Duration duration)
   {
     if (duration.isNegative())
       return -duration.getYears();
@@ -672,7 +688,7 @@ public class XSDTimeUtil
       return duration.getYears();
   }
 
-  private static int getMonths(org.apache.axis.types.@NonNull Duration duration)
+  private static int getMonthsFromAxisDuration(org.apache.axis.types.@NonNull Duration duration)
   {
     if (duration.isNegative())
       return -duration.getMonths();
@@ -680,7 +696,7 @@ public class XSDTimeUtil
       return duration.getMonths();
   }
 
-  private static int getDays(org.apache.axis.types.@NonNull Duration duration)
+  private static int getDaysFromAxisDuration(org.apache.axis.types.@NonNull Duration duration)
   {
     if (duration.isNegative())
       return -duration.getDays();
@@ -688,7 +704,7 @@ public class XSDTimeUtil
       return duration.getDays();
   }
 
-  private static int getHours(org.apache.axis.types.@NonNull Duration duration)
+  private static int getHoursFromAxisDuration(org.apache.axis.types.@NonNull Duration duration)
   {
     if (duration.isNegative())
       return -duration.getHours();
@@ -696,7 +712,7 @@ public class XSDTimeUtil
       return duration.getHours();
   }
 
-  private static int getMinutes(org.apache.axis.types.@NonNull Duration duration)
+  private static int getMinutesFromAxisDuration(org.apache.axis.types.@NonNull Duration duration)
   {
     if (duration.isNegative())
       return -duration.getMinutes();
@@ -704,7 +720,7 @@ public class XSDTimeUtil
       return duration.getMinutes();
   }
 
-  private static double getSeconds(org.apache.axis.types.@NonNull Duration duration)
+  private static double getSecondsFromAxisDuration(org.apache.axis.types.@NonNull Duration duration)
   {
     if (duration.isNegative())
       return -duration.getSeconds();

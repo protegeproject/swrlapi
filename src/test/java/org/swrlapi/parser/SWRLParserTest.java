@@ -689,7 +689,7 @@ public class SWRLParserTest extends IntegrationTestBase
     addOWLAxioms(ontology, Declaration(HAS_LAST_ACCESS_TIME), Declaration(P1));
 
     SWRLAPIRule rule = swrlapiOWLOntology.createSWRLRule("r1",
-      "swrlb:addDayTimeDurationToDateTime(?dt, \"1999-01-01T12:12:12\", \"P1Y\") -> hasLastAccessTime(p1, ?dt)");
+      "swrlb:addDayTimeDurationToDateTime(?dt, \"1999-01-01T12:12:12\"^^xsd:dateTIme, \"P1Y\"^^xsd:duration) -> hasLastAccessTime(p1, ?dt)");
 
     assertEquals(1, rule.getBodyAtoms().size());
     assertEquals(1, rule.getHeadAtoms().size());
