@@ -1117,12 +1117,13 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     return processResultArgument(arguments, 0, utilDate2XSDDateTime(operationUtilDate));
   }
 
-  public boolean /**
+  /**
    * @param arguments The built-in arguments
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
    */
-  addDayTimeDurationToDateTime(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  public boolean addDayTimeDurationToDateTime(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(3, arguments.size());
 
@@ -1518,39 +1519,35 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   private org.apache.axis.types.Duration getArgumentAsAnAxisDuration(int argumentNumber,
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
-    String duration = "";
-
     try {
-      duration = getArgumentAsAString(argumentNumber, arguments);
-      return XSDTimeUtil.xsdDurationString2AxisDuration(duration);
+      XSDDuration duration = getArgumentAsADuration(argumentNumber, arguments);
+      return XSDTimeUtil.xsdDuration2AxisDuration(duration);
     } catch (IllegalArgumentException e) {
-      throw new SWRLBuiltInException("invalid xsd:duration " + duration + ": " + e.getMessage(), e);
+      throw new SWRLBuiltInException("invalid xsd:duration " + arguments.get(argumentNumber) + ": " + e.getMessage(),
+        e);
     }
   }
 
   private java.util.Date getXSDDateArgumentAsAUtilDate(int argumentNumber,
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
-    String date = "";
-
     try {
-      date = getArgumentAsAString(argumentNumber, arguments);
-      return XSDTimeUtil.xsdDateString2Date(date);
+      XSDDate date = getArgumentAsADate(argumentNumber, arguments);
+      return XSDTimeUtil.xsdDate2UtilDate(date);
     } catch (IllegalArgumentException e) {
-      throw new SWRLBuiltInException("invalid xsd:date " + date + ": " + e.getMessage(), e);
+      throw new SWRLBuiltInException("invalid xsd:date " + arguments.get(argumentNumber) + ": " + e.getMessage(), e);
     }
   }
 
   private java.util.Date getXSDDateTimeArgumentAsAUtilDate(int argumentNumber,
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
-    String date = "";
-
     try {
-      date = getArgumentAsAString(argumentNumber, arguments);
-      return XSDTimeUtil.xsdDateTimeString2Date(date);
+      XSDDateTime dateTime = getArgumentAsADateTime(argumentNumber, arguments);
+      return XSDTimeUtil.xsdDateTime2UtilDate(dateTime);
     } catch (IllegalArgumentException e) {
-      throw new SWRLBuiltInException("invalid xsd:dateTime " + date + ": " + e.getMessage(), e);
+      throw new SWRLBuiltInException("invalid xsd:dateTime " + arguments.get(argumentNumber) + ": " + e.getMessage(),
+        e);
     }
   }
 
@@ -1629,6 +1626,20 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       return str;
     }
     return str.substring(0, pos);
+  }
+
+  private int convertArgumentToAnInt(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException
+  {
+    BigInteger integerValue = getArgumentAsAnInteger(argumentNumber, arguments);
+
+    if (integerValue.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) > 0
+      || integerValue.compareTo(BigInteger.valueOf(Integer.MIN_VALUE)) < 0)
+      throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
+        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber),
+          "value converted to xsd:int cannot be larger than " + Integer.MAX_VALUE));
+
+    return integerValue.intValue();
   }
 
 }

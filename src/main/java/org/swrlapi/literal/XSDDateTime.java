@@ -16,7 +16,7 @@ public class XSDDateTime extends XSDType<XSDDateTime>
   {
     super(content, XSDVocabulary.DATE_TIME.getIRI());
 
-    this.datetime = XSDTimeUtil.xsdDateTimeString2Date(content);
+    this.datetime = XSDTimeUtil.xsdDateTimeString2UtilDate(content);
   }
 
   public XSDDateTime(@NonNull Date datetime)
@@ -31,7 +31,7 @@ public class XSDDateTime extends XSDType<XSDDateTime>
     if (getContent() == null)
       throw new IllegalArgumentException("null content for xsd:DateTime");
 
-    if (!XSDTimeUtil.isValidXSDDateTime(getContent()))
+    if (!XSDTimeUtil.isValidXSDDateTimeString(getContent()))
       throw new IllegalArgumentException("invalid xsd:DateTime " + getContent());
   }
 

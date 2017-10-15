@@ -97,7 +97,8 @@ public abstract class AbstractSWRLBuiltInLibrary
   private int invokingBuiltInIndex = -1;
   private boolean isInConsequent = false;
 
-  protected AbstractSWRLBuiltInLibrary(@NonNull String prefix, @NonNull String namespace, @NonNull Set<@NonNull String> builtInNames)
+  protected AbstractSWRLBuiltInLibrary(@NonNull String prefix, @NonNull String namespace,
+    @NonNull Set<@NonNull String> builtInNames)
   {
     this.invokingBridge = null;
     this.prefix = prefix;
@@ -243,61 +244,9 @@ public abstract class AbstractSWRLBuiltInLibrary
     return result;
   }
 
-  /**
-   * @return A SQWRL result value factory
-   * @throws SWRLBuiltInLibraryException If an error occurs during factory retrieval
-   */
-  @NonNull protected SQWRLResultValueFactory getSQWRLResultValueFactory() throws SWRLBuiltInLibraryException
-  {
-    return getBuiltInBridge().getSWRLAPIOWLDataFactory().getSQWRLResultValueFactory();
-  }
-
-  /**
-   * Create a string that represents a unique invocation pattern for a built-in for a bridge/rule/built-in/arguments
-   * combination.
-   *
-   * @param bridge       The built-in bridge invoking the built-in
-   * @param ruleName     The prefix of the rule invoking the built-in
-   * @param builtInIndex The 0-based index of the built-in in the rule
-   * @param inConsequent Is the built-in in the rule consequent
-   * @param arguments    The arguments to the built-in
-   * @return A unique pattern for the invocation
-   * @throws SWRLBuiltInException If the parameters are invalid or if there is an error during pattern generation
-   */
-  @NonNull protected String createInvocationPattern(@NonNull SWRLBuiltInBridge bridge, @NonNull String ruleName,
-    int builtInIndex, boolean inConsequent, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
-    throws SWRLBuiltInException
-  {
-    String pattern = "" + bridge.hashCode() + "." + ruleName + "." + builtInIndex + "." + inConsequent;
-    String result;
-
-    for (int i = 0; i < arguments.size(); i++)
-      pattern += "." + getArgumentAsAPropertyValue(i, arguments);
-
-    if (this.invocationPatternMap.containsKey(pattern))
-      result = this.invocationPatternMap.get(pattern).toString();
-    else {
-      this.invocationPatternMap.put(pattern, this.invocationPatternID);
-      result = this.invocationPatternID.toString();
-      this.invocationPatternID++;
-    }
-
-    return result;
-  }
-
-  @NonNull protected IRI createIRI(@NonNull String fullName) throws SWRLBuiltInException
-  {
-    try {
-      return IRI.create(fullName);
-    } catch (RuntimeException e) {
-      throw new SWRLBuiltInException(
-        "error creating IRI from full prefix " + fullName + ": " + (e.getMessage() != null ? e.getMessage() : ""), e);
-    }
-  }
-
   // Argument handling methods
 
-  protected void checkNumberOfArgumentsAtLeastOne(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+  @Override public void checkNumberOfArgumentsAtLeastOne(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     if (arguments.size() < 1)
@@ -901,12 +850,11 @@ public abstract class AbstractSWRLBuiltInLibrary
   @NonNull @Override public BigInteger getArgumentAsAnInteger(@NonNull SWRLBuiltInArgument argument)
     throws SWRLBuiltInException
   {
-    return getArgumentAsALiteral(argument).getInteger();
-    // Will throw exception if invalid.
+    return getArgumentAsALiteral(argument).getInteger();  // Will throw exception if invalid
   }
 
-  private boolean isArgumentAnInteger(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
-    throws SWRLBuiltInException
+  @Override public boolean isArgumentAnInteger(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     return isArgumentALiteral(argumentNumber, arguments) && (getArgumentAsALiteral(argumentNumber, arguments)
       .isInteger());
@@ -939,7 +887,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     // Will throw exception if invalid.
   }
 
-  private boolean isArgumentADecimal(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+  @Override public boolean isArgumentADecimal(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     return isArgumentALiteral(argumentNumber, arguments) && (getArgumentAsALiteral(argumentNumber, arguments)
@@ -1133,7 +1081,8 @@ public abstract class AbstractSWRLBuiltInLibrary
   @NonNull @Override public OWLLiteral getArgumentAsAnOWLLiteral(SWRLBuiltInArgument argument)
     throws SWRLBuiltInException
   {
-    checkThatArgumentIsALiteral(argument);
+    if (!(argument instanceof SWRLLiteralBuiltInArgument))
+      throw new InvalidSWRLBuiltInArgumentException(makeInvalidArgumentTypeMessage(argument, "data value"));
 
     SWRLLiteralBuiltInArgument a = (SWRLLiteralBuiltInArgument)argument;
 
@@ -1201,7 +1150,7 @@ public abstract class AbstractSWRLBuiltInLibrary
 
   @Override public float getArgumentAsAFloat(SWRLBuiltInArgument argument) throws SWRLBuiltInException
   {
-    return getArgumentAsALiteral(argument).getFloat(); // Will throw LiteralException if invalid.
+    return getArgumentAsALiteral(argument).getFloat(); // Will throw LiteralException if invalid
   }
 
   // Double
@@ -1278,7 +1227,15 @@ public abstract class AbstractSWRLBuiltInLibrary
   @NonNull @Override public String getArgumentAsAString(int argumentNumber,
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
-    checkThatArgumentIsAString(argumentNumber, arguments);
+    isArgumentAString(argumentNumber, arguments);
+
+    return getArgumentAsALiteral(argumentNumber, arguments).getString();
+  }
+
+  @NonNull @Override public String getLiteralArgumentAsAString(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    isArgumentALiteral(argumentNumber, arguments);
 
     return getArgumentAsALiteral(argumentNumber, arguments).getString();
   }
@@ -1422,7 +1379,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     return arguments.get(argumentNumber).isVariable() && arguments.get(argumentNumber).asVariable().isUnbound();
   }
 
-  protected boolean isBoundArgument(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+  @Override public boolean isBoundArgument(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     checkArgumentNumber(argumentNumber, arguments);
@@ -1485,33 +1442,6 @@ public abstract class AbstractSWRLBuiltInLibrary
     return arguments.get(argumentNumber).asVariable().getVariableName();
   }
 
-  @NonNull protected String makeInvalidArgumentTypeMessage(@NonNull SWRLBuiltInArgument argument,
-    @NonNull String expectedTypeName) throws SWRLBuiltInException
-  {
-    String message = "expecting " + expectedTypeName + ", got ";
-
-    if (argument.isVariable() && argument.asVariable().isUnbound())
-      message += "unbound argument with variable prefix " + argument.asVariable().getVariableName();
-    else {
-      if (argument instanceof SWRLClassBuiltInArgument) {
-        SWRLClassBuiltInArgument classArgument = (SWRLClassBuiltInArgument)argument;
-        message += "class with IRI " + classArgument.getIRI();
-      } else if (argument instanceof SWRLPropertyBuiltInArgument) {
-        SWRLPropertyBuiltInArgument propertyArgument = (SWRLPropertyBuiltInArgument)argument;
-        message += "property with IRI " + propertyArgument.getIRI();
-      } else if (argument instanceof SWRLNamedIndividualBuiltInArgument) {
-        SWRLNamedIndividualBuiltInArgument individualArgument = (SWRLNamedIndividualBuiltInArgument)argument;
-        message += "individual with IRI " + individualArgument.getIRI();
-      } else if (argument instanceof SWRLLiteralBuiltInArgument) {
-        SWRLLiteralBuiltInArgument literalBuiltInArgument = (SWRLLiteralBuiltInArgument)argument;
-        message += "literal with value " + literalBuiltInArgument.getLiteral().getLiteral() + " and type "
-          + literalBuiltInArgument.getLiteral().getDatatype();
-      } else
-        message += "unknown type " + argument.getClass();
-    }
-    return message;
-  }
-
   /**
    * Take an bound Argument object with types ClassArgument, PropertyArgument, IndividualArgument, or LiteralArgument
    * and return it as a property value representation. Class, property and individual arguments are represented by their
@@ -1536,7 +1466,11 @@ public abstract class AbstractSWRLBuiltInLibrary
       return individualArgument.getIRI();
     } else if (argument instanceof SWRLLiteralBuiltInArgument) {
       Literal literal = getArgumentAsALiteral(argument);
-      if (literal.isByte())
+      if (literal.isInteger())
+        return literal.getInteger();
+      else if (literal.isDecimal())
+        return literal.getDecimal();
+      else if (literal.isByte())
         return literal.getByte();
       else if (literal.isShort())
         return literal.getShort();
@@ -1868,39 +1802,7 @@ public abstract class AbstractSWRLBuiltInLibrary
       .getSQWRLCollectionVariableBuiltInArgument(variableIRI, queryName, collectionName, collectionGroupID);
   }
 
-  @NonNull protected SWRLLiteralBuiltInArgument createLeastNarrowNumericLiteralBuiltInArgument(double value,
-    @NonNull List<@NonNull SWRLBuiltInArgument> boundInputNumericArguments) throws SWRLBuiltInException
-  {
-    OWLLiteral literal = createLeastNarrowNumericOWLLiteral(value, boundInputNumericArguments);
-
-    return getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(literal);
-  }
-
-  @NonNull protected SWRLLiteralBuiltInArgument createLeastNarrowNumericLiteralBuiltInArgument(BigDecimal value,
-    @NonNull List<@NonNull SWRLBuiltInArgument> boundInputNumericArguments) throws SWRLBuiltInException
-  {
-    OWLLiteral literal = createLeastNarrowNumericOWLLiteral(value, boundInputNumericArguments);
-
-    return getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(literal);
-  }
-
-  @NonNull protected SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory() throws SWRLBuiltInLibraryException
-  {
-    return getBuiltInBridge().getSWRLAPIOWLDataFactory();
-  }
-
-  @NonNull protected OWLNamedIndividual injectOWLNamedIndividualOfClass(@NonNull OWLClass cls)
-  {
-    OWLNamedIndividual individual = getSWRLAPIOWLDataFactory().getInjectedOWLNamedIndividual();
-    OWLDeclarationAxiom declarationAxiom = getSWRLAPIOWLDataFactory().getOWLIndividualDeclarationAxiom(individual);
-    OWLClassAssertionAxiom classAssertionAxiom = getSWRLAPIOWLDataFactory().getOWLClassAssertionAxiom(cls, individual);
-    getBuiltInBridge().injectOWLAxiom(declarationAxiom);
-    getBuiltInBridge().injectOWLAxiom(classAssertionAxiom);
-
-    return individual;
-  }
-
-  @NonNull protected Map<@NonNull Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> createOutputMultiValueArguments(
+  @NonNull @Override public Map<@NonNull Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> createOutputMultiValueArguments(
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     Map<@NonNull Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> outputMultiValueArguments = new HashMap<>();
@@ -1914,7 +1816,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     return outputMultiValueArguments;
   }
 
-  @NonNull protected Map<Integer, @NonNull OWLObject> getInputArgumentValues(
+  @NonNull @Override public Map<@NonNull Integer, @NonNull OWLObject> getInputArgumentValues(
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments, @NonNull SWRLBuiltInArgumentType<?>... builtInArgumentTypes)
     throws SWRLBuiltInException
   {
@@ -1979,107 +1881,18 @@ public abstract class AbstractSWRLBuiltInLibrary
     return boundInputArgumentValues;
   }
 
-  protected boolean noBoundArgumentsMismatch(Map<Integer, @NonNull OWLObject> inputArgumentValues,
-    OWLObject... candidateValues) throws SWRLBuiltInException
-  {
-    for (int argumentNumber : inputArgumentValues.keySet()) {
-      OWLObject inputArgumentValue = inputArgumentValues.get(argumentNumber);
-      if (!inputArgumentValue.equals(candidateValues[argumentNumber]))
-        return true;
-    }
-    return false;
-  }
-
-  protected boolean processOutputMultiValueArguments(@NonNull List<@NonNull SWRLBuiltInArgument> arguments,
-    Map<@NonNull Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> outputMultiValueArguments)
+  @Override public boolean processResultMultiValueArguments(@NonNull List<@NonNull SWRLBuiltInArgument> arguments,
+    @NonNull Map<@NonNull Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> resultMultiValueArguments)
     throws SWRLBuiltInException
   {
-    if (outputMultiValueArguments.values().stream().filter(a -> a.hasArguments()).collect(Collectors.toSet())
-      .isEmpty()) // No output multi-value arguments have content
+    if (resultMultiValueArguments.values().stream().filter(a -> a.hasArguments()).collect(Collectors.toSet())
+      .isEmpty()) // No result multi-value arguments have content
       return false;
     else {
-      for (Integer argumentNumber : outputMultiValueArguments.keySet())
-        arguments.get(argumentNumber).asVariable().setBuiltInResult(outputMultiValueArguments.get(argumentNumber));
+      for (Integer argumentNumber : resultMultiValueArguments.keySet())
+        arguments.get(argumentNumber).asVariable().setBuiltInResult(resultMultiValueArguments.get(argumentNumber));
       return true;
     }
-  }
-
-  protected int convertArgumentToPositiveInt(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
-    throws SWRLBuiltInException
-  {
-    BigInteger integerValue = getArgumentAsAnInteger(argumentNumber, arguments);
-
-    if (integerValue.compareTo(BigInteger.ZERO) < 0)
-      throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
-        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "expecting positive xsd:integer"));
-
-    if (integerValue.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) > 0)
-      throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
-        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber),
-          "value converted to xsd:int cannot be larger than " + Integer.MAX_VALUE));
-
-    return integerValue.intValue();
-  }
-
-  protected int convertArgumentToAnInt(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
-    throws SWRLBuiltInException
-  {
-    BigInteger integerValue = getArgumentAsAnInteger(argumentNumber, arguments);
-
-    if (integerValue.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) > 0
-      || integerValue.compareTo(BigInteger.valueOf(Integer.MIN_VALUE)) < 0)
-      throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
-        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber),
-          "value converted to xsd:int cannot be larger than " + Integer.MAX_VALUE));
-
-    return integerValue.intValue();
-  }
-
-  protected long convertArgumentToAPositiveLong(int argumentNumber,
-    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
-  {
-    BigInteger integerValue = getArgumentAsAnInteger(argumentNumber, arguments);
-
-    if (integerValue.compareTo(BigInteger.ZERO) < 0)
-      throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
-        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "expecting positive xsd:integer"));
-
-    if (integerValue.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0)
-      throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
-        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber),
-          "value converted to xsd:long cannot be larger than " + Long.MAX_VALUE));
-
-    return integerValue.longValue();
-  }
-
-  protected long convertArgumentToALong(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
-    throws SWRLBuiltInException
-  {
-    BigInteger integerValue = getArgumentAsAnInteger(argumentNumber, arguments);
-
-    if (integerValue.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0
-      || integerValue.compareTo(BigInteger.valueOf(Long.MIN_VALUE)) < 0)
-      throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
-        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber),
-          "value converted to xsd:long cannot be larger than " + Long.MAX_VALUE));
-
-    return integerValue.longValue();
-  }
-
-  private void checkThatArgumentIsALiteral(SWRLBuiltInArgument argument) throws SWRLBuiltInException
-  {
-    if (!(argument instanceof SWRLLiteralBuiltInArgument))
-      throw new InvalidSWRLBuiltInArgumentException(makeInvalidArgumentTypeMessage(argument, "data value"));
-  }
-
-  @NonNull private SWRLBuiltInArgumentFactory getSWRLBuiltInArgumentFactory() throws SWRLBuiltInLibraryException
-  {
-    return getBuiltInBridge().getSWRLAPIOWLDataFactory().getSWRLBuiltInArgumentFactory();
-  }
-
-  @NonNull private LiteralFactory getLiteralFactory() throws SWRLBuiltInLibraryException
-  {
-    return getBuiltInBridge().getSWRLAPIOWLDataFactory().getLiteralFactory();
   }
 
   @NonNull private OWLLiteral createLeastNarrowNumericOWLLiteral(double value,
@@ -2120,11 +1933,6 @@ public abstract class AbstractSWRLBuiltInLibrary
       return getOWLLiteralFactory().getOWLLiteral(value);
   }
 
-  @NonNull private OWLLiteralFactory getOWLLiteralFactory() throws SWRLBuiltInLibraryException
-  {
-    return getBuiltInBridge().getSWRLAPIOWLDataFactory().getOWLLiteralFactory();
-  }
-
   @NonNull private Literal getArgumentAsALiteral(int argumentNumber,
     @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
@@ -2137,11 +1945,124 @@ public abstract class AbstractSWRLBuiltInLibrary
 
   @NonNull private Literal getArgumentAsALiteral(SWRLBuiltInArgument argument) throws SWRLBuiltInException
   {
-    checkThatArgumentIsALiteral(argument);
+    if (!(argument instanceof SWRLLiteralBuiltInArgument))
+      throw new InvalidSWRLBuiltInArgumentException(makeInvalidArgumentTypeMessage(argument, "data value"));
 
     SWRLLiteralBuiltInArgument a = (SWRLLiteralBuiltInArgument)argument;
 
     return getLiteralFactory().getLiteral(a.getLiteral());
   }
 
+  @NonNull @Override public String makeInvalidArgumentTypeMessage(@NonNull SWRLBuiltInArgument argument,
+    @NonNull String expectedTypeName) throws SWRLBuiltInException
+  {
+    String message = "expecting " + expectedTypeName + ", got ";
+
+    if (argument.isVariable() && argument.asVariable().isUnbound())
+      message += "unbound argument with variable prefix " + argument.asVariable().getVariableName();
+    else {
+      if (argument instanceof SWRLClassBuiltInArgument) {
+        SWRLClassBuiltInArgument classArgument = (SWRLClassBuiltInArgument)argument;
+        message += "class with IRI " + classArgument.getIRI();
+      } else if (argument instanceof SWRLPropertyBuiltInArgument) {
+        SWRLPropertyBuiltInArgument propertyArgument = (SWRLPropertyBuiltInArgument)argument;
+        message += "property with IRI " + propertyArgument.getIRI();
+      } else if (argument instanceof SWRLNamedIndividualBuiltInArgument) {
+        SWRLNamedIndividualBuiltInArgument individualArgument = (SWRLNamedIndividualBuiltInArgument)argument;
+        message += "individual with IRI " + individualArgument.getIRI();
+      } else if (argument instanceof SWRLLiteralBuiltInArgument) {
+        SWRLLiteralBuiltInArgument literalBuiltInArgument = (SWRLLiteralBuiltInArgument)argument;
+        message += "literal with value " + literalBuiltInArgument.getLiteral().getLiteral() + " and type "
+          + literalBuiltInArgument.getLiteral().getDatatype();
+      } else
+        message += "unknown type " + argument.getClass();
+    }
+    return message;
+  }
+
+  /**
+   * Create a string that represents a unique invocation pattern for a built-in for a bridge/rule/built-in/arguments
+   * combination.
+   *
+   * @param bridge       The built-in bridge invoking the built-in
+   * @param ruleName     The prefix of the rule invoking the built-in
+   * @param builtInIndex The 0-based index of the built-in in the rule
+   * @param inConsequent Is the built-in in the rule consequent
+   * @param arguments    The arguments to the built-in
+   * @return A unique pattern for the invocation
+   * @throws SWRLBuiltInException If the parameters are invalid or if there is an error during pattern generation
+   */
+  @NonNull protected String createInvocationPattern(@NonNull SWRLBuiltInBridge bridge, @NonNull String ruleName,
+    int builtInIndex, boolean inConsequent, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException
+  {
+    String pattern = "" + bridge.hashCode() + "." + ruleName + "." + builtInIndex + "." + inConsequent;
+    String result;
+
+    for (int i = 0; i < arguments.size(); i++)
+      pattern += "." + getArgumentAsAPropertyValue(i, arguments);
+
+    if (this.invocationPatternMap.containsKey(pattern))
+      result = this.invocationPatternMap.get(pattern).toString();
+    else {
+      this.invocationPatternMap.put(pattern, this.invocationPatternID);
+      result = this.invocationPatternID.toString();
+      this.invocationPatternID++;
+    }
+
+    return result;
+  }
+
+  @NonNull @Override public SWRLLiteralBuiltInArgument createLeastNarrowNumericLiteralBuiltInArgument(double value,
+    @NonNull List<@NonNull SWRLBuiltInArgument> boundInputNumericArguments) throws SWRLBuiltInException
+  {
+    OWLLiteral literal = createLeastNarrowNumericOWLLiteral(value, boundInputNumericArguments);
+
+    return getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(literal);
+  }
+
+  @NonNull @Override public SWRLLiteralBuiltInArgument createLeastNarrowNumericLiteralBuiltInArgument(
+    @NonNull BigDecimal value, @NonNull List<@NonNull SWRLBuiltInArgument> boundInputNumericArguments)
+    throws SWRLBuiltInException
+  {
+    OWLLiteral literal = createLeastNarrowNumericOWLLiteral(value, boundInputNumericArguments);
+
+    return getSWRLBuiltInArgumentFactory().getLiteralBuiltInArgument(literal);
+  }
+
+  @NonNull protected OWLNamedIndividual injectOWLNamedIndividualOfClass(@NonNull OWLClass cls)
+  {
+    OWLNamedIndividual individual = getSWRLAPIOWLDataFactory().getInjectedOWLNamedIndividual();
+    OWLDeclarationAxiom declarationAxiom = getSWRLAPIOWLDataFactory().getOWLIndividualDeclarationAxiom(individual);
+    OWLClassAssertionAxiom classAssertionAxiom = getSWRLAPIOWLDataFactory().getOWLClassAssertionAxiom(cls, individual);
+    getBuiltInBridge().injectOWLAxiom(declarationAxiom);
+    getBuiltInBridge().injectOWLAxiom(classAssertionAxiom);
+
+    return individual;
+  }
+
+  @NonNull protected SWRLAPIOWLDataFactory getSWRLAPIOWLDataFactory() throws SWRLBuiltInLibraryException
+  {
+    return getBuiltInBridge().getSWRLAPIOWLDataFactory();
+  }
+
+  @NonNull protected SQWRLResultValueFactory getSQWRLResultValueFactory() throws SWRLBuiltInLibraryException
+  {
+    return getSWRLAPIOWLDataFactory().getSQWRLResultValueFactory();
+  }
+
+  @NonNull private LiteralFactory getLiteralFactory() throws SWRLBuiltInLibraryException
+  {
+    return getSWRLAPIOWLDataFactory().getLiteralFactory();
+  }
+
+  @NonNull private OWLLiteralFactory getOWLLiteralFactory() throws SWRLBuiltInLibraryException
+  {
+    return getSWRLAPIOWLDataFactory().getOWLLiteralFactory();
+  }
+
+  @NonNull private SWRLBuiltInArgumentFactory getSWRLBuiltInArgumentFactory() throws SWRLBuiltInLibraryException
+  {
+    return getSWRLAPIOWLDataFactory().getSWRLBuiltInArgumentFactory();
+  }
 }

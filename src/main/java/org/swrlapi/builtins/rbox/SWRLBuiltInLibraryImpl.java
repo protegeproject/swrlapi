@@ -82,7 +82,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
           }
         }
       }
-      return processOutputMultiValueArguments(arguments, outputMultiValueArguments);
+      return processResultMultiValueArguments(arguments, outputMultiValueArguments);
     }
   }
 
@@ -114,7 +114,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
           }
         }
       }
-      return processOutputMultiValueArguments(arguments, outputMultiValueArguments);
+      return processResultMultiValueArguments(arguments, outputMultiValueArguments);
     }
   }
 
@@ -146,7 +146,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
           }
         }
       }
-      return processOutputMultiValueArguments(arguments, outputMultiValueArguments);
+      return processResultMultiValueArguments(arguments, outputMultiValueArguments);
     }
   }
 
@@ -178,7 +178,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
           }
         }
       }
-      return processOutputMultiValueArguments(arguments, outputMultiValueArguments);
+      return processResultMultiValueArguments(arguments, outputMultiValueArguments);
     }
   }
 
@@ -210,7 +210,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
           }
         }
       }
-      return processOutputMultiValueArguments(arguments, outputMultiValueArguments);
+      return processResultMultiValueArguments(arguments, outputMultiValueArguments);
     }
   }
 
@@ -247,7 +247,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
           }
         }
       }
-      return processOutputMultiValueArguments(arguments, outputMultiValueArguments);
+      return processResultMultiValueArguments(arguments, outputMultiValueArguments);
     }
   }
 
@@ -285,7 +285,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
           }
         }
       }
-      return processOutputMultiValueArguments(arguments, outputMultiValueArguments);
+      return processResultMultiValueArguments(arguments, outputMultiValueArguments);
     }
   }
 
@@ -323,7 +323,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
           }
         }
       }
-      return processOutputMultiValueArguments(arguments, outputMultiValueArguments);
+      return processResultMultiValueArguments(arguments, outputMultiValueArguments);
     }
   }
 
@@ -359,7 +359,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
           }
         }
       }
-      return processOutputMultiValueArguments(arguments, outputMultiValueArguments);
+      return processResultMultiValueArguments(arguments, outputMultiValueArguments);
     }
   }
 
@@ -395,7 +395,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
           }
         }
       }
-      return processOutputMultiValueArguments(arguments, outputMultiValueArguments);
+      return processResultMultiValueArguments(arguments, outputMultiValueArguments);
     }
   }
 
@@ -433,7 +433,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
           }
         }
       }
-      return processOutputMultiValueArguments(arguments, outputMultiValueArguments);
+      return processResultMultiValueArguments(arguments, outputMultiValueArguments);
     }
   }
 
@@ -471,7 +471,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
           }
         }
       }
-      return processOutputMultiValueArguments(arguments, outputMultiValueArguments);
+      return processResultMultiValueArguments(arguments, outputMultiValueArguments);
     }
   }
 
@@ -479,4 +479,16 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   {
     throw new SWRLBuiltInNotImplementedException("rbox:spcoa built-in not implemented");
   }
+
+  private boolean noBoundArgumentsMismatch(@NonNull Map<Integer, @NonNull OWLObject> inputArgumentValues,
+    OWLObject... candidateValues) throws SWRLBuiltInException
+  {
+    for (int argumentNumber : inputArgumentValues.keySet()) {
+      OWLObject inputArgumentValue = inputArgumentValues.get(argumentNumber);
+      if (!inputArgumentValue.equals(candidateValues[argumentNumber]))
+        return true;
+    }
+    return false;
+  }
+
 }

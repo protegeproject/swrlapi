@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This interface defines utility methods for built-in implementations to handle result processing.
@@ -203,4 +204,44 @@ public interface SWRLBuiltInResultArgumentHandler
    */
   boolean processResultArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments, int resultArgumentNumber,
     @NonNull OWLLiteral generatedResultArgument) throws SWRLBuiltInException;
+
+  /**
+   * @param arguments A list of built-in arguments
+   * @return
+   * @throws SWRLBuiltInException If an error occurs during processing
+   */
+  @NonNull Map<@NonNull Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> createOutputMultiValueArguments(
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+
+  /**
+   * @param arguments                 A list of built-in arguments
+   * @param outputMultiValueArguments
+   * @return
+   * @throws SWRLBuiltInException If an error occurs during processing
+   */
+  boolean processResultMultiValueArguments(@NonNull List<@NonNull SWRLBuiltInArgument> arguments,
+    @NonNull Map<@NonNull Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> outputMultiValueArguments)
+    throws SWRLBuiltInException;
+
+  /**
+   *
+   * @param value
+   * @param boundInputNumericArguments
+   * @return
+   * @throws SWRLBuiltInException
+   */
+  @NonNull SWRLLiteralBuiltInArgument createLeastNarrowNumericLiteralBuiltInArgument(double value,
+    @NonNull List<@NonNull SWRLBuiltInArgument> boundInputNumericArguments) throws SWRLBuiltInException;
+
+  /**
+   *
+   * @param value
+   * @param boundInputNumericArguments
+   * @return
+   * @throws SWRLBuiltInException
+   */
+  @NonNull SWRLLiteralBuiltInArgument createLeastNarrowNumericLiteralBuiltInArgument(
+    @NonNull BigDecimal value, @NonNull List<@NonNull SWRLBuiltInArgument> boundInputNumericArguments)
+    throws SWRLBuiltInException;
+
 }

@@ -32,7 +32,7 @@ public class XSDTime extends XSDType<XSDTime>
     if (getContent() == null)
       throw new IllegalArgumentException("null content for xsd:Time");
 
-    if (!XSDTimeUtil.isValidXSDTime(getContent()))
+    if (!XSDTimeUtil.isValidXSDTimeString(getContent()))
       throw new IllegalArgumentException("invalid xsd:Time '" + getContent() + "'");
   }
 
@@ -64,6 +64,6 @@ public class XSDTime extends XSDType<XSDTime>
     if (this == o)
       return 0;
 
-    return XSDTimeUtil.compareTimes(this.time, o.time);
+    return XSDTimeUtil.compareAxisTimes(this.time, o.time);
   }
 }

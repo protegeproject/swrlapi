@@ -17,6 +17,7 @@ import org.swrlapi.exceptions.SWRLBuiltInLibraryException;
 import org.swrlapi.literal.XSDDate;
 import org.swrlapi.literal.XSDDateTime;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -31,13 +32,13 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 
   private static final String NAMESPACE = "http://swrl.stanford.edu/ontologies/built-ins/3.3/temporal.owl#";
 
-  private static final String[] BUILT_IN_NAMES = { "notEquals", "notIntersects", "notStarts", "overlappedBy", "contains",
-    "equals", "intersects", "finishedBy", "notDurationLessThanOrEqualTo", "notStartedBy", "notFinishedBy", "starts",
-    "notContains", "notOverlaps", "durationLessThanOrEqualTo", "duration", "notFinishes", "metBy", "notDurationEqualTo",
-    "before", "startedBy", "notMeets", "durationGreaterThanOrEqualTo", "notDuring", "notOverlappedBy", "during",
-    "notDurationLessThan", "notBefore", "meets", "notDurationGreaterThan", "notDurationGreaterThanOrEqualTo", "add",
-    "finishes", "notAfter", "durationEqualTo", "overlaps", "durationGreaterThan", "durationLessThan", "after",
-    "notMetBy" };
+  private static final String[] BUILT_IN_NAMES = { "notEquals", "notIntersects", "notStarts", "overlappedBy",
+    "contains", "equals", "intersects", "finishedBy", "notDurationLessThanOrEqualTo", "notStartedBy", "notFinishedBy",
+    "starts", "notContains", "notOverlaps", "durationLessThanOrEqualTo", "duration", "notFinishes", "metBy",
+    "notDurationEqualTo", "before", "startedBy", "notMeets", "durationGreaterThanOrEqualTo", "notDuring",
+    "notOverlappedBy", "during", "notDurationLessThan", "notBefore", "meets", "notDurationGreaterThan",
+    "notDurationGreaterThanOrEqualTo", "add", "finishes", "notAfter", "durationEqualTo", "overlaps",
+    "durationGreaterThan", "durationLessThan", "after", "notMetBy" };
 
   private static final String TemporalEquals = PREFIX + ":" + "equals";
   private static final String TemporalAfter = PREFIX + ":" + "after";
@@ -857,6 +858,20 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     return value.toString();
   }
 
+  private long convertArgumentToALong(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+    throws SWRLBuiltInException
+  {
+    BigInteger integerValue = getArgumentAsAnInteger(argumentNumber, arguments);
+
+    if (integerValue.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0
+      || integerValue.compareTo(BigInteger.valueOf(Long.MIN_VALUE)) < 0)
+      throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
+        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber),
+          "value converted to xsd:long cannot be larger than " + Long.MAX_VALUE));
+
+    return integerValue.longValue();
+  }
+
   /*
    * For convenience, we allow users to supply xsd:date or xsd:dateTimes to built-ins as strings. We automatically
    * rewrite those arguments to xsd:date or xsd:dateTimes. We must make sure that the generated date or dateTime <p> We
@@ -882,4 +897,32 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       throw new SWRLBuiltInException("invalid xsd:date or xsd:dateTime string " + datetimeString);
     }
   }
+
+  private long convertArgumentToAPositiveLong(int argumentNumber,
+    @NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+  {
+    BigInteger integerValue = getArgumentAsAnInteger(argumentNumber, arguments);
+
+    if (integerValue.compareTo(BigInteger.ZERO) < 0)
+      throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
+        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber), "expecting positive xsd:integer"));
+
+    if (integerValue.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0)
+      throw new InvalidSWRLBuiltInArgumentException(argumentNumber,
+        makeInvalidArgumentTypeMessage(arguments.get(argumentNumber),
+          "value converted to xsd:long cannot be larger than " + Long.MAX_VALUE));
+
+    return integerValue.longValue();
+  }
+
+  @NonNull private IRI createIRI(@NonNull String fullName) throws SWRLBuiltInException
+  {
+    try {
+      return IRI.create(fullName);
+    } catch (RuntimeException e) {
+      throw new SWRLBuiltInException(
+        "error creating IRI from full prefix " + fullName + ": " + (e.getMessage() != null ? e.getMessage() : ""), e);
+    }
+  }
+
 }

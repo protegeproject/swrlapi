@@ -23,7 +23,7 @@ public class XSDDuration extends XSDType<XSDDuration>
     if (getContent() == null)
       throw new IllegalArgumentException("null content for XSD:duration literal");
 
-    if (!XSDTimeUtil.isValidXSDDuration(getContent()))
+    if (!XSDTimeUtil.isValidXSDDurationString(getContent()))
       throw new IllegalArgumentException("invalid xsd:Duration: " + getContent());
   }
 
@@ -55,6 +55,6 @@ public class XSDDuration extends XSDType<XSDDuration>
     if (this == o)
       return 0;
 
-    return XSDTimeUtil.compareDurations(this.duration, o.duration);
+    return XSDTimeUtil.compareAxisDurations(this.duration, o.duration);
   }
 }
