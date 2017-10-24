@@ -57,7 +57,7 @@ this engine, and then process the results.
 
  // Process the SQWRL result
  if (result.next()) 
-   System.out.println("Name: " + result.getLiteral("x").getInt());
+   System.out.println("Name: " + result.getLiteral("x").getInteger());
 ```
 
 Extensive documentation on the SWRLAPI can be found on the [SWRLAPI Wiki](https://github.com/protegeproject/swrlapi/wiki).
