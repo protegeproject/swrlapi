@@ -40,13 +40,8 @@
     </dependency>
 
     <dependency>
-      <groupId>org.apache.geronimo.bundles</groupId>
+      <groupId>org.apache.axis</groupId>
       <artifactId>axis</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.geronimo.bundles</groupId>
-      <artifactId>commons-discovery</artifactId>
     </dependency>
 
     <dependency>
@@ -117,10 +112,15 @@
             </Import-Package>
             <Export-Package>
               org.nfunk.*;version="${jep.version}",
-              org.swrlapi.*;version="1.0.0"
+              org.apache.axis.*;version="1.4",
+              org.swrlapi.*;version="1.0.0",
             </Export-Package>
             <Embed-Transitive>true</Embed-Transitive>
-            <Embed-Dependency>jep;version="${jep.version}"</Embed-Dependency>
+            <Embed-Dependency>
+              jep;version="${jep.version}",
+              axis;version=1.4,
+              commons-discovery;version=0.5
+            </Embed-Dependency>
           </instructions>
         </configuration>
 
