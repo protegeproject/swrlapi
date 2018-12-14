@@ -45,7 +45,7 @@ This example shows how the API can be used to create a SQWRL query engine, creat
 this engine, and then process the results.
 
 ```java
- // Create OWLOntology instances using the OWLAPI
+ // Create OWLOntology instance using the OWLAPI
  OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
  OWLOntology ontology = ontologyManager.loadOntologyFromOntologyDocument(new File("/ont/Ont1.owl"));
 
@@ -57,7 +57,7 @@ this engine, and then process the results.
 
  // Process the SQWRL result
  if (result.next()) 
-   System.out.println("Name: " + result.getLiteral("x").getInt());
+   System.out.println("Name: " + result.getLiteral("x").getInteger());
 ```
 
 Extensive documentation on the SWRLAPI can be found on the [SWRLAPI Wiki](https://github.com/protegeproject/swrlapi/wiki).
