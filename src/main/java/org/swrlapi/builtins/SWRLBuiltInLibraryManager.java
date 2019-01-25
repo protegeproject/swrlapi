@@ -15,6 +15,7 @@ import org.swrlapi.exceptions.UnresolvedSWRLBuiltInMethodException;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -365,8 +366,8 @@ public class SWRLBuiltInLibraryManager
       swrlBuiltInLibraryImplementationClass);
 
     try { // TODO Need to get constructor of library to catch exceptions it may throw
-      return (SWRLBuiltInLibrary)swrlBuiltInLibraryImplementationClass.newInstance();
-    } catch (@NonNull InstantiationException | ExceptionInInitializerError | SecurityException | IllegalAccessException e) {
+      return (SWRLBuiltInLibrary)swrlBuiltInLibraryImplementationClass.getDeclaredConstructor().newInstance();
+    } catch (@NonNull InstantiationException | ExceptionInInitializerError | SecurityException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
       throw new IncompatibleSWRLBuiltInClassException(swrlBuiltInLibraryImplementationClassName,
         e.getMessage() != null ? e.getMessage() : "", e);
     }
