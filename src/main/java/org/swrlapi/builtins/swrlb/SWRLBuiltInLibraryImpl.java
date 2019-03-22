@@ -822,7 +822,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @param arguments The built-in arguments
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
-   */ public boolean dayTimeDuration(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+   */
+  public boolean dayTimeDuration(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(5, arguments.size());
     int days = convertArgumentToAnInt(1, arguments);

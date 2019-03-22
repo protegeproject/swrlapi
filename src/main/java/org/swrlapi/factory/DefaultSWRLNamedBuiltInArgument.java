@@ -15,6 +15,7 @@ import org.semanticweb.owlapi.model.SWRLObjectVisitorEx;
 import org.swrlapi.builtins.arguments.SWRLNamedBuiltInArgument;
 
 import java.util.Collections;
+import java.util.Objects;
 import java.util.Set;
 
 abstract class DefaultSWRLNamedBuiltInArgument extends DefaultSWRLBuiltInArgument implements SWRLNamedBuiltInArgument
@@ -67,7 +68,7 @@ abstract class DefaultSWRLNamedBuiltInArgument extends DefaultSWRLBuiltInArgumen
 
     DefaultSWRLNamedBuiltInArgument that = (DefaultSWRLNamedBuiltInArgument)o;
 
-    return !(entity != null ? !entity.equals(that.entity) : that.entity != null);
+    return Objects.equals(entity, that.entity);
 
   }
 

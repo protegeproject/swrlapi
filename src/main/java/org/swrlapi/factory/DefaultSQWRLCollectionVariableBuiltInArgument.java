@@ -11,6 +11,8 @@ import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitor;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgumentVisitorEx;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 
+import java.util.Objects;
+
 class DefaultSQWRLCollectionVariableBuiltInArgument extends DefaultSWRLVariableBuiltInArgument
   implements SQWRLCollectionVariableBuiltInArgument
 {
@@ -73,13 +75,11 @@ class DefaultSQWRLCollectionVariableBuiltInArgument extends DefaultSWRLVariableB
 
     DefaultSQWRLCollectionVariableBuiltInArgument that = (DefaultSQWRLCollectionVariableBuiltInArgument)o;
 
-    if (queryName != null ? !queryName.equals(that.queryName) : that.queryName != null)
+    if (!Objects.equals(queryName, that.queryName))
       return false;
-    if (collectionName != null ? !collectionName.equals(that.collectionName) : that.collectionName != null)
+    if (!Objects.equals(collectionName, that.collectionName))
       return false;
-    return !(collectionGroupID != null ?
-      !collectionGroupID.equals(that.collectionGroupID) :
-      that.collectionGroupID != null);
+    return !(!Objects.equals(collectionGroupID, that.collectionGroupID));
 
   }
 

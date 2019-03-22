@@ -27,7 +27,7 @@ public final class SWRLBuiltInArgumentType<E extends SWRLBuiltInArgument>
   private SWRLBuiltInArgumentType() {}
 
   static {
-    VARIABLE = new SWRLBuiltInArgumentType<SWRLVariableBuiltInArgument>();
+    VARIABLE = new SWRLBuiltInArgumentType<>();
     MULTI_VALUE_VARIABLE = new SWRLBuiltInArgumentType<SWRLMultiValueVariableBuiltInArgument>();
     COLLECTION_VARIABLE = new SWRLBuiltInArgumentType<SQWRLCollectionVariableBuiltInArgument>();
     LITERAL = new SWRLBuiltInArgumentType<SWRLLiteralBuiltInArgument>();
