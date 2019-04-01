@@ -97,31 +97,31 @@ public class SQWRLNames
   public static final String NthGreatestSlice = SQWRL_PREFIX + "nthGreatestSlice";
   public static final String NotNthGreatestSlice = SQWRL_PREFIX + "notNthGreatestSlice";
 
-  private static final String headSelectionBuiltInNamesArray[] = { Select, SelectDistinct, OrderBy, OrderByDescending,
+  private static final String[] headSelectionBuiltInNamesArray = { Select, SelectDistinct, OrderBy, OrderByDescending,
     ColumnNames };
-  private static final String headAggregationBuiltInNamesArray[] = { Count, CountDistinct, Avg, Median, Min, Max, Sum };
+  private static final String[] headAggregationBuiltInNamesArray = { Count, CountDistinct, Avg, Median, Min, Max, Sum };
 
-  private static final String headSlicingBuiltInNamesArray[] = { Limit, Nth, NthGreatest, NthLast, NthSlice,
+  private static final String[] headSlicingBuiltInNamesArray = { Limit, Nth, NthGreatest, NthLast, NthSlice,
     NthLastSlice, NthGreatestSlice, NotNthGreatestSlice, NotNthLastSlice, NotNthSlice, NotNth, NotNthLast,
     NotNthGreatest, NotFirstN, NotLastN, NotGreatestN, NotLeastN, LastN, FirstN, LeastN, GreatestN };
 
-  private static final String collectionMakeBuiltInNamesArray[] = { MakeSet, MakeBag };
-  private static final String collectionGroupByBuiltInNamesArray[] = { GroupBy };
+  private static final String[] collectionMakeBuiltInNamesArray = { MakeSet, MakeBag };
+  private static final String[] collectionGroupByBuiltInNamesArray = { GroupBy };
 
-  private static final String singleCollectionOperationWithoutCollectionCreateBuiltInNamesArray[] = { Size, IsEmpty,
+  private static final String[] singleCollectionOperationWithoutCollectionCreateBuiltInNamesArray = { Size, IsEmpty,
     NotIsEmpty, Element, NotElement, Min, Max, Sum, Avg, Median, Nth, NthGreatest, NthLast };
 
-  private static final String singleCollectionOperationWithCollectionCreateBuiltInNamesArray[] = { NthSlice,
+  private static final String[] singleCollectionOperationWithCollectionCreateBuiltInNamesArray = { NthSlice,
     NthLastSlice, NthGreatestSlice, NotNthGreatestSlice, NotNthLastSlice, NotNthSlice, NotNth, NotNthLast,
     NotNthGreatest, NotFirstN, NotLastN, NotGreatestN, NotLeastN, LastN, FirstN, LeastN, GreatestN };
 
-  private static final String multiCollectionOperationWithoutCollectionCreateBuiltInNamesArray[] = { Intersects,
+  private static final String[] multiCollectionOperationWithoutCollectionCreateBuiltInNamesArray = { Intersects,
     NotIntersects, Equal, NotEqual, Contains, NotContains };
 
-  private static final String multiCollectionOperationWithCollectionCreateBuiltInNamesArray[] = { Intersection, Union,
+  private static final String[] multiCollectionOperationWithCollectionCreateBuiltInNamesArray = { Intersection, Union,
     Difference, Append };
 
-  public static final String aggregateFunctionNames[] = { MinAggregateFunction, MaxAggregateFunction,
+  public static final String[] aggregateFunctionNames = { MinAggregateFunction, MaxAggregateFunction,
     SumAggregateFunction, AvgAggregateFunction, MedianAggregateFunction, CountAggregateFunction,
     CountDistinctAggregateFunction };
 

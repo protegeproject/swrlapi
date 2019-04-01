@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 
 /**
  * A view holding the result for a single SQWRL query.
@@ -165,7 +166,7 @@ public class SQWRLResultView extends JPanel implements SWRLAPIView
           File selectedFile = this.chooser.getSelectedFile();
           currentDirectory = this.chooser.getCurrentDirectory();
           OutputStream fileOutputStream = new FileOutputStream(selectedFile);
-          OutputStreamWriter writer = new OutputStreamWriter(fileOutputStream, "UTF8");
+          OutputStreamWriter writer = new OutputStreamWriter(fileOutputStream, StandardCharsets.UTF_8);
           SQWRLResultView.this.sqwrlResult = SQWRLResultView.this.getSQWRLQueryEngine()
             .getSQWRLResult(SQWRLResultView.this.queryName);
 

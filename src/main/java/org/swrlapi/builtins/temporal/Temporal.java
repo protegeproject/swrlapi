@@ -54,16 +54,15 @@ class Temporal
   // 1000 seconds will be converted to 1000/(60) minutes. Months are a special case and individual routines will deal
   // with them
   // separately. Leap years are also handled separately.
-  private static final long conversion_table[][] = {
-  /* year, month, day, hours, minutes, seconds, milliseconds */
-  { 1, 12, 365, 365 * 24, 365 * 24 * 60, 365 * 24 * 60 * 60, 365 * 24 * 60 * 60 * 1000L }, /* year */
-  { 0, 1, 0, 0, 0, 0, 0 }, /* month */
-  { 365, 0, 1, 24, 24 * 60, 24 * 60 * 60, 24 * 60 * 60 * 1000 }, /* day */
-  { 365 * 24, 0, 24, 1, 60, 60 * 60, 60 * 60 * 1000 }, /* hour */
-  { 365 * 24 * 60, 0, 24 * 60, 60, 1, 60, 60 * 1000 }, /* minute */
-  { 365 * 24 * 60 * 60, 0, 24 * 60 * 60, 60 * 60, 60, 1, 1000 }, /* second */
-  { 365 * 24 * 60 * 60 * 1000L, 0, 24 * 60 * 60 * 1000, 60 * 60 * 1000, 60 * 1000, 1000, 1 } /* milli-seconds */
-  };
+  private static final long[][] conversion_table = {
+    /* year, month, day, hours, minutes, seconds, milliseconds */
+    { 1, 12, 365, 365 * 24, 365 * 24 * 60, 365 * 24 * 60 * 60, 365 * 24 * 60 * 60 * 1000L }, /* year */
+    { 0, 1, 0, 0, 0, 0, 0 }, /* month */
+    { 365, 0, 1, 24, 24 * 60, 24 * 60 * 60, 24 * 60 * 60 * 1000 }, /* day */
+    { 365 * 24, 0, 24, 1, 60, 60 * 60, 60 * 60 * 1000 }, /* hour */
+    { 365 * 24 * 60, 0, 24 * 60, 60, 1, 60, 60 * 1000 }, /* minute */
+    { 365 * 24 * 60 * 60, 0, 24 * 60 * 60, 60 * 60, 60, 1, 1000 }, /* second */
+    { 365 * 24 * 60 * 60 * 1000L, 0, 24 * 60 * 60 * 1000, 60 * 60 * 1000, 60 * 1000, 1000, 1 } /* milli-seconds */ };
 
   private static final String[] stringGranularityRepresentation = { "years", "months", "days", "hours", "minutes",
       "seconds", "milliseconds" };

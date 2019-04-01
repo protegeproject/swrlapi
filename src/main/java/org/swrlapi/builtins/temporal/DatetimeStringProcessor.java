@@ -18,8 +18,8 @@ abstract class DatetimeStringProcessor
   // The number of tokens (including delimeters) necessary to strip a datetime to the specified granularity
   @NonNull private final int[] gTokenIndex;
 
-  @NonNull private final String datetimeRoundDownPadding[]; // Padding for a partially specified datetime
-  @NonNull private final String datetimeRoundUpPadding[]; // Padding for a partially specified datetime
+  @NonNull private final String[] datetimeRoundDownPadding; // Padding for a partially specified datetime
+  @NonNull private final String[] datetimeRoundUpPadding; // Padding for a partially specified datetime
 
   /**
    * @param dateFormat               A date format
@@ -28,8 +28,8 @@ abstract class DatetimeStringProcessor
    * @param datetimeRoundDownPadding Padding for rounding down
    * @param datetimeRoundUpPadding   Padding for rounding up
    */
-  DatetimeStringProcessor(@NonNull SimpleDateFormat dateFormat, @NonNull String delimiters, @NonNull int gTokenIndex[],
-    @NonNull String datetimeRoundDownPadding[], @NonNull String datetimeRoundUpPadding[])
+  DatetimeStringProcessor(@NonNull SimpleDateFormat dateFormat, @NonNull String delimiters, @NonNull int[] gTokenIndex,
+    @NonNull String[] datetimeRoundDownPadding, @NonNull String[] datetimeRoundUpPadding)
   {
     this.dateFormat = dateFormat;
     this.delimiters = delimiters;

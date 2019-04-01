@@ -96,7 +96,6 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     Set<OWLDeclarationAxiom> axioms = getBuiltInBridge().getOWLOntology()
       .getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream().filter(a -> a.getEntity().isOWLObjectProperty())
       .collect(Collectors.toSet());
-    ;
 
     if (axioms.isEmpty())
       return false;
@@ -129,7 +128,6 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     Set<OWLDeclarationAxiom> axioms = getBuiltInBridge().getOWLOntology()
       .getAxioms(AxiomType.DECLARATION, Imports.INCLUDED).stream().filter(a -> a.getEntity().isOWLDataProperty())
       .collect(Collectors.toSet());
-    ;
 
     if (axioms.isEmpty())
       return false;

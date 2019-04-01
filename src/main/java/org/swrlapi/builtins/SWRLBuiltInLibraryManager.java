@@ -46,7 +46,7 @@ public class SWRLBuiltInLibraryManager
 
   private static final String SWRLBuiltInLibraryPackageBaseName = "org.swrlapi.builtins";
   private static final String SWRLBuiltInLibraryImplementationClassName = "SWRLBuiltInLibraryImpl";
-  private static final String preCannedSWRLBuiltInLibraryPrefixNames[] = { "swrlb", "sqwrl", "swrlx", "swrlm", "abox",
+  private static final String[] preCannedSWRLBuiltInLibraryPrefixNames = { "swrlb", "sqwrl", "swrlx", "swrlm", "abox",
     "tbox", "rbox", "temporal" };
   private static final Set<String> preCannedSWRLBuiltInLibraryPrefixes = new HashSet<>(
     Arrays.asList(preCannedSWRLBuiltInLibraryPrefixNames));
@@ -379,13 +379,13 @@ public class SWRLBuiltInLibraryManager
     if (method.getReturnType() != Boolean.TYPE)
       throw new IncompatibleBuiltInMethodException(ruleName, prefix, builtInURI, "Java method must return a boolean");
 
-    Class<?> exceptionTypes[] = method.getExceptionTypes();
+    Class<?>[] exceptionTypes = method.getExceptionTypes();
 
     if ((exceptionTypes.length != 1) || (exceptionTypes[0] != SWRLBuiltInException.class))
       throw new IncompatibleBuiltInMethodException(ruleName, prefix, builtInURI,
         "Java method must throw a single exception of type BuiltInException");
 
-    Type parameterTypes[] = method.getGenericParameterTypes();
+    Type[] parameterTypes = method.getGenericParameterTypes();
 
     if ((parameterTypes.length != 1) || (!(parameterTypes[0] instanceof ParameterizedType)) || (
       ((ParameterizedType)parameterTypes[0]).getRawType() != List.class) || (

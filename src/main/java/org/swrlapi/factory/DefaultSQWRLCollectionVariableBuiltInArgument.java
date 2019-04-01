@@ -79,7 +79,7 @@ class DefaultSQWRLCollectionVariableBuiltInArgument extends DefaultSWRLVariableB
       return false;
     if (!Objects.equals(collectionName, that.collectionName))
       return false;
-    return !(!Objects.equals(collectionGroupID, that.collectionGroupID));
+    return Objects.equals(collectionGroupID, that.collectionGroupID);
 
   }
 

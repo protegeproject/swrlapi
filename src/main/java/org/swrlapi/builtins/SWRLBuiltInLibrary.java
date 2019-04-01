@@ -31,7 +31,7 @@ public interface SWRLBuiltInLibrary extends SWRLBuiltInContext
 
   @NonNull Set<@NonNull String> getBuiltInNames();
 
-  @NonNull public Set<@NonNull IRI> getBuiltInIRIs();
+  @NonNull Set<@NonNull IRI> getBuiltInIRIs();
 
   /**
    * Reset library, discarding any internal state if any (e.g., caches)

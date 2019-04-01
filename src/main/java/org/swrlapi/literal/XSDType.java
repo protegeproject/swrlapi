@@ -7,7 +7,7 @@ import org.semanticweb.owlapi.model.IRI;
 /**
  * Base class for the small set of temporal XSD types provided by the SWRLAPI.
  */
-abstract class XSDType<T extends @NonNull Object> implements Comparable<T>
+abstract class XSDType<T> implements Comparable<T>
 {
   @NonNull private final String content;
   @NonNull private final IRI iri;
