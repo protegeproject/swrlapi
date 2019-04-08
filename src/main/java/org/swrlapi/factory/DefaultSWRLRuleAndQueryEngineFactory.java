@@ -118,8 +118,7 @@ public class DefaultSWRLRuleAndQueryEngineFactory implements SWRLRuleAndQueryEng
   {
     Optional<@NonNull TargetSWRLRuleEngineCreator> ruleEngineCreator = getDroolsSWRLRuleEngineCreator();
 
-    if (ruleEngineCreator.isPresent())
-      this.ruleEngineManager.registerRuleEngine(ruleEngineCreator.get());
+    ruleEngineCreator.ifPresent(this.ruleEngineManager::registerRuleEngine);
   }
 
   private Optional<@NonNull TargetSWRLRuleEngineCreator> getDroolsSWRLRuleEngineCreator()

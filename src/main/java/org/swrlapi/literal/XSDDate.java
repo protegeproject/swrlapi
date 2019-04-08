@@ -45,7 +45,7 @@ public class XSDDate extends XSDType<XSDDate>
 
     XSDDate xsdDate = (XSDDate)o;
 
-    return !(!Objects.equals(date, xsdDate.date));
+    return Objects.equals(date, xsdDate.date);
   }
 
   @SideEffectFree @Deterministic @Override public int hashCode()

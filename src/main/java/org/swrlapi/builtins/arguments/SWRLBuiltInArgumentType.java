@@ -28,18 +28,18 @@ public final class SWRLBuiltInArgumentType<E extends SWRLBuiltInArgument>
 
   static {
     VARIABLE = new SWRLBuiltInArgumentType<>();
-    MULTI_VALUE_VARIABLE = new SWRLBuiltInArgumentType<SWRLMultiValueVariableBuiltInArgument>();
-    COLLECTION_VARIABLE = new SWRLBuiltInArgumentType<SQWRLCollectionVariableBuiltInArgument>();
-    LITERAL = new SWRLBuiltInArgumentType<SWRLLiteralBuiltInArgument>();
-    CLASS = new SWRLBuiltInArgumentType<SWRLClassBuiltInArgument>();
-    CLASS_EXPRESSION = new SWRLBuiltInArgumentType<SWRLClassExpressionBuiltInArgument>();
-    NAMED_INDIVIDUAL = new SWRLBuiltInArgumentType<SWRLNamedIndividualBuiltInArgument>();
-    OBJECT_PROPERTY = new SWRLBuiltInArgumentType<SWRLObjectPropertyBuiltInArgument>();
-    OBJECT_PROPERTY_EXPRESSION = new SWRLBuiltInArgumentType<SWRLObjectPropertyExpressionBuiltInArgument>();
-    DATA_PROPERTY = new SWRLBuiltInArgumentType<SWRLDataPropertyBuiltInArgument>();
-    DATA_PROPERTY_EXPRESSION = new SWRLBuiltInArgumentType<SWRLDataPropertyExpressionBuiltInArgument>();
-    ANNOTATION_PROPERTY = new SWRLBuiltInArgumentType<SWRLAnnotationPropertyBuiltInArgument>();
-    DATATYPE = new SWRLBuiltInArgumentType<SWRLDatatypeBuiltInArgument>();
+    MULTI_VALUE_VARIABLE = new SWRLBuiltInArgumentType<>();
+    COLLECTION_VARIABLE = new SWRLBuiltInArgumentType<>();
+    LITERAL = new SWRLBuiltInArgumentType<>();
+    CLASS = new SWRLBuiltInArgumentType<>();
+    CLASS_EXPRESSION = new SWRLBuiltInArgumentType<>();
+    NAMED_INDIVIDUAL = new SWRLBuiltInArgumentType<>();
+    OBJECT_PROPERTY = new SWRLBuiltInArgumentType<>();
+    OBJECT_PROPERTY_EXPRESSION = new SWRLBuiltInArgumentType<>();
+    DATA_PROPERTY = new SWRLBuiltInArgumentType<>();
+    DATA_PROPERTY_EXPRESSION = new SWRLBuiltInArgumentType<>();
+    ANNOTATION_PROPERTY = new SWRLBuiltInArgumentType<>();
+    DATATYPE = new SWRLBuiltInArgumentType<>();
     VALUES = Collections.unmodifiableList(Arrays.asList(
       new SWRLBuiltInArgumentType<?>[] { VARIABLE, MULTI_VALUE_VARIABLE, COLLECTION_VARIABLE, LITERAL, CLASS,
         CLASS_EXPRESSION, NAMED_INDIVIDUAL, OBJECT_PROPERTY, OBJECT_PROPERTY_EXPRESSION, DATA_PROPERTY,

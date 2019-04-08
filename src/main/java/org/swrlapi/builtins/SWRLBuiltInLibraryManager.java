@@ -51,8 +51,8 @@ public class SWRLBuiltInLibraryManager
   private static final Set<String> preCannedSWRLBuiltInLibraryPrefixes = new HashSet<>(
     Arrays.asList(preCannedSWRLBuiltInLibraryPrefixNames));
 
-  @NonNull private Map<@NonNull IRI, @NonNull String> swrlBuiltInIRI2PrefixedName = new HashMap<>();
-  @NonNull private Map<@NonNull String, @NonNull IRI> swrlBuiltInPrefixedName2IRI = new HashMap<>();
+  @NonNull private final Map<@NonNull IRI, @NonNull String> swrlBuiltInIRI2PrefixedName = new HashMap<>();
+  @NonNull private final Map<@NonNull String, @NonNull IRI> swrlBuiltInPrefixedName2IRI = new HashMap<>();
 
   // Map of built-in library prefix name to SWRLBuiltInLibrary instance
   @NonNull private final Map<@NonNull String, @NonNull SWRLBuiltInLibrary> swrlBuiltInLibraryImplementations;

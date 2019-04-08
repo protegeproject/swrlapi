@@ -27,7 +27,7 @@ public final class SQWRLResultValueType<E extends SQWRLResultValue>
 
   static {
     CLASS = new SQWRLResultValueType<>();
-    CLASS_EXPRESSION = new SQWRLResultValueType<SQWRLClassExpressionResultValue>();
+    CLASS_EXPRESSION = new SQWRLResultValueType<>();
     INDIVIDUAL = new SQWRLResultValueType<SQWRLIndividualResultValue>();
     NAMED_INDIVIDUAL = new SQWRLResultValueType<SQWRLNamedIndividualResultValue>();
     OBJECT_PROPERTY = new SQWRLResultValueType<SQWRLObjectPropertyResultValue>();

@@ -254,13 +254,13 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
   }
 
   @NonNull @Override public SQWRLQuery createSQWRLQuery(@NonNull String queryName, @NonNull String query)
-    throws SWRLParseException, SQWRLException, SWRLBuiltInException
+    throws SWRLParseException, SWRLBuiltInException
   {
     return createSQWRLQuery(queryName, query, "", true);
   }
 
   @NonNull @Override public SQWRLQuery createSQWRLQuery(@NonNull String queryName, @NonNull String queryText,
-    @NonNull String comment, boolean isActive) throws SWRLParseException, SQWRLException, SWRLBuiltInException
+    @NonNull String comment, boolean isActive) throws SWRLParseException, SWRLBuiltInException
   {
     Optional<SWRLRule> owlapiRule = createSWRLParser().parseSWRLRule(queryText, false, queryName, comment);
 
@@ -620,9 +620,8 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
         IRI builtInIRI = builtInAtom.getPredicate();
         Optional<String> knownBuiltInPrefixedName = this.swrlBuiltInLibraryManager
           .swrlBuiltInIRI2PrefixedName(builtInIRI);
-        String builtInPrefixedName = knownBuiltInPrefixedName.isPresent() ?
-          knownBuiltInPrefixedName.get() :
-          iri2PrefixedName(builtInIRI); // Even if we do not have an implementation for a built-in we must process it
+        // Even if we do not have an implementation for a built-in we must process it
+        String builtInPrefixedName = knownBuiltInPrefixedName.orElseGet(() -> iri2PrefixedName(builtInIRI));
         List<@NonNull SWRLDArgument> swrlDArguments = builtInAtom.getArguments();
         List<@NonNull SWRLBuiltInArgument> swrlBuiltInArguments = convertSWRLDArguments2SWRLBuiltInArguments(
           swrlDArguments);
