@@ -997,7 +997,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
     // entire row.
 
     try {
-      Collections.sort(localRows, rowComparator); // Binary search is expecting a sorted list
+      localRows.sort(rowComparator); // Binary search is expecting a sorted list
       for (List<@NonNull SQWRLResultValue> row : localRows) {
         if (Collections.binarySearch(processedRows, row, rowComparator) < 0)
           processedRows.add(row);
@@ -1097,7 +1097,7 @@ class DefaultSQWRLResultManager implements SQWRLResultManager, Serializable
       this.orderByColumnIndexes, ascending);
 
     try {
-      Collections.sort(result, rowComparator);
+      result.sort(rowComparator);
     } catch (RuntimeException e) {
       throw new SQWRLException("Internal error comparing rows", e);
     }
