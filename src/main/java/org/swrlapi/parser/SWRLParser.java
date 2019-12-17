@@ -21,7 +21,7 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * A basic SWRL and SQWRL parser. It provides in interactive parsing mode for incomplete rules and queries and provides
+ * A basic SWRL and SQWRL parser. It provides an interactive parsing mode for incomplete rules and queries and provides
  * feedback on the next token that it is expecting.
  * <p>
  * This parser will throw a {@link org.swrlapi.parser.SWRLParseException} if there is an error in the rule or query. In

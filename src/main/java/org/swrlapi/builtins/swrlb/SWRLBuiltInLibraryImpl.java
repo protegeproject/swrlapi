@@ -1450,7 +1450,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     } else if (builtInName.equalsIgnoreCase(SWRLB_DIVIDE)) {
       BigDecimal argument2 = getArgumentAsADecimal(1, arguments);
       BigDecimal argument3 = getArgumentAsADecimal(2, arguments);
-      operationResult = argument2.divide(argument3);
+      operationResult = argument2.divide(argument3, RoundingMode.HALF_UP);
     } else if (builtInName.equalsIgnoreCase(SWRLB_INTEGER_DIVIDE)) {
       BigInteger argument2 = getArgumentAsAnInteger(1, arguments);
       BigInteger argument3 = getArgumentAsAnInteger(2, arguments);
