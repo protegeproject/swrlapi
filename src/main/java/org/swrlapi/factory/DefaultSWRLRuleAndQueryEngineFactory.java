@@ -118,8 +118,7 @@ public class DefaultSWRLRuleAndQueryEngineFactory implements SWRLRuleAndQueryEng
   {
     Optional<@NonNull TargetSWRLRuleEngineCreator> ruleEngineCreator = getDroolsSWRLRuleEngineCreator();
 
-    if (ruleEngineCreator.isPresent())
-      this.ruleEngineManager.registerRuleEngine(ruleEngineCreator.get());
+    ruleEngineCreator.ifPresent(this.ruleEngineManager::registerRuleEngine);
   }
 
   private Optional<@NonNull TargetSWRLRuleEngineCreator> getDroolsSWRLRuleEngineCreator()
@@ -132,10 +131,7 @@ public class DefaultSWRLRuleAndQueryEngineFactory implements SWRLRuleAndQueryEng
     try {
       Class<? extends @NonNull T> clazz = Class.forName(className).asSubclass(interfaceClass);
       Optional<@NonNull T> result = createInstance(clazz);
-      if (result.isPresent())
-        return Optional.of(result.get());
-      else
-        return Optional.<@NonNull T>empty();
+      return result;
     } catch (ClassNotFoundException e) {
       return Optional.<@NonNull T>empty();
     }

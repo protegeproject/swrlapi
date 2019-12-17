@@ -88,8 +88,8 @@ public interface SWRLRuleEngine
    * @param rule     The rule text
    * @param comment  A comment associated with the rule
    * @param isActive Is the rule active
-   * @return
-   * @throws SWRLParseException
+   * @throws SWRLParseException If a parse error occurs
+   * @throws SWRLBuiltInException If an error occurs during processing
    */
   void replaceSWRLRule(@NonNull String originalRuleName, @NonNull String ruleName, @NonNull String rule,
     @NonNull String comment, boolean isActive) throws SWRLParseException, SWRLBuiltInException;

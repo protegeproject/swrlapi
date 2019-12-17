@@ -17,9 +17,9 @@ public class SQWRLResultNames
   public static final String CountAggregateFunction = "count";
   public static final String CountDistinctAggregateFunction = "countDistinct";
 
-  public static final String aggregateFunctionNames[] = { MinAggregateFunction, MaxAggregateFunction,
-      SumAggregateFunction, AvgAggregateFunction, MedianAggregateFunction, CountAggregateFunction,
-      CountDistinctAggregateFunction };
+  public static final String[] aggregateFunctionNames = { MinAggregateFunction, MaxAggregateFunction,
+    SumAggregateFunction, AvgAggregateFunction, MedianAggregateFunction, CountAggregateFunction,
+    CountDistinctAggregateFunction };
 
   /**
    * @param aggregateFunctionName The name of a function

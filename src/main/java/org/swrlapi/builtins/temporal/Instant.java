@@ -17,7 +17,7 @@ class Instant
   private long granuleCount; // Granule count since 1 C.E.
   private int granularity;
 
-  private final long granuleCountArray[] = new long[Temporal.NUMBER_OF_GRANULARITIES];
+  private final long[] granuleCountArray = new long[Temporal.NUMBER_OF_GRANULARITIES];
 
   public Instant(@NonNull Temporal temporal, long granuleCount, int granularity)
   {

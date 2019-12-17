@@ -10,6 +10,7 @@ import org.swrlapi.builtins.arguments.SWRLMultiValueVariableBuiltInArgument;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A class used to bind multiple arguments to a built-in argument
@@ -95,7 +96,7 @@ class DefaultSWRLMultiValueVariableBuiltInArgument extends DefaultSWRLVariableBu
 
     DefaultSWRLMultiValueVariableBuiltInArgument that = (DefaultSWRLMultiValueVariableBuiltInArgument)o;
 
-    return arguments != null ? arguments.equals(that.arguments) : that.arguments == null;
+    return Objects.equals(arguments, that.arguments);
 
   }
 

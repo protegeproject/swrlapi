@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SWRLAPIBuiltInAtom
@@ -213,19 +214,15 @@ class DefaultSWRLAPIBuiltInAtom extends SWRLBuiltInAtomImpl implements SWRLAPIBu
       return false;
     if (builtInIndex != that.builtInIndex)
       return false;
-    if (ruleName != null ? !ruleName.equals(that.ruleName) : that.ruleName != null)
+    if (!Objects.equals(ruleName, that.ruleName))
       return false;
-    if (builtInIRI != null ? !builtInIRI.equals(that.builtInIRI) : that.builtInIRI != null)
+    if (!Objects.equals(builtInIRI, that.builtInIRI))
       return false;
-    if (builtInPrefixedName != null ?
-      !builtInPrefixedName.equals(that.builtInPrefixedName) :
-      that.builtInPrefixedName != null)
+    if (!Objects.equals(builtInPrefixedName, that.builtInPrefixedName))
       return false;
-    if (arguments != null ? !arguments.equals(that.arguments) : that.arguments != null)
+    if (!Objects.equals(arguments, that.arguments))
       return false;
-    return pathVariableNames != null ?
-      pathVariableNames.equals(that.pathVariableNames) :
-      that.pathVariableNames == null;
+    return Objects.equals(pathVariableNames, that.pathVariableNames);
 
   }
 

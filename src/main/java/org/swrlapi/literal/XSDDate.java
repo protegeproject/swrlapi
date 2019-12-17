@@ -7,6 +7,7 @@ import org.checkerframework.dataflow.qual.SideEffectFree;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class XSDDate extends XSDType<XSDDate>
 {
@@ -44,7 +45,7 @@ public class XSDDate extends XSDType<XSDDate>
 
     XSDDate xsdDate = (XSDDate)o;
 
-    return !(date != null ? !date.equals(xsdDate.date) : xsdDate.date != null);
+    return Objects.equals(date, xsdDate.date);
   }
 
   @SideEffectFree @Deterministic @Override public int hashCode()

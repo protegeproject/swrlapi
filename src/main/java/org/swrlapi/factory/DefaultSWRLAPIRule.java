@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 public class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
@@ -211,13 +212,13 @@ public class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
 
     if (active != that.active)
       return false;
-    if (ruleName != null ? !ruleName.equals(that.ruleName) : that.ruleName != null)
+    if (!Objects.equals(ruleName, that.ruleName))
       return false;
-    if (comment != null ? !comment.equals(that.comment) : that.comment != null)
+    if (!Objects.equals(comment, that.comment))
       return false;
-    if (bodyAtoms != null ? !bodyAtoms.equals(that.bodyAtoms) : that.bodyAtoms != null)
+    if (!Objects.equals(bodyAtoms, that.bodyAtoms))
       return false;
-    return headAtoms != null ? headAtoms.equals(that.headAtoms) : that.headAtoms == null;
+    return Objects.equals(headAtoms, that.headAtoms);
 
   }
 

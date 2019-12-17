@@ -52,7 +52,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Comparator;
 
-public final class NaturalOrderComparator<T extends @NonNull Object> implements Comparator<T>
+public final class NaturalOrderComparator<T> implements Comparator<T>
 {
   @NonNull public static final Comparator<String> NUMERICAL_ORDER = new NaturalOrderComparator<>(false);
   @NonNull public static final Comparator<String> CASE_INSENSITIVE_NUMERICAL_ORDER = new NaturalOrderComparator<>(true);

@@ -21,6 +21,7 @@ import org.swrlapi.literal.XSDTimeUtil;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -821,7 +822,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @param arguments The built-in arguments
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
-   */ public boolean dayTimeDuration(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+   */
+  public boolean dayTimeDuration(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(5, arguments.size());
     int days = convertArgumentToAnInt(1, arguments);
@@ -1448,7 +1450,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     } else if (builtInName.equalsIgnoreCase(SWRLB_DIVIDE)) {
       BigDecimal argument2 = getArgumentAsADecimal(1, arguments);
       BigDecimal argument3 = getArgumentAsADecimal(2, arguments);
-      operationResult = argument2.divide(argument3);
+      operationResult = argument2.divide(argument3, RoundingMode.HALF_UP);
     } else if (builtInName.equalsIgnoreCase(SWRLB_INTEGER_DIVIDE)) {
       BigInteger argument2 = getArgumentAsAnInteger(1, arguments);
       BigInteger argument3 = getArgumentAsAnInteger(2, arguments);
@@ -1478,16 +1480,16 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       operationResult = argument2.abs();
     } else if (builtInName.equalsIgnoreCase(SWRLB_CEILING)) {
       BigDecimal argument2 = getArgumentAsADecimal(1, arguments);
-      operationResult = argument2.setScale(0, BigDecimal.ROUND_CEILING);
+      operationResult = argument2.setScale(0, RoundingMode.CEILING);
     } else if (builtInName.equalsIgnoreCase(SWRLB_FLOOR)) {
       BigDecimal argument2 = getArgumentAsADecimal(1, arguments);
-      operationResult = argument2.setScale(0, BigDecimal.ROUND_FLOOR);
+      operationResult = argument2.setScale(0, RoundingMode.FLOOR);
     } else if (builtInName.equalsIgnoreCase(SWRLB_ROUND)) {
       BigDecimal argument2 = getArgumentAsADecimal(1, arguments);
       operationResult = argument2.setScale(0);
     } else if (builtInName.equalsIgnoreCase(SWRLB_ROUND_HALF_TO_EVEN)) {
       BigDecimal argument2 = getArgumentAsADecimal(1, arguments);
-      operationResult = argument2.setScale(0, BigDecimal.ROUND_HALF_EVEN);
+      operationResult = argument2.setScale(0, RoundingMode.HALF_EVEN);
     } else if (builtInName.equalsIgnoreCase(SWRLB_SIN)) {
       double argument2 = getArgumentAsADouble(1, arguments);
       operationResult = new BigDecimal(java.lang.Math.sin(argument2));

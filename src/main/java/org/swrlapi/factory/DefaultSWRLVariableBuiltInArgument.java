@@ -23,6 +23,7 @@ import org.swrlapi.exceptions.SWRLAPIException;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -186,11 +187,11 @@ class DefaultSWRLVariableBuiltInArgument extends DefaultSWRLBuiltInArgument impl
 
     if (isBound != that.isBound)
       return false;
-    if (variableIRI != null ? !variableIRI.equals(that.variableIRI) : that.variableIRI != null)
+    if (!Objects.equals(variableIRI, that.variableIRI))
       return false;
-    if (variableName != null ? !variableName.equals(that.variableName) : that.variableName != null)
+    if (!Objects.equals(variableName, that.variableName))
       return false;
-    return builtInResult != null ? builtInResult.equals(that.builtInResult) : that.builtInResult == null;
+    return Objects.equals(builtInResult, that.builtInResult);
 
   }
 

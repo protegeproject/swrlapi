@@ -48,7 +48,7 @@ public interface SWRLBuiltInInputArgumentHandler
    * @param argumentNumber The 0-based index of the argument
    * @param arguments      The built-in arguments
    * @return True if the specified argument is bound
-   * @throws SWRLBuiltInException
+   * @throws SWRLBuiltInException If an error occurs during processing
    */
   boolean isBoundArgument(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException;
@@ -109,8 +109,8 @@ public interface SWRLBuiltInInputArgumentHandler
     throws SWRLBuiltInException;
 
   /**
-   * @param arguments
-   * @throws SWRLBuiltInException
+   * @param arguments Arguments
+   * @throws SWRLBuiltInException If the number of arguments is not at least one
    */
   void checkNumberOfArgumentsAtLeastOne(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException;
@@ -1153,8 +1153,8 @@ public interface SWRLBuiltInInputArgumentHandler
 
   /**
    * @param arguments            The built-in arguments
-   * @param builtInArgumentTypes
-   * @return
+   * @param builtInArgumentTypes The types of the built-in arguments
+   * @return A map of built-in argument numbers to arguments
    * @throws SWRLBuiltInException If an error occurs during processing
    */
   @NonNull Map<@NonNull Integer, @NonNull OWLObject> getInputArgumentValues(
@@ -1162,9 +1162,9 @@ public interface SWRLBuiltInInputArgumentHandler
     throws SWRLBuiltInException;
 
   /**
-   * @param argument
-   * @param expectedTypeName
-   * @return
+   * @param argument         The built-in argument
+   * @param expectedTypeName The expected type of the argument
+   * @return A user-readable message
    * @throws SWRLBuiltInException If an error occurs during processing
    */
   @NonNull String makeInvalidArgumentTypeMessage(@NonNull SWRLBuiltInArgument argument,

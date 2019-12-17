@@ -94,8 +94,7 @@ public interface SWRLAPIOWLOntology
    * @param rule     The rule text
    * @param comment  A comment associated with the rule
    * @param isActive Is the rule active
-   * @return
-   * @throws SWRLParseException
+   * @throws SWRLParseException If a parse error occurs
    */
   void replaceSWRLRule(@NonNull String originalRuleName, @NonNull String ruleName, @NonNull String rule,
     @NonNull String comment, boolean isActive) throws SWRLParseException, SWRLBuiltInException;
@@ -137,10 +136,10 @@ public interface SWRLAPIOWLOntology
   // Methods for handling SQWRL Queries
 
   @NonNull SQWRLQuery createSQWRLQuery(@NonNull String queryName, @NonNull String query)
-      throws SWRLParseException, SQWRLException, SWRLBuiltInException;
+      throws SWRLParseException, SWRLBuiltInException;
 
   @NonNull SQWRLQuery createSQWRLQuery(@NonNull String queryName, @NonNull String query, @NonNull String comment,
-      boolean isActive) throws SWRLParseException, SQWRLException, SWRLBuiltInException;
+      boolean isActive) throws SWRLParseException, SWRLBuiltInException;
 
   @NonNull SQWRLResult getSQWRLResult(@NonNull String queryName) throws SQWRLException;
 
@@ -158,7 +157,7 @@ public interface SWRLAPIOWLOntology
 
   void reset();
 
-  void processOntology() throws SQWRLException, SWRLBuiltInException;
+  void processOntology() throws SWRLBuiltInException;
 
   // Optimization methods
 

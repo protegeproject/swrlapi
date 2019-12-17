@@ -25,8 +25,8 @@ import java.util.Set;
  */
 class SWRLTokenizer
 {
-  @NonNull private static final char wordChars[] = { ':', '_', '-', '/', '#' };
-  @NonNull private static final char ordinaryChars[] = { '.', '^', '<', '>', '(', ')', '?' };
+  @NonNull private static final char[] wordChars = { ':', '_', '-', '/', '#' };
+  @NonNull private static final char[] ordinaryChars = { '.', '^', '<', '>', '(', ')', '?' };
 
   @NonNull private final MyStreamTokenizer tokenizer;
 

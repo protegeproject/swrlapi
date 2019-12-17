@@ -15,6 +15,7 @@ import org.swrlapi.exceptions.UnresolvedSWRLBuiltInMethodException;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -45,13 +46,13 @@ public class SWRLBuiltInLibraryManager
 
   private static final String SWRLBuiltInLibraryPackageBaseName = "org.swrlapi.builtins";
   private static final String SWRLBuiltInLibraryImplementationClassName = "SWRLBuiltInLibraryImpl";
-  private static final String preCannedSWRLBuiltInLibraryPrefixNames[] = { "swrlb", "sqwrl", "swrlx", "swrlm", "abox",
+  private static final String[] preCannedSWRLBuiltInLibraryPrefixNames = { "swrlb", "sqwrl", "swrlx", "swrlm", "abox",
     "tbox", "rbox", "temporal" };
   private static final Set<String> preCannedSWRLBuiltInLibraryPrefixes = new HashSet<>(
     Arrays.asList(preCannedSWRLBuiltInLibraryPrefixNames));
 
-  @NonNull private Map<@NonNull IRI, @NonNull String> swrlBuiltInIRI2PrefixedName = new HashMap<>();
-  @NonNull private Map<@NonNull String, @NonNull IRI> swrlBuiltInPrefixedName2IRI = new HashMap<>();
+  @NonNull private final Map<@NonNull IRI, @NonNull String> swrlBuiltInIRI2PrefixedName = new HashMap<>();
+  @NonNull private final Map<@NonNull String, @NonNull IRI> swrlBuiltInPrefixedName2IRI = new HashMap<>();
 
   // Map of built-in library prefix name to SWRLBuiltInLibrary instance
   @NonNull private final Map<@NonNull String, @NonNull SWRLBuiltInLibrary> swrlBuiltInLibraryImplementations;
@@ -365,8 +366,8 @@ public class SWRLBuiltInLibraryManager
       swrlBuiltInLibraryImplementationClass);
 
     try { // TODO Need to get constructor of library to catch exceptions it may throw
-      return (SWRLBuiltInLibrary)swrlBuiltInLibraryImplementationClass.newInstance();
-    } catch (@NonNull InstantiationException | ExceptionInInitializerError | SecurityException | IllegalAccessException e) {
+      return (SWRLBuiltInLibrary)swrlBuiltInLibraryImplementationClass.getDeclaredConstructor().newInstance();
+    } catch (@NonNull InstantiationException | ExceptionInInitializerError | SecurityException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
       throw new IncompatibleSWRLBuiltInClassException(swrlBuiltInLibraryImplementationClassName,
         e.getMessage() != null ? e.getMessage() : "", e);
     }
@@ -378,13 +379,13 @@ public class SWRLBuiltInLibraryManager
     if (method.getReturnType() != Boolean.TYPE)
       throw new IncompatibleBuiltInMethodException(ruleName, prefix, builtInURI, "Java method must return a boolean");
 
-    Class<?> exceptionTypes[] = method.getExceptionTypes();
+    Class<?>[] exceptionTypes = method.getExceptionTypes();
 
     if ((exceptionTypes.length != 1) || (exceptionTypes[0] != SWRLBuiltInException.class))
       throw new IncompatibleBuiltInMethodException(ruleName, prefix, builtInURI,
         "Java method must throw a single exception of type BuiltInException");
 
-    Type parameterTypes[] = method.getGenericParameterTypes();
+    Type[] parameterTypes = method.getGenericParameterTypes();
 
     if ((parameterTypes.length != 1) || (!(parameterTypes[0] instanceof ParameterizedType)) || (
       ((ParameterizedType)parameterTypes[0]).getRawType() != List.class) || (

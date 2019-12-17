@@ -207,7 +207,7 @@ public interface SWRLBuiltInResultArgumentHandler
 
   /**
    * @param arguments A list of built-in arguments
-   * @return
+   * @return A map of built-in argument numbers to built-in arguments
    * @throws SWRLBuiltInException If an error occurs during processing
    */
   @NonNull Map<@NonNull Integer, @NonNull SWRLMultiValueVariableBuiltInArgument> createOutputMultiValueArguments(
@@ -215,8 +215,8 @@ public interface SWRLBuiltInResultArgumentHandler
 
   /**
    * @param arguments                 A list of built-in arguments
-   * @param outputMultiValueArguments
-   * @return
+   * @param outputMultiValueArguments A generated map of built-in argument numbers to built-in arguments
+   * @return True if the predicate is satisfied
    * @throws SWRLBuiltInException If an error occurs during processing
    */
   boolean processResultMultiValueArguments(@NonNull List<@NonNull SWRLBuiltInArgument> arguments,
@@ -225,20 +225,20 @@ public interface SWRLBuiltInResultArgumentHandler
 
   /**
    *
-   * @param value
-   * @param boundInputNumericArguments
-   * @return
-   * @throws SWRLBuiltInException
+   * @param value A double literal value
+   * @param boundInputNumericArguments A list of numeric arguments
+   * @return The literal with the least narrow type
+   * @throws SWRLBuiltInException If an error occurs during processing
    */
   @NonNull SWRLLiteralBuiltInArgument createLeastNarrowNumericLiteralBuiltInArgument(double value,
     @NonNull List<@NonNull SWRLBuiltInArgument> boundInputNumericArguments) throws SWRLBuiltInException;
 
   /**
    *
-   * @param value
-   * @param boundInputNumericArguments
-   * @return
-   * @throws SWRLBuiltInException
+   * @param value A BigDecimal value
+   * @param boundInputNumericArguments A list of numeric arguments
+   * @return The literal with the least narrow type
+   * @throws SWRLBuiltInException If an error occurs during processing
    */
   @NonNull SWRLLiteralBuiltInArgument createLeastNarrowNumericLiteralBuiltInArgument(
     @NonNull BigDecimal value, @NonNull List<@NonNull SWRLBuiltInArgument> boundInputNumericArguments)
