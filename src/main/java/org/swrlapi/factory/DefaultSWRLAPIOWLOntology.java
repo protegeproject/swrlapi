@@ -135,7 +135,7 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
   @NonNull private final Set<SWRLRuleEngineModel> swrlRuleEngineModels;
 
   private boolean hasOntologyChanged = true; // Ensure initial processing
-  private boolean eventFreezeMode = false;
+  private boolean eventFreezeMode = false; // When set to true ontology change events are ignored
 
   public DefaultSWRLAPIOWLOntology(@NonNull OWLOntology ontology, @NonNull IRIResolver iriResolver)
   {
@@ -705,7 +705,6 @@ class DefaultSWRLAPIOWLOntology implements SWRLAPIOWLOntology, OWLOntologyChange
    * Note: An important restriction here is that variable names do not intersect with named properties in their OWL
    * ontology. A SWRL parser should check for this on input and report an error.
    *
-   * @see SWRLParser#parseShortNameSWRLDArgument(org.swrlapi.parser.SWRLTokenizer, boolean, String)
    * @see DefaultSWRLRuleAndQueryRenderer#visit(SWRLVariable)
    */
   @NonNull private SWRLBuiltInArgument convertSWRLVariable2SWRLBuiltInArgument(@NonNull SWRLVariable swrlVariable)
