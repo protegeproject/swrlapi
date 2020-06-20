@@ -822,8 +822,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
    * @param arguments The built-in arguments
    * @return The result of the built-in
    * @throws SWRLBuiltInException If an error occurs during processing
-   */
-  public boolean dayTimeDuration(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
+   */ public boolean dayTimeDuration(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsEqualTo(5, arguments.size());
     int days = convertArgumentToAnInt(1, arguments);
@@ -1470,11 +1469,10 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       operationResult = argument2.pow(argument3);
     } else if (builtInName.equalsIgnoreCase(SWRLB_UNARY_PLUS)) {
       BigDecimal argument2 = getArgumentAsADecimal(1, arguments);
-      operationResult = argument2; // TODO Not correct since already a double so xsd:int conversion logic missed
+      operationResult = argument2;
     } else if (builtInName.equalsIgnoreCase(SWRLB_UNARY_MINUS)) {
       BigDecimal argument2 = getArgumentAsADecimal(1, arguments);
-      operationResult = argument2
-        .negate(); // TODO Not correct since already a double so xsd:int conversion logic missed
+      operationResult = argument2.negate();
     } else if (builtInName.equalsIgnoreCase(SWRLB_ABS)) {
       BigDecimal argument2 = getArgumentAsADecimal(1, arguments);
       operationResult = argument2.abs();

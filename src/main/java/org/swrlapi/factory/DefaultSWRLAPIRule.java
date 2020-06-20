@@ -80,10 +80,30 @@ public class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
     return this.bodyAtoms;
   }
 
+  @NonNull @Override public List<@NonNull SWRLAtom> getNonBuiltInAtomsFromBody()
+  {
+    return getNonBuiltInAtoms(getBodyAtoms());
+  }
+
+  @NonNull @Override public List<@NonNull SWRLAPIBuiltInAtom> getBuiltInAtomsFromHead()
+  {
+    return getBuiltInAtoms(getHeadAtoms());
+  }
+
+  @NonNull @Override public List<@NonNull SWRLAtom> getNonBuiltInAtomsFromHead()
+  {
+    return getNonBuiltInAtoms(getHeadAtoms());
+  }
+
   @NonNull @Override public List<@NonNull SWRLAPIBuiltInAtom> getBuiltInAtomsFromHead(
     @NonNull Set<@NonNull String> builtInNames)
   {
     return getBuiltInAtoms(getHeadAtoms(), builtInNames);
+  }
+
+  @NonNull @Override public List<@NonNull SWRLAPIBuiltInAtom> getBuiltInAtomsFromBody()
+  {
+    return getBuiltInAtoms(getBodyAtoms());
   }
 
   @NonNull @Override public List<@NonNull SWRLAPIBuiltInAtom> getBuiltInAtomsFromBody(
@@ -158,6 +178,31 @@ public class DefaultSWRLAPIRule extends SWRLRuleImpl implements SWRLAPIRule
     result.addAll(bodyClassAtoms); // We arrange the class atoms first
     result.addAll(bodyNonClassNonBuiltInAtoms); // Followed by other non built-in atoms
 
+    return result;
+  }
+
+  @NonNull private List<@NonNull SWRLAPIBuiltInAtom> getBuiltInAtoms(@NonNull List<@NonNull SWRLAtom> atoms)
+  {
+    List<@NonNull SWRLAPIBuiltInAtom> result = new ArrayList<>();
+
+    for (SWRLAtom atom : atoms) {
+      if (atom instanceof SWRLBuiltInAtom) {
+        SWRLAPIBuiltInAtom builtInAtom = (SWRLAPIBuiltInAtom)atom;
+        result.add(builtInAtom);
+      }
+    }
+    return result;
+  }
+
+  @NonNull private List<@NonNull SWRLAtom> getNonBuiltInAtoms(@NonNull List<@NonNull SWRLAtom> atoms)
+  {
+    List<@NonNull SWRLAtom> result = new ArrayList<>();
+
+    for (SWRLAtom atom : atoms) {
+      if (!(atom instanceof SWRLBuiltInAtom)) {
+        result.add(atom);
+      }
+    }
     return result;
   }
 

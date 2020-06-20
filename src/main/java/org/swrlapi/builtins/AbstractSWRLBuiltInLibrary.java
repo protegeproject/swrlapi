@@ -1390,7 +1390,7 @@ public abstract class AbstractSWRLBuiltInLibrary
   /**
    * Get 0-offset position of first unbound argument; return -1 if no unbound arguments are found.
    */
-  @Override public int getFirstUnboundArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
+  @Override public int getFirstUnboundArgumentNumber(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
     for (int index = 0; index < arguments.size(); index++)
@@ -1404,14 +1404,14 @@ public abstract class AbstractSWRLBuiltInLibrary
     throws SWRLBuiltInException
   {
     checkForUnboundArguments(arguments,
-      "built-in does not support variable binding - unbound argument '" + getFirstUnboundArgument(arguments) + "'");
+      "built-in does not support variable binding - unbound argument '" + getFirstUnboundArgumentNumber(arguments) + "'");
   }
 
   @Override public void checkForUnboundArguments(@NonNull List<@NonNull SWRLBuiltInArgument> arguments,
     @NonNull String message) throws SWRLBuiltInException
   {
     if (hasUnboundArguments(arguments))
-      throw new SWRLBuiltInException(message + " (0-offset) argument #" + getFirstUnboundArgument(arguments));
+      throw new SWRLBuiltInException(message + " (0-offset) argument #" + getFirstUnboundArgumentNumber(arguments));
   }
 
   @Override public void checkThatAllArgumentsAreBoundVariables(@NonNull List<@NonNull SWRLBuiltInArgument> arguments,
@@ -1425,9 +1425,12 @@ public abstract class AbstractSWRLBuiltInLibrary
   @Override public void checkForUnboundNonFirstArguments(@NonNull List<@NonNull SWRLBuiltInArgument> arguments)
     throws SWRLBuiltInException
   {
-    if (hasUnboundArguments(arguments.subList(1, arguments.size())))
-      throw new SWRLBuiltInException("built-in supports variable binding only for the first argument - "
-        + "unbound variables used as other arguments");
+    for (SWRLBuiltInArgument argument : arguments.subList(1, arguments.size())) {
+      if (argument.isVariable())
+        if (argument.asVariable().isUnbound())
+          throw new SWRLBuiltInException("built-in supports variable binding only for the first argument - "
+            + "unbound variable ?" + argument.asVariable().getVariableName() + " used in non-first position");
+    }
   }
 
   @Override public String getVariableName(int argumentNumber, @NonNull List<@NonNull SWRLBuiltInArgument> arguments)
