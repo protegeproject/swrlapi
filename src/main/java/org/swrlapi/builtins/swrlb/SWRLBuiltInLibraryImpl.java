@@ -1,5 +1,6 @@
 package org.swrlapi.builtins.swrlb;
 
+import ch.obermuhlner.math.big.BigDecimalMath;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.semanticweb.owlapi.model.IRI;
@@ -21,6 +22,7 @@ import org.swrlapi.literal.XSDTimeUtil;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -57,7 +59,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     "subtractYearMonthDurationFromDateTime", "subtractDayTimeDurationFromDateTime", "addYearMonthDurationToDate",
     "addDayTimeDurationToDate", "subtractYearMonthDurationFromDate", "subtractDayTimeDurationFromDate",
     "addDayTimeDurationToTime", "subtractDayTimeDurationFromTime", "subtractDateTimesYieldingYearMonthDuration",
-    "subtractDateTimesYieldingYearMonthDuration", "resolveURI", "anyURU", "listConcat", "listIntersection",
+    "subtractDateTimesYieldingYearMonthDuration", "resolveURI", "anyURI", "listConcat", "listIntersection",
     "listSubtraction", "member", "length", "first", "rest", "sublist", "empty" };
 
   private static final String SWRLBPrefix = "swrlb:";
@@ -79,6 +81,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   private static final String SWRLB_SIN = SWRLBPrefix + "sin";
   private static final String SWRLB_COS = SWRLBPrefix + "cos";
   private static final String SWRLB_TAN = SWRLBPrefix + "tan";
+
+  private static final MathContext mathContext = new MathContext(100);
 
   public SWRLBuiltInLibraryImpl()
   {
@@ -1489,28 +1493,23 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       BigDecimal argument2 = getArgumentAsADecimal(1, arguments);
       operationResult = argument2.setScale(0, RoundingMode.HALF_EVEN);
     } else if (builtInName.equalsIgnoreCase(SWRLB_SIN)) {
-      double argument2 = getArgumentAsADouble(1, arguments);
-      operationResult = new BigDecimal(java.lang.Math.sin(argument2));
+      BigDecimal argument2 = getArgumentAsADecimal(1, arguments);
+      operationResult = BigDecimalMath.sin(argument2, mathContext);
     } else if (builtInName.equalsIgnoreCase(SWRLB_COS)) {
-      double argument2 = getArgumentAsADouble(1, arguments);
-      operationResult = new BigDecimal(java.lang.Math.cos(argument2));
+      BigDecimal argument2 = getArgumentAsADecimal(1, arguments);
+      operationResult = BigDecimalMath.cos(argument2, mathContext);
     } else if (builtInName.equalsIgnoreCase(SWRLB_TAN)) {
-      double argument2 = getArgumentAsADouble(1, arguments);
-      operationResult = new BigDecimal(java.lang.Math.tan(argument2));
+      BigDecimal argument2 = getArgumentAsADecimal(1, arguments);
+      operationResult = BigDecimalMath.tan(argument2, mathContext);
     } else
       throw new InvalidSWRLBuiltInNameException(builtInName);
 
     if (hasUnbound1stArgument) { // Bind the result to the first argument.
       List<@NonNull SWRLBuiltInArgument> boundInputArguments = arguments.subList(1, arguments.size());
 
-      if (builtInName.equalsIgnoreCase(SWRLB_SIN) || builtInName.equalsIgnoreCase(SWRLB_COS) || builtInName
-        .equalsIgnoreCase(SWRLB_TAN))
-        arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument(operationResult.doubleValue()));
-      else {
-        SWRLBuiltInArgument resultArgument = createLeastNarrowNumericLiteralBuiltInArgument(operationResult,
-          boundInputArguments);
-        arguments.get(0).asVariable().setBuiltInResult(resultArgument);
-      }
+      SWRLBuiltInArgument resultArgument = createLeastNarrowNumericLiteralBuiltInArgument(operationResult,
+        boundInputArguments);
+      arguments.get(0).asVariable().setBuiltInResult(resultArgument);
       return true;
     } else
       return (argument1.equals(operationResult));

@@ -1,5 +1,6 @@
 package org.swrlapi.builtins.swrlm;
 
+import ch.obermuhlner.math.big.BigDecimalMath;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.nfunk.jep.JEP;
@@ -8,13 +9,15 @@ import org.swrlapi.builtins.AbstractSWRLBuiltInLibrary;
 import org.swrlapi.builtins.arguments.SWRLBuiltInArgument;
 import org.swrlapi.exceptions.SWRLBuiltInException;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
 /**
- * Implementations library for SWRL mathematical built-ins.
+ * Implementations library for SWRL mathematical built-ins
  */
 public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
 {
@@ -23,6 +26,8 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   private static final String NAMESPACE = "http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlm.owl#";
 
   private static final String[] BUILT_IN_NAMES = { "sqrt", "eval", "log" };
+
+  private static final MathContext mathContext = new MathContext(100);
 
   @Nullable private JEP jep = null;
 
@@ -47,15 +52,17 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   public boolean sqrt(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsAtLeast(2, arguments.size());
+    checkForUnboundNonFirstArguments(arguments);
 
-    double argument2 = getArgumentAsADouble(1, arguments);
+    BigDecimal argument2 = getArgumentAsADecimal(1, arguments);
+    BigDecimal operationResult = BigDecimalMath.sqrt(argument2, mathContext);
 
     if (isUnboundArgument(0, arguments)) {
-      arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument(java.lang.Math.sqrt(argument2)));
+      arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument(operationResult));
       return true;
     } else {
-      double argument1 = getArgumentAsADouble(0, arguments);
-      return argument1 == java.lang.Math.sqrt(argument2);
+      BigDecimal argument1 = getArgumentAsADecimal(0, arguments);
+      return argument1.equals(operationResult);
     }
   }
 
@@ -70,15 +77,17 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
   public boolean log(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException
   {
     checkNumberOfArgumentsAtLeast(2, arguments.size());
+    checkForUnboundNonFirstArguments(arguments);
 
-    double argument2 = getArgumentAsADouble(1, arguments);
+    BigDecimal argument2 = getArgumentAsADecimal(1, arguments);
+    BigDecimal operationResult = BigDecimalMath.log10(argument2, mathContext);
 
     if (isUnboundArgument(0, arguments)) {
-      arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument(java.lang.Math.log(argument2)));
+      arguments.get(0).asVariable().setBuiltInResult(createLiteralBuiltInArgument(operationResult));
       return true;
     } else {
-      double argument1 = getArgumentAsADouble(0, arguments);
-      return argument1 == java.lang.Math.log(argument2);
+      BigDecimal argument1 = getArgumentAsADecimal(0, arguments);
+      return argument1.equals(operationResult);
     }
   }
 
@@ -98,6 +107,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     final int resultArgumentIndex = 0;
 
     checkNumberOfArgumentsAtLeast(minimumNumberoOfArguments, arguments.size());
+    checkForUnboundNonFirstArguments(arguments);
 
     String expression = getArgumentAsAString(expressionArgumentIndex, arguments);
 

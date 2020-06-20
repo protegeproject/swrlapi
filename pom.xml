@@ -44,6 +44,11 @@
       <artifactId>jep</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>ch.obermuhlner</groupId>
+      <artifactId>big-math</artifactId>
+    </dependency>
+
     <!-- Checker dependencies -->
 
     <dependency>
