@@ -28,16 +28,16 @@ public final class SQWRLResultValueType<E extends SQWRLResultValue>
   static {
     CLASS = new SQWRLResultValueType<>();
     CLASS_EXPRESSION = new SQWRLResultValueType<>();
-    INDIVIDUAL = new SQWRLResultValueType<SQWRLIndividualResultValue>();
-    NAMED_INDIVIDUAL = new SQWRLResultValueType<SQWRLNamedIndividualResultValue>();
-    OBJECT_PROPERTY = new SQWRLResultValueType<SQWRLObjectPropertyResultValue>();
-    OBJECT_PROPERTY_EXPRESSION = new SQWRLResultValueType<SQWRLObjectPropertyExpressionResultValue>();
-    DATA_PROPERTY = new SQWRLResultValueType<SQWRLDataPropertyResultValue>();
-    DATA_PROPERTY_EXPRESSION = new SQWRLResultValueType<SQWRLDataPropertyExpressionResultValue>();
-    ANNOTATION_PROPERTY = new SQWRLResultValueType<SQWRLAnnotationPropertyResultValue>();
-    DATATYPE = new SQWRLResultValueType<SQWRLDatatypeResultValue>();
-    DATA_RANGE = new SQWRLResultValueType<SQWRLDataRangeResultValue>();
-    LITERAL = new SQWRLResultValueType<SQWRLLiteralResultValue>();
+    INDIVIDUAL = new SQWRLResultValueType<>();
+    NAMED_INDIVIDUAL = new SQWRLResultValueType<>();
+    OBJECT_PROPERTY = new SQWRLResultValueType<>();
+    OBJECT_PROPERTY_EXPRESSION = new SQWRLResultValueType<>();
+    DATA_PROPERTY = new SQWRLResultValueType<>();
+    DATA_PROPERTY_EXPRESSION = new SQWRLResultValueType<>();
+    ANNOTATION_PROPERTY = new SQWRLResultValueType<>();
+    DATATYPE = new SQWRLResultValueType<>();
+    DATA_RANGE = new SQWRLResultValueType<>();
+    LITERAL = new SQWRLResultValueType<>();
     VALUES = Collections.unmodifiableList(Arrays.asList(
       new SQWRLResultValueType<?>[] { CLASS, CLASS_EXPRESSION, NAMED_INDIVIDUAL, INDIVIDUAL, OBJECT_PROPERTY,
         OBJECT_PROPERTY_EXPRESSION, DATA_PROPERTY, DATA_PROPERTY_EXPRESSION, ANNOTATION_PROPERTY, DATATYPE, DATA_RANGE,

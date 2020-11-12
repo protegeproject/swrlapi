@@ -72,10 +72,9 @@ public class SWRLBuiltInLibraryManager
   {
     if (swrlBuiltInLibraryDirectory.exists() && swrlBuiltInLibraryDirectory.isDirectory()) {
       File[] swrlBuiltInLibrarySubDirectories = swrlBuiltInLibraryDirectory.listFiles();
-      for (int builtInLibraryIndex = 0;
-           builtInLibraryIndex < swrlBuiltInLibrarySubDirectories.length; builtInLibraryIndex++) {
-        if (swrlBuiltInLibrarySubDirectories[builtInLibraryIndex].isDirectory()) {
-          File swrlBuiltInLibrarySubDirectory = swrlBuiltInLibrarySubDirectories[builtInLibraryIndex];
+      for (File builtInLibrarySubDirectory : swrlBuiltInLibrarySubDirectories) {
+        if (builtInLibrarySubDirectory.isDirectory()) {
+          File swrlBuiltInLibrarySubDirectory = builtInLibrarySubDirectory;
           String swrlBuiltInLibrarySubDirectoryName = swrlBuiltInLibrarySubDirectory.getName();
           try {
             URL swrlBuiltInLibrarySubDirectoryURL = new URL(

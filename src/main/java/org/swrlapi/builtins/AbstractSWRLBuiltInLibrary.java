@@ -1078,7 +1078,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     return argument.getLiteral();
   }
 
-  @NonNull @Override public OWLLiteral getArgumentAsAnOWLLiteral(SWRLBuiltInArgument argument)
+  @NonNull @Override public OWLLiteral getArgumentAsAnOWLLiteral(@NonNull SWRLBuiltInArgument argument)
     throws SWRLBuiltInException
   {
     if (!(argument instanceof SWRLLiteralBuiltInArgument))
@@ -1148,7 +1148,7 @@ public abstract class AbstractSWRLBuiltInLibrary
     // invalid.
   }
 
-  @Override public float getArgumentAsAFloat(SWRLBuiltInArgument argument) throws SWRLBuiltInException
+  @Override public float getArgumentAsAFloat(@NonNull SWRLBuiltInArgument argument) throws SWRLBuiltInException
   {
     return getArgumentAsALiteral(argument).getFloat(); // Will throw LiteralException if invalid
   }

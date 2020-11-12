@@ -1457,7 +1457,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     } else if (builtInName.equalsIgnoreCase(SWRLB_INTEGER_DIVIDE)) {
       BigInteger argument2 = getArgumentAsAnInteger(1, arguments);
       BigInteger argument3 = getArgumentAsAnInteger(2, arguments);
-      if (argument3.equals(BigDecimal.ZERO))
+      if (argument3.equals(BigInteger.ZERO))
         throw new InvalidSWRLBuiltInArgumentException(2, "zero passed as divisor");
       if (argument3.compareTo(BigInteger.ZERO) >= 0)
         operationResult = new BigDecimal(argument2.add(argument3).add(BigInteger.ONE.divide(argument3)));

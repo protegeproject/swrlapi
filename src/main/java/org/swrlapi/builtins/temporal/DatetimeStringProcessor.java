@@ -264,7 +264,7 @@ abstract class DatetimeStringProcessor
       int i = 1;
       while (i++ < this.gTokenIndex[granularity])
         tokenizer.nextToken();
-      return Integer.valueOf(tokenizer.nextToken());
+      return Integer.parseInt(tokenizer.nextToken());
     } catch (Exception e) {
       Temporal.throwInvalidDatetimeStringException(datetimeString);
     }

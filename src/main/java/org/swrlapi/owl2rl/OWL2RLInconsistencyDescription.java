@@ -29,7 +29,7 @@ public class OWL2RLInconsistencyDescription
     if (argumentsDescriptionMap.containsKey(owl2RLRuleName))
       return Optional.of(argumentsDescriptionMap.get(owl2RLRuleName));
     else
-      return Optional.<@NonNull OWL2RLRuleArguments>empty();
+      return Optional.empty();
   }
 
   private static void createArgumentDescription(@NonNull String owl2RLRuleName, int numberOfClassArguments,

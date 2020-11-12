@@ -191,7 +191,7 @@ class SWRLParserSupport
       OWLLiteral owlLiteral = getOWLLiteralFactory().getOWLLiteral(value);
       return getOWLDataFactory().getSWRLLiteralArgument(owlLiteral);
     } catch (NumberFormatException e) {
-      throw new SWRLParseException(lexicalValue + " is not a valid xsd:int");
+      throw new SWRLParseException(lexicalValue + " is not a valid xsd:Decimal");
     }
   }
 
