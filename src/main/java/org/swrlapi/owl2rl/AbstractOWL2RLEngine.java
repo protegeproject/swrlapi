@@ -10,7 +10,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * This class provides utility methods that can be used by implementations on an OWL 2 RL engine in the SWRLAPI.
@@ -146,7 +145,7 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
   @Override public void enableTables(OWL2RLRuleTable... enabledTables)
   {
     for (OWL2RLRuleTable table : enabledTables) {
-      this.enabledRules.addAll(this.table2RulesMap.get(table).stream().collect(Collectors.toList()));
+      this.enabledRules.addAll(new ArrayList<>(this.table2RulesMap.get(table)));
     }
     setRuleSelectionChanged();
     getOWL2RLPersistenceLayer().setEnabledRules(this.enabledRules);
@@ -157,7 +156,7 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
     Set<OWL2RLRule> disabledRules = new HashSet<>();
 
     for (OWL2RLRuleTable table : disabledTables)
-      disabledRules.addAll(this.table2RulesMap.get(table).stream().collect(Collectors.toList()));
+      disabledRules.addAll(new ArrayList<>(this.table2RulesMap.get(table)));
 
     this.enabledRules.removeAll(disabledRules);
 
@@ -181,7 +180,7 @@ public abstract class AbstractOWL2RLEngine implements OWL2RLEngine
 
   private void enableRule(OWL2RLRule rule)
   {
-    this.enabledRules.addAll(getGroup(rule).stream().collect(Collectors.toList()));
+    this.enabledRules.addAll(new ArrayList<>(getGroup(rule)));
 
     setRuleSelectionChanged();
     getOWL2RLPersistenceLayer().setEnabledRules(this.enabledRules);

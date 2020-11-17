@@ -14,13 +14,17 @@ public class DefaultOWL2RLPersistenceLayer implements OWL2RLPersistenceLayer
 {
   @SuppressWarnings("unused") private final @NonNull OWLOntology ontology;
 
+  private final Set<OWL2RLNames.OWL2RLRule> disabledRules;
+
   public DefaultOWL2RLPersistenceLayer(@NonNull OWLOntology ontology)
   {
     this.ontology = ontology;
+    this.disabledRules = new HashSet<>();
   }
 
   @NonNull @Override public Set<OWL2RLNames.OWL2RLRule> getEnabledRules()
-  { // If not explicitly disabled, assume enabled
+  {
+    // If not explicitly disabled, assume enabled
     Set<OWL2RLNames.OWL2RLRule> enabledRules = new HashSet<>();
     for (OWL2RLNames.OWL2RLRule rule : EnumSet.allOf(OWL2RLNames.OWL2RLRule.class))
       if (!isOWL2RLRuleDisabled(rule))
@@ -30,7 +34,9 @@ public class DefaultOWL2RLPersistenceLayer implements OWL2RLPersistenceLayer
 
   @Override public void setEnabledRules(@NonNull Set<OWL2RLNames.OWL2RLRule> rules)
   {
-    // TODO setEnabledRules
+    this.disabledRules.removeAll(rules);
+
+    // TODO implement enable/disableRule persistence with annotation properties in ontology
     // OWLIndividual p3OWLIndividual = getOWLModel().getOWLIndividual(OWL2RLNames.SWRLA_NAMESPACE +
     // rule.toString());
     // OWLDatatypeProperty p3OWLDataProperty = getIsOWL2RLRuleEnabledProperty();
@@ -66,7 +72,9 @@ public class DefaultOWL2RLPersistenceLayer implements OWL2RLPersistenceLayer
 
   private void disableRule(OWL2RLNames.OWL2RLRule rule)
   {
-    if (!isOWL2RLRuleDisabled(rule)) { // TODO implement disableRule
+    if (!isOWL2RLRuleDisabled(rule)) {
+      this.disabledRules.add(rule);
+      // TODO implement disableRule persistence with annotation properties in ontology
       // OWLIndividual p3OWLIndividual = getOWLModel().getOWLIndividual(OWL2RLNames.SWRLA_NAMESPACE + rule.toString());
       // OWLDatatypeProperty p3OWLDataProperty = getIsOWL2RLRuleEnabledProperty();
       // if (p3OWLIndividual != null && p3OWLDataProperty != null)
@@ -76,7 +84,8 @@ public class DefaultOWL2RLPersistenceLayer implements OWL2RLPersistenceLayer
 
   private boolean isOWL2RLRuleDisabled(OWL2RLNames.OWL2RLRule rule)
   {
-    // TODO implement isOWL2RLRuleDisabled
+    return this.disabledRules.contains(rule);
+    // TODO implement disableRule persistence with annotation properties in ontology
     // OWLIndividual p3OWLIndividual = getOWLModel().getOWLIndividual(OWL2RLNames.SWRLA_NAMESPACE + rule.toString());
     // OWLDatatypeProperty p3OWLDataProperty = getIsOWL2RLRuleEnabledProperty();
     //
@@ -89,6 +98,5 @@ public class DefaultOWL2RLPersistenceLayer implements OWL2RLPersistenceLayer
     // } else
     // // If the individual or property are null, then the annotations ontology is not loaded so there is no persistence
     // // so we default to enabled.
-    return false;
   }
 }

@@ -376,12 +376,10 @@ class DefaultSQWRLQuery implements SQWRLQuery
         .isSQWRLHeadAggregationBuiltIn(builtInName)) {
         if (argument.isVariable()) {
           String variableName = argument.asVariable().getVariableName();
-          if (selectedVariable2ColumnIndices.containsKey(variableName)) {
-            selectedVariable2ColumnIndices.get(variableName).add(columnIndex);
-          } else {
+          if (!selectedVariable2ColumnIndices.containsKey(variableName)) {
             selectedVariable2ColumnIndices.put(variableName, new ArrayList<>());
-            selectedVariable2ColumnIndices.get(variableName).add(columnIndex);
           }
+          selectedVariable2ColumnIndices.get(variableName).add(columnIndex);
         }
         if (builtInName.equalsIgnoreCase(SQWRLNames.Select)) {
           processSelectArgument(argument);

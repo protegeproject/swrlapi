@@ -38,7 +38,7 @@ public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtom
   void setBuiltInIndex(int builtInIndex);
 
   /**
-   * @param variableNames A set of prefixed variable names
+   * @param variableNames A set of variable names
    * @return True if the built-in uses at lease one of the supplied variables
    */
   boolean usesAtLeastOneVariableOf(Set<@NonNull String> variableNames) throws SWRLBuiltInException;
@@ -76,23 +76,23 @@ public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtom
   boolean hasVariableArguments();
 
   /**
-   * @return The prefixed names of the unbound variable arguments
+   * @return The names of the unbound variable arguments
    */
   @NonNull Set<@NonNull String> getUnboundArgumentVariableNames() throws SWRLBuiltInException;
 
   /**
    * @param argumentNumber An argument index
-   * @return A prefixed variable name
+   * @return A variable name
    */
   String getArgumentVariableName(int argumentNumber) throws SWRLBuiltInException;
 
   /**
-   * @return A list of variable prefixed names
+   * @return A list of variable names
    */
   @NonNull List<@NonNull String> getArgumentsVariableNames() throws SWRLBuiltInException;
 
   /**
-   * @return A list of variable prefixed names
+   * @return A list of variable names
    */
   @NonNull List<@NonNull String> getArgumentsVariableNamesExceptFirst() throws SWRLBuiltInException;
 
@@ -114,7 +114,7 @@ public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtom
   void addArguments(@NonNull List<@NonNull SWRLBuiltInArgument> additionalArguments);
 
   /**
-   * @param variableNames A set of variable prefixed-names
+   * @param variableNames A set of variable names
    */
   void setPathVariableNames(Set<@NonNull String> variableNames);
 
@@ -124,9 +124,9 @@ public interface SWRLAPIBuiltInAtom extends SWRLBuiltInAtom
   boolean hasPathVariables();
 
   /**
-   * Indicates variables that this built-in atom depends on (directly or indirectly)
+   * Indicates variables that this built-in depends on (directly or indirectly)
    *
-   * @return A list of variable prefixed names
+   * @return A list of variable names
    */
   @NonNull Set<@NonNull String> getPathVariableNames();
 

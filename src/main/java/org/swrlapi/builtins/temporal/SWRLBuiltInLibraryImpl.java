@@ -836,7 +836,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     @NonNull IRI propertyIRI)
   {
     Set<@NonNull OWLObjectPropertyAssertionAxiom> axioms = new HashSet<>(); // TODO Get assertions for this individual/property
-    OWLObjectPropertyAssertionAxiom axiom = axioms.toArray(new OWLObjectPropertyAssertionAxiom[axioms.size()])[0];
+    OWLObjectPropertyAssertionAxiom axiom = axioms.toArray(new OWLObjectPropertyAssertionAxiom[0])[0];
     OWLIndividual subject = axiom.getObject();
 
     return subject.asOWLNamedIndividual().getIRI();
@@ -852,7 +852,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     @NonNull IRI propertyIRI)
   {
     Set<@NonNull OWLDataPropertyAssertionAxiom> axioms = new HashSet<>(); // TODO Get assertions for this individual/property
-    OWLDataPropertyAssertionAxiom axiom = axioms.toArray(new OWLDataPropertyAssertionAxiom[axioms.size()])[0];
+    OWLDataPropertyAssertionAxiom axiom = axioms.toArray(new OWLDataPropertyAssertionAxiom[0])[0];
     OWLLiteral value = axiom.getObject();
 
     return value.toString();

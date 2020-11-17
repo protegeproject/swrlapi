@@ -77,7 +77,7 @@ public interface SWRLBuiltInInputArgumentHandler
    * @param arguments The built-in arguments
    * @return The first unbound argument
    */
-  int getFirstUnboundArgument(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
+  int getFirstUnboundArgumentNumber(@NonNull List<@NonNull SWRLBuiltInArgument> arguments) throws SWRLBuiltInException;
 
   /**
    * @param arguments The built-in arguments

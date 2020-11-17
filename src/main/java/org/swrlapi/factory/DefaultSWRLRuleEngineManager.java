@@ -24,9 +24,8 @@ class DefaultSWRLRuleEngineManager implements SWRLRuleEngineManager
 
     if (this.registeredSWRLRuleEngines.containsKey(ruleEngineName)) {
       this.registeredSWRLRuleEngines.remove(ruleEngineName);
-      this.registeredSWRLRuleEngines.put(ruleEngineName, ruleEngineCreator);
-    } else
-      this.registeredSWRLRuleEngines.put(ruleEngineName, ruleEngineCreator);
+    }
+    this.registeredSWRLRuleEngines.put(ruleEngineName, ruleEngineCreator);
   }
 
   @Override public boolean isRuleEngineRegistered(@NonNull String ruleEngineName)

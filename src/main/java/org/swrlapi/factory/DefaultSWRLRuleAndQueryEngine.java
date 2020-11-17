@@ -81,7 +81,7 @@ class DefaultSWRLRuleAndQueryEngine implements SWRLRuleEngine, SQWRLQueryEngine
       exportSQWRLQuery2TargetRuleEngine(queryName);
     } catch (SWRLAPIException e) {
       throw new SWRLRuleEngineException(
-        "error exporting SQWRL query rule engine: " + (e.getMessage() != null ? e.getMessage() : ""), e);
+        "error exporting SQWRL query to rule engine: " + (e.getMessage() != null ? e.getMessage() : ""), e);
     }
   }
 
