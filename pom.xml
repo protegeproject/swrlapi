@@ -110,11 +110,12 @@
               *
             </Import-Package>
             <Export-Package>
+              ch.obermuhlner.math.big.*;version="${big.math.version}",
               org.nfunk.*;version="${jep.version}",
               org.swrlapi.*;version="${swrlapi.version}"
             </Export-Package>
             <Embed-Transitive>true</Embed-Transitive>
-            <Embed-Dependency>jep;version="${jep.version}"</Embed-Dependency>
+            <Embed-Dependency>jep, big-math"</Embed-Dependency>
           </instructions>
         </configuration>
 
