@@ -12,7 +12,7 @@ import java.util.Set;
 // TODO Implement OWL 2 RL persistence layer
 public class DefaultOWL2RLPersistenceLayer implements OWL2RLPersistenceLayer
 {
-  @SuppressWarnings("unused") private final @NonNull OWLOntology ontology;
+  @SuppressWarnings({ "unused", "FieldCanBeLocal" }) private final @NonNull OWLOntology ontology;
 
   private final Set<OWL2RLNames.OWL2RLRule> disabledRules;
 

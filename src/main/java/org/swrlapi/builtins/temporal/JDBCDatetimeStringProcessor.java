@@ -1,5 +1,7 @@
 package org.swrlapi.builtins.temporal;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
@@ -8,7 +10,6 @@ import java.text.SimpleDateFormat;
  */
 class JDBCDatetimeStringProcessor extends DatetimeStringProcessor
 {
-  private static final SimpleDateFormat _dateFormat = new SimpleDateFormat("y-M-d h:m:s.S");
   private static final String _delimiters = " -:."; // Note the space.
 
   // The number of tokens (including delimeters) necessary to strip a datetime to a specified granularity.
@@ -27,10 +28,10 @@ class JDBCDatetimeStringProcessor extends DatetimeStringProcessor
 
   public JDBCDatetimeStringProcessor()
   {
-    super(_dateFormat, _delimiters, _gTokenIndex, _datetimeRoundDownPadding, _datetimeRoundUpPadding);
+    super(new SimpleDateFormat("y-M-d h:m:s.S"), _delimiters, _gTokenIndex, _datetimeRoundDownPadding, _datetimeRoundUpPadding);
   }
 
-  @Override
+  @NotNull @Override
   protected String constructDatetimeStringFromMillisecondsFrom1970Count(long millisecondsFrom1970)
   {
     Timestamp ts = new Timestamp(millisecondsFrom1970);

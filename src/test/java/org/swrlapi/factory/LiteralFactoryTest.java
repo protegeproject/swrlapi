@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.swrlapi.literal.Literal;
 
-import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 
 /**
@@ -27,6 +26,6 @@ public class LiteralFactoryTest
     Literal literal = this.literalFactory.getLiteral(b);
 
     assertTrue(literal.isBoolean());
-    assertEquals(true, literal.getBoolean());
+    assertTrue(literal.getBoolean());
   }
 }

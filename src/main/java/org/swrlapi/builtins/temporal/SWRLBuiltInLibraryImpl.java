@@ -764,7 +764,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
         if (hashIndex == -1)
           granularityName = fullName;
         else
-          granularityName = fullName.substring(hashIndex + 1, fullName.length());
+          granularityName = fullName.substring(hashIndex + 1);
         return Temporal.getIntegerGranularityRepresentation(granularityName);
       } else
         throw new InvalidSWRLBuiltInArgumentException(argumentNumber,

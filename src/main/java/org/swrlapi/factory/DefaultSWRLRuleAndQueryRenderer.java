@@ -254,8 +254,6 @@ class DefaultSWRLRuleAndQueryRenderer implements SWRLRuleRenderer, SQWRLQueryRen
    * variables with an IRI referring to OWL entities in the active ontology we can transform them to the
    * appropriate short form for the named entity.
    *
-   * @see org.swrlapi.parser.SWRLParser#parseShortNameSWRLDArgument(org.swrlapi.parser.SWRLTokenizer, boolean, String)
-   * @see DefaultSWRLAPIOWLOntology#convertSWRLVariable2SWRLBuiltInArgument(SWRLVariable)
    */
   @NonNull @Override public String visit(@NonNull SWRLVariable variable)
   {
