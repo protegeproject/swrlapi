@@ -2,7 +2,6 @@ package org.swrlapi.literal;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -15,10 +14,17 @@ public class XSDTimeUtil
   @NonNull private static final String jdbcDateTimeFormatString = "y-M-d h:m:s.S";
   @NonNull private static final String jdbcDateFormatString = "y-M-d";
 
-  @NonNull private static final DateFormat xsdDateTimeFormat = new SimpleDateFormat(xsdDateTimeFormatString);
-  @NonNull private static final DateFormat xsdDateFormat = new SimpleDateFormat(xsdDateFormatString);
-  @NonNull private static final DateFormat jdbcDateTimeFormat = new SimpleDateFormat(jdbcDateTimeFormatString);
-  @NonNull private static final DateFormat jdbcDateFormat = new SimpleDateFormat(jdbcDateFormatString);
+  private static final ThreadLocal<@NonNull SimpleDateFormat> xsdDateTimeFormat = ThreadLocal
+    .withInitial(() -> new SimpleDateFormat(xsdDateTimeFormatString));
+
+  private static final ThreadLocal<@NonNull SimpleDateFormat> xsdDateFormat = ThreadLocal
+    .withInitial(() -> new SimpleDateFormat(xsdDateFormatString));
+
+  private static final ThreadLocal<@NonNull SimpleDateFormat> jdbcDateTimeFormat = ThreadLocal
+    .withInitial(() -> new SimpleDateFormat(jdbcDateTimeFormatString));
+
+  private static final ThreadLocal<@NonNull SimpleDateFormat> jdbcDateFormat = ThreadLocal
+    .withInitial(() -> new SimpleDateFormat(jdbcDateFormatString));
 
   public static org.apache.axis.types.Duration addAxisDurations(org.apache.axis.types.@NonNull Duration duration1,
     org.apache.axis.types.@NonNull Duration duration2)
@@ -457,12 +463,12 @@ public class XSDTimeUtil
 
   @NonNull public static String utilDate2XSDDateTimeString(java.util.@NonNull Date date)
   {
-    return xsdDateTimeFormat.format(date);
+    return xsdDateTimeFormat.get().format(date);
   }
 
   @NonNull public static String utilDate2XSDDateString(java.util.@NonNull Date date)
   {
-    return xsdDateFormat.format(date);
+    return xsdDateFormat.get().format(date);
   }
 
   @NonNull public static String utilDate2XSDTimeString(java.util.@NonNull Date date)
@@ -488,7 +494,7 @@ public class XSDTimeUtil
   public static java.util.@NonNull Date xsdDateTimeString2UtilDate(@NonNull String content)
   {
     try {
-      return xsdDateTimeFormat.parse(content);
+      return xsdDateTimeFormat.get().parse(content);
     } catch (ParseException e) {
       throw new IllegalArgumentException("Invalid xsd:DateTime " + content);
     }
@@ -502,7 +508,7 @@ public class XSDTimeUtil
   public static java.util.@NonNull Date xsdDateString2UtilDate(@NonNull String content)
   {
     try {
-      return xsdDateFormat.parse(content);
+      return xsdDateFormat.get().parse(content);
     } catch (ParseException e) {
       throw new IllegalArgumentException("Invalid xsd:Date " + content);
     }
@@ -532,18 +538,18 @@ public class XSDTimeUtil
 
   @NonNull public static String date2JDBCDateTimeString(java.util.@NonNull Date date)
   {
-    return jdbcDateTimeFormat.format(date);
+    return jdbcDateTimeFormat.get().format(date);
   }
 
   @NonNull public static String date2JDBCDateString(java.util.Date date)
   {
-    return jdbcDateFormat.format(date);
+    return jdbcDateFormat.get().format(date);
   }
 
   public static java.util.@NonNull Date jdbcDateTimeString2UtilDate(@NonNull String content)
   {
     try {
-      return jdbcDateTimeFormat.parse(content);
+      return jdbcDateTimeFormat.get().parse(content);
     } catch (ParseException e) {
       throw new IllegalArgumentException("Invalid JDBC datetime " + content);
     }
@@ -552,7 +558,7 @@ public class XSDTimeUtil
   public static java.util.@NonNull Date jdbcDateString2UtilDate(@NonNull String content)
   {
     try {
-      return jdbcDateFormat.parse(content);
+      return jdbcDateFormat.get().parse(content);
     } catch (ParseException e) {
       throw new IllegalArgumentException("Invalid JDBC date " + content);
     }
@@ -561,7 +567,7 @@ public class XSDTimeUtil
   public static boolean isValidXSDDateTimeString(@NonNull String content)
   {
     try {
-      xsdDateTimeFormat.parse(content);
+      xsdDateTimeFormat.get().parse(content);
       return true;
     } catch (ParseException e) {
       return false;
@@ -571,7 +577,7 @@ public class XSDTimeUtil
   public static boolean isValidXSDDateString(@NonNull String content)
   {
     try {
-      xsdDateFormat.parse(content);
+      xsdDateFormat.get().parse(content);
       return true;
     } catch (ParseException e) {
       return false;
@@ -601,7 +607,7 @@ public class XSDTimeUtil
   public static boolean isValidJDBCDateTimeString(@NonNull String content)
   {
     try {
-      jdbcDateTimeFormat.parse(content);
+      jdbcDateTimeFormat.get().parse(content);
       return true;
     } catch (ParseException e) {
       return false;

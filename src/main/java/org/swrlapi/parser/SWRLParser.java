@@ -412,7 +412,6 @@ public class SWRLParser
    * appropriate SWRLAPI built-in argument for the named entity.
    *
    * @see org.swrlapi.parser.SWRLParser#parseShortNameSWRLDArgument(SWRLTokenizer, boolean, String)
-   * @see org.swrlapi.factory.DefaultSWRLRuleAndQueryRenderer#visit(SWRLVariable)
    */
   private Optional<@NonNull SWRLDArgument> parseShortNameSWRLDArgument(@NonNull SWRLTokenizer tokenizer,
     boolean isInBuiltIn, @NonNull String shortName) throws SWRLParseException

@@ -85,7 +85,7 @@ class Temporal
       31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30, // to December
       365 };
 
-  @NonNull private final GregorianCalendar gc;
+  private final ThreadLocal<@NonNull GregorianCalendar> gc = new ThreadLocal<>();
 
   /**
    * @param datetimeStringProcessor A datetime string processor
@@ -94,7 +94,7 @@ class Temporal
   {
     this.datetimeStringProcessor = datetimeStringProcessor;
 
-    this.gc = new GregorianCalendar();
+    this.gc.set(new GregorianCalendar());
   }
 
   /**
@@ -221,10 +221,10 @@ class Temporal
     if (milliseconds < 0)
       throw new TemporalException("milliseconds must be 0 or greater in datetime: " + datetimeString);
 
-    this.gc.clear();
-    this.gc.set(years, months - 1, days, hours, minutes, seconds);
+    this.gc.get().clear();
+    this.gc.get().set(years, months - 1, days, hours, minutes, seconds);
 
-    long granuleCountInMillis = this.gc.getTimeInMillis() + milliseconds + MillisecondsTo1970;
+    long granuleCountInMillis = this.gc.get().getTimeInMillis() + milliseconds + MillisecondsTo1970;
 
     return convertGranuleCount(granuleCountInMillis, MILLISECONDS, granularity);
   }
@@ -263,15 +263,14 @@ class Temporal
     long localGranuleCount = granuleCount;
 
     // If we are converting from a granularity of days or finer to months or years, we need to account for the extra
-    // day's worth of granules
-    // in each leap year up to that point in time.
+    // day's worth of granules in each leap year up to that point in time.
     if ((from_granularity >= DAYS) && (to_granularity <= MONTHS)) {
       leapOffsetGranuleCount = -leapYearsUpToGranuleCount(localGranuleCount, from_granularity)
           * conversion_table[DAYS][from_granularity];
       localGranuleCount += leapOffsetGranuleCount;
     }
 
-    // Months must be dealt with separately.
+    // Months must be dealt with separately
     if (from_granularity == MONTHS)
       result = convertMonthCount2GranuleCount(localGranuleCount, to_granularity);
     else if (to_granularity == MONTHS)
@@ -284,8 +283,7 @@ class Temporal
       result = localGranuleCount;
 
     // If we are converting from a granularity of years or months to a granularity of days or finer, we need to account
-    // for the extra day's
-    // worth of granules in each leap year up to that point in time.
+    // for the extra day's worth of granules in each leap year up to that point in time.
     if ((from_granularity <= MONTHS) && (to_granularity >= DAYS)) {
       if (from_granularity == YEARS)
         leapOffsetGranuleCount = leapGranulesUpToYear(granuleCount, to_granularity);

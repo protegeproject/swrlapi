@@ -15,7 +15,7 @@ import java.util.List;
 public class Period
 {
   // Both instants will have the same granularity so we do not store the granularity separately.
-  @NonNull private Instant startInstant, finishInstant;
+  @NonNull private final Instant startInstant, finishInstant;
   @NonNull private final Temporal temporal;
 
   public Period(@NonNull Temporal temporal, long startGranuleCount, long finishGranuleCount, int granularity)
@@ -68,11 +68,8 @@ public class Period
   {
     this.temporal = temporal;
 
-    this.startInstant = new Instant(temporal, startInstant);
-    this.finishInstant = new Instant(temporal, finishInstant);
-
-    this.startInstant.setGranularity(granularity);
-    this.finishInstant.setGranularity(granularity);
+    this.startInstant = new Instant(temporal, startInstant, granularity);
+    this.finishInstant = new Instant(temporal, finishInstant, granularity);
 
     orderCheck(this.startInstant, this.finishInstant); // Throws exception if start is after finish.
   }
@@ -88,10 +85,7 @@ public class Period
     this.finishInstant = new Instant(temporal, finishInstant);
 
     // Set granularity to finest of both.
-    if (startInstant.getGranularity() > finishInstant.getGranularity())
-      granularity = startInstant.getGranularity();
-    else
-      granularity = finishInstant.getGranularity();
+    granularity = Math.max(startInstant.getGranularity(), finishInstant.getGranularity());
 
     this.startInstant.setGranularity(granularity);
     this.finishInstant.setGranularity(granularity);
@@ -482,20 +476,6 @@ public class Period
     return result;
   }
 
-  public void setStartInstant(@NonNull Instant instant) throws TemporalException
-  {
-    this.startInstant = new Instant(this.temporal, instant);
-    // Both instants must share same granularity.
-    this.finishInstant.setGranularity(instant.getGranularity());
-  }
-
-  public void setFinishInstant(@NonNull Instant instant) throws TemporalException
-  {
-    this.finishInstant = new Instant(this.temporal, instant);
-    // Both instants must share same granularity.
-    this.startInstant.setGranularity(instant.getGranularity());
-  }
-
   public String getStartDatetimeString() throws TemporalException
   {
     return this.startInstant.getDatetimeString();
@@ -506,7 +486,7 @@ public class Period
     return this.startInstant.getUtilDate();
   }
 
-  public Instant getStartInstant()
+  public @NonNull Instant getStartInstant()
   {
     return this.startInstant;
   }
@@ -531,7 +511,7 @@ public class Period
     return this.finishInstant.getUtilDate();
   }
 
-  public Instant getFinishInstant()
+  public @NonNull Instant getFinishInstant()
   {
     return this.finishInstant;
   }

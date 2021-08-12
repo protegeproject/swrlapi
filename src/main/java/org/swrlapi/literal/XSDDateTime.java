@@ -1,29 +1,29 @@
 package org.swrlapi.literal;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.dataflow.qual.Deterministic;
 import org.checkerframework.dataflow.qual.SideEffectFree;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class XSDDateTime extends XSDType<XSDDateTime>
 {
-  @NonNull private final Date datetime;
+  private final ThreadLocal<@NonNull Date> datetime = new ThreadLocal<Date>();
 
   public XSDDateTime(@NonNull String content)
   {
     super(content, XSDVocabulary.DATE_TIME.getIRI());
 
-    this.datetime = XSDTimeUtil.xsdDateTimeString2UtilDate(content);
+    this.datetime.set(XSDTimeUtil.xsdDateTimeString2UtilDate(content));
   }
 
   public XSDDateTime(@NonNull Date datetime)
   {
     super(XSDTimeUtil.utilDate2XSDDateTimeString(datetime), XSDVocabulary.DATE_TIME.getIRI());
 
-    this.datetime = new Date(datetime.getTime());
+    this.datetime.set(new Date(datetime.getTime()));
   }
 
   @Override protected void validate()
@@ -35,24 +35,20 @@ public class XSDDateTime extends XSDType<XSDDateTime>
       throw new IllegalArgumentException("invalid xsd:DateTime " + getContent());
   }
 
-  @SideEffectFree @Deterministic @Override public boolean equals(@Nullable Object o)
+
+  @Override public boolean equals(Object o)
   {
     if (this == o)
       return true;
-
-    if (!(o instanceof XSDDateTime))
+    if (o == null || getClass() != o.getClass())
       return false;
-
-    XSDDateTime otherDateTime = (XSDDateTime)o;
-
-    return this.datetime != null && otherDateTime.datetime != null && this.datetime.equals(otherDateTime.datetime);
+    XSDDateTime that = (XSDDateTime)o;
+    return datetime.get().getTime() == that.datetime.get().getTime();
   }
 
   @SideEffectFree @Deterministic @Override public int hashCode()
   {
-    int code = 136;
-    code += this.datetime.hashCode();
-    return code;
+    return Objects.hash(datetime.get());
   }
 
   @SideEffectFree @Deterministic @Override public int compareTo(@NonNull XSDDateTime o)
@@ -63,6 +59,6 @@ public class XSDDateTime extends XSDType<XSDDateTime>
     if (this == o)
       return 0;
 
-    return XSDTimeUtil.compareDateTimes(this.datetime, o.datetime);
+    return XSDTimeUtil.compareDateTimes(this.datetime.get(), o.datetime.get());
   }
 }

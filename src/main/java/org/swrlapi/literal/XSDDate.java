@@ -1,7 +1,6 @@
 package org.swrlapi.literal;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.dataflow.qual.Deterministic;
 import org.checkerframework.dataflow.qual.SideEffectFree;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
@@ -11,20 +10,20 @@ import java.util.Objects;
 
 public class XSDDate extends XSDType<XSDDate>
 {
-  @NonNull private final Date date;
+  private final ThreadLocal<@NonNull Date> date = new ThreadLocal<>();
 
   public XSDDate(@NonNull String content)
   {
     super(content, XSDVocabulary.DATE.getIRI());
 
-    this.date = XSDTimeUtil.xsdDateString2UtilDate(content);
+    this.date.set(XSDTimeUtil.xsdDateString2UtilDate(content));
   }
 
   public XSDDate(@NonNull Date date)
   {
     super(XSDTimeUtil.utilDate2XSDDateString(date), XSDVocabulary.DATE.getIRI());
 
-    this.date = new Date(date.getTime());
+    this.date.set(new Date(date.getTime()));
   }
 
   @Override protected void validate()
@@ -36,21 +35,19 @@ public class XSDDate extends XSDType<XSDDate>
       throw new IllegalArgumentException("invalid xsd:Date '" + getContent() + "'");
   }
 
-  @SideEffectFree @Deterministic @Override public boolean equals(@Nullable Object o)
+  @SideEffectFree @Deterministic @Override public boolean equals(Object o)
   {
     if (this == o)
       return true;
     if (o == null || getClass() != o.getClass())
       return false;
-
-    XSDDate xsdDate = (XSDDate)o;
-
-    return Objects.equals(date, xsdDate.date);
+    XSDDate that = (XSDDate)o;
+    return date.get().getTime() == that.date.get().getTime();
   }
 
-  @SideEffectFree @Deterministic @Override public int hashCode()
+  @Override public int hashCode()
   {
-    return date != null ? date.hashCode() : 0;
+    return Objects.hash(date.get());
   }
 
   @SideEffectFree @Deterministic @Override public int compareTo(@NonNull XSDDate o)
@@ -61,6 +58,6 @@ public class XSDDate extends XSDType<XSDDate>
     if (this == o)
       return 0;
 
-    return XSDTimeUtil.compareDates(this.date, o.date);
+    return XSDTimeUtil.compareDates(this.date.get(), o.date.get());
   }
 }

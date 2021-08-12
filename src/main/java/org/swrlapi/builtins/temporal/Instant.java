@@ -116,6 +116,11 @@ class Instant
     this(temporal, instant.getGranuleCount(instant.getGranularity()), instant.getGranularity());
   }
 
+  public Instant(@NonNull Temporal temporal, @NonNull Instant instant, int granularity) throws TemporalException
+  {
+    this(temporal, instant.getGranuleCount(granularity), granularity);
+  }
+
   public int getGranularity()
   {
     return this.granularity;

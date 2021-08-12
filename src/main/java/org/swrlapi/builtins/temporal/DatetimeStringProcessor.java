@@ -12,14 +12,14 @@ import java.util.StringTokenizer;
  */
 abstract class DatetimeStringProcessor
 {
-  @NonNull private final SimpleDateFormat dateFormat;
+  private final ThreadLocal<@NonNull SimpleDateFormat> dateFormat = new ThreadLocal<>();
   @NonNull private final String delimiters;
 
-  // The number of tokens (including delimeters) necessary to strip a datetime to the specified granularity
-  @NonNull private final int[] gTokenIndex;
+  // The number of tokens (including delimiters) necessary to strip a datetime to the specified granularity
+  private final int[] gTokenIndex;
 
-  @NonNull private final String[] datetimeRoundDownPadding; // Padding for a partially specified datetime
-  @NonNull private final String[] datetimeRoundUpPadding; // Padding for a partially specified datetime
+  private final String[] datetimeRoundDownPadding; // Padding for a partially specified datetime
+  private final String[] datetimeRoundUpPadding; // Padding for a partially specified datetime
 
   /**
    * @param dateFormat               A date format
@@ -28,10 +28,10 @@ abstract class DatetimeStringProcessor
    * @param datetimeRoundDownPadding Padding for rounding down
    * @param datetimeRoundUpPadding   Padding for rounding up
    */
-  DatetimeStringProcessor(@NonNull SimpleDateFormat dateFormat, @NonNull String delimiters, @NonNull int[] gTokenIndex,
-    @NonNull String[] datetimeRoundDownPadding, @NonNull String[] datetimeRoundUpPadding)
+  DatetimeStringProcessor(@NonNull SimpleDateFormat dateFormat, @NonNull String delimiters, int[] gTokenIndex,
+    String[] datetimeRoundDownPadding, String[] datetimeRoundUpPadding)
   {
-    this.dateFormat = dateFormat;
+    this.dateFormat.set(dateFormat);
     this.delimiters = delimiters;
     this.gTokenIndex = gTokenIndex.clone();
     this.datetimeRoundUpPadding = datetimeRoundUpPadding.clone();
@@ -80,7 +80,7 @@ abstract class DatetimeStringProcessor
   private void checkDatetimeString(@NonNull String datetimeString) throws TemporalException
   {
     String localDatetimeString = datetimeString.trim();
-    java.util.Date date = this.dateFormat.parse(localDatetimeString, new ParsePosition(0));
+    java.util.Date date = this.dateFormat.get().parse(localDatetimeString, new ParsePosition(0));
 
     if (date == null)
       Temporal.throwInvalidDatetimeStringException(datetimeString);
