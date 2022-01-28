@@ -78,11 +78,11 @@ public class SWRLBuiltInLibraryManager
           String swrlBuiltInLibrarySubDirectoryName = swrlBuiltInLibrarySubDirectory.getName();
           try {
             URL swrlBuiltInLibrarySubDirectoryURL = new URL(
-              "file:" + swrlBuiltInLibrarySubDirectory.getCanonicalPath());
+              "file:" + swrlBuiltInLibrarySubDirectory.getCanonicalPath() + "/"); // the trailing slash is important for the classloader (otherwise it expects a file and throws a FNFE)
             URLClassLoader classLoader = new URLClassLoader(new URL[] { swrlBuiltInLibrarySubDirectoryURL },
               this.getClass().getClassLoader());
             SWRLBuiltInLibrary swrlBuiltInLibrary = instantiateSWRLBuiltInLibraryImplementation(
-              swrlBuiltInLibrarySubDirectoryName);
+              swrlBuiltInLibrarySubDirectoryName, classLoader);
             String swrlBuiltInLibraryPrefix = swrlBuiltInLibrary.getPrefix();
             if (preCannedSWRLBuiltInLibraryPrefixes.contains(swrlBuiltInLibraryPrefix)) {
               log.warn("External built-in library prefix " + swrlBuiltInLibraryPrefix
@@ -110,7 +110,7 @@ public class SWRLBuiltInLibraryManager
   private void loadInternalSWRLBuiltInLibraries(Set<@NonNull String> swrlBuiltInLibraryPrefixes)
   {
     for (String swrlBuiltInLibraryPrefix : swrlBuiltInLibraryPrefixes) {
-      SWRLBuiltInLibrary swrlBuiltInLibrary = instantiateSWRLBuiltInLibraryImplementation(swrlBuiltInLibraryPrefix);
+      SWRLBuiltInLibrary swrlBuiltInLibrary = instantiateSWRLBuiltInLibraryImplementation(swrlBuiltInLibraryPrefix, SWRLBuiltInLibraryManager.class.getClassLoader());
 
       registerSWRLBuiltIns(swrlBuiltInLibrary.getPrefix(), swrlBuiltInLibrary.getNamespace(),
         swrlBuiltInLibrary.getBuiltInNames());
@@ -346,7 +346,7 @@ public class SWRLBuiltInLibraryManager
   }
 
   @NonNull private SWRLBuiltInLibrary instantiateSWRLBuiltInLibraryImplementation(
-    @NonNull String swrlBuiltInLibraryPrefix) throws SWRLBuiltInLibraryException
+    @NonNull String swrlBuiltInLibraryPrefix, ClassLoader classLoader) throws SWRLBuiltInLibraryException
   {
     Class<?> swrlBuiltInLibraryImplementationClass;
     String swrlBuiltInLibraryImplementationClassName =
@@ -354,7 +354,7 @@ public class SWRLBuiltInLibraryManager
         + SWRLBuiltInLibraryImplementationClassName;
 
     try {
-      swrlBuiltInLibraryImplementationClass = Class.forName(swrlBuiltInLibraryImplementationClassName);
+      swrlBuiltInLibraryImplementationClass = Class.forName(swrlBuiltInLibraryImplementationClassName, true, classLoader);
     } catch (Exception e) {
       throw new UnresolvedSWRLBuiltInClassException(swrlBuiltInLibraryImplementationClassName,
         e.getMessage() != null ? e.getMessage() : "", e);
