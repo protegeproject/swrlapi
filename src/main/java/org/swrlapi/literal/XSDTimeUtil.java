@@ -98,6 +98,12 @@ public class XSDTimeUtil
       return diff;
 
     diff = calendar1.get(Calendar.SECOND) - calendar2.get(Calendar.SECOND);
+    if (diff != 0)
+      return diff;
+
+    diff = calendar1.get(Calendar.MILLISECOND) - calendar2.get(Calendar.MILLISECOND);
+    if (diff != 0)
+      return diff;
 
     return diff;
   }
@@ -137,6 +143,10 @@ public class XSDTimeUtil
       return diff;
 
     diff = calendar1.get(Calendar.SECOND) - calendar2.get(Calendar.SECOND);
+    if (diff != 0)
+      return diff;
+
+    diff = calendar1.get(Calendar.MILLISECOND) - calendar2.get(Calendar.MILLISECOND);
     if (diff != 0)
       return diff;
 

@@ -110,17 +110,44 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
         String s2 = getArgumentAsAString(1, arguments);
         return s1.compareTo(s2) > 0;
       } else
-        throw new InvalidSWRLBuiltInArgumentException(1,
-          "expecting string argument for comparison, got " + representArgumentAsAString(1, arguments));
+        return false;
     } else if (isArgumentNumeric(0, arguments)) {
       if (isArgumentNumeric(1, arguments))
         return compareTwoNumericArguments(arguments) > 0;
       else
-        throw new InvalidSWRLBuiltInArgumentException(1,
-          "expecting numeric argument for comparison, got " + representArgumentAsAString(1, arguments));
+        return false;
+    } else if (isArgumentADateTime(0, arguments)) {
+      XSDDateTime dt1 = getArgumentAsADateTime(0, arguments);
+      if (isArgumentADateTime(1, arguments)) {
+        XSDDateTime dt2 = getArgumentAsADateTime(1, arguments);
+        return dt1.compareTo(dt2) > 0;
+      } else
+        return false;
+    } else if (isArgumentADate(0, arguments)) {
+      XSDDate d1 = getArgumentAsADate(0, arguments);
+      if (isArgumentADate(1, arguments)) {
+        XSDDate d2 = getArgumentAsADate(1, arguments);
+        return d1.compareTo(d2) > 0;
+      } else
+        return false;
+    } else if (isArgumentATime(0, arguments)) {
+      XSDTime t1 = getArgumentAsATime(0, arguments);
+      if (isArgumentATime(1, arguments)) {
+        XSDTime t2 = getArgumentAsATime(1, arguments);
+        return t1.compareTo(t2) > 0;
+      } else
+        return false;
+    } else if (isArgumentADuration(0, arguments)) {
+      XSDDuration d1 = getArgumentAsADuration(0, arguments);
+      if (isArgumentADuration(1, arguments)) {
+        XSDDuration d2 = getArgumentAsADuration(1, arguments);
+        return d1.compareTo(d2) > 0;
+      } else
+        return false;
     } else
       throw new InvalidSWRLBuiltInArgumentException(0,
-        "expecting string or numeric argument for comparison, got " + representArgumentAsAString(0, arguments));
+        "unsupported argument type: expecting numeric, string, xsd:date, xsd:dateTime, xsd:time, or xsd:duration argument for comparison, got " +
+          representArgumentAsAString(0, arguments));
   }
 
   /**
@@ -138,17 +165,44 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
         String s2 = getArgumentAsAString(1, arguments);
         return s1.compareTo(s2) < 0;
       } else
-        throw new InvalidSWRLBuiltInArgumentException(1,
-          "expecting string argument for comparison, got " + representArgumentAsAString(1, arguments));
+        return false;
     } else if (isArgumentNumeric(0, arguments)) {
       if (isArgumentNumeric(1, arguments))
         return compareTwoNumericArguments(arguments) < 0;
       else
-        throw new InvalidSWRLBuiltInArgumentException(1,
-          "expecting numeric argument for comparison, got " + representArgumentAsAString(1, arguments));
+        return false;
+    } else if (isArgumentADateTime(0, arguments)) {
+      XSDDateTime dt1 = getArgumentAsADateTime(0, arguments);
+      if (isArgumentADateTime(1, arguments)) {
+        XSDDateTime dt2 = getArgumentAsADateTime(1, arguments);
+        return dt1.compareTo(dt2) < 0;
+      } else
+        return false;
+    } else if (isArgumentADate(0, arguments)) {
+      XSDDate d1 = getArgumentAsADate(0, arguments);
+      if (isArgumentADate(1, arguments)) {
+        XSDDate d2 = getArgumentAsADate(1, arguments);
+        return d1.compareTo(d2) < 0;
+      } else
+        return false;
+    } else if (isArgumentATime(0, arguments)) {
+      XSDTime t1 = getArgumentAsATime(0, arguments);
+      if (isArgumentATime(1, arguments)) {
+        XSDTime t2 = getArgumentAsATime(1, arguments);
+        return t1.compareTo(t2) < 0;
+      } else
+        return false;
+    } else if (isArgumentADuration(0, arguments)) {
+      XSDDuration d1 = getArgumentAsADuration(0, arguments);
+      if (isArgumentADuration(1, arguments)) {
+        XSDDuration d2 = getArgumentAsADuration(1, arguments);
+        return d1.compareTo(d2) < 0;
+      } else
+        return false;
     } else
       throw new InvalidSWRLBuiltInArgumentException(0,
-        "expecting string or numeric argument for comparison, got " + representArgumentAsAString(0, arguments));
+        "unsupported argument type: expecting numeric, string, xsd:date, xsd:dateTime, xsd:time, or xsd:duration argument for comparison, got " +
+          representArgumentAsAString(0, arguments));
   }
 
   /**
@@ -209,8 +263,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
       if (isArgumentNumeric(1, arguments))
         return compareTwoNumericArguments(arguments) == 0;
       else
-        throw new InvalidSWRLBuiltInArgumentException(1,
-          "expecting numeric argument for comparison, got " + representArgumentAsAString(1, arguments));
+        return false;
     } else
       throw new InvalidSWRLBuiltInArgumentException(0,
         "unsupported argument type: expecting boolean, numeric, string, xsd:date, xsd:dateTime, xsd:time, or xsd:duration argument for comparison, got "
