@@ -1524,7 +1524,7 @@ public class SWRLBuiltInLibraryImpl extends AbstractSWRLBuiltInLibrary
     } else if (builtInName.equalsIgnoreCase(SWRLB_POW)) {
       int argument3 = convertArgumentToAnInt(2, arguments);
       BigDecimal argument2 = getArgumentAsADecimal(1, arguments);
-      operationResult = argument2.pow(argument3);
+      operationResult = argument2.pow(argument3, mathContext);
     } else if (builtInName.equalsIgnoreCase(SWRLB_UNARY_PLUS)) {
       BigDecimal argument2 = getArgumentAsADecimal(1, arguments);
       operationResult = argument2;
